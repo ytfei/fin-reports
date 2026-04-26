@@ -1,0 +1,11 @@
+name = "fin-reports"
+compatibility_date = "2024-01-01"
+
+# 静态网站配置
+pages_build_output_dir = "public"
+
+# 自定义域名（需要在 Cloudflare 后台配置 DNS）
+# fin.a11.world → Cloudflare Pages
+
+# 注意：构建命令在 Cloudflare Pages 后台配置，或使用 CLI 参数
+# 不在 wrangler.toml 中配置 command 字段

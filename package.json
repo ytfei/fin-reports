@@ -1,0 +1,15 @@
+{
+  "name": "fin-reports",
+  "version": "1.0.0",
+  "description": "Financial analysis articles website",
+  "scripts": {
+    "build": "node src/build.js",
+    "dev": "node src/build.js && npx serve public",
+    "verify": "./scripts/verify-build.sh",
+    "deploy": "npm run build && wrangler pages deploy public --project-name=fin-reports",
+    "pre-commit": "npm run build"
+  },
+  "keywords": ["finance", "reports"],
+  "author": "",
+  "license": "MIT"
+}

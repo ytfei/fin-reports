@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔨 运行预提交构建..."
+npm run build
+
+if [ $? -ne 0 ]; then
+  echo "❌ 构建失败，提交中止"
+  exit 1
+fi
+
+echo "✅ 构建成功，继续提交"
