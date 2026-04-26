@@ -6,7 +6,7 @@
     "build": "node src/build.js",
     "dev": "node src/build.js && npx serve public",
     "verify": "./scripts/verify-build.sh",
-    "deploy": "npm run build && wrangler pages deploy public --project-name=fin-reports",
+    "deploy": "npm run build && wrangler pages deploy public --project-name=fin-reports --branch=main",
     "pre-commit": "npm run build"
   },
   "keywords": ["finance", "reports"],
