@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫金矿业（601899）深度分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header .meta {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .card h3 {
+            color: #555;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .highlight {
+            background: #fff3e0;
+            color: #e65100;
+            font-weight: 600;
+        }
+
+        .positive {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .negative {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .metric-card .label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .swot-item {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .swot-strength {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+
+        .swot-weakness {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+
+        .swot-opportunity {
+            background: #e3f2fd;
+            border-left-color: #2196f3;
+        }
+
+        .swot-threat {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+
+        .swot-item h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .swot-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .swot-item li {
+            font-size: 13px;
+            padding: 3px 0;
+            color: #666;
+        }
+
+        .swot-item li:before {
+            content: "• ";
+            color: #667eea;
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .conclusion h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .conclusion .rating {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-container h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .alert-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .alert-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .alert-box li {
+            font-size: 13px;
+            padding: 5px 0;
+            color: #856404;
+        }
+
+        .alert-box li:before {
+            content: "⚠️ ";
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 紫金矿业（601899）深度分析报告</h1>
+        <div class="meta">
+            <p>📅 报告日期：2026年4月23日</p>
+            <p>📊 分析框架：主营产品 → 市场规模 → 定价权 → 产业链 → 技术分析 → SWOT</p>
+        </div>
+    </div>
+
+    <!-- 执行摘要 -->
+    <div class="card">
+        <h2>📋 执行摘要</h2>
+        <p>紫金矿业是全球领先的综合矿业龙头，近两年业绩爆发式增长（净利润复合增速超50%）。公司黄金产量全国占比23%，矿产铜产量亚洲唯一超百万吨企业，锂业务快速崛起（2026年目标12万吨，增长370%）。当前股价34.40元，PE 14.83倍，估值合理偏低。核心逻辑：量价齐升（金价+49.4%、铜+11.8%）+ 产量持续增长（2026年金+16.7%、铜+10.1%、锂+370%）+ 并购扩张（藏格矿业、赤峰黄金）。评级：买入，目标价43.84元。</p>
+    </div>
+
+    <!-- 关键数据 -->
+    <div class="metric-grid">
+        <div class="metric-card">
+            <div class="label">当前股价</div>
+            <div class="value">¥34.40</div>
+            <div class="label">今日：-3.18%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">总市值</div>
+            <div class="value">¥9,147亿</div>
+            <div class="label">全球矿业龙头</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">市盈率（TTM）</div>
+            <div class="value">14.83倍</div>
+            <div class="label">合理偏低</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">2025净利润</div>
+            <div class="value">¥518亿</div>
+            <div class="label">同比+61.55%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">矿产品毛利率</div>
+            <div class="value">61.56%</div>
+            <div class="label">行业领先</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">股息率</div>
+            <div class="value">1.45%</div>
+            <div class="label">分红159.5亿</div>
+        </div>
+    </div>
+
+    <!-- 一、主营产品与盈利能力 -->
+    <div class="card">
+        <h2>一、主营产品与盈利能力分析</h2>
+
+        <h3>1.1 主营产品构成</h3>
+        <p>紫金矿业是全球领先的金属矿业企业，主营产品包括黄金、铜、锌、银、锂、钼等有色金属。</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>产品类别</th>
+                    <th>收入（亿元）</th>
+                    <th>占比</th>
+                    <th>毛利率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td>矿产品收入</td>
+                    <td>1,099.78</td>
+                    <td>31.51%</td>
+                    <td class="positive">61.56%</td>
+                </tr>
+                <tr>
+                    <td>冶炼加工及贸易金</td>
+                    <td>1,258.22</td>
+                    <td>21.54%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>冶炼产铜</td>
+                    <td>499.68</td>
+                    <td>8.56%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>其他收入</td>
+                    <td>1,396.88</td>
+                    <td>23.94%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>贸易收入</td>
+                    <td>292.13</td>
+                    <td>8.37%</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>1.2 使用场景</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>产品</th>
+                    <th>使用场景</th>
+                    <th>应用领域</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>黄金</td>
+                    <td>饰品、投资、央行储备</td>
+                    <td>珠宝首饰、金融投资、货币储备</td>
+                </tr>
+                <tr>
+                    <td>铜</td>
+                    <td>导电材料</td>
+                    <td>电力、新能源、建筑、电子</td>
+                </tr>
+                <tr>
+                    <td>锌</td>
+                    <td>合金、镀锌</td>
+                    <td>建筑、汽车、化工</td>
+                </tr>
+                <tr>
+                    <td>银</td>
+                    <td>工业用银、投资</td>
+                    <td>光伏、电子、医疗</td>
+                </tr>
+                <tr>
+                    <td>锂</td>
+                    <td>电池原料</td>
+                    <td>新能源汽车、储能</td>
+                </tr>
+                <tr>
+                    <td>钼</td>
+                    <td>合金钢添加剂</td>
+                    <td>航空航天、军工、特种钢</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>1.3 毛利与净利分析</h3>
+        <p><strong>2025年盈利能力：</strong></p>
+        <ul>
+            <li>综合毛利率：<strong>27.73%</strong>（同比+7.36个百分点）</li>
+            <li>矿产品毛利率：<strong>61.56%</strong>（同比+3.59个百分点）</li>
+            <li>归母净利润：<strong>517.77亿元</strong>（同比+61.55%）</li>
+            <li>净利率：14.83%</li>
+            <li>每股收益：1.95元</li>
+        </ul>
+
+        <h3>近三年业绩趋势</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>年份</th>
+                    <th>营业收入（亿元）</th>
+                    <th>归母净利润（亿元）</th>
+                    <th>净利润增速</th>
+                    <th>毛利率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2022</td>
+                    <td>2,703.29</td>
+                    <td>200.42</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>2,934.03</td>
+                    <td>211.19</td>
+                    <td class="positive">+5.37%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2024</td>
+                    <td>3,036.40</td>
+                    <td>320.51</td>
+                    <td class="positive">+51.73%</td>
+                    <td>~20.37%</td>
+                </tr>
+                <tr class="highlight">
+                    <td>2025</td>
+                    <td>3,490.79</td>
+                    <td>517.77</td>
+                    <td class="positive">+61.55%</td>
+                    <td>27.73%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 业绩趋势图表 -->
+    <div class="chart-container">
+        <h4>📈 近三年净利润趋势</h4>
+        <canvas id="profitTrendChart"></canvas>
+    </div>
+
+    <!-- 二、市场规模与竞争格局 -->
+    <div class="card">
+        <h2>二、市场规模与竞争格局</h2>
+
+        <h3>2.1 市场规模</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>产品</th>
+                    <th>公司产量</th>
+                    <th>全球占比</th>
+                    <th>市场规模（估算）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>黄金</td>
+                    <td>89.54吨</td>
+                    <td class="highlight">~4%（中国23%）</td>
+                    <td>全球3,500吨/年，市值约$10万亿</td>
+                </tr>
+                <tr>
+                    <td>铜</td>
+                    <td>108.51万吨</td>
+                    <td class="highlight">~5%（亚洲龙头）</td>
+                    <td>全球2,100万吨/年，市值约$15万亿</td>
+                </tr>
+                <tr>
+                    <td>锂（当量）</td>
+                    <td>2.55万吨</td>
+                    <td>~2%</td>
+                    <td>全球125万吨/年（快速扩张中）</td>
+                </tr>
+                <tr>
+                    <td>锌</td>
+                    <td>40万吨</td>
+                    <td>~3%</td>
+                    <td>全球1,350万吨/年</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2.2 主要竞争对手</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>公司</th>
+                    <th>市值（亿元）</th>
+                    <th>主营产品</th>
+                    <th>定位对比</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td>紫金矿业</td>
+                    <td>9,147</td>
+                    <td>金、铜、锂、钼、锌</td>
+                    <td>全球化综合矿业龙头</td>
+                </tr>
+                <tr>
+                    <td>江西铜业</td>
+                    <td>1,200+</td>
+                    <td>铜、金</td>
+                    <td>国内铜业龙头，冶炼为主</td>
+                </tr>
+                <tr>
+                    <td>山东黄金</td>
+                    <td>800+</td>
+                    <td>黄金</td>
+                    <td>国内黄金龙头，资源禀赋强</td>
+                </tr>
+                <tr>
+                    <td>中金黄金</td>
+                    <td>500+</td>
+                    <td>黄金</td>
+                    <td>央企背景，黄金业务</td>
+                </tr>
+                <tr>
+                    <td>洛阳钼业</td>
+                    <td>1,500+</td>
+                    <td>铜、钴、钼、锂</td>
+                    <td>新能源金属平台型公司</td>
+                </tr>
+                <tr>
+                    <td>赣锋锂业</td>
+                    <td>600+</td>
+                    <td>锂</td>
+                    <td>全球锂业龙头</td>
+                </tr>
+                <tr>
+                    <td>天齐锂业</td>
+                    <td>800+</td>
+                    <td>锂</td>
+                    <td>锂资源自给率最高</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 市场份额图表 -->
+    <div class="chart-container">
+        <h4>🥧 公司产品全球市场份额</h4>
+        <canvas id="marketShareChart"></canvas>
+    </div>
+
+    <!-- 三、定价权与定价优势 -->
+    <div class="card">
+        <h2>三、定价权与定价优势</h2>
+
+        <h3>产业链定价权分析</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>环节</th>
+                    <th>定价权主体</th>
+                    <th>紫金矿业地位</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td>资源端</td>
+                    <td>资源型矿企（矿山）</td>
+                    <td class="positive"><strong>强</strong>：控制优质矿权资源</td>
+                </tr>
+                <tr>
+                    <td>冶炼端</td>
+                    <td>冶炼厂、精炼厂</td>
+                    <td><strong>中强</strong>：冶炼加工能力强</td>
+                </tr>
+                <tr>
+                    <td>贸易端</td>
+                    <td>大宗商品贸易商</td>
+                    <td><strong>中</strong>：贸易收入占比8.37%</td>
+                </tr>
+                <tr>
+                    <td>深加工</td>
+                    <td>制造业、终端应用</td>
+                    <td class="negative"><strong>弱</strong>：主要出售矿产品</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>紫金矿业定价优势</h3>
+        <ul>
+            <li><strong>规模优势：</strong>黄金产量占全国23%，全球前五；铜产量亚洲第一，连续三年超百万吨</li>
+            <li><strong>成本优势：</strong>矿产品毛利率61.56%，远高于行业平均；一体化运营降低中间环节成本</li>
+            <li><strong>全球化布局：</strong>拥有塞尔维亚、刚果（金）、哥伦比亚等海外优质矿山；境外收入占比30.90%</li>
+            <li><strong>价格敏感度低：</strong>主要金属价格处于上升通道（金+49.4%、铜+11.8%）；产量持续增长对冲成本上涨</li>
+        </ul>
+
+        <h3>定价劣势</h3>
+        <ul>
+            <li><strong>终端金属价格受全球市场定价</strong>（伦敦金、LME铜等）</li>
+            <li><strong>无法完全对冲价格波动风险</strong></li>
+            <li><strong>冶炼和贸易业务毛利率较低</strong></li>
+        </ul>
+    </div>
+
+    <!-- 四、供应链分析 -->
+    <div class="card">
+        <h2>四、供应链分析</h2>
+
+        <h3>4.1 上游：资源采购（按成本占比排序）</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>成本项目</th>
+                    <th>占比估算</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td>矿山开采成本</td>
+                    <td>40-50%</td>
+                    <td>爆破、钻探、运输、剥离</td>
+                </tr>
+                <tr>
+                    <td>能源成本</td>
+                    <td>15-20%</td>
+                    <td>电力、燃油（露天矿山能源需求大）</td>
+                </tr>
+                <tr>
+                    <td>人工成本</td>
+                    <td>10-15%</td>
+                    <td>矿工薪资、管理费用（2025年同比提升）</td>
+                </tr>
+                <tr>
+                    <td>设备折旧</td>
+                    <td>8-12%</td>
+                    <td>大型设备、基础设施折旧</td>
+                </tr>
+                <tr>
+                    <td>税费/权益金</td>
+                    <td>5-8%</td>
+                    <td>资源税、采矿权费（金价上涨时权益金同步上升）</td>
+                </tr>
+                <tr>
+                    <td>其他</td>
+                    <td>5-10%</td>
+                    <td>运输、环保、安全等</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>2025年成本变化：</strong></p>
+        <ul>
+            <li>金精矿单位成本：<strong>190.83元/g</strong>（2024年158.15元/g，同比+20.7%）</li>
+            <li>铜精矿单位成本：<strong>22,362元/吨</strong>（2024年19,139元/吨，同比+16.8%）</li>
+        </ul>
+
+        <p><strong>成本上升原因：</strong>品位下降、运距增加、员工薪酬提升、权益金上涨</p>
+
+        <h3>4.2 中游：冶炼加工与协作</h3>
+        <ul>
+            <li><strong>冶炼加工能力：</strong>冶炼产品收入1,658.59亿元（占比47.51%）</li>
+            <li><strong>战略协作：</strong>紫金黄金国际（分拆港股上市）、赤峰黄金（2026年3月收购25.85%股权）、藏格矿业（2025年收购控制权）</li>
+        </ul>
+
+        <h3>4.3 下游：需求方与合作</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>客户类型</th>
+                    <th>产品</th>
+                    <th>合作模式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>冶炼厂/精炼厂</td>
+                    <td>矿产品</td>
+                    <td>长期合约，基准价+升贴水</td>
+                </tr>
+                <tr>
+                    <td>黄金交易所</td>
+                    <td>黄金</td>
+                    <td>上海黄金交易所、伦敦金市场</td>
+                </tr>
+                <tr>
+                    <td>新能源汽车厂商</td>
+                    <td>锂</td>
+                    <td>长期供应协议（宁德时代、比亚迪等）</td>
+                </tr>
+                <tr>
+                    <td>电力/电网公司</td>
+                    <td>铜</td>
+                    <td>长期采购协议</td>
+                </tr>
+                <tr>
+                    <td>珠宝首饰品牌</td>
+                    <td>黄金</td>
+                    <td>需求旺盛，价格敏感度低</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 五、技术分析与风险 -->
+    <div class="card">
+        <h2>五、技术分析与风险</h2>
+
+        <h3>5.1 股价技术面分析</h3>
+        <p><strong>当前股价：</strong>34.40元（2026年4月23日）</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>技术指标</th>
+                    <th>数值</th>
+                    <th>信号</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5日均线</td>
+                    <td>34.82</td>
+                    <td class="negative">股价在MA5下方，短期偏弱</td>
+                </tr>
+                <tr>
+                    <td>10日均线</td>
+                    <td>34.66</td>
+                    <td class="negative">股价在MA10下方，短期承压</td>
+                </tr>
+                <tr>
+                    <td>20日均线</td>
+                    <td>34.60</td>
+                    <td>股价在MA20附近，中期震荡</td>
+                </tr>
+                <tr>
+                    <td>60日均线</td>
+                    <td>34.38</td>
+                    <td class="positive">股价在MA60上方，长期趋势向上</td>
+                </tr>
+                <tr>
+                    <td>MACD</td>
+                    <td>-0.06（死叉）</td>
+                    <td class="negative">短期动量转弱</td>
+                </tr>
+                <tr>
+                    <td>KDJ</td>
+                    <td>30以下（超卖）</td>
+                    <td class="positive">短期超卖，或迎反弹</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>近期走势（2026年3月24日-4月23日）：</strong></p>
+        <ul>
+            <li>区间涨幅：<strong>+12.49%</strong></li>
+            <li>最高价：<strong>36.00元</strong>（4月15日）</li>
+            <li>最低价：<strong>30.91元</strong>（3月24日）</li>
+            <li>振幅：<strong>16.64%</strong></li>
+            <li>年初至今涨幅：<strong>-0.20%</strong></li>
+        </ul>
+
+        <p><strong>技术面判断：</strong></p>
+        <ul>
+            <li><strong>短期：</strong>技术指标偏弱，MACD死叉，股价回落至30-35元区间震荡</li>
+            <li><strong>中期：</strong>20日均线有支撑，基本面强劲，中长期向上趋势未变</li>
+            <li><strong>关键支撑位：</strong>32元（前期低点）、30.91元（近期低点）</li>
+            <li><strong>关键压力位：</strong>35.56元（今日开盘）、36.00元（近期高点）</li>
+        </ul>
+    </div>
+
+    <!-- 技术分析图表 -->
+    <div class="chart-container">
+        <h4>📊 近期股价走势与技术指标</h4>
+        <canvas id="priceTrendChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>5.2 经营风险</h3>
+
+        <div class="alert-box">
+            <h4>⚠️ 主要风险提示</h4>
+            <ul>
+                <li><strong>金属价格波动风险：</strong>黄金、铜、锂价格高度依赖全球市场，若全球经济衰退或美联储加息超预期，金属价格可能大幅下跌</li>
+                <li><strong>项目建设与投产风险：</strong>刚果马诺诺锂矿、藏格矿业等新项目投产进度不及预期；新企业并购过渡期成本高</li>
+                <li><strong>海外经营风险：</strong>境外收入占比30.90%，面临政治风险、汇率波动；塞尔维亚、刚果（金）等地政策不确定性</li>
+                <li><strong>矿山安全与环保风险：</strong>矿山安全事故可能导致停产、罚款；环保监管趋严，可能增加成本</li>
+                <li><strong>财务风险：</strong>资产负债率预计>60%，债务压力较大；海外并购、新项目投资需要大量资金</li>
+                <li><strong>市场情绪风险：</strong>一季度基金减仓120.54亿元，有色金属板块近期调整（今日板块跌-3.59%）</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 六、SWOT 分析 -->
+    <div class="card">
+        <h2>六、SWOT 全面分析</h2>
+
+        <div class="swot-grid">
+            <div class="swot-item swot-strength">
+                <h4>💪 Strengths（优势）</h4>
+                <ul>
+                    <li>资源禀赋优势：全球化优质矿山布局，自产矿产品毛利率高达61.56%</li>
+                    <li>规模与成本优势：黄金产量全国占比23%，矿产铜产量亚洲第一</li>
+                    <li>成长性突出：近5年矿产金产量CAGR 17%，增速行业第一</li>
+                    <li>战略布局前瞻：提前布局锂、钼等新能源金属</li>
+                    <li>股东回报稳健：2025年分红159.5亿元，股息率1.45%</li>
+                </ul>
+            </div>
+
+            <div class="swot-item swot-weakness">
+                <h4>⚠️ Weaknesses（劣势）</h4>
+                <ul>
+                    <li>产业链位置劣势：定价权受全球市场约束，冶炼和贸易业务毛利率低</li>
+                    <li>成本控制压力：2025年金精矿、铜精矿成本同比+20.7%、+16.8%</li>
+                    <li>财务杠杆较高：资产负债率预计>60%，债务压力较大</li>
+                    <li>海外经营风险：境外收入占比30.90%，面临政治、汇率风险</li>
+                </ul>
+            </div>
+
+            <div class="swot-item swot-opportunity">
+                <h4>🚀 Opportunities（机会）</h4>
+                <ul>
+                    <li>黄金价格长期上涨：地缘政治风险、通胀预期推动黄金需求</li>
+                    <li>新能源转型需求爆发：铜（新能源、AI数据中心）、锂（新能源汽车、储能）</li>
+                    <li>中国资源安全保障：国家鼓励企业海外并购优质矿权</li>
+                    <li>行业整合加速：全球矿业集中度提升，头部企业优势凸显</li>
+                    <li>ESG投资需求：绿色转型推动金属需求增长</li>
+                </ul>
+            </div>
+
+            <div class="swot-item swot-threat">
+                <h4>🛡️ Threats（威胁）</h4>
+                <ul>
+                    <li>金属价格波动风险：全球经济衰退、美联储加息可能压制金属需求</li>
+                    <li>政策与监管风险：环保、安全监管趋严，海外矿产资源国有化风险</li>
+                    <li>竞争加剧：山东黄金、江西铜业、巴里克黄金等强势竞争</li>
+                    <li>项目执行风险：新项目投产进度不及预期，收购整合失败风险</li>
+                    <li>市场情绪风险：有色金属板块近期调整，基金减仓</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SWOT 雷达图 -->
+    <div class="chart-container">
+        <h4>🎯 综合评分雷达图</h4>
+        <canvas id="swotRadarChart"></canvas>
+    </div>
+
+    <!-- 七、投资结论 -->
+    <div class="conclusion">
+        <h3>📊 投资结论与建议</h3>
+
+        <p><strong>核心观点：</strong>紫金矿业是全球领先的综合矿业龙头，具备资源禀赋强、成长性突出、战略布局前瞻三大核心优势。公司近两年业绩爆发式增长（净利润复合增速超50%），受益于金属价格上涨和产量持续释放。2026年铜、金、锂产量目标分别为+10.1%、+16.7%、+370%，未来增长动能强劲。</p>
+
+        <p><strong>关键投资逻辑：</strong></p>
+        <ul>
+            <li><strong>黄金：</strong>价格维持高位，产量增长+16.7%，量价齐升</li>
+            <li><strong>铜：</strong>亚洲龙头，产量持续增长，新能源需求爆发</li>
+            <li><strong>锂：</strong>后起之秀，2026年产量12万吨，有望进入全球前三</li>
+            <li><strong>并购扩张：</strong>收购藏格矿业、赤峰黄金，快速扩张资源版图</li>
+        </ul>
+
+        <div class="rating">
+            评级：<strong>买入（Long）</strong>
+        </div>
+
+        <p><strong>目标价：</strong>43.84元（华创证券2026年目标价，对应14倍PE）</p>
+
+        <p><strong>操作建议：</strong></p>
+        <ul>
+            <li><strong>长线投资者：</strong>当前价位（34.40元）适合分批建仓，持有2-3年</li>
+            <li><strong>中线投资者：</strong>等待股价回落至32元附近（前期低点）择机介入</li>
+            <li><strong>短线投资者：</strong>技术指标偏弱，建议观望，等待MACD金叉信号</li>
+        </ul>
+
+        <p><strong>关键跟踪指标：</strong></p>
+        <ul>
+            <li>金属价格：黄金（伦敦金）、铜（LME铜）、锂（碳酸锂）</li>
+            <li>产量数据：矿产金、矿产铜、碳酸锂产量</li>
+            <li>新项目进度：马诺诺锂矿、赤峰黄金、藏格矿业</li>
+            <li>资金流向：北向资金、公募基金持仓变化</li>
+        </ul>
+
+        <p style="font-size: 12px; margin-top: 20px; opacity: 0.8;">
+            <strong>报告声明：</strong>本报告基于公开信息整理，不构成投资建议。投资者应独立判断并承担风险。
+        </p>
+    </div>
+
+    <script>
+        // 业绩趋势图表
+        const profitTrendCtx = document.getElementById('profitTrendChart').getContext('2d');
+        new Chart(profitTrendCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '归母净利润（亿元）',
+                    data: [200.42, 211.19, 320.51, 517.77],
+                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 市场份额图表
+        const marketShareCtx = document.getElementById('marketShareChart').getContext('2d');
+        new Chart(marketShareCtx, {
+            type: 'pie',
+            data: {
+                labels: ['黄金', '铜', '锂', '锌'],
+                datasets: [{
+                    label: '全球市场份额',
+                    data: [4, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // 股价走势图表
+        const priceTrendCtx = document.getElementById('priceTrendChart').getContext('2d');
+        new Chart(priceTrendCtx, {
+            type: 'line',
+            data: {
+                labels: ['03-24', '03-28', '04-01', '04-05', '04-09', '04-13', '04-15', '04-18', '04-21', '04-23'],
+                datasets: [{
+                    label: '股价（元）',
+                    data: [30.91, 32.50, 33.80, 34.20, 35.00, 35.40, 36.00, 34.73, 35.66, 34.40],
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: '20日均线',
+                    data: [31.50, 32.20, 32.90, 33.40, 33.80, 34.10, 34.30, 34.45, 34.52, 34.60],
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                    fill: false,
+                    tension: 0.4,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 30,
+                        max: 37
+                    }
+                }
+            }
+        });
+
+        // SWOT 雷达图
+        const swotRadarCtx = document.getElementById('swotRadarChart').getContext('2d');
+        new Chart(swotRadarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['资源禀赋', '成长性', '成本控制', '技术实力', '抗风险能力', '股东回报'],
+                datasets: [{
+                    label: '综合评分（满分10）',
+                    data: [9, 9, 7, 7, 6, 7],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(102, 126, 234, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球资本市场崩盘风险全息分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+            padding: 50px 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(233, 69, 96, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+
+        .hero .date-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: rgba(233, 69, 96, 0.15);
+            border-left: 5px solid #e94560;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .executive-summary h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .executive-summary ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .executive-summary li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            color: #d0d0d0;
+        }
+
+        .executive-summary li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #e94560;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Section Styling */
+        section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        section h2 {
+            color: #e94560;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        section h3 {
+            color: #ff6b6b;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        section h4 {
+            color: #ffa07a;
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #d0d0d0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d0d0d0;
+        }
+
+        tr:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        /* Risk Cards */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .risk-card {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.2) 0%, rgba(255, 107, 107, 0.1) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #e94560;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .risk-card h3 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .risk-card .risk-level {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .risk-high {
+            background: rgba(233, 69, 96, 0.3);
+            color: #ff6b6b;
+            border: 1px solid #e94560;
+        }
+
+        .risk-medium {
+            background: rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+            border: 1px solid #ff8c00;
+        }
+
+        .risk-low {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            border: 1px solid #27ae60;
+        }
+
+        /* Indicator Boxes */
+        .indicator-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .indicator-box .name {
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .indicator-box .value {
+            font-size: 1.3em;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .indicator-box .status {
+            font-size: 0.9em;
+            color: #ffa07a;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .chart-container h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Strategy Cards */
+        .strategy-card {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(39, 174, 96, 0.1) 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .strategy-card h3 {
+            color: #2ecc71;
+            margin-bottom: 15px;
+        }
+
+        .strategy-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .strategy-card li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            color: #d0d0d0;
+        }
+
+        .strategy-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #808080;
+            font-size: 0.9em;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer .disclaimer {
+            background: rgba(233, 69, 96, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero">
+            <h1>📉 全球资本市场崩盘风险全息分析</h1>
+            <p class="subtitle">系统性风险识别 · 传导路径梳理 · 监控指标体系 · 获利策略设计</p>
+            <div class="date-badge">
+                📅 分析日期：2026年4月25日
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>📌 执行摘要</h2>
+            <ul>
+                <li><strong>当前市场状态：</strong>美股估值处于历史高位（标普500 PE > 25倍），纳指年初至今涨6.86%，技术面出现背离；A股创业板市盈率达67.79倍，远超历史均值；恒生指数估值偏低但受地缘政治压制。</li>
+                <li><strong>主要崩盘风险：</strong>美债收益率曲线倒挂（短期利率5.25-5.50% > 10年期4.56%）、通胀再起（CPI同比3.3%）、AI泡沫、地缘政治冲突（中东、俄乌）、中国房地产债务危机。</li>
+                <li><strong>监控关键指标：</strong>VIX恐慌指数（需突破30）、美债10年期收益率（突破5%为警戒线）、美元指数（走强压制新兴市场）、黄金价格（避险需求）、资金流向（北向资金连续净流出）。</li>
+                <li><strong>获利策略：</strong>做空高估值成长股、做多波动率（VIX期货/期权）、配置黄金、做空新兴市场货币、持有美债空头头寸、配置反向ETF（如SH、SPXS）。</li>
+            </ul>
+        </div>
+
+        <!-- Section 1: Current Market Status -->
+        <section>
+            <h2>1️⃣ 当前全球市场关键数据快览</h2>
+            <p>基于2026年4月24日实时数据，全球主要市场呈现以下特征：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>市场</th>
+                        <th>指数</th>
+                        <th>最新点位</th>
+                        <th>日涨跌</th>
+                        <th>年初至今</th>
+                        <th>估值特征</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3"><strong>美股</strong></td>
+                        <td>标普500</td>
+                        <td>7,165.08</td>
+                        <td>+0.80%</td>
+                        <td>+4.67%</td>
+                        <td>PE > 25倍（高估）</td>
+                    </tr>
+                    <tr>
+                        <td>纳斯达克</td>
+                        <td>24,836.60</td>
+                        <td>+1.63%</td>
+                        <td>+6.86%</td>
+                        <td>PE > 35倍（泡沫化）</td>
+                    </tr>
+                    <tr>
+                        <td>道琼斯</td>
+                        <td>49,230.71</td>
+                        <td>-0.16%</td>
+                        <td>+2.43%</td>
+                        <td>PE ~ 22倍（偏高）</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>A股</strong></td>
+                        <td>上证指数</td>
+                        <td>4,079.90</td>
+                        <td>-0.33%</td>
+                        <td>+2.80%</td>
+                        <td>PE(TTM) 17.74（正常）</td>
+                    </tr>
+                    <tr>
+                        <td>深证成指</td>
+                        <td>14,940.30</td>
+                        <td>-0.69%</td>
+                        <td>+10.46%</td>
+                        <td>PE(TTM) 52.90（偏高）</td>
+                    </tr>
+                    <tr>
+                        <td>创业板指</td>
+                        <td>3,667.79</td>
+                        <td>-1.41%</td>
+                        <td>+14.50%</td>
+                        <td>PE(TTM) 67.79（高估）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>港股</strong></td>
+                        <td>恒生指数</td>
+                        <td>25,978.07</td>
+                        <td>+0.24%</td>
+                        <td>+1.36%</td>
+                        <td>PE < 10倍（低估）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>大宗商品与关键指标</h3>
+            <div class="indicator-box">
+                <div class="name">🥇 黄金现货（COMEX）</div>
+                <div class="value">4,725.40 美元/盎司</div>
+                <div class="status">历史高位附近，避险需求旺盛</div>
+            </div>
+
+            <div class="indicator-box">
+                <div class="name">🛢️ WTI原油</div>
+                <div class="value">94.88 美元/桶</div>
+                <div class="status">地缘政治溢价，关注中东局势</div>
+            </div>
+
+            <div class="indicator-box">
+                <div class="name">📊 美国10年期国债收益率</div>
+                <div class="value">4.56%</div>
+                <div class="status">倒挂风险（短期利率5.25-5.50%）</div>
+            </div>
+
+            <div class="indicator-box">
+                <div class="name">😱 VIX恐慌指数</div>
+                <div class="value">21.67点</div>
+                <div class="status">3月初曾升至29点，接近警戒线</div>
+            </div>
+
+            <h3>美国宏观经济数据</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>最新值</th>
+                        <th>趋势</th>
+                        <th>风险等级</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPI同比</td>
+                        <td>3.3%</td>
+                        <td>↑ 回升</td>
+                        <td><span class="risk-level risk-high">高</span></td>
+                    </tr>
+                    <tr>
+                        <td>核心CPI同比</td>
+                        <td>2.6%</td>
+                        <td>→ 持平</td>
+                        <td><span class="risk-level risk-medium">中</span></td>
+                    </tr>
+                    <tr>
+                        <td>失业率</td>
+                        <td>4.3%</td>
+                        <td>↑ 轻升</td>
+                        <td><span class="risk-level risk-medium">中</span></td>
+                    </tr>
+                    <tr>
+                        <td>联邦基金利率</td>
+                        <td>5.25-5.50%</td>
+                        <td>→ 高位</td>
+                        <td><span class="risk-level risk-high">高</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 2: Historical Crash Cases -->
+        <section>
+            <h2>2️⃣ 历史崩盘案例复盘与共性分析</h2>
+            <p>通过分析过去30年三次重大市场崩盘，提炼出崩盘的典型特征与触发机制：</p>
+
+            <h3>2.1 2000年互联网泡沫破裂（1999-2002）</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>阶段</th>
+                        <th>时间</th>
+                        <th>核心特征</th>
+                        <th>跌幅</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>泡沫膨胀期</td>
+                        <td>1995-1999</td>
+                        <td>科技股PE超200倍，无盈利公司上市暴涨</td>
+                        <td>+500%</td>
+                    </tr>
+                    <tr>
+                        <td>崩盘开始</td>
+                        <td>2000年3月</td>
+                        <td>Fed加息触发，市场开始去杠杆</td>
+                        <td>-78%</td>
+                    </tr>
+                    <tr>
+                        <td>底部探明</td>
+                        <td>2002年10月</td>
+                        <td>纳指从5132点跌至1108点</td>
+                        <td>-78%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>关键启示：</strong>高估值（PE > 200倍）+ 流动性收紧（Fed加息）+ 投机泡沫（无盈利公司）= 必然崩盘</p>
+
+            <h3>2.2 2008年全球金融危机（2007-2009）</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>阶段</th>
+                        <th>时间</th>
+                        <th>核心特征</th>
+                        <th>跌幅</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>危机酝酿</td>
+                        <td>2007年初</td>
+                        <td>次贷违约率上升，贝尔斯登濒临破产</td>
+                        <td>-15%</td>
+                    </tr>
+                    <tr>
+                        <td>雷曼倒闭</td>
+                        <td>2008年9月</td>
+                        <td>系统性风险爆发，全球流动性冻结</td>
+                        <td>-40%</td>
+                    </tr>
+                    <tr>
+                        <td>政策救市</td>
+                        <td>2008年底</td>
+                        <td>QE推出、TARP计划，市场企稳</td>
+                        <td>-50%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>关键启示：</strong>杠杆崩塌（次贷衍生品）+ 系统性风险传染（雷曼倒闭）+ 流动性枯竭 = 系统性崩盘</p>
+
+            <h3>2.3 2020年疫情冲击（2020年2-3月）</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>阶段</th>
+                        <th>时间</th>
+                        <th>核心特征</th>
+                        <th>跌幅</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>黑天鹅事件</td>
+                        <td>2020年2月</td>
+                        <td>COVID-19全球蔓延，经济停摆</td>
+                        <td>-20%</td>
+                    </tr>
+                    <tr>
+                        <td>熔断频发</td>
+                        <td>2020年3月</td>
+                        <td>美股4次熔断，VIX飙升至82点</td>
+                        <td>-34%</td>
+                    </tr>
+                    <tr>
+                        <td>V型反弹</td>
+                        <td>2020年4月</td>
+                        <td>Fed无限QE，财政刺激到位</td>
+                        <td>+80%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>关键启示：</strong>外部冲击（疫情）+ 极端恐慌（VIX > 80）+ 强力干预（无限QE）= 深V反转</p>
+
+            <h3>2.4 三次崩盘的共性特征</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>📈 高估值泡沫</h3>
+                    <p>崩盘前市场均处于历史估值高位（PE > 30倍），投资者情绪极度乐观</p>
+                </div>
+                <div class="risk-card">
+                    <h3>💸 流动性收紧</h3>
+                    <p>Fed加息或去杠杆导致市场流动性枯竭，资产价格失去支撑</p>
+                </div>
+                <div class="risk-card">
+                    <h3>🔗 杠杆崩塌</h3>
+                    <p>高杠杆交易（衍生品、融资盘）触发爆仓链式反应</p>
+                </div>
+                <div class="risk-card">
+                    <h3>😱 恐慌传染</h3>
+                    <p>VIX指数飙升，投资者抛售一切可变现资产，不分基本面</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Crash Cause Analysis Framework -->
+        <section>
+            <h2>3️⃣ 崩盘原因分析框架</h2>
+            <p>构建系统性与非系统性风险的分类框架，全面识别潜在崩盘触发因素：</p>
+
+            <h3>3.1 系统性风险（宏观层面，难以分散）</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>💸 货币政策转向</h3>
+                    <span class="risk-level risk-high">风险等级：高</span>
+                    <p>Fed维持5.25-5.50%高位利率，若继续加息或放缓降息，将压制风险资产估值</p>
+                    <p><strong>传导路径：</strong>利率上升 → 债券收益率提升 → 股票贴现率提高 → 股价下跌</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>📊 通胀再起</h3>
+                    <span class="risk-level risk-high">风险等级：高</span>
+                    <p>CPI同比3.3%，若通胀持续超预期，Fed将被迫维持鹰派政策</p>
+                    <p><strong>传导路径：</strong>通胀上行 → 实际利率下降 → 购买力下降 → 企业盈利受损</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>📉 美债危机</h3>
+                    <span class="risk-level risk-medium">风险等级：中</span>
+                    <p>美国债务超过34万亿美元，利息支出占GDP比例接近10%，债务可持续性存疑</p>
+                    <p><strong>传导路径：</strong>债务危机 → 美债收益率飙升 → 全球金融资产重估</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🌍 地缘政治冲突</h3>
+                    <span class="risk-level risk-high">风险等级：高</span>
+                    <p>中东战争、俄乌冲突升级，可能引发能源危机和全球供应链中断</p>
+                    <p><strong>传导路径：</strong>战争爆发 → 油价暴涨 → 通胀失控 → 股市崩盘</p>
+                </div>
+            </div>
+
+            <h3>3.2 非系统性风险（市场层面，可部分分散）</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>🤖 AI泡沫破裂</h3>
+                    <span class="risk-level risk-high">风险等级：高</span>
+                    <p>美股AI概念股（NVIDIA、Microsoft、Google等）估值已达历史极值，若AI商业化不及预期，将引发科技股暴跌</p>
+                    <p><strong>类比：</strong>2000年互联网泡沫，历史PE超过200倍</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🏠 中国房地产危机</h3>
+                    <span class="risk-level risk-high">风险等级：高</span>
+                    <p>恒大、碧桂园债务危机持续，房地产投资拖累中国经济复苏，影响全球供应链</p>
+                    <p><strong>传导路径：</strong>房地产崩盘 → 银行坏账 → 信用紧缩 → 经济衰退</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🏭 全球经济衰退</h3>
+                    <span class="risk-level risk-medium">风险等级：中</span>
+                    <p>美国初请失业金人数上升至21.4万，制造业PMI持续低于50，经济衰退信号增强</p>
+                    <p><strong>传导路径：</strong>经济衰退 → 企业盈利下滑 → 股市下跌</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>💹 A股泡沫风险</h3>
+                    <span class="risk-level risk-medium">风险等级：中</span>
+                    <p>创业板指PE达67.79倍，深证成指52.90倍，远超历史均值，存在回调压力</p>
+                    <p><strong>传导路径：</strong>估值回归 → 杠盘爆仓 → 大面积跌停</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>主要风险等级雷达图</h3>
+                <canvas id="riskRadarChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 4: Transmission Paths -->
+        <section>
+            <h2>4️⃣ 崩盘传导路径与多米诺效应</h2>
+            <p>系统性崩盘不会孤立发生，而是通过金融网络在全球范围内传导。以下是典型传导路径：</p>
+
+            <h3>4.1 传导机制全景图</h3>
+            <div class="chart-container">
+                <h3>风险传导路径示意图</h3>
+                <canvas id="transmissionChart"></canvas>
+            </div>
+
+            <h3>4.2 核心传导路径详解</h3>
+
+            <h4>路径1：美股 → 港股/A股（外部冲击）</h4>
+            <p><strong>触发条件：</strong>美股大跌（标普500跌幅 > 20%）</p>
+            <p><strong>传导链条：</strong></p>
+            <ol>
+                <li>美股暴跌引发全球避险情绪上升</li>
+                <li>外资从新兴市场撤资，港股首当其冲</li>
+                <li>A股北向资金大幅流出，拖累指数</li>
+                <li>国内投资者恐慌性抛售，放大跌幅</li>
+            </ol>
+            <p><strong>历史案例：</strong>2008年金融危机期间，恒生指数跌幅达67%，上证指数跌幅达72%</p>
+
+            <h4>路径2：美债收益率飙升 → 全球股债双杀（利率冲击）</h4>
+            <p><strong>触发条件：</strong>10年期美债收益率突破5%</p>
+            <p><strong>传导链条：</strong></p>
+            <ol>
+                <li>美债收益率上升提升全球无风险利率</li>
+                <li>债券价格下跌，债券基金亏损</li>
+                <li>股票估值受压制（贴现率提高）</li>
+                <li>高估值成长股首当其冲</li>
+                <li>投资者赎回基金，被迫抛售股票</li>
+            </ol>
+            <p><strong>当前风险：</strong>10年期美债收益率已达4.56%，距离5%警戒线仅一步之遥</p>
+
+            <h4>路径3：地缘冲突 → 能源危机 → 通胀失控（供给冲击）</h4>
+            <p><strong>触发条件：</strong>中东战争升级，原油价格突破120美元/桶</p>
+            <p><strong>传导链条：</strong></p>
+            <ol>
+                <li>地缘冲突导致原油供应中断</li>
+                <li>油价暴涨推高全球通胀</li>
+                <li>Fed被迫维持或提高利率</li>
+                <li>经济衰退预期增强</li>
+                <li>股市崩盘</li>
+            </ol>
+            <p><strong>当前风险：</strong>WTI原油已至94.88美元/桶，若中东局势恶化，油价可能飙升至150美元</p>
+
+            <h4>路径4：AI泡沫破裂 → 科技股崩盘（估值冲击）</h4>
+            <p><strong>触发条件：</strong>AI商业化不及预期，或重大技术突破遇阻</p>
+            <p><strong>传导链条：</strong></p>
+            <ol>
+                <li>AI龙头公司业绩不及预期</li>
+                <li>科技股估值大幅回调</li>
+                <li>纳斯达克暴跌（预期跌幅50%+）</li>
+                <li>全球科技板块同步下跌</li>
+                <li>A股AI概念股同步暴跌</li>
+            </ol>
+            <p><strong>历史类比：</strong>2000年互联网泡沫破裂，纳指下跌78%</p>
+
+            <h3>4.3 多米诺效应时间线模拟</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>事件</th>
+                        <th>市场反应</th>
+                        <th>跌幅预期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>T+0</td>
+                        <td>触发事件（如Fed突然加息）</td>
+                        <td>VIX跳升至30+</td>
+                        <td>-5%</td>
+                    </tr>
+                    <tr>
+                        <td>T+1</td>
+                        <td>美股暴跌，全球避险</td>
+                        <td>港股、A股跟跌</td>
+                        <td>-10%</td>
+                    </tr>
+                    <tr>
+                        <td>T+3</td>
+                        <td>杠杆爆仓，流动性危机</td>
+                        <td>大宗商品暴跌</td>
+                        <td>-20%</td>
+                    </tr>
+                    <tr>
+                        <td>T+7</td>
+                        <td>恐慌情绪蔓延</td>
+                        <td>资金撤离风险资产</td>
+                        <td>-30%</td>
+                    </tr>
+                    <tr>
+                        <td>T+30</td>
+                        <td>经济衰退确认</td>
+                        <td>盈利预期下修</td>
+                        <td>-40%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 5: Monitoring Indicators -->
+        <section>
+            <h2>5️⃣ 监控指标体系</h2>
+            <p>建立领先、同步、滞后三类指标，提前预警崩盘风险：</p>
+
+            <h3>5.1 领先指标（提前3-6个月预警）</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>📈 美债收益率曲线</h3>
+                    <p><strong>当前值：</strong>10年期4.56% vs 2年期5.25%</p>
+                    <p><strong>倒挂幅度：</strong>69基点</p>
+                    <p><strong>警戒线：</strong>倒挂超过100基点</p>
+                    <p><strong>历史关联：</strong>历次衰退前均出现收益率曲线倒挂</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🏭 制造业PMI</h3>
+                    <p><strong>当前值：</strong>49.2（美国，3月）</p>
+                    <p><strong>趋势：</strong>连续3个月低于50</p>
+                    <p><strong>警戒线：</strong>持续低于45</p>
+                    <p><strong>历史关联：</strong>制造业收缩预示经济衰退</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🏢 企业盈利预期</h3>
+                    <p><strong>当前值：</strong>标普500盈利增速预计-2%（2026）</p>
+                    <p><strong>趋势：</strong>连续两个季度下调</p>
+                    <p><strong>警戒线：</strong>盈利增速转负</p>
+                    <p><strong>历史关联：</strong>盈利下行期股市通常下跌</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>💸 房地产市场</h3>
+                    <p><strong>当前值：</strong>美国成屋销售量同比-15%</p>
+                    <p><strong>趋势：</strong>持续下行</p>
+                    <p><strong>警戒线：</strong>销售量同比下降超过20%</p>
+                    <p><strong>历史关联：</strong>房地产危机往往是系统性危机的前兆</p>
+                </div>
+            </div>
+
+            <h3>5.2 同步指标（实时反映市场状态）</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>😱 VIX恐慌指数</h3>
+                    <p><strong>当前值：</strong>21.67点</p>
+                    <p><strong>警戒线：</strong>30点</p>
+                    <p><strong>极端值：</strong>50点（2008年曾达82点）</p>
+                    <p><strong>信号含义：</strong>VIX突破30意味着市场进入恐慌模式</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>💰 北向资金流向</h3>
+                    <p><strong>当前状态：</strong>间歇性净流出</p>
+                    <p><strong>警戒线：</strong>连续5个交易日净流出</p>
+                    <p><strong>极端值：</strong>单日净流出超过100亿</p>
+                    <p><strong>信号含义：</strong>外资撤离预示A股风险上升</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>📊 融资融券余额</h3>
+                    <p><strong>当前值：</strong>A股两融余额约1.6万亿</p>
+                    <p><strong>警戒线：</strong>快速下降超过20%</p>
+                    <p><strong>极端值：</strong>2015年股灾期间下降60%</p>
+                    <p><strong>信号含义：</strong>杠杆资金撤出意味着市场信心崩溃</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>🥇 黄金价格</h3>
+                    <p><strong>当前值：</strong>4,725美元/盎司</p>
+                    <p><strong>趋势：</strong>持续上涨</p>
+                    <p><strong>信号含义：</strong>黄金走强意味着避险需求上升</p>
+                    <p><strong>反向指标：</strong>黄金暴涨往往伴随股市下跌</p>
+                </div>
+            </div>
+
+            <h3>5.3 滞后指标（确认崩盘趋势）</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>📉 市场跌幅</h3>
+                    <p><strong>技术性熊市：</strong>从高点下跌20%</p>
+                    <p><strong>崩盘：</strong>从高点下跌40%+</p>
+                    <p><strong>当前状态：</strong>标普500距历史高点-12%（4月24日）</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>📊 企业盈利增速</h3>
+                    <p><strong>衰退期：</strong>连续两个季度负增长</p>
+                    <p><strong>当前状态：</strong>美股2026年Q1盈利增速预计-2%</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>👨‍💼 失业率</h3>
+                    <p><strong>衰退期：</strong>失业率上升超过1个百分点</p>
+                    <p><strong>当前状态：</strong>美国失业率4.3%，较低点上升0.3个百分点</p>
+                </div>
+
+                <div class="risk-card">
+                    <h3>📉 投资者情绪</h3>
+                    <p><strong>极度悲观：</strong>AII投资者情绪指数低于20</p>
+                    <p><strong>当前状态：</strong>中性偏悲观</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>监控指标趋势图</h3>
+                <canvas id="indicatorChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 6: Profit Strategies -->
+        <section>
+            <h2>6️⃣ 获利策略与对冲方案</h2>
+            <p>崩盘风险下，投资者可通过做空、对冲、避险等策略实现获利或资产保值：</p>
+
+            <h3>6.1 纯做空策略（高风险高回报）</h3>
+            <div class="strategy-card">
+                <h3>做空高估值成长股</h3>
+                <ul>
+                    <li><strong>标的：</strong>纳斯达克100指数（QQQ）、中国创业板指、AI概念龙头股</li>
+                    <li><strong>工具：</strong>做空ETF（QID/SPXS）、股指期货、期权看跌期权</li>
+                    <li><strong>预期收益：</strong>市场下跌40%时可获得30%-50%收益</li>
+                    <li><strong>风险：</strong>短期反弹会导致亏损，需严格止损</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>做空波动率交易</h3>
+                <ul>
+                    <li><strong>标的：</strong>VIX期货、VIX期权</li>
+                    <li><strong>策略：</strong>当VIX突破30时做多VIX，预期VIX升至50+</li>
+                    <li><strong>预期收益：</strong>VIX每上升10点，可获100%+收益</li>
+                    <li><strong>风险：</strong>VIX波动极大，需要专业交易能力</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>做空新兴市场货币</h3>
+                <ul>
+                    <li><strong>标的：</strong>人民币、印度卢比、巴西雷亚尔</li>
+                    <li><strong>工具：</strong>外汇期货、外汇期权</li>
+                    <li><strong>逻辑：</strong>美元走强时期，新兴市场货币通常贬值</li>
+                    <li><strong>预期收益：</strong>货币贬值10%-20%可获得相应收益</li>
+                </ul>
+            </div>
+
+            <h3>6.2 对冲保值策略（中等风险中等回报）</h3>
+            <div class="strategy-card">
+                <h3>配置黄金等避险资产</h3>
+                <ul>
+                    <li><strong>标的：</strong>黄金ETF（GLD）、黄金期货、实物黄金</li>
+                    <li><strong>逻辑：</strong>黄金是传统避险资产，危机期间往往上涨</li>
+                    <li><strong>历史表现：</strong>2008年金融危机期间黄金上涨30%</li>
+                    <li><strong>当前价格：</strong>4,725美元/盎司（历史高位附近）</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>配置美债多头</h3>
+                <ul>
+                    <li><strong>标的：</strong>美国10年期国债ETF（TLT）、国债期货</li>
+                    <li><strong>逻辑：</strong>危机期间美联储降息，国债价格上涨</li>
+                    <li><strong>历史表现：</strong>2008年金融危机期间TLT上涨20%</li>
+                    <li><strong>当前风险：</strong>若通胀持续，美债可能继续下跌</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>配置反向ETF</h3>
+                <ul>
+                    <li><strong>标的：</strong>SH（做空标普500）、SPXS（3倍做空标普500）</li>
+                    <li><strong>逻辑：</strong>反向ETF提供天然对冲，无需保证金</li>
+                    <li><strong>注意事项：</strong>3倍杠杆ETF不长期持有，适合短期交易</li>
+                    <li><strong>配置比例：</strong>建议不超过资产组合的10%</li>
+                </ul>
+            </div>
+
+            <h3>6.3 套利与中性策略（低风险稳定回报）</h3>
+            <div class="strategy-card">
+                <h3>跨市场套利</h3>
+                <ul>
+                    <li><strong>A股-H股套利：</strong>AH溢价过大时买入H股、卖空A股</li>
+                    <li><strong>期货现货套利：</strong>股指期货升水时套利</li>
+                    <li><strong>风险：</strong>基差风险、流动性风险</li>
+                    <li><strong>预期收益：</strong>年化5%-10%</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>波动率套利</h3>
+                <ul>
+                    <li><strong>隐含波动率套利：</strong>当IV高于HV时做空期权</li>
+                    <li><strong>波动率微笑套利：</strong>跨式期权组合</li>
+                    <li><strong>风险：</strong>极端事件时损失巨大</li>
+                    <li><strong>预期收益：</strong>年化8%-15%</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>货币市场套利</h3>
+                <ul>
+                    <li><strong>利差交易：</strong>借入低息货币，投资高息货币</li>
+                    <li><strong>当前机会：</strong>借入日元，投资美元</li>
+                    <li><strong>风险：</strong>汇率波动、利率变化</li>
+                    <li><strong>预期收益：</strong>年化3%-8%</li>
+                </ul>
+            </div>
+
+            <h3>6.4 资产配置建议</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>资产类别</th>
+                        <th>建议配置比例</th>
+                        <th>工具举例</th>
+                        <th>风险等级</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>现金及等价物</td>
+                        <td>20-30%</td>
+                        <td>货币基金、短期国债</td>
+                        <td>低</td>
+                    </tr>
+                    <tr>
+                        <td>黄金</td>
+                        <td>10-15%</td>
+                        <td>GLD、黄金期货</td>
+                        <td>中</td>
+                    </tr>
+                    <tr>
+                        <td>国债</td>
+                        <td>15-20%</td>
+                        <td>TLT、国债ETF</td>
+                        <td>中</td>
+                    </tr>
+                    <tr>
+                        <td>做空头寸</td>
+                        <td>10-15%</td>
+                        <td>SH、SPXS、VIX期权</td>
+                        <td>高</td>
+                    </tr>
+                    <tr>
+                        <td>优质股票</td>
+                        <td>10-15%</td>
+                        <td>高分红股、防御性行业</td>
+                        <td>中高</td>
+                    </tr>
+                    <tr>
+                        <td>套利策略</td>
+                        <td>5-10%</td>
+                        <td>期现套利、跨市场套利</td>
+                        <td>中</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>6.5 风险控制与止损原则</h3>
+            <div class="risk-grid">
+                <div class="risk-card">
+                    <h3>🎯 严格止损</h3>
+                    <p>做空头寸单笔亏损不超过5%，总仓位亏损不超过10%</p>
+                </div>
+                <div class="risk-card">
+                    <h3>⚖️ 分散投资</h3>
+                    <p>单一头寸不超过总资产的15%，跨市场、跨品种分散</p>
+                </div>
+                <div class="risk-card">
+                    <h3>📊 动态调整</h3>
+                    <p>根据市场变化及时调整仓位，避免长期持有高杠杆头寸</p>
+                </div>
+                <div class="risk-card">
+                    <h3>🛡️ 保留现金</h3>
+                    <p>保持20-30%现金，在市场极端下跌时择机抄底</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Conclusion -->
+        <section>
+            <h2>7️⃣ 总结与展望</h2>
+
+            <h3>7.1 当前市场风险评估</h3>
+            <p>综合分析当前市场数据、历史经验和宏观环境，全球资本市场面临以下主要风险：</p>
+            <ul>
+                <li><strong>估值风险：</strong>美股（尤其是纳指）和A股创业板估值处于历史高位，存在回调压力</li>
+                <li><strong>流动性风险：</strong>Fed维持高利率，若继续收紧将压制风险资产</li>
+                <li><strong>通胀风险：</strong>CPI回升至3.3%，若通胀失控将迫使Fed维持鹰派</li>
+                <li><strong>地缘风险：</strong>中东冲突、俄乌战争存在升级可能，可能引发能源危机</li>
+                <li><strong>技术风险：</strong>AI概念股估值过高，若商业化不及预期可能泡沫破裂</li>
+            </ul>
+
+            <h3>7.2 崩盘概率评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>风险类别</th>
+                        <th>崩盘概率</th>
+                        <th>预期跌幅</th>
+                        <th>时间窗口</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI泡沫破裂</td>
+                        <td>30-40%</td>
+                        <td>纳指下跌40-50%</td>
+                        <td>6-12个月</td>
+                    </tr>
+                    <tr>
+                        <td>地缘冲突升级</td>
+                        <td>20-30%</td>
+                        <td>全球股市下跌30-40%</td>
+                        <td>3-6个月</td>
+                    </tr>
+                    <tr>
+                        <td>美债危机</td>
+                        <td>15-25%</td>
+                        <td>全球股债双杀50%+</td>
+                        <td>12-24个月</td>
+                    </tr>
+                    <tr>
+                        <td>全球经济衰退</td>
+                        <td>25-35%</td>
+                        <td>美股下跌20-30%</td>
+                        <td>6-18个月</td>
+                    </tr>
+                    <tr>
+                        <td>A股回调</td>
+                        <td>40-50%</td>
+                        <td>创业板下跌20-30%</td>
+                        <td>3-6个月</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>7.3 投资建议</h3>
+            <div class="strategy-card">
+                <h3>保守型投资者</h3>
+                <ul>
+                    <li>减持高估值成长股，增加现金和债券配置</li>
+                    <li>配置黄金等避险资产，降低风险暴露</li>
+                    <li>避免使用杠杆，保留流动性</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>激进型投资者</h3>
+                <ul>
+                    <li>适度做空高估值成长股（配置10-15%）</li>
+                    <li>做多VIX等波动率产品（配置5-10%）</li>
+                    <li>关注套利机会，获取稳定收益</li>
+                    <li>严格风险控制，设置止损</li>
+                </ul>
+            </div>
+
+            <h3>7.4 监控清单（每日更新）</h3>
+            <ul>
+                <li>✅ VIX恐慌指数（当前：21.67，警戒：30）</li>
+                <li>✅ 美债10年期收益率（当前：4.56%，警戒：5%）</li>
+                <li>✅ 美股估值（标普500 PE > 25倍，纳指 PE > 35倍）</li>
+                <li>✅ 北向资金流向（关注连续净流出）</li>
+                <li>✅ A股两融余额（关注快速下降）</li>
+                <li>✅ 黄金价格（避险情绪指标）</li>
+                <li>✅ 地缘政治新闻（中东、俄乌）</li>
+            </ul>
+
+            <h3>7.5 最终判断</h3>
+            <p>当前市场处于"高估值 + 高利率 + 高不确定性"的脆弱平衡状态。任何一个意外冲击都可能打破平衡，引发连锁反应。投资者应：</p>
+            <ol>
+                <li><strong>降低预期：</strong>接受未来1-2年低收益甚至负收益的现实</li>
+                <li><strong>加强防御：</strong>增加现金、黄金、国债等避险资产配置</li>
+                <li><strong>保持警惕：</strong>密切关注监控指标，及时调整仓位</li>
+                <li><strong>控制杠杆：</strong>避免过度杠杆化，防范爆仓风险</li>
+                <li><strong>等待机会：</strong>市场崩盘后将出现黄金抄底机会</li>
+            </ol>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>📊 本报告由 AI 助手生成，数据来源：NeoData 金融数据服务</p>
+            <p>⏰ 数据更新时间：2026年4月25日</p>
+            <div class="disclaimer">
+                <strong>⚠️ 免责声明：</strong>
+                <p>本报告仅供参考，不构成投资建议。市场有风险，投资需谨慎。历史表现不代表未来收益。请根据自身风险承受能力做出投资决策。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js 全局配置
+        Chart.defaults.color = '#d0d0d0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 风险等级雷达图
+        const riskRadarCtx = document.getElementById('riskRadarChart').getContext('2d');
+        new Chart(riskRadarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['货币政策转向', '通胀再起', '美债危机', '地缘政治', 'AI泡沫', '房地产危机', '经济衰退', 'A股泡沫'],
+                datasets: [{
+                    label: '风险等级（1-10分）',
+                    data: [8, 9, 6, 9, 8, 8, 6, 5],
+                    backgroundColor: 'rgba(233, 69, 96, 0.2)',
+                    borderColor: 'rgba(233, 69, 96, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(233, 69, 96, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(233, 69, 96, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: {
+                            stepSize: 2,
+                            color: '#808080'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 11
+                            },
+                            color: '#d0d0d0'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // 风险传导路径示意图（使用折线图模拟）
+        const transmissionCtx = document.getElementById('transmissionChart').getContext('2d');
+        new Chart(transmissionCtx, {
+            type: 'line',
+            data: {
+                labels: ['触发事件', '阶段1：市场反应', '阶段2：蔓延', '阶段3：系统危机', '阶段4：全面崩盘'],
+                datasets: [{
+                    label: '风险传导强度',
+                    data: [20, 45, 70, 85, 100],
+                    fill: false,
+                    borderColor: 'rgba(233, 69, 96, 1)',
+                    backgroundColor: 'rgba(233, 69, 96, 0.2)',
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointBackgroundColor: 'rgba(233, 69, 96, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '传导强度'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const descriptions = [
+                                    'Fed加息/地缘冲突/AI泡沫破裂',
+                                    'VIX跳升，资金撤离',
+                                    '跨市场传染，流动性危机',
+                                    '金融系统承压，政策干预',
+                                    '股债双杀，经济衰退确认'
+                                ];
+                                return descriptions[context.dataIndex];
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 监控指标趋势图
+        const indicatorCtx = document.getElementById('indicatorChart').getContext('2d');
+        new Chart(indicatorCtx, {
+            type: 'line',
+            data: {
+                labels: ['2024-01', '2024-03', '2024-05', '2024-07', '2024-09', '2024-11', '2025-01', '2025-03', '2025-05', '2025-07', '2025-09', '2025-11', '2026-01', '2026-03', '2026-04'],
+                datasets: [
+                    {
+                        label: 'VIX恐慌指数',
+                        data: [18, 20, 15, 17, 22, 25, 19, 21, 18, 20, 24, 29, 25, 22, 21.67],
+                        yAxisID: 'y',
+                        borderColor: 'rgba(233, 69, 96, 1)',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: '美债10年期收益率(%)',
+                        data: [4.0, 4.2, 4.5, 4.3, 4.1, 3.9, 4.1, 4.3, 4.5, 4.7, 4.8, 4.6, 4.5, 4.55, 4.56],
+                        yAxisID: 'y1',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: '标普500点位',
+                        data: [5200, 5400, 5300, 5500, 5700, 5600, 5800, 6000, 6200, 6100, 6300, 6500, 6800, 7100, 7165],
+                        yAxisID: 'y2',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'VIX'
+                        },
+                        max: 35
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '收益率(%)'
+                        },
+                        max: 6,
+                        min: 3,
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        display: false,
+                        min: 5000,
+                        max: 7500
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

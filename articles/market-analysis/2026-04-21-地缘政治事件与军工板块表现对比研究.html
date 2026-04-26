@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股军工板块与全球防务股在地缘政治事件中的表现对比研究</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#1a1a2e;line-height:1.7;font-size:15px}
+.c{max-width:780px;margin:0 auto;padding:0 16px 40px}
+.hero{background:linear-gradient(135deg,#1a1a2e,#2d1b3d 50%,#44318d);color:#fff;padding:48px 24px 36px;text-align:center;border-radius:0 0 24px 24px;margin-bottom:28px}
+.hero .tag{display:inline-block;background:rgba(168,85,247,.85);padding:4px 14px;border-radius:20px;font-size:12px;letter-spacing:2px;margin-bottom:16px}
+.hero h1{font-size:24px;font-weight:700;margin-bottom:10px;line-height:1.35}
+.hero .sub{color:rgba(255,255,255,.65);font-size:13px;letter-spacing:1px}
+.hero .dt{color:rgba(255,255,255,.5);font-size:12px;margin-top:12px}
+.es{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:16px;padding:24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(124,58,237,.25)}
+.es h2{font-size:17px;margin-bottom:12px}
+.es p{font-size:14px;line-height:1.8;opacity:.95;margin-bottom:8px}
+.s{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.s h2{font-size:19px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #7c3aed;display:flex;align-items:center;gap:8px}
+.s h3{font-size:16px;font-weight:600;color:#16213e;margin:18px 0 10px}
+.s p{font-size:14px;line-height:1.8;color:#333;margin-bottom:10px}
+.s ul,.s ol{padding-left:20px;margin-bottom:12px}
+.s li{font-size:14px;line-height:1.75;color:#333;margin-bottom:4px}
+.dg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+.dc{background:linear-gradient(135deg,#f8f9fa,#e9ecef);border-radius:12px;padding:16px;text-align:center}
+.dc .n{font-size:28px;font-weight:800;color:#7c3aed;line-height:1.2}
+.dc .l{font-size:12px;color:#666;margin-top:4px}
+.dc.g .n{color:#2ecc71}.dc.r .n{color:#e94560}.dc.o .n{color:#e67e22}
+.ac{border-radius:12px;padding:16px;margin:14px 0}
+.ar{background:linear-gradient(135deg,#fff5f5,#ffe0e0);border-left:4px solid #e94560}
+.ao{background:linear-gradient(135deg,#fff8f0,#ffe8cc);border-left:4px solid #e67e22}
+.ap{background:linear-gradient(135deg,#f5f0ff,#e8daff);border-left:4px solid #7c3aed}
+.ac h4{font-size:14px;margin-bottom:6px}
+.ac p{font-size:13px;color:#444;margin-bottom:4px}
+.ar h4{color:#c0392b}.ao h4{color:#d35400}.ap h4{color:#6d28d9}
+.st{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.st thead{background:linear-gradient(135deg,#1a1a2e,#44318d);color:#fff}
+.st th{padding:10px 12px;text-align:left;font-weight:600;font-size:12px}
+.st td{padding:9px 12px;border-bottom:1px solid #eee}
+.st tr:nth-child(even){background:#f8f9fa}
+.st tr:hover{background:#f3efff}
+.tr{background:#e94560;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px}
+.tg{background:#2ecc71;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px}
+.to{background:#e67e22;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px}
+.cc{position:relative;width:100%;margin:16px 0}
+.cc canvas{max-height:320px}
+.tl{position:relative;padding-left:28px;margin:16px 0}
+.tl::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#7c3aed,#44318d);border-radius:2px}
+.ti{position:relative;margin-bottom:20px}
+.ti::before{content:'';position:absolute;left:-22px;top:6px;width:12px;height:12px;background:#7c3aed;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 3px rgba(124,58,237,.2)}
+.ti .y{font-size:13px;font-weight:700;color:#7c3aed;margin-bottom:4px}
+.ti .e{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.ti .d{font-size:13px;color:#555;line-height:1.6}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.vs-card{border-radius:14px;padding:20px;text-align:center}
+.vs-a{background:linear-gradient(135deg,#fff5f5,#ffe0e0);border:1px solid rgba(233,69,96,.3)}
+.vs-u{background:linear-gradient(135deg,#f0f4ff,#dde6ff);border:1px solid rgba(52,152,219,.3)}
+.vs-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.vs-a h4{color:#c0392b}.vs-u h4{color:#2980b9}
+.vs-card .big{font-size:36px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.vs-a .big{color:#e94560}.vs-u .big{color:#3498db}
+.vs-card .desc{font-size:12px;color:#666}
+.ft{text-align:center;padding:20px 0;color:#999;font-size:12px}
+@media(max-width:680px){.hero h1{font-size:20px}.vs{grid-template-columns:1fr}.dg{grid-template-columns:1fr 1fr}.dc .n{font-size:22px}.s{padding:18px}body{font-size:13px}.st{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="c">
+<div class="hero">
+<div class="tag">COMPARATIVE STUDY</div>
+<h1>A股军工板块与全球防务股<br>在地缘政治事件中的表现对比研究</h1>
+<div class="sub">A-SHARE MILITARY vs. US DEFENSE STOCKS IN GEOPOLITICAL EVENTS</div>
+<div class="dt">2026 年 4 月 21 日 | FinancialAnalyst 深度研究</div>
+</div>
+
+<div class="es">
+<h2>📋 执行摘要</h2>
+<p>A股军工板块呈现典型的<strong>"事件驱动、情绪主导、先涨后跌"</strong>规律，而美股防务股则呈现<strong>"订单驱动、业绩支撑、持续上涨"</strong>的特征。根本原因在于两者的基本面支撑、市场结构和投资者行为存在本质差异。A股军工应定位为"主题交易"而非"价值投资"。</p>
+</div>
+
+<!-- VS Cards -->
+<div class="s">
+<h2>⚖️ 核心对比：A股军工 vs 美股防务</h2>
+<div class="vs">
+<div class="vs-card vs-a">
+<h4>🇨🇳 A股军工</h4>
+<div class="big">先涨后跌</div>
+<div class="desc">事件驱动 · 情绪主导<br>PE 60-70x · 散户主导</div>
+</div>
+<div class="vs-card vs-u">
+<h4>🇺🇸 美股防务</h4>
+<div class="big">持续上涨</div>
+<div class="desc">订单驱动 · 业绩支撑<br>PE 15-20x · 机构主导</div>
+</div>
+</div>
+<div class="dg">
+<div class="dc r"><div class="n">60-70x</div><div class="l">A股军工 PE-TTM</div></div>
+<div class="dc g"><div class="n" style="color:#3498db">15-20x</div><div class="l">美股防务 PE-TTM</div></div>
+<div class="dc"><div class="n">1-4周</div><div class="l">A股军工脉冲持续时间</div></div>
+<div class="dc o"><div class="n">~15%</div><div class="l">LMT 十年复合收益</div></div>
+</div>
+</div>
+
+<!-- Chart: Performance Timeline -->
+<div class="s">
+<h2>📈 俄乌冲突期间股价走势对比</h2>
+<div class="cc"><canvas id="perfChart"></canvas></div>
+<div class="ac ap"><h4>🔑 关键差异</h4><p>美股防务股（如 Lockheed Martin）在冲突后持续获得美国政府大额订单，欧洲各国增加国防预算，业绩确定性极高。A股军工企业无直接订单受益，情绪退潮后即回落。</p></div>
+</div>
+
+<!-- Table: Core Differences -->
+<div class="s">
+<h2>🔍 中美军工股核心差异</h2>
+<table class="st">
+<thead><tr><th>维度</th><th>A股军工</th><th>美股防务</th></tr></thead>
+<tbody>
+<tr><td><strong>直接受益</strong></td><td>间接，无直接订单</td><td>高度直接，获军援订单</td></tr>
+<tr><td><strong>订单可见性</strong></td><td>披露有限，难预判</td><td>5-10年政府合同透明</td></tr>
+<tr><td><strong>PE估值</strong></td><td>60-70倍（情绪溢价）</td><td>15-20倍（业绩支撑）</td></tr>
+<tr><td><strong>利润率</strong></td><td>偏低，受制定价机制</td><td>稳定10-15%</td></tr>
+<tr><td><strong>客户结构</strong></td><td>高度集中国内军方</td><td>美军+盟国+商业多元</td></tr>
+<tr><td><strong>投资者结构</strong></td><td>散户主导，情绪驱动</td><td>机构主导，价值投资</td></tr>
+<tr><td><strong>业绩兑现</strong></td><td>周期长，不确定性高</td><td>季度财报验证</td></tr>
+</tbody>
+</table>
+<div class="ac ar"><h4>⚠️ A股军工高估值本质</h4><p>市场为"国家安全概念"和"自主可控"主题支付溢价，这部分溢价难以通过业绩兑现。</p></div>
+</div>
+
+<!-- Historical Events -->
+<div class="s">
+<h2>📜 历史事件复盘</h2>
+<div class="tl">
+<div class="ti"><div class="y">2011 利比亚战争</div><div class="e">脉冲式上涨后回落</div><div class="d">军工板块受短期事件驱动出现涨幅，但 1-2 个月后回落，更多是情绪炒作而非实质业绩改善。</div></div>
+<div class="ti"><div class="y">2018 中美贸易战</div><div class="e">军工板块同样未能幸免</div><div class="d">上证综指全年下跌 24.59%，军工板块同样下跌。<strong>军工"避险属性"并非绝对</strong>，高度依赖整体市场环境。</div></div>
+<div class="ti"><div class="y">2022 俄乌冲突</div><div class="e">典型"先涨后跌"</div><div class="d">冲突当日逆势涨 3-5%，但 6 个月后回落约 15%。美股 LMT 涨 40% 后持续震荡向上。</div></div>
+</div>
+<div class="cc"><canvas id="eventChart"></canvas></div>
+</div>
+
+<!-- Chart: Valuation Comparison -->
+<div class="s">
+<h2>📊 估值对比图</h2>
+<div class="cc"><canvas id="valChart"></canvas></div>
+</div>
+
+<!-- Conclusion -->
+<div class="s">
+<h2>🎯 投资建议</h2>
+<div class="dg">
+<div class="dc" style="background:linear-gradient(135deg,#fff5f5,#ffe0e0)">
+<div class="n" style="font-size:16px;color:#c0392b">A股军工</div>
+<div class="l">主题交易，逆向布局<br>冲突前低预期时买入<br>情绪亢奋时止盈</div>
+</div>
+<div class="dc" style="background:linear-gradient(135deg,#f0f4ff,#dde6ff)">
+<div class="n" style="font-size:16px;color:#2980b9">美股防务</div>
+<div class="l">防御型价值投资<br>关注国防预算+订单<br>不确定性期超配</div>
+</div>
+</div>
+
+<div class="ac ar"><h4>❌ A股军工投资误区</h4>
+<p>不要因为"战争可能持续"就长期持有 | 不要因为"国家安全概念"就忽视估值</p></div>
+
+<div class="ac ap"><h4>📌 核心结论</h4>
+<p><strong>A股军工是"事件驱动"而非"业绩驱动"</strong>——情绪炒作难以持续</p>
+<p><strong>美股防务是"订单驱动"</strong>——政府合同确保长期业绩</p>
+<p><strong>美股防务股逻辑无法在A股复制</strong>——基本面和制度环境存在根本差异</p></div>
+</div>
+
+<!-- Data Appendix -->
+<div class="s">
+<h2>📋 数据附录</h2>
+<h3>美股防务股表现（俄乌冲突期间）</h3>
+<table class="st">
+<thead><tr><th>股票</th><th>代码</th><th>2022.2 涨幅</th><th>2022 全年</th></tr></thead>
+<tbody>
+<tr><td>Lockheed Martin</td><td>LMT</td><td>+40%</td><td>+20%</td></tr>
+<tr><td>Raytheon</td><td>RTX</td><td>+30%</td><td>+15%</td></tr>
+<tr><td>Northrop Grumman</td><td>NOC</td><td>+25%</td><td>+10%</td></tr>
+</tbody>
+</table>
+<h3>A股军工指数表现（俄乌冲突期间）</h3>
+<table class="st">
+<thead><tr><th>时间节点</th><th>申万国防军工</th></tr></thead>
+<tbody>
+<tr><td>2022.2.24 冲突爆发</td><td>+3-5%</td></tr>
+<tr><td>之后 1 个月</td><td>-5%</td></tr>
+<tr><td>之后 3 个月</td><td>-10%</td></tr>
+<tr><td>之后 6 个月</td><td>-15%</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="s">
+<h2>📚 参考资料</h2>
+<ol style="font-size:13px;line-height:2">
+<li><a href="https://xueqiu.com/2722855951/377665432" target="_blank" style="color:#3498db">2022年俄乌战争爆发后股市行情回顾</a> - 雪球</li>
+<li><a href="https://caifuhao.eastmoney.com/news/20260320222436872883450" target="_blank" style="color:#3498db">俄乌 vs 美伊：两次地缘冲突A股涨幅全景对比</a> - 东方财富</li>
+<li><a href="https://finance.sina.com.cn/wm/2022-02-24/doc-imcwipih5197718.shtml" target="_blank" style="color:#3498db">国防军工股大涨</a> - 新浪财经</li>
+<li><a href="https://www.benzinga.com/news/23/12/36097989/defense-stocks-lockheed-and-rtx-shot-higher-when-russia-first-attacked-ukraine-now-they-struggle" target="_blank" style="color:#3498db">Defense Stocks When Russia Attacked Ukraine</a> - Benzinga</li>
+<li><a href="https://www.nasdaq.com/articles/u.s.-defense-stocks-gain-as-russia-ukraine-war-intensifies" target="_blank" style="color:#3498db">U.S. Defense Stocks Gain</a> - Nasdaq</li>
+</ol>
+</div>
+
+<div class="ft"><p>FinancialAnalyst 深度研究报告 · 2026.04.21</p><p style="margin-top:4px">本报告仅供研究参考，不构成投资建议</p></div>
+</div>
+
+<script>
+new Chart(document.getElementById('perfChart'),{
+  type:'line',
+  data:{
+    labels:['冲突前','1周','2周','1月','3月','6月','12月'],
+    datasets:[
+      {label:'Lockheed Martin (LMT)',data:[0,15,25,35,38,42,45],borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.1)',fill:true,tension:0.3,pointRadius:4},
+      {label:'A股申万军工',data:[0,5,8,3,-5,-12,-15],borderColor:'#e94560',backgroundColor:'rgba(233,69,96,0.1)',fill:true,tension:0.3,pointRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{title:{display:true,text:'俄乌冲突后股价走势对比（示意，%）',font:{size:14}},legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'涨跌幅 %'}}}}
+});
+
+new Chart(document.getElementById('eventChart'),{
+  type:'bar',
+  data:{
+    labels:['利比亚2011','贸易战2018','俄乌2022'],
+    datasets:[
+      {label:'A股军工（峰值）',data:[8,-24,5],backgroundColor:'rgba(233,69,96,0.7)'},
+      {label:'A股军工（3月后）',data:[-5,-24,-10],backgroundColor:'rgba(233,69,96,0.3)'},
+      {label:'美股LMT',data:[10,-8,40],backgroundColor:'rgba(52,152,219,0.7)'}
+    ]
+  },
+  options:{responsive:true,plugins:{title:{display:true,text:'历次地缘事件军工/防务股表现（%）',font:{size:14}},legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'涨跌幅 %'}}}}
+});
+
+new Chart(document.getElementById('valChart'),{
+  type:'bar',
+  data:{
+    labels:['PE-TTM','PB','利润率(%)','散户占比(%)'],
+    datasets:[
+      {label:'A股军工',data:[65,4.5,5,65],backgroundColor:'rgba(233,69,96,0.75)'},
+      {label:'美股防务',data:[18,5.5,12,20],backgroundColor:'rgba(52,152,219,0.75)'}
+    ]
+  },
+  options:{responsive:true,plugins:{title:{display:true,text:'中美军工股核心指标对比',font:{size:14}},legend:{position:'bottom'}},scales:{y:{type:'logarithmic',title:{display:true,text:'数值（对数轴）'}}}}
+});
+</script>
+</body>
+</html>

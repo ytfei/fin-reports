@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移为通信(300590)投资分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(102,126,234,0.3) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-banner h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner .stock-code {
+            font-size: 18px;
+            color: #a8b4d4;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner .analysis-date {
+            font-size: 14px;
+            color: #6b7c93;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2 .emoji {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .card.danger {
+            background: linear-gradient(135deg, #fff3f3 0%, #ffe6e6 100%);
+            border-left-color: #ff6b6b;
+        }
+
+        .card.success {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
+            border-left-color: #51cf66;
+        }
+
+        .card.warning {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff4cc 100%);
+            border-left-color: #ffd93d;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1a1a2e;
+        }
+
+        .card-content {
+            font-size: 15px;
+            color: #495057;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .highlight-item {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .highlight-item .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .highlight-item .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .highlight-item .value.up {
+            color: #51cf66;
+        }
+
+        .highlight-item .value.down {
+            color: #ff6b6b;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 18px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .risk-badge.high {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .risk-badge.medium {
+            background: #ffd93d;
+            color: #333;
+        }
+
+        .risk-badge.low {
+            background: #51cf66;
+            color: white;
+        }
+
+        .disclaimer {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.8;
+            margin-top: 40px;
+            border-top: 3px solid #dee2e6;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 8px;
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 680px) {
+            .hero-banner {
+                padding: 30px 20px;
+            }
+
+            .hero-banner h1 {
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .card-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-banner">
+            <h1>移为通信投资分析报告</h1>
+            <div class="stock-code">股票代码：300590.SZ</div>
+            <div class="analysis-date">分析日期：2026年4月24日</div>
+        </div>
+
+        <div class="content">
+            <div class="highlight-box">
+                <h3>🎯 最终投资建议</h3>
+                <div class="highlight-grid">
+                    <div class="highlight-item">
+                        <div class="label">投资决策</div>
+                        <div class="value up">HOLD（持有）</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="label">信心水平</div>
+                        <div class="value" style="color: #ffd93d;">中等</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="label">风险等级</div>
+                        <div class="value" style="color: #ff6b6b;">高风险</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="label">建议仓位</div>
+                        <div class="value">轻仓（&lt;30%）</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">📊</span>综合评分</h2>
+                <div class="chart-container">
+                    <h3>四维度评分雷达图</h3>
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">💹</span>市场技术分析</h2>
+                <div class="card success">
+                    <div class="card-title">✅ 趋势判断</div>
+                    <div class="card-content">
+                        <strong>当前趋势：</strong>短期强势上涨，处于上升通道<br>
+                        <strong>趋势强度：</strong>5日涨幅19.11%，20日涨幅27.79%，动能强劲<br>
+                        <strong>关键位置：</strong>支撑位13.50元，压力位15.50元（2026-04-24最高价15.03元接近压力位）
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚠️ 技术信号</div>
+                    <div class="card-content">
+                        <strong>量价关系：</strong>换手率13.32%（偏高），量比26.36（异常放量），短期可能面临回调<br>
+                        <strong>涨停板分析：</strong>2026-04-23涨停（+20.03%），2026-04-24回调-2.40%，典型"一日游"行情<br>
+                        <strong>震荡信号：</strong>当日振幅6.39%，显示多空分歧加大
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <div class="card-title">🚨 技术风险</div>
+                    <div class="card-content">
+                        <strong>短期风险：</strong>已连续上涨多日，获利盘压力增大<br>
+                        <strong>趋势警告：</strong>若跌破13.50元支撑位，可能加速下跌至12元附近<br>
+                        <strong>量能风险：</strong>高位放量滞涨，需警惕主力出货
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">📈</span>基本面分析</h2>
+                <div class="card success">
+                    <div class="card-title">✅ 2026Q1业绩亮眼</div>
+                    <div class="card-content">
+                        <strong>营业收入：</strong>3.12亿元（同比+14.85%）<br>
+                        <strong>归母净利润：</strong>5,192.99万元（同比+430.64%）<br>
+                        <strong>销售净利率：</strong>16.62%（vs 2025全年8.34%），盈利能力显著提升<br>
+                        <strong>销售毛利率：</strong>40.81%，维持高位
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <div class="card-title">🚨 2025年业绩大幅下滑</div>
+                    <div class="card-content">
+                        <strong>营业收入：</strong>8.91亿元（同比-7.84%）<br>
+                        <strong>归母净利润：</strong>7,455.83万元（同比-52.99%）<br>
+                        <strong>ROE：</strong>4.05%（vs 2024年8.80%），资产收益率减半<br>
+                        <strong>业绩趋势：</strong>连续两年下滑（2024年：营收-4.81%，净利润+8.08%）
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚠️ 行业地位分析</div>
+                    <div class="card-content">
+                        <strong>行业排名：</strong>通信设备行业85家公司中，营收排名第43位，净利润排名第47位（中游偏下）<br>
+                        <strong>盈利能力：</strong>ROE 3.33%（行业均值2.23%），略高于行业平均<br>
+                        <strong>估值对比：</strong>当前PE 56.00（行业均值57.38），PB 3.46（行业均值3.55），估值与行业持平
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>营收与净利润趋势（2022-2026Q1）</h3>
+                    <canvas id="financeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">🌍</span>新闻与行业动态</h2>
+                <div class="card success">
+                    <div class="card-title">✅ 2026Q1业绩超预期</div>
+                    <div class="card-content">
+                        <strong>关键事件：</strong>2026-04-23披露2026Q1财报，净利润同比增长430.64%，远超市场预期<br>
+                        <strong>市场反应：</strong>当日涨停（+20.03%），股价创近期新高<br>
+                        <strong>业绩解读：</strong>毛利率40.81%维持高位，净利率16.62%显著改善，显示盈利能力恢复
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚠️ 2025年业绩预告下调</div>
+                    <div class="card-content">
+                        <strong>预警信号：</strong>2026-01-30业绩预告，预计2025年净利润同比下降58%至48%<br>
+                        <strong>实际业绩：</strong>2025年净利润7,455.83万元，同比-52.99%，符合预告区间下限<br>
+                        <strong>经营压力：</strong>连续两年业绩下滑，需要关注2026年能否扭转趋势
+                    </div>
+                </div>
+
+                <div class="card success">
+                    <div class="card-title">✅ 行业政策红利</div>
+                    <div class="card-content">
+                        <strong>"十五五"规划：</strong>明确建设5G-A基站50万个，为通信行业奠定未来3年增长基石<br>
+                        <strong>行业景气：</strong>申万通信板块今年累计上涨7.55%，跑赢沪深300指数10.84个百分点<br>
+                        <strong>技术驱动：</strong>5G-A、量子通信、低空经济等新质生产力方向持续释放增长动能
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📋 主营业务分析</div>
+                    <div class="card-content">
+                        <strong>核心业务：</strong>物联网终端设备研发、销售<br>
+                        <strong>产品结构：</strong>车载信息智能终端（52.94%）、资产管理信息智能终端（27.09%）<br>
+                        <strong>市场分布：</strong>中国境外收入94.34%，高度依赖海外市场<br>
+                        <strong>行业关联：</strong>物联网、5G、车联网，受益于5G-A建设加速
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">💰</span>情绪与资金流向</h2>
+                <div class="card danger">
+                    <div class="card-title">🚨 主力资金净流出</div>
+                    <div class="card-content">
+                        <strong>当日资金：</strong>主力净流出-6,498.46万元<br>
+                        <strong>超大单：</strong>净流出-8,390.41万元（机构抛售）<br>
+                        <strong>散户行为：</strong>散户净流入+6,498.45万元（高位接盘）<br>
+                        <strong>资金信号：</strong>机构减仓、散户进场，典型的"出货"信号
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚠️ 龙虎榜分析</div>
+                    <div class="card-content">
+                        <strong>上榜日期：</strong>2026-04-23（涨停当日）<br>
+                        <strong>上榜理由：</strong>日收盘价格涨幅达到15%<br>
+                        <strong>买入前五：</strong>开源证券（7,162.06万元）、国泰海通（6,551.94万元）、东北证券（2,682.08万元）<br>
+                        <strong>卖出前五：</strong>申万宏源（3,422.05万元）、中泰证券（1,407.11万元）、深股通（1,203.68万元）<br>
+                        <strong>深股通动向：</strong>净买入1,346.33万元（北向资金小幅加仓）
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚠️ 股东结构变化</div>
+                    <div class="card-content">
+                        <strong>股东人数：</strong>2026Q1股东人数减少1,793户（-5.13%），筹码集中度提升<br>
+                        <strong>人均持股：</strong>4,187股（vs 2025Q4的3,433股），人均持股增加21.97%<br>
+                        <strong>高管减持：</strong>董秘贺亮于2025-06-03减持2.29万股，交易均价12.03元<br>
+                        <strong>信号解读：</strong>筹码集中是利好信号，但高管减持需关注
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">⚖️</span>投资辩论结论</h2>
+                <div class="card success">
+                    <div class="card-title">🐂 多头核心论点</div>
+                    <div class="card-content">
+                        1. 2026Q1业绩爆发式增长（净利润+430.64%），扭转下滑趋势<br>
+                        2. 通信行业政策红利（"十五五"规划5G-A建设50万基站）<br>
+                        3. 车载信息智能终端占比52.94%，受益于车联网和物联网普及<br>
+                        4. 海外收入占比94.34%，具备国际市场竞争力
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <div class="card-title">🐻 空头核心论点</div>
+                    <div class="card-content">
+                        1. 2025年业绩大幅下滑（净利润-52.99%），连续两年负增长<br>
+                        2. 主力资金净流出，超大单抛售，机构减仓<br>
+                        3. 高位放量滞涨，短期面临回调压力<br>
+                        4. 估值处于历史中位，但业绩波动性大，不确定性高
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚖️ 研究主管裁决</div>
+                    <div class="card-content">
+                        <strong>最终建议：</strong>HOLD（持有）<br>
+                        <strong>裁决理由：</strong>2026Q1业绩改善是积极信号，但2025年业绩大幅下滑和主力资金净流出构成显著风险。当前股价已反映一季度利好，短期回调压力较大，建议持有者谨慎观望，未持有者等待回调至合理价位（13.50元附近）再考虑介入。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">⚠️</span>风险评估结论</h2>
+                <div class="card">
+                    <div class="card-title">🔥 激进派核心观点</div>
+                    <div class="card-content">
+                        2026Q1业绩+430.64%显示公司基本面反转，通信行业政策红利持续，建议逢低买入，目标价18元（+26.6%）。
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🛡️ 保守派核心观点</div>
+                    <div class="card-content">
+                        2025年业绩大幅下滑，主力资金净流出，估值偏高（PE 56倍），建议减仓或清仓，等待更明确的业绩复苏信号。
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">⚖️ 中性派核心观点</div>
+                    <div class="card-content">
+                        2026Q1改善vs 2025年下滑形成对比，建议维持现有仓位，密切跟踪Q2业绩，若Q2持续改善可加仓。
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">⚖️ 风险主管最终裁决</div>
+                    <div class="card-content">
+                        <strong>最终建议：</strong>HOLD（持有）<br>
+                        <strong>关键调整点：</strong>建议降低仓位至20%-30%，将止损位设在12.50元（-12%）。若跌破12.50元，清仓离场。若突破15.50元压力位并放量上攻，可加仓至40%。<br>
+                        <strong>风险等级：</strong>高风险（业绩波动大、主力资金流出、短期涨幅过高）
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">🎯</span>操作建议</h2>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>项目</th>
+                            <th>建议</th>
+                            <th>说明</th>
+                        </tr>
+                        <tr>
+                            <td><strong>当前价格</strong></td>
+                            <td>14.21元</td>
+                            <td>2026-04-24 10:00实时价格</td>
+                        </tr>
+                        <tr>
+                            <td><strong>入场价位</strong></td>
+                            <td><span style="color: #51cf66;">13.50元附近</span></td>
+                            <td>接近2026-04-24最低价14.10元，等待回调至支撑位</td>
+                        </tr>
+                        <tr>
+                            <td><strong>目标价位</strong></td>
+                            <td><span style="color: #ffd93d;">15.50元</span></td>
+                            <td>基于2026Q1业绩改善和行业政策红利，目标涨幅+9.1%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>止损价位</strong></td>
+                            <td><span style="color: #ff6b6b;">12.50元</span></td>
+                            <td>跌破13.50元支撑位后下一支撑位，止损幅度-12%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>建议仓位</strong></td>
+                            <td><span style="color: #ffd93d;">轻仓（20%-30%）</span></td>
+                            <td>高风险品种，不宜重仓</td>
+                        </tr>
+                        <tr>
+                            <td><strong>操作节奏</strong></td>
+                            <td>分批建仓</td>
+                            <td>13.50元建仓50%，若回调至12.50元加仓50%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>正面催化剂</strong></td>
+                            <td>2026Q2业绩持续改善、5G-A订单落地</td>
+                            <td>关注中报预告和行业招标信息</td>
+                        </tr>
+                        <tr>
+                            <td><strong>风险事件</strong></td>
+                            <td>主力资金持续流出、2026Q2业绩下滑</td>
+                            <td>每日监控资金流向，密切关注业绩预告</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">🚨</span>关键风险提示</h2>
+                <div class="card danger">
+                    <div class="card-title">1. 业绩波动风险</div>
+                    <div class="card-content">
+                        <strong>风险描述：</strong>2025年净利润同比-52.99%，虽然2026Q1改善，但单季度业绩不能代表全年趋势<br>
+                        <strong>应对措施：</strong>密切关注2026Q2业绩预告，若Q2继续下滑，及时止损
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <div class="card-title">2. 资金面风险</div>
+                    <div class="card-content">
+                        <strong>风险描述：</strong>主力资金净流出-6,498.46万元，超大单抛售，机构减仓<br>
+                        <strong>应对措施：</strong>每日监控资金流向，若主力持续流出3天以上，减仓
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <div class="card-title">3. 高位回调风险</div>
+                    <div class="card-content">
+                        <strong>风险描述：</strong>5日涨幅19.11%，换手率13.32%（偏高），短期获利盘压力大<br>
+                        <strong>应对措施：</strong>严格执行止损策略，跌破12.50元立即清仓
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">4. 行业竞争风险</div>
+                    <div class="card-content">
+                        <strong>风险描述：</strong>通信设备行业竞争激烈，公司行业排名中游偏下（营收第43位/85）<br>
+                        <strong>应对措施：</strong>关注公司核心产品（车载信息智能终端）的市场份额变化
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-title">5. 海外市场风险</div>
+                    <div class="card-content">
+                        <strong>风险描述：</strong>中国境外收入占比94.34%，高度依赖海外市场，受汇率、政策影响大<br>
+                        <strong>应对措施：</strong>关注汇率波动和国际贸易政策变化
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <h3>⚠️ 免责声明</h3>
+                <p>本分析报告由 AI 基于 NeoData 实时金融数据和多角色辩论方法论自动生成，仅供参考，不构成任何投资建议。</p>
+                <p>投资有风险，入市需谨慎。过去的表现不代表未来的结果。请结合自身风险承受能力做出独立投资判断。</p>
+                <p>报告数据来源：NeoData 金融数据服务（数据更新时间：2026-04-24 10:00）</p>
+                <p><strong>分析模型：</strong>Trading Agent（11角色多空辩论系统）</p>
+                <p><strong>风险提示：</strong>本报告提及的股票为高风险投资标的，可能面临重大损失，请谨慎决策。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 四维度评分雷达图
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['技术面', '基本面', '新闻面', '情绪面'],
+                datasets: [{
+                    label: '移为通信',
+                    data: [65, 55, 60, 45],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(102, 126, 234, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20,
+                            font: { size: 12 }
+                        },
+                        pointLabels: {
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // 营收与净利润趋势图
+        const financeCtx = document.getElementById('financeChart').getContext('2d');
+        new Chart(financeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2022年', '2023年', '2024年', '2025年', '2026Q1'],
+                datasets: [
+                    {
+                        label: '营业收入（亿元）',
+                        data: [10.02, 10.16, 9.67, 8.91, 3.12],
+                        backgroundColor: 'rgba(102, 126, 234, 0.7)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: '归母净利润（亿元）',
+                        data: [1.66, 1.47, 1.59, 0.75, 0.52],
+                        type: 'line',
+                        borderColor: 'rgba(255, 107, 107, 1)',
+                        backgroundColor: 'rgba(255, 107, 107, 0.2)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.3,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: '营业收入（亿元）'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '归母净利润（亿元）'
+                        },
+                        grid: {
+                            drawOnChartArea: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

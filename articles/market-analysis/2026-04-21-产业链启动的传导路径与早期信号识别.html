@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产业链启动的传导路径与早期信号识别</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: #fff;
+        }
+        
+        .hero-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 60px 30px;
+            text-align: center;
+        }
+        
+        .hero-banner h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero-banner .tag {
+            display: inline-block;
+            background: #e94560;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .hero-banner .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e94560;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-left: 4px solid #e94560;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .card.warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .card.danger {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .card.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+        }
+        
+        .key-metric {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e94560;
+            margin: 15px 0;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        table th, table td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table th {
+            background: #1a1a2e;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .chart-container canvas {
+            max-height: 350px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #e94560;
+            border-radius: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 17px;
+            width: 2px;
+            height: calc(100% - 12px);
+            background: #e94560;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 5px;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .signal-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .signal-strong {
+            background: #dc3545;
+            color: #fff;
+        }
+        
+        .signal-medium {
+            background: #ffc107;
+            color: #000;
+        }
+        
+        .signal-weak {
+            background: #28a745;
+            color: #fff;
+        }
+        
+        .path-diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .path-arrow {
+            font-size: 24px;
+            color: #e94560;
+            margin: 10px 0;
+        }
+        
+        .references {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .references h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+        
+        .references ul {
+            list-style: none;
+        }
+        
+        .references li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        .references a {
+            color: #e94560;
+            text-decoration: none;
+        }
+        
+        .references a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 600px) {
+            .hero-banner h1 {
+                font-size: 24px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .key-metric {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-banner">
+            <span class="tag">深度研究</span>
+            <h1>产业链启动的传导路径与早期信号识别</h1>
+            <p class="subtitle">行业板块启动机制、传导规律与投资实战指南</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="card danger">
+                    <div class="card-title">核心结论</div>
+                    <p>不同类型板块遵循不同传导路径：<strong>科技成长板块</strong>（1-18个月，自上而下）、<strong>传统周期板块</strong>（6-24个月，自下而上）、<strong>政策驱动板块</strong>（1-3个月，政策扩散）。早期信号识别需关注资金面、基本面、政策面、技术面、产业面五大维度，真信号特征是多维度共振、持续性、龙头股领涨、基本面支撑。</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">三种传导路径对比</h2>
+                
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-title">自上而下</div>
+                        <p class="metric-label">传导速度</p>
+                        <div class="key-metric">1-18月</div>
+                        <p><strong>适用：</strong>科技成长板块<br><strong>起点：</strong>上游技术突破<br><strong>案例：</strong>AI算力、半导体</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">自下而上</div>
+                        <p class="metric-label">传导速度</p>
+                        <div class="key-metric">6-24月</div>
+                        <p><strong>适用：</strong>传统周期板块<br><strong>起点：</strong>下游需求回暖<br><strong>案例：</strong>钢铁、煤炭、光伏</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">政策扩散</div>
+                        <p class="metric-label">传导速度</p>
+                        <div class="key-metric">1-3月</div>
+                        <p><strong>适用：</strong>政策驱动板块<br><strong>起点：</strong>政策受益环节<br><strong>案例：</strong>军工、新基建</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="pathComparisonChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">2023年AI算力板块启动全过程</h2>
+                
+                <div class="path-diagram">
+                    <div class="card-title">传导路径</div>
+                    <div>海外技术突破（ChatGPT 2022.11）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>国内映射启动（寒武纪 2022.12）</div>
+                    <div class="path-arrow">↓</div>
+                    <div class="highlight">上游：GPU/光模块（中际旭创、新易盛 2023.1-2）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>中游：AI服务器/算法（工业富联、浪潮信息 2023.2-3）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>下游：AI应用（科大讯飞、金山办公 2023.3-4）</div>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px; font-size: 18px; color: #1a1a2e;">早期信号时间线</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2022年11月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">技术面</span> ChatGPT月活用户破亿，海外映射启动
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2022年12月</div>
+                    <div>
+                        <span class="signal-badge signal-medium">资金面</span> 寒武纪放量上涨，比英伟达晚4天但已启动
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年1月</div>
+                    <div>
+                        <span class="signal-badge signal-medium">政策面</span> AI发展规划出台，政策支持明确<br>
+                        <span class="signal-badge signal-strong">资金面</span> 北向资金流入AI板块龙头（寒武纪、中际旭创）
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年2月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">基本面</span> 光模块订单增长，中际旭创业绩预告超预期<br>
+                        <span class="signal-badge signal-medium">产业面</span> 产业链会议密集，巨头布局AI
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年3月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">技术面</span> 寒武纪、中际旭创首次涨停，龙头确立<br>
+                        <span class="signal-badge signal-strong">资金面</span> 融资余额快速增长，杠杆资金涌入
+                    </div>
+                </div>
+                
+                <div class="card warning">
+                    <div class="card-title">关键涨幅</div>
+                    <div class="grid-2">
+                        <div>
+                            <p class="metric-label">中际旭创（光模块）</p>
+                            <div class="key-metric">400%</div>
+                        </div>
+                        <div>
+                            <p class="metric-label">寒武纪（AI芯片）</p>
+                            <div class="key-metric">600%</div>
+                        </div>
+                    </div>
+                    <p><strong>结论：</strong>上游环节弹性最大，涨幅远超中下游</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">2020年新能源车板块启动全过程</h2>
+                
+                <div class="path-diagram">
+                    <div class="card-title">传导路径</div>
+                    <div>政策驱动（补贴延长 2020.6）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>海外映射（特斯拉股价翻倍 2020.7-9）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>下游：整车厂（比亚迪 2020.11-12）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>中游：电池（宁德时代 2020.10-11）→电机/电控（汇川技术、三花智控）</div>
+                    <div class="path-arrow">↓</div>
+                    <div>上游：锂资源（赣锋锂业、天齐锂业 2020.10-12）</div>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px; font-size: 18px; color: #1a1a2e;">早期信号时间线</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2020年6月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">政策面</span> 新能源车补贴延长政策发布，原定退坡延后2年
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2020年7月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">技术面</span> 特斯拉上海工厂投产，国产化率提升<br>
+                        <span class="signal-badge signal-strong">资金面</span> 特斯拉股价从250美元涨至500美元（7-9月翻倍）
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2020年8月</div>
+                    <div>
+                        <span class="signal-badge signal-medium">基本面</span> 新能源车销量8月超预期，渗透率突破3%
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2020年9-10月</div>
+                    <div>
+                        <span class="signal-badge signal-strong">资金面</span> 北向资金流入新能源车龙头（比亚迪、宁德时代）<br>
+                        <span class="signal-badge signal-strong">基本面</span> 渗透率突破5%，进入快速渗透期<br>
+                        <span class="signal-badge signal-strong">基本面</span> 锂矿价格启动上涨，从4万元/吨涨至10万元/吨
+                    </div>
+                </div>
+                
+                <div class="card success">
+                    <div class="card-title">关键涨幅</div>
+                    <div class="grid-3">
+                        <div>
+                            <p class="metric-label">比亚迪（整车）</p>
+                            <div class="key-metric">560%</div>
+                        </div>
+                        <div>
+                            <p class="metric-label">宁德时代（电池）</p>
+                            <div class="key-metric">600%</div>
+                        </div>
+                        <div>
+                            <p class="metric-label">赣锋锂业（锂资源）</p>
+                            <div class="key-metric">300%</div>
+                        </div>
+                    </div>
+                    <p><strong>结论：</strong>下游率先受益，上游最后补涨</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">五大早期信号识别维度</h2>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">资金面信号</div>
+                        <ul style="margin-left: 20px; font-size: 14px;">
+                            <li><strong>北向资金：</strong>持续流入龙头股（3日以上、单日流入超1亿）</li>
+                            <li><strong>机构资金：</strong>基金加仓、调研频次增加、险资增持</li>
+                            <li><strong>游资/杠杆：</strong>龙虎榜活跃、融资余额增长、龙头涨停</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">基本面信号</div>
+                        <ul style="margin-left: 20px; font-size: 14px;">
+                            <li><strong>业绩预告：</strong>业绩预增超预期、大额订单公告</li>
+                            <li><strong>行业数据：</strong>PMI回升、产品价格上涨、产销改善</li>
+                            <li><strong>技术突破：</strong>重大技术发布、专利申请增加</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">政策面信号</div>
+                        <ul style="margin-left: 20px; font-size: 14px;">
+                            <li>政策文件发布（国家规划、产业政策）</li>
+                            <li>部委专项政策（各部委扶持文件）</li>
+                            <li>地方配套政策（补贴、产业园区）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">技术面信号</div>
+                        <ul style="margin-left: 20px; font-size: 14px;">
+                            <li><strong>量价配合：</strong>板块整体放量、龙头领涨、持续上涨</li>
+                            <li><strong>板块轮动：</strong>热点转移、趋势形成、相对强度上升</li>
+                            <li><strong>技术形态：</strong>突破压力位、底部形态完成</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 15px;">
+                    <div class="card-title">产业面信号</div>
+                    <ul style="margin-left: 20px; font-size: 14px;">
+                        <li><strong>行业会议：</strong>重大行业论坛、产业链会议</li>
+                        <li><strong>巨头动向：</strong>龙头企业布局、跨界进入</li>
+                        <li><strong>市场预期：</strong>券商研报密集、机构路演</li>
+                    </ul>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="signalWeightChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">投资决策指南</h2>
+                
+                <div class="card danger">
+                    <div class="card-title">择时策略四阶段</div>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>启动前准备期</strong></p>
+                            <p>建立股票池，小仓位试水（10%以下），等待信号共振</p>
+                        </div>
+                        <div>
+                            <p><strong>启动初期</strong></p>
+                            <p>快速加仓至30-50%，优先上游环节，设置止损线（-10%）</p>
+                        </div>
+                        <div>
+                            <p><strong>爆发期</strong></p>
+                            <p>逐步减仓至20-30%，从上游向中游转移，设定止盈目标</p>
+                        </div>
+                        <div>
+                            <p><strong>末期</strong></p>
+                            <p>快速清仓，避免接盘，等待下一个板块</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card success">
+                    <div class="card-title">选股三大原则</div>
+                    <div style="margin-top: 15px;">
+                        <h4 style="margin-bottom: 10px;">1. 上游环节优先</h4>
+                        <p style="margin-bottom: 15px;">传导起点、弹性最大、护城河最深。需求不及预期时跌幅最大，需控制风险。</p>
+                        
+                        <h4 style="margin-bottom: 10px;">2. 龙头股优先</h4>
+                        <p style="margin-bottom: 15px;">市值大、流动性好、带动效应强。选择标准：板块市值前3名、ROE>15%、研发投入占比>5%。</p>
+                        
+                        <h4 style="margin-bottom: 10px;">3. 弹性选股策略</h4>
+                        <p>短线：小票+游资+题材（高风险高收益）；中线：中市值+基本面+成长性；长线：大盘龙头+行业景气度。</p>
+                    </div>
+                </div>
+                
+                <div class="card warning">
+                    <div class="card-title">风险控制铁律</div>
+                    <ul style="margin-left: 20px; font-size: 14px;">
+                        <li><strong>止损纪律：</strong>建立后10%无条件止损，跌破关键支撑位（如20日线）止损，信号证伪后止损</li>
+                        <li><strong>仓位管理：</strong>单一板块最大仓位50%，单一股票最大仓位20%（除非特别看好龙头），预留现金</li>
+                        <li><strong>假信号识别：</strong>仅单一维度信号、龙头股不涨、无基本面支撑、一日游行情</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">不同类型板块特征对比</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特征</th>
+                                <th>科技成长板块</th>
+                                <th>传统周期板块</th>
+                                <th>政策驱动板块</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>传导起点</strong></td>
+                                <td>技术突破（上游）</td>
+                                <td>需求回暖（下游）</td>
+                                <td>政策发布（受政策优先环节）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>传导路径</strong></td>
+                                <td>自上而下</td>
+                                <td>自下而上</td>
+                                <td>政策扩散</td>
+                            </tr>
+                            <tr>
+                                <td><strong>传导速度</strong></td>
+                                <td>快（1-18月）</td>
+                                <td>中（6-24月）</td>
+                                <td>最快（1-3月）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>信号强度</strong></td>
+                                <td>海外映射>技术突破>资金面</td>
+                                <td>基本面>价格信号>资金面</td>
+                                <td>政策面>订单公告>资金面</td>
+                            </tr>
+                            <tr>
+                                <td><strong>持续性</strong></td>
+                                <td>短（1-2年）</td>
+                                <td>长（2-5年）</td>
+                                <td>短（6-12月）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>估值特征</strong></td>
+                                <td>PE扩张快（200-800x）</td>
+                                <td>PE稳定（15-30x）</td>
+                                <td>PE扩张快（50-300x）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="characteristicsRadarChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="references">
+                <h3>参考资料</h3>
+                <ul>
+                    <li><a href="https://zhuanlan.zhihu.com/p/639210495">复盘2023年AI主题大行情 - 知乎专栏</a></li>
+                    <li><a href="https://www.sohu.com/a/436110043_467568">中国新能源汽车发展报告2020：资本市场大爆发 - 搜狐财经</a></li>
+                    <li><a href="https://xueqiu.com/813020864/378437906">赛道投资专题——主题择时方法论及主线跟踪 - 雪球网</a></li>
+                    <li><a href="https://finance.sina.com.cn/wm/2026-03-12/doc-inihxtya463361.shtml">AI算力产业链最全50家公司（收藏版）- 新浪财经</a></li>
+                    <li><a href="https://data.eastmoney.com/bkzj/">东方财富网 - 概念板块数据中心</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>报告完成时间：2026年4月21日 | FinancialAnalyst 深度研究</p>
+        </div>
+    </div>
+    
+    <script>
+        // 传导路径对比图
+        const pathCtx = document.getElementById('pathComparisonChart').getContext('2d');
+        new Chart(pathCtx, {
+            type: 'bar',
+            data: {
+                labels: ['自上而下', '自下而上', '政策扩散'],
+                datasets: [{
+                    label: '传导速度（月）',
+                    data: [9, 15, 2],
+                    backgroundColor: [
+                        'rgba(233, 69, 96, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(40, 167, 69, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(233, 69, 96)',
+                        'rgb(255, 193, 7)',
+                        'rgb(40, 167, 69)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: '三种传导路径的传导速度对比',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '传导速度（月）'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 信号权重图
+        const signalCtx = document.getElementById('signalWeightChart').getContext('2d');
+        new Chart(signalCtx, {
+            type: 'bar',
+            data: {
+                labels: ['海外映射', '技术突破', '基本面', '价格信号', '资金面', '政策面', '订单公告'],
+                datasets: [{
+                    label: '科技板块',
+                    data: [9, 9, 7, 5, 7, 5, 7],
+                    backgroundColor: 'rgba(233, 69, 96, 0.7)'
+                }, {
+                    label: '周期板块',
+                    data: [3, 3, 9, 9, 5, 5, 5],
+                    backgroundColor: 'rgba(255, 193, 7, 0.7)'
+                }, {
+                    label: '政策板块',
+                    data: [5, 3, 5, 3, 9, 9, 9],
+                    backgroundColor: 'rgba(40, 167, 69, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: '不同板块类型的信号权重对比（1-9分）',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: '信号权重（1-9分）'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 板块特征雷达图
+        const radarCtx = document.getElementById('characteristicsRadarChart').getContext('2d');
+        new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['传导速度', '信号强度', '持续性', '估值弹性'],
+                datasets: [{
+                    label: '科技成长板块',
+                    data: [8, 8, 4, 9],
+                    backgroundColor: 'rgba(233, 69, 96, 0.2)',
+                    borderColor: 'rgb(233, 69, 96)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgb(233, 69, 96)'
+                }, {
+                    label: '传统周期板块',
+                    data: [5, 6, 9, 3],
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                    borderColor: 'rgb(255, 193, 7)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgb(255, 193, 7)'
+                }, {
+                    label: '政策驱动板块',
+                    data: [9, 7, 4, 8],
+                    backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                    borderColor: 'rgb(40, 167, 69)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgb(40, 167, 69)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: '不同板块类型特征雷达图（1-9分）',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

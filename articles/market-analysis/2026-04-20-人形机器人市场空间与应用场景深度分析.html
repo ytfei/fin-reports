@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人形机器人市场空间与应用场景深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-sec: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d29922;
+    --red: #f85149;
+    --orange: #db6d28;
+    --purple: #bc8cff;
+    --gradient1: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .banner {
+    background: var(--gradient1);
+    border-radius: 16px;
+    padding: 40px 32px;
+    margin-bottom: 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(88,166,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(188,140,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .banner h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    letter-spacing: 1px;
+  }
+  .banner .subtitle {
+    font-size: 14px;
+    color: var(--text-sec);
+    position: relative;
+    letter-spacing: 2px;
+  }
+  .banner .date {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-sec);
+    opacity: 0.7;
+    position: relative;
+  }
+
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 20px; }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .metric-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-card.highlight { border-color: var(--accent); background: rgba(88,166,255,0.06); }
+  .metric-card.green { border-color: var(--accent2); background: rgba(63,185,80,0.06); }
+  .metric-card.orange { border-color: var(--accent3); background: rgba(210,153,34,0.06); }
+  .metric-card.red { border-color: var(--red); background: rgba(248,81,73,0.06); }
+  .metric-card.purple { border-color: var(--purple); background: rgba(188,140,255,0.06); }
+  .metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .metric-card.green .metric-value { color: var(--accent2); }
+  .metric-card.orange .metric-value { color: var(--accent3); }
+  .metric-card.red .metric-value { color: var(--red); }
+  .metric-card.purple .metric-value { color: var(--purple); }
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-sec);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  th {
+    background: rgba(255,255,255,0.05);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+    vertical-align: top;
+  }
+  tr:hover { background: rgba(255,255,255,0.02); }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-high { background: rgba(248,81,73,0.15); color: #f85149; }
+  .tag-mid { background: rgba(210,153,34,0.15); color: #d29922; }
+  .tag-low { background: rgba(63,185,80,0.15); color: #3fb950; }
+  .tag-info { background: rgba(88,166,255,0.15); color: #58a6ff; }
+
+  .chart-container {
+    position: relative;
+    height: 320px;
+    margin: 16px 0;
+  }
+
+  .logic-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .logic-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+  .logic-step:nth-child(2) { border-left-color: var(--accent2); }
+  .logic-step:nth-child(3) { border-left-color: var(--accent3); }
+  .logic-step:nth-child(4) { border-left-color: var(--purple); }
+  .logic-step:nth-child(5) { border-left-color: var(--red); }
+  .logic-num {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 28px;
+  }
+  .logic-step:nth-child(2) .logic-num { color: var(--accent2); }
+  .logic-step:nth-child(3) .logic-num { color: var(--accent3); }
+  .logic-step:nth-child(4) .logic-num { color: var(--purple); }
+  .logic-step:nth-child(5) .logic-num { color: var(--red); }
+  .logic-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .logic-desc {
+    font-size: 13px;
+    color: var(--text-sec);
+  }
+
+  .scenario-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .scenario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .scenario-name {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .timeline {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .timeline-item {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+  }
+  .timeline-item.active {
+    background: rgba(63,185,80,0.15);
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .risk-item {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .risk-high { background: rgba(248,81,73,0.08); border-left: 3px solid var(--red); }
+  .risk-mid { background: rgba(210,153,34,0.08); border-left: 3px solid var(--accent3); }
+  .risk-low { background: rgba(63,185,80,0.08); border-left: 3px solid var(--accent2); }
+
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(188,140,255,0.06) 100%);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+  }
+  .verdict-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .data-source {
+    font-size: 11px;
+    color: var(--text-sec);
+    opacity: 0.6;
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 680px) {
+    body { padding: 12px; }
+    .banner { padding: 24px 16px; }
+    .banner h1 { font-size: 20px; }
+    .section { padding: 16px; }
+    .metric-value { font-size: 20px; }
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Banner -->
+<div class="banner">
+  <h1>🤖 人形机器人市场空间与应用场景深度分析</h1>
+  <div class="subtitle">HUMANOID ROBOT MARKET DEEP DIVE</div>
+  <div class="date">2026年4月20日 | 基于多源行业数据综合分析</div>
+</div>
+
+<!-- 一、市场规模总览 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> 一、市场规模：从48亿到万亿的十年赛道</div>
+  
+  <div class="metric-grid">
+    <div class="metric-card highlight">
+      <div class="metric-value">48.9亿</div>
+      <div class="metric-label">2025年全球市场规模（美元）</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-value">341亿</div>
+      <div class="metric-label">2030年预测（Mordor）</div>
+    </div>
+    <div class="metric-card purple">
+      <div class="metric-value">1651亿</div>
+      <div class="metric-label">2034年预测（Fortune BI）</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="metric-value">2434亿</div>
+      <div class="metric-label">2035年预测（R&M）</div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;color:var(--text-sec);margin-bottom:14px;">
+    多家机构预测的 CAGR 均在 <strong style="color:var(--accent)">47%~51%</strong> 之间，但需注意：早期基数极低（2025年仅~49亿美元），高 CAGR 部分是"低基数效应"的数学结果。
+  </p>
+
+  <div class="chart-container">
+    <canvas id="marketChart"></canvas>
+  </div>
+
+  <table>
+    <tr>
+      <th>预测机构</th>
+      <th>2025E</th>
+      <th>2030E</th>
+      <th>2035E</th>
+      <th>CAGR</th>
+      <th>备注</th>
+    </tr>
+    <tr>
+      <td>Fortune BI</td>
+      <td>48.9亿</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="color:var(--accent);font-weight:700">50.6%</td>
+      <td>至2034年达1651亿</td>
+    </tr>
+    <tr>
+      <td>Mordor Intelligence</td>
+      <td>48.2亿</td>
+      <td style="color:var(--accent2);font-weight:700">341亿</td>
+      <td>—</td>
+      <td>47.9%</td>
+      <td>亚太主导市场</td>
+    </tr>
+    <tr>
+      <td>ResearchAndMarkets</td>
+      <td>2.98亿</td>
+      <td>—</td>
+      <td style="color:var(--purple);font-weight:700">2434亿</td>
+      <td>49.2%</td>
+      <td>起始基数最低</td>
+    </tr>
+    <tr>
+      <td>高盛</td>
+      <td>—</td>
+      <td>—</td>
+      <td>380亿</td>
+      <td>—</td>
+      <td>出货140万台/年</td>
+    </tr>
+    <tr>
+      <td>GGII（高工机器人）</td>
+      <td>63.4亿</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>2025年销量1.24万台</td>
+    </tr>
+  </table>
+
+  <div class="risk-item risk-mid">
+    <strong>⚠️ 注意预测差异</strong>：不同机构对2025年基数的估计差距达16倍（2.98亿 vs 48.9亿），核心分歧在于"人形机器人"的边界定义——是否包含轮式、半人形、工业协作臂等。读者应关注<strong>趋势方向</strong>而非精确数字。
+  </div>
+</div>
+
+<!-- 二、价格与经济性 -->
+<div class="section">
+  <div class="section-title"><span class="icon">💰</span> 二、价格断崖式下降：经济性拐点已至</div>
+  
+  <div class="metric-grid">
+    <div class="metric-card green">
+      <div class="metric-value">~$6K</div>
+      <div class="metric-label">最低售价（Unitree R1）</div>
+    </div>
+    <div class="metric-card highlight">
+      <div class="metric-value">$16K</div>
+      <div class="metric-label">性价比标杆（Unitree G1）</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="metric-value">$20-30K</div>
+      <div class="metric-label">Tesla Optimus 预估</div>
+    </div>
+    <div class="metric-card purple">
+      <div class="metric-value">~40%/年</div>
+      <div class="metric-label">价格年降幅</div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>厂商</th>
+      <th>型号</th>
+      <th>价格</th>
+      <th>定位</th>
+      <th>量产进展</th>
+    </tr>
+    <tr>
+      <td>宇树科技</td>
+      <td>R1</td>
+      <td>~$6,000</td>
+      <td>入门/研究</td>
+      <td>已量产</td>
+    </tr>
+    <tr>
+      <td>宇树科技</td>
+      <td>G1</td>
+      <td>~$16,000</td>
+      <td>多用途</td>
+      <td>多次售罄</td>
+    </tr>
+    <tr>
+      <td>Tesla</td>
+      <td>Optimus Gen3</td>
+      <td>$20,000-30,000</td>
+      <td>工厂自用→商用</td>
+      <td>部署1000+台，上海量产</td>
+    </tr>
+    <tr>
+      <td>Figure AI</td>
+      <td>Figure 03</td>
+      <td>$30,000-50,000</td>
+      <td>商业工作</td>
+      <td>月产数百台</td>
+    </tr>
+    <tr>
+      <td>Agility Robotics</td>
+      <td>Digit</td>
+      <td>$50,000-80,000</td>
+      <td>物流仓储</td>
+      <td>RaaS模式</td>
+    </tr>
+    <tr>
+      <td>Boston Dynamics</td>
+      <td>Atlas（电动）</td>
+      <td>$100,000-150,000</td>
+      <td>高端旗舰</td>
+      <td>早期商用</td>
+    </tr>
+  </table>
+
+  <div class="chart-container">
+    <canvas id="priceChart"></canvas>
+  </div>
+
+  <div style="font-size:13px;color:var(--text-sec);margin-top:12px;">
+    <strong style="color:var(--accent2)">✅ 经济性拐点核心逻辑：</strong>以中国制造业工人年均成本约 8-12 万元（$11,000-$16,500）计算，人形机器人（$16K-$30K）已进入 <strong>1.5-3年回本期</strong>的窗口。加上可24小时运行、无需社保、不受劳动法限制等优势，在重复性高、环境恶劣的工位上，ROI 已经为正。
+  </div>
+
+  <table style="margin-top:12px;">
+    <tr>
+      <th>成本构成</th>
+      <th>占比</th>
+      <th>说明</th>
+    </tr>
+    <tr>
+      <td>执行器与电机</td>
+      <td style="color:var(--red);font-weight:700">30-40%</td>
+      <td>20-40个执行器，单价$200-2,000</td>
+    </tr>
+    <tr>
+      <td>计算与传感器</td>
+      <td>15-25%</td>
+      <td>NVIDIA Jetson、LiDAR、深度摄像头</td>
+    </tr>
+    <tr>
+      <td>电池系统</td>
+      <td>10-15%</td>
+      <td>1-3 kWh，$100/kWh（较2024年下降）</td>
+    </tr>
+    <tr>
+      <td>结构/其他</td>
+      <td>15-25%</td>
+      <td>框架、线束、外壳等</td>
+    </tr>
+    <tr>
+      <td colspan="3" style="font-size:12px;color:var(--text-sec);">
+        TCO附加：总拥有成本 = 硬件价 × 1.25~1.40（含集成、维护、培训、保险）
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- 三、应用场景 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🏭</span> 三、应用场景：工业先行，商业跟进，家庭远期</div>
+  <p style="font-size:13px;color:var(--text-sec);margin-bottom:16px;">
+    行业共识落地路径：<strong style="color:var(--accent)">工业制造 → 物流仓储 → 商业服务 → 家庭消费</strong>，按"环境结构化程度"和"任务标准化程度"递减排序。
+  </p>
+
+  <!-- 场景1：工业制造 -->
+  <div class="scenario-card">
+    <div class="scenario-header">
+      <span class="scenario-name">🏭 工业制造（最先落地 · 已有量产订单）</span>
+      <span class="tag tag-low">已验证</span>
+    </div>
+    <table>
+      <tr><th>具体工位</th><th>代表厂商</th><th>关键数据</th></tr>
+      <tr>
+        <td>汽车装配线</td>
+        <td>Tesla Optimus、智元</td>
+        <td>Tesla 2025年部署1000+台；智元累计万台</td>
+      </tr>
+      <tr>
+        <td>3C电子精密制造</td>
+        <td>AGIBOT G2 + 龙旗科技</td>
+        <td>310 UPH，99.9%成功率，24/7运行</td>
+      </tr>
+      <tr>
+        <td>面板/半导体</td>
+        <td>智平方（AI² Robotics）</td>
+        <td>惠科3年1000台/5亿元订单</td>
+      </tr>
+      <tr>
+        <td>新能源电池</td>
+        <td>Tesla（自用）</td>
+        <td>2026年4月切入EV电池制造</td>
+      </tr>
+    </table>
+    <div class="timeline">
+      <span class="timeline-item active">2025-2026 试点/小规模</span>
+      <span class="timeline-item">2027-2028 百台级</span>
+      <span class="timeline-item">2029-2030 千台级</span>
+    </div>
+  </div>
+
+  <!-- 场景2：物流仓储 -->
+  <div class="scenario-card">
+    <div class="scenario-header">
+      <span class="scenario-name">📦 物流仓储（快速跟进 · RaaS模式成熟）</span>
+      <span class="tag tag-low">已验证</span>
+    </div>
+    <table>
+      <tr><th>具体场景</th><th>代表厂商</th><th>关键进展</th></tr>
+      <tr>
+        <td>仓库搬运/分拣</td>
+        <td>Agility Digit、亚马逊</td>
+        <td>Agility已为亚马逊供货</td>
+      </tr>
+      <tr>
+        <td>末端配送</td>
+        <td>多家在研</td>
+        <td>最后100米仍在验证</td>
+      </tr>
+    </table>
+    <div class="timeline">
+      <span class="timeline-item active">2025-2026 试点</span>
+      <span class="timeline-item">2027-2028 规模化</span>
+      <span class="timeline-item">2029+ RaaS主流</span>
+    </div>
+  </div>
+
+  <!-- 场景3：商业服务 -->
+  <div class="scenario-card">
+    <div class="scenario-header">
+      <span class="scenario-name">🏪 商业服务（中期放量 · 场景逐步打开）</span>
+      <span class="tag tag-mid">验证中</span>
+    </div>
+    <table>
+      <tr><th>具体场景</th><th>代表厂商</th><th>关键进展</th></tr>
+      <tr>
+        <td>零售/超市</td>
+        <td>银河通用（Galbot）</td>
+        <td>"十城百店"规划</td>
+      </tr>
+      <tr>
+        <td>酒店/餐饮</td>
+        <td>多家在研</td>
+        <td>简单迎宾/配送已落地</td>
+      </tr>
+      <tr>
+        <td>医疗陪护</td>
+        <td>傅里叶智能</td>
+        <td>康复训练场景试用</td>
+      </tr>
+    </table>
+    <div class="timeline">
+      <span class="timeline-item">2025-2026 概念验证</span>
+      <span class="timeline-item active">2027-2029 试点商用</span>
+      <span class="timeline-item">2030+ 规模化</span>
+    </div>
+  </div>
+
+  <!-- 场景4：家庭消费 -->
+  <div class="scenario-card">
+    <div class="scenario-header">
+      <span class="scenario-name">🏠 家庭消费（远期愿景 · 需技术跃迁）</span>
+      <span class="tag tag-high">早期</span>
+    </div>
+    <table>
+      <tr><th>具体场景</th><th>挑战</th><th>预计时间</th></tr>
+      <tr>
+        <td>家务/烹饪/清洁</td>
+        <td>非结构化环境、安全认证、用户接受度</td>
+        <td>2030年后</td>
+      </tr>
+      <tr>
+        <td>老人/儿童陪护</td>
+        <td>情感交互、责任界定、隐私</td>
+        <td>2032年后</td>
+      </tr>
+      <tr>
+        <td>个人助理</td>
+        <td>价格需降至$5K以下、能力需大幅提升</td>
+        <td>2035年+</td>
+      </tr>
+    </table>
+    <div class="timeline">
+      <span class="timeline-item">2025-2028 技术积累</span>
+      <span class="timeline-item">2029-2032 早期产品</span>
+      <span class="timeline-item">2033+ 大众化</span>
+    </div>
+  </div>
+</div>
+
+<!-- 四、逻辑支撑 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔗</span> 四、逻辑支撑：为什么人形机器人不是"泡沫"？</div>
+
+  <div class="logic-chain">
+    <div class="logic-step">
+      <div class="logic-num">1</div>
+      <div>
+        <div class="logic-title">需求端：全球劳动力结构性短缺不可逆</div>
+        <div class="logic-desc">
+          2024年联合国报告：包括中国、德国、日本在内的63国人口已达峰值，未来30年总人口将减少14%。中国制造业劳动力超1.23亿人，但老龄化加速+年轻人不愿进工厂，制造业劳动力缺口持续扩大。诺贝尔经济学奖得主（2010）指出：中国制造业、农业劳动力需求会因人口结构变化面临严重不足。<br>
+          <span class="tag tag-high">核心矛盾</span> 需求在增长，供给在萎缩，缺口只能由机器填补。
+        </div>
+      </div>
+    </div>
+
+    <div class="logic-step">
+      <div class="logic-num">2</div>
+      <div>
+        <div class="logic-title">供给端：AI大模型 + 具身智能 → 技术奇点</div>
+        <div class="logic-desc">
+          2024-2025年大模型技术（VLA模型、端到端学习、强化学习）突破，使人形机器人从"预先编程"转向"理解-推理-执行"范式。智平方 GOVLA 超越国际标杆 π₀ 达30%；AGIBOT 实现"1 Robotic Body, 3 Intelligence"架构。这不是渐进式改良，而是<strong>能力范式的跃迁</strong>——机器人首次具备了泛化到未见任务的能力。<br>
+          <span class="tag tag-info">关键判断</span> 硬件趋同化为"标准件"，大模型能力成为核心竞争壁垒。
+        </div>
+      </div>
+    </div>
+
+    <div class="logic-step">
+      <div class="logic-num">3</div>
+      <div>
+        <div class="logic-title">经济性：价格断崖式下降 × 劳动力成本上升 = ROI交叉点</div>
+        <div class="logic-desc">
+          2026年人形机器人价格已降至 $6,000-$30,000 区间，年降幅~40%。预计2030年商业级机器人价格降至 $13,000-$17,000。同时全球制造业劳动力成本年均增长3-5%。两条线的交叉意味着：<strong>2026-2028年将是人形机器人经济性全面超越人力的拐点窗口</strong>。<br>
+          <span class="tag tag-low">经济拐点</span> 回本周期已缩短至1.5-3年。
+        </div>
+      </div>
+    </div>
+
+    <div class="logic-step">
+      <div class="logic-num">4</div>
+      <div>
+        <div class="logic-title">政策端：中美共振，国家级战略支持</div>
+        <div class="logic-desc">
+          <strong>中国</strong>：2025年《人形机器人创新发展指导意见》、多地政府补贴、产业基金密集设立。<br>
+          <strong>美国</strong>：Tesla Optimus 获得强力支持，Figure AI 获微软/英伟达/贝索斯投资，Agility 拿到亚马逊订单。<br>
+          中美两大经济体在人形机器人赛道上形成"竞合"态势，政策与资本双轮驱动，产业不会因单一因素而停滞。<br>
+          <span class="tag tag-info">政策红利</span> G7和中国政府均将具身智能列为战略方向。
+        </div>
+      </div>
+    </div>
+
+    <div class="logic-step">
+      <div class="logic-num">5</div>
+      <div>
+        <div class="logic-title">生态端：从"单点产品"到"产业飞轮"</div>
+        <div class="logic-desc">
+          核心零部件供应链正在快速成熟——专用执行器供应商、标准传感器包、定制计算模块涌现。2025-2026年订单数据已形成"数据飞轮"：更多部署 → 更多场景数据 → 更强的AI模型 → 更多场景解锁。AGIBOT 从创新到量产仅用4个月，龙旗科技36小时完成产线集成。<br>
+          <span class="tag tag-mid">飞轮效应</span> 部署速度正在加速，生态壁垒正在形成。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 五、风险与挑战 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚠️</span> 五、风险与挑战：不能只看"万亿叙事"</div>
+
+  <div class="risk-item risk-high">
+    <strong>🔴 技术可靠性风险</strong>：当前人形机器人在受控环境（工厂流水线）表现优异（99.9%成功率），但在非结构化环境（家庭、户外、突发事件）仍远未达到消费级要求。安全性认证（ISO 13482等）仍是瓶颈。
+  </div>
+
+  <div class="risk-item risk-high">
+    <strong>🔴 软件能力是真正的瓶颈</strong>：$10,000但只能执行2个任务的机器人，远不如$30,000能执行20个任务的机器人。硬件成本下降容易，软件能力积累需要时间和数据——这是不能被"摩尔定律"简单加速的。
+  </div>
+
+  <div class="risk-item risk-mid">
+    <strong>🟠 市场预测的"低基数陷阱"</strong>：2025年全球市场规模仅~49亿美元（相当于一家中型上市公司的市值），所有"万亿预测"都建立在CAGR 47-51%的假设上。一旦技术成熟慢于预期，增长曲线可能在2028-2030年出现"平台期"。
+  </div>
+
+  <div class="risk-item risk-mid">
+    <strong>🟠 社会与法律障碍</strong>：大规模替代人力的社会冲击、隐私保护、事故责任界定、工会反对等，可能成为比技术更难跨越的障碍。特别是中国市场，就业问题高度敏感。
+  </div>
+
+  <div class="risk-item risk-low">
+    <strong>🟢 供应链成熟度</strong>：高端执行器、精密减速器、高性能芯片等核心部件仍依赖少数供应商。地缘政治风险可能导致供应链中断。
+  </div>
+
+  <div class="chart-container" style="height:280px;">
+    <canvas id="riskChart"></canvas>
+  </div>
+</div>
+
+<!-- 六、产业格局 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🌏</span> 六、全球产业格局：中美双雄</div>
+
+  <table>
+    <tr>
+      <th>梯队</th>
+      <th>厂商</th>
+      <th>出货量/产能</th>
+      <th>核心优势</th>
+    </tr>
+    <tr>
+      <td rowspan="2"><span class="tag tag-low">第一梯队</span></td>
+      <td>智元 AGIBOT 🇨🇳</td>
+      <td style="font-weight:700;color:var(--accent2)">累计10,000台（2026.3）</td>
+      <td>全栈自研、具身AI、工业落地最深</td>
+    </tr>
+    <tr>
+      <td>Tesla Optimus 🇺🇸</td>
+      <td>1,000+台（2025），上海量产规划</td>
+      <td>供应链+制造能力+FSD技术迁移</td>
+    </tr>
+    <tr>
+      <td rowspan="4"><span class="tag tag-mid">第二梯队</span></td>
+      <td>宇树 Unitree 🇨🇳</td>
+      <td>多型号量产，G1多次售罄</td>
+      <td>极致性价比（$6K-$16K起）</td>
+    </tr>
+    <tr>
+      <td>Agility Robotics 🇺🇸</td>
+      <td>1,200台</td>
+      <td>Digit物流场景深耕、RaaS模式</td>
+    </tr>
+    <tr>
+      <td>Figure AI 🇺🇸</td>
+      <td>650台，月产数百</td>
+      <td>OpenAI合作、通用任务能力</td>
+    </tr>
+    <tr>
+      <td>智平方 AI² Robotics 🇨🇳</td>
+      <td>年产2000台→万台规划</td>
+      <td>GOVLA大模型领先，惠科5亿元订单</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-info">第三梯队</span></td>
+      <td>优必选、傅里叶、银河通用、Apptronik、Boston Dynamics 等</td>
+      <td>数十至数百台</td>
+      <td>各有所长，垂直场景深耕</td>
+    </tr>
+  </table>
+
+  <div class="chart-container">
+    <canvas id="shipmentChart"></canvas>
+  </div>
+</div>
+
+<!-- 七、结论 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 七、结论与投资视角</div>
+  
+  <div class="verdict-box">
+    <div class="verdict-title">核心判断</div>
+    <p style="font-size:14px;line-height:1.8;">
+      人形机器人<strong>不是泡沫</strong>，但也不是"明天就颠覆一切"。它是一个<strong>10年维度的产业趋势</strong>，目前处于从"技术验证"向"商业落地"跨越的关键阶段（2026年可视为"量产元年"）。<br><br>
+      <strong>短期（2026-2028）</strong>：工业制造场景确定性最高，已有真实订单和ROI验证。关注：<strong>执行器、减速器、传感器</strong>等核心零部件供应商。<br>
+      <strong>中期（2029-2032）</strong>：物流仓储和商业服务场景放量，RaaS模式可能成为主流商业模式。<br>
+      <strong>长期（2033+）</strong>：家庭消费场景仍需技术突破，但一旦跨越"泛化能力"临界点，将打开真正的万亿市场。
+    </p>
+  </div>
+
+  <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,0.02);border-radius:8px;font-size:13px;">
+    <strong style="color:var(--accent)">📌 一句话总结：</strong><br>
+    人形机器人的逻辑支撑是坚实的——劳动力短缺（需求）+ AI技术突破（能力）+ 成本快速下降（经济性）+ 政策共振（催化剂），四条逻辑链互相强化。但投资者需要区分"已验证的工业场景"和"远期家庭愿景"，前者已可计算ROI，后者仍需等待技术跃迁。
+  </div>
+</div>
+
+<div class="data-source">
+  数据来源：Fortune BI、Mordor Intelligence、ResearchAndMarkets、GGII、Omdia、IDC、高盛、IT之家、RoboticsTomorrow、Humanoid Index 等 | 本报告仅供研究参考，不构成投资建议
+</div>
+
+<script>
+// 市场规模图表
+new Chart(document.getElementById('marketChart'), {
+  type: 'line',
+  data: {
+    labels: ['2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033', '2034', '2035'],
+    datasets: [{
+      label: '市场规模（亿美元）',
+      data: [49, 79, 127, 204, 328, 528, 850, 1000, 1200, 1651, 2434],
+      borderColor: '#58a6ff',
+      backgroundColor: 'rgba(88,166,255,0.08)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: 4,
+      pointBackgroundColor: '#58a6ff',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: '#8b949e', font: { size: 12 } } },
+      tooltip: {
+        callbacks: {
+          label: ctx => `$${ctx.parsed.y}亿`
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(48,54,61,0.5)' } },
+      y: {
+        ticks: { color: '#8b949e', callback: v => `$${v}亿` },
+        grid: { color: 'rgba(48,54,61,0.5)' }
+      }
+    }
+  }
+});
+
+// 价格对比图
+new Chart(document.getElementById('priceChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Unitree R1', 'Unitree G1', 'Tesla Optimus', 'Figure 03', 'Agility Digit', 'Boston Dynamics'],
+    datasets: [{
+      label: '价格（千美元）',
+      data: [6, 16, 25, 40, 65, 125],
+      backgroundColor: ['#3fb950', '#3fb950', '#58a6ff', '#d29922', '#db6d28', '#f85149'],
+      borderRadius: 6,
+      barThickness: 32,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `$${ctx.parsed.y}K` } }
+    },
+    scales: {
+      x: { ticks: { color: '#8b949e', font: { size: 11 } }, grid: { display: false } },
+      y: { ticks: { color: '#8b949e', callback: v => `$${v}K` }, grid: { color: 'rgba(48,54,61,0.5)' } }
+    }
+  }
+});
+
+// 风险矩阵雷达图
+new Chart(document.getElementById('riskChart'), {
+  type: 'radar',
+  data: {
+    labels: ['技术可靠性', '软件泛化能力', '市场规模实现', '社会/法律障碍', '供应链安全', '政策支持力度'],
+    datasets: [{
+      label: '确定性评分（10=最高确定性）',
+      data: [5, 4, 6, 4, 7, 9],
+      borderColor: '#58a6ff',
+      backgroundColor: 'rgba(88,166,255,0.12)',
+      pointBackgroundColor: '#58a6ff',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#8b949e', font: { size: 11 } } } },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 10,
+        ticks: { color: '#8b949e', backdropColor: 'transparent', font: { size: 10 } },
+        grid: { color: 'rgba(48,54,61,0.5)' },
+        angleLines: { color: 'rgba(48,54,61,0.5)' },
+        pointLabels: { color: '#e6edf3', font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// 出货量对比
+new Chart(document.getElementById('shipmentChart'), {
+  type: 'bar',
+  data: {
+    labels: ['智元 AGIBOT', 'Agility Robotics', '宇树 Unitree', 'Figure AI', '智平方 AI²', '傅里叶 Fourier', 'Apptronik'],
+    datasets: [{
+      label: '累计出货/产能（台）',
+      data: [10000, 1200, 800, 650, 2000, 300, 100],
+      backgroundColor: ['#3fb950', '#58a6ff', '#3fb950', '#d29922', '#bc8cff', '#db6d28', '#f85149'],
+      borderRadius: 6,
+      barThickness: 28,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.parsed.x}台` } }
+    },
+    scales: {
+      x: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(48,54,61,0.5)' } },
+      y: { ticks: { color: '#e6edf3', font: { size: 11 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

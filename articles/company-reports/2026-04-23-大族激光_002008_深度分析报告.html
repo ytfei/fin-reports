@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大族激光(002008)深度分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .hero-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .hero-info-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .decision-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(238, 90, 36, 0.3);
+        }
+
+        .decision-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .decision-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .decision-label {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .decision-value {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .reason-card {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+        }
+
+        .reason-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #856404;
+        }
+
+        .reason-text {
+            font-size: 13px;
+            color: #856404;
+            line-height: 1.7;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .comparison-table th {
+            background: #ecf0f1;
+            padding: 8px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .bull-point {
+            color: #27ae60;
+        }
+
+        .bear-point {
+            color: #e74c3c;
+        }
+
+        .chart-container {
+            margin: 20px 0;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .metric-change {
+            font-size: 11px;
+        }
+
+        .positive {
+            color: #e74c3c;
+        }
+
+        .negative {
+            color: #27ae60;
+        }
+
+        .risk-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .risk-high {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .risk-medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .risk-low {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .action-plan {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .catalyst-list, .risk-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .catalyst-list li, .risk-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 13px;
+        }
+
+        .catalyst-list li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .risk-list li::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 24px;
+            font-size: 11px;
+            color: #856404;
+        }
+
+        @media (max-width: 480px) {
+            .hero-info {
+                grid-template-columns: 1fr;
+            }
+
+            .decision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-title">大族激光(002008)深度分析报告</div>
+            <div class="hero-subtitle">AI驱动下的激光装备龙头新周期</div>
+            <div class="hero-info">
+                <div class="hero-info-item">
+                    <span>分析日期</span>
+                    <span>2026-04-23</span>
+                </div>
+                <div class="hero-info-item">
+                    <span>最新价格</span>
+                    <span>¥103.60</span>
+                </div>
+                <div class="hero-info-item">
+                    <span>涨跌幅</span>
+                    <span class="positive">+10.00% (涨停)</span>
+                </div>
+                <div class="hero-info-item">
+                    <span>年初至今</span>
+                    <span class="positive">+151.52%</span>
+                </div>
+                <div class="hero-info-item">
+                    <span>市盈率(TTM)</span>
+                    <span>77.28</span>
+                </div>
+                <div class="hero-info-item">
+                    <span>总市值</span>
+                    <span>1,066.67亿元</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decision Card -->
+        <div class="decision-card">
+            <div class="decision-title">投资建议：HOLD</div>
+            <div class="reason-text" style="color: white; margin-bottom: 16px;">
+                短期涨幅过大(151.52%)且技术超买，建议回调后逢低吸纳。AI PCB长期逻辑成立，但估值已反映高预期，需等待26Q1财报验证。
+            </div>
+            <div class="decision-grid">
+                <div class="decision-item">
+                    <div class="decision-label">信心水平</div>
+                    <div class="decision-value">中</div>
+                </div>
+                <div class="decision-item">
+                    <div class="decision-label">风险等级</div>
+                    <div class="decision-value">
+                        <span class="risk-level risk-high">高</span>
+                    </div>
+                </div>
+                <div class="decision-item">
+                    <div class="decision-label">建议持仓期</div>
+                    <div class="decision-value">中期(1-6月)</div>
+                </div>
+                <div class="decision-item">
+                    <div class="decision-label">建议仓位</div>
+                    <div class="decision-value">轻仓(<30%)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Four-Dimensional Analysis -->
+        <div class="section">
+            <div class="section-title">四维分析评分</div>
+            <div class="chart-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">技术面评分</div>
+                    <div class="metric-value">6/10</div>
+                    <div class="metric-change">多头排列但超买</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">基本面评分</div>
+                    <div class="metric-value">7/10</div>
+                    <div class="metric-change">PCB高景气，盈利下滑</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">新闻面评分</div>
+                    <div class="metric-value">8/10</div>
+                    <div class="metric-change">AI催化强，机构看好</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">情绪面评分</div>
+                    <div class="metric-value">7/10</div>
+                    <div class="metric-change">主力强势，北向分歧</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bull vs Bear Comparison -->
+        <div class="section">
+            <div class="section-title">多空核心论点对比</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%">多头论点</th>
+                        <th style="width: 50%">空头论点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bull-point">✅ AI PCB需求高景气：2025年PCB业务收入+73%，毛利率42.2%</td>
+                        <td class="bear-point">⚠️ 短期涨幅过大：年初至今涨151.52%，KDJ超买(99.38)</td>
+                    </tr>
+                    <tr>
+                        <td class="bull-point">✅ 技术突破：3D打印与全球消费电子龙头深度合作</td>
+                        <td class="bear-point">⚠️ 净利润下滑：2025年归母净利润-29.75%</td>
+                    </tr>
+                    <tr>
+                        <td class="bull-point">✅ 资金追捧：北向净买入+4.67亿，股东人数-24.61%</td>
+                        <td class="bear-point">⚠️ 估值偏高：PE(TTM) 77.28，显著高于行业平均</td>
+                    </tr>
+                    <tr>
+                        <td class="bull-point">✅ 海外扩张：拟投资1.5亿美元设立海外运营中心</td>
+                        <td class="bear-point">⚠️ 质押风险：控股股东及高云峰质押比例高</td>
+                    </tr>
+                    <tr>
+                        <td class="bull-point">✅ 多业务协同：PCB+3C+半导体+新能源多元化布局</td>
+                        <td class="bear-point">⚠️ 境外收入占比低：仅11.76%，出海效果待验证</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Price Trend Chart -->
+        <div class="section">
+            <div class="section-title">近30日价格走势</div>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Financial Metrics -->
+        <div class="section">
+            <div class="section-title">财务关键指标</div>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">2025年营收</div>
+                    <div class="metric-value">187.59亿</div>
+                    <div class="metric-change positive">+26.96%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">2025年归母净利润</div>
+                    <div class="metric-value">11.90亿</div>
+                    <div class="metric-change negative">-29.75%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">ROE</div>
+                    <div class="metric-value">18.64%</div>
+                    <div class="metric-change">优秀水平</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">毛利率</div>
+                    <div class="metric-value">38.98%</div>
+                    <div class="metric-change">PCB业务42.2%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">研发费用率</div>
+                    <div class="metric-value">8.54%</div>
+                    <div class="metric-change">持续高投入</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">资产负债率</div>
+                    <div class="metric-value">47.62%</div>
+                    <div class="metric-change">适中</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Plan -->
+        <div class="section">
+            <div class="section-title">操作建议</div>
+            <div class="action-plan">
+                <h3 style="margin-bottom: 12px; color: #1565c0;">📋 具体操作方案</h3>
+
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: #2e7d32;">当前策略（持有者）：</strong>
+                    <ul style="margin-left: 20px; font-size: 13px; margin-top: 8px;">
+                        <li>继续持有，但不追高</li>
+                        <li>关注回调至80-85元区间是否加仓</li>
+                        <li>设置止损：跌破90元考虑减仓</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: #c62828;">潜在买入者：</strong>
+                    <ul style="margin-left: 20px; font-size: 13px; margin-top: 8px;">
+                        <li><strong>观望为主</strong>，等待回调至85元以下</li>
+                        <li>若回调至80-85元，可建仓10-15%</li>
+                        <li>关键支撑位：85元（20日均线）、75元（布林带中轨）</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    <strong style="color: #f57c00;">价格区间参考：</strong>
+                    <div style="margin-top: 8px; font-size: 13px;">
+                        <span style="display: inline-block; width: 15px; height: 15px; background: #4caf50; border-radius: 50%; margin-right: 8px;"></span>
+                        支撑位：85-90元
+                    </div>
+                    <div style="margin-top: 4px; font-size: 13px;">
+                        <span style="display: inline-block; width: 15px; height: 15px; background: #2196f3; border-radius: 50%; margin-right: 8px;"></span>
+                        当前价：103.60元
+                    </div>
+                    <div style="margin-top: 4px; font-size: 13px;">
+                        <span style="display: inline-block; width: 15px; height: 15px; background: #f44336; border-radius: 50%; margin-right: 8px;"></span>
+                        压力位：120元+
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="margin-bottom: 12px; color: #2e7d32;">✅ 关键催化剂</h3>
+                <ul class="catalyst-list">
+                    <li>2026 Q1财报验证PCB业务高增长</li>
+                    <li>AI算力中心扩张超预期</li>
+                    <li>消费电子新品周期启动</li>
+                    <li>海外运营中心落地进展</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="margin-bottom: 12px; color: #c62828;">⚠️ 关键风险事件</h3>
+                <ul class="risk-list">
+                    <li>短期大幅回调（>15%）</li>
+                    <li>26Q1财报不及预期</li>
+                    <li>宏观经济下行</li>
+                    <li>控股股东质押爆仓风险</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Long-term Outlook -->
+        <div class="section">
+            <div class="section-title">长期展望（6-12月）</div>
+            <div class="reason-card" style="background: #e8f5e9; border-left-color: #4caf50;">
+                <div class="reason-title" style="color: #2e7d32;">📈 看多理由</div>
+                <div class="reason-text" style="color: #2e7d32;">
+                    <strong>AI算力中心需求持续强劲</strong>：PCB设备业务高景气延续，预计2026年收入继续+66%以上。<br><br>
+                    <strong>3D打印技术突破</strong>：与全球消费电子龙头深度合作，环形光束技术系统性提升打印效率。<br><br>
+                    <strong>半导体设备国产化替代</strong>：激光打孔、解键合、清洗、SiC剥片等领域取得批量订单。<br><br>
+                    <strong>海外市场拓展</strong>：投资1.5亿美元设立海外运营中心，打开新增长空间。
+                </div>
+            </div>
+            <div style="margin-top: 16px;">
+                <strong style="color: #1565c0;">投资结论：</strong>
+                <ul style="margin-left: 20px; margin-top: 8px; font-size: 13px;">
+                    <li><strong>短期（<1月）</strong>：HOLD，等待回调，不追高</li>
+                    <li><strong>中期（1-6月）</strong>：HOLD，关注85元支撑位，回调后加仓</li>
+                    <li><strong>长期（>6月）</strong>：BUY，AI PCB长期逻辑成立，回调是买入机会</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>⚠️ 免责声明</strong><br><br>
+            本分析由 AI 基于 NeoData 实时金融数据和综合分析方法自动生成，仅供参考，不构成任何投资建议。<br><br>
+            投资有风险，入市需谨慎。过去的表现不代表未来的结果。请结合自身风险承受能力做出独立投资判断。
+        </div>
+    </div>
+
+    <script>
+        // Radar Chart
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['技术面', '基本面', '新闻面', '情绪面'],
+                datasets: [{
+                    label: '四维评分',
+                    data: [6, 7, 8, 7],
+                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(231, 76, 60, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: {
+                            stepSize: 2,
+                            font: {
+                                size: 10
+                            }
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Price Trend Chart
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: ['3-24', '4-16', '4-20', '4-21', '4-22', '4-23'],
+                datasets: [{
+                    label: '收盘价（元）',
+                    data: [61.76, 86.67, 89.18, 92.80, 94.18, 103.60],
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            font: {
+                                size: 10
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 10
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

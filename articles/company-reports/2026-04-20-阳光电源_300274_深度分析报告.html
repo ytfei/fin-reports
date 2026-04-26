@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阳光电源(300274)深度分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+        .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .header .subtitle { font-size: 14px; opacity: 0.9; }
+        .header .date { font-size: 12px; opacity: 0.7; margin-top: 8px; }
+        .card { 
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card h2 { 
+            font-size: 18px; 
+            margin-bottom: 16px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h3 { font-size: 15px; margin: 16px 0 12px; color: #a0a0a0; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .metric-box { 
+            background: rgba(255,255,255,0.03);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-box .value { 
+            font-size: 24px; 
+            font-weight: 700;
+            color: #4ade80;
+        }
+        .metric-box .value.down { color: #f87171; }
+        .metric-box .label { font-size: 12px; color: #888; margin-top: 4px; }
+        .tag { 
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 4px 4px 4px 0;
+        }
+        .tag-green { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .tag-yellow { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .tag-red { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .tag-blue { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { 
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        th { color: #888; font-weight: 500; }
+        .highlight { color: #4ade80; font-weight: 600; }
+        .highlight-red { color: #f87171; font-weight: 600; }
+        .conclusion { 
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+        .conclusion h2 { color: #fff; margin-bottom: 16px; }
+        .chart-container { 
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            height: 280px;
+        }
+        .risk-item { 
+            background: rgba(248, 113, 113, 0.1);
+            border-left: 3px solid #f87171;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .opportunity-item { 
+            background: rgba(74, 222, 128, 0.1);
+            border-left: 3px solid #4ade80;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .shareholder-card { 
+            background: rgba(255,255,255,0.03);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        .shareholder-card .name { font-weight: 600; color: #fff; }
+        .shareholder-card .desc { font-size: 13px; color: #888; margin-top: 4px; }
+        @media (max-width: 600px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .header h1 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>阳光电源(300274)深度分析报告</h1>
+            <div class="subtitle">全球光储龙头 · 逆变器+储能双轮驱动 · AIDC新增长极</div>
+            <div class="date">报告日期：2026年4月20日 | 股价：135.31元 | 市值：2805.26亿元</div>
+        </div>
+
+        <!-- 核心数据概览 -->
+        <div class="card">
+            <h2>📊 核心数据概览</h2>
+            <div class="grid-3">
+                <div class="metric-box">
+                    <div class="value">135.31</div>
+                    <div class="label">最新股价(元)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="value down">-20.89%</div>
+                    <div class="label">年初至今</div>
+                </div>
+                <div class="metric-box">
+                    <div class="value">2805亿</div>
+                    <div class="label">总市值</div>
+                </div>
+                <div class="metric-box">
+                    <div class="value">20.84</div>
+                    <div class="label">PE-TTM</div>
+                </div>
+                <div class="metric-box">
+                    <div class="value">6.02</div>
+                    <div class="label">PB</div>
+                </div>
+                <div class="metric-box">
+                    <div class="value">1.49%</div>
+                    <div class="label">股息率</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 财务分析 -->
+        <div class="card">
+            <h2>💰 财务分析</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>2025年业绩表现</h3>
+                    <table>
+                        <tr><td>营业收入</td><td class="highlight">891.84亿元</td><td>同比+14.6%</td></tr>
+                        <tr><td>归母净利润</td><td class="highlight">134.61亿元</td><td>同比+22.0%</td></tr>
+                        <tr><td>每股收益</td><td class="highlight">6.55元</td><td>同比+23.1%</td></tr>
+                        <tr><td>ROE</td><td class="highlight">31.26%</td><td>行业第1</td></tr>
+                        <tr><td>毛利率</td><td>31.83%</td><td>行业领先</td></tr>
+                        <tr><td>资产负债率</td><td>58.06%</td><td>适中水平</td></tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>近五年业绩趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 业务构成 -->
+        <div class="card">
+            <h2>🏭 业务构成分析</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>收入结构(2025年)</h3>
+                    <div class="chart-container" style="height: 220px;">
+                        <canvas id="businessChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3>各业务板块详情</h3>
+                    <table>
+                        <tr>
+                            <th>业务板块</th>
+                            <th>收入(亿元)</th>
+                            <th>占比</th>
+                            <th>同比</th>
+                        </tr>
+                        <tr>
+                            <td>储能系统</td>
+                            <td class="highlight">372.87</td>
+                            <td>41.81%</td>
+                            <td class="highlight">+49%</td>
+                        </tr>
+                        <tr>
+                            <td>光伏逆变器</td>
+                            <td>311.36</td>
+                            <td>34.91%</td>
+                            <td>+7%</td>
+                        </tr>
+                        <tr>
+                            <td>新能源投资</td>
+                            <td>165.59</td>
+                            <td>18.57%</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>其他</td>
+                            <td>42.02</td>
+                            <td>4.71%</td>
+                            <td>-</td>
+                        </tr>
+                    </table>
+                    <div style="margin-top: 12px;">
+                        <span class="tag tag-green">海外收入60.54%</span>
+                        <span class="tag tag-blue">储能出货43GWh(+54%)</span>
+                        <span class="tag tag-yellow">逆变器出货143GW</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 竞争优势 -->
+        <div class="card">
+            <h2>🎯 核心竞争优势</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>市场地位</h3>
+                    <div class="opportunity-item">
+                        <strong>光伏逆变器全球第一</strong><br>
+                        2024年全球市占率25.2%，连续十余年出货量全球领先，累计装机超595GW
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>储能系统全球领先</strong><br>
+                        2025年储能收入373亿元(+49%)，出货量43GWh(+54%)，海外占比超80%
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>技术护城河深厚</strong><br>
+                        SG465HX全球首款400kW+逆变器，1+X 2.0模块化技术，构网型技术行业领先
+                    </div>
+                </div>
+                <div>
+                    <h3>全球化布局</h3>
+                    <div class="opportunity-item">
+                        <strong>海外收入首破60%</strong><br>
+                        2025年海外收入539.92亿元，占比60.54%，覆盖100+国家，20+海外分支机构
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>港股IPO推进中</strong><br>
+                        已启动H股发行并在港交所上市相关工作，募集资金用于全球产能扩张
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>ESG评级优异</strong><br>
+                        MSCI ESG评级AAA、EcoVadis金牌认证，入选全球可持续发展百强榜
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AIDC新业务 -->
+        <div class="card">
+            <h2>🚀 AIDC新业务布局(第三增长曲线)</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>战略布局</h3>
+                    <p style="margin-bottom: 12px;">2025年5月成立独立AIDC事业部，与光储业务平行运营，押注英伟达SST(固态变压器)方案。</p>
+                    <table>
+                        <tr><td>技术路线</td><td>SST固态变压器+800V HVDC高压直流</td></tr>
+                        <tr><td>产品覆盖</td><td>系统级电源→机架式电源→板载电源</td></tr>
+                        <tr><td>目标客户</td><td>国际头部云厂商、国内互联网大厂</td></tr>
+                        <tr><td>落地时间</td><td>2026年产品落地，2027年规模交付</td></tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>市场机遇</h3>
+                    <div class="opportunity-item">
+                        <strong>AIDC储能市场爆发</strong><br>
+                        GGII预计2030年AIDC储能出货量突破300GWh(2025年仅15GWh)
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>技术协同优势</strong><br>
+                        逆变器、储能与AIDC电源底层技术同源，电力电子技术积累深厚
+                    </div>
+                    <div class="opportunity-item">
+                        <strong>光储一体共建</strong><br>
+                        2026年美国储能市场预计40-50GWh，光储共建模式成快速解决方案
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 风险分析 -->
+        <div class="card">
+            <h2>⚠️ 核心风险分析</h2>
+            <div class="risk-item">
+                <strong>Q4业绩暴雷风险</strong><br>
+                2025年Q4归母净利润仅15.8亿元，环比-62%，毛利率23%环比-13pct，主要因储能上游原材料涨价未能及时传导
+            </div>
+            <div class="risk-item">
+                <strong>行业价格战加剧</strong><br>
+                光伏行业深陷产能过剩、价格战泥潭，逆变器毛利率承压，储能业务面临"量增价跌"困境
+            </div>
+            <div class="risk-item">
+                <strong>海外关税风险</strong><br>
+                2026年美国对华电池关税将升至48.4%，美国是公司重要目标市场，出口成本将大幅增加
+            </div>
+            <div class="risk-item">
+                <strong>AIDC业务兑现周期长</strong><br>
+                SST产品2026年无实质业绩贡献，储能主业承压期可能长达2-3年，青黄不接阶段或加剧估值波动
+            </div>
+            <div class="risk-item">
+                <strong>筹码分散化</strong><br>
+                股东人数29.41万户，环比+15.29%，人均持股仅5404股，筹码趋于分散
+            </div>
+        </div>
+
+        <!-- 股东分析 -->
+        <div class="card">
+            <h2>👥 前十大流通股东深度分析</h2>
+            
+            <div class="shareholder-card">
+                <div class="name">🏆 曹仁贤 — 30.46%</div>
+                <div class="desc">
+                    <strong>创始人、董事长兼总裁</strong> | 持股6.31亿股<br>
+                    1968年生，1993年毕业于合肥工业大学，曾任大学教师。1997年抵押房产凑50万元创立阳光电源，27年打造2800亿光储帝国。<br>
+                    <span class="tag tag-green">技术派创始人</span>
+                    <span class="tag tag-blue">全国人大代表</span>
+                    <span class="tag tag-yellow">国务院特殊津贴专家</span>
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">🇭🇰 香港中央结算有限公司 — 7.89%</div>
+                <div class="desc">
+                    <strong>北向资金通道</strong> | 持股1.64亿股<br>
+                    代表外资通过沪深港通持有的股份，反映国际资本对公司认可度。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">📈 易方达创业板ETF — 1.36%</div>
+                <div class="desc">
+                    <strong>被动指数基金</strong> | 持股2828.77万股<br>
+                    跟踪创业板指数，被动配置阳光电源(创业板权重股)。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">📊 华泰柏瑞沪深300ETF — 1.16%</div>
+                <div class="desc">
+                    <strong>被动指数基金</strong> | 持股2396.18万股<br>
+                    跟踪沪深300指数，被动配置。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">💼 郑桂标 — 0.63%</div>
+                <div class="desc">
+                    <strong>董事、高级副总裁、CIO</strong> | 持股1301.23万股<br>
+                    1968年生，硕士，高级工程师，中科大MBA校友。曾任副总经理，现任CIO，2025年7月出任中科大校友会数智分会会长。<br>
+                    <span class="tag tag-yellow">核心高管</span>
+                    <span class="tag tag-red">曾有违规减持记录(2017年)</span>
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">🌏 麒麟亚洲控股有限公司 — 0.58%</div>
+                <div class="desc">
+                    <strong>外资机构</strong> | 持股1201.94万股<br>
+                    境外机构投资者，长期看好新能源赛道。
+                </div>
+            </div>
+
+            <h3 style="margin-top: 20px;">机构持仓概况</h3>
+            <table>
+                <tr>
+                    <th>机构类型</th>
+                    <th>持股比例</th>
+                    <th>变动</th>
+                </tr>
+                <tr>
+                    <td>公募基金</td>
+                    <td>7.37%</td>
+                    <td class="highlight">+0.84%</td>
+                </tr>
+                <tr>
+                    <td>保险资金</td>
+                    <td>0.87%</td>
+                    <td>+0.06%</td>
+                </tr>
+                <tr>
+                    <td>前十大流通股东</td>
+                    <td>21.89%</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 增长空间与估值 -->
+        <div class="card">
+            <h2>📈 增长空间与估值分析</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>增长空间测算</h3>
+                    <table>
+                        <tr>
+                            <th>业务</th>
+                            <th>增长驱动</th>
+                            <th>空间</th>
+                        </tr>
+                        <tr>
+                            <td>储能系统</td>
+                            <td>全球能源转型</td>
+                            <td class="highlight">2026年出货60GWh+</td>
+                        </tr>
+                        <tr>
+                            <td>逆变器</td>
+                            <td>新兴市场扩张</td>
+                            <td>市占率维持25%+</td>
+                        </tr>
+                        <tr>
+                            <td>AIDC电源</td>
+                            <td>AI数据中心建设</td>
+                            <td class="highlight">2030年300GWh+</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>估值分析</h3>
+                    <div class="metric-box" style="margin-bottom: 12px;">
+                        <div class="value">20.84</div>
+                        <div class="label">当前PE-TTM</div>
+                    </div>
+                    <p style="font-size: 13px; color: #888;">
+                        • 5年估值分位：41.69%（适中）<br>
+                        • 行业中位数：约25倍<br>
+                        • 机构目标价：160-196元（华泰/长江证券）<br>
+                        • 上涨空间：18-45%
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 投资结论 -->
+        <div class="conclusion">
+            <h2>💡 投资结论</h2>
+            <div style="margin-bottom: 16px;">
+                <span class="tag tag-green">全球光储龙头</span>
+                <span class="tag tag-blue">AIDC新增长极</span>
+                <span class="tag tag-yellow">估值处于历史中位</span>
+            </div>
+            <p style="margin-bottom: 12px;">
+                <strong>核心逻辑：</strong>阳光电源是全球光储行业绝对龙头，逆变器市占率25%连续十年全球第一，储能业务已成第一大收入来源(41.81%)。公司技术护城河深厚，全球化布局领先，海外收入首破60%。AIDC事业部押注英伟达SST方案，有望打开第三增长曲线。
+            </p>
+            <p style="margin-bottom: 12px;">
+                <strong>短期风险：</strong>Q4业绩暴雷(利润环比-62%)，行业价格战加剧，美国关税风险上升，AIDC业务兑现周期长。
+            </p>
+            <p style="margin-bottom: 16px;">
+                <strong>长期看点：</strong>全球能源转型大趋势不变，储能需求持续爆发，AIDC电源市场2030年达300GWh，公司技术积累深厚，有望持续受益。
+            </p>
+            <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+                <strong>评级：持有/关注</strong><br>
+                <span style="font-size: 13px; color: #888;">
+                    当前PE 20.84倍处于历史中位，估值相对合理。短期受Q4业绩和行业情绪压制，建议等待业绩拐点确认后再考虑加仓。长期看好光储+AIDC双轮驱动逻辑。
+                </span>
+            </div>
+            <p style="margin-top: 16px; font-size: 12px; color: #666;">
+                <strong>关键跟踪指标：</strong>季度储能出货量、毛利率变化、AIDC产品落地进度、港股IPO进展、美国关税政策变化
+            </p>
+        </div>
+
+        <div style="text-align: center; padding: 20px; color: #666; font-size: 12px;">
+            免责声明：本报告仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+        </div>
+    </div>
+
+    <script>
+        // 营收趋势图
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '营业收入(亿元)',
+                    data: [241, 403, 723, 779, 892],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: '净利润(亿元)',
+                    data: [16, 36, 94, 110, 135],
+                    borderColor: '#4ade80',
+                    backgroundColor: 'rgba(74, 222, 128, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e0e0e0' } }
+                },
+                scales: {
+                    y: { 
+                        ticks: { color: '#888' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: { 
+                        ticks: { color: '#888' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // 业务构成饼图
+        const businessCtx = document.getElementById('businessChart').getContext('2d');
+        new Chart(businessCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['储能系统', '光伏逆变器', '新能源投资', '其他'],
+                datasets: [{
+                    data: [41.81, 34.91, 18.57, 4.71],
+                    backgroundColor: ['#667eea', '#4ade80', '#facc15', '#60a5fa'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'right',
+                        labels: { color: '#e0e0e0', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

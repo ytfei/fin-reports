@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蓝色光标(300058)深度分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .subtitle { font-size: 14px; opacity: 0.8; letter-spacing: 2px; }
+        .header .stock-code { font-size: 18px; margin-top: 10px; opacity: 0.9; }
+        .header .date { font-size: 12px; opacity: 0.6; margin-top: 15px; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 35px; }
+        .section-title {
+            font-size: 20px;
+            color: #1a1a2e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title .icon { margin-right: 10px; font-size: 24px; }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .overview-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .overview-card .label { font-size: 12px; opacity: 0.8; margin-bottom: 5px; }
+        .overview-card .value { font-size: 24px; font-weight: bold; }
+        .overview-card .change { font-size: 12px; margin-top: 5px; }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .metric-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-item .label { font-size: 12px; color: #666; margin-bottom: 5px; }
+        .metric-item .value { font-size: 18px; font-weight: bold; color: #1a1a2e; }
+        .metric-item .rank { font-size: 11px; color: #999; margin-top: 3px; }
+        .business-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .business-card h3 {
+            color: #1a1a2e;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .business-card h3 .percentage {
+            background: #3498db;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .risk-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .risk-card h3 { font-size: 16px; margin-bottom: 10px; }
+        .risk-card ul { padding-left: 20px; }
+        .risk-card li { margin-bottom: 8px; font-size: 14px; }
+        .growth-card {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .growth-card h3 { font-size: 16px; margin-bottom: 10px; }
+        .growth-card ul { padding-left: 20px; }
+        .growth-card li { margin-bottom: 8px; font-size: 14px; }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:hover { background: #f8f9fa; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 4px; }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .tag-red { background: #ffebee; color: #c62828; }
+        .tag-green { background: #e8f5e9; color: #2e7d32; }
+        .tag-blue { background: #e3f2fd; color: #1565c0; }
+        .tag-orange { background: #fff3e0; color: #ef6c00; }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+        .insight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .insight-box h4 { color: #2980b9; margin-bottom: 8px; }
+        .shareholder-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .shareholder-card h3 {
+            color: #1a1a2e;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .shareholder-card h3 .rank {
+            background: #1a1a2e;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        .shareholder-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .info-item { font-size: 13px; }
+        .info-item .label { color: #666; }
+        .info-item .value { font-weight: 600; color: #1a1a2e; }
+        .conclusion {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        .conclusion h3 { margin-bottom: 15px; }
+        .conclusion ul { padding-left: 20px; }
+        .conclusion li { margin-bottom: 8px; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>蓝色光标深度分析报告</h1>
+            <div class="stock-code">300058.SZ</div>
+            <div class="subtitle">AI营销龙头 · 出海广告第一股</div>
+            <div class="date">报告日期：2026年4月20日</div>
+        </div>
+
+        <div class="content">
+            <!-- 第一部分：公司概况与实时行情 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">📊</span>
+                    一、公司概况与实时行情
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="label">最新价格</div>
+                        <div class="value">19.68元</div>
+                        <div class="change">+9.33% (当日)</div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="label">总市值</div>
+                        <div class="value">706.56亿</div>
+                        <div class="change">流通市值684.46亿</div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="label">年初至今</div>
+                        <div class="value">+70.83%</div>
+                        <div class="change">20日涨幅+35.63%</div>
+                    </div>
+                </div>
+
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <div class="label">市盈率(TTM)</div>
+                        <div class="value" style="color:#e74c3c">314.49</div>
+                        <div class="rank">5年84.7%分位</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">市净率</div>
+                        <div class="value" style="color:#e74c3c">8.95</div>
+                        <div class="rank">5年98.01%分位</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">ROE</div>
+                        <div class="value">2.92%</div>
+                        <div class="rank">行业排名1/7</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">资产负债率</div>
+                        <div class="value">68.6%</div>
+                        <div class="rank">行业排名118/131</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">毛利率</div>
+                        <div class="value">2.63%</div>
+                        <div class="rank">行业排名122/131</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">换手率</div>
+                        <div class="value">17.86%</div>
+                        <div class="rank">当日成交118.88亿</div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 公司概况</h4>
+                    <p><strong>蓝色光标</strong>成立于1996年，2010年在创业板上市，是中国首家上市的本土公关公司。主营业务涵盖整合数字营销、公共关系、广告创意策划及媒体代理、活动管理以及国际传播业务。</p>
+                    <p><strong>核心荣誉</strong>：连续多年跻身WARC「全球最佳控股公司Top10」，2025年位列第9名，是唯一进入全球前十的中国企业；入选中国民营企业500强第195名。</p>
+                </div>
+            </div>
+
+            <!-- 第二部分：财务分析 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">💰</span>
+                    二、财务分析
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>年度</th>
+                                <th>营业收入(亿元)</th>
+                                <th>同比</th>
+                                <th>归母净利润(亿元)</th>
+                                <th>同比</th>
+                                <th>每股收益(元)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2022</td>
+                                <td>366.83</td>
+                                <td>-</td>
+                                <td style="color:#e74c3c">-21.75</td>
+                                <td style="color:#e74c3c">亏损</td>
+                                <td>-0.87</td>
+                            </tr>
+                            <tr>
+                                <td>2023</td>
+                                <td>526.16</td>
+                                <td style="color:#27ae60">+43.4%</td>
+                                <td>1.17</td>
+                                <td style="color:#27ae60">扭亏</td>
+                                <td>0.05</td>
+                            </tr>
+                            <tr>
+                                <td>2024</td>
+                                <td>607.97</td>
+                                <td style="color:#27ae60">+15.5%</td>
+                                <td style="color:#e74c3c">-2.91</td>
+                                <td style="color:#e74c3c">-348%</td>
+                                <td>-0.08</td>
+                            </tr>
+                            <tr style="background:#fff3cd;font-weight:bold;">
+                                <td>2025</td>
+                                <td>686.93</td>
+                                <td style="color:#27ae60">+12.99%</td>
+                                <td style="color:#27ae60">2.25</td>
+                                <td style="color:#27ae60">扭亏+177%</td>
+                                <td>0.06</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 财务要点</h4>
+                    <p>1. <strong>营收稳健增长</strong>：2025年营收686.93亿元，同比+12.99%，连续三年保持两位数增长</p>
+                    <p>2. <strong>扭亏为盈</strong>：2025年归母净利润2.25亿元，同比扭亏为盈，主要得益于出海业务增长和费用管控</p>
+                    <p>3. <strong>现金流大幅改善</strong>：2025年经营性净现金流6.32亿元，同比+604.35%，应收账款管控见效</p>
+                    <p>4. <strong>毛利率承压</strong>：毛利率仅2.63%，行业排名122/131，净利率0.32%，盈利能力较弱</p>
+                </div>
+            </div>
+
+            <!-- 第三部分：业务分析 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">🎯</span>
+                    三、业务构成与竞争优势
+                </div>
+
+                <div class="business-card">
+                    <h3>出海广告投放 <span class="percentage">82.24%</span></h3>
+                    <p><strong>2025年收入</strong>：564.96亿元，同比+16.89%</p>
+                    <p><strong>毛利率</strong>：1.56%（同比-0.17pct）</p>
+                    <p><strong>核心优势</strong>：出海收入市占率稳居中国第一，Meta、Google、TikTok三大平台官方授权代理商</p>
+                    <p><strong>客户结构</strong>：游戏42.8%、电商23.9%、互联网及应用23.6%</p>
+                </div>
+
+                <div class="business-card">
+                    <h3>全案推广服务 <span class="percentage">12.60%</span></h3>
+                    <p><strong>2025年收入</strong>：86.58亿元，同比+6.45%</p>
+                    <p><strong>毛利率</strong>：7.55%（同比+0.77pct）</p>
+                    <p><strong>服务内容</strong>：品牌管理、公关传播、数字营销等整合服务</p>
+                </div>
+
+                <div class="business-card">
+                    <h3>全案广告代理 <span class="percentage">5.15%</span></h3>
+                    <p><strong>2025年收入</strong>：35.39亿元，同比-18.29%</p>
+                    <p><strong>毛利率</strong>：7.79%（同比+3.88pct）</p>
+                    <p><strong>趋势</strong>：主动收缩低毛利代理业务</p>
+                </div>
+
+                <div class="growth-card">
+                    <h3>🚀 AI驱动业务（核心增长极）</h3>
+                    <ul>
+                        <li><strong>2025年AI收入</strong>：37.25亿元，同比<strong>+210.42%</strong>，营收占比5.42%</li>
+                        <li><strong>Token调用量</strong>：全年突破<strong>1万亿</strong>词元</li>
+                        <li><strong>AI Agent</strong>：基于Blue AI平台孵化136个AI Agent</li>
+                        <li><strong>效率提升</strong>：95%以上作业场景AI重度覆盖，效率提升60%-1000%</li>
+                        <li><strong>人员优化</strong>：员工从5058人缩减至2311人（-54%），人均创收从801万增至2630万</li>
+                    </ul>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="businessChart"></canvas>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 竞争优势分析</h4>
+                    <p><strong>1. 出海先发优势</strong>：2025年在新加坡、越南、泰国、印尼等地开设7家海外办公室，预计2026年增至10家以上</p>
+                    <p><strong>2. AI战略布局</strong>：2023年发布"All In AI"战略，Blue AI行业大模型+136个AI Agent生态形成护城河</p>
+                    <p><strong>3. 平台授权</strong>：Meta、Google、TikTok国内官方授权代理商，媒体返点稳定</p>
+                    <p><strong>4. 客户基础</strong>：服务超过20家全球500强企业，客户粘性强</p>
+                </div>
+            </div>
+
+            <!-- 第四部分：增长与风险分析 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">⚖️</span>
+                    四、增长空间与风险分析
+                </div>
+
+                <div class="growth-card">
+                    <h3>📈 增长空间</h3>
+                    <ul>
+                        <li><strong>出海市场</strong>：跨境营销市场预计从2024年4404亿元增至2029年7866亿元，CAGR约12%</li>
+                        <li><strong>AI营销</strong>：2026年AI收入预计达50-80亿元，占比有望提升至10%以上</li>
+                        <li><strong>全球化2.0</strong>：目标业务规模从700亿增长至1000亿元，毛利率提升至4%</li>
+                        <li><strong>GEO（生成式引擎优化）</strong>：2026年市场规模预计突破30亿元，2027年达90亿元</li>
+                        <li><strong>港股IPO</strong>：已递交申请，有望优化资本结构，增强国际影响力</li>
+                    </ul>
+                </div>
+
+                <div class="risk-card">
+                    <h3>⚠️ 核心风险</h3>
+                    <ul>
+                        <li><strong>盈利能力弱</strong>：毛利率仅2.63%，净利率0.32%，ROE 2.92%，盈利能力处于行业底部</li>
+                        <li><strong>估值极高</strong>：PE 314倍、PB 8.95倍，均处于历史高位，短期回调压力大</li>
+                        <li><strong>供应商集中</strong>：前五大供应商占比89.3%，议价能力受限</li>
+                        <li><strong>行业竞争加剧</strong>：省广集团、三人行等竞争对手加速AI布局</li>
+                        <li><strong>转型阵痛</strong>：从"人力密集型"向"技术驱动型"转型，利润改善仍需时间</li>
+                        <li><strong>股东减持</strong>：创始人赵文权、副董事长熊剑近期披露减持计划</li>
+                    </ul>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>竞争对手</th>
+                                <th>2025年营收</th>
+                                <th>净利润</th>
+                                <th>ROE</th>
+                                <th>核心优势</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#e3f2fd;font-weight:bold;">
+                                <td>蓝色光标</td>
+                                <td>686.93亿</td>
+                                <td>2.25亿</td>
+                                <td>2.92%</td>
+                                <td>出海+AI双轮驱动</td>
+                            </tr>
+                            <tr>
+                                <td>省广集团</td>
+                                <td>213.54亿</td>
+                                <td>0.90亿</td>
+                                <td>1.81%</td>
+                                <td>国资背景、品牌管理</td>
+                            </tr>
+                            <tr>
+                                <td>三人行</td>
+                                <td>36.65亿</td>
+                                <td>1.90亿</td>
+                                <td>5.37%</td>
+                                <td>校园媒体、场景活动</td>
+                            </tr>
+                            <tr>
+                                <td>华扬联众(ST)</td>
+                                <td>约20亿</td>
+                                <td>亏损</td>
+                                <td>-91.07%</td>
+                                <td>品牌营销(困境)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 第五部分：股东分析 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">👥</span>
+                    五、前十大流通股东分析
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>股东名称</th>
+                                <th>持股数量(万股)</th>
+                                <th>持股比例</th>
+                                <th>股东性质</th>
+                                <th>市值(亿元)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>赵文权</strong></td>
+                                <td>14,000</td>
+                                <td>3.90%</td>
+                                <td><span class="tag tag-blue">创始人/董事长</span></td>
+                                <td>27.5</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>拉卡拉支付</strong></td>
+                                <td>9,408</td>
+                                <td>2.62%</td>
+                                <td><span class="tag tag-orange">战略股东</span></td>
+                                <td>18.5</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>易方达创业板ETF</td>
+                                <td>6,859</td>
+                                <td>1.91%</td>
+                                <td><span class="tag tag-blue">指数基金</span></td>
+                                <td>13.5</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>香港中央结算</td>
+                                <td>6,197</td>
+                                <td>1.73%</td>
+                                <td><span class="tag tag-blue">北向资金</span></td>
+                                <td>12.2</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>中证500ETF</td>
+                                <td>5,196</td>
+                                <td>1.45%</td>
+                                <td><span class="tag tag-blue">指数基金</span></td>
+                                <td>10.2</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>西藏鼎鑫投资</strong></td>
+                                <td>5,036</td>
+                                <td>1.40%</td>
+                                <td><span class="tag tag-green">投资机构</span></td>
+                                <td>9.9</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong>叶卓凡</strong></td>
+                                <td>4,035</td>
+                                <td>1.12%</td>
+                                <td><span class="tag tag-green">自然人</span></td>
+                                <td>7.9</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><strong>孙陶然</strong></td>
+                                <td>3,101</td>
+                                <td>0.86%</td>
+                                <td><span class="tag tag-orange">联合创始人</span></td>
+                                <td>6.1</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><strong>郭士斌</strong></td>
+                                <td>2,737</td>
+                                <td>0.76%</td>
+                                <td><span class="tag tag-green">自然人</span></td>
+                                <td>5.4</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>华安创业板50ETF</td>
+                                <td>2,421</td>
+                                <td>0.67%</td>
+                                <td><span class="tag tag-blue">指数基金</span></td>
+                                <td>4.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="shareholder-card">
+                    <h3><span class="rank">1</span>赵文权（创始人/董事长）</h3>
+                    <div class="shareholder-info">
+                        <div class="info-item">
+                            <div class="label">持股比例</div>
+                            <div class="value">3.90%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股数量</div>
+                            <div class="value">1.40亿股</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股市值</div>
+                            <div class="value">约27.5亿元</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">背景</div>
+                            <div class="value">北大毕业，1996年创立蓝色光标</div>
+                        </div>
+                    </div>
+                    <div class="insight-box" style="margin-top:15px;">
+                        <p><strong>背景分析</strong>：赵文权1970年生，1991年毕业于北京大学政治学与行政管理系。1996年与孙陶然等五人联合创办蓝色光标，2010年带领公司在创业板上市，成为中国首家上市本土公关公司。2015年获北京大学授予名誉校董。</p>
+                        <p><strong>最新动态</strong>：2026年4月公告计划减持不超过2000万股，引发市场关注。</p>
+                    </div>
+                </div>
+
+                <div class="shareholder-card">
+                    <h3><span class="rank">2</span>拉卡拉支付股份有限公司</h3>
+                    <div class="shareholder-info">
+                        <div class="info-item">
+                            <div class="label">持股比例</div>
+                            <div class="value">2.62%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股数量</div>
+                            <div class="value">9,408万股</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股市值</div>
+                            <div class="value">约18.5亿元</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">关联</div>
+                            <div class="value">孙陶然为拉卡拉创始人</div>
+                        </div>
+                    </div>
+                    <div class="insight-box" style="margin-top:15px;">
+                        <p><strong>背景分析</strong>：拉卡拉是中国领先的第三方支付公司，2025年归母净利润11.71亿元，同比增长233.33%。拉卡拉入股蓝色光标体现了对AI营销赛道的战略布局。</p>
+                    </div>
+                </div>
+
+                <div class="shareholder-card">
+                    <h3><span class="rank">8</span>孙陶然（联合创始人）</h3>
+                    <div class="shareholder-info">
+                        <div class="info-item">
+                            <div class="label">持股比例</div>
+                            <div class="value">0.86%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股数量</div>
+                            <div class="value">3,101万股</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">持股市值</div>
+                            <div class="value">约6.1亿元</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">身份</div>
+                            <div class="value">拉卡拉创始人/董事长</div>
+                        </div>
+                    </div>
+                    <div class="insight-box" style="margin-top:15px;">
+                        <p><strong>背景分析</strong>：孙陶然1969年生，1991年毕业于北京大学经济学院。著名连续创业者，创办了蓝色光标（1996年）、拉卡拉（2005年）、考拉基金等多家知名企业。著有畅销书《创业36条军规》，销量超百万册。</p>
+                        <p><strong>投资风格</strong>：长期价值投资，与赵文权共同见证蓝色光标从初创到上市全过程。</p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 股东结构关键洞察</h4>
+                    <p><strong>1. 股权分散</strong>：前十大流通股东合计持股仅16.43%，无绝对控股股东，赵文权作为创始人持股3.90%</p>
+                    <p><strong>2. 北大系背景</strong>：赵文权、孙陶然均为北大校友，形成稳定的创始团队联盟</p>
+                    <p><strong>3. 机构持仓增加</strong>：公募基金持股0.63%，持股变动率+0.56%，近期机构略有增持</p>
+                    <p><strong>4. 筹码分散</strong>：股东人数48.44万户，环比+71.18%，人均持股仅7180股，筹码趋于分散</p>
+                    <p><strong>5. 减持压力</strong>：创始人赵文权、副董事长熊剑近期披露减持计划，需关注后续进展</p>
+                </div>
+            </div>
+
+            <!-- 第六部分：资金流向 -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">💸</span>
+                    六、资金流向与龙虎榜
+                </div>
+
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <div class="label">主力净流入</div>
+                        <div class="value" style="color:#27ae60">+5.71亿</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">主力流入</div>
+                        <div class="value">58.90亿</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">主力流出</div>
+                        <div class="value">53.19亿</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="label">超大单流入</div>
+                        <div class="value" style="color:#27ae60">4.96亿</div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 龙虎榜分析（2026-04-08）</h4>
+                    <p><strong>上榜理由</strong>：有价格涨跌幅限制的日收盘价格涨幅达到15%的证券</p>
+                    <p><strong>买入前五</strong>：</p>
+                    <ul style="margin-left:20px;">
+                        <li>国泰海通证券上海浦东新区海阳西路（章盟主）：买入7.39亿</li>
+                        <li>深股通专用：买入6.94亿，卖出1.74亿</li>
+                        <li>机构专用：买入2.22亿，卖出2.23亿</li>
+                        <li>国泰海通证券上海分公司：买入1.50亿</li>
+                        <li>国泰海通证券杭州富春路：买入1.40亿</li>
+                    </ul>
+                    <p><strong>分析</strong>：游资章盟主大举买入，北向资金净流入，机构分歧较大（买卖接近），显示市场对该股存在较大分歧。</p>
+                </div>
+            </div>
+
+            <!-- 结论 -->
+            <div class="conclusion">
+                <h3>📊 投资结论与关键跟踪指标</h3>
+                <ul>
+                    <li><strong>核心逻辑</strong>：蓝色光标是"AI营销第一股"，出海广告+AI双轮驱动，2025年AI收入37亿（+210%），出海收入565亿（+17%），增长势头强劲</li>
+                    <li><strong>主要风险</strong>：PE 314倍估值极高，毛利率仅2.63%盈利能力弱，股东人数激增71%筹码分散，创始人减持压力</li>
+                    <li><strong>增长空间</strong>：AI营销市场规模快速扩张，目标营收从700亿增至1000亿，毛利率提升至4%</li>
+                    <li><strong>投资建议</strong>：短期估值透支严重，建议谨慎；长期关注AI业务占比提升和毛利率改善情况</li>
+                </ul>
+                <p style="margin-top:15px;font-weight:bold;">🔍 关键跟踪指标：</p>
+                <ul>
+                    <li>季度AI收入及占比变化</li>
+                    <li>毛利率/净利率改善趋势</li>
+                    <li>海外办公室扩张进展</li>
+                    <li>港股IPO进程</li>
+                    <li>创始人减持进展</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>数据来源：NeoData金融数据、公司公告、券商研报、公开信息</p>
+            <p>免责声明：本报告仅供参考，不构成投资建议，据此操作风险自担</p>
+        </div>
+    </div>
+
+    <script>
+        // 业务收入构成饼图
+        const ctx1 = document.getElementById('businessChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['出海广告投放', '全案推广服务', '全案广告代理', 'AI驱动收入'],
+                datasets: [{
+                    data: [82.24, 12.60, 5.15, 5.42],
+                    backgroundColor: ['#3498db', '#27ae60', '#f39c12', '#9b59b6']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '2025年业务收入构成（%）',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

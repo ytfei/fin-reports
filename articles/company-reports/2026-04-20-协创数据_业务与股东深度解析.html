@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>协创数据(300857)业务与股东深度解析</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f6f7;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .section h3 {
+            font-size: 15px;
+            color: #333;
+            margin: 20px 0 12px 0;
+        }
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #4285f4;
+        }
+        .product-card h4 {
+            font-size: 16px;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        .product-card .revenue {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .product-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .product-card li {
+            margin: 6px 0;
+            font-size: 13px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-right: 6px;
+        }
+        .tag.blue { background: #e3f2fd; color: #1565c0; }
+        .tag.green { background: #e8f5e9; color: #2e7d32; }
+        .tag.orange { background: #fff3e0; color: #e65100; }
+        .tag.red { background: #ffebee; color: #c62828; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+        tr:hover { background: #fafafa; }
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-left: 4px solid #ff3333;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        .highlight-box.green {
+            background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%);
+            border-left-color: #00b050;
+        }
+        .highlight-box.blue {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+            border-left-color: #4285f4;
+        }
+        .shareholder-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 12px 0;
+        }
+        .shareholder-card .name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .shareholder-card .meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .shareholder-card .desc {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.7;
+        }
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .competitor-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .competitor-card .name {
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+        .competitor-card .type {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .competitor-card .advantage {
+            font-size: 12px;
+            color: #555;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 12px;
+        }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .scenario-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .scenario-item .icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .scenario-item .title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .scenario-item .desc {
+            font-size: 11px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>协创数据(300857)业务与股东深度解析</h1>
+            <div class="subtitle">产品应用场景、客户构成、竞争格局与股东背景全景分析</div>
+        </div>
+
+        <!-- Product Lines -->
+        <div class="section">
+            <h2>📦 四大核心业务线详解</h2>
+            
+            <div class="product-card">
+                <h4>1️⃣ 数据存储设备 <span class="tag blue">核心业务</span></h4>
+                <div class="revenue">2025年收入：44.93亿元 | 占比：36.72% | 同比：+28.31%</div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 10px;">
+                    公司传统优势业务，持续深化企业级存储产品布局与市场拓展。
+                </p>
+                <strong>主要产品：</strong>
+                <ul>
+                    <li><strong>企业级SSD固态硬盘</strong>：高性能存储解决方案，适配数据中心、云计算场景</li>
+                    <li><strong>消费级存储产品</strong>：移动硬盘、U盘、存储卡等终端消费产品</li>
+                    <li><strong>嵌入式存储</strong>：eMMC、UFS等嵌入式存储方案，用于智能终端</li>
+                </ul>
+                <strong>供应链合作：</strong>与闪迪、海力士、铠侠、Solidigm等全球存储原厂达成供应合作
+            </div>
+
+            <div class="product-card" style="border-left-color: #ff9800;">
+                <h4>2️⃣ 智能算力产品及服务 <span class="tag orange">增长引擎</span></h4>
+                <div class="revenue">2025年收入：27.61亿元 | 占比：22.57% | 同比：<strong>+1727.17%</strong></div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 10px;">
+                    公司战略转型核心方向，AI算力租赁业务爆发式增长，已成为业绩增长主驱动力。
+                </p>
+                <strong>核心产品/服务：</strong>
+                <ul>
+                    <li><strong>GPU算力租赁</strong>：提供英伟达H20/H100等高端GPU服务器租赁服务</li>
+                    <li><strong>算力集群解决方案</strong>：大规模AI训练/推理集群建设与运维</li>
+                    <li><strong>FCloud智能体训推平台</strong>：自研全栈式AI训推一体化平台</li>
+                    <li><strong>FCloud Omnibot具身智能机器人平台</strong>：面向机器人场景的算力解决方案</li>
+                </ul>
+                <strong>服务模式：</strong>共享、按需付费、弹性伸缩的GPU/CPU计算资源使用权
+            </div>
+
+            <div class="product-card" style="border-left-color: #4caf50;">
+                <h4>3️⃣ 服务器及周边再制造 <span class="tag green">协同业务</span></h4>
+                <div class="revenue">2025年收入：25.75亿元 | 占比：21.04% | 同比：+169.35%</div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 10px;">
+                    国内服务器再制造龙头厂商，形成"回收-再制造-销售"闭环，与算力业务形成协同。
+                </p>
+                <strong>业务模式：</strong>
+                <ul>
+                    <li><strong>服务器回收</strong>：从数据中心、企业客户回收退役服务器</li>
+                    <li><strong>再制造加工</strong>：检测、维修、升级，恢复设备性能</li>
+                    <li><strong>二手服务器销售</strong>：提供高性价比的二手算力设备</li>
+                    <li><strong>零部件再利用</strong>：GPU、CPU、内存等核心零部件拆解再利用</li>
+                </ul>
+                <strong>核心优势：</strong>通过美国子公司回收二手算力芯片，构建低成本算力集群
+            </div>
+
+            <div class="product-card" style="border-left-color: #9c27b0;">
+                <h4>4️⃣ 物联网智能终端 <span class="tag red">调整收缩</span></h4>
+                <div class="revenue">2025年收入：15.72亿元 | 占比：12.85% | 同比：<span style="color: #00b050;">-30.42%</span></div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 10px;">
+                    公司主动调整业务结构，逐步收缩低毛利智能终端业务，聚焦高附加值领域。
+                </p>
+                <strong>产品类型：</strong>
+                <ul>
+                    <li>智能摄像头、智能门锁等智能家居产品</li>
+                    <li>智能穿戴设备</li>
+                    <li>其他AIoT智能终端</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Application Scenarios -->
+        <div class="section">
+            <h2>🎯 算力业务应用场景</h2>
+            
+            <p style="font-size: 13px; color: #555; margin-bottom: 15px;">
+                协创数据的智能算力服务已深度渗透以下高算力需求场景：
+            </p>
+
+            <div class="scenario-grid">
+                <div class="scenario-item">
+                    <div class="icon">🤖</div>
+                    <div class="title">大模型训练推理</div>
+                    <div class="desc">Gemini、Grok等多模态大模型训练，日均Token调用量超百万亿</div>
+                </div>
+                <div class="scenario-item">
+                    <div class="icon">🚗</div>
+                    <div class="title">自动驾驶</div>
+                    <div class="desc">感知模型训练、仿真测试、数据标注等算力需求</div>
+                </div>
+                <div class="scenario-item">
+                    <div class="icon">💊</div>
+                    <div class="title">生物医药</div>
+                    <div class="desc">蛋白质结构预测、药物分子筛选、基因组分析</div>
+                </div>
+                <div class="scenario-item">
+                    <div class="icon">🎮</div>
+                    <div class="title">云游戏/云手机</div>
+                    <div class="desc">云端渲染、实时串流、虚拟化算力支持</div>
+                </div>
+                <div class="scenario-item">
+                    <div class="icon">🤖</div>
+                    <div class="title">具身智能/机器人</div>
+                    <div class="desc">机器人大脑训练、动作规划、多模态感知</div>
+                </div>
+                <div class="scenario-item">
+                    <div class="icon">💰</div>
+                    <div class="title">金融科技</div>
+                    <div class="desc">量化交易模型、风险评估、智能客服</div>
+                </div>
+            </div>
+
+            <div class="highlight-box blue">
+                <strong>💡 技术能力支撑</strong><br>
+                • <strong>异构算力纳管</strong>：实现不同类型算力资源的统一调度与灵活分配<br>
+                • <strong>实时资源调度</strong>：保障高并发场景下的资源高效利用<br>
+                • <strong>主流模型适配</strong>：适配主流AI模型，实现多领域模型快速部署<br>
+                • <strong>高速网络运维</strong>：实现数据传输与计算的低延迟<br>
+                • <strong>全生命周期服务</strong>：从接入到运维的一站式解决方案
+            </div>
+        </div>
+
+        <!-- Customer Structure -->
+        <div class="section">
+            <h2>👥 客户构成分析</h2>
+            
+            <h3>核心客户群体</h3>
+            <table>
+                <tr>
+                    <th>客户类型</th>
+                    <th>具体客户/领域</th>
+                    <th>需求特点</th>
+                </tr>
+                <tr>
+                    <td><strong>头部互联网巨头</strong></td>
+                    <td>字节跳动(火山引擎)、阿里、腾讯、百度等</td>
+                    <td>大模型训练推理，长期合约，5年期订单</td>
+                </tr>
+                <tr>
+                    <td><strong>自动驾驶企业</strong></td>
+                    <td>新能源汽车厂商、自动驾驶方案商</td>
+                    <td>感知模型训练、仿真测试</td>
+                </tr>
+                <tr>
+                    <td><strong>生物医药企业</strong></td>
+                    <td>制药公司、基因测序企业</td>
+                    <td>蛋白质预测、药物筛选</td>
+                </tr>
+                <tr>
+                    <td><strong>运营商</strong></td>
+                    <td>中国联通等</td>
+                    <td>算力服务项目中标</td>
+                </tr>
+                <tr>
+                    <td><strong>海外客户</strong></td>
+                    <td>境外收入占比50.60%</td>
+                    <td>全球化布局，生产基地覆盖菲律宾、泰国、美国</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box green">
+                <strong>✅ 客户合作特点</strong><br>
+                • <strong>深度绑定</strong>：与头部互联网巨头形成深度合作关系<br>
+                • <strong>长期合约</strong>：多数大额合作协议为5年长期合约，收入可见性强<br>
+                • <strong>订单真实</strong>：所有采购均基于已签署订单进行，合同负债同比+63.16%验证需求旺盛<br>
+                • <strong>多元化布局</strong>：覆盖AI、自动驾驶、生物医药等多个高景气赛道
+            </div>
+
+            <h3>收入地区分布</h3>
+            <table>
+                <tr>
+                    <th>地区</th>
+                    <th>收入金额</th>
+                    <th>占比</th>
+                </tr>
+                <tr>
+                    <td>境外</td>
+                    <td>61.91亿元</td>
+                    <td>50.60%</td>
+                </tr>
+                <tr>
+                    <td>境内</td>
+                    <td>60.44亿元</td>
+                    <td>49.40%</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Competitors -->
+        <div class="section">
+            <h2>⚔️ 竞争对手分析</h2>
+            
+            <h3>算力租赁/智算中心竞争对手</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="name">润泽科技</div>
+                    <div class="type">IDC/算力租赁龙头</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>廊坊50万机架规模，2024年营收约80亿、净利20亿，市值1136亿<br>
+                        <strong>劣势：</strong>纯IDC租赁模式，缺乏服务器再制造协同
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">润建股份</div>
+                    <div class="type">智算中心运营商</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>多地智算中心布局，通信网络运维能力强<br>
+                        <strong>劣势：</strong>算力规模相对较小，缺乏存储业务协同
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">首都在线</div>
+                    <div class="type">云计算服务商</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>覆盖全球的云计算服务网络<br>
+                        <strong>劣势：</strong>主要面向中小企业，缺乏大模型训练级算力
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">优刻得</div>
+                    <div class="type">中立云计算服务商</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>上海青浦+内蒙古乌兰察布两大智算中心，万P级算力资源池<br>
+                        <strong>劣势：</strong>主要面向公有云市场，AI算力租赁起步较晚
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">青云科技</div>
+                    <div class="type">企业级云服务商</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>企业级云服务经验丰富<br>
+                        <strong>劣势：</strong>算力规模有限，AI算力非核心业务
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">云赛智联</div>
+                    <div class="type">上海国资云服务商</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>上海国资背景，政务云资源丰富<br>
+                        <strong>劣势：</strong>市场化程度相对较低
+                    </div>
+                </div>
+            </div>
+
+            <h3>数据存储竞争对手</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="name">江波龙</div>
+                    <div class="type">存储模组龙头</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>企业级SSD产品线完善，推出128TB大容量产品<br>
+                        <strong>劣势：</strong>缺乏算力租赁业务协同
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">佰维存储</div>
+                    <div class="type">存储芯片设计</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>存储芯片设计能力，HBM产品线<br>
+                        <strong>劣势：</strong>主要面向消费级市场，企业级占比低
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">朗科科技</div>
+                    <div class="type">U盘/存储模组</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>U盘专利优势，品牌知名度<br>
+                        <strong>劣势：</strong>企业级存储布局较晚
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">同有科技</div>
+                    <div class="type">企业级存储系统</div>
+                    <div class="advantage">
+                        <strong>优势：</strong>企业级存储系统解决方案<br>
+                        <strong>劣势：</strong>规模相对较小
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>⚔️ 竞争格局总结</strong><br>
+                • <strong>差异化定位</strong>：协创数据巧妙切入"AI算力租赁+服务器再制造+数据存储"三位一体模式，形成独特竞争优势<br>
+                • <strong>成本优势</strong>：通过服务器再制造业务获取低成本二手算力芯片，构建低成本算力集群<br>
+                • <strong>规模差距</strong>：相比润泽科技等IDC龙头，协创当前机架资源集中于长三角，超大型项目竞标能力仍有差距<br>
+                • <strong>供应链风险</strong>：GPU采购依赖英伟达H20芯片，受美国出口管制影响
+            </div>
+        </div>
+
+        <!-- Shareholder Analysis -->
+        <div class="section">
+            <h2>👔 前十大流通股东深度解析</h2>
+            
+            <div class="shareholder-card">
+                <div class="name">1️⃣ 协创智慧科技有限公司 <span class="tag blue">控股股东</span></div>
+                <div class="meta">
+                    <span>持股：7,027.78万股</span>
+                    <span>占比：20.30%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>公司控股股东，由实际控制人耿康铭控制。耿康铭通过该公司及一致行动人合计控制公司超过30%的股权。<br>
+                    <strong>关联：</strong>耿康铭担任协创智慧科技有限公司法定代表人，直接控股6家企业，间接持股30家实体。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">2️⃣ POWER CHANNEL LIMITED <span class="tag orange">外资股东</span></div>
+                <div class="meta">
+                    <span>持股：5,765.34万股</span>
+                    <span>占比：16.66%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>外资机构股东，注册地通常为香港或离岸金融中心。<br>
+                    <strong>性质：</strong>可能为战略投资者或财务投资者，具体背景需查阅公司招股说明书或历史股权变动公告。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">3️⃣ 宁琛 <span class="tag green">自然人股东</span></div>
+                <div class="meta">
+                    <span>持股：902.67万股</span>
+                    <span>占比：2.61%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>个人投资者，持股数量较大，可能为公司早期投资人或关联方。<br>
+                    <strong>特点：</strong>自然人股东持股稳定，通常代表对公司长期发展的信心。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">4️⃣ 香港中央结算有限公司 <span class="tag blue">北向资金</span></div>
+                <div class="meta">
+                    <span>持股：434.66万股</span>
+                    <span>占比：1.26%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>沪深港通北向资金持股平台，代表境外投资者通过港股通持有的A股股份。<br>
+                    <strong>意义：</strong>反映外资对公司的关注度和配置意愿。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">5️⃣ 易方达创业板ETF <span class="tag red">指数基金</span></div>
+                <div class="meta">
+                    <span>持股：428.98万股</span>
+                    <span>占比：1.24%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>被动配置型基金，跟踪创业板指数，非主动选股。<br>
+                    <strong>特点：</strong>持股随指数权重调整而变化，反映公司在创业板中的市值地位。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">6️⃣ 中证500ETF <span class="tag red">指数基金</span></div>
+                <div class="meta">
+                    <span>持股：357.69万股</span>
+                    <span>占比：1.03%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>跟踪中证500指数的被动型基金。<br>
+                    <strong>意义：</strong>公司已被纳入中证500指数成分股，代表中盘股代表性标的。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">7️⃣ 谭岳鑫 <span class="tag green">自然人股东</span></div>
+                <div class="meta">
+                    <span>持股：313.37万股</span>
+                    <span>占比：0.91%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>个人投资者，可能为公司高管或早期投资人。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">8️⃣ 易方达中证人工智能主题ETF <span class="tag orange">主题基金</span></div>
+                <div class="meta">
+                    <span>持股：197.85万股</span>
+                    <span>占比：0.57%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>主动配置型主题基金，看好AI算力赛道。<br>
+                    <strong>意义：</strong>反映机构投资者对公司AI算力业务前景的认可。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">9️⃣ 王四丽 <span class="tag green">自然人股东</span></div>
+                <div class="meta">
+                    <span>持股：191.55万股</span>
+                    <span>占比：0.55%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>个人投资者。
+                </div>
+            </div>
+
+            <div class="shareholder-card">
+                <div class="name">🔟 高盛国际-自有资金 <span class="tag blue">QFII</span></div>
+                <div class="meta">
+                    <span>持股：185.34万股</span>
+                    <span>占比：0.54%</span>
+                </div>
+                <div class="desc">
+                    <strong>背景：</strong>高盛集团自有资金投资，代表国际顶级投行对公司的关注。<br>
+                    <strong>变动：</strong>持股变动率-0.47%，近期有所减持。
+                </div>
+            </div>
+        </div>
+
+        <!-- Management Team -->
+        <div class="section">
+            <h2>👨‍💼 核心管理团队与实际控制人</h2>
+            
+            <h3>实际控制人：耿康铭</h3>
+            <table>
+                <tr>
+                    <th>项目</th>
+                    <th>详情</th>
+                </tr>
+                <tr>
+                    <td>姓名</td>
+                    <td>耿康铭</td>
+                </tr>
+                <tr>
+                    <td>出生年月</td>
+                    <td>1974年10月</td>
+                </tr>
+                <tr>
+                    <td>学历</td>
+                    <td>硕士研究生</td>
+                </tr>
+                    <td>现任职务</td>
+                    <td>协创数据董事长兼CEO</td>
+                </tr>
+                <tr>
+                    <td>持股</td>
+                    <td>通过协创智慧科技间接持股约20.30%</td>
+                </tr>
+            </table>
+
+            <h3>职业经历</h3>
+            <table>
+                <tr>
+                    <th>时间</th>
+                    <th>经历</th>
+                </tr>
+                <tr>
+                    <td>1995年3月-2001年1月</td>
+                    <td>富士康精密组件(深圳)有限公司，历任工程、品质、采购、业务、制造课长</td>
+                </tr>
+                <tr>
+                    <td>2005年11月-2016年7月</td>
+                    <td>协创数据技术有限公司，历任执行董事、董事、董事长</td>
+                </tr>
+                <tr>
+                    <td>2016年7月至今</td>
+                    <td>协创数据技术股份有限公司董事长</td>
+                </tr>
+            </table>
+
+            <h3>荣誉与财富</h3>
+            <table>
+                <tr>
+                    <th>时间</th>
+                    <th>荣誉/排名</th>
+                </tr>
+                <tr>
+                    <td>2025年7月</td>
+                    <td>入选2025福布斯中国最佳CEO榜单</td>
+                </tr>
+                <tr>
+                    <td>2025年10月</td>
+                    <td>以75亿元财富位列《2025年胡润百富榜》第956位</td>
+                </tr>
+                <tr>
+                    <td>2026年3月</td>
+                    <td>以140亿元财富位列《2026胡润全球富豪榜》第2311位</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box blue">
+                <strong>💡 富士康系背景</strong><br>
+                协创数据核心管理团队具有深厚的<strong>富士康系背景</strong>，由实控人耿康铭掌舵，并引入了<strong>郭台强</strong>（富士康创始人郭台铭胞弟）作为名誉董事长，整体风格偏向制造业的精密化管理。这一背景赋予公司在供应链管理、精密制造、成本控制方面的独特优势。
+            </div>
+
+            <h3>其他核心高管</h3>
+            <table>
+                <tr>
+                    <th>姓名</th>
+                    <th>职务</th>
+                    <th>背景</th>
+                </tr>
+                <tr>
+                    <td>郭台强</td>
+                    <td>名誉董事长</td>
+                    <td>富士康创始人郭台铭胞弟，提供战略指导和产业资源</td>
+                </tr>
+                <tr>
+                    <td>林坤煌</td>
+                    <td>副董事长、非独立董事</td>
+                    <td>公司创始团队成员之一</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Shareholder Structure Summary -->
+        <div class="section">
+            <h2>📊 股东结构总结</h2>
+            
+            <h3>持股结构分布</h3>
+            <table>
+                <tr>
+                    <th>股东类型</th>
+                    <th>持股比例</th>
+                    <th>特点</th>
+                </tr>
+                <tr>
+                    <td>控股股东(协创智慧科技)</td>
+                    <td>20.30%</td>
+                    <td>实际控制人耿康铭控制，股权稳定</td>
+                </tr>
+                <tr>
+                    <td>外资股东(POWER CHANNEL)</td>
+                    <td>16.66%</td>
+                    <td>长期战略投资者</td>
+                </tr>
+                <tr>
+                    <td>自然人股东(前十大中3位)</td>
+                    <td>4.07%</td>
+                    <td>早期投资人或关联方</td>
+                </tr>
+                <tr>
+                    <td>北向资金(香港中央结算)</td>
+                    <td>1.26%</td>
+                    <td>外资配置意愿</td>
+                </tr>
+                <tr>
+                    <td>指数基金(创业板+中证500)</td>
+                    <td>2.27%</td>
+                    <td>被动配置</td>
+                </tr>
+                <tr>
+                    <td>主题基金(AI ETF)</td>
+                    <td>0.57%</td>
+                    <td>主动看好AI算力赛道</td>
+                </tr>
+                <tr>
+                    <td>QFII(高盛国际)</td>
+                    <td>0.54%</td>
+                    <td>国际投行关注，近期减持</td>
+                </tr>
+                <tr>
+                    <td>其他股东</td>
+                    <td>~54%</td>
+                    <td>散户+其他机构</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>⚠️ 股东结构关注点</strong><br>
+                • <strong>机构减仓</strong>：公募基金持股变动-0.68%，QFII变动-0.47%，机构近期有所减持<br>
+                • <strong>筹码集中</strong>：股东人数3.20万户，环比-16.13%，筹码趋于集中<br>
+                • <strong>前十大占比</strong>：前十大流通股东占比45.66%，股权结构相对稳定<br>
+                • <strong>实际控制人</strong>：耿康铭通过协创智慧科技控制约20.30%股权，控制权稳固
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>报告生成时间：2026年4月20日 | 数据来源：NeoData金融数据服务、公开信息整理</p>
+            <p>⚠️ 本报告仅供参考，不构成投资建议。投资有风险，入市需谨慎。</p>
+        </div>
+    </div>
+</body>
+</html>

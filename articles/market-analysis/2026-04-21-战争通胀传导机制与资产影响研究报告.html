@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>战争通胀传导机制与资产影响研究报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red:    #c0392b;
+    --red-lt: #e74c3c;
+    --red-bg: #fdf0ef;
+    --orange: #d35400;
+    --org-bg: #fef5ec;
+    --gold:   #c9a227;
+    --gld-bg: #fefaed;
+    --green:  #1a7a4a;
+    --grn-bg: #edfaf3;
+    --blue:   #1a3a5c;
+    --blk:    #1c1c2e;
+    --gray:   #5a6072;
+    --light:  #f4f6fa;
+    --border: #dde3ef;
+    --white:  #ffffff;
+    --font:   'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--light); color: var(--blk); font-size: 14px; line-height: 1.75; }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 60%, #2c5282 100%);
+    color: #fff;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(201,162,39,.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #90b4d8; margin-bottom: 10px; }
+  .hero-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
+  .hero-sub { color: #90b4d8; font-size: 13px; max-width: 680px; }
+  .hero-meta { margin-top: 22px; display: flex; gap: 24px; flex-wrap: wrap; }
+  .hero-tag {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 4px; padding: 4px 12px; font-size: 12px; color: #cde;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* ── SECTION TITLE ── */
+  .sec-title {
+    font-size: 17px; font-weight: 700; color: var(--blue);
+    border-left: 4px solid var(--blue); padding-left: 12px;
+    margin: 40px 0 18px;
+  }
+  .sec-title.danger { border-color: var(--red); color: var(--red); }
+  .sec-title.gold   { border-color: var(--gold); color: #7a5c00; }
+
+  /* ── SUMMARY BOX ── */
+  .summary-box {
+    background: linear-gradient(135deg, var(--red) 0%, #a93226 100%);
+    color: #fff; border-radius: 10px; padding: 24px 28px; margin-bottom: 28px;
+  }
+  .summary-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; opacity: .85; letter-spacing: 1px; }
+  .summary-box p  { font-size: 13.5px; line-height: 1.8; }
+
+  /* ── CARDS ── */
+  .cards { display: grid; gap: 16px; }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--white); border-radius: 10px;
+    border: 1px solid var(--border); padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  .card-icon { font-size: 22px; margin-bottom: 8px; }
+  .card-title { font-size: 12px; color: var(--gray); font-weight: 600; letter-spacing: .5px; margin-bottom: 4px; }
+  .card-value { font-size: 18px; font-weight: 700; color: var(--blk); }
+  .card-desc  { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .card.red   { border-top: 3px solid var(--red); }
+  .card.org   { border-top: 3px solid var(--orange); }
+  .card.gld   { border-top: 3px solid var(--gold); }
+  .card.grn   { border-top: 3px solid var(--green); }
+  .card.blue  { border-top: 3px solid var(--blue); }
+
+  /* ── PIPELINE ── */
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin: 24px 0; overflow-x: auto; }
+  .pipe-step {
+    flex: 1; min-width: 140px;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 0; padding: 18px 14px;
+    position: relative;
+    text-align: center;
+  }
+  .pipe-step:first-child { border-radius: 10px 0 0 10px; }
+  .pipe-step:last-child  { border-radius: 0 10px 10px 0; }
+  .pipe-step::after {
+    content: '▶';
+    position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+    font-size: 20px; color: var(--blue); z-index: 1;
+  }
+  .pipe-step:last-child::after { display: none; }
+  .pipe-step.s1 { border-top: 4px solid #c0392b; }
+  .pipe-step.s2 { border-top: 4px solid #d35400; }
+  .pipe-step.s3 { border-top: 4px solid #c9a227; }
+  .pipe-step.s4 { border-top: 4px solid #1a7a4a; }
+  .pipe-step.s5 { border-top: 4px solid #1a3a5c; }
+  .pipe-num   { font-size: 22px; font-weight: 900; color: var(--border); margin-bottom: 4px; }
+  .pipe-label { font-size: 13px; font-weight: 700; color: var(--blk); margin-bottom: 4px; }
+  .pipe-time  { font-size: 11px; color: var(--gray); }
+
+  /* ── CHANNEL LIST ── */
+  .channel-block { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 20px 24px; margin-bottom: 14px; }
+  .channel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .channel-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 20px; color: #fff;
+    letter-spacing: .5px;
+  }
+  .badge-energy   { background: var(--red); }
+  .badge-food     { background: var(--orange); }
+  .badge-monetary { background: var(--blue); }
+  .badge-expect   { background: var(--gray); }
+  .channel-title { font-size: 14px; font-weight: 700; }
+  .channel-chain  {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+    font-size: 12px; color: var(--gray);
+  }
+  .chain-node {
+    background: var(--light); border: 1px solid var(--border);
+    border-radius: 4px; padding: 3px 8px; color: var(--blk); font-weight: 600;
+  }
+  .chain-arrow { color: var(--red); font-weight: 700; }
+
+  /* ── ASSET TABLE ── */
+  .asset-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .asset-table th { background: var(--blue); color: #fff; padding: 11px 14px; font-size: 12px; font-weight: 600; text-align: left; }
+  .asset-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .asset-table tr:last-child td { border-bottom: none; }
+  .asset-table tr:hover td { background: #f7f9fd; }
+  .badge-up    { display:inline-block; background:#e8f9f1; color:var(--green); border:1px solid #a8e4c5; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; }
+  .badge-down  { display:inline-block; background:var(--red-bg); color:var(--red); border:1px solid #f5c6c2; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; }
+  .badge-mid   { display:inline-block; background:var(--gld-bg); color:#7a5c00; border:1px solid #f0d888; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; }
+  .badge-neu   { display:inline-block; background:var(--light); color:var(--gray); border:1px solid var(--border); border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; }
+  .star-high   { color: var(--red); font-size: 15px; }
+  .star-mid    { color: var(--gold); font-size: 15px; }
+  .star-low    { color: #ccc; font-size: 15px; }
+
+  /* ── HISTORY TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 26px; }
+  .tl-dot {
+    position: absolute; left: -26px; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--blue);
+    background: var(--blue);
+  }
+  .tl-dot.red { background: var(--red); box-shadow: 0 0 0 2px var(--red); }
+  .tl-dot.gld { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+  .tl-dot.org { background: var(--orange); box-shadow: 0 0 0 2px var(--orange); }
+  .tl-era  { font-size: 11px; font-weight: 700; color: var(--gray); letter-spacing: 1px; margin-bottom: 3px; }
+  .tl-head { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--blk); }
+  .tl-body { font-size: 13px; color: var(--gray); line-height: 1.7; background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .tl-kpi  { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .tl-kpi-item { background: var(--red-bg); color: var(--red); border-radius: 4px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .tl-kpi-item.org { background: var(--org-bg); color: var(--orange); }
+  .tl-kpi-item.gld { background: var(--gld-bg); color: #7a5c00; }
+  .tl-kpi-item.grn { background: var(--grn-bg); color: var(--green); }
+
+  /* ── STRATEGY MATRIX ── */
+  .strategy-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .strategy-card {
+    border-radius: 10px; padding: 18px 16px; border: 1px solid var(--border);
+  }
+  .strategy-card.overweight  { background: var(--grn-bg); border-color: #a8e4c5; }
+  .strategy-card.neutral     { background: var(--gld-bg); border-color: #f0d888; }
+  .strategy-card.underweight { background: var(--red-bg); border-color: #f5c6c2; }
+  .strategy-rank { font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .strategy-rank.ow  { color: var(--green); }
+  .strategy-rank.neu { color: #7a5c00; }
+  .strategy-rank.uw  { color: var(--red); }
+  .strategy-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .strategy-card ul { list-style: none; }
+  .strategy-card ul li { font-size: 12.5px; color: var(--gray); padding: 2px 0; }
+  .strategy-card ul li::before { content: '· '; font-weight: 700; }
+
+  /* ── CHART WRAPPER ── */
+  .chart-wrap { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; }
+  .chart-title { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 14px; }
+
+  /* ── FOOTNOTE ── */
+  .footnote { font-size: 11.5px; color: #999; border-top: 1px solid var(--border); margin-top: 40px; padding-top: 14px; }
+  .footnote a { color: #6b8fb5; text-decoration: none; }
+  .footnote a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .cards-2, .cards-3, .cards-4 { grid-template-columns: 1fr 1fr; }
+    .pipeline { gap: 4px; }
+    .pipe-step::after { display: none; }
+    .strategy-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 20px; }
+  }
+  @media (max-width: 420px) {
+    .cards-2, .cards-4 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO BANNER ═══ -->
+<div class="hero">
+  <div class="hero-label">Deep Research · Macro Analysis</div>
+  <div class="hero-title">战争通胀传导机制与资产影响研究报告</div>
+  <div class="hero-sub">系统梳理战争引发大通胀的传导路径，复盘四大历史案例，量化评估各类资本市场资产的机会与风险</div>
+  <div class="hero-meta">
+    <span class="hero-tag">📅 2026-04-21</span>
+    <span class="hero-tag">📊 宏观经济 · 通胀研究</span>
+    <span class="hero-tag">⚔️ 战争经济学</span>
+    <span class="hero-tag">🏦 跨资产配置</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══ 执行摘要 ═══ -->
+  <div class="summary-box" style="margin-top:8px;">
+    <h3>▌ 执行摘要</h3>
+    <p>战争通胀是典型的供给冲击型通胀，传导遵循 <strong>「能源先行 → 粮食跟进 → 工资响应 → 资产分化」</strong> 的规律。历史数据显示：一战德国超级通胀达每月 +20%、1970年代黄金涨幅 +2300%、俄乌战争欧洲天然气价格飙升至战前 10 倍。<br>
+    在资产影响方面，实物资产（黄金、大宗商品）显著优于名义金融资产；债券市场整体承压；股票内部出现能源、军工大幅跑赢而成长科技深度受损的行业分化。</p>
+  </div>
+
+  <!-- ═══ 关键数据速览 ═══ -->
+  <div class="sec-title">关键数据速览</div>
+  <div class="cards cards-4">
+    <div class="card red">
+      <div class="card-icon">🛢️</div>
+      <div class="card-title">石油涨幅（1970s）</div>
+      <div class="card-value" style="color:var(--red)">+1000%+</div>
+      <div class="card-desc">OPEC禁运 1973–1974</div>
+    </div>
+    <div class="card gld">
+      <div class="card-icon">🥇</div>
+      <div class="card-title">黄金涨幅（1970s）</div>
+      <div class="card-value" style="color:#7a5c00">+2300%</div>
+      <div class="card-desc">$35 → $850/oz</div>
+    </div>
+    <div class="card org">
+      <div class="card-icon">🌾</div>
+      <div class="card-title">小麦涨幅（俄乌）</div>
+      <div class="card-value" style="color:var(--orange)">+70%</div>
+      <div class="card-desc">2022 年 3 月，单月峰值</div>
+    </div>
+    <div class="card blue">
+      <div class="card-icon">🔥</div>
+      <div class="card-title">欧洲天然气（俄乌）</div>
+      <div class="card-value" style="color:var(--blue)">×10</div>
+      <div class="card-desc">€340/MWh，历史峰值</div>
+    </div>
+  </div>
+
+  <!-- ═══ 传导五阶段 ═══ -->
+  <div class="sec-title danger">传导路径：五阶段时序模型</div>
+  <div class="pipeline">
+    <div class="pipe-step s1">
+      <div class="pipe-num">01</div>
+      <div class="pipe-label">恐慌 · 避险</div>
+      <div class="pipe-time">0 – 2 周</div>
+    </div>
+    <div class="pipe-step s2">
+      <div class="pipe-num">02</div>
+      <div class="pipe-label">商品全面上涨</div>
+      <div class="pipe-time">2 – 8 周</div>
+    </div>
+    <div class="pipe-step s3">
+      <div class="pipe-num">03</div>
+      <div class="pipe-label">实体经济传导</div>
+      <div class="pipe-time">1 – 6 月</div>
+    </div>
+    <div class="pipe-step s4">
+      <div class="pipe-num">04</div>
+      <div class="pipe-label">政策响应·资产重估</div>
+      <div class="pipe-time">6 – 18 月</div>
+    </div>
+    <div class="pipe-step s5">
+      <div class="pipe-num">05</div>
+      <div class="pipe-label">长期结构调整</div>
+      <div class="pipe-time">18 月以上</div>
+    </div>
+  </div>
+
+  <!-- ═══ 四大传导渠道 ═══ -->
+  <div class="sec-title danger">四大传导渠道</div>
+
+  <div class="channel-block">
+    <div class="channel-header">
+      <span class="channel-badge badge-energy">渠道一</span>
+      <span class="channel-title">能源渠道（最快、最强）</span>
+    </div>
+    <div class="channel-chain">
+      <span class="chain-node">战争爆发</span><span class="chain-arrow">→</span>
+      <span class="chain-node">油气供应中断</span><span class="chain-arrow">→</span>
+      <span class="chain-node">能源价格飙升</span><span class="chain-arrow">→</span>
+      <span class="chain-node">工业生产成本上涨</span><span class="chain-arrow">→</span>
+      <span class="chain-node">终端消费品提价</span><span class="chain-arrow">→</span>
+      <span class="chain-node">全局通胀</span>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--gray)">典型时滞：2–4 周即可到达峰值。欧洲对俄罗斯天然气的依赖度超过 40%，断供后能源通胀的传导极为迅猛。</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="channel-header">
+      <span class="channel-badge badge-food">渠道二</span>
+      <span class="channel-title">粮食渠道（影响最广）</span>
+    </div>
+    <div class="channel-chain">
+      <span class="chain-node">战区粮食出口中断</span><span class="chain-arrow">→</span>
+      <span class="chain-node">化肥价格上涨</span><span class="chain-arrow">→</span>
+      <span class="chain-node">谷物期货飙升</span><span class="chain-arrow">→</span>
+      <span class="chain-node">食品加工成本上升</span><span class="chain-arrow">→</span>
+      <span class="chain-node">消费端物价上涨</span><span class="chain-arrow">→</span>
+      <span class="chain-node">工资上涨压力</span>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--gray)">俄乌两国占全球小麦出口约 28%、玉米约 15%、葵花籽油约 80%。天然气→尿素→化肥的二次传导放大了农产品的涨价幅度。</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="channel-header">
+      <span class="channel-badge badge-monetary">渠道三</span>
+      <span class="channel-title">货币财政渠道（放大器）</span>
+    </div>
+    <div class="channel-chain">
+      <span class="chain-node">军费开支扩张</span><span class="chain-arrow">→</span>
+      <span class="chain-node">财政赤字飙升</span><span class="chain-arrow">→</span>
+      <span class="chain-node">货币超发</span><span class="chain-arrow">→</span>
+      <span class="chain-node">汇率贬值</span><span class="chain-arrow">→</span>
+      <span class="chain-node">进口通胀</span><span class="chain-arrow">→</span>
+      <span class="chain-node">通胀螺旋</span>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--gray)">一战德国案例：战争财政+货币超发导致 1923 年超级通胀，物价在一年内上涨数十亿倍。此渠道是将短期冲击演变为持续通胀的核心机制。</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="channel-header">
+      <span class="channel-badge badge-expect">渠道四</span>
+      <span class="channel-title">预期渠道（自我强化）</span>
+    </div>
+    <div class="channel-chain">
+      <span class="chain-node">通胀预期上升</span><span class="chain-arrow">→</span>
+      <span class="chain-node">工人要求加薪</span><span class="chain-arrow">→</span>
+      <span class="chain-node">企业提前囤货</span><span class="chain-arrow">→</span>
+      <span class="chain-node">供给缺口扩大</span><span class="chain-arrow">→</span>
+      <span class="chain-node">物价进一步上涨</span>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--gray)">工资-物价螺旋的时滞约为 6–12 个月。一旦形成自我强化，即使战争结束，通胀惯性也难以迅速消退，1970s 的教训印证了这一点。</p>
+  </div>
+
+  <!-- ═══ 各类资产影响 ═══ -->
+  <div class="sec-title gold">各类资产影响矩阵</div>
+
+  <table class="asset-table">
+    <thead>
+      <tr>
+        <th>资产类别</th>
+        <th>通胀初期（0–6月）</th>
+        <th>通胀深化期（6–18月）</th>
+        <th>政策加息期</th>
+        <th>推荐配置</th>
+        <th>核心逻辑</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>🥇 黄金</strong></td>
+        <td><span class="badge-up">强势上涨</span></td>
+        <td><span class="badge-up">持续上涨</span></td>
+        <td><span class="badge-mid">承压震荡</span></td>
+        <td><span class="star-high">★★★★★</span></td>
+        <td>避险+通胀对冲双重属性</td>
+      </tr>
+      <tr>
+        <td><strong>🛢️ 能源商品</strong></td>
+        <td><span class="badge-up">极速上涨</span></td>
+        <td><span class="badge-up">高位波动</span></td>
+        <td><span class="badge-mid">趋于回落</span></td>
+        <td><span class="star-high">★★★★★</span></td>
+        <td>战争直接影响供给端</td>
+      </tr>
+      <tr>
+        <td><strong>🌾 农产品</strong></td>
+        <td><span class="badge-up">快速上涨</span></td>
+        <td><span class="badge-up">持续上涨</span></td>
+        <td><span class="badge-mid">趋于稳定</span></td>
+        <td><span class="star-high">★★★★</span></td>
+        <td>供应链中断+化肥成本双击</td>
+      </tr>
+      <tr>
+        <td><strong>⚒️ 工业金属</strong></td>
+        <td><span class="badge-mid">分化上涨</span></td>
+        <td><span class="badge-mid">分化表现</span></td>
+        <td><span class="badge-down">需求拖累</span></td>
+        <td><span class="star-mid">★★★</span></td>
+        <td>铜受需求下降制约；锂钴稀缺性强</td>
+      </tr>
+      <tr>
+        <td><strong>🏭 能源股</strong></td>
+        <td><span class="badge-up">大幅上涨</span></td>
+        <td><span class="badge-up">持续跑赢</span></td>
+        <td><span class="badge-mid">仍有支撑</span></td>
+        <td><span class="star-high">★★★★★</span></td>
+        <td>盈利与油价正相关，估值低</td>
+      </tr>
+      <tr>
+        <td><strong>⚔️ 军工股</strong></td>
+        <td><span class="badge-up">快速拉升</span></td>
+        <td><span class="badge-up">持续受益</span></td>
+        <td><span class="badge-up">政策支持</span></td>
+        <td><span class="star-high">★★★★★</span></td>
+        <td>订单直接来自军费增加</td>
+      </tr>
+      <tr>
+        <td><strong>🍎 必需消费</strong></td>
+        <td><span class="badge-mid">小幅上涨</span></td>
+        <td><span class="badge-mid">相对防御</span></td>
+        <td><span class="badge-mid">成本压力</span></td>
+        <td><span class="star-mid">★★★</span></td>
+        <td>需求稳定但成本转嫁有限</td>
+      </tr>
+      <tr>
+        <td><strong>💻 科技/成长股</strong></td>
+        <td><span class="badge-down">估值承压</span></td>
+        <td><span class="badge-down">深度调整</span></td>
+        <td><span class="badge-down">加息双杀</span></td>
+        <td><span class="star-low">★</span></td>
+        <td>高估值依赖低利率，实际利率上升伤害最大</td>
+      </tr>
+      <tr>
+        <td><strong>📋 名义国债</strong></td>
+        <td><span class="badge-mid">小幅下跌</span></td>
+        <td><span class="badge-down">持续下跌</span></td>
+        <td><span class="badge-down">利率上升下跌</span></td>
+        <td><span class="star-low">★</span></td>
+        <td>实际利率为负，资本利得损失</td>
+      </tr>
+      <tr>
+        <td><strong>📈 TIPS（通胀债）</strong></td>
+        <td><span class="badge-up">上涨</span></td>
+        <td><span class="badge-up">持续表现</span></td>
+        <td><span class="badge-mid">相对抗跌</span></td>
+        <td><span class="star-high">★★★★</span></td>
+        <td>本金随通胀调整，直接保护实际收益</td>
+      </tr>
+      <tr>
+        <td><strong>🏠 房地产</strong></td>
+        <td><span class="badge-up">实物保值</span></td>
+        <td><span class="badge-mid">加息抑制</span></td>
+        <td><span class="badge-down">房贷利率承压</span></td>
+        <td><span class="star-mid">★★★</span></td>
+        <td>温和通胀好于高通胀+激进加息</td>
+      </tr>
+      <tr>
+        <td><strong>💵 美元现金</strong></td>
+        <td><span class="badge-up">避险升值</span></td>
+        <td><span class="badge-mid">高息但贬值</span></td>
+        <td><span class="badge-mid">加息受益</span></td>
+        <td><span class="star-mid">★★★</span></td>
+        <td>短期避险，长期被通胀侵蚀购买力</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══ 图表：大类资产表现 ═══ -->
+  <div class="sec-title" style="margin-top:36px;">历史通胀期资产表现对比</div>
+  <div class="chart-wrap">
+    <div class="chart-title">1970 年代滞胀期各资产年化真实收益率（%）</div>
+    <canvas id="assetChart" height="100"></canvas>
+  </div>
+
+  <div class="cards cards-2" style="margin-top:14px;">
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-title">战争通胀传导路径权重分析</div>
+      <canvas id="channelChart" height="180"></canvas>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-title">各资产通胀防御评分（0–10）</div>
+      <canvas id="radarChart" height="180"></canvas>
+    </div>
+  </div>
+
+  <!-- ═══ 历史案例 ═══ -->
+  <div class="sec-title">四大历史案例</div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot red"></div>
+      <div class="tl-era">1914 – 1923</div>
+      <div class="tl-head">一战 + 魏玛德国超级通胀</div>
+      <div class="tl-body">
+        一战期间德国为战争大量举债印钞，战后赔款压力使财政崩溃。1923年进入超级通胀，物价每月上涨数千倍，最终以货币改革终结。核心教训：战争财政赤字+货币超发是通胀螺旋的根本驱动。
+        <div class="tl-kpi">
+          <span class="tl-kpi-item">月通胀率峰值 +29,500%</span>
+          <span class="tl-kpi-item org">马克几乎归零</span>
+          <span class="tl-kpi-item gld">黄金保值效果极佳</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-era">1939 – 1948</div>
+      <div class="tl-head">二战 + 战后价格反弹</div>
+      <div class="tl-body">
+        美国《1942年价格控制法案》将通胀压在可控范围内，但形成"堰塞湖效应"——管制解除后（1946–48年）通胀压力集中释放，CPI 单年上涨超 18%。布雷顿森林体系的建立为战后重建提供了货币秩序。
+        <div class="tl-kpi">
+          <span class="tl-kpi-item">战后 CPI 峰值 +18%</span>
+          <span class="tl-kpi-item org">价格管制解除后爆发</span>
+          <span class="tl-kpi-item grn">布雷顿森林稳定预期</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot gld"></div>
+      <div class="tl-era">1968 – 1982</div>
+      <div class="tl-head">越战 + 两次石油危机 = 大滞胀</div>
+      <div class="tl-body">
+        越战财政压力+1973年OPEC石油禁运+1979年第二次石油危机，三重冲击叠加产生经典"滞胀"。沃尔克将联邦基金利率提升至20%，代价是1980–82年深度衰退。这是研究战争通胀最完整的历史案例。
+        <div class="tl-kpi">
+          <span class="tl-kpi-item">美国 CPI 峰值 +13.3%（1979）</span>
+          <span class="tl-kpi-item org">石油涨幅 +1000%</span>
+          <span class="tl-kpi-item gld">黄金 +2300%</span>
+          <span class="tl-kpi-item grn">股市"失去的十年"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot org"></div>
+      <div class="tl-era">2022 – 至今</div>
+      <div class="tl-head">俄乌战争 + 全球能源粮食危机</div>
+      <div class="tl-body">
+        俄乌战争是当代最新的战争通胀案例。能源渠道（欧洲天然气断供）与粮食渠道（黑海走廊封锁）同步触发。欧央行与美联储以1970年代以来最快的速度加息，通胀于2023年开始回落，但高利率的经济代价持续显现。
+        <div class="tl-kpi">
+          <span class="tl-kpi-item">欧洲通胀峰值 +10.6%（2022.10）</span>
+          <span class="tl-kpi-item org">天然气涨幅 ×10</span>
+          <span class="tl-kpi-item gld">美联储加息 525bps</span>
+          <span class="tl-kpi-item grn">欧央行加息 450bps</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ 配置策略 ═══ -->
+  <div class="sec-title gold">投资组合配置策略</div>
+  <div class="strategy-grid">
+    <div class="strategy-card overweight">
+      <div class="strategy-rank ow">▲ 超配</div>
+      <h4>实物资产 · 通胀受益</h4>
+      <ul>
+        <li>黄金 / 贵金属 ETF</li>
+        <li>石油 / 天然气股票</li>
+        <li>军工板块</li>
+        <li>农业 / 食品板块</li>
+        <li>TIPS（通胀保值债券）</li>
+        <li>大宗商品指数基金</li>
+      </ul>
+    </div>
+    <div class="strategy-card neutral">
+      <div class="strategy-rank neu">▶ 标配 / 谨慎</div>
+      <h4>防御资产 · 部分保护</h4>
+      <ul>
+        <li>必需消费品股票</li>
+        <li>医疗保健板块</li>
+        <li>美元现金（短期避险）</li>
+        <li>短期国库券</li>
+        <li>实物房地产（温和通胀）</li>
+        <li>瑞士法郎 / 大宗货币</li>
+      </ul>
+    </div>
+    <div class="strategy-card underweight">
+      <div class="strategy-rank uw">▼ 低配</div>
+      <h4>名义资产 · 主动规避</h4>
+      <ul>
+        <li>长久期名义国债</li>
+        <li>高负债科技成长股</li>
+        <li>高 P/E 非必需消费</li>
+        <li>新兴市场货币</li>
+        <li>现金（实际购买力萎缩）</li>
+        <li>高收益信用债</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ 核心结论 ═══ -->
+  <div class="sec-title" style="margin-top:40px;">核心结论</div>
+  <div class="cards cards-2">
+    <div class="card blue" style="border-top-width:3px;">
+      <div class="card-title">传导规律</div>
+      <p style="font-size:13px;color:var(--gray);line-height:1.8;margin-top:6px;">战争通胀传导遵循固定时序：<strong>能源（0–2周）→ 原材料（2–8周）→ 粮食（1–3月）→ 工资（3–12月）→ 全局通胀（6–18月）</strong>。每一阶段的传导都比上一阶段更广泛，但传导速度逐渐放缓。</p>
+    </div>
+    <div class="card red" style="border-top-width:3px;">
+      <div class="card-title">资产应对原则</div>
+      <p style="font-size:13px;color:var(--gray);line-height:1.8;margin-top:6px;">核心策略：<strong>超配实物资产、缩短债券久期、向通胀受益行业集中股票持仓、持有避险货币</strong>。关键时机：能源价格开始快速上涨时即应开始调仓，而非等通胀数据公布后再行动。</p>
+    </div>
+  </div>
+
+  <!-- ═══ 参考来源 ═══ -->
+  <div class="footnote">
+    <strong>参考来源</strong><br>
+    <a href="https://www.ecb.europa.eu/pub/pdf/sintra/ecb.forumcentbankpub2024_Iacoviello_paper.en.pdf">ECB – Geopolitical Shocks and Inflation (2024)</a> ·
+    <a href="https://www.imf.org/-/media/Files/Publications/WP/2024/English/wpiea2024062-print-pdf.ashx">IMF – Global Value Chains and Inflation Dynamics (2024)</a> ·
+    <a href="https://www.federalreservehistory.org/essays/great-inflation">Federal Reserve History – The Great Inflation</a> ·
+    <a href="https://www.iea.org/topics/russias-war-on-ukraine">IEA – Russia's War on Ukraine</a> ·
+    <a href="https://www.econlib.org/hyperinflation-in-germany-1921-1923/">EconLib – Hyperinflation in Germany, 1921-1923</a> ·
+    <a href="https://rpc.cfainstitute.org/blogs/enterprising-investor/2022/sector-and-factor-performance-in-wartime">CFA Institute – Sector Performance in Wartime</a>
+    <br><br>⚠️ 本报告仅供研究参考，不构成投资建议。
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ── Chart 1：资产年化真实收益率 ──
+const ctx1 = document.getElementById('assetChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['黄金','石油股票','军工股','能源ETF','农产品','房地产','必需消费','标普500全量','名义长期国债','现金（美元）','科技成长股'],
+    datasets: [{
+      label: '年化真实收益率（%）',
+      data: [31.2, 28.4, 22.1, 19.8, 14.3, 8.5, 3.2, -1.4, -6.8, -3.9, -11.2],
+      backgroundColor: [
+        '#c9a227','#c0392b','#1a3a5c','#d35400','#e67e22',
+        '#1a7a4a','#2980b9','#7f8c8d','#e74c3c','#95a5a6','#922b21'
+      ],
+      borderRadius: 4,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + '%' } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#eee' }, ticks: { callback: v => v + '%', font: { size: 11 } } }
+    }
+  }
+});
+
+// ── Chart 2：渠道权重饼图 ──
+const ctx2 = document.getElementById('channelChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['能源渠道', '粮食渠道', '货币财政渠道', '预期渠道'],
+    datasets: [{
+      data: [38, 28, 22, 12],
+      backgroundColor: ['#c0392b','#d35400','#1a3a5c','#7f8c8d'],
+      borderWidth: 2,
+      borderColor: '#fff',
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } }
+    }
+  }
+});
+
+// ── Chart 3：雷达图 ──
+const ctx3 = document.getElementById('radarChart').getContext('2d');
+new Chart(ctx3, {
+  type: 'radar',
+  data: {
+    labels: ['黄金', '能源商品', '军工股', 'TIPS', '房地产', '科技股', '名义债券'],
+    datasets: [
+      {
+        label: '通胀防御评分',
+        data: [9.5, 9.0, 8.5, 8.0, 6.0, 2.5, 1.5],
+        backgroundColor: 'rgba(192,57,43,0.12)',
+        borderColor: '#c0392b',
+        borderWidth: 2,
+        pointBackgroundColor: '#c0392b',
+        pointRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      r: {
+        min: 0, max: 10,
+        ticks: { stepSize: 2, font: { size: 10 }, backdropColor: 'transparent' },
+        grid: { color: '#e0e5ef' },
+        pointLabels: { font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>润泽科技（300442）投资分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .hero-tags {
+            margin-top: 15px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-right: 8px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .summary-card .card-title {
+            color: white;
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .data-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .data-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .data-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .data-value.positive {
+            color: #e74c3c;
+        }
+
+        .data-value.negative {
+            color: #27ae60;
+        }
+
+        .risk-level-high {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .risk-level-medium {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .decision-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .decision-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .decision-confidence {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .table tr:hover {
+            background: #f9fafb;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title:before {
+            content: "▸";
+            margin-right: 8px;
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .risk-warning {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .risk-warning-title {
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+
+        .opportunity-highlight {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .disclaimer {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 10px;
+            }
+
+            .hero-title {
+                font-size: 22px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .data-value {
+                font-size: 20px;
+            }
+
+            .decision-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-title">润泽科技（300442.SZ）</div>
+            <div class="hero-subtitle">数据中心与AI智算龙头 | A股</div>
+            <div class="hero-tags">
+                <span class="hero-tag">通信服务</span>
+                <span class="hero-tag">人工智能</span>
+                <span class="hero-tag">算力基础设施</span>
+            </div>
+        </div>
+
+        <!-- 决策摘要 -->
+        <div class="decision-card">
+            <div class="decision-title">HOLD</div>
+            <div class="decision-confidence">信心等级：中等 | 风险等级：高</div>
+            <p style="font-size: 15px; opacity: 0.95; max-width: 600px; margin: 0 auto;">
+                短期调整压力较大（今日跌4.09%），但AIDC业务快速成长、机构目标价仍有39%空间。
+                建议等待回调至85-88元区间再考虑分批建仓，关注上架率提升和算力交付进度。
+            </p>
+        </div>
+
+        <!-- 核心数据概览 -->
+        <div class="card">
+            <div class="card-title">核心数据概览</div>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-label">最新价格</div>
+                    <div class="data-value">¥91.95</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">今日涨跌幅</div>
+                    <div class="data-value negative">-4.09%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">年初至今涨幅</div>
+                    <div class="data-value positive">+74.15%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市盈率（TTM）</div>
+                    <div class="data-value">28.89</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市净率</div>
+                    <div class="data-value">10.52</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">总市值</div>
+                    <div class="data-value">1503亿</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 投资建议 -->
+        <div class="card">
+            <div class="card-title">操作建议</div>
+            <table class="table">
+                <tr>
+                    <th width="30%">项目</th>
+                    <th width="70%">建议</th>
+                </tr>
+                <tr>
+                    <td><strong>入场价位</strong></td>
+                    <td>85-88元区间（回调10-15%后再建仓）</td>
+                </tr>
+                <tr>
+                    <td><strong>目标价位</strong></td>
+                    <td>133元（机构综合目标价，+45%空间）</td>
+                </tr>
+                <tr>
+                    <td><strong>止损价位</strong></td>
+                    <td>78元（跌停板下方，-15%严格止损）</td>
+                </tr>
+                <tr>
+                    <td><strong>仓位比例</strong></td>
+                    <td>20-30%（中仓，分散风险）</td>
+                </tr>
+                <tr>
+                    <td><strong>操作节奏</strong></td>
+                    <td>分批建仓，3-4次入场，避免追高</td>
+                </tr>
+                <tr>
+                    <td><strong>关注催化剂</strong></td>
+                    <td>新算力中心交付上架、REIT扩募、AI客户签约</td>
+                </tr>
+                <tr>
+                    <td><strong>关注风险事件</strong></td>
+                    <td>行业竞争加剧、毛利率继续下滑、上架率不及预期</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 财务分析 -->
+        <div class="card">
+            <div class="card-title">财务与成长性分析</div>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="profitChart"></canvas>
+            </div>
+
+            <div class="section">
+                <div class="section-title">盈利能力</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>ROE TTM</strong>：36.41%（行业排名4/128），优秀水平</li>
+                    <li><strong>销售净利率 TTM</strong>：82.47%（行业排名1/128），盈利能力极强</li>
+                    <li><strong>销售毛利率 TTM</strong>：45.57%（行业排名14/128），中等偏上</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">成长性</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>营收增速 TTM</strong>：38.01%（行业排名17/128），高成长</li>
+                    <li><strong>净利润增速 TTM</strong>：197.89%（行业排名7/128），超高速增长</li>
+                    <li><strong>2025年净利润</strong>：50.50亿元，同比+182%（主要来自REIT资产处置收益）</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">运营与偿债</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>资产周转率</strong>：0.15次（行业排名125/128），运营效率偏弱</li>
+                    <li><strong>资产负债率</strong>：64.97%（行业排名111/128），偿债压力较大</li>
+                    <li><strong>流动比率</strong>：1.12（行业排名110/128），短期偿债能力偏弱</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 业务结构 -->
+        <div class="card">
+            <div class="card-title">业务结构与竞争优势</div>
+            <div class="chart-container">
+                <canvas id="businessChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="regionChart"></canvas>
+            </div>
+
+            <div class="section">
+                <div class="section-title">IDC业务（55.76%）</div>
+                <p>传统数据中心业务，成熟算力中心上架率超过90%，贡献稳定现金流</p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">AIDC业务（44.24%，快速提升）</div>
+                <p>AI智算中心业务，2024年营收占比从27.56%提升至33.25%，公司重点布局方向</p>
+            </div>
+
+            <div class="opportunity-highlight">
+                <strong>竞争优势</strong>：
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>液冷技术领先：率先交付行业首例整栋纯液冷智算中心</li>
+                    <li>稀缺资源储备：能耗指标储备较2023年末增加约130%</li>
+                    <li>头部客户资源：已吸引众多AI头部客户入驻</li>
+                    <li>全国布局：京津冀、长三角、大湾区三大园区协同发展</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 资金流向与市场情绪 -->
+        <div class="card">
+            <div class="card-title">资金流向与市场情绪</div>
+            <div class="section">
+                <div class="section-title">今日资金流向</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>主力资金</strong>：净流出4.57亿元（流入15.25亿，流出19.83亿）</li>
+                    <li><strong>散户资金</strong>：净流入4.57亿元（散户承接主力抛压）</li>
+                    <li><strong>超大单</strong>：净流出3.17亿元</li>
+                    <li><strong>大单</strong>：净流出1.41亿元</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">机构持仓</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>基金持股比例</strong>：0.15%（237万股），近期减持0.08个百分点</li>
+                    <li><strong>机构调研次数</strong>：186次（行业排名2/128），市场关注度极高</li>
+                    <li><strong>最新机构数</strong>：19家，较上期持平</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">机构评级与目标价</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>综合目标价</strong>：133.24元（+38.98%上涨空间）</li>
+                    <li><strong>评级分布</strong>：2026年4月有5家机构发布观点，100%为买入/增持</li>
+                    <li><strong>研报观点</strong>：中原证券、国联民生证券等维持"买入"评级</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 风险提示 -->
+        <div class="card">
+            <div class="card-title">风险提示</div>
+
+            <div class="risk-warning">
+                <div class="risk-warning-title">🚨 高风险警示</div>
+                <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                    <li><strong>估值高企</strong>：PE 28.89倍、PB 10.52倍，处于历史高位区间</li>
+                    <li><strong>偿债压力大</strong>：资产负债率64.97%，流动比率仅1.12</li>
+                    <li><strong>毛利率下滑</strong>：2025Q3毛利率45.95%，同比下降10.85个百分点</li>
+                </ul>
+            </div>
+
+            <div class="risk-warning">
+                <div class="risk-warning-title">⚠️ 关键风险</div>
+                <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                    <li><strong>行业竞争加剧</strong>：AIDC竞争兴起，高性能算力模组业务盈利空间大幅下滑</li>
+                    <li><strong>上架率不及预期</strong>：新算力中心客户上架进度可能影响业绩释放</li>
+                    <li><strong>AI需求波动</strong>：AI行业需求若不及预期，将影响公司长期成长性</li>
+                    <li><strong>政策风险</strong>：能耗政策、数据中心监管政策变化可能影响业务开展</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 免责声明 -->
+        <div class="disclaimer">
+            <strong>免责声明</strong><br>
+            本分析由 AI 基于 NeoData 实时金融数据和公开市场信息自动生成，仅供参考，不构成任何投资建议。<br>
+            投资有风险，入市需谨慎。过去的表现不代表未来的结果。<br>
+            请结合自身风险承受能力、投资目标和财务状况，做出独立投资判断。<br>
+            数据更新时间：2026年4月24日 11:12
+        </div>
+    </div>
+
+    <script>
+        // Chart.js 配置
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // 营收趋势图
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2022', '2023', '2024', '2025(预测)'],
+                datasets: [{
+                    label: '营业收入（亿元）',
+                    data: [27.15, 43.51, 43.65, 56.74],
+                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                plugins: {
+                    ...chartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: '营业收入趋势（2022-2025）'
+                    }
+                }
+            }
+        });
+
+        // 净利润趋势图
+        const profitCtx = document.getElementById('profitChart').getContext('2d');
+        new Chart(profitCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '归母净利润（亿元）',
+                    data: [11.98, 17.62, 17.90, 50.50],
+                    backgroundColor: 'rgba(240, 147, 251, 0.6)',
+                    borderColor: 'rgba(240, 147, 251, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                plugins: {
+                    ...chartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: '归母净利润趋势（2022-2025）'
+                    }
+                }
+            }
+        });
+
+        // 业务结构图
+        const businessCtx = document.getElementById('businessChart').getContext('2d');
+        new Chart(businessCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['IDC业务', 'AIDC业务'],
+                datasets: [{
+                    data: [55.76, 44.24],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(245, 87, 108, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                plugins: {
+                    ...chartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: '主营业务构成（2025）'
+                    }
+                }
+            }
+        });
+
+        // 地区分布图
+        const regionCtx = document.getElementById('regionChart').getContext('2d');
+        new Chart(regionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['华北地区', '华东地区', '华南地区'],
+                datasets: [{
+                    data: [74.89, 22.66, 2.45],
+                    backgroundColor: [
+                        'rgba(23, 162, 184, 0.8)',
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(255, 193, 7, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                plugins: {
+                    ...chartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: '地区收入构成（2025）'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
