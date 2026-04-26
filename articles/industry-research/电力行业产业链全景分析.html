@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电力行业全产业链全景分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#0d1117;color:#e6edf3;line-height:1.7;padding:16px}
+.container{max-width:1400px;margin:0 auto}
+
+/* Banner */
+.banner{background:linear-gradient(135deg,#0c2340 0%,#1a3a2a 50%,#2a1a0a 100%);border-radius:16px;padding:36px 30px;margin-bottom:24px;text-align:center;border:1px solid rgba(46,204,113,0.3);position:relative;overflow:hidden}
+.banner::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 50%,rgba(46,204,113,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(241,196,15,0.08) 0%,transparent 50%)}
+.banner h1{font-size:2.2em;background:linear-gradient(90deg,#2ecc71,#f1c40f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;position:relative}
+.banner .subtitle{color:#8b949e;font-size:1.05em;position:relative}
+.banner .date{color:#58a6ff;font-size:0.85em;margin-top:6px;position:relative}
+
+/* Chain Flow */
+.chain-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin:20px 0 10px;flex-wrap:wrap;position:relative}
+.chain-node{background:rgba(46,204,113,0.15);border:1px solid rgba(46,204,113,0.4);color:#2ecc71;padding:8px 18px;border-radius:20px;font-size:0.9em;font-weight:600;position:relative}
+.chain-node.upstream{border-color:rgba(241,196,15,0.5);color:#f1c40f;background:rgba(241,196,15,0.1)}
+.chain-node.midstream{border-color:rgba(46,204,113,0.5);color:#2ecc71;background:rgba(46,204,113,0.1)}
+.chain-node.downstream{border-color:rgba(52,152,219,0.5);color:#3498db;background:rgba(52,152,219,0.1)}
+.chain-arrow{color:#8b949e;font-size:1.2em}
+
+/* Section */
+.section{background:rgba(22,27,34,0.9);border-radius:14px;padding:24px;margin-bottom:24px;border:1px solid rgba(48,54,61,0.8)}
+.section-title{font-size:1.4em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid rgba(46,204,113,0.3);display:flex;align-items:center;gap:10px}
+.section-title.upstream{color:#f1c40f;border-color:rgba(241,196,15,0.3)}
+.section-title.midstream{color:#2ecc71;border-color:rgba(46,204,113,0.3)}
+.section-title.downstream{color:#3498db;border-color:rgba(52,152,219,0.3)}
+
+/* Layer Header */
+.layer-header{background:linear-gradient(90deg,rgba(46,204,113,0.12),transparent);border-radius:10px;padding:14px 18px;margin:16px 0 12px;border-left:4px solid #2ecc71}
+.layer-header.gold{border-left-color:#f1c40f;background:linear-gradient(90deg,rgba(241,196,15,0.1),transparent)}
+.layer-header.blue{border-left-color:#3498db;background:linear-gradient(90deg,rgba(52,152,219,0.1),transparent)}
+.layer-header h3{color:#2ecc71;font-size:1.1em}
+.layer-header.gold h3{color:#f1c40f}
+.layer-header.blue h3{color:#3498db}
+.layer-header p{color:#8b949e;font-size:0.88em;margin-top:4px}
+
+/* Stock Grid */
+.stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.stock-card{background:rgba(22,27,34,0.8);border-radius:8px;padding:12px;border:1px solid rgba(48,54,61,0.6);transition:transform 0.2s,border-color 0.2s}
+.stock-card:hover{transform:translateY(-2px);border-color:rgba(46,204,113,0.5)}
+.stock-name{font-weight:bold;color:#e6edf3;font-size:0.95em}
+.stock-code{color:#8b949e;font-size:0.8em}
+.stock-price{color:#58a6ff;font-size:1.1em;font-weight:bold;margin-top:4px}
+.stock-changes{display:flex;gap:8px;margin-top:6px;font-size:0.82em}
+.change-tag{padding:2px 8px;border-radius:4px}
+.up{color:#e74c3c;background:rgba(231,76,60,0.15)}
+.down{color:#2ecc71;background:rgba(46,204,113,0.15)}
+.pe-info{color:#8b949e;font-size:0.78em;margin-top:4px}
+.mv-info{color:#f1c40f;font-size:0.78em;margin-top:2px}
+
+/* Data Table */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.85em}
+th{background:rgba(46,204,113,0.12);color:#2ecc71;padding:10px;text-align:left;white-space:nowrap}
+td{padding:10px;border-bottom:1px solid rgba(48,54,61,0.5)}
+tr:hover{background:rgba(46,204,113,0.05)}
+.num{font-family:monospace;color:#58a6ff}
+
+/* KPI Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:16px 0}
+.kpi-card{background:rgba(0,0,0,0.25);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(48,54,61,0.6)}
+.kpi-card .value{font-size:1.8em;font-weight:700;color:#2ecc71}
+.kpi-card .value.gold{color:#f1c40f}
+.kpi-card .value.blue{color:#3498db}
+.kpi-card .value.red{color:#e74c3c}
+.kpi-card .label{font-size:0.82em;color:#8b949e;margin-top:4px}
+
+/* Highlight Box */
+.highlight-box{background:linear-gradient(135deg,rgba(46,204,113,0.08),rgba(52,152,219,0.08));border-radius:10px;padding:16px;margin:16px 0;border:1px solid rgba(46,204,113,0.25)}
+.highlight-box h4{color:#2ecc71;margin-bottom:10px}
+.highlight-box.gold{border-color:rgba(241,196,15,0.3);background:linear-gradient(135deg,rgba(241,196,15,0.06),rgba(46,204,113,0.06))}
+.highlight-box.gold h4{color:#f1c40f}
+.highlight-box.blue{border-color:rgba(52,152,219,0.3);background:linear-gradient(135deg,rgba(52,152,219,0.06),rgba(46,204,113,0.06))}
+.highlight-box.blue h4{color:#3498db}
+
+/* Chart Container */
+.chart-container{background:rgba(0,0,0,0.2);border-radius:8px;padding:16px;margin:16px 0;height:280px}
+
+/* Comparison Row */
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin:16px 0}
+.compare-card{background:rgba(0,0,0,0.25);border-radius:12px;padding:18px;border:1px solid rgba(48,54,61,0.6)}
+.compare-card h4{color:#58a6ff;margin-bottom:12px;font-size:1em}
+.compare-row{display:flex;justify-content:space-between;margin:6px 0;font-size:0.88em}
+.compare-label{color:#8b949e}
+.compare-value{color:#e6edf3;font-weight:600}
+
+/* Risk/Opportunity */
+.risk-item{background:rgba(231,76,60,0.08);border-left:3px solid #e74c3c;padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:0.9em}
+.opportunity-item{background:rgba(46,204,113,0.08);border-left:3px solid #2ecc71;padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:0.9em}
+
+/* Responsive */
+@media(max-width:768px){
+.banner h1{font-size:1.5em}
+.stock-grid{grid-template-columns:1fr 1fr}
+.kpi-grid{grid-template-columns:1fr 1fr}
+.compare-grid{grid-template-columns:1fr}
+table{font-size:0.78em}
+th,td{padding:6px}
+}
+@media(max-width:480px){
+.stock-grid{grid-template-columns:1fr}
+.kpi-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Banner -->
+<div class="banner">
+<h1>⚡ 电力行业全产业链全景分析</h1>
+<p class="subtitle">上游能源与设备 → 中游发电与输配电 → 下游用电与电力市场 | 覆盖40+核心标的</p>
+<p class="date">数据日期：2026年4月20日 | 来源：NeoData实时行情 + 行业公开数据</p>
+
+<div class="chain-flow">
+<div class="chain-node upstream">⛏️ 上游·能源原料</div>
+<div class="chain-arrow">→</div>
+<div class="chain-node upstream">🔧 上游·发电设备</div>
+<div class="chain-arrow">→</div>
+<div class="chain-node midstream">🏭 中游·发电运营</div>
+<div class="chain-arrow">→</div>
+<div class="chain-node midstream">🔌 中游·输配电</div>
+<div class="chain-arrow">→</div>
+<div class="chain-node downstream">🏠 下游·用电</div>
+<div class="chain-arrow">→</div>
+<div class="chain-node downstream">💹 下游·电力市场</div>
+</div>
+</div>
+
+<!-- 核心数据概览 -->
+<div class="section">
+<h2 class="section-title">📊 中国电力行业核心数据概览</h2>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">33.5</div><div class="label">总装机(亿千瓦)</div></div>
+<div class="kpi-card"><div class="value gold">52%</div><div class="label">新能源装机占比</div></div>
+<div class="kpi-card"><div class="value blue">10.05</div><div class="label">全社会用电量(万亿kWh)</div></div>
+<div class="kpi-card"><div class="value">~60%</div><div class="label">火电发电量占比</div></div>
+<div class="kpi-card"><div class="value gold">14.5</div><div class="label">最高负荷(亿千瓦)</div></div>
+<div class="kpi-card"><div class="value blue">+6.0%</div><div class="label">用电量同比增速</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+<div class="chart-container"><canvas id="installChart"></canvas></div>
+<div class="chart-container"><canvas id="usageChart"></canvas></div>
+</div>
+</div>
+
+<!-- ==================== 上游：能源原料 ==================== -->
+<div class="section">
+<h2 class="section-title upstream">⛏️ 上游 · 能源原料与设备制造</h2>
+
+<div class="layer-header gold">
+<h3>🔥 一次能源供应</h3>
+<p>煤炭仍是基础能源，但新能源上游产能扩张迅速</p>
+</div>
+
+<div class="compare-grid">
+<div class="compare-card">
+<h4>煤炭（动力煤）</h4>
+<div class="compare-row"><span class="compare-label">国内产量</span><span class="compare-value">47.6亿吨(2024)</span></div>
+<div class="compare-row"><span class="compare-label">进口量</span><span class="compare-value">5.4亿吨</span></div>
+<div class="compare-row"><span class="compare-label">长协价</span><span class="compare-value">~700元/吨</span></div>
+<div class="compare-row"><span class="compare-label">现货价</span><span class="compare-value">800-950元/吨</span></div>
+<div class="compare-row"><span class="compare-label">电力用煤占比</span><span class="compare-value">62%</span></div>
+<div class="compare-row"><span class="compare-label">趋势</span><span class="compare-value" style="color:#2ecc71">价格中枢下移，利好火电</span></div>
+</div>
+<div class="compare-card">
+<h4>天然气</h4>
+<div class="compare-row"><span class="compare-label">国内产量</span><span class="compare-value">2450亿方</span></div>
+<div class="compare-row"><span class="compare-label">对外依存度</span><span class="compare-value">40-42%</span></div>
+<div class="compare-row"><span class="compare-label">气电装机</span><span class="compare-value">1.3亿kW</span></div>
+<div class="compare-row"><span class="compare-label">度电成本</span><span class="compare-value">0.55-0.75元</span></div>
+<div class="compare-row"><span class="compare-label">定位</span><span class="compare-value" style="color:#f1c40f">调峰保障性电源</span></div>
+</div>
+<div class="compare-card">
+<h4>核燃料（铀矿）</h4>
+<div class="compare-row"><span class="compare-label">中国产量</span><span class="compare-value">~1800吨U</span></div>
+<div class="compare-row"><span class="compare-label">需求量</span><span class="compare-value">~1.2万吨U</span></div>
+<div class="compare-row"><span class="compare-label">对外依存度</span><span class="compare-value">80-85%</span></div>
+<div class="compare-row"><span class="compare-label">国际铀价</span><span class="compare-value">80+美元/磅</span></div>
+<div class="compare-row"><span class="compare-label">趋势</span><span class="compare-value" style="color:#e74c3c">供应安全挑战大</span></div>
+</div>
+</div>
+
+<div class="layer-header gold">
+<h3>🌞 新能源上游原材料与设备</h3>
+<p>光伏产能过剩出清中，储能电池需求爆发</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">中国神华</div><div class="stock-code">601088.SH</div>
+<div class="stock-price">45.55</div>
+<div class="stock-changes"><span class="change-tag down">5日 -1.79%</span><span class="change-tag down">20日 -7.92%</span></div>
+<div class="pe-info">煤炭龙头 | 煤电一体化 | 市值9879亿</div>
+<div class="mv-info">PE 18.69 | ROE 12.64%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">陕西煤业</div><div class="stock-code">601225.SH</div>
+<div class="stock-price">24.80</div>
+<div class="stock-changes"><span class="change-tag down">5日 -1.70%</span><span class="change-tag down">20日 -6.84%</span></div>
+<div class="pe-info">优质动力煤 | 陕北矿区 | 市值2404亿</div>
+<div class="mv-info">PE 14.53 | ROE 13.74%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">隆基绿能</div><div class="stock-code">601012.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag down">行业深度调整</span></div>
+<div class="pe-info">硅片+组件全球龙头 | 产能过剩出清中</div>
+<div class="mv-info">光伏行业深度亏损</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">通威股份</div><div class="stock-code">600438.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag down">硅料价格低迷</span></div>
+<div class="pe-info">硅料+电池片双龙头 | 硅料价格触底</div>
+<div class="mv-info">硅料产能过剩</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">金风科技</div><div class="stock-code">002202.SZ</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag down">行业竞争加剧</span></div>
+<div class="pe-info">风电整机龙头 | 海上风电放量</div>
+<div class="mv-info">风机价格战持续</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">东方电气</div><div class="stock-code">600875.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">核电设备放量</span></div>
+<div class="pe-info">发电设备龙头 | 核电+水电设备</div>
+<div class="mv-info">三大动力集团之一</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">特变电工</div><div class="stock-code">600089.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">特高压+新能源</span></div>
+<div class="pe-info">变压器龙头 | 多晶硅+特高压</div>
+<div class="mv-info">输变电+新能源双轮驱动</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">国电南瑞</div><div class="stock-code">600406.SH</div>
+<div class="stock-price">26.81</div>
+<div class="stock-changes"><span class="change-tag up">5日 +1.71%</span><span class="change-tag down">20日 -3.60%</span></div>
+<div class="pe-info">电网自动化龙头 | 市值2153亿</div>
+<div class="mv-info">PE 26.94 | ROE 9.86%</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== 中游：发电与输配电 ==================== -->
+<div class="section">
+<h2 class="section-title midstream">🏭 中游 · 发电运营与输配电</h2>
+
+<div class="layer-header">
+<h3>🔥 火电：从主力电源到调节性电源</h3>
+<p>容量电价落地提供盈利底线，煤价下行周期利好火电弹性</p>
+</div>
+
+<div class="highlight-box">
+<h4>火电盈利模式变革</h4>
+<p><strong>电量电价</strong>（市场化竞价）+ <strong>容量电价</strong>（100-165元/kW·年）= 双重保障</p>
+<p style="margin-top:8px;color:#8b949e;font-size:0.88em">灵活性改造完成率75%（目标2亿kW），火电角色从"多发电赚钱"转向"提供容量保障赚钱"</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">华能国际</div><div class="stock-code">600011.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">煤价下行受益</span></div>
+<div class="pe-info">全国火电装机第一 | 市值~1400亿</div>
+<div class="mv-info">PE ~12 | ROE ~12%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">国电电力</div><div class="stock-code">600795.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">煤电一体化</span></div>
+<div class="pe-info">国家能源集团旗下 | 市值~1100亿</div>
+<div class="mv-info">PE ~11 | ROE ~14%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">华电国际</div><div class="stock-code">600027.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">火电+新能源</span></div>
+<div class="pe-info">华电集团核心平台 | 市值~800亿</div>
+<div class="mv-info">PE ~13 | ROE ~11%</div>
+</div>
+</div>
+
+<div class="layer-header">
+<h3>💧 水电：优质现金流的"印钞机"</h3>
+<p>经营杠杆极高，折旧占比50%+，无燃料成本</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">长江电力</div><div class="stock-code">600900.SH</div>
+<div class="stock-price">26.38</div>
+<div class="stock-changes"><span class="change-tag down">5日 -0.08%</span><span class="change-tag down">20日 -3.23%</span></div>
+<div class="pe-info">全球最大水电上市公司 | 六座巨型电站</div>
+<div class="mv-info">市值6455亿 | PE 18.89 | ROE 13.07%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">华能水电</div><div class="stock-code">600025.SH</div>
+<div class="stock-price">9.51</div>
+<div class="stock-changes"><span class="change-tag" style="color:#888">5日 0.00%</span><span class="change-tag down">20日 -7.31%</span></div>
+<div class="pe-info">澜沧江流域独家开发 | 市值1772亿</div>
+<div class="mv-info">PE 20.58 | ROE 9.74%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">国投电力</div><div class="stock-code">600886.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">水火并济</span></div>
+<div class="pe-info">雅砻江水电核心平台 | 市值~1400亿</div>
+<div class="mv-info">PE ~14 | ROE ~14%</div>
+</div>
+</div>
+
+<div class="layer-header">
+<h3>☢️ 核电：确定性成长的"慢变量"</h3>
+<p>年均核准6-10台，2030年在运装机达1亿kW</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">中国核电</div><div class="stock-code">601985.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">审批加速受益</span></div>
+<div class="pe-info">中核集团旗下 | 国内最大核电运营商</div>
+<div class="mv-info">市值~2000亿 | PE ~20 | ROE ~11%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">中国广核</div><div class="stock-code">003816.SZ</div>
+<div class="stock-price">4.39</div>
+<div class="stock-changes"><span class="change-tag down">5日 -2.01%</span><span class="change-tag up">20日 +6.30%</span></div>
+<div class="pe-info">在运机组数量第一 | 市值2217亿</div>
+<div class="mv-info">PE 22.70 | ROE 8.05%</div>
+</div>
+</div>
+
+<div class="layer-header">
+<h3>🌬️ 风电·光伏·电网</h3>
+<p>新能源装机首超50%，但消纳仍是核心矛盾</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">龙源电力</div><div class="stock-code">001289.SZ</div>
+<div class="stock-price">15.36</div>
+<div class="stock-changes"><span class="change-tag up">5日 +0.79%</span><span class="change-tag down">20日 -16.20%</span></div>
+<div class="pe-info">风电运营龙头 | 市值1284亿</div>
+<div class="mv-info">PE 28.37 | ROE 6.11%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">三峡能源</div><div class="stock-code">600905.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">风光运营</span></div>
+<div class="pe-info">三峡集团新能源平台 | 风光装机领先</div>
+<div class="mv-info">PE ~25</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">思源电气</div><div class="stock-code">002028.SZ</div>
+<div class="stock-price">213.80</div>
+<div class="stock-changes"><span class="change-tag up">5日 +1.65%</span><span class="change-tag up">20日 +1.28%</span></div>
+<div class="pe-info">输配电设备龙头 | 市值1670亿</div>
+<div class="mv-info">PE 52.80 | ROE 22.60%</div>
+</div>
+</div>
+
+<div class="highlight-box">
+<h4>特高压与智能电网</h4>
+<p>特高压：跨区输送新能源能力持续增强，"十四五"期间建成多条交流/直流线路</p>
+<p style="margin-top:6px">智能电网：国电南瑞市占率超40%，数字化转型推动在线监测、故障自愈、新能源消纳调度</p>
+</div>
+</div>
+
+<!-- ==================== 下游：用电与电力市场 ==================== -->
+<div class="section">
+<h2 class="section-title downstream">🏠 下游 · 用电与电力市场</h2>
+
+<div class="layer-header blue">
+<h3>📊 用电结构全景</h3>
+<p>工业用电占65%，新兴负荷（数据中心/充电/绿氢）成最大增量</p>
+</div>
+
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value gold">65%</div><div class="label">工业用电占比</div></div>
+<div class="kpi-card"><div class="value">15%</div><div class="label">居民用电占比</div></div>
+<div class="kpi-card"><div class="value blue">15%</div><div class="label">商业/服务业</div></div>
+<div class="kpi-card"><div class="value">5%</div><div class="label">农业用电</div></div>
+</div>
+
+<div class="compare-grid">
+<div class="compare-card">
+<h4>🖥️ 数据中心/AI算力（最强增长极）</h4>
+<div class="compare-row"><span class="compare-label">2025年用电</span><span class="compare-value">~4000亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">占比</span><span class="compare-value">~4.0%</span></div>
+<div class="compare-row"><span class="compare-label">2030年E</span><span class="compare-value" style="color:#e74c3c">8000-12000亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">PUE要求</span><span class="compare-value">新建<1.25</span></div>
+<div class="compare-row"><span class="compare-label">趋势</span><span class="compare-value" style="color:#f1c40f">算电协同，绿电刚需</span></div>
+</div>
+<div class="compare-card">
+<h4>🚗 新能源车充电</h4>
+<div class="compare-row"><span class="compare-label">保有量</span><span class="compare-value">~4000万辆</span></div>
+<div class="compare-row"><span class="compare-label">充电桩</span><span class="compare-value">~1800万台</span></div>
+<div class="compare-row"><span class="compare-label">年用电量</span><span class="compare-value">~1800亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">2030年E</span><span class="compare-value" style="color:#e74c3c">~5000亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">V2G</span><span class="compare-value" style="color:#2ecc71">2027-2028规模化</span></div>
+</div>
+<div class="compare-card">
+<h4>⚗️ 绿氢制备</h4>
+<div class="compare-row"><span class="compare-label">2025年产能</span><span class="compare-value">~30万吨</span></div>
+<div class="compare-row"><span class="compare-label">2030年E</span><span class="compare-value" style="color:#e74c3c">~500万吨</span></div>
+<div class="compare-row"><span class="compare-label">用电量(2030E)</span><span class="compare-value">~2500亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">经济性门槛</span><span class="compare-value">电价<0.2元</span></div>
+<div class="compare-row"><span class="compare-label">趋势</span><span class="compare-value" style="color:#2ecc71">绿电富集区已可行</span></div>
+</div>
+</div>
+
+<div class="layer-header blue">
+<h3>💹 电力市场化交易</h3>
+<p>2027年前全国统一电力市场体系基本建成</p>
+</div>
+
+<div class="compare-grid">
+<div class="compare-card">
+<h4>电力现货市场</h4>
+<div class="compare-row"><span class="compare-label">连续运行省份</span><span class="compare-value">8个</span></div>
+<div class="compare-row"><span class="compare-label">交易电量</span><span class="compare-value">~5000亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">峰谷价差</span><span class="compare-value" style="color:#e74c3c">山东-0.08→广东1.0+</span></div>
+<div class="compare-row"><span class="compare-label">趋势</span><span class="compare-value" style="color:#2ecc71">试运行→正式运行</span></div>
+</div>
+<div class="compare-card">
+<h4>绿电交易/碳市场</h4>
+<div class="compare-row"><span class="compare-label">绿电交易量</span><span class="compare-value">~2000亿kWh</span></div>
+<div class="compare-row"><span class="compare-label">绿电溢价</span><span class="compare-value">0.02-0.04元</span></div>
+<div class="compare-row"><span class="compare-label">碳价</span><span class="compare-value">80-100元/吨</span></div>
+<div class="compare-row"><span class="compare-label">2030年碳价E</span><span class="compare-value" style="color:#e74c3c">200-300元/吨</span></div>
+</div>
+</div>
+
+<div class="layer-header blue">
+<h3>🔋 储能·虚拟电厂·新业态</h3>
+<p>工商业储能经济性持续改善，虚拟电厂从政策驱动转向市场驱动</p>
+</div>
+
+<div class="stock-grid">
+<div class="stock-card">
+<div class="stock-name">宁德时代</div><div class="stock-code">300750.SZ</div>
+<div class="stock-price">444.20</div>
+<div class="stock-changes"><span class="change-tag up">5日 +6.78%</span><span class="change-tag up">20日 +10.91%</span></div>
+<div class="pe-info">全球动力+储能电池龙头 | 市值2.03万亿</div>
+<div class="mv-info">PE 25.67 | ROE 5.97% | 储能市占率~35%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">阳光电源</div><div class="stock-code">300274.SZ</div>
+<div class="stock-price">132.75</div>
+<div class="stock-changes"><span class="change-tag up">5日 +1.50%</span><span class="change-tag down">20日 -19.59%</span></div>
+<div class="pe-info">光储+AIDC电源 | 市值2752亿</div>
+<div class="mv-info">PE 20.45 | ROE 32.24% | 储能出货43GWh</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">亿纬锂能</div><div class="stock-code">300014.SZ</div>
+<div class="stock-price">69.85</div>
+<div class="stock-changes"><span class="change-tag up">5日 +1.11%</span><span class="change-tag up">20日 +4.16%</span></div>
+<div class="pe-info">动力+储能电池 | 市值1485亿</div>
+<div class="mv-info">PE 35.93 | ROE 10.35%</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">特锐德</div><div class="stock-code">300001.SZ</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">充电桩运营第一</span></div>
+<div class="pe-info">特来电充电量市占率~25% | 市值~290亿</div>
+<div class="mv-info">PE ~45</div>
+</div>
+<div class="stock-card">
+<div class="stock-name">南网科技</div><div class="stock-code">688248.SH</div>
+<div class="stock-price">—</div>
+<div class="stock-changes"><span class="change-tag up">储能+碳管理</span></div>
+<div class="pe-info">南网系科创平台 | 储能+数字化双驱</div>
+<div class="mv-info">市值~250亿 | PE ~45</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== 全产业链核心公司汇总 ==================== -->
+<div class="section">
+<h2 class="section-title">📋 电力产业链核心公司汇总表</h2>
+<table>
+<thead>
+<tr><th>环节</th><th>细分</th><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE(TTM)</th><th>ROE</th><th>核心看点</th></tr>
+</thead>
+<tbody>
+<tr><td rowspan="2" style="color:#f1c40f">上游·煤炭</td><td>动力煤</td><td>中国神华</td><td>601088</td><td class="num">9879</td><td class="num">18.69</td><td class="num">12.64%</td><td>煤电一体化龙头</td></tr>
+<tr><td>动力煤</td><td>陕西煤业</td><td>601225</td><td class="num">2404</td><td class="num">14.53</td><td class="num">13.74%</td><td>优质动力煤基地</td></tr>
+<tr><td rowspan="3" style="color:#2ecc71">中游·火电</td><td>火电</td><td>华能国际</td><td>600011</td><td class="num">~1400</td><td class="num">~12</td><td class="num">~12%</td><td>火电装机第一</td></tr>
+<tr><td>火电</td><td>国电电力</td><td>600795</td><td class="num">~1100</td><td class="num">~11</td><td class="num">~14%</td><td>煤电一体化</td></tr>
+<tr><td>火电</td><td>华电国际</td><td>600027</td><td class="num">~800</td><td class="num">~13</td><td class="num">~11%</td><td>火电+新能源</td></tr>
+<tr><td rowspan="3" style="color:#2ecc71">中游·水电</td><td>水电</td><td>长江电力</td><td>600900</td><td class="num">6455</td><td class="num">18.89</td><td class="num">13.07%</td><td>全球水电之王</td></tr>
+<tr><td>水电</td><td>华能水电</td><td>600025</td><td class="num">1772</td><td class="num">20.58</td><td class="num">9.74%</td><td>澜沧江独家开发</td></tr>
+<tr><td>水电</td><td>国投电力</td><td>600886</td><td class="num">~1400</td><td class="num">~14</td><td class="num">~14%</td><td>雅砻江水电</td></tr>
+<tr><td rowspan="2" style="color:#2ecc71">中游·核电</td><td>核电</td><td>中国核电</td><td>601985</td><td class="num">~2000</td><td class="num">~20</td><td class="num">~11%</td><td>核电运营龙头</td></tr>
+<tr><td>核电</td><td>中国广核</td><td>003816</td><td class="num">2217</td><td class="num">22.70</td><td class="num">8.05%</td><td>在运机组最多</td></tr>
+<tr><td rowspan="2" style="color:#2ecc71">中游·新能源</td><td>风电</td><td>龙源电力</td><td>001289</td><td class="num">1284</td><td class="num">28.37</td><td class="num">6.11%</td><td>风电运营龙头</td></tr>
+<tr><td>风光</td><td>三峡能源</td><td>600905</td><td class="num">—</td><td class="num">~25</td><td class="num">—</td><td>三峡集团新能源</td></tr>
+<tr><td rowspan="2" style="color:#2ecc71">中游·电网</td><td>电网自动化</td><td>国电南瑞</td><td>600406</td><td class="num">2153</td><td class="num">26.94</td><td class="num">9.86%</td><td>电力信息化绝对龙头</td></tr>
+<tr><td>输配电设备</td><td>思源电气</td><td>002028</td><td class="num">1670</td><td class="num">52.80</td><td class="num">22.60%</td><td>民营输配电龙头</td></tr>
+<tr><td rowspan="3" style="color:#3498db">下游·储能</td><td>储能电池</td><td>宁德时代</td><td>300750</td><td class="num">20274</td><td class="num">25.67</td><td class="num">5.97%</td><td>全球电池龙头</td></tr>
+<tr><td>储能系统</td><td>阳光电源</td><td>300274</td><td class="num">2752</td><td class="num">20.45</td><td class="num">32.24%</td><td>光储+AIDC</td></tr>
+<tr><td>储能电池</td><td>亿纬锂能</td><td>300014</td><td class="num">1485</td><td class="num">35.93</td><td class="num">10.35%</td><td>大圆柱路线</td></tr>
+<tr><td style="color:#3498db">下游·充电</td><td>充电桩</td><td>特锐德</td><td>300001</td><td class="num">~290</td><td class="num">~45</td><td class="num">—</td><td>充电运营市占率第一</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== 投资逻辑 ==================== -->
+<div class="section">
+<h2 class="section-title">💡 投资逻辑与趋势判断</h2>
+
+<div class="compare-grid">
+<div class="compare-card">
+<h4>主线一：电力市场化受益（确定性强）</h4>
+<div class="opportunity-item"><strong>国电南瑞</strong>：电力信息化+调度+虚拟电厂平台，市场交易系统建设最直接受益</div>
+<div class="opportunity-item"><strong>朗新科技</strong>：电力营销+聚合运营，用户侧放开受益</div>
+</div>
+<div class="compare-card">
+<h4>主线二：新兴负荷增长（弹性大）</h4>
+<div class="opportunity-item"><strong>阳光电源</strong>：储能+AIDC电源，第三增长曲线</div>
+<div class="opportunity-item"><strong>特锐德</strong>：充电桩运营龙头，V2G放量在即</div>
+<div class="opportunity-item"><strong>宁德时代</strong>：AIDC储能2030年达300GWh</div>
+</div>
+<div class="compare-card">
+<h4>主线三：碳约束加强（中长期）</h4>
+<div class="opportunity-item"><strong>长江电力</strong>：碳价上行推升绿电溢价</div>
+<div class="opportunity-item"><strong>中国广核</strong>：零碳基荷电源价值重估</div>
+<div class="opportunity-item"><strong>南网科技</strong>：储能+碳管理平台</div>
+</div>
+<div class="compare-card">
+<h4>主线四：火电盈利修复（周期反转）</h4>
+<div class="opportunity-item"><strong>华能国际</strong>：煤价下行+容量电价双击</div>
+<div class="opportunity-item"><strong>国电电力</strong>：煤电一体化成本优势</div>
+<div class="opportunity-item"><strong>华电国际</strong>：火电转型新能源</div>
+</div>
+</div>
+
+<div class="highlight-box gold">
+<h4>⚠️ 核心风险提示</h4>
+<div class="risk-item"><strong>政策风险</strong>：电力市场化推进节奏不及预期，现货市场规则调整</div>
+<div class="risk-item"><strong>电价风险</strong>：峰谷价差收窄影响储能经济性，现货电价波动加大</div>
+<div class="risk-item"><strong>竞争风险</strong>：储能行业"量增价跌"，充电桩运营盈利模式尚不成熟</div>
+<div class="risk-item"><strong>技术风险</strong>：AIDC业务兑现周期长，固态电池量产时间不确定</div>
+<div class="risk-item"><strong>需求风险</strong>：宏观经济下行导致工业用电下滑</div>
+<div class="risk-item"><strong>地缘风险</strong>：美国对华电池关税升至48.4%</div>
+</div>
+</div>
+
+<!-- ==================== 关键趋势图 ==================== -->
+<div class="section">
+<h2 class="section-title">📈 关键趋势：装机结构变迁</h2>
+<div class="chart-container" style="height:320px"><canvas id="trendChart"></canvas></div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;padding:20px;color:#666;font-size:12px">
+免责声明：本报告仅供研究参考，不构成投资建议。投资有风险，入市需谨慎。<br>
+数据来源：NeoData实时行情、国家能源局、中电联、行业公开数据
+</div>
+
+</div>
+
+<script>
+// 装机结构图
+const installCtx = document.getElementById('installChart').getContext('2d');
+new Chart(installCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['火电', '水电', '风电', '光伏', '核电'],
+        datasets: [{
+            data: [43, 13, 17, 23, 2],
+            backgroundColor: ['#e74c3c','#3498db','#2ecc71','#f1c40f','#9b59b6'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: { display: true, text: '2025年装机结构(%)', color: '#e6edf3', font: {size: 14} },
+            legend: { position: 'right', labels: { color: '#e6edf3', font: {size: 11} } }
+        }
+    }
+});
+
+// 用电结构图
+const usageCtx = document.getElementById('usageChart').getContext('2d');
+new Chart(usageCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['工业', '居民', '商业/服务业', '农业', '新兴(数据中心+充电)'],
+        datasets: [{
+            data: [58, 13, 13, 4, 8],
+            backgroundColor: ['#e74c3c','#3498db','#2ecc71','#f1c40f','#9b59b6'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: { display: true, text: '用电结构(%)', color: '#e6edf3', font: {size: 14} },
+            legend: { position: 'right', labels: { color: '#e6edf3', font: {size: 11} } }
+        }
+    }
+});
+
+// 装机趋势图
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+new Chart(trendCtx, {
+    type: 'bar',
+    data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025E'],
+        datasets: [
+            { label: '火电装机(亿kW)', data: [12.5, 13.0, 13.3, 13.9, 14.2, 14.5], backgroundColor: 'rgba(231,76,60,0.7)' },
+            { label: '新能源装机(亿kW)', data: [5.3, 6.4, 7.6, 10.5, 14.0, 17.8], backgroundColor: 'rgba(46,204,113,0.7)' }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: { display: true, text: '火电 vs 新能源装机趋势(亿kW)', color: '#e6edf3', font: {size: 14} },
+            legend: { labels: { color: '#e6edf3' } }
+        },
+        scales: {
+            x: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+        }
+    }
+});
+</script>
+</body>
+</html>

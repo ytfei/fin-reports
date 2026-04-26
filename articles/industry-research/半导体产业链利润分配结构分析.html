@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>半导体产业链利润分配结构深度分析 | 2026-04-26</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.7; }
+.container { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+
+.hero { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: white; padding: 44px 24px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(46,204,113,0.06) 0%, transparent 60%); }
+.hero h1 { font-size: 26px; margin-bottom: 6px; position: relative; }
+.hero .subtitle { font-size: 14px; opacity: 0.7; position: relative; }
+.hero .tags { margin-top: 14px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; position: relative; }
+.hero .tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 12px; }
+
+.summary-card { background: linear-gradient(135deg, #1a936f, #88d498); color: white; margin: -20px 16px 20px; padding: 24px; border-radius: 12px; position: relative; z-index: 1; box-shadow: 0 8px 24px rgba(26,147,111,0.3); }
+.summary-card h2 { font-size: 15px; margin-bottom: 10px; opacity: 0.9; }
+.summary-card p { font-size: 13px; line-height: 1.9; }
+
+.section { background: white; border-radius: 12px; padding: 24px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.section h2 { font-size: 17px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #eee; display: flex; align-items: center; gap: 8px; }
+.section h3 { font-size: 15px; margin: 18px 0 10px; color: #302b63; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+th { background: #f8f9fa; padding: 10px 8px; text-align: center; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #dee2e6; }
+td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+td:first-child, th:first-child { text-align: left; }
+tr:hover { background: #fafbfc; }
+.text-red { color: #e74c3c; font-weight: 600; }
+.text-green { color: #27ae60; font-weight: 600; }
+.text-blue { color: #2980b9; font-weight: 600; }
+.text-orange { color: #e67e22; font-weight: 600; }
+
+.highlight-box { background: #fffde7; border-left: 4px solid #f9a825; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13px; line-height: 1.8; }
+.insight-box { background: #e8f5e9; border-left: 4px solid #27ae60; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13px; line-height: 1.8; }
+.warning-box { background: #fde8e8; border-left: 4px solid #e74c3c; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13px; line-height: 1.8; }
+
+.metric-strip { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
+.metric-pill { background: #f8f9fa; border-radius: 20px; padding: 10px 18px; text-align: center; flex: 1; min-width: 120px; }
+.metric-pill .label { font-size: 11px; color: #888; }
+.metric-pill .value { font-size: 20px; font-weight: 700; margin-top: 2px; }
+
+.chart-container { position: relative; margin: 16px 0; padding: 16px; background: #fafbfc; border-radius: 10px; }
+.chart-container canvas { max-height: 320px; }
+
+.company-card { background: #f8f9fa; border-radius: 10px; padding: 16px; margin: 10px 0; border-left: 4px solid #302b63; }
+.company-card h4 { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+.company-card .detail { font-size: 12px; color: #555; line-height: 1.8; }
+
+.ranking-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; color: white; }
+.r1 { background: #e74c3c; }
+.r2 { background: #e67e22; }
+.r3 { background: #f39c12; }
+
+.footer { text-align: center; padding: 24px; font-size: 12px; color: #999; }
+
+@media (max-width: 680px) {
+  .hero h1 { font-size: 20px; }
+  .summary-card { margin: -10px 8px 16px; padding: 16px; }
+  .section { padding: 16px; margin: 10px 0; }
+  table { font-size: 11px; }
+  th, td { padding: 8px 4px; }
+  .metric-strip { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>💰 半导体产业链利润分配结构</h1>
+  <div class="subtitle">SEMICONDUCTOR VALUE CHAIN PROFIT DISTRIBUTION</div>
+  <div class="tags">
+    <span class="tag">利润分配</span>
+    <span class="tag">毛利率对比</span>
+    <span class="tag">定价权分析</span>
+    <span class="tag">2025年报</span>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="summary-card">
+  <h2>📋 核心结论</h2>
+  <p>半导体产业链利润呈现<strong>极度不均衡的"微笑曲线"</strong>分布——<strong>芯片设计</strong>环节拿走最多利润（毛利率 55-65%，净利率 17-39%），<strong>设备</strong>环节靠技术壁垒获取合理回报（毛利率 40-46%），而<strong>制造</strong>和<strong>封测</strong>环节处于"干苦力"的位置（毛利率 14-21%，净利率仅 3-7%）。决定利润分配的核心变量不是营收规模，而是<strong>技术壁垒×定价权×资产轻重</strong>。</p>
+</div>
+
+<!-- Section 1: 全景对比 -->
+<div class="section">
+  <h2>📊 七大龙头利润指标全景对比（2025 年报）</h2>
+
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>环节</th>
+        <th>营收<br>(亿元)</th>
+        <th>毛利<br>(亿元)</th>
+        <th>毛利率</th>
+        <th>归母净利<br>(亿元)</th>
+        <th>净利率</th>
+        <th>ROE</th>
+        <th>研发费用率</th>
+        <th>资产负债率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff5f5;">
+        <td><strong>海光信息</strong></td><td>设计</td><td>143.77</td><td>83.14</td>
+        <td class="text-red">57.83%</td><td>25.45</td><td class="text-red">17.70%</td>
+        <td>15.47%</td><td class="text-blue">28.83%</td><td>27.13%</td>
+      </tr>
+      <tr style="background:#fff5f5;">
+        <td><strong>澜起科技</strong></td><td>设计</td><td>54.56</td><td>33.95</td>
+        <td class="text-red">62.23%</td><td>22.36</td><td class="text-red">40.98%</td>
+        <td class="text-red">18.25%</td><td class="text-blue">16.77%</td><td>6.38%</td>
+      </tr>
+      <tr style="background:#fff8f0;">
+        <td><strong>韦尔股份</strong></td><td>设计</td><td>288.55</td><td>~92.3</td>
+        <td class="text-orange">32.00%</td><td>40.45</td><td class="text-orange">14.02%</td>
+        <td>~13%</td><td class="text-blue">~12%</td><td>~55%</td>
+      </tr>
+      <tr style="background:#f0f8ff;">
+        <td><strong>中微公司</strong></td><td>设备</td><td>123.85</td><td>~55.3</td>
+        <td class="text-blue">44.66%</td><td>~20.5</td><td class="text-blue">16.55%</td>
+        <td>~19%</td><td class="text-blue">~30%</td><td>~24%</td>
+      </tr>
+      <tr style="background:#f0f8ff;">
+        <td><strong>北方华创</strong></td><td>设备</td><td>393.53</td><td>157.82</td>
+        <td class="text-blue">40.10%</td><td>55.22</td><td class="text-blue">14.03%</td>
+        <td class="text-red">16.41%</td><td class="text-blue">13.81%</td><td>51.08%</td>
+      </tr>
+      <tr style="background:#f5f5f5;">
+        <td><strong>中芯国际</strong></td><td>制造</td><td>673.23</td><td>145.58</td>
+        <td>21.63%</td><td>50.41</td><td>7.49%</td>
+        <td>~4.5%</td><td class="text-blue">8.20%</td><td>~42%</td>
+      </tr>
+      <tr style="background:#f5f5f5;">
+        <td><strong>长电科技</strong></td><td>封测</td><td>388.71</td><td>54.99</td>
+        <td style="color:#999;">14.15%</td><td>15.65</td>
+        <td style="color:#999;">4.03%</td>
+        <td style="color:#999;">5.56%</td><td class="text-blue">5.36%</td><td>~57%</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Section 2: 毛利率瀑布图 -->
+<div class="section">
+  <h2>💧 毛利率分层——产业链"微笑曲线"</h2>
+
+  <div class="chart-container">
+    <canvas id="grossMarginChart"></canvas>
+  </div>
+
+  <div class="insight-box">
+    <strong>微笑曲线验证：</strong>毛利率从设计（55-65%）→ 设备（40-46%）→ 制造（22%）→ 封测（14%），完美吻合经典的"微笑曲线"理论。设计环节位于曲线两端（研发+品牌），制造封测位于底部。
+  </div>
+
+  <div class="highlight-box">
+    <strong>关键发现：毛利率≠净利率</strong><br>
+    • <strong>澜起科技</strong>毛利率 62% 但研发费用率仅 17%，最终净利率高达 41%——轻资产+低负债（6.4%），几乎每一分毛利都能转化为净利<br>
+    • <strong>北方华创</strong>毛利率 40% 但净利率仅 14%——销售/管理费用吞噬大量利润，且资产负债率高达 51%<br>
+    • <strong>长电科技</strong>毛利率仅 14%，净利率仅 4%——典型的劳动密集+资产密集型，毛利率上限被行业竞争锁死
+  </div>
+</div>
+
+<!-- Section 3: 净利润贡献 -->
+<div class="section">
+  <h2>🎯 净利润贡献——谁真正赚到了钱？</h2>
+
+  <div class="chart-container">
+    <canvas id="netProfitChart"></canvas>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr><th>排名</th><th>公司</th><th>环节</th><th>归母净利(亿)</th><th>净利率</th><th>每1亿营收赚多少净利(万)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="ranking-badge r1">1</span></td><td><strong>北方华创</strong></td><td>设备</td><td>55.22</td><td>14.03%</td><td>1,403 万</td></tr>
+      <tr><td><span class="ranking-badge r2">2</span></td><td><strong>韦尔股份</strong></td><td>设计</td><td>40.45</td><td>14.02%</td><td>1,402 万</td></tr>
+      <tr><td><span class="ranking-badge r3">3</span></td><td><strong>中芯国际</strong></td><td>制造</td><td>50.41</td><td>7.49%</td><td>749 万</td></tr>
+      <tr><td>4</td><td><strong>海光信息</strong></td><td>设计</td><td>25.45</td><td>17.70%</td><td>1,770 万</td></tr>
+      <tr><td>5</td><td><strong>长电科技</strong></td><td>封测</td><td>15.65</td><td>4.03%</td><td>403 万</td></tr>
+      <tr><td>6</td><td><strong>中微公司</strong></td><td>设备</td><td>~20.5</td><td>16.55%</td><td>1,655 万</td></tr>
+      <tr><td>7</td><td><strong>澜起科技</strong></td><td>设计</td><td>22.36</td><td>40.98%</td><td>4,098 万</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="insight-box">
+    <strong>核心洞察——"规模≠利润"：</strong><br>
+    • <strong>中芯国际</strong>营收最大（673 亿），但净利率仅 7.5%，<strong>每 100 亿营收只赚 7.5 亿净利</strong><br>
+    • <strong>澜起科技</strong>营收最小（55 亿），但净利率高达 41%，<strong>每 100 亿营收能赚 41 亿净利</strong><br>
+    • 澜起的"赚钱效率"是中芯国际的 <strong>5.5 倍</strong>，是长电科技的 <strong>10 倍</strong><br>
+    → <strong>营收规模是虚胖，净利率才是核心竞争力</strong>
+  </div>
+</div>
+
+<!-- Section 4: 定价权分析 -->
+<div class="section">
+  <h2>👑 定价权透视——谁有真正的议价能力？</h2>
+
+  <div class="company-card" style="border-left-color:#e74c3c;">
+    <h4>澜起科技 <span class="ranking-badge r1">定价权最强</span></h4>
+    <div class="detail">
+      • DDR5 RCD 芯片全球份额 50%+，<strong>几乎无竞争对手</strong>（仅 Rambus）<br>
+      • 毛利率 62% 且持续稳定，Q4 单季毛利率升至 64.5%<br>
+      • 毛销差（毛利率-销售费用率）高达 60%，说明<strong>几乎不需要销售费用</strong><br>
+      • 资产负债率仅 6.4%，经营完全靠自有资金——<strong>真正的"印钞机"模式</strong><br>
+      • 应收账款周转率 11.4 次/年（~32 天），回款极快
+    </div>
+  </div>
+
+  <div class="company-card" style="border-left-color:#e67e22;">
+    <h4>海光信息 <span class="ranking-badge r2">政策护城河定价权</span></h4>
+    <div class="detail">
+      • 国产 CPU+GPU <strong>唯一双赛道标的</strong>，X86 架构独家授权<br>
+      • 毛利率 57.8%（2025 全年）/ 61%（Q3 单季），国内政企客户<strong>刚性需求</strong><br>
+      • 研发费用率高达 28.8%，但净利率仍达 17.7%——<strong>高毛利覆盖高研发</strong><br>
+      • 定价权来源：<strong>不可替代性</strong>（信创采购必须用国产），而非市场竞争优势
+    </div>
+  </div>
+
+  <div class="company-card" style="border-left-color:#f39c12;">
+    <h4>中微公司 <span class="ranking-badge">技术替代定价权</span></h4>
+    <div class="detail">
+      • CCP 刻蚀在国内厂商市占率 60%+，ICP 市占率 40%+<br>
+      • 毛利率 44.7%，目标中长期 40%+，受新设备导入成本短期扰动<br>
+      • 定价权来源：<strong>国产替代刚需</strong>+ 刻蚀是半导体设备中技术壁垒最高的环节之一<br>
+      • 大陆收入占比 97.4%，高度依赖国内晶圆厂扩产
+    </div>
+  </div>
+
+  <div class="company-card" style="border-left-color:#2980b9;">
+    <h4>北方华创 <span class="ranking-badge">规模优势定价权</span></h4>
+    <div class="detail">
+      • 毛利率 40.1%，刻蚀+薄膜双百亿，平台型公司享受<strong>采购规模效应</strong><br>
+      • 但净利率仅 14%，低于中微（16.6%）——<strong>管理效率有提升空间</strong><br>
+      • 定价权来源：<strong>全产品线覆盖</strong>，客户一站式采购，但单品议价能力弱于中微<br>
+      • 收购芯源微后产品矩阵完善，有望提升整体毛利率
+    </div>
+  </div>
+
+  <div class="company-card" style="border-left-color:#999;">
+    <h4>中芯国际 / 长电科技 <span class="ranking-badge" style="background:#999;">定价权最弱</span></h4>
+    <div class="detail">
+      • <strong>中芯国际</strong>：毛利率 21.6%，受制于台积电/三星价格竞争，<strong>产能利用率决定生死</strong>（当前 95.7%）<br>
+      • <strong>长电科技</strong>：毛利率 14.2%，封测行业充分竞争，<strong>客户议价权极强</strong><br>
+      • 制造和封测都是<strong>重资产+人力密集</strong>模式，毛利被折旧和人工大量侵蚀<br>
+      • 长电科技每 1 元营收只赚 4 分钱——典型的"大而不强"
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: 利润分配结构 -->
+<div class="section">
+  <h2>🏦 利润分配全景——价值链各环节"切蛋糕"</h2>
+
+  <div class="chart-container">
+    <canvas id="valueChainChart"></canvas>
+  </div>
+
+  <div class="highlight-box">
+    <strong>为什么设计赚最多、制造封测赚最少？</strong><br><br>
+    <strong>1. 资产模式差异：</strong><br>
+    • 设计公司（Fabless）<strong>轻资产</strong>：澜起科技资产负债率仅 6.4%，不需要大规模建厂<br>
+    • 制造公司（Foundry）<strong>超重资产</strong>：中芯国际 2025 年资本开支 81 亿美元，折旧 33 亿美元<br>
+    • 封测公司（OSAT）<strong>人力密集</strong>：长电科技员工 3 万+，毛利率被人工成本锁死<br><br>
+    <strong>2. 竞争格局差异：</strong><br>
+    • 设计环节：细分赛道龙头往往<strong>全球垄断</strong>（澜起 DDR5 RCD 50%+）<br>
+    • 制造环节：台积电一家独占 60%+ 份额，中芯国际只能<strong>打价格战</strong><br>
+    • 封测环节：全球 OSAT 行业充分竞争，长电/安靠/日月光三足鼎立<br><br>
+    <strong>3. 研发投入的杠杆效应：</strong><br>
+    • 澜起科技研发费率 17%，但每 1 元研发投入撬动 4 元净利<br>
+    • 北方华创研发费率 14%，每 1 元研发投入撬动 1 元净利<br>
+    • 长电科技研发费率 5%，每 1 元研发投入仅撬动 0.8 元净利
+  </div>
+</div>
+
+<!-- Section 6: 研发效率矩阵 -->
+<div class="section">
+  <h2>🔬 研发效率与 ROE 矩阵</h2>
+
+  <div class="chart-container">
+    <canvas id="quadrantChart"></canvas>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr><th>公司</th><th>研发费率</th><th>每1元研发撬动净利</th><th>ROE</th><th>效率评级</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>澜起科技</td><td>16.77%</td><td class="text-red">4.4 元</td><td class="text-red">18.25%</td><td><strong>⭐⭐⭐⭐⭐</strong></td></tr>
+      <tr><td>海光信息</td><td>28.83%</td><td class="text-orange">1.5 元</td><td>15.47%</td><td><strong>⭐⭐⭐⭐</strong></td></tr>
+      <tr><td>北方华创</td><td>13.81%</td><td>2.5 元</td><td class="text-red">16.41%</td><td><strong>⭐⭐⭐⭐</strong></td></tr>
+      <tr><td>中微公司</td><td>~30%</td><td class="text-orange">1.1 元</td><td>~19%</td><td><strong>⭐⭐⭐</strong></td></tr>
+      <tr><td>韦尔股份</td><td>~12%</td><td class="text-blue">1.8 元</td><td>~13%</td><td><strong>⭐⭐⭐</strong></td></tr>
+      <tr><td>中芯国际</td><td>8.20%</td><td>2.2 元</td><td style="color:#999;">4.5%</td><td><strong>⭐⭐</strong></td></tr>
+      <tr><td>长电科技</td><td>5.36%</td><td style="color:#999;">0.8 元</td><td style="color:#999;">5.56%</td><td><strong>⭐</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ ROE 悖论：</strong>中微公司 ROE 约 19%（最高），但每 1 元研发仅撬动 1.1 元净利——研发效率不高但杠杆高（资产负债率 24%）。澜起科技 ROE 18% 而资产负债率仅 6.4%——<strong>纯靠经营质量驱动的高 ROE 远比靠杠杆驱动的高 ROE 更可持续</strong>。
+  </div>
+</div>
+
+<!-- Section 7: 投资启示 -->
+<div class="section">
+  <h2>💡 利润分配分析的投资启示</h2>
+
+  <div class="insight-box">
+    <strong>1. 选赛道 > 选公司</strong><br>
+    半导体产业链利润分配极度不均，选择<strong>毛利率 >40% 的环节</strong>（设计/设备）天然比制造/封测有更高的容错率。即使个别公司经营不善，高毛利环节的盈利安全垫也远厚于低毛利环节。
+  </div>
+
+  <div class="insight-box">
+    <strong>2. 定价权是终极护城河</strong><br>
+    澜起科技（DDR5 RCD 全球垄断）、海光信息（国产 CPU+GPU 唯一标的）的定价权来源于<strong>不可替代性</strong>，而非成本优势。这种定价权在行业下行周期中是"保命符"，在行业上行周期中是"放大器"。
+  </div>
+
+  <div class="insight-box">
+    <strong>3. 研发效率比研发投入更重要</strong><br>
+    中微公司研发费率 30%（最高），但澜起科技仅 17% 就创造了更高的净利率和 ROE。<strong>花多少钱不如花在什么地方、怎么花</strong>。选股时应关注"每 1 元研发撬动多少净利"而非单纯的研发费率。
+  </div>
+
+  <div class="highlight-box">
+    <strong>4. 规模陷阱</strong><br>
+    中芯国际营收 673 亿（最大）、长电科技 389 亿（第三），但净利率分别仅 7.5% 和 4%。<strong>大营收≠强竞争力</strong>。投资者应警惕"营收幻觉"，回归净利率和 ROE 本质。
+  </div>
+</div>
+
+<div class="footer">
+  <p>数据来源：各公司 2025 年年报 | NeoData 金融数据服务</p>
+  <p style="margin-top:4px;">⚠️ 免责声明：本分析仅为研究参考，不构成投资建议。</p>
+</div>
+
+</div>
+
+<script>
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 12;
+
+// 1. 毛利率分层——微笑曲线
+new Chart(document.getElementById('grossMarginChart'), {
+  type: 'bar',
+  data: {
+    labels: ['澜起科技', '海光信息', '韦尔股份', '中微公司', '北方华创', '中芯国际', '长电科技'],
+    datasets: [
+      {
+        label: '毛利率(%)',
+        data: [62.23, 57.83, 32.00, 44.66, 40.10, 21.63, 14.15],
+        backgroundColor: [
+          'rgba(231,76,60,0.85)', 'rgba(231,76,60,0.7)', 'rgba(230,126,34,0.7)',
+          'rgba(41,128,185,0.8)', 'rgba(41,128,185,0.65)', 'rgba(149,165,166,0.6)', 'rgba(149,165,166,0.45)'
+        ],
+        borderRadius: 6, barPercentage: 0.55
+      },
+      {
+        label: '净利率(%)',
+        data: [40.98, 17.70, 14.02, 16.55, 14.03, 7.49, 4.03],
+        backgroundColor: [
+          'rgba(231,76,60,0.35)', 'rgba(231,76,60,0.25)', 'rgba(230,126,34,0.25)',
+          'rgba(41,128,185,0.3)', 'rgba(41,128,185,0.2)', 'rgba(149,165,166,0.25)', 'rgba(149,165,166,0.15)'
+        ],
+        borderRadius: 6, barPercentage: 0.55
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '毛利率 vs 净利率——产业链"微笑曲线"', font: { size: 14, weight: 'bold' } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw.toFixed(2) + '%' } }
+    },
+    scales: {
+      y: { max: 70, grid: { color: '#f0f0f0' }, ticks: { callback: v => v + '%' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 2. 净利润贡献
+new Chart(document.getElementById('netProfitChart'), {
+  type: 'bar',
+  data: {
+    labels: ['北方华创', '中芯国际', '韦尔股份', '海光信息', '澜起科技', '中微公司', '长电科技'],
+    datasets: [{
+      label: '归母净利润（亿元）',
+      data: [55.22, 50.41, 40.45, 25.45, 22.36, 20.5, 15.65],
+      backgroundColor: [
+        'rgba(41,128,185,0.85)', 'rgba(149,165,166,0.7)', 'rgba(230,126,34,0.75)',
+        'rgba(231,76,60,0.8)', 'rgba(231,76,60,0.65)', 'rgba(41,128,185,0.6)', 'rgba(149,165,166,0.45)'
+      ],
+      borderRadius: 6, barPercentage: 0.55
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '归母净利润排名（亿元）', font: { size: 14, weight: 'bold' } }
+    },
+    scales: {
+      x: { grid: { color: '#f0f0f0' }, ticks: { callback: v => v + '亿' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// 3. 价值链各环节利润分配
+new Chart(document.getElementById('valueChainChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['芯片设计（海光+澜起+韦尔）', '设备（北方华创+中微）', '制造（中芯国际）', '封测（长电科技）'],
+    datasets: [{
+      data: [88.26, 75.72, 50.41, 15.65],
+      backgroundColor: ['rgba(231,76,60,0.85)', 'rgba(41,128,185,0.85)', 'rgba(149,165,166,0.7)', 'rgba(230,126,34,0.6)'],
+      borderWidth: 2, borderColor: 'white'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '七大龙头净利润环节分布（亿元）', font: { size: 14, weight: 'bold' } },
+      legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+            const pct = (ctx.raw / total * 100).toFixed(1);
+            return ctx.label + ': ' + ctx.raw.toFixed(1) + ' 亿 (' + pct + '%)';
+          }
+        }
+      }
+    }
+  }
+});
+
+// 4. 研发效率 vs ROE 散点图
+new Chart(document.getElementById('quadrantChart'), {
+  type: 'bubble',
+  data: {
+    datasets: [
+      { label: '澜起科技', data: [{ x: 4.4, y: 18.25, r: 14 }], backgroundColor: 'rgba(231,76,60,0.7)', borderColor: '#e74c3c', borderWidth: 2 },
+      { label: '海光信息', data: [{ x: 1.5, y: 15.47, r: 12 }], backgroundColor: 'rgba(231,76,60,0.5)', borderColor: '#e74c3c', borderWidth: 2 },
+      { label: '北方华创', data: [{ x: 2.5, y: 16.41, r: 16 }], backgroundColor: 'rgba(41,128,185,0.7)', borderColor: '#2980b9', borderWidth: 2 },
+      { label: '中微公司', data: [{ x: 1.1, y: 19, r: 10 }], backgroundColor: 'rgba(41,128,185,0.5)', borderColor: '#2980b9', borderWidth: 2 },
+      { label: '韦尔股份', data: [{ x: 1.8, y: 13, r: 13 }], backgroundColor: 'rgba(230,126,34,0.5)', borderColor: '#e67e22', borderWidth: 2 },
+      { label: '中芯国际', data: [{ x: 2.2, y: 4.5, r: 18 }], backgroundColor: 'rgba(149,165,166,0.5)', borderColor: '#95a5a6', borderWidth: 2 },
+      { label: '长电科技', data: [{ x: 0.8, y: 5.56, r: 14 }], backgroundColor: 'rgba(149,165,166,0.35)', borderColor: '#95a5a6', borderWidth: 2 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '研发效率 vs ROE 矩阵（气泡大小 = 营收规模）', font: { size: 14, weight: 'bold' } },
+      legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            const d = ctx.raw;
+            return ctx.dataset.label + ': 每1元研发赚' + d.x + '元净利, ROE ' + d.y + '%';
+          }
+        }
+      }
+    },
+    scales: {
+      x: { title: { display: true, text: '每 1 元研发撬动净利（元）', font: { size: 11 } }, grid: { color: '#f0f0f0' }, min: 0, max: 5 },
+      y: { title: { display: true, text: 'ROE (%)', font: { size: 11 } }, grid: { color: '#f0f0f0' }, min: 0, max: 22 }
+    }
+  }
+});
+</script>
+</body>
+</html>

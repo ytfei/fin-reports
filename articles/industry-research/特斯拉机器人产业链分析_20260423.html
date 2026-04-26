@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特斯拉机器人产业链深度分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            border-radius: 0;
+        }
+
+        .hero-banner h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-banner .subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        .executive-summary h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .executive-summary .point {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .executive-summary .point:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Key Metrics */
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-card .value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-card .label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            color: #1a1a2e;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: #333;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        table th, table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Stock Card */
+        .stock-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+
+        .stock-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .stock-card .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stock-card .ticker {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .stock-card .name {
+            font-size: 14px;
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .stock-card .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+
+        .stock-card .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .stock-card .info-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stock-card .info-label {
+            color: #999;
+        }
+
+        .stock-card .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Value Chain Diagram */
+        .value-chain {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .value-chain .title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .chart-container canvas {
+            max-height: 300px;
+        }
+
+        /* Risk Warning */
+        .risk-warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .risk-warning h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .risk-warning ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .risk-warning li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            font-size: 13px;
+        }
+
+        .risk-warning li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .container {
+                padding: 15px;
+            }
+
+            .hero-banner h1 {
+                font-size: 22px;
+            }
+
+            .key-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .stock-card .info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <h1>特斯拉机器人产业链深度分析</h1>
+            <p class="subtitle">Tesla Optimus Supply Chain Analysis</p>
+            <div style="margin-top: 20px;">
+                <span class="badge">执行器</span>
+                <span class="badge">减速器</span>
+                <span class="badge">伺服系统</span>
+                <span class="badge">国产替代</span>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>📋 执行摘要</h2>
+            <div class="point"><strong>核心观点</strong>: 特斯拉Optimus已进入量产前夜,中国供应链企业在执行器、减速器等核心环节占据关键位置</div>
+            <div class="point"><strong>量产进度</strong>: 2025年Q4启动Gen3量产,2026年产能目标月产1万台</div>
+            <div class="point"><strong>投资主线</strong>: 执行器(关节总成)、减速器、伺服系统三大高壁垒环节是核心受益领域</div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="key-metrics">
+            <div class="metric-card">
+                <div class="value">40%+</div>
+                <div class="label">执行器总成价值占比</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">25%</div>
+                <div class="label">减速器系统价值占比</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">3-5万</div>
+                <div class="label">2025年Q4初期产量(台)</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">1万</div>
+                <div class="label">2026年月产能目标(台)</div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="section">
+            <h2>📅 特斯拉机器人进展时间表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>时间节点</th>
+                        <th>关键事件</th>
+                        <th>意义</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025年Q3</td>
+                        <td>Optimus Gen-3发布</td>
+                        <td>灵巧手技术突破,量产设计定型</td>
+                    </tr>
+                    <tr>
+                        <td>2025年Q4</td>
+                        <td>Gen3量产启动</td>
+                        <td>初期产量3-5万台</td>
+                    </tr>
+                    <tr>
+                        <td>2026年4月</td>
+                        <td>上海工厂正式交付</td>
+                        <td>中国产能落地,供应链协同加速</td>
+                    </tr>
+                    <tr>
+                        <td>2026年</td>
+                        <td>产能目标月产1万台</td>
+                        <td>规模化量产开启</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Value Chain Diagram -->
+        <div class="section">
+            <h2>🔗 产业链全景图</h2>
+            <div class="value-chain">
+                <div class="title">特斯拉机器人产业链</div>
+                <br>
+核心价值环节:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🦾 执行器总成(关节) - 价值占比40%+
+   ├─ 线性执行器
+   ├─ 旋转执行器
+   └─ 机电一体化关节
+
+⚙️ 减速器系统 - 价值占比25%+
+   ├─ 谐波减速器
+   ├─ 行星减速器
+   └─ RV减速器
+
+🔧 伺服电机与驱动 - 价值占比15%+
+   ├─ 高功率密度电机
+   ├─ 伺服驱动器
+   └─ 电机控制器
+
+🧠 感知与控制系统 - 价值占比10%
+   ├─ IMU传感器
+   ├─ 机器视觉
+   └─ 激光雷达(可选)
+
+🔌 电子元器件 - 价值占比10%
+   ├─ PCB/FPC
+   ├─ 连接器
+   └─ 电源管理
+            </div>
+        </div>
+
+        <!-- Value Distribution Chart -->
+        <div class="chart-container">
+            <h3 style="margin-top: 0;">各环节价值占比</h3>
+            <canvas id="valueChart"></canvas>
+        </div>
+
+        <!-- Actuator Suppliers -->
+        <div class="section">
+            <h2>🦾 执行器总成供应商(价值占比40%+)</h2>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">三花智控 (002050.SZ)</span>
+                        <span class="name">机电执行器核心供应商</span>
+                    </div>
+                    <span class="badge">龙头</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">特斯拉全球核心供应商,电磁直驱技术领先</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">多轴同步控制精度±0.01mm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">预期订单占比</span>
+                        <span class="info-value">20%+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">拓普集团 (601689.SH)</span>
+                        <span class="name">线性关节总成核心供应商</span>
+                    </div>
+                    <span class="badge">成长</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">行星滚柱丝杠国内领先,一体化整合能力强</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">电磁直驱突破传统,精度±0.01mm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">预期订单占比</span>
+                        <span class="info-value">15%+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">浙江荣泰 (603163.SH)</span>
+                        <span class="name">灵巧手微型丝杠供应商</span>
+                    </div>
+                    <span class="badge">细分</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">微型丝杠领域专家,轻量化材料技术成熟</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">微型精密丝杠加工精度控制</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">预期营收增长</span>
+                        <span class="info-value">30%+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reducer Suppliers -->
+        <div class="section">
+            <h2>⚙️ 减速器系统供应商(技术壁垒最高)</h2>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">绿的谐波 (688017.SH)</span>
+                        <span class="name">谐波减速器绝对龙头</span>
+                    </div>
+                    <span class="badge">核心龙头</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">全球谐波减速器头部,特斯拉订单占25%</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">精度弧秒级,成本优于哈默纳科</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">2025Q3营收增速</span>
+                        <span class="info-value">49.92%</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">双环传动 (002472.SZ)</span>
+                        <span class="name">RV减速器核心供应商</span>
+                    </div>
+                    <span class="badge">突破</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">RV减速器技术突破,3~1000Kg负载全覆盖</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">机电控一体化关节模组</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">产能规划</span>
+                        <span class="info-value">3年内年产20万台</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">丰立智能 (301368.SZ)</span>
+                        <span class="name">谐波减速器</span>
+                    </div>
+                    <span class="badge">送样</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">谐波减速器适配Optimus关节需求</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">中大力德 (002896.SZ)</span>
+                        <span class="name">行星减速器</span>
+                    </div>
+                    <span class="badge">送样</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">行星减速器技术领先,成本控制优势</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Servo System Suppliers -->
+        <div class="section">
+            <h2>🔧 伺服系统供应商</h2>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">汇川技术 (300124.SZ)</span>
+                        <span class="name">伺服系统综合解决方案商</span>
+                    </div>
+                    <span class="badge">龙头</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">工业伺服国内龙头,功率密度国际领先</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">驱动器控制精度与响应速度优化</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">预期订单占比</span>
+                        <span class="info-value">10%+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">鸣志电器 (603728.SH)</span>
+                        <span class="name">步进电机核心供应商</span>
+                    </div>
+                    <span class="badge">细分</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">步进电机细分龙头,混合步进技术领先</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">订单占比</span>
+                        <span class="info-value">10%+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Suppliers -->
+        <div class="section">
+            <h2>🧠 感知与电子元器件供应商</h2>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">博杰股份 (688325.SH)</span>
+                        <span class="name">IMU传感器测试设备</span>
+                    </div>
+                    <span class="badge">感知</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">IMU测试设备供应商,精度1弧秒</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术价值</span>
+                        <span class="info-value">平衡控制与运动跟踪核心</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">世运电路 (603920.SH)</span>
+                        <span class="name">PCB核心供应商</span>
+                    </div>
+                    <span class="badge">电子</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">为特斯拉二代Optimus提供PCB</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">订单占比</span>
+                        <span class="info-value">5-10%</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">壁垒评级</span>
+                        <span class="info-value">⭐⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="header">
+                    <div>
+                        <span class="ticker">东睦股份 & 统联精密</span>
+                        <span class="name">MIM工艺供应商</span>
+                    </div>
+                    <span class="badge">工艺</span>
+                </div>
+                <div class="info">
+                    <div class="info-item">
+                        <span class="info-label">核心优势</span>
+                        <span class="info-value">MIM工艺领先,Gen3轻量化受益</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">技术壁垒</span>
+                        <span class="info-value">复杂结构件一体化成型</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Share Chart -->
+        <div class="chart-container">
+            <h3 style="margin-top: 0;">国产替代进度</h3>
+            <canvas id="marketShareChart"></canvas>
+        </div>
+
+        <!-- Value Chain Table -->
+        <div class="section">
+            <h2>📊 产业链价值分布</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>环节</th>
+                        <th>价值占比</th>
+                        <th>技术壁垒</th>
+                        <th>A股龙头</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>执行器总成</td>
+                        <td>40%+</td>
+                        <td>高</td>
+                        <td>三花智控、拓普集团</td>
+                    </tr>
+                    <tr>
+                        <td>减速器</td>
+                        <td>25%+</td>
+                        <td>极高</td>
+                        <td>绿的谐波、双环传动</td>
+                    </tr>
+                    <tr>
+                        <td>伺服电机</td>
+                        <td>15%</td>
+                        <td>中高</td>
+                        <td>汇川技术、鸣志电器</td>
+                    </tr>
+                    <tr>
+                        <td>感知控制</td>
+                        <td>10%</td>
+                        <td>中</td>
+                        <td>博杰股份</td>
+                    </tr>
+                    <tr>
+                        <td>电子元器件</td>
+                        <td>10%</td>
+                        <td>中低</td>
+                        <td>世运电路</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Investment Logic -->
+        <div class="section">
+            <h2>💡 投资逻辑</h2>
+
+            <h3>三大主线</h3>
+            <div style="margin-bottom: 20px;">
+                <p style="margin-bottom: 10px;"><strong>1. 订单确定性</strong>: 特斯拉定点企业优先受益,送样企业关注技术突破节奏</p>
+                <p style="margin-bottom: 10px;"><strong>2. 技术壁垒</strong>: 减速器、执行器环节技术壁垒最高,龙头享超额收益</p>
+                <p style="margin-bottom: 10px;"><strong>3. 国产替代</strong>: 在关键环节突破海外垄断,具备长期成长空间</p>
+            </div>
+
+            <h3>关键催化因素</h3>
+            <ul>
+                <li style="margin-bottom: 8px;">✅ Optimus量产订单落地</li>
+                <li style="margin-bottom: 8px;">✅ 中国供应链份额提升</li>
+                <li style="margin-bottom: 8px;">✅ 国产替代加速</li>
+                <li style="margin-bottom: 8px;">✅ 人形机器人商业化落地</li>
+            </ul>
+        </div>
+
+        <!-- Risk Warning -->
+        <div class="risk-warning">
+            <h3>⚠️ 风险提示</h3>
+            <ul>
+                <li><strong>技术风险</strong>: 量产良率不达预期、技术路线调整导致订单流失</li>
+                <li><strong>市场风险</strong>: 特斯拉Optimus量产延迟、市场预期过热导致估值泡沫</li>
+                <li><strong>经营风险</strong>: 特斯拉客户集中度过高、原材料价格波动</li>
+            </ul>
+        </div>
+
+        <!-- Investment Advice -->
+        <div class="section">
+            <h2>🎯 投资建议</h2>
+
+            <h3>短期配置(0-6个月)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>占比</th>
+                        <th>标的</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>核心配置</td>
+                        <td>60%</td>
+                        <td>绿的谐波(688017)、三花智控(002050)</td>
+                    </tr>
+                    <tr>
+                        <td>弹性配置</td>
+                        <td>30%</td>
+                        <td>拓普集团(601689)、双环传动(002472)</td>
+                    </tr>
+                    <tr>
+                        <td>观察配置</td>
+                        <td>10%</td>
+                        <td>浙江荣泰(603163)、汇川技术(300124)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>中长期布局(1-3年)</h3>
+            <ul>
+                <li style="margin-bottom: 8px;"><strong>战略布局</strong>: 核心零部件龙头(绿的谐波、三花智控)</li>
+                <li style="margin-bottom: 8px;"><strong>国产替代</strong>: 国产替代先锋(双环传动、丰立智能)</li>
+                <li style="margin-bottom: 8px;"><strong>产业链延伸</strong>: 关注送样企业订单落地</li>
+            </ul>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="section">
+            <h2>📋 核心标的汇总</h2>
+            <table style="font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th>代码</th>
+                        <th>名称</th>
+                        <th>核心业务</th>
+                        <th>订单占比</th>
+                        <th>壁垒评级</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>002050.SZ</td>
+                        <td>三花智控</td>
+                        <td>机电执行器</td>
+                        <td>20%+</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>601689.SH</td>
+                        <td>拓普集团</td>
+                        <td>线性关节总成</td>
+                        <td>15%+</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>688017.SH</td>
+                        <td>绿的谐波</td>
+                        <td>谐波减速器</td>
+                        <td>25%</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>002472.SZ</td>
+                        <td>双环传动</td>
+                        <td>RV减速器</td>
+                        <td>送样中</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>300124.SZ</td>
+                        <td>汇川技术</td>
+                        <td>伺服系统</td>
+                        <td>10%+</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>603728.SH</td>
+                        <td>鸣志电器</td>
+                        <td>步进电机</td>
+                        <td>10%+</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>603920.SH</td>
+                        <td>世运电路</td>
+                        <td>PCB</td>
+                        <td>5-10%</td>
+                        <td>⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>603163.SH</td>
+                        <td>浙江荣泰</td>
+                        <td>微型丝杠</td>
+                        <td>5-10%</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>报告日期: 2026年4月23日</p>
+            <p>报告编制: Auto - FinancialAnalyst AI Research Team</p>
+            <p style="margin-top: 15px;">免责声明: 本报告基于公开信息整理,不构成投资建议。投资者应基于独立判断做出投资决策,并承担相应风险。</p>
+        </div>
+    </div>
+
+    <script>
+        // Value Distribution Chart
+        const valueCtx = document.getElementById('valueChart').getContext('2d');
+        new Chart(valueCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['执行器总成', '减速器', '伺服电机', '感知控制', '电子元器件'],
+                datasets: [{
+                    data: [40, 25, 15, 10, 10],
+                    backgroundColor: [
+                        '#667eea',
+                        '#f093fb',
+                        '#4facfe',
+                        '#43e97b',
+                        '#fa709a'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Market Share Chart
+        const marketCtx = document.getElementById('marketShareChart').getContext('2d');
+        new Chart(marketCtx, {
+            type: 'bar',
+            data: {
+                labels: ['谐波减速器', '行星减速器', 'RV减速器', '伺服系统'],
+                datasets: [{
+                    label: '国产化率 (%)',
+                    data: [30, 50, 20, 40],
+                    backgroundColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

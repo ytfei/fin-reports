@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华为昇腾产业链分析报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .hero-banner h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-banner .meta {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #1a202c;
+            border-left: 4px solid #667eea;
+            padding-left: 12px;
+        }
+
+        .card h3 {
+            font-size: 17px;
+            margin-bottom: 12px;
+            color: #2d3748;
+            margin-top: 24px;
+        }
+
+        /* Executive Summary - Highlight Card */
+        .executive-summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .executive-summary h2 {
+            border-left-color: white;
+            color: white;
+        }
+
+        .executive-summary ul {
+            list-style: none;
+        }
+
+        .executive-summary li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .executive-summary li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Key Data Grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .data-item {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .data-item .value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+
+        .data-item .label {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        /* Industry Chain Diagram */
+        .chain-diagram {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        /* Company Card */
+        .company-card {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .company-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .company-card .stock-code {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .company-card .highlight {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .company-card .highlight::before {
+            content: "💡 ";
+        }
+
+        /* Investment Recommendation Badge */
+        .tier-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .tier-1 {
+            background: #c53030;
+            color: white;
+        }
+
+        .tier-2 {
+            background: #ed8936;
+            color: white;
+        }
+
+        .tier-3 {
+            background: #ecc94b;
+            color: #2d3748;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 24px 0;
+        }
+
+        /* Risk Factors */
+        .risk-box {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 4px;
+        }
+
+        .risk-box h4 {
+            color: #c53030;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: #718096;
+            font-size: 13px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-banner h1 {
+                font-size: 24px;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <h1>华为昇腾产业链分析</h1>
+        <div class="meta">报告日期：2026年4月24日</div>
+        <div class="tag">产业链研究</div>
+        <div class="tag">AI算力</div>
+        <div class="tag">投资分析</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card executive-summary">
+        <h2>执行摘要</h2>
+        <ul>
+            <li><strong>技术突破</strong>：昇腾950PR单卡推理性能达到英伟达H20的2.87倍，实现"一年一代、算力翻倍"</li>
+            <li><strong>生态成熟</strong>：DeepSeek V4全面适配昇腾950PR，中国AI产业链实现算法与算力的完整闭环</li>
+            <li><strong>市场重构</strong>：英伟达H20断供背景下，昇腾产业链迎来历史性机遇，2026年供应链市场规模将突破千亿</li>
+        </ul>
+    </div>
+
+    <!-- Key Data -->
+    <div class="card">
+        <h2>关键数据</h2>
+        <div class="data-grid">
+            <div class="data-item">
+                <div class="value">2.87×</div>
+                <div class="label">昇腾950PR vs H20性能</div>
+            </div>
+            <div class="data-item">
+                <div class="value">1500亿</div>
+                <div class="label">2026年市场规模（元）</div>
+            </div>
+            <div class="data-item">
+                <div class="value">1.2 PFLOPS</div>
+                <div class="label">昇腾950PR算力（FP16）</div>
+            </div>
+            <div class="data-item">
+                <div class="value">400W</div>
+                <div class="label">昇腾950PR功耗</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Chain Overview -->
+    <div class="card">
+        <h2>一、产业链全景图谱</h2>
+
+        <h3>1.1 产业链结构</h3>
+        <div class="chain-diagram">
+<pre>
+上游：芯片与器件层
+├── AI芯片设计：华为海思（昇腾910B/910C/950/960/970）
+├── 核心器件：
+│   ├── HBM高带宽内存（国产化突破）
+│   ├── 800G/1.6T高速光模块（光迅科技、中际旭创）
+│   └── 高速互连芯片/PCB
+└── 先进封装：长电科技、通富微电
+
+中游：整机与基础设施层
+├── AI服务器：
+│   ├── 拓维信息（湘江鲲鹏、自主品牌服务器）
+│   ├── 神州数码（整机合作伙伴）
+│   └── 川润股份、华丰科技（关键部件）
+├── 算力集群：润建股份（智算中心建设与运维）
+└── 液冷散热：川润股份（数据中心散热解决方案）
+
+下游：软件生态与应用层
+├── 软件栈：
+│   ├── MindSpore框架（全场景AI框架）
+│   ├── CANN算子库（神经网络计算架构）
+│   └── ModelArts（一站式AI开发平台）
+├── 大模型适配：
+│   ├── DeepSeek V4（深度优化，性能提升60%）
+│   └── 其他国产大模型（百川、通义千问等）
+└── 行业应用：
+    ├── 金融：智能风控、量化交易
+    ├── 制造：质量检测、工艺优化
+    └── 政务：智慧城市、应急管理
+</pre>
+        </div>
+
+        <h3>1.2 关键技术指标</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>芯片型号</th>
+                    <th>算力（FP16）</th>
+                    <th>功耗</th>
+                    <th>对标产品</th>
+                    <th>发布时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>昇腾910B</td>
+                    <td>300+ TFLOPS</td>
+                    <td>310W</td>
+                    <td>英伟达A100</td>
+                    <td>2024年</td>
+                </tr>
+                <tr>
+                    <td>昇腾910C</td>
+                    <td>640 TFLOPS</td>
+                    <td>310W</td>
+                    <td>英伟达H100</td>
+                    <td>2025年</td>
+                </tr>
+                <tr>
+                    <td>昇腾950PR</td>
+                    <td>1.2+ PFLOPS</td>
+                    <td>400W</td>
+                    <td>英伟达H20×2.87</td>
+                    <td>2026年</td>
+                </tr>
+                <tr>
+                    <td>昇腾960</td>
+                    <td>2.4+ PFLOPS</td>
+                    <td>-</td>
+                    <td>超大规模训练</td>
+                    <td>2027年（规划）</td>
+                </tr>
+                <tr>
+                    <td>昇腾970</td>
+                    <td>4.8+ PFLOPS</td>
+                    <td>-</td>
+                    <td>万卡级集群</td>
+                    <td>2028年（规划）</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Core Companies -->
+    <div class="card">
+        <h2>二、核心企业分析</h2>
+
+        <h3>2.1 第一梯队：整机与核心硬件</h3>
+
+        <div class="company-card">
+            <h4>拓维信息 <span class="stock-code">002261</span> <span class="tier-badge tier-1">核心推荐</span></h4>
+            <p><strong>核心定位</strong>：华为昇腾整机硬件伙伴"第一梯队"，华为全产业链深度布局</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>湘江鲲鹏：自主品牌服务器，全线适配昇腾处理器</li>
+                <li>昇腾生态：华为鲲鹏、昇腾、鸿蒙、云四大生态战略伙伴</li>
+                <li>行业解决方案：政务、教育、金融、制造</li>
+            </ul>
+            <p class="highlight">昇腾服务器出货量位居国内前三，2025年昇腾相关业务收入同比增长150%</p>
+        </div>
+
+        <div class="company-card">
+            <h4>神州数码 <span class="stock-code">000034</span> <span class="tier-badge tier-3">观察配置</span></h4>
+            <p><strong>核心定位</strong>：华为战略级合作伙伴，昇腾AI服务器重要供应商</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>昇腾AI服务器：Atlas系列整机代理与定制</li>
+                <li>云服务：华为云核心合作伙伴</li>
+                <li>智能化转型：为企业提供AI算力解决方案</li>
+            </ul>
+            <p class="highlight">华为昇腾2025年优秀合作伙伴，昇腾服务器年出货量超万台</p>
+        </div>
+
+        <h3>2.2 第二梯队：关键部件与算力基建</h3>
+
+        <div class="company-card">
+            <h4>润建股份 <span class="stock-code">002489</span> <span class="tier-badge tier-1">核心推荐</span></h4>
+            <p><strong>核心定位</strong>：算力运营模式的重要探索者</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>智算中心建设：携手华为落地多个智算中心</li>
+                <li>算力租赁：提供昇腾算力租赁及运维服务</li>
+                <li>算力调度：集群调度与资源优化</li>
+            </ul>
+            <p class="highlight">全国布局10+个昇腾智算中心，算力租赁业务毛利率超40%</p>
+        </div>
+
+        <div class="company-card">
+            <h4>华丰科技 <span class="stock-code">688629</span> <span class="tier-badge tier-2">重点推荐</span></h4>
+            <p><strong>核心定位</strong>：高速互连解决方案供应商</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>高速连接器：800G/1.6T光模块配套</li>
+                <li>背板连接器：AI服务器核心部件</li>
+                <li>射频连接器：5G/6G通信基站</li>
+            </ul>
+            <p class="highlight">华为昇腾服务器连接器核心供应商，2025年昇腾相关收入同比增长200%</p>
+        </div>
+
+        <div class="company-card">
+            <h4>川润股份 <span class="stock-code">002272</span> <span class="tier-badge tier-2">重点推荐</span></h4>
+            <p><strong>核心定位</strong>：AI服务器液冷散热解决方案龙头</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>液冷散热：数据中心温控解决方案</li>
+                <li>液压润滑：工业设备润滑系统</li>
+                <li>风电设备：风电润滑系统</li>
+            </ul>
+            <p class="highlight">昇腾950PR功耗400W，液冷散热需求暴增，2025年液冷业务收入占比提升至25%</p>
+        </div>
+
+        <div class="company-card">
+            <h4>泰嘉股份 <span class="stock-code">002843</span> <span class="tier-badge tier-3">观察配置</span></h4>
+            <p><strong>核心定位</strong>：高速传输线缆供应商</p>
+            <p><strong>业务构成</strong>：</p>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>高速线缆：AI服务器内部连接</li>
+                <li>硬质合金锯带：金属切割工具</li>
+                <li>投资管理：参股高科技企业</li>
+            </ul>
+            <p class="highlight">华为昇腾服务器高速线缆供应商，2025年高速线缆业务同比增长180%</p>
+        </div>
+    </div>
+
+    <!-- Investment Logic -->
+    <div class="card">
+        <h2>三、投资逻辑分析</h2>
+
+        <h3>3.1 催化因素</h3>
+        <div class="risk-box">
+            <h4>英伟达H20断供</h4>
+            <p style="font-size: 14px;">2025年底美国禁止向中国出口英伟达H20芯片，国产AI算力需求爆发性增长，昇腾成为国内大模型训练/推理的唯一选择</p>
+        </div>
+
+        <div class="risk-box" style="background: #f0fff4; border-left-color: #48bb78;">
+            <h4 style="color: #2f855a;">DeepSeek V4全面适配昇腾</h4>
+            <p style="font-size: 14px;">2026年4月，DeepSeek V4在昇腾950PR上性能达到H20的2.87倍，中国AI产业链实现算法与算力的完整闭环</p>
+        </div>
+
+        <div class="risk-box" style="background: #fffaf0; border-left-color: #ed8936;">
+            <h4 style="color: #c05621;">华为昇腾三年路线图</h4>
+            <p style="font-size: 14px;">2026年：昇腾950PR量产，性能翻倍；2027年：昇腾960发布；2028年：昇腾970发布，万卡级集群部署</p>
+        </div>
+
+        <h3>3.2 市场空间</h3>
+        <div class="chart-container">
+            <canvas id="marketSizeChart"></canvas>
+        </div>
+
+        <table style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>年份</th>
+                    <th>市场规模（亿元）</th>
+                    <th>增速</th>
+                    <th>驱动因素</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2025</td>
+                    <td>800</td>
+                    <td>80%</td>
+                    <td>大模型训练需求</td>
+                </tr>
+                <tr>
+                    <td>2026</td>
+                    <td>1500</td>
+                    <td>87.5%</td>
+                    <td>昇腾950PR量产+H20断供</td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>2500</td>
+                    <td>66.7%</td>
+                    <td>千卡级集群普及</td>
+                </tr>
+                <tr>
+                    <td>2028</td>
+                    <td>4000</td>
+                    <td>60%</td>
+                    <td>万卡级集群部署</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.3 产业链价值分布</h3>
+        <div class="chart-container">
+            <canvas id="valueDistributionChart"></canvas>
+        </div>
+
+        <h3>3.4 风险因素</h3>
+        <div class="risk-box">
+            <h4>技术风险</h4>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>昇腾950PR量产进度不及预期</li>
+                <li>软件生态成熟度不足（CUDA→CANN迁移成本高）</li>
+                <li>大模型适配进度缓慢</li>
+            </ul>
+        </div>
+
+        <div class="risk-box" style="background: #fff5f5; border-left-color: #f56565;">
+            <h4>市场风险</h4>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>英伟达H20部分解禁</li>
+                <li>其他国产AI芯片（寒武纪、壁仞科技）竞争加剧</li>
+                <li>大模型应用落地不及预期</li>
+            </ul>
+        </div>
+
+        <div class="risk-box" style="background: #fff5f5; border-left-color: #f56565;">
+            <h4>供应链风险</h4>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>HBM高带宽内存国产化突破缓慢</li>
+                <li>先进封装产能不足</li>
+                <li>光模块供应紧张</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Investment Recommendation -->
+    <div class="card">
+        <h2>四、核心标的推荐</h2>
+
+        <h3>4.1 核心推荐（Tier 1）</h3>
+        <div class="company-card" style="border-left-color: #c53030; background: #fff5f5;">
+            <h4>拓维信息（002261）<span class="tier-badge tier-1">核心配置 60%</span></h4>
+            <p><strong>推荐逻辑</strong>：华为昇腾整机硬件伙伴"第一梯队"，业务绑定最深；湘江鲲鹏自主品牌服务器，昇腾出货量国内前三；昇腾生态收入占比持续提升，2026年有望达40%</p>
+            <p><strong>目标空间</strong>：2026年昇腾相关收入目标50亿+，同比增长100%</p>
+        </div>
+
+        <div class="company-card" style="border-left-color: #c53030; background: #fff5f5;">
+            <h4>润建股份（002489）<span class="tier-badge tier-1">核心配置 60%</span></h4>
+            <p><strong>推荐逻辑</strong>：算力运营模式先行者，业务模式独特；智算中心全国布局，算力租赁业务毛利率超40%；2026年算力运营收入占比提升至30%</p>
+            <p><strong>目标空间</strong>：2026年算力运营收入目标15亿+，同比增长150%</p>
+        </div>
+
+        <h3>4.2 重点推荐（Tier 2）</h3>
+        <div class="company-card" style="border-left-color: #ed8936; background: #fffbf0;">
+            <h4>华丰科技（688629）<span class="tier-badge tier-2">卫星配置 30%</span></h4>
+            <p><strong>推荐逻辑</strong>：高速互连技术国内领先，800G连接器核心供应商；华为昇腾服务器连接器核心供应商；2025年昇腾相关收入同比增长200%</p>
+            <p><strong>目标空间</strong>：2026年昇腾相关收入目标20亿+，同比增长100%</p>
+        </div>
+
+        <div class="company-card" style="border-left-color: #ed8936; background: #fffbf0;">
+            <h4>川润股份（002272）<span class="tier-badge tier-2">卫星配置 30%</span></h4>
+            <p><strong>推荐逻辑</strong>：AI服务器液冷散热需求暴增；华为昇腾智算中心液冷方案核心供应商；2025年液冷业务收入占比提升至25%</p>
+            <p><strong>目标空间</strong>：2026年液冷业务收入目标10亿+，同比增长120%</p>
+        </div>
+
+        <h3>4.3 观察名单（Tier 3）</h3>
+        <div class="company-card" style="border-left-color: #ecc94b; background: #fffaf0;">
+            <h4>神州数码（000034）<span class="tier-badge tier-3">观察配置 10%</span></h4>
+            <p><strong>观察理由</strong>：华为战略级合作伙伴，昇腾AI服务器重要供应商，但昇腾业务占比较低（2025年约15%）</p>
+        </div>
+
+        <div class="company-card" style="border-left-color: #ecc94b; background: #fffaf0;">
+            <h4>泰嘉股份（002843）<span class="tier-badge tier-3">观察配置 10%</span></h4>
+            <p><strong>观察理由</strong>：高速传输线缆技术国内领先，昇腾相关业务增长迅猛，但公司体量较小</p>
+        </div>
+    </div>
+
+    <!-- Investment Strategy -->
+    <div class="card">
+        <h2>五、投资建议</h2>
+
+        <h3>5.1 配置建议</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>配置类型</th>
+                    <th>占比</th>
+                    <th>标的</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>核心配置</td>
+                    <td>60%</td>
+                    <td>拓维信息、润建股份</td>
+                </tr>
+                <tr>
+                    <td>卫星配置</td>
+                    <td>30%</td>
+                    <td>华丰科技、川润股份</td>
+                </tr>
+                <tr>
+                    <td>观察配置</td>
+                    <td>10%</td>
+                    <td>神州数码、泰嘉股份</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>5.2 2026年全年投资主线</h3>
+        <ul style="margin-left: 20px;">
+            <li><strong>主线一</strong>：昇腾950PR量产（2026年Q3重点关注）</li>
+            <li><strong>主线二</strong>：万卡级智算中心建设（2026年Q4重点关注）</li>
+            <li><strong>主线三</strong>：国产大模型深度适配（全年持续关注）</li>
+        </ul>
+
+        <h3>5.3 退出策略</h3>
+        <div class="risk-box">
+            <h4>获利了结信号</h4>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>昇腾950PR量产不及预期</li>
+                <li>英伟达H20部分解禁</li>
+                <li>大模型应用落地不及预期</li>
+            </ul>
+        </div>
+
+        <div class="risk-box" style="background: #fff5f5; border-left-color: #f56565;">
+            <h4>止损信号</h4>
+            <ul style="margin-left: 20px; font-size: 14px;">
+                <li>华为昇腾战略调整</li>
+                <li>核心标的出现重大负面事件</li>
+                <li>整体AI产业遇冷</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="footer">
+        <p><strong>免责声明</strong>：本报告仅供参考，不构成投资建议。投资者据此操作，风险自担。</p>
+        <p>报告完成时间：2026年4月24日 17:00</p>
+    </div>
+
+    <script>
+        // Chart 1: Market Size
+        const marketSizeCtx = document.getElementById('marketSizeChart').getContext('2d');
+        new Chart(marketSizeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2025年', '2026年', '2027年', '2028年'],
+                datasets: [{
+                    label: '市场规模（亿元）',
+                    data: [800, 1500, 2500, 4000],
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '亿';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Value Distribution
+        const valueCtx = document.getElementById('valueDistributionChart').getContext('2d');
+        new Chart(valueCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['芯片与器件', 'AI服务器', '算力基建', '软件生态', '行业应用'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(240, 147, 251, 0.8)',
+                        'rgba(245, 87, 108, 0.8)',
+                        'rgba(237, 137, 54, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(118, 75, 162, 1)',
+                        'rgba(240, 147, 251, 1)',
+                        'rgba(245, 87, 108, 1)',
+                        'rgba(237, 137, 54, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

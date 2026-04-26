@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>军工产业链全景图谱 — A股投资地图</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: #111827;
+    --card2: #1a2236;
+    --border: #1e2d45;
+    --text: #e8f0fe;
+    --muted: #8899b0;
+    --accent: #3b82f6;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #22c55e;
+    --gold: #fbbf24;
+    --purple: #a855f7;
+    --cyan: #06b6d4;
+    --upstream: #7c3aed;
+    --midstream: #2563eb;
+    --downstream: #059669;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+  .container{max-width:1100px;margin:0 auto;padding:16px}
+  @media(max-width:680px){.container{padding:10px}body{font-size:13px}}
+
+  /* Banner */
+  .hero{background:linear-gradient(135deg,#050b1a 0%,#0d1b3e 40%,#0a2040 100%);border-radius:16px;padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(0,200,255,0.2)}
+  .hero::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(59,130,246,0.15) 0%,transparent 70%);pointer-events:none}
+  .hero-tag{display:inline-block;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.35);color:var(--accent);font-size:11px;padding:4px 14px;border-radius:20px;letter-spacing:2px;margin-bottom:14px;text-transform:uppercase}
+  .hero h1{font-size:clamp(24px,5vw,38px);font-weight:700;background:linear-gradient(90deg,#fff 0%,#3b82f6 60%,#93c5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;letter-spacing:1px}
+  .hero-sub{font-size:14px;color:var(--muted);max-width:600px;margin:0 auto 20px}
+  .hero-stats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+  .stat-item{text-align:center}
+  .stat-num{font-size:22px;font-weight:700;color:var(--cyan);display:block}
+  .stat-label{font-size:11px;color:var(--muted)}
+
+  /* Section */
+  .section{background:var(--card);border-radius:14px;padding:22px;margin-bottom:20px;border:1px solid var(--border)}
+  .section-title{font-size:18px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px}
+  .section-title.upstream{color:#c4b5fd;border-bottom-color:rgba(124,58,237,0.4)}
+  .section-title.midstream{color:#93c5fd;border-bottom-color:rgba(37,99,235,0.4)}
+  .section-title.downstream{color:#6ee7b7;border-bottom-color:rgba(5,150,105,0.4)}
+  .section-title.group{color:#fbbf24;border-bottom-color:rgba(251,191,36,0.4)}
+  .section-title.catalyst{color:#f87171;border-bottom-color:rgba(248,113,113,0.4)}
+
+  /* Flow Diagram */
+  .flow-diagram{display:flex;align-items:stretch;gap:0;margin:16px 0;overflow-x:auto;padding-bottom:6px}
+  .flow-block{flex:1;min-width:160px;padding:18px 14px;text-align:center;border-radius:0;position:relative}
+  .flow-block:first-child{border-radius:12px 0 0 12px}
+  .flow-block:last-child{border-radius:0 12px 12px 0}
+  .flow-block.up{background:linear-gradient(135deg,#2d1b69,#4a2c8a);border:1px solid rgba(124,58,237,0.5)}
+  .flow-block.mid{background:linear-gradient(135deg,#0d3b6e,#1565c0);border:1px solid rgba(37,99,235,0.5);border-left:none;border-right:none}
+  .flow-block.dn{background:linear-gradient(135deg,#004d40,#00796b);border:1px solid rgba(5,150,105,0.5)}
+  .flow-block-icon{font-size:24px;margin-bottom:6px}
+  .flow-block-title{font-size:15px;font-weight:700;margin-bottom:4px}
+  .flow-block.up .flow-block-title{color:#c4b5fd}
+  .flow-block.mid .flow-block-title{color:#93c5fd}
+  .flow-block.dn .flow-block-title{color:#6ee7b7}
+  .flow-block-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px}
+  .flow-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(255,255,255,0.08);color:var(--muted)}
+  .flow-arrow{display:flex;align-items:center;color:var(--cyan);font-size:22px;padding:0 2px;flex-shrink:0}
+
+  /* Layer Header */
+  .layer-header{border-radius:10px;padding:14px 18px;margin:14px 0 10px}
+  .layer-header.up{border-left:4px solid #7c3aed;background:linear-gradient(90deg,rgba(124,58,237,0.1),transparent)}
+  .layer-header.mid{border-left:4px solid #2563eb;background:linear-gradient(90deg,rgba(37,99,235,0.1),transparent)}
+  .layer-header.dn{border-left:4px solid #059669;background:linear-gradient(90deg,rgba(5,150,105,0.1),transparent)}
+  .layer-header h3{font-size:14px;font-weight:600}
+  .layer-header.up h3{color:#c4b5fd}
+  .layer-header.mid h3{color:#93c5fd}
+  .layer-header.dn h3{color:#6ee7b7}
+  .layer-header p{color:var(--muted);font-size:12.5px;margin-top:3px}
+
+  /* Data Table */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+  th{background:rgba(59,130,246,0.08);color:var(--cyan);padding:9px 8px;text-align:left;font-size:11px;white-space:nowrap;border-bottom:1px solid var(--border)}
+  td{padding:8px;border-bottom:1px solid rgba(30,45,69,0.5)}
+  tr:hover{background:rgba(59,130,246,0.04)}
+  .hl{color:var(--gold);font-weight:600}
+  .num{font-family:monospace;color:#60a5fa}
+  .up{color:var(--red);font-weight:600}
+  .dn{color:var(--green);font-weight:600}
+
+  /* Stock Grid */
+  .stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:12px 0}
+  .stock-card{background:var(--card2);border-radius:8px;padding:12px;border:1px solid var(--border);transition:transform 0.2s,border-color 0.2s}
+  .stock-card:hover{transform:translateY(-2px);border-color:rgba(59,130,246,0.5)}
+  .stock-name{font-weight:bold;color:var(--text);font-size:14px}
+  .stock-code{color:var(--muted);font-size:11px}
+  .stock-desc{color:var(--cyan);font-size:12px;margin-top:4px;font-weight:600}
+  .stock-detail{color:var(--muted);font-size:11.5px;margin-top:4px;line-height:1.6}
+  .stock-pe{color:var(--orange);font-size:12px;margin-top:4px;font-weight:600}
+
+  /* Group Grid */
+  .group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin:14px 0}
+  .group-card{background:var(--card2);border-radius:10px;padding:16px;border:1px solid var(--border)}
+  .group-card h4{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .group-card .biz{font-size:12px;color:var(--cyan);margin-bottom:6px}
+  .group-card .companies{font-size:12px;color:var(--muted);line-height:1.7}
+  .group-card .companies strong{color:var(--text)}
+
+  /* Catalyst Card */
+  .catalyst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0}
+  .catalyst-card{background:var(--card2);border-radius:10px;padding:14px;border-left:3px solid}
+  .catalyst-card.red{border-left-color:var(--red)}
+  .catalyst-card.orange{border-left-color:var(--orange)}
+  .catalyst-card.green{border-left-color:var(--green)}
+  .catalyst-card h4{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .catalyst-card p{font-size:12px;color:var(--muted);line-height:1.7}
+
+  /* Risk/Opportunity */
+  .risk-item{background:rgba(239,68,68,0.06);border-left:3px solid var(--red);padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:13px}
+  .opp-item{background:rgba(34,197,94,0.06);border-left:3px solid var(--green);padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:13px}
+
+  /* Chart */
+  .chart-box{background:rgba(0,0,0,0.2);border-radius:8px;padding:16px;margin:14px 0;height:280px;position:relative}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  .chart-row .chart-box{height:260px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}.group-grid{grid-template-columns:1fr}}
+
+  /* Highlight */
+  .highlight-box{background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(6,182,212,0.06));border-radius:10px;padding:16px;margin:14px 0;border:1px solid rgba(59,130,246,0.2)}
+  .highlight-box h4{color:var(--cyan);margin-bottom:8px;font-size:14px}
+
+  /* Logic Chain */
+  .logic-chain{display:flex;align-items:center;gap:4px;margin:10px 0;flex-wrap:wrap;padding:10px;background:rgba(0,0,0,0.15);border-radius:8px}
+  .logic-node{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600}
+  .logic-node.driver{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#60a5fa}
+  .logic-node.result{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24}
+  .logic-node.risk{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171}
+  .logic-arrow{color:var(--muted);font-size:14px}
+
+  /* Footer */
+  .footer{text-align:center;padding:20px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:24px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Banner -->
+<div class="hero">
+  <div class="hero-tag">MILITARY INDUSTRIAL CHAIN</div>
+  <h1>军工产业链全景图谱</h1>
+  <p class="hero-sub">十大军工集团 · 上游材料→中游分系统→下游整机 · A股核心标的</p>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">10</span><span class="stat-label">大军工集团</span></div>
+    <div class="stat-item"><span class="stat-num">19096亿</span><span class="stat-label">2026国防预算</span></div>
+    <div class="stat-item"><span class="stat-num">7%</span><span class="stat-label">连续5年增速</span></div>
+    <div class="stat-item"><span class="stat-num">~2万亿</span><span class="stat-label">板块总市值</span></div>
+  </div>
+</div>
+
+<!-- 产业链全景流程 -->
+<div class="flow-diagram">
+  <div class="flow-block up">
+    <div class="flow-block-icon">⛏️</div>
+    <div class="flow-block-title">上游：原材料/元器件</div>
+    <div class="flow-block-tags">
+      <span class="flow-tag">高温合金</span>
+      <span class="flow-tag">钛合金</span>
+      <span class="flow-tag">碳纤维</span>
+      <span class="flow-tag">稀土/锑/镓</span>
+      <span class="flow-tag">军用芯片</span>
+      <span class="flow-tag">连接器</span>
+    </div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-block mid">
+    <div class="flow-block-icon">⚙️</div>
+    <div class="flow-block-title">中游：分系统/核心装备</div>
+    <div class="flow-block-tags">
+      <span class="flow-tag">航空发动机</span>
+      <span class="flow-tag">雷达/电子对抗</span>
+      <span class="flow-tag">导弹制导</span>
+      <span class="flow-tag">船舶动力</span>
+      <span class="flow-tag">卫星系统</span>
+    </div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-block dn">
+    <div class="flow-block-icon">🛡️</div>
+    <div class="flow-block-title">下游：整机/总装</div>
+    <div class="flow-block-tags">
+      <span class="flow-tag">战斗机/直升机</span>
+      <span class="flow-tag">导弹/火箭</span>
+      <span class="flow-tag">军舰/潜艇</span>
+      <span class="flow-tag">卫星/航天器</span>
+      <span class="flow-tag">无人机</span>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 上游 ====== -->
+<div class="section">
+  <h2 class="section-title upstream">上游：军工新材料与元器件</h2>
+
+  <div class="layer-header up">
+    <h3>A. 军工新材料——壁垒最高、认证周期5-8年</h3>
+    <p>高温合金和碳纤维是壁垒最高的赛道，军品认证周期长、供应商切换成本高、型号全生命周期锁定</p>
+  </div>
+  <table>
+    <tr><th>细分领域</th><th>代表公司</th><th>代码</th><th>市值(亿)</th><th>PE(TTM)</th><th>核心竞争力</th></tr>
+    <tr><td class="hl">高温合金</td><td>抚顺特钢</td><td class="num">600399.SH</td><td class="num">~280</td><td class="num">~35</td><td>航发核心供应商，军品占比超40%，壁垒极高</td></tr>
+    <tr><td class="hl">高温合金</td><td>钢研高纳</td><td class="num">300034.SZ</td><td class="num">~180</td><td class="num">~45</td><td>精铸高温合金龙头，航天+航空双覆盖</td></tr>
+    <tr><td class="hl">钛合金</td><td>宝钛股份</td><td class="num">600456.SH</td><td class="num">~220</td><td class="num">~28</td><td>军品钛合金市占率超60%</td></tr>
+    <tr><td class="hl">钛合金</td><td>西部超导</td><td class="num">688122.SH</td><td class="num">~250</td><td class="num">~50</td><td>高端钛合金+超导双龙头，军品钛棒市占率超70%</td></tr>
+    <tr><td class="hl">碳纤维</td><td>中简科技</td><td class="num">300777.SZ</td><td class="num">~200</td><td class="num">~55</td><td>ZT7系列打破国外垄断，军品占比超90%</td></tr>
+    <tr><td class="hl">碳纤维</td><td>光威复材</td><td class="num">300699.SZ</td><td class="num">~300</td><td class="num">~38</td><td>军用碳纤维龙头，T300/T800全覆盖</td></tr>
+    <tr><td class="hl">特钢</td><td>中信特钢</td><td class="num">000708.SZ</td><td class="num">845</td><td class="num">14.25</td><td>全球特钢龙头，军工轴承钢核心供应商</td></tr>
+    <tr><td class="hl">隐身材料</td><td>光启技术</td><td class="num">002625.SZ</td><td class="num">859</td><td class="num">119</td><td>超材料隐身龙头，歼-20隐身结构核心</td></tr>
+    <tr><td class="hl">石英纤维</td><td>菲利华</td><td class="num">300395.SZ</td><td class="num">~150</td><td class="num">~42</td><td>军用石英纤维龙头，航天透波材料</td></tr>
+  </table>
+
+  <div class="layer-header up">
+    <h3>B. 军用电子元器件——信息化战争的"神经末梢"</h3>
+  </div>
+  <table>
+    <tr><th>细分领域</th><th>代表公司</th><th>代码</th><th>市值(亿)</th><th>PE(TTM)</th><th>核心竞争力</th></tr>
+    <tr><td class="hl">军用芯片</td><td>紫光国微</td><td class="num">002049.SZ</td><td class="num">~600</td><td class="num">~55</td><td>军用FPGA/安全芯片龙头，市占率超50%</td></tr>
+    <tr><td class="hl">连接器</td><td>中航光电</td><td class="num">002179.SZ</td><td class="num">~900</td><td class="num">~32</td><td>连接器绝对龙头，军品+新能源双驱动，市值军工电子第一</td></tr>
+    <tr><td class="hl">连接器</td><td>航天电器</td><td class="num">002025.SZ</td><td class="num">~350</td><td class="num">~38</td><td>弹载连接器+微波器件龙头，军品占比超70%</td></tr>
+    <tr><td class="hl">电容电阻</td><td>振华科技</td><td class="num">000733.SZ</td><td class="num">~350</td><td class="num">~30</td><td>军用MLCC/电阻核心，CEC旗下平台</td></tr>
+    <tr><td class="hl">钽电容</td><td>宏达电子</td><td class="num">300726.SZ</td><td class="num">~180</td><td class="num">~35</td><td>军用钽电容龙头，军品占比超75%</td></tr>
+    <tr><td class="hl">红外探测</td><td>高德红外</td><td class="num">002414.SZ</td><td class="num">~350</td><td class="num">~40</td><td>导弹导引头核心供应商</td></tr>
+  </table>
+
+  <div class="layer-header up">
+    <h3>C. 关键战略矿物——中国的反制利器</h3>
+  </div>
+  <table>
+    <tr><th>矿物</th><th>中国全球占比</th><th>战略意义</th><th>核心标的</th><th>出口管制</th></tr>
+    <tr><td class="hl">稀土</td><td>采矿60%/分离89%</td><td>导弹制导/雷达/声纳不可替代</td><td>北方稀土/五矿稀土/盛和资源</td><td>2023年起收紧</td></tr>
+    <tr><td class="hl">锑</td><td>产量55%+/储量25%</td><td>穿甲弹/红外制导/夜视仪</td><td>湖南黄金/华锡有色</td><td>2024年9月</td></tr>
+    <tr><td class="hl">镓</td><td>产量98%</td><td>相控阵雷达(GaN)/夜视仪</td><td>中国铝业/东方盛虹</td><td>2023年8月</td></tr>
+    <tr><td class="hl">锗</td><td>产量68%</td><td>红外光学/光纤通信/卫星太阳能</td><td>云南锗业/驰宏锌锗</td><td>2023年8月</td></tr>
+    <tr><td class="hl">钨</td><td>产量82%/储量57%</td><td>穿甲弹/合金刀具/火箭喷管</td><td>厦门钨业/中钨高新</td><td>2025年升级</td></tr>
+  </table>
+  <div class="highlight-box">
+    <h4>关键矿物反制逻辑</h4>
+    <p style="font-size:13px">镓是GaN（氮化镓）核心原料→GaN是新一代有源相控阵雷达核心→中国管制镓出口直接影响全球军工雷达产能。锑与穿甲弹和红外制导密切相关。中国对关键矿物的出口管制是应对美国半导体限制的重要反制工具。</p>
+  </div>
+</div>
+
+<!-- ====== 中游 ====== -->
+<div class="section">
+  <h2 class="section-title midstream">中游：分系统与核心装备</h2>
+
+  <div class="layer-header mid">
+    <h3>航空发动机/动力系统</h3>
+    <p>航发是军工"皇冠上的明珠"，WS-10/WS-15是当前主力/下一代发动机</p>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>定位</th></tr>
+    <tr><td class="hl">航发动力</td><td class="num">600893.SH</td><td class="num">~1,100</td><td class="num">~70</td><td>WS-10/WS-15总装唯一平台，AECC核心上市平台</td></tr>
+    <tr><td class="hl">航发控制</td><td class="num">600861.SH</td><td class="num">~300</td><td class="num">~55</td><td>航发控制系统龙头，AECC旗下</td></tr>
+    <tr><td class="hl">航发科技</td><td class="num">600391.SH</td><td class="num">~120</td><td class="num">~80</td><td>航发零部件+外贸转包</td></tr>
+  </table>
+
+  <div class="layer-header mid">
+    <h3>雷达/电子对抗/通信</h3>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>定位</th></tr>
+    <tr><td class="hl">国睿科技</td><td class="num">600562.SH</td><td class="num">~200</td><td class="num">~50</td><td>CETC十四所上市平台，军用雷达核心</td></tr>
+    <tr><td class="hl">海格通信</td><td class="num">002465.SZ</td><td class="num">~250</td><td class="num">~55</td><td>军用无线通信龙头，北斗+卫星通信</td></tr>
+    <tr><td class="hl">七一二</td><td class="num">603712.SH</td><td class="num">~200</td><td class="num">~45</td><td>军用专网通信龙头，机载/舰载通信</td></tr>
+  </table>
+
+  <div class="layer-header mid">
+    <h3>船舶动力/导弹制导/卫星</h3>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>定位</th></tr>
+    <tr><td class="hl">中国动力</td><td class="num">600482.SH</td><td class="num">~400</td><td class="num">~45</td><td>舰船综合动力系统龙头，CSSC旗下</td></tr>
+    <tr><td class="hl">航天电子</td><td class="num">600879.SH</td><td class="num">773</td><td class="num">340</td><td>航天测控+精确制导，CASC旗下</td></tr>
+    <tr><td class="hl">高德红外</td><td class="num">002414.SZ</td><td class="num">~350</td><td class="num">~40</td><td>红外导引头龙头，完整导弹系统资质</td></tr>
+    <tr><td class="hl">中国卫星</td><td class="num">600118.SH</td><td class="num">~300</td><td class="num">~200</td><td>小卫星制造龙头，CASC旗下</td></tr>
+  </table>
+</div>
+
+<!-- ====== 下游 ====== -->
+<div class="section">
+  <h2 class="section-title downstream">下游：整机与总装</h2>
+
+  <div class="layer-header dn">
+    <h3>航空装备——战斗机/运输机/直升机</h3>
+    <p>下游总装厂是最具稀缺性的环节，每个型号只有1-2个总装单位</p>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>核心产品</th></tr>
+    <tr><td class="hl">中航沈飞</td><td class="num">600760.SH</td><td class="num">1,444</td><td class="num">41.05</td><td>歼-11/歼-15/歼-16唯一总装，AVIC旗下</td></tr>
+    <tr><td class="hl">中航成飞</td><td class="num">600862.SH</td><td class="num">~800</td><td class="num">~60</td><td>歼-10/歼-20总装（注：成飞借壳中航电测）</td></tr>
+    <tr><td class="hl">中航西飞</td><td class="num">000768.SZ</td><td class="num">~600</td><td class="num">~80</td><td>运-20/轰-6总装，大飞机平台</td></tr>
+    <tr><td class="hl">中直股份</td><td class="num">600038.SH</td><td class="num">~300</td><td class="num">~70</td><td>直-9/直-20直升机总装</td></tr>
+  </table>
+
+  <div class="layer-header dn">
+    <h3>舰船装备——军舰/潜艇</h3>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>核心产品</th></tr>
+    <tr><td class="hl">中国船舶</td><td class="num">600150.SH</td><td class="num">2,486</td><td class="num">34.55</td><td>军舰+民船总装，CSSC核心上市平台，军工市值第一</td></tr>
+    <tr><td class="hl">中国重工</td><td class="num">601989.SH</td><td class="num">~900</td><td class="num">~50</td><td>潜艇/驱护舰分段建造</td></tr>
+  </table>
+
+  <div class="layer-header dn">
+    <h3>导弹/火箭/无人机/卫星</h3>
+  </div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE</th><th>核心产品</th></tr>
+    <tr><td class="hl">中国卫通</td><td class="num">601698.SH</td><td class="num">1,435</td><td class="num">325</td><td>卫星运营龙头，通信广播卫星</td></tr>
+    <tr><td class="hl">航天彩虹</td><td class="num">002389.SZ</td><td class="num">~200</td><td class="num">~100</td><td>军用无人机龙头，彩虹系列</td></tr>
+    <tr><td class="hl">中无人机</td><td class="num">688297.SH</td><td class="num">~300</td><td class="num">~80</td><td>翼龙系列无人机，军贸出海</td></tr>
+    <tr><td class="hl">内蒙一机</td><td class="num">600967.SH</td><td class="num">~200</td><td class="num">~35</td><td>主战坦克/步兵战车总装</td></tr>
+  </table>
+</div>
+
+<!-- ====== 十大军工集团 ====== -->
+<div class="section">
+  <h2 class="section-title group">十大军工集团与A股上市平台</h2>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:14px">军工行业最大特点：集团资产证券化率普遍偏低（30-50%），资产注入预期是重要投资逻辑</p>
+  <div class="group-grid">
+    <div class="group-card">
+      <h4>中国航空工业集团 (AVIC)</h4>
+      <div class="biz">战斗机/直升机/运输机/航空装备</div>
+      <div class="companies"><strong>中航沈飞</strong>(歼击机) · <strong>中航西飞</strong>(运输机) · <strong>中直股份</strong>(直升机) · <strong>中航光电</strong>(连接器) · <strong>中航高科</strong>(复合材料) · <strong>贵航股份</strong>(汽车零部件)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国航天科技集团 (CASC)</h4>
+      <div class="biz">运载火箭/卫星/载人航天</div>
+      <div class="companies"><strong>中国卫星</strong>(小卫星) · <strong>航天电子</strong>(测控+制导) · <strong>中国卫通</strong>(卫星运营) · <strong>航天机电</strong>(太阳能)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国航天科工集团 (CASIC)</h4>
+      <div class="biz">导弹/防御系统/信息技术</div>
+      <div class="companies"><strong>航天电器</strong>(连接器) · <strong>航天信息</strong>(信息安全) · <strong>航天发展</strong>(电子蓝军)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国船舶集团 (CSSC)</h4>
+      <div class="biz">军舰/民船/船舶动力</div>
+      <div class="companies"><strong>中国船舶</strong>(总装) · <strong>中国动力</strong>(动力系统) · <strong>中国重工</strong>(舰船制造) · <strong>中船防务</strong>(船舶配套)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国兵器工业集团 (NORINCO)</h4>
+      <div class="biz">坦克/装甲/弹药/精确打击</div>
+      <div class="companies"><strong>内蒙一机</strong>(坦克总装) · <strong>北方导航</strong>(制导) · <strong>中兵红箭</strong>(超硬材料+弹药)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国兵器装备集团 (CSGC)</h4>
+      <div class="biz">轻武器/汽车/光电</div>
+      <div class="companies"><strong>长城军工</strong>(弹药) · <strong>建设工业</strong>(枪械) · <strong>长安汽车</strong>(民用)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国电子科技集团 (CETC)</h4>
+      <div class="biz">雷达/电子对抗/信息安全</div>
+      <div class="companies"><strong>国睿科技</strong>(雷达) · <strong>四创电子</strong>(预警雷达) · <strong>太极股份</strong>(信安) · <strong>海康威视</strong>(安防)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国电子信息产业集团 (CEC)</h4>
+      <div class="biz">信息安全/基础软件/集成电路</div>
+      <div class="companies"><strong>振华科技</strong>(MLCC) · <strong>中国软件</strong>(基础软件) · <strong>深桑达A</strong>(云计算)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国核工业集团 (CNNC)</h4>
+      <div class="biz">核武器/核电/核燃料</div>
+      <div class="companies"><strong>中国核电</strong>(核电运营) · <strong>中国核建</strong>(核工程建设)</div>
+    </div>
+    <div class="group-card">
+      <h4>中国航空发动机集团 (AECC)</h4>
+      <div class="biz">航空发动机/燃气轮机</div>
+      <div class="companies"><strong>航发动力</strong>(总装) · <strong>航发控制</strong>(控制系统) · <strong>航发科技</strong>(零部件)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 市值分布 ====== -->
+<div class="section">
+  <h2 class="section-title" style="color:var(--cyan);border-bottom-color:rgba(6,182,212,0.4)">板块市值与估值分布</h2>
+  <div class="chart-row">
+    <div class="chart-box"><canvas id="mvChart"></canvas></div>
+    <div class="chart-box"><canvas id="peChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ====== 军工特殊逻辑 ====== -->
+<div class="section">
+  <h2 class="section-title" style="color:var(--orange);border-bottom-color:rgba(245,158,11,0.4)">军工行业特殊逻辑</h2>
+
+  <div class="highlight-box">
+    <h4>军品定价机制变革</h4>
+    <p style="font-size:13px">传统"成本加成5%"定价→向"审价+竞争"转变。主机厂利润率从3-5%向8-10%提升空间大。军品价格改革是军工板块盈利能力改善的核心驱动。</p>
+  </div>
+
+  <div class="highlight-box">
+    <h4>五年规划节奏</h4>
+    <p style="font-size:13px">军工订单高度遵循"五年规划"节奏：规划第一年(2026)下达预研→第二年批量订单→第三年交付高峰→第四五年新规划酝酿。2026年是"十五五"开局年，主机端有望开启新一轮备货周期，上游率先受益。</p>
+  </div>
+
+  <div class="highlight-box">
+    <h4>三轮驱动新格局</h4>
+    <p style="font-size:13px"><strong>第一曲线：内需筑基</strong>——国防预算7%稳定增长+装备升级换代<br><strong>第二曲线：军贸出海</strong>——中国军贸份额持续提升，无人机/导弹/护卫舰出海<br><strong>第三曲线：军用技术民用化</strong>——商业航天/低空经济/大飞机/燃气轮机，万亿级新市场</p>
+  </div>
+
+  <div class="highlight-box">
+    <h4>资产证券化率提升</h4>
+    <p style="font-size:13px">十大军工集团资产证券化率普遍30-50%，远低于央企平均67%。科研院所改制+军工集团重组是长期主题。每一次资产注入预期都是股价催化剂。</p>
+  </div>
+</div>
+
+<!-- ====== 催化因素 ====== -->
+<div class="section">
+  <h2 class="section-title catalyst">2025-2026年核心催化因素</h2>
+  <div class="catalyst-grid">
+    <div class="catalyst-card red">
+      <h4>十五五规划落地</h4>
+      <p>2026年是十五五开局年，新装备排产+订单下达，上游率先受益。建军百年(2027)目标倒逼装备加速列装。</p>
+    </div>
+    <div class="catalyst-card red">
+      <h4>地缘冲突升级</h4>
+      <p>俄乌/中东/台海局势持续紧张。全球军费扩张，北约计划2035年将国防支出提升至GDP的5%。军贸需求"量价齐升"。</p>
+    </div>
+    <div class="catalyst-card orange">
+      <h4>商业航天爆发</h4>
+      <p>千帆星座第七批组网发射成功，2026年近30次发射。可复用火箭试验推进。商业航天权重占军工指数69%。</p>
+    </div>
+    <div class="catalyst-card orange">
+      <h4>两机产业（燃气轮机+商发）</h4>
+      <p>AI数据中心电力需求暴增→燃气轮机需求爆发。商发（CJ-1000A/2000A）国产大飞机发动机进入验证期。</p>
+    </div>
+    <div class="catalyst-card green">
+      <h4>军贸出海加速</h4>
+      <p>中国军贸凭借性价比+体系化作战能力份额持续提升。无人机/导弹/护卫舰成为出海主力，第二增长曲线确认。</p>
+    </div>
+    <div class="catalyst-card green">
+      <h4>军用技术民用化</h4>
+      <p>低空经济/大飞机/可控核聚变/深海科技，军工技术向民用溢出催生万亿级新产业，"军技民用，反哺军工"。</p>
+    </div>
+  </div>
+
+  <div class="logic-chain">
+    <span class="logic-node driver">国防预算7%增长</span>
+    <span class="logic-arrow">→</span>
+    <span class="logic-node driver">十五五新装备订单</span>
+    <span class="logic-arrow">→</span>
+    <span class="logic-node result">上游元器件/材料率先放量</span>
+    <span class="logic-arrow">→</span>
+    <span class="logic-node result">中游分系统业绩兑现</span>
+    <span class="logic-arrow">→</span>
+    <span class="logic-node result">下游总装交付确认收入</span>
+  </div>
+</div>
+
+<!-- ====== 风险与机会 ====== -->
+<div class="section">
+  <h2 class="section-title" style="color:#f87171;border-bottom-color:rgba(248,113,113,0.4)">风险与机会</h2>
+
+  <div class="opp-item"><strong>机会1：业绩从"左侧行情"走向"右侧兑现"</strong> — 2026年上半年军工行业基本面有望持续改善，订单端及业绩端将逐步修复。从主题博弈转向基本面定价。</div>
+  <div class="opp-item"><strong>机会2：新质新质战斗力</strong> — 无人装备、军事智能化、卫星互联网、电子对抗等新域新质是增量方向，估值弹性大。</div>
+  <div class="opp-item"><strong>机会3：军贸出海</strong> — 地缘冲突推升全球军备需求，中国军贸份额提升是确定性趋势。</div>
+  <div class="opp-item"><strong>机会4：商业航天/低空经济</strong> — 军工技术民用化打开天花板，从周期股走向成长股。</div>
+
+  <div class="risk-item"><strong>风险1：军品降价压力</strong> — 军品审价改革+以量换价，可能导致相关企业利润率下滑。</div>
+  <div class="risk-item"><strong>风险2：订单节奏不确定</strong> — 军工订单受政策/国际形势影响大，可能延迟或不及预期。</div>
+  <div class="risk-item"><strong>风险3：估值偏高</strong> — 部分军工股PE 50-300x，业绩短期无法验证，存在估值回调风险。</div>
+  <div class="risk-item"><strong>风险4：民参军标的质地参差</strong> — 民参军企业竞争力和壁垒较弱，业绩波动大。</div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  数据来源：公司年报、Tushare Pro、NeoData、申万行业分类、SIPRI、券商研报<br>
+  仅供参考学习，不构成投资建议 · Auto 🧭 · 2026.04.20
+</div>
+
+</div>
+
+<script>
+// 市值分布图
+const mvCtx = document.getElementById('mvChart').getContext('2d');
+new Chart(mvCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['航空装备', '船舶装备', '航天装备', '军工电子', '军工材料', '地面兵装', '其他'],
+    datasets: [{
+      data: [3200, 2400, 2200, 2000, 1800, 600, 800],
+      backgroundColor: ['#3b82f6','#06b6d4','#a855f7','#f59e0b','#22c55e','#ef4444','#6b7280'],
+      borderColor: '#111827',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '军工细分板块市值分布(亿元)', color: '#e8f0fe', font: { size: 14 } },
+      legend: { position: 'right', labels: { color: '#8899b0', font: { size: 11 }, padding: 8 } }
+    }
+  }
+});
+
+// PE分布图
+const peCtx = document.getElementById('peChart').getContext('2d');
+new Chart(peCtx, {
+  type: 'bar',
+  data: {
+    labels: ['上游材料', '上游元器件', '中游航发', '中游电子', '下游航空', '下游舰船', '下游导弹/无人机'],
+    datasets: [{
+      label: 'PE中位数',
+      data: [45, 38, 65, 50, 60, 42, 100],
+      backgroundColor: ['rgba(124,58,237,0.6)','rgba(124,58,237,0.5)','rgba(37,99,235,0.6)','rgba(37,99,235,0.5)','rgba(5,150,105,0.6)','rgba(5,150,105,0.5)','rgba(5,150,105,0.5)'],
+      borderColor: ['#7c3aed','#7c3aed','#2563eb','#2563eb','#059669','#059669','#059669'],
+      borderWidth: 1,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: {
+      title: { display: true, text: '各环节PE中位数', color: '#e8f0fe', font: { size: 14 } },
+      legend: { display: false }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(30,45,69,0.5)' }, ticks: { color: '#8899b0' } },
+      y: { grid: { display: false }, ticks: { color: '#e8f0fe', font: { size: 11 } } }
+    }
+  }
+});
+</script>
+</body>
+</html>
