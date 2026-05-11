@@ -84,6 +84,205 @@ function getCategoryDisplayName(category) {
 }
 
 /**
+ * 生成分类页面 HTML
+ * 抓手：为每个分类生成独立的列表页面
+ */
+function generateCategoryPage(category, categoryArticles, categories) {
+  const sortedArticles = categoryArticles.sort((a, b) =>
+    new Date(b.date) - new Date(a.date)
+  );
+
+  const categoryHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${categories[category].displayName} | fin.a11.world</title>
+  <meta name="description" content="${categories[category].displayName}汇集">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .articles-section {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .articles-section h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .article-card {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+
+    .article-card:hover {
+      background: #f9f9f9;
+    }
+
+    .article-card:last-child {
+      border-bottom: none;
+    }
+
+    .article-title {
+      font-size: 1.3em;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .article-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .article-title a:hover {
+      text-decoration: underline;
+    }
+
+    .article-meta {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    .article-category {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      margin-right: 10px;
+    }
+
+    .article-description {
+      color: #555;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>${categories[category].displayName}</h1>
+      <p>${getCategoryDescription(category)}</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">返回首页</a>
+    </div>
+
+    <section class="articles-section">
+      <h2>${categories[category].displayName}列表</h2>
+      ${sortedArticles.map(article => `
+      <div class="article-card">
+        <h3 class="article-title">
+          <a href="${article.path}">${article.title}</a>
+        </h3>
+        <div class="article-meta">
+          <span class="article-category">${categories[article.category].displayName}</span>
+          <span>${article.date}</span>
+        </div>
+        ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
+      </div>
+      `).join('')}
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; ${new Date().getFullYear()} fin.a11.world - 金融分析文章汇集</p>
+  </footer>
+</body>
+</html>`;
+
+  return categoryHtml;
+}
+
+/**
+ * 分类描述
+ */
+function getCategoryDescription(category) {
+  const descriptions = {
+    'market-analysis': '深入解读市场趋势与投资机会',
+    'industry-research': '深度分析各行业产业链与发展趋势',
+    'company-reports': '深度分析各类上市公司的财务状况与投资价值'
+  };
+  return descriptions[category] || '';
+}
+
+/**
  * 生成首页 HTML
  * 闭环：自动生成首页，展示所有文章
  */
@@ -147,6 +346,11 @@ function generateIndex(articles, categories, categoriesList) {
       margin-bottom: 40px;
     }
 
+    .categories a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .category-card {
       background: white;
       padding: 20px;
@@ -156,7 +360,7 @@ function generateIndex(articles, categories, categoriesList) {
       cursor: pointer;
     }
 
-    .category-card:hover {
+    .categories a:hover .category-card {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
@@ -267,10 +471,12 @@ function generateIndex(articles, categories, categoriesList) {
     <!-- 分类导航 -->
     <section class="categories">
       ${categoriesList.map(cat => `
-      <div class="category-card" onclick="filterByCategory('${cat}')">
-        <h3>${categories[cat].displayName}</h3>
-        <p class="count">${categories[cat].count} 篇文章</p>
-      </div>
+      <a href="articles/${cat}/" style="text-decoration: none; color: inherit;">
+        <div class="category-card">
+          <h3>${categories[cat].displayName}</h3>
+          <p class="count">${categories[cat].count} 篇文章</p>
+        </div>
+      </a>
       `).join('')}
     </section>
 
@@ -296,30 +502,6 @@ function generateIndex(articles, categories, categoriesList) {
     <p>&copy; ${new Date().getFullYear()} fin.a11.world - 金融分析文章汇集</p>
   </footer>
 
-  <script>
-    // 分类筛选功能
-    function filterByCategory(category) {
-      const cards = document.querySelectorAll('.article-card');
-      cards.forEach(card => {
-        if (card.dataset.category === category) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      // 滚动到文章列表
-      document.querySelector('.articles-section').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // 点击分类卡片外的其他地方恢复显示所有文章
-    document.querySelector('.categories').addEventListener('click', (e) => {
-      if (!e.target.closest('.category-card')) {
-        const cards = document.querySelectorAll('.article-card');
-        cards.forEach(card => card.style.display = 'block');
-      }
-    });
-  </script>
 </body>
 </html>`;
 
@@ -328,7 +510,7 @@ function generateIndex(articles, categories, categoriesList) {
 
 /**
  * 构建网站
- * 主入口：扫描文章 → 生成首页 → 复制到 public 目录
+ * 主入口：扫描文章 → 生成首页 → 生成分类页面 → 复制到 public 目录
  */
 function build() {
   console.log('🔨 开始构建网站...\n');
@@ -349,9 +531,9 @@ function build() {
 
   // 写入首页
   fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
-  console.log('✅ 首页已生成: public/index.html\n');
+  console.log('✅ 首页已生成: public/index.html');
 
-  // 复制 articles 目录到 public
+  // 复制 articles 目录到 public（先复制文章）
   const publicArticlesDir = path.join(publicDir, 'articles');
   if (fs.existsSync(publicArticlesDir)) {
     fs.rmSync(publicArticlesDir, { recursive: true, force: true });
@@ -361,7 +543,18 @@ function build() {
     publicArticlesDir,
     { recursive: true }
   );
-  console.log('✅ 文章已复制到 public/articles\n');
+  console.log('✅ 文章已复制到 public/articles');
+
+  // 生成分类页面（在复制文章之后生成，避免被覆盖）
+  categoriesList.forEach(category => {
+    const categoryArticles = articles.filter(a => a.category === category);
+    const categoryHtml = generateCategoryPage(category, categoryArticles, categories);
+    const categoryDir = path.join(publicDir, 'articles', category);
+
+    // 写入分类页面
+    fs.writeFileSync(path.join(categoryDir, 'index.html'), categoryHtml);
+    console.log(`✅ 分类页面已生成: public/articles/${category}/index.html`);
+  });
 
   console.log('✨ 构建完成！');
   console.log(`\n📊 统计：`);
