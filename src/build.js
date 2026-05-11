@@ -271,6 +271,47 @@ function generateCategoryPage(category, categoryArticles, categories) {
 }
 
 /**
+ * 生成 sitemap.xml
+ * 抓手：为 SEO 生成符合标准的 sitemap
+ */
+function generateSitemap(articles, categories, categoriesList) {
+  const baseUrl = 'https://fin.a11.world';
+  const currentDate = new Date().toISOString();
+
+  const urls = [
+    // 首页
+    `
+  <url>
+    <loc>${baseUrl}/</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>`,
+    // 分类页面
+    ...categoriesList.map(category => `
+  <url>
+    <loc>${baseUrl}/articles/${category}/</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>`),
+    // 文章页面
+    ...articles.map(article => `
+  <url>
+    <loc>${baseUrl}/${article.path}</loc>
+    <lastmod>${article.date}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`)
+  ];
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join('')}
+</urlset>`;
+}
+
+/**
  * 分类描述
  */
 function getCategoryDescription(category) {
@@ -555,6 +596,11 @@ function build() {
     fs.writeFileSync(path.join(categoryDir, 'index.html'), categoryHtml);
     console.log(`✅ 分类页面已生成: public/articles/${category}/index.html`);
   });
+
+  // 生成 sitemap.xml
+  const sitemapXml = generateSitemap(articles, categories, categoriesList);
+  fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml);
+  console.log('✅ Sitemap 已生成: public/sitemap.xml');
 
   console.log('✨ 构建完成！');
   console.log(`\n📊 统计：`);

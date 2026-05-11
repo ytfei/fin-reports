@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoWoS 先进封装产业链分析</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a25;
+            --border: #2a2a3a;
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --green: #34d399;
+            --green-bg: rgba(52, 211, 153, 0.08);
+            --red: #f87171;
+            --red-bg: rgba(248, 113, 113, 0.08);
+            --yellow: #fbbf24;
+            --yellow-bg: rgba(251, 191, 36, 0.08);
+            --blue: #60a5fa;
+            --blue-bg: rgba(96, 165, 250, 0.08);
+            --cyan: #22d3ee;
+            --cyan-bg: rgba(34, 211, 238, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .hero {
+            position: relative;
+            padding: 80px 40px 60px;
+            background: linear-gradient(135deg, #051a10, #0a2015, #0a1a12);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.08), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff, #a7f3d0, #6ee7b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .kpi-change {
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .up { color: var(--green); }
+        .down { color: var(--red); }
+        .warn { color: var(--yellow); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-child { border-bottom: none; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .section h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-green { background: var(--green); }
+        .dot-red { background: var(--red); }
+        .dot-yellow { background: var(--yellow); }
+        .dot-blue { background: var(--blue); }
+        .dot-cyan { background: var(--cyan); }
+        .dot-purple { background: var(--accent); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+
+        th:first-child { border-radius: 8px 0 0 0; }
+        th:last-child { border-radius: 0 8px 0 0; }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+            font-variant-numeric: tabular-nums;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(16, 185, 129, 0.03); }
+
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        .highlight-row { background: rgba(16, 185, 129, 0.06); }
+        .highlight-row td { font-weight: 600; }
+
+        .danger-row { background: rgba(248, 113, 113, 0.06); }
+        .danger-row td { font-weight: 600; }
+
+        .alert-card {
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+        .alert-red { background: var(--red-bg); border: 1px solid rgba(248, 113, 113, 0.2); }
+        .alert-yellow { background: var(--yellow-bg); border: 1px solid rgba(251, 191, 36, 0.2); }
+        .alert-green { background: var(--green-bg); border: 1px solid rgba(52, 211, 153, 0.2); }
+        .alert-blue { background: var(--blue-bg); border: 1px solid rgba(96, 165, 250, 0.2); }
+        .alert-cyan { background: var(--cyan-bg); border: 1px solid rgba(34, 211, 238, 0.2); }
+
+        .alert-title { font-weight: 600; margin-bottom: 4px; }
+        .alert-text { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+        .bar-chart { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+
+        .bar-row { display: flex; align-items: center; gap: 12px; }
+
+        .bar-label {
+            width: 100px;
+            font-size: 13px;
+            color: var(--text-dim);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 28px;
+            background: var(--surface2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .bar-purple { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .bar-green { background: linear-gradient(90deg, #059669, var(--green)); }
+        .bar-blue { background: linear-gradient(90deg, #2563eb, var(--blue)); }
+        .bar-yellow { background: linear-gradient(90deg, #d97706, var(--yellow)); }
+        .bar-red { background: linear-gradient(90deg, #dc2626, var(--red)); }
+        .bar-cyan { background: linear-gradient(90deg, #0891b2, var(--cyan)); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+        .chain-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .chain-node {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 170px;
+        }
+
+        .chain-node-title { font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+        .chain-node-name { font-size: 14px; font-weight: 600; }
+        .chain-arrow { color: var(--accent); font-size: 24px; padding: 0 8px; }
+
+        .chain-node.highlight {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tag-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52, 211, 153, 0.2); }
+        .tag-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248, 113, 113, 0.2); }
+        .tag-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(251, 191, 36, 0.2); }
+        .tag-cyan { background: var(--cyan-bg); color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.2); }
+
+        .timeline { position: relative; padding-left: 24px; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+        }
+
+        .timeline-date { font-size: 12px; color: var(--accent-light); margin-bottom: 4px; }
+        .timeline-text { font-size: 14px; color: var(--text-dim); }
+
+        .verdict-card {
+            background: linear-gradient(135deg, #051a10, #0a2015);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .verdict-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-light);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .verdict-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .verdict-text {
+            font-size: 15px;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 28px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 40px 20px 30px; }
+            .hero h1 { font-size: 32px; }
+            .container { padding: 0 20px; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .chain-flow { flex-direction: column; gap: 8px; }
+            .section { padding: 40px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="stock-badge">产业研究 · 先进封装 · AI算力基础设施</div>
+        <h1>CoWoS 先进封装产业链</h1>
+        <p class="hero-subtitle">AI芯片的终极瓶颈 · 没有CoWoS就没有英伟达GPU · 从技术解析到投资全景</p>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">2026底 月产能</div>
+                <div class="kpi-value">13-14<span style="font-size:18px;color:var(--text-dim)">万片</span></div>
+                <div class="kpi-change up">▲ 4年翻14倍</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">英伟达2026预订</div>
+                <div class="kpi-value" style="color:var(--accent-light)">80-85<span style="font-size:18px;color:var(--text-dim)">万片</span></div>
+                <div class="kpi-change warn">占总产能 >50%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">2026 全球需求</div>
+                <div class="kpi-value" style="color:var(--yellow)">~100<span style="font-size:18px;color:var(--text-dim)">万片</span></div>
+                <div class="kpi-change up">摩根士丹利预测</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">供需缺口</div>
+                <div class="kpi-value" style="color:var(--red)">2027H1</div>
+                <div class="kpi-change down">至少延续到2027年中</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- ========== 一、什么是CoWoS ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>什么是CoWoS — 大白话版</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>一句话解释</div>
+        <p style="font-size:16px;line-height:1.8;color:var(--text-dim)">
+            <strong style="color:var(--text)">CoWoS = Chip-on-Wafer-on-Substrate</strong>，台积电发明的2.5D先进封装技术。把GPU芯片和多颗HBM存储芯片<strong style="color:var(--text)">"拼"在同一块硅中介层上</strong>，让它们之间的通信速度快到飞起。<strong style="color:var(--text)">没有它，英伟达的AI芯片就造不出来。</strong>
+        </p>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title"><span class="dot dot-cyan"></span>分两步走</div>
+            <p style="font-size:14px;color:var(--text-dim);line-height:1.8;">
+                <strong style="color:var(--text)">① CoW（Chip-on-Wafer）：</strong>把GPU/AI芯片+多颗HBM，通过微凸块焊接到<strong>硅中介层</strong>上<br><br>
+                <strong style="color:var(--text)">② WoS（Wafer-on-Substrate）：</strong>把"芯片拼盘"整体焊到有机基板上，形成完整封装
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-yellow"></span>形象比喻</div>
+            <p style="font-size:14px;color:var(--text-dim);line-height:1.8;">
+                传统封装：一间大房子放在地基上。<br><br>
+                CoWoS：用一块硅片当<strong style="color:var(--text)">"地板"</strong>，把GPU客厅、HBM仓库、CPU书房等多间小房子平铺在上面，房间之间用<strong style="color:var(--text)">超高速走廊</strong>（TSV+RDL）连接。
+            </p>
+        </div>
+    </div>
+
+    <div class="alert-card alert-green">
+        <div class="alert-icon">⚡</div>
+        <div>
+            <div class="alert-title">为什么AI芯片非它不可？</div>
+            <div class="alert-text">英伟达H100/H200/B200/Rubin都需要搭配6-8颗甚至12颗HBM。HBM和GPU之间的数据传输带宽需求是<strong>TB/s级别</strong>。传统封装引脚间距几十微米，CoWoS能做到<strong>亚微米级</strong>。没有CoWoS，即使晶圆造好了芯片，也只能在产线上等封装。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、三大技术路线 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>CoWoS 三大技术路线</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>S / L / R 三路线对比</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>特性</th>
+                    <th class="text-center">CoWoS-S</th>
+                    <th class="text-center">CoWoS-L</th>
+                    <th class="text-center">CoWoS-R</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>中介层</td>
+                    <td class="text-center">纯硅</td>
+                    <td class="text-center"><strong style="color:var(--green)">局部硅互连+RDL</strong></td>
+                    <td class="text-center">纯RDL有机材料</td>
+                </tr>
+                <tr>
+                    <td>成本</td>
+                    <td class="text-center" style="color:var(--red)">最高</td>
+                    <td class="text-center" style="color:var(--yellow)">中等</td>
+                    <td class="text-center" style="color:var(--green)">最低</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>HBM支持</td>
+                    <td class="text-center">最多8颗</td>
+                    <td class="text-center"><strong style="color:var(--green)">最多12颗 ✓</strong></td>
+                    <td class="text-center">未明确</td>
+                </tr>
+                <tr>
+                    <td>面积限制</td>
+                    <td class="text-center">~2500mm²</td>
+                    <td class="text-center"><strong style="color:var(--green)">突破限制 ✓</strong></td>
+                    <td class="text-center">无明确限制</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>趋势</td>
+                    <td class="text-center">当前主流</td>
+                    <td class="text-center"><strong style="color:var(--green)">即将成为主流 ✓</strong></td>
+                    <td class="text-center">技术储备</td>
+                </tr>
+                <tr>
+                    <td>典型产品</td>
+                    <td class="text-center">H100/H200</td>
+                    <td class="text-center"><strong>B200 Blackwell</strong></td>
+                    <td class="text-center">边缘AI</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:14px;color:var(--text-dim);">
+            <strong style="color:var(--text)">趋势：</strong>台积电正从S→L转移。CoWoS-L能塞进12颗HBM、突破光罩面积限制。Blackwell（2 GPU die + 8 HBM）在S的3.3倍光罩面积里装不下，必须用L。2027年还将推出<strong>9倍光罩尺寸</strong>方案。
+        </p>
+    </div>
+</div>
+
+<!-- ========== 三、供需格局 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>供需格局 — 当前最紧缺的半导体环节</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>产能扩张时间线</div>
+        <div class="bar-chart">
+            <div class="bar-row">
+                <div class="bar-label">2022底</div>
+                <div class="bar-track"><div class="bar-fill bar-yellow" style="width:8%">~1万片</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2024底</div>
+                <div class="bar-track"><div class="bar-fill bar-blue" style="width:25%">~3.2万片</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025底</div>
+                <div class="bar-track"><div class="bar-fill bar-green" style="width:55%">~7万片</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label" style="color:var(--green);font-weight:700">2026底</div>
+                <div class="bar-track"><div class="bar-fill bar-purple" style="width:100%"><strong>13-14万片</strong></div></div>
+            </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">4年产能翻14倍，但还是不够！台积电首次将高利润CoW前段制程委外给日月光/矽品。</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-red"></span>需求端 — 英伟达独占半壁江山</div>
+        <table>
+            <thead>
+                <tr><th>客户</th><th class="text-right">2026E CoWoS需求(万片)</th><th>备注</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>英伟达</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">80-85</strong></td>
+                    <td style="font-size:12px;color:var(--text-dim)">占总产能>50%，CoWoS-L为主</td>
+                </tr>
+                <tr>
+                    <td>博通</td>
+                    <td class="text-right">~24</td>
+                    <td style="font-size:12px;color:var(--text-dim)">Google TPU等ASIC</td>
+                </tr>
+                <tr>
+                    <td>AMD</td>
+                    <td class="text-right">~4</td>
+                    <td style="font-size:12px;color:var(--text-dim)">+ASE支持</td>
+                </tr>
+                <tr>
+                    <td>联发科</td>
+                    <td class="text-right">~2</td>
+                    <td style="font-size:12px;color:var(--text-dim)">切入ASIC赛道</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>合计</strong></td>
+                    <td class="text-right"><strong>~100+</strong></td>
+                    <td style="font-size:12px;color:var(--text-dim)">摩根士丹利预测</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert-card alert-red">
+        <div class="alert-icon">🚨</div>
+        <div>
+            <div class="alert-title">关键信号：台积电首次外包CoW前段制程</div>
+            <div class="alert-text">2026年台积电首次将<strong>高利润的CoW前段制程</strong>委外给日月光旗下矽品（以前只外包低利润的WoS后段）。说明产能紧张到了极点。台积电董事长魏哲家原话：CoWoS需求"非常、非常"强劲，<strong>2026年产能已全面售罄</strong>，并将上调CoWoS报价。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 四、产业链全景 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>产业链全景</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>产业链流程</div>
+        <div class="chain-flow">
+            <div class="chain-node">
+                <div class="chain-node-title">芯片设计</div>
+                <div class="chain-node-name">英伟达 / AMD / 博通</div>
+            </div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">
+                <div class="chain-node-title">晶圆制造</div>
+                <div class="chain-node-name">台积电</div>
+            </div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node highlight">
+                <div class="chain-node-title">CoWoS封装</div>
+                <div class="chain-node-name" style="color:var(--accent-light)">CoW + WoS</div>
+            </div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">
+                <div class="chain-node-title">测试</div>
+                <div class="chain-node-name">京元电等</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ① 封测服务 -->
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>① 封测服务</div>
+        <table>
+            <thead>
+                <tr><th>公司</th><th>代码</th><th>角色</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>台积电</strong></td>
+                    <td>2330.TW</td>
+                    <td style="font-size:13px;color:var(--text-dim)">核心龙头，CoWoS发明者+独家量产</td>
+                </tr>
+                <tr>
+                    <td>日月光/矽品</td>
+                    <td>3711.TW</td>
+                    <td style="font-size:13px;color:var(--text-dim)">承接委外，2026开始承接CoW前段</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>长电科技</strong></td>
+                    <td><strong>600584.SH</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">XDFOI 2.5D封装量产，国内封测龙头</td>
+                </tr>
+                <tr>
+                    <td>通富微电</td>
+                    <td>002156.SZ</td>
+                    <td style="font-size:13px;color:var(--text-dim)">AMD深度绑定，3nm Chiplet良率85%</td>
+                </tr>
+                <tr>
+                    <td>甬矽电子</td>
+                    <td>688362.SH</td>
+                    <td style="font-size:13px;color:var(--text-dim)">Bump工艺，先进封装占比近100%</td>
+                </tr>
+                <tr>
+                    <td>盛合晶微</td>
+                    <td>688820</td>
+                    <td style="font-size:13px;color:var(--text-dim)">纯先进封装，IPO募资50亿扩产</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ② 封装基板 -->
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>② 封装基板 / PCB</div>
+        <table>
+            <thead>
+                <tr><th>公司</th><th>代码</th><th>角色</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>深南电路</strong></td>
+                    <td><strong>002916</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">FCBGA/ABF基板龙头，AI芯片封装必备</td>
+                </tr>
+                <tr>
+                    <td>兴森科技</td>
+                    <td>002436</td>
+                    <td style="font-size:13px;color:var(--text-dim)">FCBGA基板，快速扩产</td>
+                </tr>
+                <tr>
+                    <td>生益科技</td>
+                    <td>600183</td>
+                    <td style="font-size:13px;color:var(--text-dim)">高频高速覆铜板，ABF基板材料</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ③ 封装设备 -->
+    <div class="card">
+        <div class="card-title"><span class="dot dot-yellow"></span>③ 封装设备（最确定受益）</div>
+        <table>
+            <thead>
+                <tr><th>公司</th><th>代码</th><th>角色</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>中微公司</strong></td>
+                    <td><strong>688012</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">刻蚀+薄膜沉积，TSV深硅刻蚀</td>
+                </tr>
+                <tr>
+                    <td>盛美上海</td>
+                    <td>688082</td>
+                    <td style="font-size:13px;color:var(--text-dim)">电镀+清洗设备</td>
+                </tr>
+                <tr>
+                    <td>芯碁微装</td>
+                    <td>688630</td>
+                    <td style="font-size:13px;color:var(--text-dim)">直写光刻设备，先进封装+IC基板</td>
+                </tr>
+                <tr>
+                    <td>拓荆科技</td>
+                    <td>688072</td>
+                    <td style="font-size:13px;color:var(--text-dim)">W2W/D2W键合设备</td>
+                </tr>
+                <tr>
+                    <td>华海清科</td>
+                    <td>—</td>
+                    <td style="font-size:13px;color:var(--text-dim)">CMP/减薄设备</td>
+                </tr>
+                <tr>
+                    <td>中科飞测</td>
+                    <td>—</td>
+                    <td style="font-size:13px;color:var(--text-dim)">检测量测设备</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ④ 先进材料 -->
+    <div class="card">
+        <div class="card-title"><span class="dot dot-cyan"></span>④ 先进材料</div>
+        <table>
+            <thead>
+                <tr><th>公司</th><th>代码</th><th>角色</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>德邦科技</td>
+                    <td>688035</td>
+                    <td style="font-size:13px;color:var(--text-dim)">Underfill底部填充胶，CoWoS 2.5D必需</td>
+                </tr>
+                <tr>
+                    <td>联瑞新材</td>
+                    <td>688300</td>
+                    <td style="font-size:13px;color:var(--text-dim)">球形硅微粉，ABF基板关键材料</td>
+                </tr>
+                <tr>
+                    <td>安集科技</td>
+                    <td>688019</td>
+                    <td style="font-size:13px;color:var(--text-dim)">CMP抛光液，硅中介层平坦化</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>沃格光电</strong></td>
+                    <td><strong>603773</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">玻璃基板，下一代CoPoS核心材料</td>
+                </tr>
+                <tr>
+                    <td>华海诚科</td>
+                    <td>688543</td>
+                    <td style="font-size:13px;color:var(--text-dim)">先进封装环氧塑封料</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ========== 五、HBM ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">5</div>
+        <h2>HBM — CoWoS的"搭售"瓶颈</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-yellow"></span>HBM市场格局</div>
+        <div class="grid-3" style="margin-bottom:16px;">
+            <div style="text-align:center;padding:16px;background:var(--green-bg);border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:var(--green)">50%</div>
+                <div style="font-size:13px;color:var(--text-dim)">SK海力士</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--blue-bg);border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:var(--blue)">24%</div>
+                <div style="font-size:13px;color:var(--text-dim)">三星</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--yellow-bg);border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:var(--yellow)">27%</div>
+                <div style="font-size:13px;color:var(--text-dim)">美光</div>
+            </div>
+        </div>
+        <p style="font-size:14px;color:var(--text-dim);">
+            HBM市场规模：$2.52B(2024) → $7.95B(2029)，CAGR 25.86%。HBM平均售价是普通DRAM的<strong style="color:var(--text)">5倍</strong>。SK海力士2024-2025产能<strong style="color:var(--green)">全部售罄</strong>。
+        </p>
+    </div>
+</div>
+
+<!-- ========== 六、CoPoS ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">6</div>
+        <h2>下一代技术 — CoPoS 面板级封装</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-cyan"></span>CoPoS = Chip-on-Panel-on-Substrate</div>
+        <p style="font-size:14px;color:var(--text-dim);line-height:1.8;margin-bottom:16px;">
+            <strong style="color:var(--text)">化圆为方</strong>——用方形玻璃面板替代圆形硅晶圆。面积利用率从~70%提升到<strong style="color:var(--text)">95%</strong>，初始面板310×310mm。
+        </p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2026年2月</div>
+                <div class="timeline-text">研发设备到位，采钰(VisEra)试点产线</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2026年Q3</div>
+                <div class="timeline-text">设备供应商最终确定</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2027-2028年</div>
+                <div class="timeline-text">技术开发+工艺验证阶段</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2029-2030年</div>
+                <div class="timeline-text"><strong>量产预计时间</strong>，嘉义AP7工厂</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 七、投资标的 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">7</div>
+        <h2>A股投资标的全景</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>分层投资逻辑</div>
+        <table>
+            <thead>
+                <tr><th>层级</th><th>分类</th><th>公司</th><th>核心逻辑</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>Tier 1</strong></td>
+                    <td>封测龙头</td>
+                    <td><strong>长电科技(600584)</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">XDFOI量产，承接外溢订单，毛利率弹性5%→20%+</td>
+                </tr>
+                <tr>
+                    <td>Tier 1</td>
+                    <td>封测</td>
+                    <td>通富微电(002156)</td>
+                    <td style="font-size:13px;color:var(--text-dim)">AMD绑定，3nm Chiplet良率85%</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>Tier 2</strong></td>
+                    <td>基板</td>
+                    <td><strong>深南电路(002916)</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">FCBGA/ABF基板龙头，量价齐升</td>
+                </tr>
+                <tr>
+                    <td>Tier 3</td>
+                    <td>设备</td>
+                    <td>中微公司(688012)</td>
+                    <td style="font-size:13px;color:var(--text-dim)">刻蚀+薄膜沉积，TSV深硅刻蚀</td>
+                </tr>
+                <tr>
+                    <td>Tier 3</td>
+                    <td>设备</td>
+                    <td>盛美上海(688082)</td>
+                    <td style="font-size:13px;color:var(--text-dim)">电镀+清洗设备</td>
+                </tr>
+                <tr>
+                    <td>Tier 4</td>
+                    <td>材料</td>
+                    <td>德邦科技(688035)</td>
+                    <td style="font-size:13px;color:var(--text-dim)">Underfill底部填充胶</td>
+                </tr>
+                <tr>
+                    <td>Tier 4</td>
+                    <td>材料</td>
+                    <td>安集科技(688019)</td>
+                    <td style="font-size:13px;color:var(--text-dim)">CMP抛光液</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>CoPoS</strong></td>
+                    <td>新材料方向</td>
+                    <td><strong>沃格光电(603773)</strong></td>
+                    <td style="font-size:13px;color:var(--text-dim)">玻璃基板，下一代核心材料</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="verdict-card">
+        <div class="verdict-badge">🔥 核心逻辑：AI芯片瓶颈不在晶圆制造，在先进封装</div>
+        <div class="verdict-title">量价齐升的确定性赛道</div>
+        <div class="verdict-text">
+            台积电CoWoS产能4年翻14倍还是不够用。英伟达GPU晶圆可以快速造出来，但封装速度决定AI芯片出货上限。台积电已透露上调CoWoS报价，<strong>量价齐升</strong>。供需失衡至少延续到2027年中。<br><br>
+            <strong>投资节奏：</strong>核心主线(长电/通富) → 设备材料弹性(德邦/联瑞/安集) → 关注CoPoS新技术方向(沃格光电)<br><br>
+            <strong>风险提示：</strong>如果AI资本开支放缓（如云厂商削减预算），CoWoS扩产可能过剩，设备/材料公司首当其冲。2027年后新产能集中释放，供需可能反转。
+        </div>
+    </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div style="padding:40px 0 60px;text-align:center;">
+    <p style="font-size:12px;color:var(--text-dim);">
+        本报告基于公开信息及券商研报整理，仅供投资参考，不构成投资建议。<br>
+        数据来源：台积电法说会、摩根士丹利/瑞银/UBS研报、DIGITIMES Research<br>
+        生成日期：2026年5月 · CherryClaw 财报分析系统
+    </p>
+</div>
+
+</div>
+</body>
+</html>

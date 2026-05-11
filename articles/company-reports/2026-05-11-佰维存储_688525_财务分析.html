@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>佰维存储（688525）财务分析报告</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a25;
+            --border: #2a2a3a;
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --accent: #8b5cf6;
+            --accent-light: #a78bfa;
+            --green: #34d399;
+            --green-bg: rgba(52, 211, 153, 0.08);
+            --red: #f87171;
+            --red-bg: rgba(248, 113, 113, 0.08);
+            --yellow: #fbbf24;
+            --yellow-bg: rgba(251, 191, 36, 0.08);
+            --blue: #60a5fa;
+            --blue-bg: rgba(96, 165, 250, 0.08);
+            --cyan: #22d3ee;
+            --cyan-bg: rgba(34, 211, 238, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .hero {
+            position: relative;
+            padding: 80px 40px 60px;
+            background: linear-gradient(135deg, #1a0a2e, #0f1a30, #0a1a20);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.12), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.08), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff, #c4b5fd, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .kpi-change {
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .up { color: var(--green); }
+        .down { color: var(--red); }
+        .warn { color: var(--yellow); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-child { border-bottom: none; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .section h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-green { background: var(--green); }
+        .dot-red { background: var(--red); }
+        .dot-yellow { background: var(--yellow); }
+        .dot-blue { background: var(--blue); }
+        .dot-cyan { background: var(--cyan); }
+        .dot-purple { background: var(--accent); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+
+        th:first-child { border-radius: 8px 0 0 0; }
+        th:last-child { border-radius: 0 8px 0 0; }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+            font-variant-numeric: tabular-nums;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(139, 92, 246, 0.03); }
+
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        .highlight-row { background: rgba(139, 92, 246, 0.06); }
+        .highlight-row td { font-weight: 600; }
+
+        .danger-row { background: rgba(248, 113, 113, 0.06); }
+        .danger-row td { font-weight: 600; }
+
+        .alert-card {
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+        .alert-red { background: var(--red-bg); border: 1px solid rgba(248, 113, 113, 0.2); }
+        .alert-yellow { background: var(--yellow-bg); border: 1px solid rgba(251, 191, 36, 0.2); }
+        .alert-green { background: var(--green-bg); border: 1px solid rgba(52, 211, 153, 0.2); }
+        .alert-blue { background: var(--blue-bg); border: 1px solid rgba(96, 165, 250, 0.2); }
+        .alert-cyan { background: var(--cyan-bg); border: 1px solid rgba(34, 211, 238, 0.2); }
+
+        .alert-title { font-weight: 600; margin-bottom: 4px; }
+        .alert-text { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+        .bar-chart { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+
+        .bar-row { display: flex; align-items: center; gap: 12px; }
+
+        .bar-label {
+            width: 100px;
+            font-size: 13px;
+            color: var(--text-dim);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 28px;
+            background: var(--surface2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .bar-purple { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .bar-green { background: linear-gradient(90deg, #059669, var(--green)); }
+        .bar-blue { background: linear-gradient(90deg, #2563eb, var(--blue)); }
+        .bar-yellow { background: linear-gradient(90deg, #d97706, var(--yellow)); }
+        .bar-red { background: linear-gradient(90deg, #dc2626, var(--red)); }
+        .bar-cyan { background: linear-gradient(90deg, #0891b2, var(--cyan)); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+        .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .swot-card { border-radius: 14px; padding: 24px; }
+
+        .swot-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swot-card ul { list-style: none; padding: 0; }
+
+        .swot-card li {
+            font-size: 13px;
+            color: var(--text-dim);
+            padding: 5px 0;
+            line-height: 1.5;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .swot-card li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            font-weight: bold;
+        }
+
+        .swot-s { background: var(--green-bg); border: 1px solid rgba(52, 211, 153, 0.15); }
+        .swot-w { background: var(--red-bg); border: 1px solid rgba(248, 113, 113, 0.15); }
+        .swot-o { background: var(--blue-bg); border: 1px solid rgba(96, 165, 250, 0.15); }
+        .swot-t { background: var(--yellow-bg); border: 1px solid rgba(251, 191, 36, 0.15); }
+
+        .gauge-container {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 20px 0;
+        }
+
+        .gauge-item { text-align: center; }
+
+        .gauge-value {
+            font-size: 42px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .gauge-label {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .verdict-card {
+            background: linear-gradient(135deg, #1a0a2e, #0f1a30);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .verdict-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--yellow);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .verdict-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .verdict-text {
+            font-size: 15px;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 28px;
+            line-height: 1.8;
+        }
+
+        .price-zones {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .price-zone {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .price-zone-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .price-zone-value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .price-zone-desc {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tag-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52, 211, 153, 0.2); }
+        .tag-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248, 113, 113, 0.2); }
+        .tag-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(251, 191, 36, 0.2); }
+        .tag-cyan { background: var(--cyan-bg); color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.2); }
+
+        .chain-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .chain-node {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 170px;
+        }
+
+        .chain-node-title { font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+        .chain-node-name { font-size: 14px; font-weight: 600; }
+        .chain-arrow { color: var(--accent); font-size: 24px; padding: 0 8px; }
+
+        .chain-node.highlight {
+            border-color: var(--accent);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .metric-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+        }
+
+        .metric-pill .value { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+        .progress-bar {
+            display: flex;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--surface2);
+            margin: 12px 0;
+        }
+
+        .progress-segment { height: 100%; }
+
+        .progress-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .progress-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .progress-legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .timeline { position: relative; padding-left: 24px; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+        }
+
+        .timeline-date { font-size: 12px; color: var(--accent-light); margin-bottom: 4px; }
+        .timeline-text { font-size: 14px; color: var(--text-dim); }
+
+        .cycle-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .cycle-phase {
+            border-radius: 10px;
+            padding: 12px 20px;
+            text-align: center;
+            min-width: 100px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .cycle-arrow { color: var(--text-dim); font-size: 18px; padding: 0 4px; }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        .legend-color {
+            width: 40px;
+            height: 6px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .legend-text {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 40px 20px 30px; }
+            .hero h1 { font-size: 32px; }
+            .container { padding: 0 20px; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2, .grid-3, .grid-4, .swot-grid, .price-zones { grid-template-columns: 1fr; }
+            .chain-flow { flex-direction: column; gap: 8px; }
+            .gauge-container { gap: 24px; flex-wrap: wrap; }
+            .section { padding: 40px 0; }
+            .cycle-diagram { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="stock-badge">SH: 688525 · 科创板 · 集成电路</div>
+        <h1>佰维存储</h1>
+        <p class="hero-subtitle">AI端侧存储龙头 · 晶圆级先进封测全球唯一 · 2025年报 + 2026Q1 财务分析</p>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">2025 营收</div>
+                <div class="kpi-value">113.0<span style="font-size:18px;color:var(--text-dim)">亿</span></div>
+                <div class="kpi-change up">▲ 68.82% YoY</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">2026Q1 归母净利</div>
+                <div class="kpi-value" style="color:var(--green)">29.0<span style="font-size:18px;color:var(--text-dim)">亿</span></div>
+                <div class="kpi-change up">▲ 扭亏为盈</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Q1 毛利率</div>
+                <div class="kpi-value" style="color:var(--accent-light)">53.3<span style="font-size:18px;color:var(--text-dim)">%</span></div>
+                <div class="kpi-change up">▲ +48.3pct YoY</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">当前股价</div>
+                <div class="kpi-value">~290<span style="font-size:18px;color:var(--text-dim)">元</span></div>
+                <div class="kpi-change warn">市值 ~1366亿</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- ========== 一、公司概况 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>公司概况 — 大白话版</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-purple"></span>一句话定位</div>
+        <p style="font-size:16px;line-height:1.8;color:var(--text-dim)">
+            佰维存储是做<strong style="color:var(--text)">存储模组</strong>的——买三星/海力士/美光的NAND和DRAM颗粒，设计、封装、测试后做成各种存储产品（eMMC、UFS、SSD、内存条），卖给手机厂、AI设备厂、PC厂。核心看点是<strong style="color:var(--text)">AI眼镜存储 + 自研主控芯片 + 晶圆级先进封测</strong>。
+        </p>
+    </div>
+
+    <div class="grid-4">
+        <div class="card" style="border-color:rgba(139,92,246,0.3)">
+            <div class="card-title"><span class="dot dot-purple"></span>嵌入式存储</div>
+            <p style="font-size:13px;color:var(--text-dim)">营收占比<strong style="color:var(--text)">60%+</strong>，毛利率22%。<strong style="color:var(--green)">核心盈利板块</strong>。Meta Ray-Ban AI眼镜核心供应商。</p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-blue"></span>PC存储</div>
+            <p style="font-size:13px;color:var(--text-dim)">营收占比~33%，毛利率19%。SSD、内存条，量大但毛利偏低。涨价周期受益。</p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-green"></span>工业/汽车</div>
+            <p style="font-size:13px;color:var(--text-dim)">占比小，毛利率<strong style="color:var(--text)">27%</strong>。高毛利但规模小，长期增长空间。</p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-cyan"></span>先进封测</div>
+            <p style="font-size:13px;color:var(--text-dim)">占比小，增速<strong style="color:var(--green)">+58%</strong>。晶圆级封测，<strong style="color:var(--text)">全球唯一</strong>的存储模组企业拥有此能力。</p>
+        </div>
+    </div>
+
+    <div class="alert-card alert-cyan">
+        <div class="alert-icon">💎</div>
+        <div>
+            <div class="alert-title">差异化竞争力：全球唯一的晶圆级先进封测</div>
+            <div class="alert-text">FOMS封装存储芯片，CMC封装存算一体。这是从"组装厂"向"技术方案商"升级的关键壁垒，同行（包括江波龙）都不具备此能力。随着AI设备对封装要求提升，这一优势将越来越重要。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、核心财务数据 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>核心财务数据速览</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>年度 & 季度关键指标</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>指标</th>
+                    <th class="text-right">2023年</th>
+                    <th class="text-right">2024年</th>
+                    <th class="text-right">2025年</th>
+                    <th class="text-right">2026Q1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>营业收入</td>
+                    <td class="text-right down">—</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right"><strong>113.02亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">68.14亿</strong></td>
+                </tr>
+                <tr>
+                    <td>营收同比</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right up">+68.8%</td>
+                    <td class="text-right up">+341.5%</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>归母净利润</td>
+                    <td class="text-right down">-6.24亿</td>
+                    <td class="text-right">1.61亿</td>
+                    <td class="text-right"><strong>8.53亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">28.99亿</strong></td>
+                </tr>
+                <tr>
+                    <td>扣非净利润</td>
+                    <td class="text-right down">—</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right"><strong>7.85亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">28.38亿</strong></td>
+                </tr>
+                <tr>
+                    <td>毛利率</td>
+                    <td class="text-right">~5%</td>
+                    <td class="text-right">~18%</td>
+                    <td class="text-right">21.44%</td>
+                    <td class="text-right"><strong style="color:var(--green)">53.30%</strong></td>
+                </tr>
+                <tr>
+                    <td>净利率</td>
+                    <td class="text-right down">负</td>
+                    <td class="text-right">~1.4%</td>
+                    <td class="text-right">7.42%</td>
+                    <td class="text-right"><strong style="color:var(--green)">42.22%</strong></td>
+                </tr>
+                <tr>
+                    <td>ROE</td>
+                    <td class="text-right down">负</td>
+                    <td class="text-right">~7%</td>
+                    <td class="text-right up"><strong>19.78%</strong></td>
+                    <td class="text-right up">—</td>
+                </tr>
+                <tr class="danger-row">
+                    <td>经营现金流</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right up">+5.32亿</td>
+                    <td class="text-right down"><strong style="color:var(--red)">-19.65亿</strong></td>
+                    <td class="text-right down"><strong style="color:var(--red)">-27.06亿</strong></td>
+                </tr>
+                <tr>
+                    <td>EPS</td>
+                    <td class="text-right down">-1.49元</td>
+                    <td class="text-right">0.15元</td>
+                    <td class="text-right"><strong>1.87元</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">6.21元</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-yellow"></span>季度盈利趋势 — "前低后高"极端模式</div>
+        <div class="bar-chart">
+            <div class="bar-row">
+                <div class="bar-label">2025Q1</div>
+                <div class="bar-track"><div class="bar-fill bar-red" style="width:5%;min-width:80px">-1.97亿</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q2</div>
+                <div class="bar-track"><div class="bar-fill bar-yellow" style="width:8%;min-width:80px">-0.28亿</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q3</div>
+                <div class="bar-track"><div class="bar-fill bar-green" style="width:22%">2.56亿</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q4</div>
+                <div class="bar-track"><div class="bar-fill bar-green" style="width:55%">8.23亿</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label" style="color:var(--green);font-weight:700">2026Q1</div>
+                <div class="bar-track"><div class="bar-fill bar-purple" style="width:100%"><strong>28.99亿</strong></div></div>
+            </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">Q1单季利润超2025全年3.4倍，存储涨价+AI端侧放量的双重催化</p>
+    </div>
+</div>
+
+<!-- ========== 三、现金流分析 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>现金流分析 — 排雷第一关键</h2>
+    </div>
+
+    <div class="alert-card alert-red">
+        <div class="alert-icon">🚨</div>
+        <div>
+            <div class="alert-title">核心风险：利润赚了37亿，现金流出去47亿</div>
+            <div class="alert-text">
+                2025年经营现金流 <strong>-19.65亿</strong>（净利润+8.53亿），2026Q1经营现金流 <strong>-27.06亿</strong>（净利润+28.99亿）。利润现金含量分别为 -230% 和 -93%。<br>
+                原因：公司在大量囤积存储晶圆。存货从2025年底78.68亿暴增至Q1末<strong>120.69亿</strong>，另有<strong>15亿美元（~109亿RMB）长单</strong>锁定采购。总成本敞口约229亿。
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title"><span class="dot dot-red"></span>净利润 vs 经营现金流</div>
+            <table>
+                <thead>
+                    <tr><th>期间</th><th class="text-right">净利润</th><th class="text-right">经营CF</th><th class="text-right">含金量</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024年</td>
+                        <td class="text-right">+1.61亿</td>
+                        <td class="text-right up">+5.32亿</td>
+                        <td class="text-right up">330% ✓</td>
+                    </tr>
+                    <tr class="danger-row">
+                        <td>2025年</td>
+                        <td class="text-right up">+8.53亿</td>
+                        <td class="text-right down">-19.65亿</td>
+                        <td class="text-right down">-230% ⚠️</td>
+                    </tr>
+                    <tr class="danger-row">
+                        <td>2026Q1</td>
+                        <td class="text-right up">+28.99亿</td>
+                        <td class="text-right down">-27.06亿</td>
+                        <td class="text-right down">-93% ⚠️</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-yellow"></span>存货 + 长单 = 229亿成本敞口</div>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <div class="bar-label">2025年底存货</div>
+                    <div class="bar-track"><div class="bar-fill bar-yellow" style="width:65%">78.68亿</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label" style="color:var(--red)">2026Q1存货</div>
+                    <div class="bar-track"><div class="bar-fill bar-red" style="width:100%"><strong>120.69亿</strong></div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">锁价长单</div>
+                    <div class="bar-track"><div class="bar-fill bar-cyan" style="width:90%">15亿美元 (~109亿)</div></div>
+                </div>
+            </div>
+            <div style="margin-top:16px;padding:12px;background:var(--red-bg);border-radius:8px;text-align:center;">
+                <span style="font-size:14px;font-weight:700;color:var(--red)">总成本敞口 ≈ 229亿 RMB</span>
+                <span style="font-size:12px;color:var(--text-dim);display:block;margin-top:4px;">存储价格跌20% → 跌价损失约46亿</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>现金流为负 ≠ 造假，是"主动囤货"</div>
+        <p style="font-size:14px;color:var(--text-dim);line-height:1.8;">
+            存储行业正处于"超级涨价周期"，公司低价囤货、高价卖出，Q1毛利率53%就是这么来的。经营现金流为负是因为<strong style="color:var(--text)">"花钱买货"</strong>，而不是"卖了货收不回钱"。
+            但必须清醒认识到：<strong style="color:var(--text)">这是一把豪赌存储周期的双刃剑</strong>。赌对了赚翻（如Q1），赌错了炸雷（如2023年亏损6.24亿）。
+        </p>
+    </div>
+</div>
+
+<!-- ========== 四、盈利能力分析 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>盈利能力分析</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>季度毛利率飙升路径</div>
+        <div class="bar-chart">
+            <div class="bar-row">
+                <div class="bar-label">2025Q1</div>
+                <div class="bar-track"><div class="bar-fill bar-red" style="width:9%">~5%</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q2</div>
+                <div class="bar-track"><div class="bar-fill bar-yellow" style="width:22%">~12%</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q3</div>
+                <div class="bar-track"><div class="bar-fill bar-blue" style="width:41%">~22%</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">2025Q4</div>
+                <div class="bar-track"><div class="bar-fill bar-green" style="width:54%">~29%</div></div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label" style="color:var(--green);font-weight:700">2026Q1</div>
+                <div class="bar-track"><div class="bar-fill bar-purple" style="width:100%"><strong>53.30%</strong></div></div>
+            </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim);margin-top:12px;">
+            核心驱动：存储原厂大幅涨价，而佰维的存货是低价时采购的，"低买高卖"剪刀差扩大。53%毛利率不可持续，但毛利率中枢会从过去的15-20%提升到25-35%。
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-purple"></span>营收结构（2025年）</div>
+        <div class="progress-bar">
+            <div class="progress-segment" style="width:60.9%;background:var(--accent)"></div>
+            <div class="progress-segment" style="width:32.7%;background:var(--blue)"></div>
+            <div class="progress-segment" style="width:2.5%;background:var(--green)"></div>
+            <div class="progress-segment" style="width:1.5%;background:var(--cyan)"></div>
+            <div class="progress-segment" style="width:2.4%;background:var(--surface2)"></div>
+        </div>
+        <div class="progress-legend">
+            <div class="progress-legend-item"><span class="progress-legend-dot" style="background:var(--accent)"></span>嵌入式存储 60.9% (68.8亿, 毛利率22%)</div>
+            <div class="progress-legend-item"><span class="progress-legend-dot" style="background:var(--blue)"></span>PC存储 32.7% (37.0亿, 毛利率19%)</div>
+            <div class="progress-legend-item"><span class="progress-legend-dot" style="background:var(--green)"></span>工业/汽车 2.5% (2.8亿, 毛利率28%)</div>
+            <div class="progress-legend-item"><span class="progress-legend-dot" style="background:var(--cyan)"></span>先进封测 1.5% (1.7亿)</div>
+        </div>
+
+        <table style="margin-top:20px;">
+            <thead>
+                <tr><th>业务板块</th><th class="text-right">营收</th><th class="text-right">毛利率</th><th class="text-right">核心驱动</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>嵌入式存储</strong></td>
+                    <td class="text-right">68.78亿</td>
+                    <td class="text-right">22.13%</td>
+                    <td class="text-right" style="font-size:12px;color:var(--text-dim)">AI眼镜/UFS/eMMC</td>
+                </tr>
+                <tr>
+                    <td>PC存储</td>
+                    <td class="text-right">36.95亿</td>
+                    <td class="text-right">18.99%</td>
+                    <td class="text-right" style="font-size:12px;color:var(--text-dim)">SSD/内存条，涨价受益</td>
+                </tr>
+                <tr>
+                    <td>工业/汽车</td>
+                    <td class="text-right">2.78亿</td>
+                    <td class="text-right"><strong style="color:var(--green)">27.51%</strong></td>
+                    <td class="text-right" style="font-size:12px;color:var(--text-dim)">高毛利小规模</td>
+                </tr>
+                <tr>
+                    <td>先进封测</td>
+                    <td class="text-right">1.70亿</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right" style="font-size:12px;color:var(--text-dim)">+58%增速，产能爬坡</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>AI端侧存储</strong>（子集）</td>
+                    <td class="text-right">~17.51亿</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right" style="font-size:12px;color:var(--text-dim)">AI眼镜 ~9.6亿</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ========== 五、资产负债表 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">5</div>
+        <h2>资产负债表分析</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-yellow"></span>关键资产指标</div>
+        <table>
+            <thead>
+                <tr><th>项目</th><th class="text-right">2025年底</th><th class="text-right">2026Q1</th><th class="text-center">风险等级</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>总资产</td>
+                    <td class="text-right">155.21亿</td>
+                    <td class="text-right">—</td>
+                    <td class="text-center">—</td>
+                </tr>
+                <tr>
+                    <td>股东权益</td>
+                    <td class="text-right">54.40亿</td>
+                    <td class="text-right">85.79亿</td>
+                    <td class="text-center"><span class="tag tag-green">✓ 定增+利润</span></td>
+                </tr>
+                <tr class="danger-row">
+                    <td><strong>存货</strong></td>
+                    <td class="text-right"><strong style="color:var(--yellow)">78.68亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--red)">120.69亿</strong></td>
+                    <td class="text-center"><span class="tag tag-red">⚠ 极高</span></td>
+                </tr>
+                <tr>
+                    <td>应收账款增速</td>
+                    <td class="text-right"><strong style="color:var(--yellow)">+94.39%</strong></td>
+                    <td class="text-right">—</td>
+                    <td class="text-center"><span class="tag tag-yellow">⚠ 超营收增速</span></td>
+                </tr>
+                <tr>
+                    <td>有息负债率</td>
+                    <td class="text-right"><strong style="color:var(--yellow)">46.3%</strong></td>
+                    <td class="text-right">—</td>
+                    <td class="text-center"><span class="tag tag-yellow">中高</span></td>
+                </tr>
+                <tr>
+                    <td>存货周转天数</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right"><strong style="color:var(--red)">282天</strong></td>
+                    <td class="text-center"><span class="tag tag-red">⚠ 偏长</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert-card alert-yellow">
+        <div class="alert-icon">⚡</div>
+        <div>
+            <div class="alert-title">15亿美元锁价长单</div>
+            <div class="alert-text">2026年4月至2028年3月，8个季度内均匀采购，锁定单价。Q1末库存120.69亿<strong>未包含此长单</strong>。如果存储价格继续涨，长单是"金矿"（锁定了低价）；如果价格下跌，长单就是"枷锁"（必须高价采购）。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 六、核心增长引擎 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">6</div>
+        <h2>核心增长引擎</h2>
+    </div>
+
+    <div class="grid-2">
+        <div class="card" style="border-color:rgba(34,211,238,0.3)">
+            <div class="card-title"><span class="dot dot-cyan"></span>① AI眼镜存储 — 最大增量</div>
+            <p style="font-size:14px;color:var(--text-dim);margin-bottom:12px;">
+                <strong style="color:var(--text)">Meta Ray-Ban核心供应商</strong>。2025年AI眼镜存储收入约9.6亿，2026Q1 AI端侧产品收入同比<strong style="color:var(--green)">+496%</strong>。
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="tag tag-cyan">Meta Ray-Ban</span>
+                <span class="tag tag-cyan">Google</span>
+                <span class="tag tag-cyan">小米</span>
+                <span class="tag tag-cyan">阿里</span>
+                <span class="tag tag-cyan">Rokid</span>
+                <span class="tag tag-cyan">雷鸟创新</span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-purple"></span>② 自研主控芯片 — 毛利率提升关键</div>
+            <p style="font-size:14px;color:var(--text-dim);margin-bottom:12px;">
+                eMMC主控 <strong style="color:var(--text)">SP1800 已量产</strong>，UFS主控 <strong style="color:var(--text)">SP9300 预计2026H2量产</strong>。自研主控 = 毛利率提升 + 供应链安全。
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="tag tag-green">SP1800 已量产</span>
+                <span class="tag tag-yellow">SP9300 H2量产</span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-green"></span>③ 存储涨价超级周期</div>
+            <p style="font-size:14px;color:var(--text-dim);">
+                Q2 DRAM合约价预计<strong style="color:var(--green)">+58-63%</strong>，NAND合约价<strong style="color:var(--green)">+70-75%</strong>。公司低价库存 + 涨价 = 剪刀差持续扩大，毛利率维持高位。
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-blue"></span>④ 晶圆级先进封测</div>
+            <p style="font-size:14px;color:var(--text-dim);">
+                <strong style="color:var(--text)">全球存储模组企业中唯一</strong>拥有此能力。FOMS封装存储芯片，CMC封装存算一体。2025年封测收入+58%，开始产能爬坡。长期差异化竞争力。
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 七、SWOT分析 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">7</div>
+        <h2>行业竞争 SWOT 分析</h2>
+    </div>
+
+    <div class="swot-grid">
+        <div class="swot-card swot-s">
+            <h4><span style="color:var(--green)">●</span> 优势 Strengths</h4>
+            <ul>
+                <li>AI端侧存储先发优势（Meta Ray-Ban核心供应商）</li>
+                <li>自研主控芯片（eMMC SP1800/UFS SP9300），同行多为纯模组厂</li>
+                <li>全球唯一的存储模组企业晶圆级先进封测能力</li>
+                <li>研发封测一体化，毛利率中枢高于纯模组厂</li>
+                <li>嵌入式存储营收占比60%+，绑定AI穿戴/手机大客户</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-w">
+            <h4><span style="color:var(--red)">●</span> 劣势 Weaknesses</h4>
+            <ul>
+                <li>不掌握存储晶圆产能，核心原材料受制于三星/海力士/美光</li>
+                <li>存货规模巨大（120.69亿+109亿长单=229亿敞口）</li>
+                <li>品牌溢价弱，toB为主，无自有消费品牌</li>
+                <li>体量远小于国际存储巨头，也小于江波龙</li>
+                <li>经营现金流持续为负，资金压力大</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-o">
+            <h4><span style="color:var(--blue)">●</span> 机会 Opportunities</h4>
+            <ul>
+                <li>AI眼镜/穿戴设备爆发（Meta、Google、小米等）</li>
+                <li>存储"超级涨价周期"带来超额利润窗口</li>
+                <li>国产替代趋势（自研主控+国内封测）</li>
+                <li>北美服务器市场新机会</li>
+                <li>eMMC→UFS产业升级带动ASP提升</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-t">
+            <h4><span style="color:var(--yellow)">●</span> 威胁 Threats</h4>
+            <ul>
+                <li>存储周期见顶后暴跌风险（2023年亏损6.24亿）</li>
+                <li>三星/海力士/美光可能自建模组能力</li>
+                <li>同行竞争加剧（江波龙也在发力AI端侧）</li>
+                <li>15亿美元长单锁价，若价格下跌形成负担</li>
+                <li>境外客户集中度风险（Meta依赖度）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 八、产业链定位 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">8</div>
+        <h2>产业链定位</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-purple"></span>产业链位置</div>
+        <div class="chain-flow">
+            <div class="chain-node">
+                <div class="chain-node-title">上游 · 存储晶圆原厂</div>
+                <div class="chain-node-name">三星 / SK海力士 / 美光</div>
+            </div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node highlight">
+                <div class="chain-node-title">中游 · 模组+封测方案商</div>
+                <div class="chain-node-name" style="color:var(--accent-light)">佰维存储</div>
+            </div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">
+                <div class="chain-node-title">下游 · 终端品牌</div>
+                <div class="chain-node-name">Meta / 小米 / PC OEM</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title"><span class="dot dot-red"></span>对上游话语权：弱</div>
+            <p style="font-size:14px;color:var(--text-dim);">核心原材料完全依赖三大原厂，议价能力有限。通过长单锁价锁量来对冲价格波动风险。</p>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="dot dot-green"></span>对下游话语权：中</div>
+            <p style="font-size:14px;color:var(--text-dim);">AI端侧存储定制化程度高，方案设计壁垒让客户有粘性。但大客户（Meta）议价权也很强。核心价值来自<strong style="color:var(--text)">自研主控+先进封测</strong>的附加值。</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 九、管理层规划 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">9</div>
+        <h2>管理层规划与执行力</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>核心规划落地情况</div>
+        <table>
+            <thead>
+                <tr><th>规划项目</th><th class="text-center">进度</th><th>说明</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AI端侧存储全面扩张</td>
+                    <td class="text-center"><span class="tag tag-green">✅ 超预期</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">Q1端侧收入+496%，覆盖Meta/Google/小米等</td>
+                </tr>
+                <tr>
+                    <td>eMMC主控SP1800量产</td>
+                    <td class="text-center"><span class="tag tag-green">✅ 完成</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">已量产出货</td>
+                </tr>
+                <tr>
+                    <td>UFS主控SP9300量产</td>
+                    <td class="text-center"><span class="tag tag-yellow">🔄 推进中</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">预计2026H2量产</td>
+                </tr>
+                <tr>
+                    <td>晶圆级封测产能爬坡</td>
+                    <td class="text-center"><span class="tag tag-green">✅ +58%</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">从0到1阶段，开始规模贡献</td>
+                </tr>
+                <tr>
+                    <td>北美市场拓展</td>
+                    <td class="text-center"><span class="tag tag-yellow">🔄 进行中</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">积极拓展服务器市场新机会</td>
+                </tr>
+                <tr>
+                    <td>供应链安全（长单锁定）</td>
+                    <td class="text-center"><span class="tag tag-green">✅ 15亿美元</span></td>
+                    <td style="font-size:13px;color:var(--text-dim)">2026.4-2028.3锁价采购</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:14px;color:var(--text-dim);">
+            <strong style="color:var(--green)">执行力评分 ★★★★☆ (4/5)</strong>：AI端侧落地非常扎实，Meta Ray-Ban卡位证明了执行力。唯一担忧是存货管理的激进程度——229亿总成本敞口需要存储价格持续上行来消化。
+        </p>
+    </div>
+</div>
+
+<!-- ========== 十、券商估值 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">10</div>
+        <h2>券商估值与盈利预测</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-yellow"></span>券商盈利预测明细</div>
+        <table>
+            <thead>
+                <tr><th>机构</th><th>日期</th><th class="text-center">评级</th><th class="text-right">2026E净利</th><th class="text-right">目标价</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>华泰（深度研报）</td>
+                    <td>2026.4</td>
+                    <td class="text-center"><span class="tag tag-green">买入</span></td>
+                    <td class="text-right"><strong>136亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">635元</strong></td>
+                </tr>
+                <tr>
+                    <td>国泰海通</td>
+                    <td>2026.4.19</td>
+                    <td class="text-center"><span class="tag tag-yellow">增持</span></td>
+                    <td class="text-right"><strong>102.40亿</strong></td>
+                    <td class="text-right"><strong style="color:var(--green)">348元</strong></td>
+                </tr>
+                <tr>
+                    <td>国投证券</td>
+                    <td>2026.3.4</td>
+                    <td class="text-center"><span class="tag tag-green">买入</span></td>
+                    <td class="text-right">32.9亿</td>
+                    <td class="text-right">211.57元</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>券商一致预期</strong></td>
+                    <td>—</td>
+                    <td class="text-center">—</td>
+                    <td class="text-right">—</td>
+                    <td class="text-right"><strong>200.16元</strong> (均价)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text-dim);">
+            ⚠️ <strong>巨大分歧</strong>：目标价从200元到635元不等。核心分歧在于对2026年净利润的预测（32.9亿 vs 102亿 vs 136亿）。Q1单季28.99亿远超此前全年预期，券商在疯狂上修中。
+        </p>
+    </div>
+</div>
+
+<!-- ========== 十一、估值与投资建议 ========== -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-number">11</div>
+        <h2>估值与投资建议</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>估值情景分析</div>
+        <table>
+            <thead>
+                <tr><th>情景</th><th class="text-right">2026E净利</th><th class="text-right">合理PE</th><th class="text-right">目标价</th><th class="text-right">当前空间</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="tag tag-green">乐观</span> 存储持续涨</td>
+                    <td class="text-right">70-102亿</td>
+                    <td class="text-right">15-18x</td>
+                    <td class="text-right">224-390元</td>
+                    <td class="text-right" style="color:var(--text-dim)">-23%~+34%</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-yellow">中性</span> 高位震荡</td>
+                    <td class="text-right">50-70亿</td>
+                    <td class="text-right">12-15x</td>
+                    <td class="text-right">128-224元</td>
+                    <td class="text-right down">-56%~-23%</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-red">悲观</span> 价格回落</td>
+                    <td class="text-right">20-30亿</td>
+                    <td class="text-right">15-20x</td>
+                    <td class="text-right">64-128元</td>
+                    <td class="text-right down">-78%~-56%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text-dim);text-align:center;">
+            当前股价 ~290元 · 市值 ~1366亿 · 总股本 4.71亿股 · PB 15.94x
+        </p>
+    </div>
+
+    <div class="verdict-card">
+        <div class="verdict-badge">⚠ 谨慎关注 · 不追高 · 等回调</div>
+        <div class="verdict-title">周期上行 + AI驱动的双重红利期</div>
+        <div class="verdict-text">
+            佰维存储正处于<strong>业绩爆发的黄金窗口</strong>——Q1单季利润超去年全年3倍，AI端侧+存储涨价双轮驱动。但290元股价已price in相当多的乐观预期。最大风险不是公司本身，而是<strong>存储周期何时见顶</strong>——历史上每次见顶后，模组厂利润回撤幅度都在80%以上。这是周期股，赚的是周期上行的钱，周期见顶必须离场。
+        </div>
+
+        <div class="price-zones">
+            <div class="price-zone" style="background:var(--green-bg);border:1px solid rgba(52,211,153,0.2)">
+                <div class="price-zone-label">理想买入</div>
+                <div class="price-zone-value" style="color:var(--green)">200-240</div>
+                <div class="price-zone-desc">2026E 保守 12-13x PE</div>
+            </div>
+            <div class="price-zone" style="background:var(--yellow-bg);border:1px solid rgba(251,191,36,0.2)">
+                <div class="price-zone-label">当前价位</div>
+                <div class="price-zone-value" style="color:var(--yellow)">~290</div>
+                <div class="price-zone-desc">中性偏贵</div>
+            </div>
+            <div class="price-zone" style="background:var(--blue-bg);border:1px solid rgba(96,165,250,0.2)">
+                <div class="price-zone-label">短期止盈</div>
+                <div class="price-zone-value" style="color:var(--blue)">350-400</div>
+                <div class="price-zone-desc">涨价逻辑充分反映</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title"><span class="dot dot-red"></span>止损信号</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">信号一</div>
+                <div class="timeline-text">DRAM/NAND合约价<strong>环比涨幅转负</strong>——存储周期见顶的领先指标</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">信号二</div>
+                <div class="timeline-text">季度毛利率<strong>跌破30%</strong>——低价库存消耗完，新采购成本上升</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">信号三</div>
+                <div class="timeline-text">存货跌价计提<strong>大幅增加</strong>——公司开始认亏出清库存</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">信号四</div>
+                <div class="timeline-text">Meta等大客户<strong>AI眼镜出货量不及预期</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-card alert-yellow" style="margin-top:20px;">
+        <div class="alert-icon">⚠️</div>
+        <div>
+            <div class="alert-title">核心结论：典型周期股，不是成长股</div>
+            <div class="alert-text">赚的是存储周期上行的钱，不能用成长股逻辑长期持有。2023年亏损6.24亿就是前车之鉴——当时存储价格暴跌，公司巨额亏损。<strong>周期见顶必须离场。</strong></div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title"><span class="dot dot-cyan"></span>佰维 vs 江波龙 — 怎么选？</div>
+        <table>
+            <thead>
+                <tr><th>维度</th><th class="text-center">江波龙 301308</th><th class="text-center">佰维存储 688525</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>综合实力</td>
+                    <td class="text-center"><strong style="color:var(--green)">更强 ✓</strong></td>
+                    <td class="text-center">有差异化</td>
+                </tr>
+                <tr>
+                    <td>品牌力</td>
+                    <td class="text-center"><strong style="color:var(--green)">三品牌全球化 ✓</strong></td>
+                    <td class="text-center">无自有品牌</td>
+                </tr>
+                <tr>
+                    <td>AI端侧卡位</td>
+                    <td class="text-center">有但非核心</td>
+                    <td class="text-center"><strong style="color:var(--green)">Meta Ray-Ban独家 ✓</strong></td>
+                </tr>
+                <tr>
+                    <td>先进封测</td>
+                    <td class="text-center">传统封测</td>
+                    <td class="text-center"><strong style="color:var(--green)">晶圆级（全球唯一）✓</strong></td>
+                </tr>
+                <tr>
+                    <td>自研主控</td>
+                    <td class="text-center"><strong style="color:var(--green)">5nm UFS 4.1 ✓</strong></td>
+                    <td class="text-center">进度落后</td>
+                </tr>
+                <tr>
+                    <td>Q1净利率</td>
+                    <td class="text-center">38.98%</td>
+                    <td class="text-center"><strong style="color:var(--green)">42.22% ✓</strong></td>
+                </tr>
+                <tr>
+                    <td>存货风险</td>
+                    <td class="text-center"><strong style="color:var(--red)">180亿 ⚠</strong></td>
+                    <td class="text-center">120.69亿 + 109亿长单</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:14px;color:var(--text-dim);text-align:center;">
+            <strong style="color:var(--text)">选龙头</strong> → 江波龙 &nbsp;|&nbsp;
+            <strong style="color:var(--text)">博弹性+差异化</strong> → 佰维 &nbsp;|&nbsp;
+            <strong style="color:var(--text)">安全边际</strong> → 当前两个都偏贵，都等回调
+        </p>
+    </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div style="padding:40px 0 60px;text-align:center;">
+    <p style="font-size:12px;color:var(--text-dim);">
+        本报告基于公开财报数据及券商研报整理，仅供投资参考，不构成投资建议。<br>
+        数据来源：2025年年报、2026年一季报、国泰海通/国投证券/华泰证券研报<br>
+        生成日期：2026年5月 · CherryClaw 财报分析系统
+    </p>
+</div>
+
+</div>
+</body>
+</html>
