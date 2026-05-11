@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人形机器人+工业机器人产业链全景分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d;
+    --text: #e6edf3; --text-sec: #8b949e;
+    --accent: #58a6ff; --accent2: #3fb950; --accent3: #d29922;
+    --red: #f85149; --orange: #db6d28; --purple: #bc8cff; --pink: #f778ba; --cyan: #39d2c0;
+    --gradient1: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    max-width: 960px; margin: 0 auto; padding: 20px;
+  }
+  .banner {
+    background: var(--gradient1); border-radius: 16px; padding: 40px 32px;
+    margin-bottom: 28px; text-align: center; position: relative; overflow: hidden;
+  }
+  .banner::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(88,166,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(188,140,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .banner h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; position: relative; }
+  .banner .sub { font-size: 13px; color: var(--text-sec); position: relative; letter-spacing: 2px; }
+  .banner .date { margin-top: 12px; font-size: 12px; color: var(--text-sec); opacity: 0.7; position: relative; }
+
+  .section {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Chain diagram */
+  .chain-flow {
+    display: flex; flex-direction: column; gap: 2px; margin: 16px 0;
+  }
+  .chain-row {
+    display: flex; align-items: stretch; gap: 2px; min-height: 48px;
+  }
+  .chain-label {
+    width: 100px; min-width: 100px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 700;
+    border-radius: 8px; text-align: center; padding: 8px 4px;
+  }
+  .chain-items { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; }
+  .chain-item {
+    flex: 1; min-width: 100px; padding: 8px 10px; border-radius: 6px;
+    font-size: 11px; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .chain-item .ci-title { font-weight: 600; font-size: 12px; }
+  .chain-item .ci-stock { color: var(--accent); font-size: 10px; }
+  .chain-item .ci-val { color: var(--text-sec); font-size: 10px; }
+
+  .upstream .chain-label { background: rgba(248,81,73,0.15); color: var(--red); }
+  .midstream .chain-label { background: rgba(210,153,34,0.15); color: var(--accent3); }
+  .downstream .chain-label { background: rgba(63,185,80,0.15); color: var(--accent2); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th {
+    background: rgba(255,255,255,0.05); padding: 10px 10px; text-align: left;
+    font-weight: 600; font-size: 11px; color: var(--text-sec);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(48,54,61,0.5); }
+  tr:hover { background: rgba(255,255,255,0.02); }
+  .red { color: #f85149; } .green { color: #3fb950; } .orange { color: #d29922; }
+  .blue { color: #58a6ff; } .purple { color: #bc8cff; }
+
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 600;
+  }
+  .tag-high { background: rgba(248,81,73,0.15); color: #f85149; }
+  .tag-mid { background: rgba(210,153,34,0.15); color: #d29922; }
+  .tag-low { background: rgba(63,185,80,0.15); color: #3fb950; }
+  .tag-info { background: rgba(88,166,255,0.15); color: #58a6ff; }
+  .tag-purple { background: rgba(188,140,255,0.15); color: #bc8cff; }
+
+  .chart-container { position: relative; height: 340px; margin: 16px 0; }
+  .chart-container-sm { position: relative; height: 260px; margin: 16px 0; }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .metric-card {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px; text-align: center;
+  }
+  .metric-card.hl { border-color: var(--accent); background: rgba(88,166,255,0.06); }
+  .metric-card.green { border-color: var(--accent2); background: rgba(63,185,80,0.06); }
+  .metric-card.orange { border-color: var(--accent3); background: rgba(210,153,34,0.06); }
+  .metric-card.red { border-color: var(--red); background: rgba(248,81,73,0.06); }
+  .metric-card.purple { border-color: var(--purple); background: rgba(188,140,255,0.06); }
+  .mv { font-size: 20px; font-weight: 800; color: var(--accent); margin-bottom: 2px; }
+  .metric-card.green .mv { color: var(--accent2); }
+  .metric-card.orange .mv { color: var(--accent3); }
+  .metric-card.red .mv { color: var(--red); }
+  .metric-card.purple .mv { color: var(--purple); }
+  .ml { font-size: 11px; color: var(--text-sec); }
+
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(188,140,255,0.06) 100%);
+    border: 1px solid rgba(88,166,255,0.3); border-radius: 12px; padding: 20px; margin-top: 16px;
+  }
+
+  .data-source {
+    font-size: 11px; color: var(--text-sec); opacity: 0.6; text-align: center;
+    margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 680px) {
+    body { padding: 12px; }
+    .banner { padding: 24px 16px; }
+    .banner h1 { font-size: 18px; }
+    .section { padding: 16px; }
+    .chain-row { flex-direction: column; }
+    .chain-label { width: 100%; min-width: auto; }
+    .mv { font-size: 16px; }
+    table { font-size: 11px; }
+    th, td { padding: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <h1>🤖 人形机器人 + 工业机器人产业链全景</h1>
+  <div class="sub">ROBOT INDUSTRY CHAIN DEEP DIVE</div>
+  <div class="date">2026年4月20日 | 覆盖上中下游全环节 + 20只核心A股实时行情</div>
+</div>
+
+<!-- 产业链总览 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔗</span> 一、产业链全景图谱</div>
+
+  <div class="metric-grid">
+    <div class="metric-card hl"><div class="mv">54.6%</div><div class="ml">上游零部件价值占比</div></div>
+    <div class="metric-card green"><div class="mv">~70%</div><div class="ml">三大核心件成本占比</div></div>
+    <div class="metric-card orange"><div class="mv">28+14+14</div><div class="ml">Tesla电机/谐波/行星(个)</div></div>
+    <div class="metric-card purple"><div class="mv">2030年 ¥750亿</div><div class="ml">中国人形机器人市场</div></div>
+  </div>
+
+  <p style="font-size:13px;color:var(--text-sec);margin-bottom:14px;">
+    人形机器人与工业机器人共享<strong style="color:var(--accent)">上游核心零部件</strong>（减速器、伺服电机、控制器），区别主要在中游本体形态和下游应用场景。以下图谱将两大产业链融合展示。
+  </p>
+
+  <!-- 上游 -->
+  <div class="chain-flow">
+    <div class="chain-row upstream">
+      <div class="chain-label">🟥 上游<br>核心零部件</div>
+      <div class="chain-items">
+        <div class="chain-item">
+          <div class="ci-title">🔧 精密减速器</div>
+          <div style="color:var(--red);font-weight:700;font-size:11px;">价值量 ~20%</div>
+          <div class="ci-stock">绿的谐波 | 秦川机床 | 双环传动</div>
+          <div class="ci-val">谐波+行星，机器人关节核心</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">⚡ 伺服系统</div>
+          <div style="color:var(--orange);font-weight:700;font-size:11px;">价值量 ~15%</div>
+          <div class="ci-stock">汇川技术 | 埃斯顿 | 禾川科技</div>
+          <div class="ci-val">伺服电机+驱动器，运动控制核心</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🧠 控制器</div>
+          <div style="color:var(--accent);font-weight:700;font-size:11px;">价值量 ~10-15%</div>
+          <div class="ci-stock">埃斯顿 | 汇川技术 | 新时达</div>
+          <div class="ci-val">机器人"大脑"，协调运动指令</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🔄 无框力矩电机</div>
+          <div style="color:var(--purple);font-weight:700;font-size:11px;">人形特有</div>
+          <div class="ci-stock">步科股份 | 鸣志电器 | 昊志机电</div>
+          <div class="ci-val">28个/台Optimus，高功率密度</div>
+        </div>
+      </div>
+    </div>
+    <div class="chain-row upstream">
+      <div class="chain-label" style="visibility:hidden">🟥 上游续</div>
+      <div class="chain-items">
+        <div class="chain-item">
+          <div class="ci-title">📏 力传感器</div>
+          <div style="color:var(--red);font-weight:700;font-size:11px;">价值量 ~16%</div>
+          <div class="ci-stock">柯力传感 | 奥迪威 | 敏芯股份</div>
+          <div class="ci-val">六维力矩+一维，触觉感知核心</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🔩 行星滚柱丝杠</div>
+          <div style="color:var(--orange);font-weight:700;font-size:11px;">人形关键</div>
+          <div class="ci-stock">秦川机床 | 五洲新春 | 贝斯特</div>
+          <div class="ci-val">线性执行核心，技术壁垒极高</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">📸 机器视觉</div>
+          <div style="color:var(--accent);font-weight:700;font-size:11px;">价值量 ~8%</div>
+          <div class="ci-stock">凌云光 | 奥普特 | 奥比中光</div>
+          <div class="ci-val">3D视觉+深度相机，环境感知</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">❄️ 热管理</div>
+          <div style="color:var(--cyan);font-weight:700;font-size:11px;">配套需求</div>
+          <div class="ci-stock">三花智控 | 银轮股份</div>
+          <div class="ci-val">散热系统，高算力必配</div>
+        </div>
+      </div>
+    </div>
+    <div class="chain-row midstream">
+      <div class="chain-label">🟧 中游<br>本体制造</div>
+      <div class="chain-items">
+        <div class="chain-item">
+          <div class="ci-title">🦾 工业机器人本体</div>
+          <div class="ci-stock">埃斯顿 | 汇川技术 | 拓斯达</div>
+          <div class="ci-val">多关节/SCARA/Delta，国产替代加速</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🤖 人形机器人本体</div>
+          <div class="ci-stock">优必选(HK) | 智元(未上市) | 宇树(未上市)</div>
+          <div class="ci-val">2026量产元年，中美双雄格局</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🦿 关节模组/执行器</div>
+          <div class="ci-stock">绿的谐波 | 鸣志电器 | 三花智控</div>
+          <div class="ci-val">一体化关节，集成减速器+电机+传感器</div>
+        </div>
+      </div>
+    </div>
+    <div class="chain-row downstream">
+      <div class="chain-label">🟩 下游<br>应用集成</div>
+      <div class="chain-items">
+        <div class="chain-item">
+          <div class="ci-title">🏭 工业制造</div>
+          <div class="ci-val">汽车/3C/半导体装配、焊接、搬运</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">📦 物流仓储</div>
+          <div class="ci-val">分拣、搬运、末端配送</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🏪 商业服务</div>
+          <div class="ci-val">零售、餐饮、酒店、医疗康复</div>
+        </div>
+        <div class="chain-item">
+          <div class="ci-title">🏠 家庭消费</div>
+          <div class="ci-val">家务、陪护、教育（远期）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 二、核心零部件深度拆解 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚙️</span> 二、核心零部件深度拆解（上游价值量分布）</div>
+
+  <div class="chart-container-sm"><canvas id="costChart"></canvas></div>
+
+  <table>
+    <tr>
+      <th>零部件</th><th>价值量占比</th><th>技术壁垒</th><th>国产化率</th><th>人形需求量<br>(Tesla参考)</th><th>市场规模(2030E)</th>
+    </tr>
+    <tr>
+      <td><strong>精密减速器</strong><br><span style="font-size:11px;color:var(--text-sec)">谐波+行星</span></td>
+      <td class="red" style="font-weight:700">~20%</td>
+      <td><span class="tag tag-high">极高</span></td>
+      <td>谐波40%<br>行星30%</td>
+      <td>14+14个</td>
+      <td>~180亿元</td>
+    </tr>
+    <tr>
+      <td><strong>伺服系统</strong><br><span style="font-size:11px;color:var(--text-sec)">电机+驱动</span></td>
+      <td class="orange" style="font-weight:700">~15%</td>
+      <td><span class="tag tag-high">高</span></td>
+      <td>~45%</td>
+      <td>28个(无框)</td>
+      <td>~150亿元</td>
+    </tr>
+    <tr>
+      <td><strong>控制器</strong></td>
+      <td class="orange" style="font-weight:700">~12%</td>
+      <td><span class="tag tag-high">高</span></td>
+      <td>~35%</td>
+      <td>1套</td>
+      <td>~80亿元</td>
+    </tr>
+    <tr>
+      <td><strong>力传感器</strong><br><span style="font-size:11px;color:var(--text-sec)">六维+一维</span></td>
+      <td class="red" style="font-weight:700">~16%</td>
+      <td><span class="tag tag-high">极高</span></td>
+      <td>&lt;15%</td>
+      <td>4+14+14个</td>
+      <td>~120亿元</td>
+    </tr>
+    <tr>
+      <td><strong>行星滚柱丝杠</strong></td>
+      <td class="purple" style="font-weight:700">~8%</td>
+      <td><span class="tag tag-high">极高</span></td>
+      <td>&lt;10%</td>
+      <td>14个(线性关节)</td>
+      <td>~60亿元</td>
+    </tr>
+    <tr>
+      <td><strong>机器视觉</strong></td>
+      <td style="font-weight:700;color:var(--accent)">~8%</td>
+      <td><span class="tag tag-mid">中高</span></td>
+      <td>~50%</td>
+      <td>2-6个摄像头</td>
+      <td>~80亿元</td>
+    </tr>
+    <tr>
+      <td><strong>空心杯电机</strong></td>
+      <td style="font-weight:700;color:var(--accent)">~5%</td>
+      <td><span class="tag tag-mid">中</span></td>
+      <td>~30%</td>
+      <td>灵巧手12个</td>
+      <td>~40亿元</td>
+    </tr>
+  </table>
+
+  <div style="font-size:12px;color:var(--text-sec);margin-top:10px;padding:10px;background:rgba(248,81,73,0.06);border-radius:6px;border-left:3px solid var(--red);">
+    <strong>关键发现</strong>：力传感器国产化率最低（&lt;15%），行星滚柱丝杠次之（&lt;10%），这两大环节的国产替代空间最大，也是人形机器人区别于传统工业机器人的<strong>增量零部件</strong>。
+  </div>
+</div>
+
+<!-- 三、A股核心标的行情 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📈</span> 三、产业链核心A股标的实时行情（2026.04.20）</div>
+
+  <!-- 第一组：减速器/丝杠 -->
+  <h3 style="font-size:14px;margin:14px 0 8px;color:var(--red);">🔲 减速器 & 丝杠（价值量最高·壁垒最高）</h3>
+  <table>
+    <tr>
+      <th>公司</th><th>代码</th><th>最新价</th><th>今日</th><th>年初至今</th><th>PE(TTM)</th><th>总市值</th><th>核心定位</th>
+    </tr>
+    <tr>
+      <td><strong>绿的谐波</strong></td><td>688017</td><td>209.66</td>
+      <td class="red">-1.57%</td><td class="green" style="font-weight:700">+9.14%</td>
+      <td>307.7</td><td>384亿</td>
+      <td>国产谐波减速器龙头，全球市占20%</td>
+    </tr>
+    <tr>
+      <td><strong>双环传动</strong></td><td>002472</td><td>39.12</td>
+      <td class="red">-0.18%</td><td class="red">-17.49%</td>
+      <td>28.1</td><td>332亿</td>
+      <td>RV减速器+齿轮龙头，绑定Tesla</td>
+    </tr>
+    <tr>
+      <td><strong>秦川机床</strong></td><td>000837</td><td>10.98</td>
+      <td class="red">-0.18%</td><td class="red">-14.75%</td>
+      <td>212.4</td><td>112亿</td>
+      <td>行星减速器+滚柱丝杠，国企平台</td>
+    </tr>
+    <tr>
+      <td><strong>五洲新春</strong></td><td>603667</td><td>70.21</td>
+      <td class="red">-0.48%</td><td class="green">+0.33%</td>
+      <td>280.6</td><td>257亿</td>
+      <td>精密轴承+滚柱丝杠，供应谐波厂商</td>
+    </tr>
+  </table>
+
+  <!-- 第二组：伺服/电机 -->
+  <h3 style="font-size:14px;margin:14px 0 8px;color:var(--orange);">⚡ 伺服系统 & 电机（平台型标的）</h3>
+  <table>
+    <tr>
+      <th>公司</th><th>代码</th><th>最新价</th><th>今日</th><th>年初至今</th><th>PE(TTM)</th><th>总市值</th><th>核心定位</th>
+    </tr>
+    <tr>
+      <td><strong>汇川技术</strong></td><td>300124</td><td>66.45</td>
+      <td class="green">+1.20%</td><td class="red">-11.79%</td>
+      <td style="color:var(--accent2)">34.7</td><td style="font-weight:700">1,799亿</td>
+      <td>工控龙头，伺服+控制器全栈，估值最合理</td>
+    </tr>
+    <tr>
+      <td><strong>埃斯顿</strong></td><td>002747</td><td>21.45</td>
+      <td class="green">+0.37%</td><td class="red">-9.49%</td>
+      <td class="red">461.6</td><td>208亿</td>
+      <td>工业机器人本体+核心零部件，全产业链</td>
+    </tr>
+    <tr>
+      <td><strong>鸣志电器</strong></td><td>603728</td><td>59.12</td>
+      <td class="red">-0.91%</td><td class="red">-18.29%</td>
+      <td class="red">307.7</td><td>248亿</td>
+      <td>空心杯电机+步进电机，灵巧手核心</td>
+    </tr>
+    <tr>
+      <td><strong>步科股份</strong></td><td>688160</td><td>107.60</td>
+      <td class="red">-2.27%</td><td class="red" style="font-weight:700">-29.44%</td>
+      <td class="red">134.8</td><td>98亿</td>
+      <td>无框力矩电机，人形关节供应商</td>
+    </tr>
+    <tr>
+      <td><strong>禾川科技</strong></td><td>688320</td><td>31.22</td>
+      <td class="red">-0.70%</td><td class="red">-16.35%</td>
+      <td class="red">亏损</td><td>47亿</td>
+      <td>伺服系统+PLC，工控自动化</td>
+    </tr>
+  </table>
+
+  <!-- 第三组：传感器/视觉 -->
+  <h3 style="font-size:14px;margin:14px 0 8px;color:var(--accent);">📡 传感器 & 机器视觉</h3>
+  <table>
+    <tr>
+      <th>公司</th><th>代码</th><th>最新价</th><th>今日</th><th>年初至今</th><th>PE(TTM)</th><th>总市值</th><th>核心定位</th>
+    </tr>
+    <tr>
+      <td><strong>柯力传感</strong></td><td>603662</td><td>57.31</td>
+      <td class="red">-0.03%</td><td class="red">-20.40%</td>
+      <td style="color:var(--accent2)">49.7</td><td>161亿</td>
+      <td>传感器龙头，六维力矩传感器</td>
+    </tr>
+    <tr>
+      <td><strong>凌云光</strong></td><td>688400</td><td>47.84</td>
+      <td class="red">-2.25%</td><td class="green" style="font-weight:700">+12.88%</td>
+      <td class="red">142.5</td><td>229亿</td>
+      <td>机器视觉龙头，3D相机+算法</td>
+    </tr>
+    <tr>
+      <td><strong>奥普特</strong></td><td>688686</td><td>107.69</td>
+      <td class="red">-1.10%</td><td class="red">-13.24%</td>
+      <td class="orange">70.7</td><td>132亿</td>
+      <td>机器视觉核心部件，光源+镜头+软件</td>
+    </tr>
+  </table>
+
+  <!-- 第四组：系统集成/其他 -->
+  <h3 style="font-size:14px;margin:14px 0 8px;color:var(--accent2);">🏭 系统集成 & 配套</h3>
+  <table>
+    <tr>
+      <th>公司</th><th>代码</th><th>最新价</th><th>今日</th><th>年初至今</th><th>PE(TTM)</th><th>总市值</th><th>核心定位</th>
+    </tr>
+    <tr>
+      <td><strong>拓斯达</strong></td><td>300607</td><td>26.73</td>
+      <td class="green">+0.45%</td><td class="red">-18.85%</td>
+      <td class="orange">172.6</td><td>127亿</td>
+      <td>注塑机+机器人集成，自动化方案</td>
+    </tr>
+    <tr>
+      <td><strong>三花智控</strong></td><td>002050</td><td>45.82</td>
+      <td class="green">+0.61%</td><td class="red">-16.98%</td>
+      <td class="orange">47.5</td><td style="font-weight:700">1,928亿</td>
+      <td>热管理龙头，机器人散热+执行器</td>
+    </tr>
+    <tr>
+      <td><strong>优必选</strong></td><td style="color:var(--text-sec)">09880.HK</td><td>108.90</td>
+      <td class="red">-4.39%</td><td class="red">-13.78%</td>
+      <td class="red">亏损</td><td>548亿HKD</td>
+      <td>人形机器人本体龙头（港股）</td>
+    </tr>
+  </table>
+
+  <div class="chart-container"><canvas id="stockChart"></canvas></div>
+
+  <div class="chart-container-sm"><canvas id="ytdChart"></canvas></div>
+</div>
+
+<!-- 四、估值与性价比分析 -->
+<div class="section">
+  <div class="section-title"><span class="icon">💰</span> 四、估值与性价比分析</div>
+
+  <table>
+    <tr>
+      <th>公司</th><th>PE(TTM)</th><th>5年PE分位</th><th>ROE</th><th>净利率</th><th>营收增速</th><th>净利润增速</th><th>估值评价</th>
+    </tr>
+    <tr style="background:rgba(63,185,80,0.05)">
+      <td><strong>汇川技术</strong></td><td style="color:var(--accent2);font-weight:700">34.7</td>
+      <td style="color:var(--accent2)">15.3%</td><td style="color:var(--accent2)">15.08%</td>
+      <td>12.12%</td><td style="color:var(--accent2)">+21.32%</td><td>+8.57%</td>
+      <td><span class="tag tag-low">估值合理偏低</span></td>
+    </tr>
+    <tr style="background:rgba(63,185,80,0.05)">
+      <td><strong>双环传动</strong></td><td style="color:var(--accent2);font-weight:700">28.1</td>
+      <td style="color:var(--accent2)">31.4%</td><td style="color:var(--accent2)">12.31%</td>
+      <td>14.61%</td><td class="red">-4.91%</td><td style="color:var(--accent2)">+22.72%</td>
+      <td><span class="tag tag-low">估值最低</span></td>
+    </tr>
+    <tr style="background:rgba(63,185,80,0.05)">
+      <td><strong>柯力传感</strong></td><td style="color:var(--accent2);font-weight:700">49.7</td>
+      <td class="orange">74.0%</td><td style="color:var(--accent2)">11.76%</td>
+      <td style="color:var(--accent2)">25.99%</td><td style="color:var(--accent2)">+23.01%</td><td>+11.91%</td>
+      <td><span class="tag tag-low">盈利质量好</span></td>
+    </tr>
+    <tr>
+      <td><strong>三花智控</strong></td><td class="orange">47.5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+      <td><span class="tag tag-mid">估值中等</span></td>
+    </tr>
+    <tr>
+      <td><strong>奥普特</strong></td><td class="orange">70.7</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+      <td><span class="tag tag-mid">估值偏高</span></td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.05)">
+      <td><strong>绿的谐波</strong></td><td class="red" style="font-weight:700">307.7</td>
+      <td class="red">高位</td><td class="red">偏低</td>
+      <td>—</td><td>—</td><td>—</td>
+      <td><span class="tag tag-high">纯概念溢价</span></td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.05)">
+      <td><strong>鸣志电器</strong></td><td class="red">307.7</td><td class="red">84.0%</td><td class="red">2.71%</td>
+      <td class="red">3.11%</td><td>+7.03%</td><td class="red">-22.45%</td>
+      <td><span class="tag tag-high">估值极高</span></td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.05)">
+      <td><strong>五洲新春</strong></td><td class="red">280.6</td><td class="red">96.1%</td><td class="red">3.07%</td>
+      <td class="red">2.86%</td><td>+12.76%</td><td class="red">-19.38%</td>
+      <td><span class="tag tag-high">业绩不支撑</span></td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.05)">
+      <td><strong>秦川机床</strong></td><td class="red">212.4</td><td class="orange">62.8%</td><td class="red">1.08%</td>
+      <td class="red">1.46%</td><td>+5.96%</td><td class="red">-1.65%</td>
+      <td><span class="tag tag-high">业绩弱+估值高</span></td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.05)">
+      <td><strong>埃斯顿</strong></td><td class="red">461.6</td><td class="red">100%</td><td class="red">2.29%</td>
+      <td class="red">0.93%</td><td>+21.93%</td><td style="color:var(--accent2)">+105.6%</td>
+      <td><span class="tag tag-high">收入增长但微利</span></td>
+    </tr>
+  </table>
+
+  <div class="chart-container-sm"><canvas id="peChart"></canvas></div>
+</div>
+
+<!-- 五、投资逻辑 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 五、产业链投资逻辑与优先级排序</div>
+
+  <div style="margin:12px 0;padding:12px;background:rgba(63,185,80,0.06);border-radius:8px;border-left:3px solid var(--accent2);">
+    <strong style="color:var(--accent2)">核心观点：先零部件后本体，先确定性后弹性</strong><br>
+    <span style="font-size:13px;color:var(--text-sec)">人形机器人量产先行者红利主要在<strong>上游核心零部件</strong>——无论最终谁是人形机器人本体赢家，减速器、传感器、丝杠等零部件都是"卖铲人"逻辑。</span>
+  </div>
+
+  <table>
+    <tr>
+      <th>优先级</th><th>方向</th><th>推荐标的</th><th>逻辑</th><th>风险</th>
+    </tr>
+    <tr style="background:rgba(63,185,80,0.05)">
+      <td><span class="tag tag-low">★ 首选</span></td>
+      <td><strong>平台型龙头</strong></td>
+      <td class="blue">汇川技术</td>
+      <td>伺服+控制器全栈，PE 34x行业最低，业绩增速21%+，攻守兼备</td>
+      <td>机器人占比较小，短期驱动力有限</td>
+    </tr>
+    <tr style="background:rgba(63,185,80,0.05)">
+      <td><span class="tag tag-low">★ 首选</span></td>
+      <td><strong>高壁垒减速器</strong></td>
+      <td class="blue">双环传动</td>
+      <td>PE 28x最低，绑定Tesla供应链，RV减速器+齿轮双重驱动</td>
+      <td>营收短期下滑，需关注机器人订单兑现</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-mid">★★</span></td>
+      <td><strong>传感器国产替代</strong></td>
+      <td class="blue">柯力传感</td>
+      <td>六维力传感器国产化率&lt;15%，ROE 11.76%+净利率26%，盈利质量好</td>
+      <td>估值49x不低，传感器规模化放量节奏不确定</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-mid">★★</span></td>
+      <td><strong>热管理/执行器</strong></td>
+      <td class="blue">三花智控</td>
+      <td>汽车热管理基本盘+机器人散热增量，1928亿市值蓝筹</td>
+      <td>年初至今-17%，汽车业务承压拖累</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-mid">★★</span></td>
+      <td><strong>谐波减速器龙头</strong></td>
+      <td class="orange">绿的谐波</td>
+      <td>国产谐波第一，全球市占20%，人形机器人直接受益</td>
+      <td class="red">PE 308x极高，年初至今+9%已反映预期</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-info">★★★</span></td>
+      <td><strong>机器视觉</strong></td>
+      <td class="orange">凌云光</td>
+      <td>年初至今+12.88%逆势走强，3D视觉技术壁垒高</td>
+      <td class="red">PE 142x，业绩兑现压力大</td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.03)">
+      <td><span class="tag tag-high">谨慎</span></td>
+      <td><strong>纯概念标的</strong></td>
+      <td class="red">五洲新春/鸣志电器/秦川机床</td>
+      <td>人形机器人概念催化弹性大</td>
+      <td class="red">PE 200-300x + 净利率2-3% + 业绩下滑，纯情绪驱动</td>
+    </tr>
+    <tr style="background:rgba(248,81,73,0.03)">
+      <td><span class="tag tag-high">谨慎</span></td>
+      <td><strong>本体厂商</strong></td>
+      <td class="red">优必选/埃斯顿</td>
+      <td>人形/工业机器人直接标的</td>
+      <td class="red">优必选亏损；埃斯顿PE 462x/净利率0.93%，量产不等于盈利</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 六、人形 vs 工业机器人 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚖️</span> 六、人形机器人 vs 工业机器人：产业链异同</div>
+
+  <table>
+    <tr>
+      <th>维度</th>
+      <th>工业机器人</th>
+      <th>人形机器人</th>
+    </tr>
+    <tr>
+      <td><strong>产业链成熟度</strong></td>
+      <td><span class="tag tag-low">成熟</span> 国产化率持续提升</td>
+      <td><span class="tag tag-high">早期</span> 2026量产元年</td>
+    </tr>
+    <tr>
+      <td><strong>共享上游零部件</strong></td>
+      <td>减速器、伺服、控制器（三大件）</td>
+      <td>同左 + 无框电机、力传感器、丝杠（增量）</td>
+    </tr>
+    <tr>
+      <td><strong>本体价值量</strong></td>
+      <td>单台5-50万元</td>
+      <td>单台1-30万元（快速下降中）</td>
+    </tr>
+    <tr>
+      <td><strong>核心竞争要素</strong></td>
+      <td>成本控制、可靠性、集成能力</td>
+      <td>AI大模型能力、泛化能力、场景落地</td>
+    </tr>
+    <tr>
+      <td><strong>A股投资逻辑</strong></td>
+      <td>看国产替代率、业绩兑现</td>
+      <td>看概念催化、订单兑现、降本进展</td>
+    </tr>
+    <tr>
+      <td><strong>估值特征</strong></td>
+      <td>汇川/双环 PE 28-35x（合理）</td>
+      <td>绿的/鸣志 PE 300x+（纯概念）</td>
+    </tr>
+  </table>
+
+  <div class="chart-container-sm"><canvas id="marketCompare"></canvas></div>
+</div>
+
+<!-- 七、结论 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📋</span> 七、结论</div>
+  <div class="verdict-box">
+    <div class="verdict-title" style="color:var(--accent);">产业链投资三句话</div>
+    <p style="font-size:14px;line-height:2;">
+      <strong style="color:var(--accent2)">1. "卖铲人"优先</strong>：无论谁最终赢下人形机器人本体之战，上游核心零部件（减速器、传感器、丝杠）都是确定性最高的受益环节。<br>
+      <strong style="color:var(--accent2)">2. 估值分化严重</strong>：汇川技术PE 34x vs 绿的谐波PE 308x，两者都贴"机器人概念"，但性价比天差地别。工业机器人业绩驱动 vs 人形机器人概念驱动。<br>
+      <strong style="color:var(--accent2)">3. 国产替代+增量空间</strong>：力传感器（国产化率&lt;15%）、行星滚柱丝杠（&lt;10%）是最大增量赛道；减速器（国产化率40%）、伺服（45%）是最大的存量替代空间。<br><br>
+      <span style="color:var(--text-sec);font-size:13px;">一句话：人形机器人产业链投资的核心策略是——</span>
+      <strong style="color:var(--accent);font-size:15px;">用工业机器人的估值纪律，买入人形机器人的成长弹性。</strong>
+    </p>
+  </div>
+</div>
+
+<div class="data-source">
+  行情数据来源：NeoData（2026.04.20 实时）| 产业链数据：搜狐/头豹研究院/GGII | 本报告仅供研究参考，不构成投资建议
+</div>
+
+<script>
+// 零部件价值量分布
+new Chart(document.getElementById('costChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['精密减速器', '力传感器', '伺服系统', '控制器', '行星滚柱丝杠', '机器视觉', '空心杯电机', '其他'],
+    datasets: [{
+      data: [20, 16, 15, 12, 8, 8, 5, 16],
+      backgroundColor: ['#f85149','#d29922','#db6d28','#58a6ff','#bc8cff','#39d2c0','#3fb950','#484f58'],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { color: '#8b949e', font: { size: 11 }, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed}%` } }
+    }
+  }
+});
+
+// 年初至今涨跌幅
+new Chart(document.getElementById('ytdChart'), {
+  type: 'bar',
+  data: {
+    labels: ['绿的谐波','凌云光','五洲新春','双环传动','埃斯顿','汇川技术','三花智控','奥普特','秦川机床','禾川科技','鸣志电器','柯力传感','拓斯达','优必选','步科股份'],
+    datasets: [{
+      label: '年初至今涨跌幅(%)',
+      data: [9.14, 12.88, 0.33, -17.49, -9.49, -11.79, -16.98, -13.24, -14.75, -16.35, -18.29, -20.40, -18.85, -13.78, -29.44],
+      backgroundColor: ctx => ctx.raw >= 0 ? 'rgba(63,185,80,0.7)' : 'rgba(248,81,73,0.7)',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#8b949e', callback: v => v+'%' }, grid: { color: 'rgba(48,54,61,0.4)' } },
+      y: { ticks: { color: '#e6edf3', font: { size: 11 } }, grid: { display: false } }
+    }
+  }
+});
+
+// 市值对比
+new Chart(document.getElementById('stockChart'), {
+  type: 'bar',
+  data: {
+    labels: ['三花智控','汇川技术','双环传动','五洲新春','绿的谐波','凌云光','柯力传感','鸣志电器','埃斯顿','优必选(HK)','秦川机床','拓斯达','奥普特','步科股份','禾川科技'],
+    datasets: [{
+      label: '总市值(亿元)',
+      data: [1928, 1799, 332, 257, 384, 229, 161, 248, 208, 548, 112, 127, 132, 98, 47],
+      backgroundColor: ctx => ctx.raw >= 1000 ? 'rgba(88,166,255,0.7)' : ctx.raw >= 200 ? 'rgba(210,153,34,0.7)' : 'rgba(139,148,158,0.4)',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#8b949e', callback: v => v+'亿' }, grid: { color: 'rgba(48,54,61,0.4)' } },
+      y: { ticks: { color: '#e6edf3', font: { size: 10 } }, grid: { display: false } }
+    }
+  }
+});
+
+// PE对比
+new Chart(document.getElementById('peChart'), {
+  type: 'bar',
+  data: {
+    labels: ['双环传动','汇川技术','柯力传感','三花智控','奥普特','步科股份','秦川机床','拓斯达','绿的谐波','鸣志电器','五洲新春','埃斯顿'],
+    datasets: [{
+      label: 'PE(TTM)',
+      data: [28.1, 34.7, 49.7, 47.5, 70.7, 134.8, 212.4, 172.6, 307.7, 307.7, 280.6, 461.6],
+      backgroundColor: ctx => ctx.raw <= 50 ? 'rgba(63,185,80,0.7)' : ctx.raw <= 150 ? 'rgba(210,153,34,0.7)' : 'rgba(248,81,73,0.7)',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#8b949e', callback: v => v+'x' }, grid: { color: 'rgba(48,54,61,0.4)' } },
+      y: { ticks: { color: '#e6edf3', font: { size: 10 } }, grid: { display: false } }
+    }
+  }
+});
+
+// 市场对比
+new Chart(document.getElementById('marketCompare'), {
+  type: 'radar',
+  data: {
+    labels: ['产业链成熟度', '国产化空间', '业绩确定性', '估值合理性', '成长弹性', '政策支持'],
+    datasets: [{
+      label: '工业机器人',
+      data: [8, 5, 8, 7, 5, 7],
+      borderColor: '#3fb950', backgroundColor: 'rgba(63,185,80,0.1)',
+      pointBackgroundColor: '#3fb950', borderWidth: 2,
+    }, {
+      label: '人形机器人',
+      data: [2, 9, 3, 3, 9, 9],
+      borderColor: '#f85149', backgroundColor: 'rgba(248,81,73,0.1)',
+      pointBackgroundColor: '#f85149', borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#8b949e' } } },
+    scales: {
+      r: {
+        beginAtZero: true, max: 10,
+        ticks: { color: '#8b949e', backdropColor: 'transparent', font: { size: 10 } },
+        grid: { color: 'rgba(48,54,61,0.5)' },
+        angleLines: { color: 'rgba(48,54,61,0.5)' },
+        pointLabels: { color: '#e6edf3', font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
