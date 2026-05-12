@@ -103,8 +103,8 @@ function generateCategoryPage(category, categoryArticles, categories) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${categories[category].displayName} | fin.a11.world</title>
-  <meta name="description" content="${categories[category].displayName}汇集">
+  <title>${categories[category].displayName} | 金融研究报告</title>
+  <meta name="description" content="${categories[category].displayName} - 专业金融分析报告">
   <style>
     * {
       margin: 0;
@@ -112,163 +112,337 @@ function generateCategoryPage(category, categoryArticles, categories) {
       box-sizing: border-box;
     }
 
+    :root {
+      --color-primary: #0a192f;
+      --color-secondary: #1a2332;
+      --color-accent: #c5a059;
+      --color-accent-hover: #d4af37;
+      --color-bg: #f8f9fa;
+      --color-bg-alt: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #6c757d;
+      --color-border: #dee2e6;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: var(--font-family);
       line-height: 1.6;
-      color: #333;
-      background: #f5f5f5;
+      color: var(--color-text);
+      background: var(--color-bg);
+      font-size: 16px;
+    }
+
+    .top-bar {
+      background: var(--color-primary);
+      color: white;
+      padding: 12px 0;
+      font-size: 0.875em;
+      border-bottom: 3px solid var(--color-accent);
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 20px;
     }
 
     header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: white;
+      border-bottom: 1px solid var(--color-border);
+      padding: 30px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo h1 {
+      font-size: 2em;
       font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 5px;
+      letter-spacing: -0.5px;
     }
 
-    header p {
-      font-size: 1.1em;
-      opacity: 0.9;
+    .logo span {
+      font-size: 0.875em;
+      color: var(--color-accent);
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .page-stats {
+      display: flex;
+      gap: 30px;
+      text-align: right;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .stat-number {
+      font-size: 1.75em;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75em;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .breadcrumb-section {
+      background: white;
+      border-bottom: 1px solid var(--color-border);
+      padding: 15px 0;
     }
 
     .breadcrumb {
-      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9375em;
     }
 
     .breadcrumb a {
-      color: #667eea;
+      color: var(--color-text-secondary);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     .breadcrumb a:hover {
-      text-decoration: underline;
+      color: var(--color-accent);
+    }
+
+    .breadcrumb .separator {
+      color: var(--color-text-secondary);
+    }
+
+    .breadcrumb .current {
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .main-content {
+      padding: 50px 0;
     }
 
     .articles-section {
       background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
 
-    .articles-section h2 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      border-bottom: 2px solid #667eea;
-      padding-bottom: 10px;
+    .section-header {
+      background: var(--color-primary);
+      color: white;
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header h2 {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .section-header .count {
+      font-size: 0.9375em;
+      opacity: 0.9;
     }
 
     .article-card {
-      padding: 20px;
-      border-bottom: 1px solid #eee;
+      padding: 25px;
+      border-bottom: 1px solid var(--color-border);
       transition: background 0.2s;
     }
 
     .article-card:hover {
-      background: #f9f9f9;
+      background: #fafbff;
     }
 
     .article-card:last-child {
       border-bottom: none;
     }
 
+    .article-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
     .article-title {
-      font-size: 1.3em;
-      color: #667eea;
-      margin-bottom: 10px;
+      font-size: 1.25em;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.4;
     }
 
     .article-title a {
-      color: inherit;
+      color: var(--color-primary);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     .article-title a:hover {
-      text-decoration: underline;
+      color: var(--color-accent);
+    }
+
+    .article-date {
+      font-size: 0.875em;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      padding-left: 20px;
     }
 
     .article-meta {
-      color: #666;
-      font-size: 0.9em;
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .article-category {
       display: inline-block;
-      background: #667eea;
+      background: var(--color-primary);
       color: white;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8em;
-      margin-right: 10px;
+      padding: 4px 12px;
+      font-size: 0.75em;
+      font-weight: 500;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .article-description {
-      color: #555;
-      line-height: 1.5;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      font-size: 0.9375em;
     }
 
     footer {
+      background: var(--color-primary);
+      color: white;
+      padding: 40px 0 30px;
+      margin-top: 60px;
       text-align: center;
-      padding: 30px 20px;
-      color: #666;
-      font-size: 0.9em;
+      border-top: 3px solid var(--color-accent);
+    }
+
+    footer p {
+      opacity: 0.9;
+      font-size: 0.9375em;
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8em;
+      .page-stats {
+        display: none;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .article-header {
+        flex-direction: column;
+      }
+
+      .article-date {
+        padding-left: 0;
+        margin-top: 8px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="container">
+      <span>金融研究报告</span>
+      <span>专业金融分析平台</span>
+    </div>
+  </div>
+
   <header>
     <div class="container">
-      <h1>${categories[category].displayName}</h1>
-      <p>${getCategoryDescription(category)}</p>
+      <div class="logo">
+        <h1>${categories[category].displayName}</h1>
+        <span>Financial Research Reports</span>
+      </div>
+      <div class="page-stats">
+        <div class="stat-item">
+          <span class="stat-number">${categoryArticlesWithRelativePath.length}</span>
+          <span class="stat-label">报告数量</span>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="container">
-    <div class="breadcrumb">
-      <a href="/">返回首页</a>
+  <div class="breadcrumb-section">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">首页</a>
+        <span class="separator">›</span>
+        <span class="current">${categories[category].displayName}</span>
+      </nav>
     </div>
+  </div>
 
+  <div class="container main-content">
     <section class="articles-section">
-      <h2>${categories[category].displayName}列表</h2>
+      <div class="section-header">
+        <h2>${categories[category].displayName}报告</h2>
+        <span class="count">共 ${categoryArticlesWithRelativePath.length} 篇</span>
+      </div>
       ${categoryArticlesWithRelativePath.map(article => `
-      <div class="article-card">
-        <h3 class="article-title">
-          <a href="${article.relativePath}">${article.title}</a>
-        </h3>
+      <article class="article-card">
+        <div class="article-header">
+          <h3 class="article-title">
+            <a href="${article.relativePath}">${article.title}</a>
+          </h3>
+          <time class="article-date">${article.date}</time>
+        </div>
         <div class="article-meta">
           <span class="article-category">${categories[article.category].displayName}</span>
-          <span>${article.date}</span>
         </div>
         ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
-      </div>
+      </article>
       `).join('')}
     </section>
   </div>
 
   <footer>
-    <p>&copy; ${new Date().getFullYear()} fin.a11.world - 金融分析文章汇集</p>
+    <div class="container">
+      <p>&copy; ${new Date().getFullYear()} 金融研究报告 | 专业金融分析平台</p>
+    </div>
   </footer>
 </body>
 </html>`;
@@ -331,7 +505,7 @@ function getCategoryDescription(category) {
 
 /**
  * 生成首页 HTML
- * 闭环：自动生成首页，展示所有文章
+ * 底层逻辑：专业金融风格设计，配色方案采用深蓝+金色
  */
 function generateIndex(articles, categories, categoriesList) {
   // 按日期排序（最新的在前）
@@ -344,8 +518,8 @@ function generateIndex(articles, categories, categoriesList) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>金融分析文章汇集 | fin.a11.world</title>
-  <meta name="description" content="汇集各类金融分析报告，包括市场分析、行业研究和公司报告">
+  <title>金融研究报告 | 专业金融分析平台</title>
+  <meta name="description" content="汇聚市场分析、行业研究与公司报告的专业金融分析平台">
   <style>
     * {
       margin: 0;
@@ -353,200 +527,421 @@ function generateIndex(articles, categories, categoriesList) {
       box-sizing: border-box;
     }
 
+    :root {
+      --color-primary: #0a192f;
+      --color-secondary: #1a2332;
+      --color-accent: #c5a059;
+      --color-accent-hover: #d4af37;
+      --color-bg: #f8f9fa;
+      --color-bg-alt: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #6c757d;
+      --color-border: #dee2e6;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: var(--font-family);
       line-height: 1.6;
-      color: #333;
-      background: #f5f5f5;
+      color: var(--color-text);
+      background: var(--color-bg);
+      font-size: 16px;
+    }
+
+    .top-bar {
+      background: var(--color-primary);
+      color: white;
+      padding: 12px 0;
+      font-size: 0.875em;
+      border-bottom: 3px solid var(--color-accent);
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 20px;
     }
 
     header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    header p {
-      font-size: 1.1em;
-      opacity: 0.9;
-    }
-
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .categories a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .category-card {
       background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
+      border-bottom: 1px solid var(--color-border);
+      padding: 30px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
-    .categories a:hover .category-card {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .category-card h3 {
-      color: #667eea;
-      margin-bottom: 10px;
-      font-size: 1.2em;
+    .logo {
+      display: flex;
+      flex-direction: column;
     }
 
-    .category-card .count {
-      color: #666;
-      font-size: 0.9em;
+    .logo h1 {
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 5px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      font-size: 0.875em;
+      color: var(--color-accent);
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .stats {
+      display: flex;
+      gap: 30px;
+      text-align: right;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .stat-number {
+      font-size: 1.75em;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75em;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23c5a059" fill-opacity="0.1" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path><path fill="%23c5a059" fill-opacity="0.1" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"></path><path fill="%23c5a059" fill-opacity="0.1" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+      pointer-events: none;
+    }
+
+    .hero-section h2 {
+      font-size: 2.25em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .hero-section p {
+      font-size: 1.125em;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+
+    .main-content {
+      padding: 50px 0;
+    }
+
+    .sidebar {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .category-nav {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      height: fit-content;
+    }
+
+    .category-nav h3 {
+      background: var(--color-primary);
+      color: white;
+      padding: 15px 20px;
+      font-size: 1em;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .category-nav a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--color-text);
+      border-bottom: 1px solid var(--color-border);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .category-nav a:last-child {
+      border-bottom: none;
+    }
+
+    .category-nav a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--color-accent);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+
+    .category-nav a:hover {
+      background: #f8f9fa;
+      padding-left: 25px;
+    }
+
+    .category-nav a:hover::before {
+      transform: scaleY(1);
+    }
+
+    .category-nav .cat-name {
+      font-weight: 600;
+      color: var(--color-text);
+      display: block;
+    }
+
+    .category-nav .cat-count {
+      font-size: 0.875em;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
     }
 
     .articles-section {
       background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
 
-    .articles-section h2 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      border-bottom: 2px solid #667eea;
-      padding-bottom: 10px;
+    .articles-section h3 {
+      background: white;
+      color: var(--color-primary);
+      padding: 20px 25px;
+      font-size: 1.375em;
+      font-weight: 600;
+      border-bottom: 2px solid var(--color-accent);
+      margin: 0;
     }
 
     .article-card {
-      padding: 20px;
-      border-bottom: 1px solid #eee;
+      padding: 25px;
+      border-bottom: 1px solid var(--color-border);
       transition: background 0.2s;
     }
 
     .article-card:hover {
-      background: #f9f9f9;
+      background: #fafbff;
     }
 
     .article-card:last-child {
       border-bottom: none;
     }
 
+    .article-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
     .article-title {
-      font-size: 1.3em;
-      color: #667eea;
-      margin-bottom: 10px;
+      font-size: 1.25em;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.4;
     }
 
     .article-title a {
-      color: inherit;
+      color: var(--color-primary);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     .article-title a:hover {
-      text-decoration: underline;
+      color: var(--color-accent);
+    }
+
+    .article-date {
+      font-size: 0.875em;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      padding-left: 20px;
     }
 
     .article-meta {
-      color: #666;
-      font-size: 0.9em;
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .article-category {
       display: inline-block;
-      background: #667eea;
+      background: var(--color-primary);
       color: white;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8em;
-      margin-right: 10px;
+      padding: 4px 12px;
+      font-size: 0.75em;
+      font-weight: 500;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .article-description {
-      color: #555;
-      line-height: 1.5;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      font-size: 0.9375em;
     }
 
     footer {
+      background: var(--color-primary);
+      color: white;
+      padding: 40px 0 30px;
+      margin-top: 60px;
       text-align: center;
-      padding: 30px 20px;
-      color: #666;
-      font-size: 0.9em;
+      border-top: 3px solid var(--color-accent);
     }
 
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8em;
+    footer p {
+      opacity: 0.9;
+      font-size: 0.9375em;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        grid-template-columns: 1fr;
       }
 
-      .categories {
-        grid-template-columns: 1fr;
+      .stats {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-section h2 {
+        font-size: 1.75em;
+      }
+
+      .hero-section p {
+        font-size: 1em;
+      }
+
+      .article-header {
+        flex-direction: column;
+      }
+
+      .article-date {
+        padding-left: 0;
+        margin-top: 8px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="container">
+      <span>金融研究报告</span>
+      <span>专业金融分析平台</span>
+    </div>
+  </div>
+
   <header>
     <div class="container">
-      <h1>金融分析文章汇集</h1>
-      <p>汇聚市场分析、行业研究与公司报告</p>
+      <div class="logo">
+        <h1>金融研究报告</h1>
+        <span>专业金融分析平台</span>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-number">${articles.length}</span>
+          <span class="stat-label">总报告数</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">${categoriesList.length}</span>
+          <span class="stat-label">分类数量</span>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="container">
-    <!-- 分类导航 -->
-    <section class="categories">
-      ${categoriesList.map(cat => `
-      <a href="articles/${cat}/" style="text-decoration: none; color: inherit;">
-        <div class="category-card">
-          <h3>${categories[cat].displayName}</h3>
-          <p class="count">${categories[cat].count} 篇文章</p>
-        </div>
-      </a>
-      `).join('')}
-    </section>
+  <section class="hero-section">
+    <div class="container">
+      <h2>专业金融分析报告</h2>
+      <p>深度市场分析 · 行业产业链研究 · 上市公司财务分析</p>
+    </div>
+  </section>
 
-    <!-- 文章列表 -->
-    <section class="articles-section">
-      <h2>最新文章</h2>
-      ${sortedArticles.map(article => `
-      <div class="article-card" data-category="${article.category}">
-        <h3 class="article-title">
-          <a href="${article.path}">${article.title}</a>
-        </h3>
-        <div class="article-meta">
-          <span class="article-category">${categories[article.category].displayName}</span>
-          <span>${article.date}</span>
-        </div>
-        ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
-      </div>
-      `).join('')}
-    </section>
+  <div class="container main-content">
+    <div class="sidebar">
+      <nav class="category-nav">
+        <h3>研究报告分类</h3>
+        ${categoriesList.map(cat => `
+        <a href="articles/${cat}/">
+          <span class="cat-name">${categories[cat].displayName}</span>
+          <span class="cat-count">${categories[cat].count} 篇报告</span>
+        </a>
+        `).join('')}
+      </nav>
+
+      <section class="articles-section">
+        <h3>最新发布</h3>
+        ${sortedArticles.map(article => `
+        <article class="article-card">
+          <div class="article-header">
+            <h4 class="article-title">
+              <a href="${article.path}">${article.title}</a>
+            </h4>
+            <time class="article-date">${article.date}</time>
+          </div>
+          <div class="article-meta">
+            <span class="article-category">${categories[article.category].displayName}</span>
+          </div>
+          ${article.description ? `<p class="article-description">${article.description}</p>` : ''}
+        </article>
+        `).join('')}
+      </section>
+    </div>
   </div>
 
   <footer>
-    <p>&copy; ${new Date().getFullYear()} fin.a11.world - 金融分析文章汇集</p>
+    <div class="container">
+      <p>&copy; ${new Date().getFullYear()} 金融研究报告 | 专业金融分析平台</p>
+    </div>
+  </footer>
   </footer>
 
 </body>
