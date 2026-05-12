@@ -92,6 +92,12 @@ function generateCategoryPage(category, categoryArticles, categories) {
     new Date(b.date) - new Date(a.date)
   );
 
+  // 为分类页面生成相对路径的文章链接
+  const categoryArticlesWithRelativePath = sortedArticles.map(article => ({
+    ...article,
+    relativePath: path.basename(article.path) // 只取文件名，作为相对路径
+  }));
+
   const categoryHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -246,10 +252,10 @@ function generateCategoryPage(category, categoryArticles, categories) {
 
     <section class="articles-section">
       <h2>${categories[category].displayName}列表</h2>
-      ${sortedArticles.map(article => `
+      ${categoryArticlesWithRelativePath.map(article => `
       <div class="article-card">
         <h3 class="article-title">
-          <a href="${article.path}">${article.title}</a>
+          <a href="${article.relativePath}">${article.title}</a>
         </h3>
         <div class="article-meta">
           <span class="article-category">${categories[article.category].displayName}</span>
