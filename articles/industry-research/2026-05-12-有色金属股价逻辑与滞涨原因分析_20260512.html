@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>有色金属股价逻辑与滞涨原因深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#0d1117;color:#e6edf3;line-height:1.7;padding:16px}
+.container{max-width:760px;margin:0 auto}
+
+/* Banner */
+.banner{background:linear-gradient(135deg,#1a1a2e 0%,#2a1a0a 40%,#0a2a1a 100%);border-radius:16px;padding:40px 28px;margin-bottom:24px;text-align:center;border:1px solid rgba(241,196,15,0.3);position:relative;overflow:hidden}
+.banner::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 30% 50%,rgba(241,196,15,0.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(46,204,113,0.06) 0%,transparent 50%)}
+.banner h1{font-size:1.8em;background:linear-gradient(90deg,#f1c40f,#e67e22);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;position:relative}
+.banner .subtitle{color:#8b949e;font-size:0.95em;position:relative}
+.banner .date{color:#58a6ff;font-size:0.82em;margin-top:6px;position:relative}
+.banner .tag{display:inline-block;margin-top:10px;padding:4px 14px;border-radius:20px;font-size:0.75em;font-weight:600;position:relative}
+.tag-yellow{background:rgba(241,196,15,0.15);border:1px solid rgba(241,196,15,0.4);color:#f1c40f}
+
+/* Executive Summary */
+.exec-summary{background:linear-gradient(135deg,rgba(241,196,15,0.08),rgba(230,126,34,0.08));border:1px solid rgba(241,196,15,0.3);border-radius:14px;padding:22px;margin-bottom:24px}
+.exec-summary h2{font-size:1.2em;color:#f1c40f;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.exec-summary p{font-size:0.92em;color:#c9d1d9;margin-bottom:8px}
+.exec-summary .highlight{color:#f1c40f;font-weight:700}
+
+/* Section */
+.section{background:rgba(22,27,34,0.95);border-radius:14px;padding:24px;margin-bottom:20px;border:1px solid rgba(48,54,61,0.8)}
+.section-title{font-size:1.3em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid rgba(241,196,15,0.3);display:flex;align-items:center;gap:10px;color:#f1c40f}
+
+/* Sub-title */
+.sub-title{font-size:1.08em;color:#e67e22;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+
+/* Cards Grid */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+.card{background:rgba(30,35,42,0.9);border-radius:12px;padding:16px;border:1px solid rgba(48,54,61,0.6)}
+.card-label{font-size:0.78em;color:#8b949e;margin-bottom:6px}
+.card-value{font-size:1.5em;font-weight:700}
+.card-sub{font-size:0.8em;margin-top:4px}
+.text-red{color:#e74c3c}
+.text-green{color:#2ecc71}
+.text-yellow{color:#f1c40f}
+.text-blue{color:#3498db}
+.text-orange{color:#e67e22}
+.text-purple{color:#9b59b6}
+
+/* Table */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.88em}
+th{background:rgba(241,196,15,0.1);color:#f1c40f;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid rgba(241,196,15,0.3)}
+td{padding:8px 12px;border-bottom:1px solid rgba(48,54,61,0.5)}
+tr:hover{background:rgba(241,196,15,0.03)}
+
+/* Reason Card */
+.reason-card{background:rgba(30,35,42,0.9);border-radius:14px;padding:20px;margin:14px 0;border-left:4px solid #e67e22;position:relative}
+.reason-num{position:absolute;top:-8px;left:14px;background:#e67e22;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85em}
+.reason-title{font-size:1.05em;color:#e67e22;font-weight:700;margin-bottom:10px;padding-left:8px}
+.reason-text{font-size:0.9em;color:#c9d1d9;line-height:1.8}
+.reason-text .hl{color:#f1c40f;font-weight:600}
+
+/* Chain Flow */
+.chain-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap}
+.chain-node{padding:8px 18px;border-radius:20px;font-size:0.85em;font-weight:600}
+.chain-node.cn-gold{background:rgba(241,196,15,0.12);border:1px solid rgba(241,196,15,0.4);color:#f1c40f}
+.chain-node.cn-copper{background:rgba(230,126,34,0.12);border:1px solid rgba(230,126,34,0.4);color:#e67e22}
+.chain-node.cn-green{background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.4);color:#2ecc71}
+.chain-arrow{color:#8b949e;font-size:1.3em}
+
+/* Signal Grid */
+.signal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0}
+.signal-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(30,35,42,0.8);border:1px solid rgba(48,54,61,0.5)}
+.signal-icon{font-size:1.1em;flex-shrink:0}
+.signal-text{font-size:0.88em;color:#c9d1d9}
+.signal-status{font-size:0.82em;font-weight:600;flex-shrink:0;padding:3px 10px;border-radius:12px}
+.status-no{background:rgba(231,76,60,0.15);color:#e74c3c}
+.status-warn{background:rgba(241,196,15,0.15);color:#f1c40f}
+.status-yes{background:rgba(46,204,113,0.15);color:#2ecc71}
+
+/* Three-layer */
+.layer-box{background:rgba(30,35,42,0.9);border-radius:12px;padding:16px;margin:10px 0;border-left:3px solid}
+.layer-1{border-left-color:#f1c40f}
+.layer-2{border-left-color:#e67e22}
+.layer-3{border-left-color:#9b59b6}
+.layer-title{font-size:0.95em;font-weight:700;margin-bottom:6px}
+.layer-desc{font-size:0.85em;color:#8b949e}
+
+/* Chart Container */
+.chart-box{background:rgba(22,27,34,0.9);border-radius:12px;padding:16px;margin:16px 0;height:280px}
+
+/* Footer */
+.footer{text-align:center;padding:20px 0;color:#484f58;font-size:0.8em;border-top:1px solid rgba(48,54,61,0.5);margin-top:20px}
+
+/* Mobile */
+@media(max-width:680px){
+  body{padding:10px;font-size:14px}
+  .banner h1{font-size:1.4em}
+  .cards{grid-template-columns:1fr}
+  table{font-size:0.8em}
+  th,td{padding:6px 8px}
+  .section{padding:18px}
+  .chart-box{height:220px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Banner -->
+<div class="banner">
+  <h1>有色金属股价逻辑与滞涨原因</h1>
+  <div class="subtitle">NONFERROUS METALS — PRICING LOGIC & UNDERPERFORMANCE ANALYSIS</div>
+  <div class="date">2026年5月12日 · 产业链深度研究</div>
+  <span class="tag tag-yellow">🔍 深度分析</span>
+</div>
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+  <h2>📋 执行摘要</h2>
+  <p>有色金属板块过去一年涨幅 <span class="highlight">112.5%</span>，但年初至今仅涨 <span class="highlight">16.7%</span>，显著跑输半导体（+30%+）、AI 等热门板块。</p>
+  <p><strong>核心矛盾：</strong>商品价格已充分定价→股市估值弹性不足；板块内部严重分化→黄金/稀土强势但铜铝锂疲软；资金偏好从周期向成长迁移。</p>
+  <p><strong>三个关键结论：</strong></p>
+  <p>① 有色金属是"双重杠杆"板块——商品价格×产能扩张，但当前商品端缺乏新催化</p>
+  <p>② AI/半导体虹吸效应明显，日均成交额 4500亿 vs 有色金属 2190亿</p>
+  <p>③ 内部分化剧烈：北方稀土（+25%）、赣锋锂业（+35%）年内跑赢大盘，但紫金矿业（-0.6%）、中国铝业（-3.6%）拖累板块</p>
+</div>
+
+<!-- Section 1: 产业链全景 -->
+<div class="section">
+  <div class="section-title">🏗️ 一、有色金属产业链全景</div>
+
+  <div class="chain-flow">
+    <span class="chain-node cn-gold">上游：矿产开采</span>
+    <span class="chain-arrow">→</span>
+    <span class="chain-node cn-copper">中游：冶炼加工</span>
+    <span class="chain-arrow">→</span>
+    <span class="chain-node cn-green">下游：终端应用</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>环节</th><th>核心企业</th><th>商业模式</th><th>利润弹性来源</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>上游采矿</strong></td><td>紫金矿业、洛阳钼业、山东黄金</td><td>资源储量→开采→销售精矿</td><td>金属价格 × 产量</td></tr>
+      <tr><td><strong>中游冶炼</strong></td><td>中国铝业、江西铜业、云铝股份</td><td>加工费 / 冶炼利润</td><td>加工费 + 副产品</td></tr>
+      <tr><td><strong>下游加工</strong></td><td>宁波韵升、宝钛股份、东阳光</td><td>深加工→终端产品</td><td>技术溢价 + 订单量</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">📊 子板块分化格局（截至2026.5.11）</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">有色金属整体</div>
+      <div class="card-value text-yellow">+16.70%</div>
+      <div class="card-sub text-blue">PE 25.18 · 5日 +4.28%</div>
+    </div>
+    <div class="card">
+      <div class="card-label">小金属（稀土）⭐</div>
+      <div class="card-value text-green">+25%+</div>
+      <div class="card-sub text-yellow">PE 76 · 北方稀土领涨</div>
+    </div>
+    <div class="card">
+      <div class="card-label">工业金属（铜铝）</div>
+      <div class="card-value text-red">-0.55%</div>
+      <div class="card-sub text-blue">PE 14-18 · 需求疲软</div>
+    </div>
+    <div class="card">
+      <div class="card-label">能源金属（锂）</div>
+      <div class="card-value text-green">+35%</div>
+      <div class="card-sub text-orange">赣锋锂业底部反弹</div>
+    </div>
+  </div>
+
+  <!-- Chart: 龙头股对比 -->
+  <div class="sub-title">📈 龙头股年内涨跌幅对比</div>
+  <div class="chart-box">
+    <canvas id="stockChart"></canvas>
+  </div>
+</div>
+
+<!-- Section 2: 股价驱动逻辑 -->
+<div class="section">
+  <div class="section-title">⚙️ 二、有色金属的股价驱动逻辑</div>
+
+  <div class="sub-title">三层定价模型</div>
+
+  <div class="layer-box layer-1">
+    <div class="layer-title text-yellow">第一层：大宗商品价格（铜/铝/锂/金/稀土）</div>
+    <div class="layer-desc">决定营收规模和毛利率的基本盘 → 驱动力：全球供需、美元走势、地缘冲突、通胀预期</div>
+  </div>
+  <div class="layer-box layer-2">
+    <div class="layer-title text-orange">第二层：产能扩张节奏（量×价的乘数效应）</div>
+    <div class="layer-desc">决定利润增速的上限 → 驱动力：资本开支周期、并购整合、新矿投产</div>
+  </div>
+  <div class="layer-box layer-3">
+    <div class="layer-title text-purple">第三层：市场风格偏好（估值倍数的弹性）</div>
+    <div class="layer-desc">决定PE能给的倍数 → 驱动力：宏观利率环境、市场风险偏好、板块轮动</div>
+  </div>
+
+  <div class="sub-title">🏷️ 各品种差异化逻辑</div>
+  <table>
+    <thead>
+      <tr><th>品种</th><th>核心驱动力</th><th>当前状态</th><th>股价敏感度</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>🥇 黄金</td><td>避险+通胀+央行购金</td><td>高位震荡 $4,776/oz</td><td class="text-yellow">已充分定价</td></tr>
+      <tr><td>🔶 铜</td><td>全球PMI+电网投资</td><td>$6.49/lb，需求疲软</td><td class="text-red">价格见顶信号</td></tr>
+      <tr><td>🪞 铝</td><td>产能天花板+地产/新能源</td><td>供需弱平衡</td><td class="text-blue">弹性有限</td></tr>
+      <tr><td>🔋 锂</td><td>新能源车/储能需求</td><td>底部反弹但有库存</td><td class="text-orange">高波动</td></tr>
+      <tr><td>💎 稀土</td><td>政策管控+磁材需求</td><td>供给受限+需求增长</td><td class="text-green">强势上行</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 3: 五大滞涨原因 -->
+<div class="section">
+  <div class="section-title">🔍 三、为什么有色金属"涨不动"？——五大核心原因</div>
+
+  <div class="reason-card">
+    <div class="reason-num">1</div>
+    <div class="reason-title">商品价格已充分定价，边际催化不足</div>
+    <div class="reason-text">
+      有色金属过去一年区间涨幅 <span class="hl">112.5%</span>，远超上证指数（+36%），板块超额收益 +76%已透支商品端上涨空间。<br>
+      当前铜价、金价虽在高位，但缺乏进一步上行催化。市场需要看到<span class="hl">需求端实质改善</span>（全球PMI连续3月>52），而非仅供给端收缩。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <div class="reason-num">2</div>
+    <div class="reason-title">AI/半导体虹吸效应，资金向成长板块迁移</div>
+    <div class="reason-text">
+      半导体板块 5/11 单日成交额 <span class="hl">4,500亿+</span> vs 有色金属 <span class="hl">2,189亿</span>。<br>
+      当前"科技牛"主线明确：半导体 +6.08%、科创50 +4.65%（历史新高）、消费电子全面爆发。<br>
+      有色金属 5/11 主力净流出 <span class="hl">39亿元</span>，"弃周期、拥抱成长"风格延续。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <div class="reason-num">3</div>
+    <div class="reason-title">板块内部分化严重，权重股拖累指数</div>
+    <div class="reason-text">
+      紫金矿业（最大权重~14%，市值9,113亿）年内 <span class="hl">-0.58%</span>，中国铝业（~3%）年内 <span class="hl">-3.60%</span>。<br>
+      表现好的稀土（+25%）、锂（+35%）因权重小，无法有效拉动指数。<br>
+      <strong>结论：</strong>板块"平均数失真"，内部赚钱效应不差，但被权重结构掩盖。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <div class="reason-num">4</div>
+    <div class="reason-title">宏观环境不利——利率不降+强美元预期</div>
+    <div class="reason-text">
+      高盛、美银将降息预期推迟至 2026/12 甚至 2027/7。<br>
+      美国两年期国债收益率 <span class="hl">3.95%</span>，市场开始定价2027年初加息。<br>
+      传导链：<span class="hl">降息推迟 → 美元维持强势 → 美元计价大宗商品承压 → 有色板块资金面弱化</span>
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <div class="reason-num">5</div>
+    <div class="reason-title">供需格局分化，部分品种面临过剩压力</div>
+    <div class="reason-text">
+      <strong>铜：</strong>全球制造业PMI徘徊荣枯线，中国地产低迷，需求缺乏爆发力<br>
+      <strong>铝：</strong>产能天花板明确但下游增速放缓，价格弹性有限<br>
+      <strong>锂：</strong>全球锂矿产能仍在释放，赣锋2024年亏损20.7亿，2025年刚扭亏<br>
+      <strong>稀土：</strong>唯一供给端强约束品种，出口管控+磁材需求增长 → <span class="hl">供需格局最优</span>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: 对比视角 -->
+<div class="section">
+  <div class="section-title">⚔️ 四、对比视角：有色 vs AI/半导体</div>
+
+  <div class="chart-box">
+    <canvas id="compareChart"></canvas>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>维度</th><th>有色金属</th><th>AI/半导体</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>增长可见度</td><td>依赖全球宏观，不确定性强</td><td>订单驱动，业绩可追踪</td></tr>
+      <tr><td>想象空间</td><td>周期品，有价格天花板</td><td>技术突破=无限空间</td></tr>
+      <tr><td>政策支持</td><td>供给侧改革（偏中性）</td><td>国家战略（国产替代）</td></tr>
+      <tr><td>资金偏好</td><td>机构/价值资金</td><td>全市场资金（含游资+外资）</td></tr>
+      <tr><td>催化剂频率</td><td>月度数据（PMI/PPI）</td><td>日频（新模型/新订单/新政策）</td></tr>
+      <tr><td>PE估值</td><td>14-25倍</td><td>40-80倍</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exec-summary" style="margin-top:16px">
+    <p style="font-size:0.9em"><strong>本质：</strong>有色金属龙头 ROE 30.78%（紫金矿业）并不差，但市场只给15倍PE。半导体增速更快、想象空间更大，市场愿给40-80倍。这是<span style="color:#f1c40f;font-weight:700">"确定性溢价"vs"成长性溢价"</span>的选择。牛市中，资金永远追逐后者。</p>
+  </div>
+</div>
+
+<!-- Section 5: 投资时钟 -->
+<div class="section">
+  <div class="section-title">⏰ 五、投资时钟与观察信号</div>
+
+  <div class="sub-title">什么时候有色会重新启动？（需满足≥2项）</div>
+
+  <div class="signal-grid">
+    <div class="signal-item">
+      <span class="signal-icon">🏦</span>
+      <span class="signal-text">美联储转鸽 → 降息预期明确</span>
+      <span class="signal-status status-no">❌ 持续推迟</span>
+    </div>
+    <div class="signal-item">
+      <span class="signal-icon">🏭</span>
+      <span class="signal-text">全球制造业 PMI > 52</span>
+      <span class="signal-status status-no">❌ 荣枯线附近</span>
+    </div>
+    <div class="signal-item">
+      <span class="signal-icon">🏗️</span>
+      <span class="signal-text">中国基建/地产发力 → 固投增速>8%</span>
+      <span class="signal-status status-warn">⚠️ 边际改善</span>
+    </div>
+    <div class="signal-item">
+      <span class="signal-icon">⚡</span>
+      <span class="signal-text">供给端黑天鹅 → 矿山停产/出口管制</span>
+      <span class="signal-status status-yes">✅ 稀土管控加码</span>
+    </div>
+    <div class="signal-item">
+      <span class="signal-icon">🔄</span>
+      <span class="signal-text">板块轮动到位 → 科技交易拥挤度见顶</span>
+      <span class="signal-status status-warn">⚠️ 机构已提示</span>
+    </div>
+    <div class="signal-item">
+      <span class="signal-icon">📈</span>
+      <span class="signal-text">铜价突破前高 $6.58</span>
+      <span class="signal-status status-no">❌ 高位震荡</span>
+    </div>
+  </div>
+
+  <div class="sub-title">子板块投资时钟</div>
+  <div class="cards">
+    <div class="card" style="border-left:3px solid #f1c40f">
+      <div class="card-label">🥇 贵金属（黄金）</div>
+      <div class="card-value text-yellow" style="font-size:1.1em">高位震荡</div>
+      <div class="card-sub">关注避险事件催化</div>
+    </div>
+    <div class="card" style="border-left:3px solid #e74c3c">
+      <div class="card-label">🔶 工业金属（铜铝）</div>
+      <div class="card-value text-red" style="font-size:1.1em">低迷期</div>
+      <div class="card-sub">等待全球制造业复苏</div>
+    </div>
+    <div class="card" style="border-left:3px solid #2ecc71">
+      <div class="card-label">💎 稀土</div>
+      <div class="card-value text-green" style="font-size:1.1em">上行周期</div>
+      <div class="card-sub">供给约束+政策支持</div>
+    </div>
+    <div class="card" style="border-left:3px solid #e67e22">
+      <div class="card-label">🔋 锂</div>
+      <div class="card-value text-orange" style="font-size:1.1em">底部反弹</div>
+      <div class="card-sub">关注库存去化节奏</div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: 结论 -->
+<div class="section">
+  <div class="section-title">📌 六、核心结论</div>
+
+  <div class="exec-summary">
+    <p style="font-size:0.95em"><strong>一句话总结：</strong>有色金属板块"涨不动"不是基本面出了问题，而是<span class="highlight">时点未到</span>——商品价格已定价、资金在追科技、宏观环境不利、权重股拖累，四重因素叠加。</p>
+  </div>
+
+  <div class="sub-title">关键跟踪指标</div>
+  <table>
+    <thead><tr><th>#</th><th>指标</th><th>触发条件</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>全球制造业PMI</td><td>连续3月 > 52</td></tr>
+      <tr><td>2</td><td>美联储降息预期</td><td>任何鸽派信号</td></tr>
+      <tr><td>3</td><td>铜价走势</td><td>突破 $6.58（52周新高）</td></tr>
+      <tr><td>4</td><td>主力资金流向</td><td>单日净流入 > 50亿</td></tr>
+      <tr><td>5</td><td>稀土政策</td><td>出口管制升级</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>有色金属产业链深度研究 · 2026年5月12日</p>
+  <p>基于 NeoData 实时数据分析 · 本报告不构成投资建议</p>
+</div>
+
+</div>
+
+<script>
+// 龙头股年内涨跌幅对比
+const ctx1 = document.getElementById('stockChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['紫金矿业', '洛阳钼业', '中国铝业', '北方稀土', '赣锋锂业'],
+    datasets: [{
+      label: '年初至今涨跌幅(%)',
+      data: [-0.58, 0.05, -3.60, 25.43, 35.44],
+      backgroundColor: function(context) {
+        const v = context.raw;
+        return v >= 0 ? 'rgba(231,76,60,0.7)' : 'rgba(46,204,113,0.7)';
+      },
+      borderColor: function(context) {
+        const v = context.raw;
+        return v >= 0 ? '#e74c3c' : '#2ecc71';
+      },
+      borderWidth: 1,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) { return ctx.raw + '%'; }
+        }
+      }
+    },
+    scales: {
+      y: {
+        grid: { color: 'rgba(48,54,61,0.5)' },
+        ticks: { color: '#8b949e', callback: v => v + '%' },
+        title: { display: true, text: '涨跌幅(%)', color: '#8b949e' }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#c9d1d9', font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// 有色 vs 半导体 对比
+const ctx2 = document.getElementById('compareChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: ['日成交额(千亿)', 'PE估值(倍)', 'ROE(%)', '年内涨幅(%)'],
+    datasets: [{
+      label: '有色金属',
+      data: [2.19, 25.18, 22, 16.7],
+      backgroundColor: 'rgba(241,196,15,0.6)',
+      borderColor: '#f1c40f',
+      borderWidth: 1,
+      borderRadius: 4
+    }, {
+      label: '半导体/AI',
+      data: [4.5, 60, 20, 32],
+      backgroundColor: 'rgba(155,89,182,0.6)',
+      borderColor: '#9b59b6',
+      borderWidth: 1,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: '#c9d1d9' } }
+    },
+    scales: {
+      y: {
+        grid: { color: 'rgba(48,54,61,0.5)' },
+        ticks: { color: '#8b949e' }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#c9d1d9', font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

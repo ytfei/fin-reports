@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日元深度研究报告 - 贬值原因、货币政策与全球金融风险</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #2C2C2A;
+            background: #F1EFE8;
+            font-size: 14px;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .hero-banner h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+        
+        .hero-banner .subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+        
+        .hero-banner .meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin: 0 8px 8px 0;
+        }
+        
+        /* 执行摘要 */
+        .executive-summary {
+            margin: 32px 40px;
+            background: #FCEBEB;
+            border-left: 4px solid #A32D2D;
+            padding: 24px;
+            border-radius: 8px;
+        }
+        
+        .executive-summary h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #501313;
+        }
+        
+        .executive-summary p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+        
+        /* 关键数据格 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 32px 40px;
+        }
+        
+        .metric-card {
+            background: #F1EFE8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-card .label {
+            font-size: 13px;
+            color: #888780;
+            margin-bottom: 8px;
+        }
+        
+        .metric-card .value {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2C2C2A;
+        }
+        
+        .metric-card .change {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        
+        .positive { color: #3B6D11; }
+        .negative { color: #A32D2D; }
+        
+        /* 内容区块 */
+        .section {
+            margin: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #D3D1C7;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2C2C2A;
+        }
+        
+        .section h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 24px 0 12px 0;
+            color: #444441;
+        }
+        
+        .section p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+            color: #444441;
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            margin: 24px 0;
+            padding: 20px;
+            background: #F1EFE8;
+            border-radius: 8px;
+        }
+        
+        .chart-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #2C2C2A;
+        }
+        
+        /* 风险警示 */
+        .risk-alert {
+            margin: 24px 0;
+            padding: 16px 20px;
+            background: #FCEBEB;
+            border-left: 4px solid #A32D2D;
+            border-radius: 4px;
+        }
+        
+        .risk-alert h4 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #501313;
+        }
+        
+        /* 列表 */
+        .custom-list {
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+        
+        .custom-list li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        /* 表格 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        
+        .data-table th {
+            background: #F1EFE8;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+            border-bottom: 2px solid #D3D1C7;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #D3D1C7;
+        }
+        
+        /* 底部 */
+        .footer {
+            margin: 40px;
+            padding: 24px;
+            background: #F1EFE8;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #888780;
+            text-align: center;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 680px) {
+            .hero-banner {
+                padding: 40px 20px;
+            }
+            
+            .hero-banner h1 {
+                font-size: 24px;
+            }
+            
+            .section, .executive-summary, .metrics-grid {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <h1>日元深度研究报告</h1>
+            <div class="subtitle">贬值原因、货币政策困境与全球金融风险分析</div>
+            <div class="meta">
+                <span>📅 2026年5月12日</span>
+                <span>📊 宏观研究</span>
+                <span>🔍 深度分析</span>
+            </div>
+            <div style="margin-top: 16px;">
+                <span class="tag">日元贬值</span>
+                <span class="tag">套利交易</span>
+                <span class="tag">全球风险</span>
+                <span class="tag">日本央行</span>
+            </div>
+        </div>
+        
+        <!-- 执行摘要 -->
+        <div class="executive-summary">
+            <h2>📋 执行摘要</h2>
+            <p><strong>核心结论1：</strong>日元持续贬值是美日利差、政策错配、经济基本面疲软和贸易结构缺陷四重因素叠加的结果。2026年4月日元逼近160关口，较2022年初累计贬值35.9%。</p>
+            <p><strong>核心结论2：</strong>日本央行陷入"不可能三角"困境——加息可能引爆债务危机，不加息则通胀失控、日元持续贬值。套利交易规模高达4-5万亿美元，平仓风险可能引发全球性金融动荡。</p>
+            <p><strong>核心结论3：</strong>日元已成为全球金融市场的"达摩克利斯之剑"。历史表明，套利交易平仓曾多次加剧金融危机（1998、2008、2024年8月）。当前日本政策两难、全球流动性收紧，需高度警惕日元突然升值引发的连锁反应。</p>
+        </div>
+        
+        <!-- 关键数据格 -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="label">美元兑日元汇率</div>
+                <div class="value">160</div>
+                <div class="change negative">↗ 逼近心理关口</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">累计贬值幅度</div>
+                <div class="value">35.9%</div>
+                <div class="change negative">↗ 2022年初至今</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">套利交易规模</div>
+                <div class="value">4-5万亿</div>
+                <div class="change negative">↗ 美元</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">日本央行利率</div>
+                <div class="value">0.75%</div>
+                <div class="change negative">↗ 仍远低于美联储</div>
+            </div>
+        </div>
+        
+        <!-- 第一部分：日元为什么持续贬值？ -->
+        <div class="section">
+            <h2>一、日元为什么持续贬值？</h2>
+            
+            <h3>1.1 直接推手：美日高位利差驱动套息交易</h3>
+            <p>尽管日本央行2024年开启加息，但收紧步伐审慎，未扭转美日利差。截至2026年3月底：</p>
+            <ul class="custom-list">
+                <li><strong>政策利率差：</strong>日本0.75% vs 美国3.5%-3.75%，名义利差近300个基点</li>
+                <li><strong>10年期国债收益率差：</strong>约200个基点</li>
+                <li><strong>实际利率：</strong>日本为负（CPI 2-4%），美国仍为正值</li>
+            </ul>
+            
+            <div class="chart-container">
+                <div class="chart-title">美日政策利率对比（2022-2026）</div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="rateChart" role="img" aria-label="美日政策利率对比图表">美日政策利率对比图表</canvas>
+                </div>
+            </div>
+            
+            <h3>1.2 政策错配："紧货币+宽财政"引发财政风险溢价</h3>
+            <p>日本宏观政策内部矛盾削弱了市场对日元的信心：</p>
+            <ul class="custom-list">
+                <li><strong>政策方向冲突：</strong>央行被迫收紧货币，政府却推行大规模扩张性财政政策（2025财年补充预算高达18.3万亿日元）</li>
+                <li><strong>债务约束：</strong>日本政府债务占GDP比重高达263%，加息1%可能使利息支出吞噬50%的财政收入</li>
+                <li><strong>市场反应：</strong>出现"日债和日元下跌、日股上涨"的"高市交易"</li>
+            </ul>
+            
+            <h3>1.3 内在根源：经济基本面疲软限制紧缩空间</h3>
+            <p>日本经济长期面临潜在增长率下行的结构性困境：</p>
+            <ul class="custom-list">
+                <li><strong>潜在增长率：</strong>仅约0.5%（日本央行2026年1月数据）</li>
+                <li><strong>增长动能：</strong>脆弱的增长无法承受过高的实际利率</li>
+                <li><strong>市场预期：</strong>本轮加息终点利率将远低于其他主要发达经济体</li>
+            </ul>
+            
+            <h3>1.4 贸易结构缺陷：顺差无法形成汇率支撑</h3>
+            <ul class="custom-list">
+                <li><strong>贸易逆差常态化：</strong>连续五年录得贸易赤字，2025财年赤字规模达2.65万亿日元</li>
+                <li><strong>进口刚性：</strong>能源与原材料净进口国，进口需求对价格缺乏弹性</li>
+                <li><strong>出口脱钩：</strong>日元大幅走低但出口数量指数未趋势性回升，出口竞争力下滑</li>
+                <li><strong>经常账户盈余无法转化：</strong>海外收益直接在离岸市场再投资，而非兑换为日元回流</li>
+            </ul>
+        </div>
+        
+        <!-- 第二部分：日本央行为什么不加息？ -->
+        <div class="section">
+            <h2>二、日本央行为什么不加息（或加息缓慢）？</h2>
+            
+            <h3>2.1 财政风险约束</h3>
+            <p>日本存量政府债务规模庞大，随着国债收益率上行，利息支出攀升压力凸显。市场普遍预期，为避免触发债务危机，日本央行本轮加息的终点利率将受到财政承受能力的严格约束。</p>
+            
+            <div class="risk-alert">
+                <h4>⚠️ 债务风险警示</h4>
+                <p>日本政府债务占GDP比重高达263%，远超其他主要经济体。若日本央行将政策利率上调至2%，年度利息支出将增加约10万亿日元，相当于日本政府年度财政收入的20%以上。</p>
+            </div>
+            
+            <h3>2.2 经济增长约束</h3>
+            <p>日本潜在经济增长率仅约0.5%，脆弱的增长动能意味着实体经济无法承受过高的实际利率。为维持最低限度增长，利率需维持在相对宽松水平。</p>
+            
+            <h3>2.3 政策两难：加息后日元反而贬值</h3>
+            <p>历史上多次出现日本央行加息后日元反而贬值的反常现象（如2025年12月加息25bp后，日元对美元径直走贬1.45%），原因包括：</p>
+            <ul class="custom-list">
+                <li><strong>预期消化：</strong>市场提前定价加息预期，"买预期、卖事实"</li>
+                <li><strong>加息幅度不足：</strong>实际加息幅度低于市场预期</li>
+                <li><strong>前瞻指引偏鸽：</strong>央行强调渐进式加息，无明确持续加息时间表</li>
+                <li><strong>美元走强：</strong>若同时期美元走强，日元仍会贬值</li>
+            </ul>
+        </div>
+        
+        <!-- 第三部分：日元与全球股市的关联 -->
+        <div class="section">
+            <h2>三、日元与全球股市有什么关联？</h2>
+            
+            <h3>3.1 日元作为全球套息交易的核心融资货币</h3>
+            <p>日元是全球套息交易（Carry Trade）最主要的融资货币。投资者借入低利率日元，兑换为美元等高息货币，投资美股、美债、加密货币等高收益资产。</p>
+            
+            <div class="chart-container">
+                <div class="chart-title">日元套利交易机制示意图</div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="carryTradeChart" role="img" aria-label="日元套利交易机制图表">日元套利交易机制图表</canvas>
+                </div>
+            </div>
+            
+            <h3>3.2 套利交易对全球股市的影响机制</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>机制</th>
+                        <th>影响</th>
+                        <th>典型案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>套利交易建立</strong></td>
+                        <td>日元流出，流入美股等高风险资产，推高资产价格</td>
+                        <td>2020-2023年美股牛市</td>
+                    </tr>
+                    <tr>
+                        <td><strong>套利交易平仓</strong></td>
+                        <td>抛售全球资产换回日元还债，引发资产价格暴跌</td>
+                        <td>2024年8月美股单日暴跌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>杠杆效应</strong></td>
+                        <td>套利交易普遍叠加3-5倍杠杆，加剧波动</td>
+                        <td>2024年8月比特币单日蒸发16%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>3.3 日元作为避险资产的属性变化</h3>
+            <p>传统上，日元具有避险属性（全球风险规避时日元升值）。但2026年2月美伊冲突爆发后，日元未体现传统避险属性，反而跟随风险资产下跌，反映市场对日本财政和债务风险的担忧已超过避险需求。</p>
+        </div>
+        
+        <!-- 第四部分：日元是否是引爆金融市场的最后一根稻草？ -->
+        <div class="section">
+            <h2>四、日元是否是引爆金融市场的最后一根稻草？</h2>
+            
+            <h3>4.1 历史案例：套利交易平仓与金融危机</h3>
+            <ul class="custom-list">
+                <li><strong>1998年俄罗斯金融危机：</strong>日元套利交易大规模平仓，加剧全球市场动荡</li>
+                <li><strong>2008年全球金融危机：</strong>套利交易平仓加速了全球市场崩盘</li>
+                <li><strong>2024年8月：</strong>日本央行意外加息，引发美股单日暴跌、比特币单日蒸发16%</li>
+                <li><strong>2026年初：</strong>日本国债抛售潮引发白银单日暴跌17%、加密货币市场单日58万投资者爆仓</li>
+            </ul>
+            
+            <h3>4.2 当前风险敞口</h3>
+            <div class="chart-container">
+                <div class="chart-title">日元套利交易规模估算（万亿美元）</div>
+                <div style="position: relative; height: 320px;">
+                    <canvas id="riskChart" role="img" aria-label="日元套利交易规模风险图表">日元套利交易规模风险图表</canvas>
+                </div>
+            </div>
+            
+            <ul class="custom-list">
+                <li><strong>规模估算：</strong>市场估算日元套利交易规模在3.7万亿至20万亿美元区间（保守估计4-5万亿美元）</li>
+                <li><strong>杠杆水平：</strong>套利交易普遍叠加3-5倍杠杆，强制平仓可能引发跨市场螺旋下跌</li>
+                <li><strong>资金流向：</strong>日本保险、养老金等机构计划减持1.1万亿美元海外债券（以美债为主）</li>
+            </ul>
+            
+            <h3>4.3 风险传导路径</h3>
+            <p>若日元套利交易大规模平仓，将形成以下连锁反应：</p>
+            <ol class="custom-list">
+                <li><strong>引爆点：</strong>日本央行持续加息或日元升值预期增强</li>
+                <li><strong>流动性黑洞：</strong>投资者集中抛售美股科技股、加密货币等高流动性资产</li>
+                <li><strong>资产价格暴跌：</strong>触发杠杆仓位爆仓，进一步抽离全球市场流动性</li>
+                <li><strong>跨市场传导：</strong>美股科技股→加密货币→新兴市场→全球债市</li>
+            </ol>
+            
+            <h3>4.4 抑制系统性危机的因素</h3>
+            <p>尽管风险高企，但演变为系统性全球危机的概率较低，主要受三重防火墙约束：</p>
+            <ul class="custom-list">
+                <li><strong>日本政策两难：</strong>政府负债率高达GDP的263%，激进加息的空间非常有限</li>
+                <li><strong>市场已提前消化部分风险：</strong>2026年3月日本央行已表态谨慎加息，对冲基金提前布局日元多头头寸</li>
+                <li><strong>全球政策对冲空间：</strong>若美国同步实施宽松货币政策，可抵消日美利差收窄带来的压力</li>
+            </ul>
+            
+            <div class="risk-alert">
+                <h4>🚨 核心风险判断</h4>
+                <p><strong>日元极有可能成为引爆金融市场的"最后一根稻草"。</strong>当前全球市场面临多重压力（美联储高利率、地缘政治冲突、AI泡沫担忧），日元套利交易平仓可能成为压垮骆驼的最后一根稻草。需高度警惕2026年日本央行政策转向引发的全球流动性冲击。</p>
+            </div>
+        </div>
+        
+        <!-- 第五部分：投资建议与风险应对 -->
+        <div class="section">
+            <h2>五、投资建议与风险应对</h2>
+            
+            <h3>5.1 对投资者的建议</h3>
+            <ul class="custom-list">
+                <li><strong>降低杠杆：</strong>在日元套利交易平仓风险高企期间，降低投资组合杠杆水平</li>
+                <li><strong>分散配置：</strong>避免过度集中在美股科技股、加密货币等套利交易重仓资产</li>
+                <li><strong>关注日元：</strong>将日元汇率和日本央行政策作为全球资产配置的核心观测指标</li>
+                <li><strong>持有现金：</strong>在不确定性高企期间，适度持有现金以应对潜在的流动性冲击</li>
+            </ul>
+            
+            <h3>5.2 重点跟踪指标</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>当前值</th>
+                        <th>预警阈值</th>
+                        <th>含义</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>美元兑日元</td>
+                        <td>160</td>
+                        <td>突破165</td>
+                        <td>日本当局可能干预</td>
+                    </tr>
+                    <tr>
+                        <td>日本10年期国债收益率</td>
+                        <td>1.946%</td>
+                        <td>突破2.5%</td>
+                        <td>债务风险显著上升</td>
+                    </tr>
+                    <tr>
+                        <td>CME日元空头头寸</td>
+                        <td>历史高位</td>
+                        <td>开始大幅回落</td>
+                        <td>套利交易开始平仓</td>
+                    </tr>
+                    <tr>
+                        <td>美日10年期国债利差</td>
+                        <td>约200bp</td>
+                        <td>收窄至100bp以内</td>
+                        <td>套利空间显著压缩</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 结论 -->
+        <div class="section">
+            <h2>六、结论</h2>
+            <p>日元问题本质上是全球流动性周期、货币政策分化和日本结构性困境的集中体现。日元持续贬值不是短期现象，而是日本经济基本面、政策两难和全球货币体系结构性矛盾的必然结果。</p>
+            <p>日元套利交易规模庞大（4-5万亿美元），杠杆水平高（3-5倍），且历史多次证明平仓时会加剧全球金融市场动荡。在当前全球市场面临多重压力的背景下，日元极有可能成为引爆金融市场的"最后一根稻草"。</p>
+            <p>投资者应高度警惕日本央行政策转向引发的全球流动性冲击，降低杠杆、分散配置、持有现金，并将日元汇率和日本央行政策作为核心观测指标。</p>
+        </div>
+        
+        <!-- 底部 -->
+        <div class="footer">
+            <p>数据来源：东方金诚研究发展部、华尔街见闻、雪球、新浪财经、腾讯新闻</p>
+            <p>报告日期：2026年5月12日 | 本报告仅供参考，不构成投资建议</p>
+        </div>
+    </div>
+    
+    <script>
+        // 图表1：美日政策利率对比
+        new Chart(document.getElementById('rateChart'), {
+            type: 'line',
+            data: {
+                labels: ['2022Q1', '2022Q3', '2023Q1', '2023Q3', '2024Q1', '2024Q3', '2025Q1', '2025Q3', '2026Q1'],
+                datasets: [
+                    {
+                        label: '美联储利率',
+                        data: [0.25, 2.5, 4.75, 5.25, 5.25, 5.0, 4.5, 4.0, 3.625],
+                        borderColor: '#A32D2D',
+                        backgroundColor: 'rgba(163, 45, 45, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: '日本央行利率',
+                        data: [-0.1, -0.1, -0.1, -0.1, 0.1, 0.25, 0.5, 0.5, 0.75],
+                        borderColor: '#185FA5',
+                        backgroundColor: 'rgba(24, 95, 165, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '利率 (%)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 图表2：日元套利交易机制
+        new Chart(document.getElementById('carryTradeChart'), {
+            type: 'bar',
+            data: {
+                labels: ['借入日元', '兑换美元', '投资美股', '投资收益', '套利收益'],
+                datasets: [{
+                    label: '资金规模（万亿美元）',
+                    data: [5, 5, 5, 5.2, 0.2],
+                    backgroundColor: [
+                        '#EEEDFE',
+                        '#E1F5EE',
+                        '#FAEEDA',
+                        '#EAF3DE',
+                        '#FCEBEB'
+                    ],
+                    borderColor: [
+                        '#534AB7',
+                        '#0F6E56',
+                        '#854F0B',
+                        '#3B6D11',
+                        '#A32D2D'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '规模（万亿美元）'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 图表3：日元套利交易规模风险
+        new Chart(document.getElementById('riskChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['保守估计（4-5万亿）', '中等估计（10万亿）', '激进估计（20万亿）'],
+                datasets: [{
+                    data: [4, 10, 20],
+                    backgroundColor: [
+                        '#FCEBEB',
+                        '#FAECE7',
+                        '#FCEBEB'
+                    ],
+                    borderColor: [
+                        '#A32D2D',
+                        '#993C1D',
+                        '#A32D2D'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    title: {
+                        display: true,
+                        text: '套利交易规模估算区间（万亿美元）'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

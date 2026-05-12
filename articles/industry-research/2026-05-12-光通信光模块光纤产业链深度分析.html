@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光通信·光模块·光纤产业链深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; line-height: 1.7; max-width: 780px; margin: 0 auto; padding: 16px; }
+@media (max-width: 680px) { body { padding: 10px; font-size: 14px; } }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #fff; padding: 48px 32px; border-radius: 16px; margin-bottom: 24px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(100,200,255,0.08) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,180,100,0.06) 0%, transparent 50%); }
+.hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; }
+.hero .subtitle { font-size: 14px; color: rgba(255,255,255,0.65); position: relative; z-index: 1; letter-spacing: 2px; }
+.hero .tag-row { margin-top: 16px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; position: relative; z-index: 1; }
+.hero .tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; color: rgba(255,255,255,0.8); }
+
+/* Executive Summary */
+.summary { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: #fff; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.summary h2 { font-size: 18px; margin-bottom: 12px; }
+.summary ul { list-style: none; padding: 0; }
+.summary li { padding: 6px 0; padding-left: 20px; position: relative; font-size: 15px; }
+.summary li::before { content: '▸'; position: absolute; left: 0; color: rgba(255,255,255,0.8); }
+
+/* Section */
+.section { background: #fff; border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.section h2 { font-size: 20px; color: #1a1a2e; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #eee; display: flex; align-items: center; gap: 8px; }
+.section h2 .icon { font-size: 22px; }
+.section h3 { font-size: 16px; color: #302b63; margin: 16px 0 10px; }
+
+/* Cards Grid */
+.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+@media (max-width: 680px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+.card { background: #f8f9fc; border-radius: 10px; padding: 16px; text-align: center; border: 1px solid #eee; }
+.card .label { font-size: 12px; color: #999; margin-bottom: 6px; }
+.card .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.card .sub { font-size: 11px; color: #666; margin-top: 4px; }
+.card.highlight { background: linear-gradient(135deg: #e8f5e9, #fff); color: #2e7d32; font-size: 12px; margin-top: 4px; }
+.card.red .value { color: #e53935; }
+.card.blue .value { color: #1565c0; }
+.card.green .value { color: #2e7d32; }
+.card.gold .value { color: #f57f17; }
+
+/* Chain Flow */
+.chain-flow { background: #f0f4ff; border-radius: 12px; padding: 20px; margin: 16px 0; }
+.chain-flow h4 { text-align: center; font-size: 14px; color: #5c6bc0; margin-bottom: 12px; }
+.chain-layer { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.chain-item { background: #fff; border-radius: 8px; padding: 8px 14px; font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 3px solid #5c6bc0; }
+.chain-item.upstream { border-left-color: #e53935; }
+.chain-item.mid { border-left-color: #ff9800; }
+.chain-item.down { border-left-color: #2e7d32; }
+.chain-arrow { text-align: center; color: #5c6bc0; font-size: 20px; margin: 4px 0; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+.data-table th { background: #1a1a2e; color: #fff; padding: 10px 8px; text-align: center; font-weight: 600; font-size: 12px; }
+.data-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #eee; }
+.data-table tr:hover { background: #f5f5ff; }
+.data-table .stock-name { font-weight: 600; color: #1a1a2e; text-align: left; }
+.data-table .red { color: #e53935; font-weight: 600; }
+.data-table .green { color: #2e7d32; font-weight: 600; }
+.tag-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-badge.t1 { background: #ffebee; color: #c62828; }
+.tag-badge.t2 { background: #fff3e0; color: #e65100; }
+.tag-badge.t3 { background: #e8f5e9; color: #2e7d32; }
+
+/* Risk Box */
+.risk-box { border-radius: 10px; padding: 16px; margin: 12px 0; }
+.risk-box.high { background: #fff5f5; border-left: 4px solid #e53935; }
+.risk-box.mid { background: #fff8e1; border-left: 4px solid #ff9800; }
+.risk-box.low { background: #e8f5e9; border-left: 4px solid #2e7d32; }
+.risk-box h4 { font-size: 14px; margin-bottom: 8px; }
+.risk-box ul { padding-left: 18px; font-size: 13px; }
+.risk-box li { margin: 4px 0; }
+
+/* Tech Roadmap */
+.roadmap { display: flex; align-items: center; justify-content: space-between; margin: 16px 0; padding: 0 10px; }
+.roadmap-step { text-align: center; flex: 1; position: relative; }
+.roadmap-step .dot { width: 40px; height: 40px; border-radius: 50%; background: #5c6bc0; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin: 0 auto 6px; }
+.roadmap-step .dot.active { background: #e53935; box-shadow: 0 0 0 4px rgba(229,57,53,0.2); }
+.roadmap-step .dot.future { background: #bdbdbd; }
+.roadmap-step .title { font-size: 13px; font-weight: 600; color: #333; }
+.roadmap-step .desc { font-size: 11px; color: #999; }
+.roadmap-line { flex: 1; height: 2px; background: #ccc; margin: 0 4px; margin-bottom: 20px; }
+
+/* Chart Container */
+.chart-container { position: relative; margin: 16px 0; height: 300px; }
+.chart-container canvas { width: 100% !important; }
+
+/* Footer */
+.footer { text-align: center; padding: 24px; color: #999; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <h1>光通信 · 光模块 · 光纤<br>产业链深度分析</h1>
+  <div class="subtitle">LIGHT COMMUNICATION INDUSTRY CHAIN DEEP DIVE</div>
+  <div class="tag-row">
+    <span class="tag">AI算力驱动</span>
+    <span class="tag">光模块</span>
+    <span class="tag">光纤光缆</span>
+    <span class="tag">光芯片</span>
+    <span class="tag">800G/1.6T</span>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="summary">
+  <h2>📋 核心结论</h2>
+  <ul>
+    <li>全球AI算力"军备竞赛"正在重塑光通信产业链，2026年全球高速光模块市场规模达146亿美元，行业处于历史最高景气周期</li>
+    <li>光模块（中际旭创、新易盛）→ 光器件（天孚通信）→ 光芯片（源杰科技）→ 光纤光缆（长飞、亨通）形成完整传导链条，各环节受益逻辑清晰</li>
+    <li>供给端才是核心瓶颈——高端DSP芯片、EML激光器供应紧张，上游Lumentum订单排满至2028年，"谁锁料谁赢"成为关键竞争要素</li>
+    <li>G.652.D裸纤价格同比飙升418%，光纤光缆行业迎来AI结构性新周期，而非电信周期复苏</li>
+    <li>高景气窗口期预计持续至2028年，但CPO技术颠覆、产能集中释放等风险需持续跟踪</li>
+  </ul>
+</div>
+
+<!-- 一、行业全景 -->
+<div class="section">
+  <h2><span class="icon">🌐</span>一、光通信产业链全景图</h2>
+  
+  <p style="font-size:14px; color:#666; margin-bottom:16px;">光通信是AI算力基础设施的核心血管——从芯片到数据中心再到跨地域互连，全部依赖光传输。产业链从上游原材料到下游应用形成完整传导链条：</p>
+
+  <div class="chain-flow">
+    <h4>📡 光通信产业链全景</h4>
+    
+    <div style="text-align:center; font-size:12px; color:#e53935; margin-bottom:4px;">⬆ 上游（核心瓶颈）</div>
+    <div class="chain-layer">
+      <div class="chain-item upstream">光芯片<br><small>EML/DFB/硅光</small></div>
+      <div class="chain-item upstream">DSP芯片<br><small>高速信号处理</small></div>
+      <div class="chain-item upstream">光器件<br><small>透镜/隔离器</small></div>
+      <div class="chain-item upstream">光纤预制棒<br><small>特种/多芯/空芯</small></div>
+    </div>
+    
+    <div class="chain-arrow">⬇</div>
+    
+    <div style="text-align:center; font-size:12px; color:#ff9800; margin-bottom:4px;">⬆ 中游（制造组装）</div>
+    <div class="chain-layer">
+      <div class="chain-item mid">光模块<br><small>800G/1.6T/CPO</small></div>
+      <div class="chain-item mid">光纤光缆<br><small>G.652/多模/空芯</small></div>
+      <div class="chain-item mid">光连接器<br><small>MPO/MTP</small></div>
+      <div class="chain-item mid">光传输设备<br><small>OTN/波分</small></div>
+    </div>
+    
+    <div class="chain-arrow">⬇</div>
+    
+    <div style="text-align:center; font-size:12px; color:#2e7d32; margin-bottom:4px;">⬆ 下游（需求终端）</div>
+    <div class="chain-layer">
+      <div class="chain-item down">北美云巨头<br><small>英伟达/谷歌/微软</small></div>
+      <div class="chain-item down">国内互联网<br><small>字节/阿里/腾讯</small></div>
+      <div class="chain-item down">运营商<br><small>东数西算/智算</small></div>
+      <div class="chain-item down">设备商<br><small>思科/华为/中兴</small></div>
+    </div>
+  </div>
+
+  <!-- 关键数据卡片 -->
+  <div class="card-grid">
+    <div class="card red">
+      <div class="label">2026年高速光模块市场</div>
+      <div class="value">146亿美元</div>
+      <div class="sub">占整体64%</div>
+    </div>
+    <div class="card blue">
+      <div class="label">全球云厂商资本开支</div>
+      <div class="value">8300亿美元</div>
+      <div class="sub">同比+79%</div>
+    </div>
+    <div class="card green">
+      <div class="label">2031年市场规模</div>
+      <div class="value">~600亿美元</div>
+      <div class="sub">CAGR>20%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 二、市场驱动逻辑 -->
+<div class="section">
+  <h2><span class="icon">🚀</span>二、市场核心驱动逻辑</h2>
+  
+  <h3>2.1 AI算力需求爆发 → 光模块需求指数级增长</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    AI大模型训练和推理对数据中心内部互联带宽要求呈指数级增长。每个GPU训练集群需要数千个高速光模块互连——英伟达GB200 NVL72机柜单台就需约5000个光模块。2026年全球九大云厂商资本开支约8300亿美元，字节跳动AI基础设施支出突破2000亿元。
+  </p>
+
+  <h3>2.2 技术迭代加速 → 代际周期从4年缩短至2年</h3>
+  
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="dot">100G</div>
+      <div class="title">2020前</div>
+      <div class="desc">4年一代</div>
+    </div>
+    <div class="roadmap-line"></div>
+    <div class="roadmap-step">
+      <div class="dot">400G</div>
+      <div class="title">2022-23</div>
+      <div class="desc">过渡期</div>
+    </div>
+    <div class="roadmap-line"></div>
+    <div class="roadmap-step">
+      <div class="dot active">800G</div>
+      <div class="title">2024-25</div>
+      <div class="desc">主力量产</div>
+    </div>
+    <div class="roadmap-line"></div>
+    <div class="roadmap-step">
+      <div class="dot active">1.6T</div>
+      <div class="title">2025-26</div>
+      <div class="desc">率先商用</div>
+    </div>
+    <div class="roadmap-line"></div>
+    <div class="roadmap-step">
+      <div class="dot future">3.2T</div>
+      <div class="title">2027-28</div>
+      <div class="desc">预研中</div>
+    </div>
+  </div>
+
+  <h3>2.3 光纤光缆：AI结构性新周期启动</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    2025年Q4起，光纤光缆市场发生根本性变化——不是电信需求复苏，而是AI数据中心对高速、低时延光纤的需求爆发。G.652.D裸纤价格从2025年低点飙升超400%，主流厂商将产能向AI特种光纤倾斜，挤压普通光纤供给。
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">2025年数据中心光纤需求</div>
+      <div class="value" style="color:#e53935;">+75.9%</div>
+      <div class="sub">同比暴增</div>
+    </div>
+    <div class="card">
+      <div class="label">G.652.D裸纤价格</div>
+      <div class="value" style="color:#e53935;">+418%</div>
+      <div class="sub">2026.3同比</div>
+    </div>
+    <div class="card">
+      <div class="label">AI光纤需求占比</div>
+      <div class="value">5%→35%</div>
+      <div class="sub">2024→2027</div>
+    </div>
+  </div>
+</div>
+
+<!-- 三、产业链各环节详解 -->
+<div class="section">
+  <h2><span class="icon">⚙️</span>三、产业链各环节深度拆解</h2>
+
+  <h3>3.1 光模块 — AI算力军备赛的核心弹药</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    光模块是光通信产业链中价值量最高、竞争格局最清晰的环节。2025年A股20家光模块上市公司中14家净利润正增长，5家翻倍以上。行业呈现"赢家通吃"的三梯队分化格局。
+  </p>
+
+  <h3>3.2 光芯片 — 产业链上游的核心瓶颈</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    光芯片（EML激光器、DFB、硅光芯片）是光模块的核心元器件，直接决定模块速率和性能。全球高端光芯片市场主要由Lumentum、Broadcom、II-VI等美企主导，国产替代空间巨大。源杰科技一年暴涨1159%，核心逻辑即在于高速光芯片的国产替代+AI需求双重驱动。
+  </p>
+
+  <h3>3.3 光器件 — 模块背后的"隐形冠军"</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    光器件（光引擎、隔离器、透镜、连接器等）是光模块的上游零部件。天孚通信作为光器件平台型公司，ROE高达36.32%，净利率39.15%，是光模块产业链中盈利能力最强的标的之一。
+  </p>
+
+  <h3>3.4 光纤光缆 — 底层基础设施迎AI拐点</h3>
+  <p style="font-size:14px; color:#555; margin-bottom:12px;">
+    长飞、亨通、烽火、中天四大巨头从2025年Q4起集体受益。空芯光纤（衰减低至0.063dB/km）、多芯光纤（单纤容量提升7倍）等AI专用光纤成为增长引擎。英伟达与康宁达成长期合作，光纤正式成为AI基础设施中的基础设施。
+  </p>
+</div>
+
+<!-- 四、核心受益标的分析 -->
+<div class="section">
+  <h2><span class="icon">📊</span>四、核心受益标的全景扫描</h2>
+  
+  <p style="font-size:13px; color:#666; margin-bottom:12px;">截至2026年5月12日盘中数据</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>股价</th>
+        <th>涨跌幅</th>
+        <th>市值(亿)</th>
+        <th>PE(TTM)</th>
+        <th>年初至今</th>
+        <th>梯队</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="stock-name">中际旭创</td>
+        <td>994.12</td>
+        <td class="red">+5.74%</td>
+        <td>11,071</td>
+        <td>74.06</td>
+        <td class="red">+63.24%</td>
+        <td><span class="tag-badge t1">第一梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">新易盛</td>
+        <td>595.81</td>
+        <td class="red">+5.70%</td>
+        <td>5,922</td>
+        <td>55.15</td>
+        <td class="red">+38.28%</td>
+        <td><span class="tag-badge t1">第一梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">天孚通信</td>
+        <td>344.98</td>
+        <td class="red">+3.93%</td>
+        <td>2,688</td>
+        <td>123.76</td>
+        <td class="red">+69.92%</td>
+        <td><span class="tag-badge t1">第一梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">源杰科技</td>
+        <td>1,732.73</td>
+        <td class="red">+6.70%</td>
+        <td>1,489</td>
+        <td>418.27</td>
+        <td class="red">+169.90%</td>
+        <td><span class="tag-badge t2">光芯片龙头</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">光迅科技</td>
+        <td>199.43</td>
+        <td class="green">+0.32%</td>
+        <td>1,609</td>
+        <td>155.28</td>
+        <td class="red">+185.10%</td>
+        <td><span class="tag-badge t2">第二梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">长飞光纤</td>
+        <td>419.78</td>
+        <td class="red">+4.86%</td>
+        <td>3,475</td>
+        <td>300.33</td>
+        <td class="red">+260.76%</td>
+        <td><span class="tag-badge t1">光纤龙头</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">亨通光电</td>
+        <td>77.00</td>
+        <td class="red">+2.68%</td>
+        <td>1,899</td>
+        <td>58.82</td>
+        <td class="red">+211.36%</td>
+        <td><span class="tag-badge t1">光纤龙头</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">中天科技</td>
+        <td>44.32</td>
+        <td class="red">+1.05%</td>
+        <td>1,513</td>
+        <td>47.36</td>
+        <td class="red">+144.59%</td>
+        <td><span class="tag-badge t1">光纤龙头</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">华工科技</td>
+        <td>145.92</td>
+        <td class="green">-1.11%</td>
+        <td>1,467</td>
+        <td>86.34</td>
+        <td class="red">+83.94%</td>
+        <td><span class="tag-badge t2">第二梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">太辰光</td>
+        <td>179.99</td>
+        <td class="green">+0.67%</td>
+        <td>409</td>
+        <td>143.25</td>
+        <td class="red">+55.77%</td>
+        <td><span class="tag-badge t2">光器件</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">剑桥科技</td>
+        <td>193.90</td>
+        <td class="green">-1.97%</td>
+        <td>684</td>
+        <td>195.16</td>
+        <td class="red">+44.29%</td>
+        <td><span class="tag-badge t3">第三梯队</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">烽火通信</td>
+        <td>58.86</td>
+        <td class="red">+0.43%</td>
+        <td>799</td>
+        <td>190.78</td>
+        <td class="red">+83.48%</td>
+        <td><span class="tag-badge t2">光纤+设备</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 市值对比图表 -->
+  <div class="chart-container">
+    <canvas id="marketCapChart"></canvas>
+  </div>
+</div>
+
+<!-- 五、各标的核心受益逻辑 -->
+<div class="section">
+  <h2><span class="icon">🎯</span>五、各标的核心受益逻辑详解</h2>
+
+  <h3>🏅 第一梯队 — 光模块双雄</h3>
+  
+  <div style="background:#f5f5ff; border-radius:10px; padding:16px; margin:12px 0;">
+    <h4 style="color:#1a1a2e; margin-bottom:8px;">① 中际旭创 (300308) — 全球光模块绝对龙头</h4>
+    <table class="data-table" style="margin:8px 0;">
+      <tr><td style="text-align:left; width:40%;"><b>核心优势</b></td><td style="text-align:left;">800G市占率>40%，1.6T市占率50-70%，全球唯一实现1.6T大规模量产企业</td></tr>
+      <tr><td style="text-align:left;"><b>客户绑定</b></td><td style="text-align:left;">深度绑定英伟达、谷歌、微软等北美云巨头</td></tr>
+      <tr><td style="text-align:left;"><b>2025年营收</b></td><td style="text-align:left;">382.4亿元，归母净利润108亿元，同比+108.81%</td></tr>
+      <tr><td style="text-align:left;"><b>2026Q1增速</b></td><td style="text-align:left;">营收+192.12%，单季净利润57.35亿超2024全年</td></tr>
+      <tr><td style="text-align:left;"><b>受益逻辑</b></td><td style="text-align:left;">AI算力军备竞赛→高速光模块需求爆发→头部产能稀缺→量价齐升</td></tr>
+      <tr><td style="text-align:left;"><b>关键跟踪</b></td><td style="text-align:left;">1.6T出货量、CPO研发进度、上游锁料能力</td></tr>
+    </table>
+  </div>
+
+  <div style="background:#f5f5ff; border-radius:10px; padding:16px; margin:12px 0;">
+    <h4 style="color:#1a1a2e; margin-bottom:8px;">② 新易盛 (300502) — 行业黑马、LPO技术引领者</h4>
+    <table class="data-table" style="margin:8px 0;">
+      <tr><td style="text-align:left; width:40%;"><b>核心优势</b></td><td style="text-align:left;">800G全球份额>25%，LPO技术市占率75%，谷歌第二大800G供应商</td></tr>
+      <tr><td style="text-align:left;"><b>2025年业绩</b></td><td style="text-align:left;">营收248.42亿，归母净利润95.32亿，同比+231%~249%</td></tr>
+      <tr><td style="text-align:left;"><b>ROE</b></td><td style="text-align:left;">52.70%（行业第1名），销售净利率36.92%</td></tr>
+      <tr><td style="text-align:left;"><b>受益逻辑</b></td><td style="text-align:left;">LPO降本方案被市场快速接受→抢占英伟达GB200平台1.6T核心供应商地位</td></tr>
+      <tr><td style="text-align:left;"><b>关键跟踪</b></td><td style="text-align:left;">1.6T订单落地节奏、LPO vs 硅光技术路线竞争</td></tr>
+    </table>
+  </div>
+
+  <h3>🏅 第一梯队 — 光器件平台</h3>
+  
+  <div style="background:#f5f5ff; border-radius:10px; padding:16px; margin:12px 0;">
+    <h4 style="color:#1a1a2e; margin-bottom:8px;">③ 天孚通信 (300394) — 光器件平台型"卖水人"</h4>
+    <table class="data-table" style="margin:8px 0;">
+      <tr><td style="text-align:left; width:40%;"><b>核心定位</b></td><td style="text-align:left;">光引擎+光器件平台，不直接做模块但所有模块都离不开它的器件</td></tr>
+      <tr><td style="text-align:left;"><b>盈利能力</b></td><td style="text-align:left;">ROE 36.32%（行业第4），净利率39.15%（行业第3），毛利率54.75%</td></tr>
+      <tr><td style="text-align:left;"><b>受益逻辑</b></td><td style="text-align:left;">无论哪家光模块厂商获胜，天孚的光器件都是必需品 → "卖水人"逻辑，穿越竞争周期</td></tr>
+      <tr><td style="text-align:left;"><b>关键跟踪</b></td><td style="text-align:left;">CPO光引擎进度、800G/1.6T器件出货量</td></tr>
+    </table>
+  </div>
+
+  <h3>🔬 光芯片赛道 — 国产替代+AI需求双击</h3>
+  
+  <div style="background:#fff5f5; border-radius:10px; padding:16px; margin:12px 0;">
+    <h4 style="color:#c62828; margin-bottom:8px;">④ 源杰科技 (688498) — 高速光芯片国产替代先锋</h4>
+    <table class="data-table" style="margin:8px 0;">
+      <tr><td style="text-align:left; width:40%;"><b>核心产品</b></td><td style="text-align:left;">EML激光器芯片、DFB芯片，是光模块最核心的元器件</td></tr>
+      <tr><td style="text-align:left;"><b>股价表现</b></td><td style="text-align:left;">1年涨幅1159%（2025.4→2026.4），年初至今+169.90%</td></tr>
+      <tr><td style="text-align:left;"><b>扩产计划</b></td><td style="text-align:left;">2026年2月宣布15亿元扩产，聚焦高速光芯片研发制造基地</td></tr>
+      <tr><td style="text-align:left;"><b>受益逻辑</b></td><td style="text-align:left;">高端光芯片全球紧缺（Lumentum订单排至2028年）+国产替代加速 + AI需求共振</td></tr>
+      <tr><td style="text-align:left;"><b>风险提示</b></td><td style="text-align:left;">PE(TTM) 418倍，估值极高；扩产需18个月，产能释放有时间差</td></tr>
+    </table>
+  </div>
+
+  <h3>🌐 光纤光缆四巨头 — AI结构性新周期</h3>
+  
+  <div style="background:#e8f5e9; border-radius:10px; padding:16px; margin:12px 0;">
+    <h4 style="color:#2e7d32; margin-bottom:8px;">⑤ 长飞光纤 (601869) | 亨通光电 (600487) | 中天科技 (600522) | 烽火通信 (600498)</h4>
+    <table class="data-table" style="margin:8px 0;">
+      <tr>
+        <th style="width:20%;">公司</th>
+        <th style="width:20%;">年初至今</th>
+        <th style="width:15%;">PE</th>
+        <th>AI核心布局</th>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">长飞光纤</td>
+        <td class="red">+260.76%</td>
+        <td>300</td>
+        <td style="text-align:left; font-size:12px;">空芯光纤、多芯光纤、800G/1.6T光模块、智算中心全光底座</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">亨通光电</td>
+        <td class="red">+211.36%</td>
+        <td>59</td>
+        <td style="text-align:left; font-size:12px;">AI先进光纤研发中心扩产、超低损空芯光纤规模化、海洋通信</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">中天科技</td>
+        <td class="red">+144.59%</td>
+        <td>47</td>
+        <td style="text-align:left; font-size:12px;">空芯光纤国际一流水平、多芯光纤稳定量产（单纤容量×7）</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">烽火通信</td>
+        <td class="red">+83.48%</td>
+        <td>191</td>
+        <td style="text-align:left; font-size:12px;">空芯光纤0.063dB/km超低衰减记录、1.6T双载波OTN验证</td>
+      </tr>
+    </table>
+    <p style="font-size:12px; color:#555; margin-top:8px;">
+      💡 <b>共同受益逻辑</b>：AI数据中心建设 → 高速/特种光纤需求暴增 → 产能向AI倾斜 → 普通光纤供给收缩 → 价格暴涨（+418%）→ 量价齐升。全球云厂商资本开支2026年~8000亿→2027年~1.1万亿美元，光纤光缆作为最底层基础设施持续受益。
+    </p>
+  </div>
+</div>
+
+<!-- 六、盈利能力对比 -->
+<div class="section">
+  <h2><span class="icon">📈</span>六、核心标的盈利能力对比</h2>
+  
+  <div class="chart-container" style="height:320px;">
+    <canvas id="profitChart"></canvas>
+  </div>
+  
+  <p style="font-size:12px; color:#888; margin-top:8px; text-align:center;">数据来源：2025年报及2026年Q1财报，NeoData金融数据</p>
+</div>
+
+<!-- 七、风险分析 -->
+<div class="section">
+  <h2><span class="icon">⚠️</span>七、风险分析与关注要点</h2>
+  
+  <div class="risk-box high">
+    <h4>🔴 高风险因素</h4>
+    <ul>
+      <li><b>CPO技术颠覆</b>：共封装光学技术可能重构产业链价值分配，利润重心从模块厂商转向芯片/封装厂商。CPO光引擎成本仍比1.6T可插拔高约10%，但技术进步速度需持续跟踪</li>
+      <li><b>结构性产能过剩</b>：2026年底起新产能集中释放，价格竞争可能加剧。折旧上升+供给扩张+价格竞争三重压力可能压缩盈利空间</li>
+      <li><b>估值泡沫风险</b>：多数标的PE处于5年历史高位90-100%分位，源杰科技PE 418倍、长飞光纤PE 300倍，一旦增速不达预期可能面临剧烈回调</li>
+    </ul>
+  </div>
+  
+  <div class="risk-box mid">
+    <h4>🟡 中等风险因素</h4>
+    <ul>
+      <li><b>下游资本开支波动</b>：全球宏观经济下行可能导致云厂商缩减资本开支，直接影响光模块需求</li>
+      <li><b>上游供应链风险</b>：高端DSP芯片、InP晶圆等核心材料高度依赖进口，地缘政治风险可能加剧供应紧张</li>
+      <li><b>客户集中度</b>：中际旭创、新易盛等头部客户集中于少数北美云巨头，大客户议价能力强</li>
+    </ul>
+  </div>
+  
+  <div class="risk-box low">
+    <h4>🟢 长期确定性强</h4>
+    <ul>
+      <li><b>AI算力建设长期性</b>：大模型参数持续增长，训练和推理算力需求远未见顶</li>
+      <li><b>技术迭代持续性</b>：800G→1.6T→3.2T→CPO，每一代技术升级都带来新的需求和利润</li>
+      <li><b>国产替代空间</b>：高端光芯片国产化率仍低，替代空间巨大</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 八、投资框架 -->
+<div class="section">
+  <h2><span class="icon">💡</span>八、投资框架总结</h2>
+  
+  <div style="background:linear-gradient(135deg, #e8eaf6, #fff); border-radius:12px; padding:20px; margin:12px 0;">
+    <h4 style="color:#283593; margin-bottom:12px;">🎯 光通信产业链投资优先级</h4>
+    
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>优先级</th>
+          <th>环节</th>
+          <th>代表标的</th>
+          <th>核心逻辑</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag-badge t1">★★★</span></td>
+          <td style="font-weight:600;">光模块龙头</td>
+          <td>中际旭创、新易盛</td>
+          <td style="text-align:left; font-size:12px;">行业景气度最高、业绩兑现最强，800G/1.6T量价齐升</td>
+        </tr>
+        <tr>
+          <td><span class="tag-badge t1">★★★</span></td>
+          <td style="font-weight:600;">光器件平台</td>
+          <td>天孚通信</td>
+          <td style="text-align:left; font-size:12px;">"卖水人"逻辑，穿越竞争周期，盈利能力极强</td>
+        </tr>
+        <tr>
+          <td><span class="tag-badge t2">★★☆</span></td>
+          <td style="font-weight:600;">光芯片国产替代</td>
+          <td>源杰科技、光迅科技</td>
+          <td style="text-align:left; font-size:12px;">上游核心瓶颈，国产替代+AI需求双击，但估值需谨慎</td>
+        </tr>
+        <tr>
+          <td><span class="tag-badge t2">★★☆</span></td>
+          <td style="font-weight:600;">光纤光缆</td>
+          <td>长飞、亨通、中天</td>
+          <td style="text-align:left; font-size:12px;">AI结构性新周期，量价齐升，估值相对合理</td>
+        </tr>
+        <tr>
+          <td><span class="tag-badge t3">★☆☆</span></td>
+          <td style="font-weight:600;">二三线光模块</td>
+          <td>剑桥科技、华工科技</td>
+          <td style="text-align:left; font-size:12px;">弹性大但确定性弱，适合风险偏好较高的投资者</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>📌 关键跟踪指标</h3>
+  <div style="font-size:13px; color:#555; line-height:2;">
+    ① 北美云厂商季度资本开支（尤其英伟达/谷歌/微软）<br>
+    ② 800G/1.6T光模块出货量与ASP变化<br>
+    ③ 上游EML芯片/DSP供应紧张程度变化<br>
+    ④ CPO技术商业化进度与良率数据<br>
+    ⑤ G.652.D裸纤价格走势（AI光纤景气度指标）<br>
+    ⑥ 字节跳动等国内互联网巨头AI资本开支<br>
+    ⑦ 摩根士丹利等投行对全球云厂商资本开支预测调整
+  </div>
+</div>
+
+<!-- Chart.js Scripts -->
+<script>
+// Market Cap Chart
+const ctx1 = document.getElementById('marketCapChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['中际旭创', '新易盛', '长飞光纤', '天孚通信', '亨通光电', '中天科技', '光迅科技', '源杰科技', '华工科技', '烽火通信', '剑桥科技', '太辰光'],
+    datasets: [{
+      label: '总市值（亿元）',
+      data: [11071, 5922, 3475, 2688, 1899, 1513, 1609, 1489, 1467, 799, 684, 409],
+      backgroundColor: [
+        'rgba(229,57,53,0.8)', 'rgba(229,57,53,0.65)',
+        'rgba(46,125,50,0.8)', 'rgba(229,57,53,0.5)',
+        'rgba(46,125,50,0.65)', 'rgba(46,125,50,0.5)',
+        'rgba(255,152,0,0.7)', 'rgba(255,152,0,0.55)',
+        'rgba(255,152,0,0.4)', 'rgba(46,125,50,0.35)',
+        'rgba(158,158,158,0.5)', 'rgba(158,158,158,0.35)'
+      ],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: '光通信核心标的市值排行（亿元）', font: { size: 14 } }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.05)' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Profitability Chart
+const ctx2 = document.getElementById('profitChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: ['新易盛', '天孚通信', '中际旭创', '太辰光', '华工科技', '亨通光电', '光迅科技', '中天科技'],
+    datasets: [
+      {
+        label: 'ROE TTM (%)',
+        data: [52.7, 36.32, 42.01, 16.13, 14.54, 9.96, 10.02, 8.4],
+        backgroundColor: 'rgba(229,57,53,0.7)',
+        borderRadius: 4,
+      },
+      {
+        label: '净利率 (%)',
+        data: [36.92, 39.15, 31.74, 19.35, 11.08, 4.82, 8.16, 5.83],
+        backgroundColor: 'rgba(21,101,192,0.7)',
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '核心标的盈利能力对比：ROE vs 净利率', font: { size: 14 } },
+      legend: { position: 'top' }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true }
+    }
+  }
+});
+</script>
+
+<!-- Footer -->
+<div class="footer">
+  <p>报告日期：2026年5月12日 | 数据来源：NeoData、Wind、CRU、摩根士丹利</p>
+  <p>免责声明：本报告仅供研究参考，不构成投资建议。投资有风险，入市需谨慎。</p>
+</div>
+
+</body>
+</html>
