@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日风险监测简报 — 2026年5月14日</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6fa; color: #23272f; font-size: 15px; line-height: 1.7; }
+  a { color: #1a73e8; text-decoration: none; }
+
+  /* 顶部深色 Banner */
+  .banner { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: #fff; padding: 32px 28px 28px; }
+  .banner .date { font-size: 13px; letter-spacing: 2px; color: #a0aec0; text-transform: uppercase; }
+  .banner h1 { font-size: 26px; font-weight: 700; margin: 6px 0 4px; }
+  .banner .subtitle { font-size: 13px; color: #90caf9; letter-spacing: 1px; }
+
+  /* 风险总览卡 */
+  .risk-overview { margin: -20px 16px 16px; position: relative; z-index: 2; border-radius: 12px; padding: 20px 24px; color: #fff; }
+  .risk-overview.high { background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%); }
+  .risk-overview.medium-high { background: linear-gradient(135deg, #d35400 0%, #e67e22 100%); }
+  .risk-overview.medium { background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%); }
+  .risk-overview.low { background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); }
+  .risk-overview .label { font-size: 12px; letter-spacing: 2px; opacity: 0.85; }
+  .risk-overview .level { font-size: 32px; font-weight: 800; margin: 4px 0; }
+  .risk-overview .summary { font-size: 14px; opacity: 0.92; line-height: 1.6; }
+
+  /* 通用卡片 */
+  .card { background: #fff; border-radius: 12px; margin: 12px 16px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .card h2 .icon { margin-right: 6px; }
+
+  /* 三宫格 */
+  .tri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+  .tri-grid .item { background: #f8f9fb; border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .tri-grid .item .name { font-size: 12px; color: #666; margin-bottom: 4px; }
+  .tri-grid .item .val { font-size: 20px; font-weight: 700; }
+  .tri-grid .item .val.up { color: #e74c3c; }
+  .tri-grid .item .val.down { color: #27ae60; }
+  .tri-grid .item .change { font-size: 12px; margin-top: 2px; }
+  .tri-grid .item .change.up { color: #e74c3c; }
+  .tri-grid .item .change.down { color: #27ae60; }
+
+  /* 四宫格 */
+  .quad-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; }
+  .quad-grid .item { background: #f8f9fb; border-radius: 8px; padding: 10px 8px; text-align: center; }
+  .quad-grid .item .name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .quad-grid .item .val { font-size: 16px; font-weight: 700; color: #23272f; }
+
+  /* 风险警示区 */
+  .alert-box { background: #fff5f5; border-left: 4px solid #e74c3c; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 13px; line-height: 1.7; color: #7b241c; }
+
+  /* 风险维度 */
+  .dim-list .dim-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .dim-list .dim-item:last-child { border-bottom: none; }
+  .dim-label { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #fff; margin-right: 8px; vertical-align: middle; }
+  .dim-label.high { background: #e74c3c; }
+  .dim-label.medium-high { background: #d35400; }
+  .dim-label.medium { background: #f39c12; }
+  .dim-label.low { background: #27ae60; }
+  .dim-title { font-size: 15px; font-weight: 700; vertical-align: middle; }
+  .dim-body { font-size: 13px; color: #444; margin-top: 6px; line-height: 1.7; }
+
+  /* 重点预警卡片 */
+  .warn-card { border-radius: 10px; padding: 14px 16px; margin: 10px 0; border-left: 5px solid; }
+  .warn-card.high { background: #fff5f5; border-color: #e74c3c; }
+  .warn-card.medium-high { background: #fff8f0; border-color: #d35400; }
+  .warn-card.medium { background: #fef9e7; border-color: #f39c12; }
+  .warn-card .warn-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .warn-card.high .warn-title { color: #c0392b; }
+  .warn-card.medium-high .warn-title { color: #d35400; }
+  .warn-card.medium .warn-title { color: #e67e22; }
+  .warn-card .warn-meta { font-size: 12px; color: #666; margin-bottom: 8px; }
+  .warn-card .warn-chain { font-size: 13px; color: #444; line-height: 1.7; margin: 6px 0; }
+  .warn-card .warn-tags { margin-top: 8px; }
+  .warn-card .tag { display: inline-block; background: #eef2ff; color: #1a73e8; border-radius: 4px; padding: 2px 8px; font-size: 11px; margin-right: 6px; }
+
+  /* 数据表 */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+  .data-table th { background: #f0f4ff; color: #1a1a2e; padding: 8px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid #d0dfff; }
+  .data-table td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .up { color: #e74c3c; font-weight: 600; }
+  .down { color: #27ae60; font-weight: 600; }
+
+  /* 应对参考 */
+  .advice-list { list-style: none; }
+  .advice-list li { padding: 8px 0 8px 20px; position: relative; font-size: 13px; line-height: 1.7; color: #444; }
+  .advice-list li::before { content: "▸"; position: absolute; left: 4px; color: #1a73e8; font-weight: 700; }
+
+  /* 明日关注 */
+  .watch-list { list-style: none; counter-reset: watch; }
+  .watch-list li { counter-increment: watch; padding: 8px 0 8px 28px; position: relative; font-size: 13px; color: #444; border-bottom: 1px dashed #e0e0e0; }
+  .watch-list li::before { content: counter(watch); position: absolute; left: 0; top: 8px; width: 20px; height: 20px; background: #1a73e8; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+  .footer { text-align: center; font-size: 11px; color: #aaa; padding: 20px; line-height: 1.8; }
+  @media (max-width: 680px) {
+    .tri-grid { grid-template-columns: 1fr; }
+    .quad-grid { grid-template-columns: repeat(2, 1fr); }
+    body { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部深色 Banner -->
+<div class="banner">
+  <div class="date">2026 — 05 — 14 · THURSDAY</div>
+  <h1>📊 每日风险监测简报</h1>
+  <div class="subtitle">DAILY RISK MONITOR — Financial Analyst Workspace</div>
+</div>
+
+<!-- 整体风险总览卡 -->
+<div class="risk-overview medium-high">
+  <div class="label">整体风险等级</div>
+  <div class="level">🟠 中高风险</div>
+  <div class="summary">
+    美国4月PPI同比<strong>飙升6%</strong>（创2022年来最大涨幅），通胀从生产端加速抬头，美联储<strong>加息预期升温</strong>；A股创业板指<strong>突破历史新高</strong>（4038.33点），上证、科创50同步新高，估值达极端高位；美伊冲突持续，霍尔木兹海峡封锁已超70天；特朗普访华进行中（5/13-15），中美元首会晤今日举行，结果不确定性高。<br>
+    <strong>核心监测：</strong>美国PPI 🔴极高风险 · A股估值 🟠中高风险 · 美伊冲突 🔴高风险 · 特朗普访华 🟠中高风险
+  </div>
+</div>
+
+<!-- 🇺🇸 美股大盘快览 -->
+<div class="card">
+  <h2><span class="icon">🇺🇸</span>美股大盘快览（5月13日收盘）</h2>
+  <div class="tri-grid">
+    <div class="item">
+      <div class="name">标普500</div>
+      <div class="val up">+0.58%</div>
+      <div class="change up">再创历史新高</div>
+    </div>
+    <div class="item">
+      <div class="name">纳斯达克</div>
+      <div class="val up">+1.20%</div>
+      <div class="change up">再创历史新高，科技股领涨</div>
+    </div>
+    <div class="item">
+      <div class="name">道琼斯</div>
+      <div class="val down">-0.14%</div>
+      <div class="change down">小幅收跌</div>
+    </div>
+  </div>
+  <div class="quad-grid">
+    <div class="item">
+      <div class="name">VIX 波动率</div>
+      <div class="val">~18.94</div>
+      <div style="font-size:11px;color:#27ae60;margin-top:2px">-3.98%（回落）</div>
+    </div>
+    <div class="item">
+      <div class="name">10Y美债收益率</div>
+      <div class="val">~4.47%</div>
+      <div style="font-size:11px;color:#e74c3c;margin-top:2px">升至10个月高位</div>
+    </div>
+    <div class="item">
+      <div class="name">30Y美债收益率</div>
+      <div class="val" style="color:#e74c3c;">5.046%</div>
+      <div style="font-size:11px;color:#e74c3c;margin-top:2px">2007年来首次破5%</div>
+    </div>
+    <div class="item">
+      <div class="name">WTI原油</div>
+      <div class="val" style="color:#e74c3c;">~$98-103</div>
+      <div style="font-size:11px;color:#e74c3c;margin-top:2px">剧烈波动</div>
+    </div>
+  </div>
+  <div class="alert-box">
+    ⚠️ <strong>风险警示：</strong>PPI同比飙升6%（创2022年来最大涨幅），通胀从生产端加速传导至消费端，美联储<strong>波士顿联储行长柯林斯明确表示可能启动加息</strong>；美股在PPI超预期背景下仍创新高，市场定价与宏观基本面严重背离；美债收益率升至10个月高位，30Y破5%，债务可持续性存疑；VIX仅18.94（低位），市场对地缘风险和通胀风险的定价明显不足。
+  </div>
+</div>
+
+<!-- 港股·A股·大宗商品 -->
+<div class="card">
+  <h2><span class="icon">📈</span>港股 · A股 · 大宗商品（5月13日收盘）</h2>
+  <div class="tri-grid">
+    <div class="item">
+      <div class="name">恒生指数</div>
+      <div class="val up">26,388.44</div>
+      <div class="change up">+0.15%</div>
+    </div>
+    <div class="item">
+      <div class="name">恒生科技</div>
+      <div class="val up">5,093.85</div>
+      <div class="change up">+0.46%</div>
+    </div>
+    <div class="item">
+      <div class="name">上证指数</div>
+      <div class="val up">4,242.57</div>
+      <div class="change up">+0.67%（连续2日站上4200点）</div>
+    </div>
+    <div class="item">
+      <div class="name">深证成指</div>
+      <div class="val up">16,089.75</div>
+      <div class="change up">+1.67%</div>
+    </div>
+    <div class="item">
+      <div class="name">创业板指</div>
+      <div class="val up" style="color:#e74c3c;">4,038.33</div>
+      <div class="change up" style="color:#e74c3c;">+2.63% <strong>突破历史新高！</strong></div>
+    </div>
+    <div class="item">
+      <div class="name">科创50</div>
+      <div class="val up" style="color:#e74c3c;">1,770.15</div>
+      <div class="change up" style="color:#e74c3c;">+2.69% 创历史新高</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#444;margin-top:10px;line-height:1.7;">
+    🔴 <strong>A股估值达警戒水平：</strong>创业板指突破2015年6月历史高点（4038.33 vs 4037.96），上证、科创50同步新高，全市场成交额约<strong>3.24万亿元</strong>，连续第6日突破3万亿大关。上证PE处99.96%历史分位，估值泡沫风险急剧上升，获利回吐压力需高度警惕。<br>
+    🇭🇰 港股：南向资金净流出<strong>67.71亿港元</strong>；AI大模型"双雄"领涨（MiniMax +18%，智谱 +37%）；半导体板块大涨（澜起科技+21%，兆易创新+8%）。
+  </div>
+</div>
+
+<!-- 六大风险维度 -->
+<div class="card">
+  <h2><span class="icon">🔍</span>六大风险维度分析</h2>
+  <div class="dim-list">
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label medium-high">中高风险</span>
+        <span class="dim-title">🌐 宏观经济风险</span>
+      </div>
+      <div class="dim-body">
+        <strong>美国：</strong>继4月CPI同比3.8%超预期后，4月PPI同比<strong>飙升6%</strong>（创2022年以来最大涨幅），生产端通胀压力加速抬头，且向消费端传导的风险显著上升。能源及运输成本受美以对伊朗军事行动推高是主要驱动；服务业价格亦呈加速上涨态势。美债收益率升至10个月高位，美元连续第三日上涨。<strong>波士顿联储行长柯林斯明确表示</strong>：若未来几个月通胀压力持续扩大，美联储可能启动<strong>加息</strong>（而非降息）以推动通胀回落至2%目标。滞胀风险从"担忧"变为"现实威胁"。<br>
+        <strong>中国：</strong>4月CPI同比+1.2%（预期0.9%），PPI同比+2.8%（预期1.6%，创2022年7月以来新高）。PPI向CPI的传导存在2-4个季度的滞后，但当前全球能源价格高企（WTI约$100+），输入性通胀压力不可忽视。A股市场在"新经济叙事"驱动下持续上涨，但与实体经济基本面（制造业PMI边际放缓）的背离扩大。<br>
+        <span style="color:#d35400;font-weight:600;">→ 🟠 美国滞胀风险显著上升，PPI 6%是重大预警信号；中国输入性通胀压力上升，但内需复苏力度仍不足以支撑全面通胀。</span>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label medium-high">中高风险</span>
+        <span class="dim-title">📊 金融市场风险</span>
+      </div>
+      <div class="dim-body">
+        <strong>美股：</strong>纳指<strong>+1.20%</strong>再创历史新高，标普500<strong>+0.58%</strong>再创历史新高，道指-0.14%小幅收跌。科技股表现优于其他板块（英伟达等上涨），半导体股引领市场重返高位。但PPI数据公布后，美债收益率升至10个月高位，对估值构成压制。VIX收至约18.94（低位），市场对地缘风险和通胀风险的定价明显不足。<br>
+        <strong>A股：</strong>创业板指<strong>+2.63%</strong>，收于<strong>4038.33点</strong>，<strong>突破2015年6月创下的4037.96点历史高点</strong>，时隔近11年刷新历史纪录；上证指数+0.67%收于4242.57点（连续第2日在4200点上方站稳）；深证成指+1.67%收于16089.75点；科创50+2.69%收于1770.15点，同步创下历史新高。全市场成交额约<strong>3.24万亿元</strong>，连续第6日突破3万亿大关。市场情绪极度高涨，但<strong>上证PE处99.96%历史分位</strong>，估值泡沫风险积累。<br>
+        <strong>港股：</strong>恒生指数+0.15%收于26388.44点；恒生科技指数+0.46%收于5093.85点。南向资金净流出67.71亿港元。AI大模型"双雄"领涨（MiniMax涨超18%，智谱涨近37%）。半导体板块大涨（澜起科技涨超21%，兆易创新涨超8%）。<br>
+        <strong>原油：</strong>WTI约$98-103/桶（日内剧烈波动，一度涨1%至$103.25）；布伦特约$105-108/桶。伊朗停火协议仍"处于生命维持状态"，霍尔木兹海峡完全封锁已持续超过70天，约400艘油轮被困。<br>
+        <strong>美债：</strong>30年期美债标售中标收益率<strong>5.046%</strong>，为2007年（金融危机前）以来首次30年期美国国债发行票面利率达到5%水平。10年期美债收益率约4.47%，2年与10年利差走阔，收益率曲线趋于陡峭。<br>
+        <span style="color:#d35400;font-weight:600;">→ 🟠 A股估值泡沫风险达警戒水平，创业板指突破历史高点引发"历史上次冲顶"担忧；美股在PPI超预期背景下仍创新高，市场定价与宏观基本面严重背离；美债收益率持续高位，债务可持续性存疑。</span>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label medium-high">中高风险</span>
+        <span class="dim-title">📜 政策风险</span>
+      </div>
+      <div class="dim-body">
+        <strong>美联储：</strong>政策路径面临1970年代以来最复杂的局面——通胀反弹（CPI 3.8%、PPI 6%）叠加经济增长放缓（Q4 GDP仅0.5%），传统的"加息抗通胀"与"降息稳增长"两难选择被推向极致。<strong>波士顿联储行长柯林斯的加息表态是重要信号</strong>，意味着Fed已开始在内部讨论"加息"选项（而非常规的"降息"）。鲍威尔主席任期将于<strong>5月15日（明日）结束</strong>，沃什提名确认前景仍不明朗，政治不确定性加剧。<br>
+        <strong>中美经贸：</strong>特朗普5月13-15日访华，为此次风险监测的核心事件。5月12-13日，中美在首尔举行了经贸磋商（何立峰副总理率团），<strong>结果尚未正式公布</strong>。市场预期双方可能在部分议题上达成阶段性成果（关税减免、农产品采购、AI管制框架等），但结构性矛盾（台湾、科技管制、投资限制）难以在一次访问中解决。特朗普预计将要求中国向伊朗施压以接受美国条款，使中美会谈与美伊局势形成联动。<br>
+        <strong>中国政策：</strong>央行连续18个月增持黄金，4月单月增持量创16个月新高，显示对美元体系不信任持续加深。第一季度货币政策执行报告措辞微妙，市场解读为"鸽派中的鹰派"。若输入性通胀压力上升，货币政策边际收紧的风险上升。<br>
+        <span style="color:#d35400;font-weight:600;">→ 🟠 美联储政策路径不确定性达年内最高，加息预期若被市场定价，将引发全球资产重估；中美会谈短期预期改善，但结果不确定性高；中国货币政策面临输入性通胀与外部宽松的两难。</span>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label high">🔴 高风险</span>
+        <span class="dim-title">🌍 地缘政治风险</span>
+      </div>
+      <div class="dim-body">
+        <strong>美伊冲突（最高风险点）：</strong>伊朗对美国和平提案提出的<strong>5个先决条件</strong>（结束所有战线战争、解除制裁、解冻资金、赔偿损失、承认伊朗对霍尔木兹海峡主权）<strong>未得到满足</strong>，伊美谈判陷入僵局。霍尔木兹海峡自2月底以来<strong>完全封锁已超70天</strong>，约<strong>400艘油轮</strong>被困，全球石油供应每周减少约1亿桶。沙特阿美CEO警告：若海峡6月底前不重开，石油市场正常化将推迟至2027年。前北约最高盟军司令斯塔夫里迪斯警告，美军武力重开海峡需投入大量海军资源，每周成本约<strong>10亿美元</strong>。<br>
+        <strong>特朗普访华：</strong>中美元首会晤（5月14日，即今日）为关键节点。双方在台湾问题、科技管制、关税等领域存在根本性分歧。若会晤结果低于预期，可能引发市场剧烈波动。特朗普同时将施压中国在伊朗问题上配合美国，使中美会谈与美伊局势形成联动。<br>
+        <strong>俄乌冲突：</strong>持续消耗战，对全球能源市场的影响已被中东冲突覆盖，短期不再是主要风险驱动因素。<br>
+        <span style="color:#e74c3c;font-weight:600;">→ 🔴 地缘政治风险为当前最高风险，美伊冲突"冻结"（不战不和）状态对全球能源供给的打击每周递增；特朗普访华今日举行，结果不确定性高，可能成为市场波动催化剂。</span>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label medium">🟡 中风险</span>
+        <span class="dim-title">🏭 产业风险</span>
+      </div>
+      <div class="dim-body">
+        <strong>AI产业：</strong>纳指自2月底以来上涨近14%，估值泡沫风险持续积累。4月美国PPI数据显示AI相关资本开支（数据中心、算力设备）价格大幅上涨，说明需求端仍强劲，但同时也意味着供给端成本压力正在向下游传导。中国AI大模型"双雄"（MiniMax、智谱）在港股大涨（分别+18%和+37%），但估值已严重脱离基本面。AMD财报超预期确认了Agentic AI引擎的商业价值，但整体AI板块估值仍处于历史高位，<strong>算力过剩信号</strong>开始显现（四大云厂商2026年capex合计超7000亿美元）。<br>
+        <strong>能源产业：</strong>WTI约$100-103/桶的高油价对下游产业（航空、化工、物流）成本压力显著。中国4月PPI中油气开采（+28.6%）、石油加工（+14.2%）涨幅居前，中游制造业成本传导能力分化，利润空间承压。若美伊冲突持续至Q3，全球通胀二次冲高的风险将显著上升。<br>
+        <strong>半导体产业：</strong>港股半导体板块5月13日大涨（澜起科技+21%、兆易创新+8%），与A股科创50创新高形成共振。但美国对华半导体出口管制仍在收紧，产业周期与地缘风险叠加，波动性维持高位。<br>
+        <span style="color:#f39c12;font-weight:600;">→ 🟡 AI估值泡沫仍是中期最大风险；油价高企对全球制造业利润形成持续挤压；半导体板块短期强势，但地缘风险溢价不可忽视。</span>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div>
+        <span class="dim-label low">🟢 低风险</span>
+        <span class="dim-title">⚡ 其他突发风险</span>
+      </div>
+      <div class="dim-body">
+        目前无明显突发风险。但需关注：①特朗普访华期间可能出现的意外事件（外交摩擦、抗议活动、联合声明不及预期等）；②伊朗在谈判僵局下可能采取的"边缘政策"行动（如袭击油轮、封锁升级等）；③A股今日（5月14日）开盘后的走势——若获利回吐压力集中释放，可能引发连锁反应；④美债标售需求持续疲弱，可能引发收益率进一步上行。<br>
+        <span style="color:#27ae60;font-weight:600;">→ 🟢 当前无明确突发风险，但需对特朗普访华结果和A股走势保持高度警惕。</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 🚨 重点风险预警 -->
+<div class="card">
+  <h2><span class="icon">🚨</span>重点风险预警</h2>
+
+  <div class="warn-card high">
+    <div class="warn-title">🔴 预警1：美国4月PPI同比+6%（创2022年来最大涨幅）</div>
+    <div class="warn-meta">来源：美国劳工统计局（BLS）5月13日发布 | 等级：🔴 极高风险</div>
+    <div class="warn-chain">
+      <strong>影响：</strong>生产端通胀加速向消费端传导；美联储<strong>加息预期升温</strong>（波士顿联储行长柯林斯明确表示可能启动加息）；美债收益率升至10个月高位；美元走强压制大宗商品价格；美股估值承压；实际购买力进一步缩水。<br>
+      <strong>传导链：</strong>PPI飙升 → 企业成本上升 → 消费端价格上涨（CPI进一步走高） → 美联储被迫加息 → 美债收益率上行 → 全球资产重估 → 高估值成长股大幅调整<br>
+      <strong>跟踪指标：</strong>5月15日美国4月零售销售数据；美联储官员后续讲话；美债收益率曲线变化；美元指数走势；核心PPI环比
+    </div>
+    <div class="warn-tags">
+      <span class="tag">#通胀</span>
+      <span class="tag">#美联储</span>
+      <span class="tag">#PPI</span>
+      <span class="tag">#加息预期</span>
+      <span class="tag">#极高风险</span>
+    </div>
+  </div>
+
+  <div class="warn-card high">
+    <div class="warn-title">🔴 预警2：霍尔木兹海峡完全封锁已超70天</div>
+    <div class="warn-meta">来源：多家国际媒体综合报道 | 等级：🔴 高风险</div>
+    <div class="warn-chain">
+      <strong>影响：</strong>全球石油供应每周减少约1亿桶；WTI/布伦特原油价格维持$100+/桶高位；输入性通胀压力上升；航运成本飙升；沙特阿美CEO警告若海峡6月底前不重开，石油市场正常化将推迟至2027年。<br>
+      <strong>传导链：</strong>海峡封锁 → 全球原油供给缺口 → 油价高企 → 生产成本上升（PPI） → 消费端通胀（CPI） → 全球滞胀风险<br>
+      <strong>跟踪指标：</strong>美伊谈判进展；WTI/布伦特原油价格；霍尔木兹海峡航运数据；被困油轮数量；伊朗5个先决条件是否满足
+    </div>
+    <div class="warn-tags">
+      <span class="tag">#地缘政治</span>
+      <span class="tag">#原油</span>
+      <span class="tag">#通胀</span>
+      <span class="tag">#高风险</span>
+    </div>
+  </div>
+
+  <div class="warn-card medium-high">
+    <div class="warn-title">🟠 预警3：A股三大指数同步创历史新高，估值达极端高位</div>
+    <div class="warn-meta">来源：交易所数据，5月13日收盘 | 等级：🟠 中高风险</div>
+    <div class="warn-chain">
+      <strong>影响：</strong>创业板指突破2015年6月历史高点（4038.33 vs 4037.96），上证、科创50同步新高；市场情绪极度高涨，但<strong>上证PE处99.96%历史分位</strong>，估值泡沫风险积累，获利回吐压力急剧上升；与实体经济基本面（制造业PMI边际放缓）的背离扩大。<br>
+      <strong>传导链：</strong>市场情绪高涨 → 新增资金入场 → 估值进一步拉伸 → 与基本面背离扩大 → 触发因素出现（政策收紧、外部冲击） → 剧烈回调<br>
+      <strong>跟踪指标：</strong>A股成交额变化；融资余额；新增开户数；监管层表态；美股走势（外部传导）；上证4200点支撑力度
+    </div>
+    <div class="warn-tags">
+      <span class="tag">#A股</span>
+      <span class="tag">#估值风险</span>
+      <span class="tag">#创业板</span>
+      <span class="tag">#中高风险</span>
+    </div>
+  </div>
+
+  <div class="warn-card medium-high">
+    <div class="warn-title">🟠 预警4：特朗普访华（5/13-15），中美元首会晤结果不确定性高</div>
+    <div class="warn-meta">来源：新华社、人民日报、百度百科 | 等级：🟠 中高风险</div>
+    <div class="warn-chain">
+      <strong>影响：</strong>今日（5月14日）中美元首会晤为关键节点。若会晤结果超预期（如关税大幅减免、科技管制框架达成协议），可能引发全球市场正面反应；若结果低于预期或出现外交摩擦，可能引发剧烈波动。特朗普同时将施压中国在伊朗问题上配合美国，使中美会谈与美伊局势形成联动。<br>
+      <strong>传导链：</strong>会晤结果 → 市场预期调整 → 关税/贸易政策变化 → 产业供应链调整 → 金融市场波动<br>
+      <strong>跟踪指标：</strong>中美元首联合声明内容；关税政策调整公告；美股/港股/A股反应；半导体出口管制政策变化；特朗普访华行程
+    </div>
+    <div class="warn-tags">
+      <span class="tag">#中美关系</span>
+      <span class="tag">#贸易政策</span>
+      <span class="tag">#地缘政治</span>
+      <span class="tag">#中高风险</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- 核心数据汇总表 -->
+<div class="card">
+  <h2><span class="icon">📋</span>核心数据汇总</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>指标</th>
+        <th>数值</th>
+        <th>变化</th>
+        <th>日期</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>标普500</strong></td><td>~新高</td><td class="up">+0.58%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>纳斯达克</strong></td><td>~新高</td><td class="up">+1.20%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>道琼斯</strong></td><td>~49,760点</td><td class="down">-0.14%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>VIX波动率指数</strong></td><td>~18.94</td><td class="down">-3.98%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>上证指数</strong></td><td>4,242.57</td><td class="up">+0.67%（连续2日站上4200点）</td><td>2026-05-13</td></tr>
+      <tr><td><strong>创业板指</strong></td><td><span style="color:#e74c3c;font-weight:700;">4,038.33</span></td><td class="up" style="color:#e74c3c;font-weight:700;">+2.63% 突破历史新高！</td><td>2026-05-13</td></tr>
+      <tr><td><strong>科创50</strong></td><td><span style="color:#e74c3c;font-weight:700;">1,770.15</span></td><td class="up" style="color:#e74c3c;font-weight:700;">+2.69% 创历史新高</td><td>2026-05-13</td></tr>
+      <tr><td><strong>恒生指数</strong></td><td>26,388.44</td><td class="up">+0.15%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>恒生科技</strong></td><td>5,093.85</td><td class="up">+0.46%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>WTI原油</strong></td><td>$98-103/桶</td><td style="font-weight:600;color:#e74c3c;">剧烈波动</td><td>2026-05-13</td></tr>
+      <tr><td><strong>布伦特原油</strong></td><td>~$105-108/桶</td><td style="font-weight:600;color:#e74c3c;">高位震荡</td><td>2026-05-13</td></tr>
+      <tr><td><strong>美国CPI（同比）</strong></td><td><span style="color:#e74c3c;font-weight:700;">3.8%</span></td><td>预期3.7%，创2023年5月以来最高</td><td>2026-04</td></tr>
+      <tr><td><strong>美国PPI（同比）</strong></td><td><span style="color:#e74c3c;font-weight:700;">6.0%</span></td><td>创2022年来最大涨幅</td><td>2026-04</td></tr>
+      <tr><td><strong>美国10年期国债</strong></td><td>~4.47%</td><td style="color:#e74c3c;font-weight:600;">升至10个月高位</td><td>2026-05-13</td></tr>
+      <tr><td><strong>美国30年期国债</strong></td><td><span style="color:#e74c3c;font-weight:700;">5.046%</span></td><td>2007年来首次破5%</td><td>2026-05-13</td></tr>
+      <tr><td><strong>南向资金</strong></td><td>净流出67.71亿港元</td><td>转为净流出</td><td>2026-05-13</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:12px;color:#888;margin-top:8px;">数据来源：美国劳工统计局（BLS）、纽交所、纳斯达克、上交所、深交所、港交所、生意社、财联社、东方财富网</div>
+</div>
+
+<!-- 简要应对参考 + 明日关注重点 -->
+<div class="card">
+  <h2><span class="icon">🛡️</span>简要应对参考</h2>
+  <div style="background:#f8f9fb;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:12px;color:#e67e22;line-height:1.8;">
+    ⚠️ <strong>以下仅为风险规避参考，不构成投资建议。投资有风险，决策需谨慎。</strong>
+  </div>
+  <ul class="advice-list">
+    <li><strong>关注美联储政策动向：</strong>PPI 6%可能引发Fed内部讨论加息选项，需密切关注波士顿联储、美联储主席提名进展。若加息预期被市场定价，高估值科技股、长久期债券将面临较大调整压力。</li>
+    <li><strong>谨慎对待A股高位追涨：</strong>创业板指突破历史新高后，市场情绪极度高涨，但估值已处极端高位（上证PE 99.96%分位）。建议控制仓位，避免高位追涨，关注成交量变化和监管层表态。</li>
+    <li><strong>关注原油价格波动：</strong>霍尔木兹海峡封锁持续，WTI/$100+的高油价对全球通胀的二次冲击风险上升。需跟踪美伊谈判进展，谨慎布局能源相关板块。</li>
+    <li><strong>特朗普访华结果落地前保持谨慎：</strong>今日（5/14）中美元首会晤结果将出炉，结果不确定性高。建议等待结果明朗后再调整仓位，避免押注式操作。</li>
+    <li><strong>分散化配置+适度对冲：</strong>在多重风险（通胀、地缘、估值泡沫）并存的环境下，适度增加防御性资产配置（黄金、短久期债券），降低组合整体波动率。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2><span class="icon">🔭</span>明日关注重点（5月15日）</h2>
+  <ul class="watch-list">
+    <li><strong>中美元首会晤结果（5月14日，今日）：</strong>关注联合声明、关税政策、科技管制等议题是否有突破性进展；结果不确定性高，可能引发市场剧烈波动。</li>
+    <li><strong>美国4月零售销售数据（5月15日公布）：</strong>观察通胀高企背景下美国消费韧性；若数据超预期走弱，可能缓解加息预期。</li>
+    <li><strong>美联储官员讲话（本周多位官员发声）：</strong>特别关注对PPI数据的回应及加息可能性讨论；鲍威尔主席任期于5月15日结束，沃什提名确认进展需关注。</li>
+    <li><strong>A股今日（5/14）走势：</strong>创业板指突破历史新高后，市场能否守住成果，还是出现获利回吐；上证4200点支撑力度；成交额是否维持3万亿+。</li>
+    <li><strong>美伊谈判进展：</strong>伊朗5个先决条件是否满足，霍尔木兹海峡是否有重开迹象；特朗普访华期间是否就伊朗问题向中方施压。</li>
+    <li><strong>美国30Y国债收益率：</strong>是否继续维持在5%+高位，美债标售需求变化；若持续高位，将引发全球资产重新定价。</li>
+  </ul>
+</div>
+
+<div class="footer">
+  本报告由 <strong>Auto（金融分析工作区）</strong> 自动生成<br>
+  数据来源于公开权威渠道，分析结论仅供参考，不构成投资建议<br>
+  生成时间：2026年5月14日 07:00（北京时间）
+</div>
+
+</body>
+</html>
