@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球经济状况与日元走势深度分析 — 2026.05.20</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    line-height: 1.7;
+  }
+
+  /* HERO BANNER */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -60%; left: -20%;
+    width: 140%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(255,200,50,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,200,50,0.2);
+    color: #ffc832;
+    border: 1px solid rgba(255,200,50,0.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+  }
+  .hero-date {
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* EXECUTIVE SUMMARY CARD */
+  .exec-summary {
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: -28px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(192,57,43,0.25);
+  }
+  .exec-summary h2 {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 1px;
+  }
+  .exec-summary ul {
+    list-style: none;
+    padding: 0;
+  }
+  .exec-summary li {
+    padding: 6px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .exec-summary li:last-child { border-bottom: none; }
+  .exec-summary strong { color: #ffc832; }
+
+  /* KEY DATA GRID */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .data-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .data-card .label {
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .data-card .value {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .data-card .value.red { color: #e74c3c; }
+  .data-card .value.green { color: #27ae60; }
+  .data-card .value.blue { color: #2980b9; }
+  .data-card .sub {
+    font-size: 11px;
+    color: #999;
+    margin-top: 6px;
+  }
+
+  /* SECTION */
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    color: #1a1a2e;
+  }
+  .section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 16px 0 8px;
+    color: #2c3e50;
+  }
+  .section p, .section li {
+    font-size: 13.5px;
+    color: #444;
+    line-height: 1.8;
+  }
+  .section ul { padding-left: 18px; }
+  .section li { margin-bottom: 4px; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  th {
+    background: #f7f8fa;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    font-size: 12px;
+    border-bottom: 2px solid #e8e8e8;
+  }
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+    font-size: 13px;
+  }
+  tr:last-child td { border-bottom: none; }
+  .up { color: #e74c3c; font-weight: 600; }
+  .down { color: #27ae60; font-weight: 600; }
+
+  /* SCENARIO CARDS */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .scenario-card {
+    border-radius: 10px;
+    padding: 16px;
+    border-left: 4px solid;
+  }
+  .scenario-card.baseline {
+    background: #fef9e7;
+    border-color: #f39c12;
+  }
+  .scenario-card.hawkish {
+    background: #eafaf1;
+    border-color: #27ae60;
+  }
+  .scenario-card.dovish {
+    background: #fdedec;
+    border-color: #e74c3c;
+  }
+  .scenario-card .scenario-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .scenario-card .prob {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .scenario-card .target {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* DRIVER MATRIX */
+  .driver-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .driver-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 12.5px;
+  }
+  .driver-header {
+    background: #1a1a2e;
+    color: #fff;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+  .driver-row:not(.driver-header) {
+    background: #f7f8fa;
+  }
+  .arrow-up { color: #27ae60; font-weight: 700; }
+  .arrow-down { color: #e74c3c; font-weight: 700; }
+  .arrow-mixed { color: #f39c12; font-weight: 700; }
+
+  /* CHART CONTAINER */
+  .chart-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 16px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: relative;
+    height: 280px;
+  }
+  .chart-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a2e;
+  }
+
+  /* RISK CARD */
+  .risk-card {
+    background: #fdedec;
+    border-left: 4px solid #e74c3c;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .risk-card.orange {
+    background: #fef5e7;
+    border-color: #f39c12;
+  }
+  .risk-card .risk-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  /* CONCLUSION BOX */
+  .conclusion {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 20px;
+  }
+  .conclusion h2 { color: #ffc832; margin-bottom: 12px; font-size: 15px; }
+  .conclusion p { color: rgba(255,255,255,0.85); font-size: 13.5px; line-height: 1.8; }
+  .conclusion .target-price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffc832;
+    margin: 12px 0;
+  }
+
+  /* CARRY TRADE DIAGRAM */
+  .carry-diagram {
+    background: #f7f8fa;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 12.5px;
+    line-height: 2;
+  }
+  .carry-diagram .step {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+  }
+  .carry-diagram .step-num {
+    background: #2980b9;
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 22px; }
+    .data-grid { grid-template-columns: 1fr; }
+    .driver-row { grid-template-columns: 1fr; gap: 2px; }
+    .driver-header { display: none; }
+    .chart-box { height: 240px; }
+  }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-top: 32px;
+    padding: 16px;
+    border-top: 1px solid #e8e8e8;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="hero-tag">MACRO RESEARCH</div>
+  <h1>全球经济状况与日元走势深度分析</h1>
+  <p>USD/JPY逼近160关口 · 日本央行加息路径 · 全球滞胀风险</p>
+  <div class="hero-date">2026年5月20日 · 研股股宏观研究</div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="container">
+<div class="exec-summary">
+  <h2>⚡ 执行摘要</h2>
+  <ul>
+    <li>① USD/JPY 当前报 <strong>159.03</strong>，逼近160心理关口，年初至今日元贬值 <strong>10.64%</strong></li>
+    <li>② <strong>65%的经济学家</strong>预期日本央行6月加息至1.0%，加息只是时间问题</li>
+    <li>③ 全球滞胀风险上升：中东冲突推高油价35%，IMF下调2026年全球增长至<strong>3.1%</strong></li>
+    <li>④ 中期看涨日元（看跌USD/JPY），3个月目标<strong>150</strong>，6个月目标<strong>145</strong></li>
+  </ul>
+</div>
+
+<!-- KEY DATA GRID -->
+<div class="data-grid">
+  <div class="data-card">
+    <div class="label">USD/JPY 最新汇率</div>
+    <div class="value red">159.03</div>
+    <div class="sub">逼近160心理关口</div>
+  </div>
+  <div class="data-card">
+    <div class="label">年初至今涨跌</div>
+    <div class="value red">+10.64%</div>
+    <div class="sub">日元大幅贬值</div>
+  </div>
+  <div class="data-card">
+    <div class="label">日本政策利率</div>
+    <div class="value blue">0.75%</div>
+    <div class="sub">市场预期6月加息至1.0%</div>
+  </div>
+  <div class="data-card">
+    <div class="label">日本核心CPI（预期）</div>
+    <div class="value red">2.8%</div>
+    <div class="sub">FY2026，较此前预测大幅上调</div>
+  </div>
+</div>
+
+<!-- SECTION 1: 全球经济概览 -->
+<div class="section">
+  <h2>🌍 一、全球经济状况概览</h2>
+
+  <h3>🇺🇸 美国：增长韧性下的通胀粘性</h3>
+  <table>
+    <tr><th>指标</th><th>最新数据</th><th>趋势</th></tr>
+    <tr><td>实际GDP同比（2026Q1）</td><td>2.7%</td><td>稳健</td></tr>
+    <tr><td>CPI同比（2026年3月）</td><td class="up">3.3%</td><td>反弹（前值2.4%）</td></tr>
+    <tr><td>联邦基金利率</td><td>3.50%-3.75%</td><td>维持不变</td></tr>
+    <tr><td>初请失业金人数</td><td>21.1万人</td><td>劳动力市场仍紧</td></tr>
+    <tr><td>美联储点阵图中位数</td><td>2026年降息25bps</td><td>共识正在瓦解</td></tr>
+  </table>
+  <p>美联储陷入"抗通胀"与"稳增长"的两难。中东冲突推高油价（布伦特单月涨幅35%，一度突破120美元/桶），导致3月CPI明显反弹。7位官员预计全年不降息。</p>
+
+  <h3>🇯🇵 日本：走出通缩，但增长乏力</h3>
+  <table>
+    <tr><th>指标</th><th>数据</th><th>说明</th></tr>
+    <tr><td>政策利率（当前）</td><td>0.75%</td><td>2026年4月维持不变</td></tr>
+    <tr><td>核心CPI同比（3月）</td><td class="up">1.8%</td><td>五个月来首次加速</td></tr>
+    <tr><td>FY2026核心CPI预期</td><td class="up">2.8%</td><td>较1月预测1.9%大幅上调</td></tr>
+    <tr><td>PPI同比（4月）</td><td class="up">4.9%</td><td>能源价格上涨压力显著</td></tr>
+  </table>
+  <p>日本央行内部：3名委员在4月会议主张加息至1.0%；曾投票维持不变的委员增一行已公开转鹰，呼吁"尽早加息"。</p>
+
+  <h3>🌐 全球风险地图</h3>
+  <div class="risk-card">
+    <div class="risk-title">🔴 高风险：中东冲突（伊朗封锁霍尔木兹海峡）</div>
+    全球25%海运石油中断 → 油价上涨 → 全球CPI上行约0.4个百分点 → IMF下调2026年全球增长至3.1%
+  </div>
+  <div class="risk-card orange">
+    <div class="risk-title">🟠 中风险：中美贸易摩擦 / 关税战2.0</div>
+    中方稀土筹码 vs 美方市场开放诉求，谈判进入"沉默期"，不确定性持续
+  </div>
+</div>
+
+<!-- SECTION 2: 日元汇率分析 -->
+<div class="section">
+  <h2>💴 二、日元汇率深度分析</h2>
+
+  <h3>当前汇率水平</h3>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>备注</th></tr>
+    <tr><td>USD/JPY（2026-05-20）</td><td class="up">159.03</td><td>逼近160心理关口</td></tr>
+    <tr><td>52周最高</td><td>159.10</td><td>已触及</td></tr>
+    <tr><td>52周最低</td><td>142.10</td><td>2025年低点</td></tr>
+    <tr><td>年初至今涨跌幅</td><td class="up">+10.64%</td><td>日元大幅贬值</td></tr>
+    <tr><td>20日涨跌幅</td><td class="up">+10.15%</td><td>短期加速贬值</td></tr>
+  </table>
+
+  <h3>购买力平价（PPP）：日元被严重低估</h3>
+  <p>从PPP角度看，日元的合理汇率应在 <strong>105-115</strong> 区间，当前159的水平意味着日元被低估约 <strong>35-40%</strong>。历史经验表明，当USD/JPY突破160后，日本财务省入场干预的概率显著上升。</p>
+
+  <h3>套息交易机制：日元贬值的核心驱动力</h3>
+  <div class="carry-diagram">
+    <div class="step"><span class="step-num">1</span>投资者借入低利率日元（0.75%）</div>
+    <div class="step"><span class="step-num">2</span>兑换为美元</div>
+    <div class="step"><span class="step-num">3</span>投资于高收益美债（10年期约4.33%）</div>
+    <div class="step"><span class="step-num">4</span>赚取约3.5%的利差</div>
+    <div style="margin-top:8px; color:#e74c3c; font-weight:600;">→ 结果：持续卖出日元、买入美元 → USD/JPY 上升</div>
+  </div>
+
+  <h3>当前美日利差</h3>
+  <table>
+    <tr><th>指标</th><th>美国</th><th>日本</th><th>利差</th></tr>
+    <tr><td>10年期国债收益率</td><td class="up">4.33%</td><td>2.40%</td><td>约1.93%</td></tr>
+    <tr><td>政策利率</td><td>3.50%-3.75%</td><td>0.75%</td><td>约2.75%-3.0%</td></tr>
+  </table>
+  <p>一旦日本央行加息至1.0%，日本10年期国债收益率可能进一步上行至2.8-3.0%，利差收窄将驱动日元升值。</p>
+</div>
+
+<!-- CHART: USD/JPY 52周走势示意 -->
+<div class="chart-box">
+  <h3>📈 USD/JPY 52周价格区间示意</h3>
+  <canvas id="chartUsdJpy"></canvas>
+</div>
+
+<!-- SECTION 3: 政策路径情景分析 -->
+<div class="section">
+  <h2>🏦 三、日本央行政策路径：三种情景</h2>
+  <p style="font-size:13px;color:#666;margin-bottom:12px;">根据4月会议纪要和最新经济学家调查，日本央行政策路径存在三种主要情景：</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-card baseline">
+      <div class="scenario-title">情景一（基准，概率50%）：7月加息至1.0%</div>
+      <div class="prob">概率：50% | 触发条件：中东局势未进一步恶化，6月释放鹰派信号</div>
+      <p style="font-size:12.5px;color:#666;margin:6px 0;">6月会议维持不变但释放明确鹰派信号，待7月通胀与工资数据确认后加息。这是平衡内需脆弱与通胀压力的折中路径。</p>
+      <div class="target">📍 USD/JPY 预测目标：<strong>150-155</strong></div>
+    </div>
+
+    <div class="scenario-card hawkish">
+      <div class="scenario-title">情景二（鹰派，概率30%）：6月提前加息，年底前达1.0%</div>
+      <div class="prob">概率：30% | 触发条件：CPI持续超预期，日元逼近160</div>
+      <p style="font-size:12.5px;color:#666;margin:6px 0;">若4月PPI（4.9%）和后续CPI持续超预期，日本央行可能选择6月提前行动。鹰派委员的呼吁若获得更多支持，加息节奏将明显加快。</p>
+      <div class="target">📍 USD/JPY 预测目标：<strong>145-150</strong></div>
+    </div>
+
+    <div class="scenario-card dovish">
+      <div class="scenario-title">情景三（鸽派，概率20%）：维持利率不变至Q4</div>
+      <div class="prob">概率：20% | 触发条件：中东局势骤然升级，全球经济急剧放缓</div>
+      <p style="font-size:12.5px;color:#666;margin:6px 0;">若中东局势骤然升级导致油价飙涨，或全球经济增长急剧放缓，日本央行可能选择观望至第四季度。此概率较低。</p>
+      <div class="target">📍 USD/JPY 预测目标：<strong>突破160，测试165</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHART: 情景概率 -->
+<div class="chart-box">
+  <h3>🎯 三种情景概率分布</h3>
+  <canvas id="chartScenario"></canvas>
+</div>
+
+<!-- SECTION 4: 关键驱动因子 -->
+<div class="section">
+  <h2>🔑 四、日元走势关键驱动因子矩阵</h2>
+  <div class="driver-grid">
+    <div class="driver-row driver-header">
+      <div>驱动因子</div>
+      <div>方向</div>
+      <div>强度</div>
+      <div>时间窗口</div>
+    </div>
+    <div class="driver-row">
+      <div>日本央行加息预期</div>
+      <div class="arrow-down">日元升值 ↑</div>
+      <div>★★★</div>
+      <div>未来1-3个月</div>
+    </div>
+    <div class="driver-row">
+      <div>美联储维持高利率</div>
+      <div class="arrow-up">日元贬值 ↓</div>
+      <div>★★★</div>
+      <div>未来3-6个月</div>
+    </div>
+    <div class="driver-row">
+      <div>中东局势（油价冲击）</div>
+      <div class="arrow-mixed">复杂</div>
+      <div>★★★★</div>
+      <div>持续</div>
+    </div>
+    <div class="driver-row">
+      <div>套息交易平仓</div>
+      <div class="arrow-down">日元升值 ↑</div>
+      <div>★★★</div>
+      <div>事件驱动</div>
+    </div>
+    <div class="driver-row">
+      <div>财务省汇率干预</div>
+      <div class="arrow-down">日元升值 ↑</div>
+      <div>★★</div>
+      <div>USD/JPY &gt; 160时</div>
+    </div>
+    <div class="driver-row">
+      <div>全球衰退风险（避险）</div>
+      <div class="arrow-down">日元升值 ↑</div>
+      <div>★★</div>
+      <div>远期</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: 技术面 -->
+<div class="section">
+  <h2>📊 五、技术面分析：USD/JPY</h2>
+  <table>
+    <tr><th>类型</th><th>价位</th><th>说明</th></tr>
+    <tr><td>阻力位1</td><td class="up">160.00</td><td>心理关口 + 干预红线</td></tr>
+    <tr><td>阻力位2</td><td class="up">165.00</td><td>极端鸽派情景目标</td></tr>
+    <tr><td>支撑位1</td><td class="down">155.00</td><td>短期均线支撑</td></tr>
+    <tr><td>支撑位2</td><td class="down">150.00</td><td>心理关口 + 7月加息目标</td></tr>
+    <tr><td>支撑位3</td><td class="down">142.00</td><td>52周低点</td></tr>
+  </table>
+  <p>当前技术态势：USD/JPY 处于52周高位附近，RSI显示超买迹象。若跌破155，技术形态将转为偏空。</p>
+</div>
+
+<!-- CHART: 美日利差趋势 -->
+<div class="chart-box">
+  <h3>📉 美日10年期国债收益率利差（示意）</h3>
+  <canvas id="chartSpread"></canvas>
+</div>
+
+<!-- SECTION 6: 投资启示 -->
+<div class="section">
+  <h2>💡 六、投资启示与交易策略</h2>
+
+  <h3>投机交易者</h3>
+  <table>
+    <tr><th>策略</th><th>进场</th><th>止损</th><th>目标</th><th>风险回报比</th></tr>
+    <tr><td>中期做空USD/JPY</td><td>159附近</td><td>162</td><td>152</td><td>≈ 2.3 : 1</td></tr>
+  </table>
+  <p>逻辑：日本央行加息预期 + 财务省干预红线 + 日元严重低估，中期看空USD/JPY性价比较高。</p>
+
+  <h3>套期保值者（日本进口企业）</h3>
+  <p>当前159附近可考虑锁定部分美元购汇成本，建议在155-158区间分批建仓对冲。</p>
+
+  <h3>资产配置者</h3>
+  <ul>
+    <li><strong>日本股票（日经225）</strong>：日元升值对出口股不利，但利率正常化利好银行/保险板块</li>
+    <li><strong>日本国债</strong>：加息预期下，长端利率上行压力增大，不建议增持</li>
+  </ul>
+
+  <h3>核心监测指标（未来1-3个月）</h3>
+  <table>
+    <tr><th>指标</th><th>发布频率</th><th>重要性</th><th>对日元影响</th></tr>
+    <tr><td>日本核心CPI</td><td>每月</td><td>★★★★★</td><td>超预期 → 日元升值</td></tr>
+    <tr><td>日本央行利率决议（6月/7月）</td><td>会议制</td><td>★★★★★</td><td>加息 → 日元升值</td></tr>
+    <tr><td>美国CPI</td><td>每月</td><td>★★★★</td><td>超预期 → 延迟降息 → 日元贬值</td></tr>
+    <tr><td>美联储FOMC决议</td><td>会议制</td><td>★★★★</td><td>鹰派 → 日元贬值</td></tr>
+    <tr><td>财务省干预动向</td><td>实时</td><td>★★★</td><td>干预 → 日元短期急升</td></tr>
+  </table>
+</div>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <h2>📌 投资结论</h2>
+  <p>日元当前处于一个<strong>关键拐点区域</strong>。从基本面看，日本央行加息只是时间问题（65%经济学家预期6月行动），而美联储降息窗口不断延后但仍会在2026年某个时点开启。两者共同指向<strong>美日利差收窄的中期趋势</strong>，这对日元构成中期支撑。</p>
+  <div style="margin:16px 0;">
+    <div style="font-size:13px;color:rgba(255,255,255,0.6);">短期（1-3个月）判断</div>
+    <div style="font-size:15px;font-weight:600;color:#fff;margin:4px 0;">USD/JPY 在155-162区间震荡，方向取决于6月日本央行会议结果</div>
+  </div>
+  <div style="margin:16px 0;">
+    <div style="font-size:13px;color:rgba(255,255,255,0.6);">中期（6-12个月）目标</div>
+    <div class="target-price">USD/JPY → 145-155</div>
+  </div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:12px;">⚠️ 核心风险：中东局势失控导致全球滞胀 / 美联储转鹰超预期 / 日本央行推迟加息</div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  本报告仅供参考，不构成个人投资建议。报告数据来源于NeoData金融数据服务、日本央行、美联储公开信息及市场公开资料。<br>
+  报告生成时间：2026年5月20日 09:45 (GMT+8) | 研股股宏观研究
+</div>
+
+</div><!-- /container -->
+
+<script>
+// Chart 1: USD/JPY 52周区间示意
+const ctx1 = document.getElementById('chartUsdJpy').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: ['2025-05','2025-07','2025-09','2025-11','2026-01','2026-03','2026-05'],
+    datasets: [{
+      label: 'USD/JPY',
+      data: [155, 149, 142, 145, 152, 156, 159],
+      borderColor: '#e74c3c',
+      backgroundColor: 'rgba(231,76,60,0.1)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: 4,
+      pointBackgroundColor: '#e74c3c'
+    }, {
+      label: '160干预红线',
+      data: [160,160,160,160,160,160,160],
+      borderColor: '#f39c12',
+      borderDash: [5,5],
+      borderWidth: 1,
+      pointRadius: 0,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: true, position: 'top', labels: { font: { size: 11 } } } },
+    scales: {
+      y: { min: 135, max: 165, ticks: { font: { size: 10 } } },
+      x: { ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// Chart 2: 情景概率（饼图）
+const ctx2 = document.getElementById('chartScenario').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['基准情景（7月加息）50%', '鹰派情景（6月加息）30%', '鸽派情景（维持不变）20%'],
+    datasets: [{
+      data: [50, 30, 20],
+      backgroundColor: ['#f39c12', '#27ae60', '#e74c3c'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } }
+    }
+  }
+});
+
+// Chart 3: 美日利差示意
+const ctx3 = document.getElementById('chartSpread').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: ['2025Q2','2025Q3','2025Q4','2026Q1','2026Q2','2026Q3(预期)'],
+    datasets: [{
+      label: '美日10年期国债收益率利差（%）',
+      data: [2.8, 2.5, 2.2, 2.0, 1.93, 1.5],
+      backgroundColor: ['#e74c3c','#e67e22','#f39c12','#f1c40f','#e74c3c','#27ae60'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min: 0, max: 3.5, title: { display: true, text: '%', font: { size: 10 } }, ticks: { font: { size: 10 } } },
+      x: { ticks: { font: { size: 10 } } }
+    }
+  }
+});
+</script>
+</body>
+</html>
