@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>韬定律背后：一个架构师看"逻辑折叠"</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: #0a0a1a;
+    color: #e0e0e0;
+    line-height:1.8;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+    font-size: 15px;
+  }
+
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4e 50%, #2a0a3a 100%);
+    margin: 0 -16px 32px;
+    padding: 48px 24px 36px;
+    text-align: center;
+    border-bottom: 2px solid #ff4444;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,68,68,0.2);
+    color: #ff6666;
+    border: 1px solid #ff4444;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    color: #8888aa;
+    font-size: 13px;
+  }
+
+  /* 执行摘要 */
+  .summary-card {
+    background: linear-gradient(135deg, #1a0a0a, #2a1020);
+    border-left: 4px solid #ff4444;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 28px 0;
+  }
+  .summary-card h3 {
+    color: #ff6666;
+    font-size: 14px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .summary-card p {
+    color: #ddcccc;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  /* 数据卡片 */
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .data-card {
+    background: #12122a;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #2a2a4a;
+  }
+  .data-card .number {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ff6644;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .data-card .label {
+    font-size: 12px;
+    color: #8888aa;
+  }
+  .data-card.green .number { color: #44dd88; }
+  .data-card.blue .number { color: #4488ff; }
+
+  /* 章节 */
+  .section { margin: 36px 0; }
+  .section h2 {
+    font-size: 20px;
+    color: #ff8844;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a2a4a;
+  }
+  .section h3 {
+    font-size: 16px;
+    color: #88aaff;
+    margin: 20px 0 0px;
+  }
+  .section p {
+    margin-bottom: 14px;
+    color: #ccccdd;
+    font-size: 14.5px;
+  }
+
+  /* 表格 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: #1a1a3a;
+    color: #aaaadd;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #333366;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #1a1a2a;
+    color: #bbbbcc;
+    vertical-align: top;
+  }
+  tr:hover td { background: #0f0f25; }
+
+  /* 代码/术语 */
+  code {
+    background: #1a1a3a;
+    color: #ffaa66;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  /* 引用块 */
+  blockquote {
+    border-left: 3px solid #ff4444;
+    background: #1a0a0a;
+    padding: 14px 18px;
+    margin: 18px 0;
+    color: #ddbbbb;
+    font-size: 14px;
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* 分割线 */
+  hr {
+    border: none;
+    border-top: 1px solid #2a2a4a;
+    margin: 32px 0;
+  }
+
+  /* 页脚 */
+  .footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2a4a;
+    color: #666688;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* 良率计算特殊样式 */
+  .yield-demo {
+    background: #0a0a20;
+    border: 1px solid #333355;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #aaaacc;
+    font-family: "Courier New", monospace;
+  }
+
+  /* 股票代码样式 */
+  .stock-code {
+    color: #88ddff;
+    font-size: 12px;
+    font-family: "Courier New", monospace;
+  }
+
+  /* 子章节标题（8.x） */
+  .section h4 {
+    font-size: 15px;
+    color: #aaccff;
+    margin: 18px 0 10px;
+    padding-left: 12px;
+    border-left: 3px solid #4444aa;
+  }
+
+  /* 免责声明 */
+  .disclaimer {
+    background: #0a0a1a;
+    border: 1px solid #333355;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    color: #8888aa;
+    font-size: 12.5px;
+    line-height: 1.8;
+  }
+
+  /* 移动端适配 */
+  @media (max-width: 480px) {
+    body { font-size: 14px; padding: 0 12px 40px; }
+    .hero { padding: 36px 16px 28px; }
+    .hero h1 { font-size: 22px; }
+    .data-grid { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div class="hero-tag">技术分析 · 半导体架构</div>
+  <h1>韬定律背后：<br>一个架构师看"逻辑折叠"</h1>
+  <div class="hero-sub">从系统架构视角拆解 Logic Folding 的技术本质</div>
+</div>
+
+<!-- 执行摘要 -->
+<div class="summary-card">
+  <h3>✦ 核心结论（3句话）</h3>
+  <p>
+    ① 韬定律的本质是用"时间缩微"替代"几何缩微"，逻辑折叠是实现这一目标的核心技术手段。<br>
+    ② 逻辑折叠 ≠ 简单芯片堆叠，其技术难点集中在混合键合（&lt;1.5μm间距）、TSV热应力、3D散热三大瓶颈。<br>
+    ③ 良率的数学是残酷的：8层堆叠总良率可从99%跌至63%，这是逻辑折叠规模化的最大经济障碍。
+  </p>
+</div>
+
+<!-- 关键数据格 -->
+<div class="data-grid">
+  <div class="data-card">
+    <span class="number">53.5%</span>
+    <span class="label">晶体管密度提升<br>（麒麟2026 vs 9030）</span>
+  </div>
+  <div class="data-card green">
+    <span class="number">41%</span>
+    <span class="label">性能核能效提升<br>（麒麟2026）</span>
+  </div>
+  <div class="data-card blue">
+    <span class="number">1.5μm</span>
+    <span class="label">混合键合间距<br>（第一代保守设置）</span>
+  </div>
+  <div class="data-card">
+    <span class="number">381款</span>
+    <span class="label">华为6年基于韬定律<br>量产芯片数量</span>
+  </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="section">
+  <h2>一、先搞懂：韬定律到底在说什么？</h2>
+
+  <p>华为这次提出的"韬定律"，核心是用"时间缩微"（Time Scaling）替代延续了60年的"几何缩微"（Geometric Scaling）。</p>
+
+  <table>
+    <tr><th>维度</th><th>摩尔定律（旧范式）</th><th>韬定律（新范式）</th></tr>
+    <tr><td>优化目标</td><td>缩小晶体管尺寸（几何缩微）</td><td>压缩时间常数 τ（时间缩微）</td></tr>
+    <tr><td>实现路径</td><td>先进制程（EUV光刻，2nm→1.4nm）</td><td>逻辑折叠 + 3D堆叠 + 先进封装</td></tr>
+    <tr><td>成本曲线</td><td>严重恶化（3nm设计成本&gt;10亿美元）</td><td>在固定制程节点上持续提升性能</td></tr>
+    <tr><td>τ的含义</td><td>无</td><td>时间常数 = 信号传播延迟，贯穿器件→电路→芯片→系统四层</td></tr>
+  </table>
+
+  <p>华为给出了一组硬数据：基于韬定律，过去6年已量产 381款芯片；采用逻辑折叠的麒麟2026，晶体管密度从155 MTr/mm²提升到 238 MTr/mm²（提升53.5%），这份增益以往需要3年的几何缩微才能换来。</p>
+
+  <blockquote>但财经号没讲的是：从"知道要叠"到"叠得出来"，中间隔着多少技术地狱。</blockquote>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>二、逻辑折叠 ≠ 把两颗芯片摞在一起</h2>
+
+  <p>这是最多人误解的地方。</p>
+
+  <h3>传统3D堆叠（粗粒度）</h3>
+  <p>把两个已经做好的裸片（Die）通过微凸点（Micro-bump）或混合键合连在一起，模块级互联，信号要走较长的垂直互连通道。典型应用：HBM堆叠DRAM。</p>
+
+  <h3>逻辑折叠（细粒度）</h3>
+  <p>把逻辑门级、电路级的功能单元打散到多个有源层，通过超细间距混合键合垂直互连，对设计者来说就像在一个连续的布局画布上布线——层间边界被隐藏了，像多了一层金属层。</p>
+
+  <h3>类比：从单核到多核，再到逻辑折叠</h3>
+  <table>
+    <tr><th>演进阶段</th><th>核心思路</th><th>问题</th></tr>
+    <tr><td>单核 → 多核</td><td>原来一条路堵车，修十条并行路</td><td>十条路之间通信开销很大</td></tr>
+    <tr><td>多核 + 先进封装</td><td>Chiplet：把大芯片拆成小芯片，用2.5D/3D互联</td><td>芯片间通信延迟仍然较高</td></tr>
+    <tr><td>逻辑折叠</td><td>把平面上绕远路的信号线"折叠"到垂直方向，走"楼梯"上下层直达</td><td>TSV、散热、良率——本文重点</td></tr>
+  </table>
+
+  <p>华为论文数据：双层逻辑折叠，时钟缓冲减少 &gt;50%，布线长度减少 ~30%，时钟偏差（skew）降低 25%。</p>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>三、技术难点深究：叠起来，没那么简单</h2>
+
+  <h3>3.1 TSV：垂直互连的物理基础</h3>
+  <p><strong>TSV（Through-Silicon Via，硅通孔）</strong> 是3D IC垂直互连的物理通道。在硅片上打孔、填充铜，让上下层电路能导通。</p>
+
+  <table>
+    <tr><th>难点</th><th>具体挑战</th></tr>
+    <tr><td>孔径与深宽比</td><td>先进工艺要求TSV孔径 &lt; 5μm，深宽比 &gt; 10:1，蚀刻均匀性极难控制</td></tr>
+    <tr><td>TSV形成应力</td><td>铜与硅的热膨胀系数不匹配，会在邻近器件中产生应力，影响器件性能</td></tr>
+    <tr><td>TSV寄生参数</td><td>TSV本身的电容和电感会引入信号完整性问题，高频下尤其严重</td></tr>
+    <tr><td>TSV占位</td><td>TSV占用硅片面积，需要在floorplan阶段专门预留，影响标准单元布局密度</td></tr>
+  </table>
+
+  <p>华为逻辑折叠第一代混合键合间距 <strong>1.5μm</strong>，这意味着TSV的孔径必须同步微缩——工艺难度指数级上升。</p>
+
+  <h3>3.2 混合键合（Hybrid Bonding）：最精密的"贴合"</h3>
+  <p>混合键合是当前最先进的芯片键合技术，将两片晶圆的铜焊盘和氧化硅介质层在室温下直接键合，不需要焊料。</p>
+
+  <p>三个核心指标，每一个都是地狱难度：</p>
+
+  <table>
+    <tr><th>指标</th><th>技术要求</th><th>难度说明</th></tr>
+    <tr><td>表面平整度（CMP）</td><td>Ra &lt; 0.5nm（铜焊盘 &lt; 1nm）</td><td>一片12英寸晶圆，表面起伏不能超过一个原子的尺度</td></tr>
+    <tr><td>对准精度（Alignment）</td><td>W2W: &lt; 0.5μm；D2W: 亚微米级</td><td>任何对准偏差导致铜焊盘错位，信号无法导通，芯片直接报废</td></tr>
+    <tr><td>颗粒污染控制</td><td>&lt; 5个/片（&gt; 0.1μm颗粒）</td><td>任何微小颗粒落在键合界面都会造成键合失效</td></tr>
+  </table>
+
+  <p><strong>混合键合间距演进路线：</strong></p>
+  <div class="yield-demo">
+10μm（Micro-bump极限）
+  ↓
+5μm → 2μm（当前主流先进封装）
+  ↓
+1.5μm（华为麒麟2026，第一代）
+  ↓
+&lt; 1μm（研发中，目标2030+）
+  </div>
+
+  <h3>3.3 散热：3D堆叠的阿喀琉斯之踵</h3>
+  <p>在平面芯片上，热量可以通过硅片背面和顶面两个方向散出，热阻路径相对可控。</p>
+  <p>在3D堆叠芯片中：中间层的电路被上下两层硅片"夹"在中间，热量必须 <strong>先向上或向下穿过硅片</strong> 才能到达散热路径。</p>
+
+  <table>
+    <tr><th>散热路径</th><th>热阻特征</th></tr>
+    <tr><td>向上传导</td><td>上层硅片（~50μm厚）→ 混合键合界面（热阻较高）→ 散热器</td></tr>
+    <tr><td>向下传导</td><td>下层硅片 → TSV区域（热导率不均匀）→ 基板 → 散热器</td></tr>
+    <tr><td><strong>中间层热点温升</strong></td><td><strong>可比最上层高出 30~50°C</strong>（仿真数据）</td></tr>
+  </table>
+
+  <blockquote>对于服务器级芯片（如Ascend AI加速器），散热将是决定性瓶颈——这不是靠架构优化能完全解决的，需要系统级的散热方案（微流体冷却、背面金属化、TSV导热通道等）。</blockquote>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>四、成本结构：为什么"叠起来"不是免费的？</h2>
+
+  <p>财经号喜欢说"逻辑折叠绕过了EUV限制，成本低"——这个说法只说对了一半。</p>
+
+  <h3>固定制程节点 ≠ 零新增成本</h3>
+  <p>逻辑折叠在固定制程节点（如7nm或5nm）上通过3D集成提升性能，确实不需要购买最先进的EUV光刻机（一台ASML EUV &gt; 1.5亿美元）。</p>
+
+  <table>
+    <tr><th>成本项</th><th>说明</th><th>成本影响</th></tr>
+    <tr><td>晶圆键合设备</td><td>混合键合机台（EVG、SUSS MicroTec）价格昂贵</td><td>设备折旧显著增加</td></tr>
+    <tr><td>CMP工艺步骤增加</td><td>混合键合要求超低表面粗糙度，CMP步骤翻倍</td><td>每片晶圆工艺成本 +20~30%</td></tr>
+    <tr><td>TSV加工</td><td>深硅刻蚀、氧化层沉积、铜填充、CMP</td><td>每片晶圆成本 +15~25%</td></tr>
+    <tr><td>测试成本上升</td><td>3D堆叠需要逐层测试（KGD筛选），测试时间大幅增加</td><td>测试成本可能翻倍</td></tr>
+    <tr><td>键合良率损失</td><td>键合良率目前低于传统封装</td><td>良率损失直接转化为成本</td></tr>
+  </table>
+
+  <h3>W2W vs D2W：成本与灵活性的权衡</h3>
+  <table>
+    <tr><th>工艺路线</th><th>优点</th><th>缺点</th><th>适用场景</th></tr>
+    <tr><td>W2W（晶圆对晶圆）</td><td>对准精度高、吞吐量大、单位成本低</td><td>不能筛选KGD，一片有缺陷会拖累整批</td><td>高良率芯片（CIS、3D NAND）</td></tr>
+    <tr><td>D2W（芯片对晶圆）</td><td>先测试筛选KGD，减少浪费；支持异质集成</td><td>对准难度高、吞吐量低、单位成本高</td><td>逻辑+存储异质集成</td></tr>
+  </table>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>五、良率瓶颈：从99%到63%的残酷数学</h2>
+
+  <p>这是财经号最不愿意谈的问题。</p>
+
+  <p><strong>良率叠加原理</strong>：3D堆叠芯片的总良率 = 每层裸片的良率 × 键合良率。</p>
+
+  <div class="yield-demo">
+假设：单层裸片良率 = 99%，键合良率 = 95%
+
+层数    总良率计算                总良率
+1层     99%                       99%
+2层     99% × 99% × 95%          93%
+3层     99%³ × 95%²              88%
+4层     99%⁴ × 95%³              84%
+8层     99%⁸ × 95%⁷              63%
+
+如果单层良率是95%（更现实的工业水平）：
+8层堆叠总良率 → 36%（几乎无法商业化）
+  </div>
+
+  <blockquote>这就是为什么华为第一代逻辑折叠只做2层、且只针对关键路径选择性应用：不是技术做不到更多层，是 <strong>良率-成本曲线</strong> 不允许。</blockquote>
+
+  <h3>提升良率的技术路径</h3>
+  <table>
+    <tr><th>路径</th><th>说明</th></tr>
+    <tr><td>Known Good Die（KGD）筛选</td><td>先测试再键合，D2W路线的核心优势</td></tr>
+    <tr><td>键合工艺优化</td><td>表面平整度、对准精度、颗粒控制持续改进</td></tr>
+    <tr><td>修复机制</td><td>架构层面增加冗余电路，键合失效后通过冗余通路修复</td></tr>
+    <tr><td>逐步爬坡</td><td>从2层开始，积累良率数据，逐步向4层、8层演进</td></tr>
+  </table>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>六、架构师视角的思考：逻辑折叠不是银弹</h2>
+
+  <p>作为一个在芯片设计领域摸爬滚打过的人，我对逻辑折叠的看法是：这是后摩尔时代最系统的思路之一，但它不是银弹。</p>
+
+  <h3>逻辑折叠真正厉害的地方</h3>
+  <p>不是"叠起来"这个动作，而是 <strong>贯穿器件→电路→芯片→系统四层的协同优化体系</strong>：</p>
+  <table>
+    <tr><th>层级</th><th>优化目标（τ）</th><th>逻辑折叠的作用</th></tr>
+    <tr><td>器件层</td><td>τ_device：本征开关延迟</td><td>固定（取决于晶体管工艺）</td></tr>
+    <tr><td>电路层</td><td>τ_circuit：RC传播延迟</td><td><strong>逻辑折叠主战场</strong>：缩短走线，降低寄生RC</td></tr>
+    <tr><td>芯片层</td><td>τ_chip：计算和内存访问延迟</td><td>细粒度逻辑分布，减少内存访问延迟</td></tr>
+    <tr><td>系统层</td><td>τ_system：端到端消息传输时间</td><td>华为灵衢总线：统一内存寻址，原生内存语义</td></tr>
+  </table>
+
+  <h3>但这套体系面临的挑战也是系统级的</h3>
+  <table>
+    <tr><th>挑战</th><th>说明</th></tr>
+    <tr><td>散热</td><td>物理定律，不是架构技巧能完全化解；服务器级芯片需要系统级散热方案</td></tr>
+    <tr><td>良率数学</td><td>8层堆叠总良率从99%跌到63%，意味着成本翻倍以上</td></tr>
+    <tr><td>EDA工具链</td><td>现有工具不支持跨层布局布线、热感知设计、3D时序分析</td></tr>
+    <tr><td>生态系统</td><td>测试、封装、可靠性验证，整个供应链都需要重新适配</td></tr>
+  </table>
+</div>
+
+<hr>
+
+<div class="section">
+  <h2>七、写在最后：为什么这件事值得认真对待？</h2>
+
+  <p>韬定律最值得关注的地方，不是"国产替代"的叙事，而是中国公司第一次在半导体底层范式上提出系统性替代方案。</p>
+
+  <p>过去60年，半导体产业沿着摩尔定律的轨道走——几何缩微，缩小缩小再缩小。现在这条路的物理极限和经济极限同时到达，整个行业都在找新路。</p>
+
+  <p>华为给出的答案是：<strong>不盯着晶体管尺寸了，盯着信号传播的时间常数τ。</strong> 逻辑折叠是这条路上的第一个实质性技术成果。</p>
+
+  <p>从架构师的角度看，这个答案的巧妙之处在于：<strong>它把竞争维度从"谁能买到最先进的光刻机"转移到了"谁能做最好的系统级优化"</strong>——后者恰恰是中国供应链的相对优势所在。</p>
+
+  <p>这条路能不能走通，取决于华为能不能把上面说的那些技术难点（混合键合良率、散热管理、EDA工具链、生态系统）一个一个攻克下来。</p>
+
+  <blockquote>但至少，方向是对的。</blockquote>
+</div>
+
+<hr>
+
+<!-- 第八章：产业链标的 -->
+<div class="section">
+  <h2>八、真正能参与的公司：逻辑折叠产业链标的梳理</h2>
+
+  <p>韬定律发布后，A股半导体板块已有一轮明显上涨（长电科技、通富微电等涨停）。但情绪退潮后，<strong>真正具备技术能力和客户绑定关系的公司，才有持续性</strong>。</p>
+
+  <p>按产业链位置梳理如下（资料来源：市场公开信息，非投资建议）：</p>
+
+  <h3>8.1 封测：最直接的受益环节</h3>
+  <p>逻辑折叠的落地，最终都要通过封测厂实现。这是产业链中 <strong>弹性最大</strong> 的环节。</p>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>长电科技</td><td><span class="stock-code">600584.SH</span></td><td>全球Top3封测厂，华为麒麟核心封测供应商；XDFOI高密度封装、3D堆叠技术适配逻辑折叠，最确定的核心标的</td></tr>
+    <tr><td>通富微电</td><td><span class="stock-code">002156.SZ</span></td><td>深度绑定华为，2.5D/3D异构封装储备强，AI与手机芯片封测主力，高弹性</td></tr>
+    <tr><td>华天科技</td><td><span class="stock-code">002185.SZ</span></td><td>西安基地紧邻华为配套，多层堆叠封装能力突出</td></tr>
+    <tr><td>甬矽电子</td><td><span class="stock-code">688362.SH</span></td><td>聚焦先进封装，华为2.5D/3D封装第二供应商</td></tr>
+    <tr><td>伟测科技</td><td><span class="stock-code">603005.SH</span></td><td>高端芯片测试服务，逻辑折叠带来的复杂异构集成直接拉动测试设备需求</td></tr>
+  </table>
+
+  <h3>8.2 晶圆制造：产能落地的根基</h3>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>中芯国际</td><td><span class="stock-code">688981.SH</span></td><td>华为先进制程核心代工伙伴，N+2工艺支撑逻辑折叠的高密度制造</td></tr>
+    <tr><td>华虹公司</td><td><span class="stock-code">688347.SH</span></td><td>特色工艺代工，补充中芯产能，为华为提供功率/模拟芯片代工</td></tr>
+  </table>
+
+  <h3>8.3 设备：产能扩张的刚性需求</h3>
+  <p>逻辑折叠对TSV刻蚀、CMP、混合键合设备需求量大幅增加。</p>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>北方华创</td><td><span class="stock-code">002371.SZ</span></td><td>刻蚀、沉积、清洗全平台供应商，华为先进制程核心设备商</td></tr>
+    <tr><td>中微公司</td><td><span class="stock-code">688012.SH</span></td><td>高端刻蚀设备龙头，适配高密度晶体管工艺</td></tr>
+    <tr><td>拓荆科技</td><td><span class="stock-code">688072.SH</span></td><td>PE-CVD薄膜沉积设备龙头，3D堆叠多层电路必备</td></tr>
+    <tr><td>盛美上海</td><td><span class="stock-code">688082.SH</span></td><td>半导体清洗设备龙头，先进制程刚需</td></tr>
+    <tr><td>芯源微</td><td><span class="stock-code">688037.SH</span></td><td>涂胶显影设备供应商，适配逻辑折叠的高密度布线</td></tr>
+    <tr><td>长川科技</td><td><span class="stock-code">301568.SZ</span></td><td>半导体测试设备，逻辑折叠良率控制的保障环节</td></tr>
+  </table>
+
+  <h3>8.4 EDA/IP：逻辑折叠设计的核心工具</h3>
+  <p>逻辑折叠要求EDA工具支持跨层布局布线、热感知设计、3D时序分析——现有工具尚未完全成熟，国内EDA厂商受益。</p>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>华大九天</td><td><span class="stock-code">688519.SH</span></td><td>国产EDA龙头，全制程EDA工具，支持3D布局设计和逻辑折叠芯片设计</td></tr>
+    <tr><td>芯原股份</td><td><span class="stock-code">688521.SH</span></td><td>提供高密度逻辑IP和定制设计服务，适配新芯片架构</td></tr>
+    <tr><td>概伦电子</td><td><span class="stock-code">688206.SH</span></td><td>器件建模和电路仿真核心工具供应商</td></tr>
+    <tr><td>紫光国微</td><td><span class="stock-code">603501.SZ</span></td><td>提供可重构IP，适配逻辑折叠的灵活架构</td></tr>
+  </table>
+
+  <h3>8.5 材料：超薄、低损耗、高密度专用材料</h3>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>沪硅产业</td><td><span class="stock-code">688126.SH</span></td><td>12英寸超薄硅片供应商，堆叠芯片的核心基板材料</td></tr>
+    <tr><td>安集科技</td><td><span class="stock-code">688019.SH</span></td><td>CMP抛光液和low-k介质材料供应商，多层堆叠必备</td></tr>
+    <tr><td>湖北鼎龙</td><td><span class="stock-code">300054.SZ</span></td><td>CMP耗材和光刻胶，适配高密度布线</td></tr>
+    <tr><td>联瑞新材</td><td><span class="stock-code">688325.SH</span></td><td>键合和散热材料供应商，先进封装核心材料商</td></tr>
+    <tr><td>江丰电子</td><td><span class="stock-code">300666.SZ</span></td><td>溅射靶材龙头，支撑先进制程</td></tr>
+    <tr><td>华懋科技</td><td><span class="stock-code">603306.SH</span></td><td>获华为哈勃投资，高端光刻胶核心供应商</td></tr>
+  </table>
+
+  <h3>8.6 高速PCB/封装基板：降低信号延迟</h3>
+  <p>逻辑折叠的目标是压缩τ（时间常数），封装基板和高速PCB的信号完整性直接影响延迟指标。</p>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>景旺电子</td><td><span class="stock-code">603228.SH</span></td><td>国内少数具备ABF封装基板量产能力、已进入华为先进封装供应链</td></tr>
+    <tr><td>深南电路</td><td><span class="stock-code">002916.SZ</span></td><td>华为封装基板和高速PCB核心供应商</td></tr>
+    <tr><td>沪电股份</td><td><span class="stock-code">002463.SZ</span></td><td>高端高速PCB龙头，适配高密度互连</td></tr>
+    <tr><td>华丰科技</td><td><span class="stock-code">688629.SH</span></td><td>高速连接器供应商，降低信号损耗、适配时间缩微</td></tr>
+  </table>
+
+  <h3>8.7 芯片设计：技术落地的终端受益者</h3>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>与逻辑折叠的关联</th></tr>
+    <tr><td>寒武纪</td><td><span class="stock-code">688256.SH</span></td><td>国产AI算力芯片厂商，等效1.4nm架构带来的算力提升直接受益</td></tr>
+    <tr><td>兆易创新</td><td><span class="stock-code">603986.SH</span></td><td>国产存储和MCU龙头，新架构的高带宽需求适配</td></tr>
+    <tr><td>东芯股份</td><td><span class="stock-code">688110.SH</span></td><td>国产存储厂商，先进封装带动存储需求</td></tr>
+    <tr><td>海光信息</td><td><span class="stock-code">688041.SH</span></td><td>国产CPU厂商，与华为算力生态协同</td></tr>
+  </table>
+
+  <h3>8.8 精简关注名单</h3>
+  <p>如果只选最确定的，以下是市场共识度较高的核心标的（按确定性排序）：</p>
+  <p style="color:#ddddcc; line-height:2; margin: 12px 0;">
+    <strong style="color:#ffaa66;">封测双雄</strong>：长电科技（600584）、通富微电（002156）<br>
+    <strong style="color:#ffaa66;">晶圆制造</strong>：中芯国际（688981）<br>
+    <strong style="color:#ffaa66;">设备龙头</strong>：北方华创（002371）、中微公司（688012）<br>
+    <strong style="color:#ffaa66;">EDA</strong>：华大九天（688519）<br>
+    <strong style="color:#ffaa66;">材料</strong>：沪硅产业（688126）、安集科技（688019）<br>
+    <strong style="color:#ffaa66;">基板</strong>：景旺电子（603228）、深南电路（002916）
+  </p>
+
+  <div class="disclaimer">
+    <strong>免责</strong>：以上内容整理自公开信息，不构成投资建议。逻辑折叠技术的产业化进度存在不确定性，投资决策请结合自身风险承受能力。
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer">
+  <p>参考资料：华为《A Time Scaling Theory for Multi-Layer Electronic Systems》论文，IT之家/腾讯新闻相关报道，混合键合技术文献</p>
+  <p style="margin-top:8px;">2026年5月26日 @ Mason 工作笔记 · 技术分析系列</p>
+</div>
+
+</body>
+</html>
