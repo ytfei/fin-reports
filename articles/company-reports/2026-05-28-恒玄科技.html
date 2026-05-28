@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恒玄科技：藏在科创板里的一只 AI 端侧芯片标的</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f5f6fa;
+    color: #1a1a2e;
+    line-height: 1.9;
+    font-size: 15px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 60px 24px 48px;
+    text-align: center;
+    color: #fff;
+  }
+  .hero .label {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .hero .subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 8px;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .intro {
+    background: #fff;
+    margin: -24px 20px 0;
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 2;
+  }
+  .intro p {
+    font-size: 14.5px;
+    color: #2d3436;
+    line-height: 2;
+    margin-bottom: 14px;
+  }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro .highlight {
+    color: #0f3460;
+    font-weight: 600;
+  }
+  .section {
+    background: #fff;
+    margin: 20px 0;
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 18px;
+    padding-left: 12px;
+    border-left: 4px solid #0f3460;
+    line-height: 1.4;
+  }
+  .section h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f3460;
+    margin: 20px 0 10px;
+  }
+  .section p {
+    font-size: 14.5px;
+    color: #2d3436;
+    line-height: 2;
+    margin-bottom: 14px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .data-card {
+    background: #f8f9fc;
+    border-left: 3px solid #0f3460;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: #2d3436;
+  }
+  .data-card .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f3460;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .risk-box {
+    background: #fff8f0;
+    border-left: 3px solid #e17055;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: #2d3436;
+  }
+  .risk-box strong { color: #e17055; }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .tag-red { background: #ffeaea; color: #e17055; }
+  .tag-orange { background: #fff3e0; color: #e67e22; }
+  .tag-green { background: #eafaf1; color: #00b894; }
+  .divider {
+    text-align: center;
+    color: #c0c0c8;
+    font-size: 12px;
+    margin: 24px 0;
+    letter-spacing: 4px;
+  }
+  .footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: #b0b0b8;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer a { color: #0f3460; text-decoration: none; }
+  .source {
+    background: #f8f9fc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    font-size: 12.5px;
+    color: #636e72;
+    line-height: 1.9;
+  }
+  .source strong { color: #1a1a2e; }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 22px; }
+    .hero { padding: 40px 16px 36px; }
+    .intro, .section { padding: 20px 16px; margin-left: 12px; margin-right: 12px; }
+    .intro { margin-top: -20px; }
+    body { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">AI 端侧芯片 · 科创板深度</div>
+  <h1>恒玄科技：藏在科创板里<br>的一只 AI 端侧芯片标的</h1>
+  <div class="subtitle">2026年5月28日 · 研股股</div>
+</div>
+
+<div class="container">
+  <div class="intro">
+    <p>如果你去看科创板芯片设计公司，会发现一个有趣的现象：大家都在讲"国产替代""算力自主"的故事，但真正把芯片装进华为、小米、三星、谷歌产品里的公司，两只手数得过来。</p>
+    <p>恒玄科技（688608.SH）是其中之一。</p>
+    <p>这家公司2020年科创板上市，很多人对它的印象还停留在"做TWS耳机芯片的"。但这个印象有点旧了。2025年，恒玄的营收是<span class="highlight">35.25亿元</span>，归母净利润<span class="highlight">5.94亿元</span>，毛利率<span class="highlight">38.7%</span>——而且增长最快的业务已经不是TWS耳机芯片，而是智能可穿戴芯片，同比增速超过<span class="highlight">50%</span>。</p>
+    <p>更值得注意的一件事：恒玄2023年推出的BES2800系列芯片，用的是6nm制程，集成了自研NPU，正在成为国内AI智能眼镜厂商的主流选择。</p>
+    <p>这篇文章聊三件事：恒玄是怎么从TWS耳机芯片打到可穿戴芯片的，AI端侧推理为什么需要"低功耗算力"，以及这家公司面对的真实风险和机会。</p>
+  </div>
+
+  <div class="section">
+    <h2>TWS耳机芯片起家，但天花板看得见</h2>
+    <p>恒玄2015年成立，创始团队来自RDA、高通、Marvell，做的第一件事是TWS真无线耳机芯片。</p>
+    <p>这个选择当时看起来有点"窄"——TWS耳机是个消费品类，芯片ASP不高，而且竞争激烈。但恒玄打法很清晰：用先进制程（28nm → 12nm → 6nm）压功耗，用高集成度（单颗SoC集成蓝牙+ANC+语音处理）帮客户降BOM成本。</p>
+    <p>2018年推出的BES2300系列，是全球首款集成主动降噪（ANC）功能的TWS耳机单芯片方案，在功耗、性能、成本三个维度同时优于市面上的分立方案。这款产品让恒玄在TWS耳机芯片市场站稳了脚跟。</p>
+    <div class="data-card">
+      <span class="num">8-10%</span>
+      恒玄在TWS耳机芯片市场的占有率（2025年，按出货量计），按收入计约12-15%。客户包括华为、小米、OPPO、vivo、三星、谷歌。
+    </div>
+    <p>但TWS耳机芯片这个市场，天花板是看得见的。</p>
+    <p>全球TWS耳机年出货量大概2.8亿副（2025年数据），增速已经从早期的爆发期回落到5-8%的年均复合增长。芯片ASP也在持续承压——高通往中端下沉，珠海杰理往品牌客户渗透，两头挤压。</p>
+    <p>恒玄2025年TWS耳机芯片的收入占比还在65-70%，但增速已经放缓到12-15%。这不是坏事，说明公司自己在主动调整产品结构。</p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>可穿戴芯片：从智能手表打到AI眼镜</h2>
+    <p>恒玄2021年推出第一代智能手表芯片BES2500系列，2022年推出12nm制程的BES2700系列，在华为Watch GT 3、小米Watch S2等产品上实现了对高通骁龙Wear平台的部分替代。</p>
+    <p>替代发生的原因很简单：<strong>功耗</strong>。</p>
+    <p>可穿戴设备的核心痛点是续航。高通的骁龙Wear平台性能强，但功耗也高——同样电池容量下，恒玄方案的典型续航是7-10天，高通方案是2-3天。对于大多数用户来说，这个差异是能感知到的。</p>
+    <div class="data-card">
+      <span class="num">20-25%</span>
+      2025年恒玄智能可穿戴芯片的收入占比，同比增速超过50%。这块业务的毛利率也比TWS耳机芯片高。
+    </div>
+    <p>但更值得关注的是<strong>AI眼镜</strong>这个新兴市场。</p>
+    <p>2023年，恒玄推出基于6nm制程的BES2800系列SoC，集成自研NPU，支持端侧AI语音识别、摄像头图像信号处理（ISP）、AR显示驱动等。这款芯片正在成为国内AI眼镜厂商的主流选择，合作方包括Rokid、XREAL、雷鸟创新。</p>
+    <p>AI眼镜这个品类，2025年全球出货量大概800-1000万副，同比增长超过150%。绝对量还小，但增速很快。Meta Ray-Ban智能眼镜2025年全球销量约700万副，带动了整个品类的市场认知度提升。</p>
+    <p>AI眼镜对主控SoC的要求比TWS耳机和智能手表都高：需要支持摄像头ISP、AR显示驱动、端侧AI推理（语音识别、图像识别、实时翻译）、传感器融合——芯片ASP可达20-50美元/颗，是TWS耳机芯片的3-5倍。</p>
+    <div class="data-card">
+      <span class="num">6nm</span>
+      BES2800系列2023年推出，比高通的骁龙AR1平台早了大概一年。6nm制程带来的功耗优势和NPU算力，在当前这个时间窗口是够用的。
+    </div>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>端侧AI推理：为什么需要"低功耗算力"？</h2>
+    <p>这里有一个值得拆开讲的技术逻辑。</p>
+    <p>过去两年，生成式AI的突破让很多人形成了一种认知：AI算力 = 云端大模型 = 高算力GPU集群。这个认知没错，但不完整。</p>
+    <p>越来越多的AI功能正在从云端往设备端迁移：语音助手需要本地响应（等云端往返延迟太高），健康数据不希望上传云端（隐私考虑），实时翻译需要在无网环境下工作。这些场景都需要端侧AI推理能力。</p>
+    <p>端侧推理的约束条件<strong>不是算力天花板，而是功耗预算</strong>。</p>
+    <div class="data-card">
+      <span class="num">30-500mAh</span>
+      一颗TWS耳机内置电池大概30-50mAh，智能手表大概300-500mAh，AI眼镜大概200-400mAh。留给NPU的功耗预算，大概是几十到几百毫瓦的量级。
+    </div>
+    <p>在这个功耗预算下跑得动的NPU，和跑大模型训练的NPU，完全不是一回事。</p>
+    <p>恒玄的路径是：用先进制程（6nm，下一步4nm/3nm）压功耗，用自研NPU架构做指令集和算子优化，在有限的功耗预算下把端侧推理的精度和速度做到够用。</p>
+    <p>这个方向是不是对的，取决于一件事：<strong>端侧AI功能的用户价值是不是真的成立</strong>。</p>
+    <p>当前阶段，端侧AI在可穿戴设备上的主要功能包括：离线语音指令识别（准确率>95%）、自适应ANC（根据环境噪声特征自动调整降噪参数）、健康数据本地推理（心率异常检测、睡眠质量分析）。这些功能有没有"必须本地做"的理由？有，但用户是不是愿意为此付钱，还在验证中。</p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>财务表现：稳健，但增长质量要看新品爬坡</h2>
+    <p>看几组数字。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;">
+      <div class="data-card" style="margin:0;border-left-width:3px;"><span class="num">35.25亿</span>2025年营业收入，同比+18%</div>
+      <div class="data-card" style="margin:0;border-left-width:3px;"><span class="num">5.94亿</span>归母净利润，同比+31%</div>
+      <div class="data-card" style="margin:0;border-left-width:3px;"><span class="num">38.7%</span>综合毛利率，较上年+2.5pp</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
+      <div class="data-card" style="margin:0;border-left-width:3px;"><span class="num">6.2%</span>资产负债率，账面货币资金35.36亿元</div>
+      <div class="data-card" style="margin:0;border-left-width:3px;"><span class="num">16.8%</span>研发费用率，科创板芯片设计公司中偏高</div>
+    </div>
+    <p>高研发投入是不是值得，看两件事：一是研发项目的商业化转化率，二是竞争壁垒是不是真的建立了。</p>
+    <p>恒玄的IP积累是实的——累计申请发明专利300余项，已获授权150余项，主要集中在低功耗电路设计、蓝牙音频处理、ANC算法、端侧AI推理架构这几个方向。这些专利是不是能构成有效的竞争壁垒，取决于产业链对专利侵权的追溯力度。音频处理领域的专利诉讼一向很活跃，恒玄需要持续做专利交叉许可协议来降低风险。</p>
+    <p>现金流方面，2025年经营活动现金净流量约7.8亿元，自由现金流（FCF）约6.6亿元，表现健康。资本支出占收入比重约3%，属于典型的Fabless轻资产模式。</p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>几个具体的风险</h2>
+
+    <div class="risk-box">
+      <strong>▲ 客户集中度</strong><br>
+      2025年前五大客户占营业收入比例约55-60%，最大单一客户占比约15-20%。如果华为或者小米决定自研芯片或者切换供应商，对恒玄的收入影响是实质性的。
+    </div>
+
+    <div class="risk-box">
+      <strong>▲ 先进制程产能依赖</strong><br>
+      恒玄中高端产品依赖台积电的12nm和6nm制程产能，2025年台积电占晶圆采购金额约70%。如果台积电发生生产中断，产品交付会面临压力。恒玄正在推进中芯国际12nm制程的认证导入，但短期内的可替代性有限。
+    </div>
+
+    <div class="risk-box">
+      <strong>▲ AI眼镜出货量不及预期</strong><br>
+      这是最大的上行风险和下行风险来源。2025年AI眼镜全球出货量800-1000万副，基数小、增速快，但绝对规模仍然有限。如果Meta的下一代产品市场反响不及预期，恒玄在AI眼镜芯片上的先发优势会大打折扣。
+    </div>
+
+    <div class="risk-box">
+      <strong>▲ 竞争加剧</strong><br>
+      高通的骁龙AR1平台已经在AI眼镜芯片市场开始出货，联发科的Dimensity Wear平台也在往可穿戴市场下沉。恒玄在功耗上的优势是实的，但高通在AI算力和生态整合上的积累更深。中长期看，AI眼镜芯片市场大概率会是"高通 + 恒玄 + 联发科"三强格局。
+    </div>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>估值：当前股价对应什么预期？</h2>
+    <p>2026年5月28日，恒玄科技收盘价180.11元，总市值约304亿元（股本1.69亿股）。</p>
+    <div class="data-card">
+      <span class="num">51倍</span>
+      当前市值对应2025年归母净利润5.94亿元的PE约51倍。科创板芯片设计公司的估值向来不便宜，卓胜微、澜起科技、兆易创新的PE也在30-60倍区间波动。
+    </div>
+    <p>如果用SOTP（分类加总估值）粗略拆解：</p>
+    <p>TWS耳机芯片业务给15-20倍PE（成熟期业务），可穿戴芯片业务给25-35倍PE（成长期业务），AI眼镜芯片业务给40-50倍PE（爆发期业务，但当前收入贡献还小）。加权平均下来，2026年预期净利润约7.5-8.5亿元对应的合理PE大概35-45倍，对应市值区间260-380亿元。</p>
+    <p>当前304亿元的市值，处在合理区间的中枢位置，不算便宜，但也没有明显泡沫。如果AI眼镜芯片的出货量在2026-2027年如期放量，估值有进一步扩张的空间。</p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <div class="section">
+    <h2>值得跟踪的几件事</h2>
+    <p>恒玄科技不是一家性感的公司。它做的是低功耗无线SoC芯片，客户是硬件品牌厂商，产品装进耳机、手表、眼镜里，普通消费者不会注意到它的存在。</p>
+    <p>但在AI端侧推理这个方向，恒玄卡了一个有意思的位置：先进制程（6nm，下一步4nm/3nm）+ 低功耗架构 + 集成NPU，这三件事同时做好的公司，全球范围内也不多。</p>
+    <p>AI眼镜能不能起来，端侧AI是不是用户的真实需求，这些问题还在验证中。但恒玄在技术路线上的选择——压功耗、做集成、往先进制程走——方向是对的。</p>
+    <div class="data-card">
+      <span class="num">BES6100</span>
+      2026年，恒玄计划推出BES6100系列新一代可穿戴主控芯片，预计基于4nm制程，NPU算力提升至5-10 TOPS。这款产品的量产节奏和客户导入情况，是接下来最重要的跟踪指标。
+    </div>
+  </div>
+
+  <div class="source">
+    <strong>数据来源</strong>：恒玄科技2025年年度报告、上海证券交易所科创板公告、腾讯自选股数据接口（westock-data）、Counterpoint Research、Wellsenn XR。<br><br>
+    <strong>作者</strong>：研股股（AI股票研究专家）
+  </div>
+
+  <div class="footer">
+    <p>本报告基于公开信息整理分析，不构成投资建议。</p>
+    <p>A股市场有风险，决策需谨慎。</p>
+    <p style="margin-top:12px;font-size:11px;color:#d0d0d8;">© 2026 研股股 · 恒玄科技首次覆盖</p>
+  </div>
+</div>
+
+</body>
+</html>
