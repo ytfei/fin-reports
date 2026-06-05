@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硬科技度量单位速查手册</title>
+<style>
+  :root {
+    --bg: #f8f9fc;
+    --card: #ffffff;
+    --primary: #1a56db;
+    --primary-light: #e8edff;
+    --accent: #dc2626;
+    --accent-light: #fef2f2;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --success: #059669;
+    --warning: #d97706;
+    --code-bg: #f1f5f9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1a56db 100%);
+    color: white;
+    padding: 60px 24px 50px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .hero .subtitle {
+    font-size: 16px;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .hero .badge {
+    display: inline-block;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    backdrop-filter: blur(4px);
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+  .callout {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 32px 0;
+  }
+  .callout p { margin: 0; font-size: 15px; color: #1e3a5f; }
+  .callout strong { color: var(--primary); }
+  .callout-warning {
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+  }
+  .callout-warning p { color: #7f1d1d; }
+  .callout-warning strong { color: var(--accent); }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    color: var(--text);
+  }
+  p { margin: 10px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+    background: var(--card);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) { background: #f8fafc; }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--primary);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .metric-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .metric-card .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .metric-card .value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  .metric-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-right: 4px;
+  }
+  .tag-accent {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .tag-success {
+    background: #ecfdf5;
+    color: var(--success);
+  }
+  .section-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    padding-left: 12px;
+    border-left: 3px solid var(--border);
+  }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin: 6px 0; }
+  .footer {
+    text-align: center;
+    padding: 30px 16px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 40px 16px 36px; }
+    .hero h1 { font-size: 22px; }
+    .card-grid { grid-template-columns: 1fr; }
+    table { font-size: 13px; }
+    th, td { padding: 7px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>硬科技度量单位速查手册</h1>
+  <p class="subtitle">从 GW 到 TOPS，一篇搞懂</p>
+  <span class="badge">📖 写给非工程师的硬科技"黑话"翻译指南</span>
+</div>
+
+<div class="container">
+
+<!-- 核心逻辑 -->
+<div class="callout">
+  <p><strong>核心逻辑：</strong>硬科技几百个单位，本质上只回答两类问题——<strong>"多大？"</strong>（规模、容量、距离）和<strong>"多快？"</strong>（速度、功率、效率）。记住这条线，所有单位就不是死记硬背，而是顺理成章。</p>
+</div>
+
+<!-- 一、电力与能源 -->
+<h2>⚡ 一、电力与能源</h2>
+
+<h3>功率 vs 能量——先搞清这一对</h3>
+<p class="section-intro">这是最容易混的地方。功率是"水管有多粗"（瞬时能力），能量是"水缸有多大"（能存多少、用多久）。</p>
+
+<table>
+  <tr><th>单位</th><th>含义</th><th>类比</th></tr>
+  <tr><td><code>W（瓦）</code></td><td>瞬时功率</td><td>水管粗细</td></tr>
+  <tr><td><code>kW（千瓦）</code></td><td>1,000W</td><td>家用空调 ~3kW</td></tr>
+  <tr><td><code>MW（兆瓦）</code></td><td>1,000kW = 100万W</td><td>一栋写字楼</td></tr>
+  <tr><td><code>GW（吉瓦）</code></td><td>1,000MW = 10亿W</td><td>一座大型城市</td></tr>
+  <tr><td><code>TW（太瓦）</code></td><td>1,000GW</td><td>国家级</td></tr>
+</table>
+
+<table>
+  <tr><th>单位</th><th>含义</th><th>类比</th></tr>
+  <tr><td><code>Wh（瓦时）</code></td><td>1W 运行 1 小时的能量</td><td>一小杯水</td></tr>
+  <tr><td><code>kWh（千瓦时）</code></td><td>1,000Wh = <strong>1度电</strong></td><td>电费账单上的单位</td></tr>
+  <tr><td><code>MWh（兆瓦时）</code></td><td>1,000kWh</td><td>工厂级</td></tr>
+  <tr><td><code>GWh（吉瓦时）</code></td><td>100万kWh</td><td>城市级储能</td></tr>
+</table>
+
+<h3>1GW 到底多大？</h3>
+<div class="card-grid">
+  <div class="metric-card">
+    <div class="label">1GW 数据中心</div>
+    <div class="value">87亿度/年</div>
+    <div class="desc">≈ 200万户家庭一年用电<br>≈ 一座中型核电机组</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">1GW 光伏电站</div>
+    <div class="value">~12亿度/年</div>
+    <div class="desc">年收益约 48 亿元<br>（按 0.4 元/度计）</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">2025中国储能并网</div>
+    <div class="value">65.87GW</div>
+    <div class="desc">/ 190GWh<br>同比增长 69%</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">1GW/4GWh 储能站</div>
+    <div class="value">4小时</div>
+    <div class="desc">满功率放电时长<br>= 4GWh ÷ 1GW</div>
+  </div>
+</div>
+
+<div class="callout">
+  <p><strong>为什么储能总写 "GW/GWh" 两个数？</strong><br>GW = 充放电速度（水管有多粗）；GWh = 总容量（水缸有多大）。两者的比值 = <strong>放电时长</strong>。调峰电站通常需要 4-6 小时，调频电站 1-2 小时就够了。</p>
+</div>
+
+<!-- 二、算力 -->
+<h2>🧮 二、算力单位</h2>
+
+<h3>算力单位全家桶</h3>
+<table>
+  <tr><th>单位</th><th>全称</th><th>量级</th><th>用在哪</th></tr>
+  <tr><td><code>OPS</code></td><td>Operations Per Second</td><td>1次/秒</td><td>基础单位</td></tr>
+  <tr><td><code>FLOPS</code></td><td>Floating-point OPS</td><td>1次浮点/秒</td><td>GPU / CPU</td></tr>
+  <tr><td><code>TOPS</code></td><td>Tera OPS</td><td>10<sup>12</sup> 次/秒</td><td>边缘AI、NPU</td></tr>
+  <tr><td><code>TFLOPS</code></td><td>Tera FLOPS</td><td>10<sup>12</sup> 次浮点/秒</td><td>消费级GPU</td></tr>
+  <tr><td><code>PFLOPS</code></td><td>Peta FLOPS</td><td>10<sup>15</sup> 次浮点/秒</td><td>超算中心</td></tr>
+  <tr><td><code>EFLOPS</code></td><td>Exa FLOPS</td><td>10<sup>18</sup> 次浮点/秒</td><td>国家级超算</td></tr>
+</table>
+
+<h3>为什么有 TOPS 和 FLOPS 两种？</h3>
+<p>关键区别在<strong>精度</strong>：</p>
+<table>
+  <tr><th>精度类型</th><th>位宽</th><th>含义</th><th>典型场景</th></tr>
+  <tr><td><code>INT8</code></td><td>8位整数</td><td>精度低但速度快</td><td>边缘推理（手机、汽车）</td></tr>
+  <tr><td><code>FP16</code></td><td>16位浮点</td><td>中等精度</td><td>AI训练、推理的主流精度</td></tr>
+  <tr><td><code>FP32</code></td><td>32位浮点</td><td>高精度</td><td>科学计算、传统GPU</td></tr>
+  <tr><td><code>FP64</code></td><td>64位浮点</td><td>最高精度</td><td>气象模拟、核物理</td></tr>
+</table>
+
+<div class="callout callout-warning">
+  <p><strong>⚠️ 行业公开的秘密：</strong>同一个芯片，不同精度下的算力数字可以差 <strong>4-8 倍</strong>。厂商标称的都是对自己最有利的那个精度。看到 TOPS 数字时，一定要问一句"什么精度下？"</p>
+</div>
+
+<h3>几个直觉锚点</h3>
+<div class="card-grid">
+  <div class="metric-card">
+    <div class="label">手机 NPU</div>
+    <div class="value">~9 TOPS</div>
+    <div class="desc">骁龙 8 Gen 1（INT8）<br>边缘推理够用</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">训练级 GPU</div>
+    <div class="value">~2,000 TFLOPS</div>
+    <div class="desc">英伟达 H100（FP16）<br>单卡训练主力</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">1GW 算力中心</div>
+    <div class="value">~5,841 PFLOPS</div>
+    <div class="desc">理论支撑算力规模<br>年耗电 87 亿度</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">建设成本</div>
+    <div class="value">~350亿美元</div>
+    <div class="desc">1GW AI数据中心<br>（GB200架构）</div>
+  </div>
+</div>
+
+<h3>买芯片看什么？</h3>
+<ul>
+  <li><span class="tag">TOPS/W</span> 能效比——每瓦特能做多少运算，决定电费账单</li>
+  <li><span class="tag">带宽</span> TB/s——数据喂给芯片的速度，算力再快数据跟不上也白搭</li>
+  <li><span class="tag">精度匹配</span> 你的任务需要 INT8 就够了还是需要 FP32？</li>
+</ul>
+
+<!-- 三、带宽与存储 -->
+<h2>💾 三、带宽与存储</h2>
+
+<h3>传输速度</h3>
+<table>
+  <tr><th>单位</th><th>含义</th><th>典型场景</th></tr>
+  <tr><td><code>Mbps</code></td><td>兆比特/秒</td><td>家庭宽带（1000Mbps = 千兆宽带）</td></tr>
+  <tr><td><code>GB/s</code></td><td>吉字节/秒</td><td>DDR5 内存约 50-80 GB/s</td></tr>
+  <tr><td><code>TB/s</code></td><td>太字节/秒</td><td>HBM4 高带宽内存达 2 TB/s</td></tr>
+</table>
+
+<div class="callout">
+  <p><strong>注意：</strong>1 Byte = 8 bits，所以 1000Mbps 的宽带实际下载速度约 <strong>125MB/s</strong>。运营商说"千兆"，你只能跑到一百多兆字节——不是骗你，是单位不同。</p>
+</div>
+
+<h3>AI 芯片为什么带宽比算力更重要？</h3>
+<p>AI 运算的特点是<strong>数据搬运比计算本身更耗时</strong>。业内叫"内存墙"（Memory Wall）：</p>
+<div class="card-grid">
+  <div class="metric-card">
+    <div class="label">HBM3E</div>
+    <div class="value">~1.2 TB/s</div>
+    <div class="desc">当前量产代际</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">HBM4（2025）</div>
+    <div class="value">2 TB/s</div>
+    <div class="desc">2048-bit 接口，8 Gb/s</div>
+  </div>
+</div>
+
+<!-- 四、半导体制造 -->
+<h2>🔬 四、半导体制造</h2>
+
+<h3>制程节点</h3>
+<table>
+  <tr><th>单位</th><th>量级</th><th>代表制程</th></tr>
+  <tr><td><code>μm（微米）</code></td><td>千分之一毫米</td><td>0.35μm、0.13μm（早期）</td></tr>
+  <tr><td><code>nm（纳米）</code></td><td>百万分之一毫米</td><td>7nm、5nm、3nm、2nm</td></tr>
+  <tr><td><code>Å（埃）</code></td><td>十分之一纳米</td><td>20Å = 2nm（未来标注方式）</td></tr>
+</table>
+
+<div class="callout">
+  <p><strong>重要提醒：</strong>现在的 "3nm""2nm" 已经不是物理尺寸了，而是<strong>营销标签</strong>——台积电的 3nm 节点，晶体管实际栅极长度远大于 3nm。它更像"第几代工艺"的代际编号。1nm ≈ 3-4 个硅原子并排的宽度，到了 2nm 一个晶体管大概只有十几个原子宽。</p>
+</div>
+
+<!-- 五、光伏与新能源 -->
+<h2>☀️ 五、光伏与新能源</h2>
+
+<h3>转换效率（%）</h3>
+<p class="section-intro">光变电的能力。越接近理论极限（单晶硅约 29.4%），越难提升。</p>
+<table>
+  <tr><th>技术路线</th><th>实验室效率</th><th>量产效率</th></tr>
+  <tr><td>PERC</td><td>~24%</td><td>~23%</td></tr>
+  <tr><td>TOPCon</td><td>~26%</td><td>~25%</td></tr>
+  <tr><td>HJT</td><td>~26.8%</td><td>~25.5%</td></tr>
+  <tr><td>钙钛矿/硅叠层</td><td>~33.9%</td><td>实验室阶段</td></tr>
+</table>
+
+<h3>度电成本（LCOE，元/kWh）</h3>
+<div class="card-grid">
+  <div class="metric-card">
+    <div class="label">光伏 LCOE</div>
+    <div class="value" style="color: var(--success);">0.15-0.25元</div>
+    <div class="desc">2025年中国<br>已经比煤电便宜</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">煤电 LCOE</div>
+    <div class="value" style="color: var(--warning);">0.30-0.40元</div>
+    <div class="desc">参考基准<br>差距在持续拉大</div>
+  </div>
+</div>
+
+<!-- 六、总表 -->
+<h2>📊 六、核心度量单位速查总表</h2>
+<table>
+  <tr><th>领域</th><th>度什么</th><th>常用单位</th><th>"多大"的直觉</th></tr>
+  <tr><td>电力</td><td>功率</td><td>W / kW / MW / GW / TW</td><td>1GW ≈ 一座核电</td></tr>
+  <tr><td>电力</td><td>能量</td><td>Wh / kWh / MWh / GWh</td><td>1kWh = 1度电</td></tr>
+  <tr><td>储能</td><td>放电时长</td><td>GWh ÷ GW = 小时</td><td>4GWh÷1GW = 4h</td></tr>
+  <tr><td>算力</td><td>整数运算</td><td>TOPS</td><td>手机 ~10 TOPS</td></tr>
+  <tr><td>算力</td><td>浮点运算</td><td>TFLOPS / PFLOPS / EFLOPS</td><td>H100 ~2000 TFLOPS</td></tr>
+  <tr><td>算力</td><td>能效比</td><td>TOPS/W</td><td>越高越省电</td></tr>
+  <tr><td>存储</td><td>容量</td><td>GB / TB / PB / EB</td><td>1TB ≈ 250部电影</td></tr>
+  <tr><td>存储</td><td>传输速度</td><td>GB/s / TB/s</td><td>HBM4 = 2TB/s</td></tr>
+  <tr><td>半导体</td><td>制程</td><td>nm / Å</td><td>3nm ≈ 十几个原子宽</td></tr>
+  <tr><td>光伏</td><td>效率</td><td>%</td><td>TOPCon量产 ~25%</td></tr>
+  <tr><td>光伏</td><td>度电成本</td><td>元/kWh</td><td>光伏 ~0.15-0.25元</td></tr>
+  <tr><td>电池</td><td>能量密度</td><td>Wh/kg</td><td>三元锂 ~250-300</td></tr>
+  <tr><td>网络</td><td>传输速率</td><td>Mbps / Gbps</td><td>千兆宽带 = 1000Mbps</td></tr>
+</table>
+
+<!-- 七、记忆口诀 -->
+<h2>🧠 七、快速记忆口诀</h2>
+<div style="background: var(--card); border-radius: 12px; padding: 24px 28px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+  <ol style="padding-left: 20px; margin: 0;">
+    <li style="margin: 10px 0;"><strong>看到 W（瓦）</strong> → 想水管粗细，"能放多快"</li>
+    <li style="margin: 10px 0;"><strong>看到 Wh（瓦时）</strong> → 想水缸大小，"能装多少"</li>
+    <li style="margin: 10px 0;"><strong>看到 OPS/FLOPS</strong> → 想手速，"一秒算几次"</li>
+    <li style="margin: 10px 0;"><strong>看到 T/P/E 前缀</strong> → 千/百万/十亿亿，每次 ×1000</li>
+    <li style="margin: 10px 0;"><strong>看到 nm</strong> → 制造精度，数字越小越先进（但不等于物理尺寸）</li>
+    <li style="margin: 10px 0;"><strong>看到 /s（每秒）</strong> → 速度、吞吐量</li>
+    <li style="margin: 10px 0;"><strong>看到 %（效率）</strong> → 能不能更省</li>
+  </ol>
+  <div style="margin-top: 20px; padding-top: 16px; border-top: 2px dashed var(--border); text-align: center;">
+    <p style="font-size: 17px; font-weight: 700; color: var(--primary); margin: 0;">
+      终极口诀：功率管"快慢"，能量管"多少"，精度管"粗细"，带宽管"路宽"
+    </p>
+  </div>
+</div>
+
+<!-- 八、为什么对投资重要 -->
+<h2>💰 八、为什么这些单位对投资很重要？</h2>
+<p>因为你看到的每一个数字背后都是钱：</p>
+<ul>
+  <li>数据中心从 100MW → 1GW，投资从几十亿跳到 <strong>2,500 亿人民币</strong></li>
+  <li>储能电站从 2 小时 → 4 小时，GWh 翻倍，电池成本翻倍</li>
+  <li>芯片制程从 5nm → 3nm，晶圆成本涨 <strong>50%+</strong>，但性能也涨</li>
+  <li>HBM 带宽从 1.2TB/s → 2TB/s，AI 训练时间缩短 <strong>30-40%</strong></li>
+</ul>
+
+<div class="callout" style="background: linear-gradient(135deg, #e8edff 0%, #f0f4ff 100%);">
+  <p style="font-size: 16px;"><strong>理解单位 = 理解商业模式 = 理解投资逻辑。</strong></p>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>数据来源：公开行业报告及权威机构发布 | 截止 2026 年 6 月 | 具体项目数据请以最新公告为准</p>
+</div>
+
+</body>
+</html>
