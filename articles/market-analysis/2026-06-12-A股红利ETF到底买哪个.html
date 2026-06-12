@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股红利ETF，到底买哪个？</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.8;
+    padding: 20px 16px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .article-header {
+    text-align: center;
+    padding: 30px 0 20px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 24px;
+  }
+  .article-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .article-header .subtitle {
+    font-size: 14px;
+    color: #888;
+  }
+  .article-header .meta {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 8px;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 32px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid #2d6a4f;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 20px 0 10px;
+  }
+  p {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: #444;
+  }
+  .highlight-box {
+    background: #f0f7f4;
+    border-left: 4px solid #2d6a4f;
+    padding: 14px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  .highlight-box strong {
+    color: #2d6a4f;
+  }
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .type-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .type-card .type-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+  .type-card .type-logic {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.6;
+  }
+  .type-card .type-examples {
+    font-size: 11px;
+    color: #999;
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+  }
+  .data-table th {
+    background: #f8f8f8;
+    font-weight: 600;
+    color: #555;
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 12px;
+    border-bottom: 1px solid #eee;
+  }
+  .data-table td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #f2f2f2;
+    color: #444;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table .etf-name { font-weight: 500; color: #1a1a1a; }
+  .data-table .etf-code { font-size: 11px; color: #999; }
+  .data-table .scale-big { font-weight: 600; color: #2d6a4f; }
+  .data-table .yield { color: #2d6a4f; }
+  .drawdown-compare {
+    margin: 16px 0;
+    padding: 0;
+  }
+  .dd-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .dd-label {
+    width: 160px;
+    font-size: 13px;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .dd-bar-wrap {
+    flex: 1;
+    height: 24px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .dd-bar {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    min-width: 60px;
+  }
+  .dd-bar.low { background: #2d6a4f; }
+  .dd-bar.mid { background: #e67e22; }
+  .dd-bar.high { background: #c0392b; }
+  .pick-section {
+    margin: 16px 0;
+  }
+  .pick-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid #2d6a4f;
+  }
+  .pick-card.picked {
+    border-left-color: #2d6a4f;
+    background: #f0f7f4;
+  }
+  .pick-card .pick-target {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+  .pick-card .pick-etf {
+    font-size: 13px;
+    color: #2d6a4f;
+    font-weight: 500;
+  }
+  .pick-card .pick-reason {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+    line-height: 1.7;
+  }
+  .buy-box {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .buy-box h3 {
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+  .buy-box p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .disclaimer {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    line-height: 1.6;
+  }
+  .section-intro {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="article-header">
+  <h1>A股红利ETF，到底买哪个？</h1>
+  <div class="subtitle">四类指数、八只主流产品、一份选购清单</div>
+  <div class="meta">2026年6月12日</div>
+</div>
+
+<p class="section-intro">市面上红利ETF超过30只，名字都带"红利"二字，跟踪的指数却完全不同。买错了，可能抱着"稳健"的预期，吃着周期的亏。</p>
+
+<p>这篇文章把A股主流红利ETF拆开讲清楚——它们到底买了什么、区别在哪、谁适合你。</p>
+
+<h2>四种红利，四种逻辑</h2>
+
+<p>红利ETF的差异不在基金经理，在底层指数的编制规则。</p>
+
+<div class="type-grid">
+  <div class="type-card">
+    <div class="type-name">纯红利型</div>
+    <div class="type-logic">只看股息率，谁分红高选谁</div>
+    <div class="type-examples">上证红利 · 中证红利</div>
+  </div>
+  <div class="type-card">
+    <div class="type-name">红利+低波型</div>
+    <div class="type-logic">先筛高股息，再筛低波动</div>
+    <div class="type-examples">红利低波 · 低波50 · 低波100</div>
+  </div>
+  <div class="type-card">
+    <div class="type-name">央企/国企红利型</div>
+    <div class="type-logic">只在央企国企里挑高股息</div>
+    <div class="type-examples">央企红利 · 国企红利</div>
+  </div>
+  <div class="type-card">
+    <div class="type-name">红利质量型</div>
+    <div class="type-logic">股息率 + ROE/盈利质量</div>
+    <div class="type-examples">红利质量ETF</div>
+  </div>
+</div>
+
+<h2>持仓差异比想象的大</h2>
+
+<p>纯红利型重仓煤炭。红利ETF易方达（sh515180）前十大持仓里，8只是煤炭或能源——中远海控、兖矿能源、潞安环能、广汇能源、山煤国际、陕西煤业、中国神华、平煤股份。周期属性拉满。</p>
+
+<p>红利低波型持仓明显均衡。红利低波ETF华泰柏瑞（sh512890）前十里，南京银行、平安银行、成都银行、上海银行、沪农商行、江苏银行、华润江中、格力电器——银行占了6席，还有医药和家电，单一行业权重不超过3%。</p>
+
+<p>央企红利集中度最高。央企红利ETF华泰柏瑞（sh561580）单一持仓中远海控占比近7%，前十里还有中国神华、中国海油、建设银行、招商轮船、中国石油——全是央企巨头。红利国企ETF国泰（sh510720）同样中远海控占7%，前五名全是煤炭和能源。</p>
+
+<p>红利质量持仓最分散，PE也最高（约14.5倍），适合不满足于纯吃息、还想有点成长性的投资者。</p>
+
+<p>规模直接决定流动性。别买太小的。</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>ETF</th>
+      <th>代码</th>
+      <th>跟踪指数</th>
+      <th>规模(亿)</th>
+      <th>近1年</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="etf-name">红利低波ETF</span><br><span class="etf-code">华泰柏瑞</span></td>
+      <td>512890</td>
+      <td>中证红利低波</td>
+      <td><span class="scale-big">334</span></td>
+      <td><span class="yield">-8.05%</span></td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">红利ETF</span><br><span class="etf-code">华泰柏瑞</span></td>
+      <td>510880</td>
+      <td>上证红利</td>
+      <td>196</td>
+      <td><span class="yield">-7.11%</span></td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">红利ETF</span><br><span class="etf-code">易方达</span></td>
+      <td>515180</td>
+      <td>中证红利</td>
+      <td>161</td>
+      <td style="color:#c0392b">-15.95%</td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">红利低波50ETF</span><br><span class="etf-code">南方</span></td>
+      <td>515450</td>
+      <td>标普红利低波50</td>
+      <td>186</td>
+      <td><span class="yield">-6.64%</span></td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">中证红利ETF</span><br><span class="etf-code">招商</span></td>
+      <td>515080</td>
+      <td>中证红利</td>
+      <td>112</td>
+      <td style="color:#c0392b">-15.61%</td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">红利低波100ETF</span><br><span class="etf-code">景顺</span></td>
+      <td>515100</td>
+      <td>红利低波100</td>
+      <td>61</td>
+      <td><span class="yield">-7.49%</span></td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">央企红利ETF</span><br><span class="etf-code">华泰柏瑞</span></td>
+      <td>561580</td>
+      <td>央企红利</td>
+      <td>24</td>
+      <td style="color:#c0392b">-15.78%</td>
+    </tr>
+    <tr>
+      <td><span class="etf-name">红利国企ETF</span><br><span class="etf-code">国泰</span></td>
+      <td>510720</td>
+      <td>上证国企红利</td>
+      <td>18</td>
+      <td style="color:#e67e22">-13.74%</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  规模50亿以上的，日常交易都没问题。20亿以下的要注意流动性风险。
+</div>
+
+<p>近一年红利板块整体回调，但不同指数的回撤差距很大：</p>
+
+<div class="drawdown-compare">
+  <div class="dd-item">
+    <div class="dd-label">红利低波50ETF</div>
+    <div class="dd-bar-wrap"><div class="dd-bar low" style="width:33%">-6.64%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">红利低波100ETF</div>
+    <div class="dd-bar-wrap"><div class="dd-bar low" style="width:37%">-7.49%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">红利ETF (华泰柏瑞)</div>
+    <div class="dd-bar-wrap"><div class="dd-bar low" style="width:36%">-7.11%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">红利低波ETF</div>
+    <div class="dd-bar-wrap"><div class="dd-bar low" style="width:40%">-8.05%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">红利国企ETF</div>
+    <div class="dd-bar-wrap"><div class="dd-bar mid" style="width:69%">-13.74%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">红利ETF (易方达)</div>
+    <div class="dd-bar-wrap"><div class="dd-bar high" style="width:80%">-15.95%</div></div>
+  </div>
+  <div class="dd-item">
+    <div class="dd-label">央企红利ETF</div>
+    <div class="dd-bar-wrap"><div class="dd-bar high" style="width:79%">-15.78%</div></div>
+  </div>
+</div>
+
+<p>低波因子把回撤砍了将近一半。低波三兄弟（低波/低波50/低波100）回撤都在6-8%，纯红利型踩中煤炭下行周期，回撤普遍在15%以上。</p>
+
+<p>有个例外：上证红利ETF（sh510880）虽然也是纯红利型，但近1年仅-7.11%。原因是它的持仓里除了煤炭，还有雅戈尔、建发股份、山东高速、中国海油这些非煤行业，分布比中证红利更分散。</p>
+
+<h3>红利ETF的几个特性，买之前要清楚</h3>
+
+<p>红利ETF不是"买了就稳赚"。它持有的是一篮子股票，股票跌它也跌。近一年大部分红利ETF都是负收益，区别只是跌多跌少。分红只是锦上添花，不改变净值下跌的事实。</p>
+
+<p>ETF分红不是额外发钱，是从基金净值里扣的。分红前净值1.5元、每份分红0.06元，分红后净值变成1.44元。选择"分红再投资"可以把分红自动买入更多份额，避免现金分红后钱躺着不动。</p>
+
+<p>周期属性不低。纯红利型重仓煤炭，红利低波型重仓银行——都不是"弱周期"行业。煤价下行、息差收窄的时候，红利ETF一样会跌。它不是债券替代品，是权益资产。</p>
+
+<p>不适合短线。红利策略的收益来源是"长期持有+分红复利"，不是价差。持有不到一个完整周期（至少2-3年），可能既没吃到分红，又扛了回撤。</p>
+
+<p>和宽基ETF不冲突。红利ETF和沪深300、中证500是互补关系，不是替代。红利端提供现金流和防御，宽基端提供成长弹性。合理的做法是两者搭配，而不是all in红利。</p>
+
+<h3>什么样的投资者适合买？</h3>
+
+<div class="buy-box">
+  <p>✅ 有稳定现金流、不急需这笔钱，打算持有2年以上的长期投资者</p>
+  <p>✅ 希望通过分红获得被动收入（比如退休规划），能接受净值波动的投资者</p>
+  <p>✅ 已经持有宽基ETF，想加一层防御配置的投资者</p>
+  <p style="color:#c0392b;margin-top:10px;">❌ 不适合：短期资金、追涨杀跌型、预期买了就涨的投资者</p>
+</div>
+
+<h2>选购指南</h2>
+
+<div class="pick-section">
+  <div class="pick-card picked">
+    <div class="pick-target">想吃稳定分红、抗住回撤</div>
+    <div class="pick-etf">→ 红利低波ETF（sh512890）</div>
+    <div class="pick-reason">规模最大（334亿）、行业分布均衡、近1年回撤-8.05%。这是大多数投资者买红利ETF的真正目的。</div>
+  </div>
+
+  <div class="pick-card">
+    <div class="pick-target">能接受波动、赌周期反弹</div>
+    <div class="pick-etf">→ 红利ETF（sh515180）或 中证红利ETF（sh515080）</div>
+    <div class="pick-reason">煤炭占比高，煤价上行周期弹性大。但近1年回撤在-15%以上，周期判断要准。如果既要纯红利又想控制回撤，上证红利ETF（sh510880）是个折中选择——近1年仅-7.11%，行业分布比中证红利更分散。</div>
+  </div>
+
+  <div class="pick-card">
+    <div class="pick-target">看好央企改革和中特估</div>
+    <div class="pick-etf">→ 央企红利ETF（sh561580）</div>
+    <div class="pick-reason">政策加持明确，但集中度偏高，单一行业风险不小。适合对政策面有独立判断的投资者。</div>
+  </div>
+
+  <div class="pick-card">
+    <div class="pick-target">分红加成长</div>
+    <div class="pick-etf">→ 红利质量ETF（等规模上来再说）</div>
+    <div class="pick-reason">思路是对的，但目前规模不到3亿，流动性不够。等规模到50亿以上再考虑不迟。</div>
+  </div>
+</div>
+
+<h3>购买方式</h3>
+
+<div class="buy-box">
+  <h3>场内交易（推荐）</h3>
+  <p>在券商APP直接输入代码买入，最低100份起（约100-300元）。交易佣金跟股票一样，没有印花税。</p>
+</div>
+
+<div class="buy-box">
+  <h3>场外联接基金（适合定投）</h3>
+  <p>天天基金/支付宝搜"XX联接A/C"。</p>
+  <p>A类份额持有超一年免赎回费，适合长期拿。C类持有超7天免赎回费，适合短期。</p>
+</div>
+
+<div class="buy-box">
+  <h3>费率提醒</h3>
+  <p>管理费一般0.50%/年，托管费0.10%/年，成本很低。</p>
+  <p>记得在券商APP里把分红方式改成"分红再投资"——长期复利效果才完整。</p>
+</div>
+
+<div class="disclaimer">
+  数据来源：腾讯自选股，截至2026年6月12日<br>
+  本文仅供学习参考，不构成投资建议。投资有风险，决策需谨慎。
+</div>
+
+</body>
+</html>

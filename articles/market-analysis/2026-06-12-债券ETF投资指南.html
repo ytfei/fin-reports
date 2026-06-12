@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一文读懂债券ETF：从入门到选基</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; color: #333; line-height: 1.8; background: #f7f7f7; max-width: 680px; margin: 0 auto; padding: 20px 16px; }
+  h1 { font-size: 22px; font-weight: 700; text-align: center; margin: 20px 0 8px; line-height: 1.4; }
+  .subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 24px; }
+  h2 { font-size: 18px; font-weight: 700; margin: 32px 0 12px; padding-left: 12px; border-left: 4px solid #378ADD; }
+  h3 { font-size: 16px; font-weight: 600; margin: 24px 0 10px; }
+  p { font-size: 15px; margin-bottom: 14px; text-align: justify; }
+  .highlight { background: #fff8e1; padding: 2px 6px; border-radius: 3px; font-weight: 500; }
+  .key-point { background: #e6f1fb; border-radius: 8px; padding: 14px 16px; margin: 16px 0; border-left: 4px solid #378ADD; }
+  .key-point p { margin-bottom: 0; font-size: 14px; }
+  .warning-box { background: #fef2f2; border-radius: 8px; padding: 14px 16px; margin: 16px 0; border-left: 4px solid #e24b4a; }
+  .warning-box p { margin-bottom: 0; font-size: 13px; color: #666; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  th { background: #f0f4f8; padding: 8px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; font-size: 12px; white-space: nowrap; }
+  td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+  tr:hover td { background: #fafbfc; }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .card-value { font-size: 20px; font-weight: 700; color: #333; }
+  .card-sub { font-size: 11px; color: #999; margin-top: 2px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; margin-right: 4px; }
+  .tag-green { background: #e1f5ee; color: #085041; }
+  .tag-blue { background: #e6f1fb; color: #0c447c; }
+  .tag-purple { background: #eeedfe; color: #3c3489; }
+  .tag-orange { background: #faecda; color: #633806; }
+  .tag-red { background: #faece7; color: #712b13; }
+  .divider { border: none; border-top: 1px dashed #ddd; margin: 28px 0; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0 6px 24px; position: relative; font-size: 14px; }
+  .checklist li::before { content: "□"; position: absolute; left: 0; color: #378ADD; font-size: 16px; }
+  .source { font-size: 11px; color: #aaa; margin-top: 8px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 14px; margin: 14px 0; color: #666; font-style: italic; }
+  .risk-bar { display: flex; margin: 16px 0; border-radius: 6px; overflow: hidden; height: 32px; }
+  .risk-bar div { display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; font-weight: 500; }
+  .footer { text-align: center; color: #bbb; font-size: 12px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+  @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>一文读懂债券ETF：从入门到选基</h1>
+<p class="subtitle">2026年6月12日 | 研股股</p>
+
+<div class="card-grid">
+  <div class="card">
+    <div class="card-label">债券ETF市场总规模</div>
+    <div class="card-value">8,640亿元</div>
+    <div class="card-sub">截至 2026/6/10，连续5个月增长</div>
+  </div>
+  <div class="card">
+    <div class="card-label">上市产品数量</div>
+    <div class="card-value">53 只</div>
+    <div class="card-sub">覆盖利率债、信用债、可转债</div>
+  </div>
+  <div class="card">
+    <div class="card-label">较2024年底增长</div>
+    <div class="card-value">380%</div>
+    <div class="card-sub">2024年底仅 1,740 亿元</div>
+  </div>
+  <div class="card">
+    <div class="card-label">百亿级产品</div>
+    <div class="card-value">35 只</div>
+    <div class="card-sub">截至 2026/6/9，头部效应显著</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<h2>一、怎么买？比你想象的简单</h2>
+
+<p>债券ETF的本质是<strong>在交易所上市交易的指数基金</strong>。你不需要学什么新技能——有一个证券账户就够了。</p>
+
+<h3>场内买卖（主要方式）</h3>
+
+<table>
+  <tr><th>项目</th><th>说明</th></tr>
+  <tr><td>开户</td><td>普通 A 股证券账户，无需额外开通权限</td></tr>
+  <tr><td>交易方式</td><td>像买股票一样，输入 ETF 代码即可</td></tr>
+  <tr><td>交易单位</td><td>最小 1 手 = 100 份</td></tr>
+  <tr><td>交易时间</td><td>9:30–11:30、13:00–15:00（与 A 股一致）</td></tr>
+  <tr><td><span class="highlight">T+0 交易</span></td><td>当日买入、当日即可卖出，一天可交易多次</td></tr>
+  <tr><td>涨跌幅</td><td>无涨跌幅限制</td></tr>
+  <tr><td>印花税</td><td><strong>免收</strong></td></tr>
+  <tr><td>佣金</td><td>约 0.003%–0.03%（可向券商谈更低）</td></tr>
+</table>
+
+<div class="key-point">
+  <p>一句话总结：<strong>开个证券账户，像买股票一样输入代码买入，当天买当天就能卖，还免印花税。</strong></p>
+</div>
+
+<h3>场外申赎（机构为主）</h3>
+<p>申购赎回门槛通常为 50 万或 100 万份起步，通过一篮子债券实物申赎，主要面向机构投资者。个人投资者基本不需要参与。</p>
+
+<hr class="divider">
+
+<h2>二、债券 ETF 有哪些类型？</h2>
+
+<p>截至 2026 年 6 月，全市场共 <strong>53 只债券 ETF</strong> 上市交易。按底层债券类型分为三大类：</p>
+
+<div class="risk-bar">
+  <div style="width: 15%; background: #1D9E75;">超短债</div>
+  <div style="width: 20%; background: #5DCAA5;">短/中短债</div>
+  <div style="width: 25%; background: #639922;">信用债</div>
+  <div style="width: 22%; background: #378ADD;">利率债</div>
+  <div style="width: 18%; background: #D85A30;">可转债</div>
+</div>
+
+<h3>1. 利率债 ETF——最"干净"的债</h3>
+<p>投资于国债、政策性金融债（政金债）、地方政府债。这些债券由国家或政策性机构发行，<strong>信用风险几乎为零</strong>，主要风险来自利率变动。</p>
+
+<table>
+  <tr><th>产品</th><th>代码</th><th>最新规模</th><th>特点</th></tr>
+  <tr><td>富国政金债ETF</td><td>511520</td><td>401亿元</td><td>7-10年期，无信用风险，久期适中</td></tr>
+  <tr><td>国泰10年国债ETF</td><td>511260</td><td>201亿元</td><td>久期约7.6年，适合波段交易</td></tr>
+  <tr><td>鹏扬30年国债ETF</td><td>--</td><td>约179亿元</td><td>久期超长，利率敏感度极高</td></tr>
+</table>
+
+<p><span class="tag tag-blue">核心规律</span> <strong>久期越长，利率变动对价格的影响越大。</strong>30年国债ETF的日波动可以是短融ETF的数十倍——利率下行时赚得多，上行时亏得也多。</p>
+
+<h3>2. 信用债 ETF——市场主力</h3>
+<p>投资于公司债、城投债、短融券、科创债等企业发行的债券。有一定信用风险，但主流 ETF 持仓以 AAA 评级为主。2025 年是信用债 ETF 爆发年，基准做市信用债 ETF 和科创债 ETF 集中上市，<strong>贡献了全年增量的 54%</strong>。</p>
+
+<table>
+  <tr><th>产品</th><th>代码</th><th>最新规模</th><th>特点</th></tr>
+  <tr><td>海富通短融ETF</td><td>511360</td><td>924亿元</td><td>全市场规模最大，近1年回报1.48%</td></tr>
+  <tr><td>海富通城投债ETF</td><td>511220</td><td>541亿元</td><td>城投债标杆</td></tr>
+  <tr><td>平安公司债ETF</td><td>--</td><td>约400亿元</td><td>中高等级信用债</td></tr>
+  <tr><td>易方达基准做市公司债ETF</td><td>--</td><td>百亿级</td><td>首批基准做市信用债</td></tr>
+</table>
+
+<p><span class="tag tag-green">2025年亮点</span> 全年 24 只科创债 ETF 分三批集中上市，科创债 ETF 年末合计规模达 3,553 亿元，占全市场债券 ETF 增量近 54%。</p>
+
+<h3>3. 可转债 ETF——进可攻退可守</h3>
+<p>投资于可转换公司债券和可交换债券，兼具"债底保护"和"股票上涨弹性"。波动在债券 ETF 中最大。</p>
+
+<table>
+  <tr><th>产品</th><th>代码</th><th>最新规模</th><th>特点</th></tr>
+  <tr><td>博时可转债ETF</td><td>511380</td><td>644亿元</td><td>全市场唯一大规模可转债ETF</td></tr>
+</table>
+
+<h3>市场规模结构（2025年末 vs 2026年6月）</h3>
+
+<table>
+  <tr><th>类型</th><th>2025年底规模</th><th>占比</th><th>2026/6/10规模（估）</th></tr>
+  <tr><td>信用债ETF</td><td>6,152亿元</td><td>74.2%</td><td>约6,400亿元</td></tr>
+  <tr><td>利率债ETF</td><td>1,528亿元</td><td>18.4%</td><td>约1,600亿元</td></tr>
+  <tr><td>可转债ETF</td><td>610亿元</td><td>7.4%</td><td>约644亿元</td></tr>
+</table>
+
+<hr class="divider">
+
+<h2>三、债券基金有哪些风格？</h2>
+
+<p>除了场内交易的债券 ETF，场外还有大量债券基金。理解"风格"主要看两个维度：<strong>期限</strong>和<strong>投资范围</strong>。</p>
+
+<h3>按期限分类</h3>
+
+<table>
+  <tr><th>类型</th><th>期限</th><th>近1年平均</th><th>近3年平均</th><th>近5年平均</th><th>特点</th></tr>
+  <tr><td>短期纯债</td><td>&lt;1年</td><td>+1.71%</td><td>+7.05%</td><td>+12.97%</td><td>波动极小，类"加强版余额宝"</td></tr>
+  <tr><td>中短期纯债</td><td>1-3年</td><td>+1.74%</td><td>+7.42%</td><td>+14.0%</td><td>收益略高，波动可控</td></tr>
+  <tr><td>长期纯债</td><td>&gt;3年</td><td>+1.61%</td><td>+8.56%</td><td>+16.2%</td><td>对利率更敏感，波动稍大</td></tr>
+</table>
+<p class="source">数据截至 2026/6/11，来源：NeoData 基金数据库</p>
+
+<h3>按投资策略分类</h3>
+
+<table>
+  <tr><th>类型</th><th>说明</th><th>风险等级</th></tr>
+  <tr><td><span class="tag tag-green">纯债型</span></td><td>100% 投资债券，不碰股票和可转债</td><td>最低</td></tr>
+  <tr><td><span class="tag tag-blue">混合债基（一级）</span></td><td>≥80% 债券，可参与新股申购</td><td>中低</td></tr>
+  <tr><td><span class="tag tag-purple">混合债基（二级）</span></td><td>≥80% 债券，≤20% 可投股票</td><td>中等</td></tr>
+  <tr><td><span class="tag tag-orange">增强型</span></td><td>在跟踪指数基础上主动择时择券</td><td>视策略</td></tr>
+  <tr><td><span class="tag tag-blue">指数型</span></td><td>完全被动跟踪债券指数（即 ETF）</td><td>视指数</td></tr>
+</table>
+
+<h3>不同风格的实际收益对比</h3>
+
+<table>
+  <tr><th>分类</th><th>近1年平均</th><th>近3年平均</th><th>近5年平均</th></tr>
+  <tr><td>短期纯债</td><td>+1.71%</td><td>+7.05%</td><td>+12.97%</td></tr>
+  <tr><td>中短期纯债</td><td>+1.74%</td><td>+7.42%</td><td>+14.0%</td></tr>
+  <tr><td>长期纯债</td><td>+1.61%</td><td>+8.56%</td><td>+16.2%</td></tr>
+  <tr><td>混合债券</td><td>+2.72%</td><td>+8.73%</td><td>+13.68%</td></tr>
+  <tr><td>可转债</td><td>+20.23%</td><td>+21.92%</td><td>+19.14%</td></tr>
+</table>
+<p class="source">数据截至 2026/6/11，来源：NeoData 基金数据库</p>
+
+<div class="key-point">
+  <p>有意思的现象：<strong>近1年长期纯债的平均收益（1.61%）反而低于短期纯债（1.71%）。</strong>这说明过去一年利率先下后上，长债吃了亏。而可转债凭借股性大幅跑赢，近1年平均 +20.23%——但别忘了，它跌起来也很猛。</p>
+</div>
+
+<hr class="divider">
+
+<h2>四、选购时如何筛选？六步法</h2>
+
+<h3>第一步：明确投资目标</h3>
+
+<table>
+  <tr><th>你的需求</th><th>推荐类型</th></tr>
+  <tr><td>闲钱理财，比货基多赚一点</td><td>短融ETF / 短债基金</td></tr>
+  <tr><td>稳健增值，持有半年以上</td><td>中长期纯债 / 信用债ETF</td></tr>
+  <tr><td>看利率下行，博价差收益</td><td>政金债ETF / 长期国债ETF</td></tr>
+  <tr><td>看好股市但求安全垫</td><td>可转债ETF</td></tr>
+</table>
+
+<h3>第二步：看规模——越大越好</h3>
+<p>优先选规模 <strong>&gt; 50 亿元</strong>的产品。截至 2026 年 6 月已有 <strong>35 只百亿级债券 ETF</strong>，选择面很宽。规模过小（&lt;10亿）的 ETF 有清盘风险。</p>
+
+<h3>第三步：看流动性——日均成交额</h3>
+<p>日均成交额 <strong>&gt; 1 亿元</strong>为佳。短融ETF、政金债ETF 成交最活跃。成交不活跃的 ETF 可能出现买卖价差过大的问题。</p>
+
+<h3>第四步：看费率——省到就是赚到</h3>
+
+<table>
+  <tr><th>费用项</th><th>债券ETF典型水平</th></tr>
+  <tr><td>管理费</td><td>0.15%–0.25%/年</td></tr>
+  <tr><td>托管费</td><td>0.05%–0.10%/年</td></tr>
+  <tr><td><strong>总费率</strong></td><td><strong>0.20%–0.35%/年</strong></td></tr>
+  <tr><td>印花税</td><td>免收</td></tr>
+  <tr><td>申购/赎回费</td><td>免收（场内买卖）</td></tr>
+</table>
+
+<p>优先选总费率 <strong>&lt; 0.30%</strong> 的产品。</p>
+
+<h3>第五步：看跟踪误差——管理质量的试金石</h3>
+<p>年化跟踪误差 <strong>&lt; 0.15%</strong> 为优良。误差小说明基金经理管理能力好，ETF 价格紧跟指数。</p>
+
+<h3>第六步：看久期和信用评级——匹配你的风险偏好</h3>
+
+<table>
+  <tr><th></th><th>低风险偏好</th><th>适度风险</th><th>较高风险</th></tr>
+  <tr><td>久期</td><td>&lt;1年</td><td>2-5年</td><td>&gt;10年</td></tr>
+  <tr><td>信用评级</td><td>国债/政金债</td><td>AAA 公司债</td><td>可转债</td></tr>
+  <tr><td>最大回撤容忍</td><td>&lt;0.5%</td><td>1-3%</td><td>&gt;5%</td></tr>
+</table>
+
+<h3>一页纸筛选清单</h3>
+
+<ul class="checklist">
+  <li>规模 &gt; 50 亿元（越大越好）</li>
+  <li>日均成交额 &gt; 1 亿元（流动性保障）</li>
+  <li>总费率 &lt; 0.30%/年（成本控制）</li>
+  <li>跟踪误差 &lt; 0.15%（管理质量）</li>
+  <li>久期匹配持有周期（短钱短配、长钱长配）</li>
+  <li>信用评级匹配风险承受力</li>
+  <li>是否纳入质押库（加分项：可质押回购 = 流动性提升）</li>
+</ul>
+
+<hr class="divider">
+
+<h2>不同投资者的推荐配置</h2>
+
+<table>
+  <tr><th>投资者类型</th><th>推荐配置</th></tr>
+  <tr><td><span class="tag tag-green">保守型</span></td><td>80% 短债/短融ETF + 20% 利率债ETF</td></tr>
+  <tr><td><span class="tag tag-blue">稳健型</span></td><td>70% 中长期纯债/信用债ETF + 30% 混合债基</td></tr>
+  <tr><td><span class="tag tag-orange">进取型</span></td><td>50% 可转债ETF + 50% 高等级信用债ETF</td></tr>
+</table>
+
+<hr class="divider">
+
+<h2>写在最后</h2>
+
+<p>债券ETF正经历从"小众工具"到"主流配置"的跃迁。两年时间，市场规模从不到 2,000 亿元增长到超过 8,600 亿元，头部产品规模逼近千亿元。</p>
+
+<p>对于普通投资者来说，它的核心价值有三个：</p>
+
+<p><strong>第一，低门槛</strong>——一个证券账户、几百块钱就能参与机构级别的债券配置。</p>
+
+<p><strong>第二，高效率</strong>——T+0 交易，当天买卖，流动性远超场外债基。</p>
+
+<p><strong>第三，低成本</strong>——免印花税、免申赎费，管理费普遍低于主动管理型债基。</p>
+
+<p>但记住：低风险不等于无风险。利率上行、信用事件、流动性紧张都可能让债券ETF净值下跌。<strong>买入之前，先想清楚自己能承受多大的波动。</strong></p>
+
+<div class="warning-box">
+  <p><strong>风险提示：</strong>本文仅供知识科普和参考，不构成个人投资建议。债券ETF虽然整体波动低于股票，但并非保本产品。投资前请充分了解产品风险，根据自身风险承受能力做出决策。</p>
+</div>
+
+<div class="footer">
+  <p>数据来源：NeoData 金融数据服务、Wind 数据、券商研究报告</p>
+  <p>数据截至 2026 年 6 月 11 日</p>
+  <p>出品：研股股</p>
+</div>
+
+</body>
+</html>
