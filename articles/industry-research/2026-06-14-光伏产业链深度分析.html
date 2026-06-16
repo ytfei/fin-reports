@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光伏产业链全生命周期深度分析报告</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e27;color:#e0e6f0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.8;max-width:780px;margin:0 auto;padding:0 16px}
+h1{font-size:24px;font-weight:700;margin:24px 0 8px;color:#7dd3fc;text-align:center;letter-spacing:1px}
+h2{font-size:20px;font-weight:600;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid rgba(125,211,252,0.2);color:#a5f3fc}
+h3{font-size:17px;font-weight:600;margin:24px 0 10px;color:#bae6fd}
+h4{font-size:15px;font-weight:600;margin:18px 0 8px;color:#90cdfd}
+p{margin:8px 0;color:#cbd5e1}
+strong{color:#fbbf24}
+em{color:#a78bfa;font-style:normal}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;margin:0 3px}
+.tag-red{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)}
+.tag-green{background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3)}
+.tag-blue{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.3)}
+.tag-amber{background:rgba(251,191,36,0.15);color:#fcd34d;border:1px solid rgba(251,191,36,0.3)}
+.tag-purple{background:rgba(168,139,250,0.15);color:#c4b5fd;border:1px solid rgba(168,139,250,0.3)}
+.hero{background:linear-gradient(135deg,#1e3a5f,#0a0e27);border-radius:16px;padding:32px 24px;margin:16px 0 32px;text-align:center;border:1px solid rgba(125,211,252,0.15)}
+.hero h1{margin-top:0}
+.hero .subtitle{font-size:13px;color:#94a3b8;margin-top:8px}
+.meta-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:16px}
+.meta-bar span{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(125,211,252,0.08);color:#7dd3fc;border:1px solid rgba(125,211,252,0.15)}
+.section{margin:32px 0;padding:0 4px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+.kpi-card{background:rgba(30,41,59,0.6);border-radius:10px;padding:14px;border:1px solid rgba(125,211,252,0.1)}
+.kpi-label{font-size:12px;color:#94a3b8;margin-bottom:4px}
+.kpi-value{font-size:22px;font-weight:700;color:#fbbf24}
+.kpi-unit{font-size:13px;color:#64748b}
+.kpi-sub{font-size:11px;color=#64748b;margin-top:2px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th{background:rgba(59,130,246,0.1);padding:10px 8px;text-align:left;font-weight:600;color:#93c5fd;border:1px solid rgba(125,211,252,0.15)}
+td{padding:8px;border:1px solid rgba(125,211,252,0.08);color:#cbd5e1}
+tr:hover td{background:rgba(59,130,246,0.05)}
+.callout{background:rgba(30,41,59,0.5);border-left:3px solid #7dd3fc;padding:14px 16px;margin:16px 0;border-radius:0 8px 8px 0}
+.callout.warning{border-left-color:#fbbf24}
+.callout.danger{border-left-color:#f87171}
+.callout.success{border-left-color:#34d399}
+.chart-box{background:rgba(30,41,59,0.4);border-radius:10px;padding:16px;margin:16px 0;border:1px solid rgba(125,211,252,0.08)}
+.chart-title{font-size:13px;color:#94a3b8;margin-bottom:8px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:12px;color:#94a3b8}
+.chart-legend span{display:flex;align-items:center;gap:4px}
+.chart-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.matrix-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:16px 0;max-width:500px}
+.matrix-cell{padding:14px 8px;text-align:center;border-radius:6px;font-size:12px}
+.matrix-cell.title{font-weight:600;background:rgba(125,211,252,0.08);color:#7dd3fc}
+.matrix-cell.best{background:rgba(34,197,94,0.1);color:#86efac;border:1px solid rgba(34,197,94,0.2)}
+.matrix-cell.warn{background:rgba(251,191,36,0.08);color:#fcd34d}
+.matrix-cell.mute{background:rgba(100,116,139,0.08);color:#64748b}
+.risk-list{margin:12px 0;padding:0;list-style:none}
+.risk-list li{padding:8px 0 8px 24px;position:relative;border-bottom:1px solid rgba(125,211,252,0.05)}
+.risk-list li:before{content:"!";position:absolute;left:0;top:8px;width:16px;height:16px;border-radius:50%;background:rgba(239,68,68,0.2);color:#fca5a5;font-size:11px;font-weight:700;text-align:center;line-height:16px}
+.disclaimer{text-align:center;font-size:12px;color:#475569;padding:24px 16px;border-top:1px solid rgba(125,211,252,0.08);margin-top:32px}
+.timeline-box{margin:16px 0}
+.timeline-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(125,211,252,0.06)}
+.timeline-time{min-width:90px;font-size:12px;color:#7dd3fc;font-weight:600}
+.timeline-content{font-size:13px;color:#cbd5e1}
+.timeline-conf{font-size:11px;color:#94a3b8;margin-top:2px}
+@media(max-width:680px){body{font-size:14px}h1{font-size:20px}h2{font-size:18px}.kpi-grid{grid-template-columns:repeat(2,1fr)}.kpi-value{font-size:18px}table{font-size:12px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>光伏产业链全生命周期深度分析</h1>
+<p style="color:#fbbf24;font-size:16px;margin:8px 0">反内卷拐点已至 · 技术迭代加速 · 龙头价值重估</p>
+<div class="subtitle">报告日期: 2026-06-14 | 覆盖期: 2025-2026 | 分析师: 研股股</div>
+<div class="meta-bar">
+<span>周期定位: 谷底磨底→复苏初期</span>
+<span>核心评级: 观察名单→加仓(选择性)</span>
+<span>定价锚: 多晶硅价格 + 组件均价</span>
+<span>数据截至: 2026-06-12</span>
+</div>
+</div>
+
+<div class="section">
+<h2>一、执行摘要</h2>
+<div class="kpi-grid">
+<div class="kpi-card">
+<div class="kpi-label">2025年全球装机量</div>
+<div class="kpi-value">599<span class="kpi-unit"> GW</span></div>
+<div class="kpi-sub">同比 +11% (东吴证券)</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">2025年中国装机量</div>
+<div class="kpi-value">290<span class="kpi-unit"> GW</span></div>
+<div class="kpi-sub">1-10月累计253GW (+39%)</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">多晶硅价格(最新)</div>
+<div class="kpi-value">4-5.2<span class="kpi-unit"> 万/吨</span></div>
+<div class="kpi-sub">7月低点以来涨 ~50%</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">组件均价</div>
+<div class="kpi-value">0.68-0.75<span class="kpi-unit"> 元/W</span></div>
+<div class="kpi-sub">底部修复中, 龙头集体涨价</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">产业链CR5</div>
+<div class="kpi-value">76%<span class="kpi-unit">→80%</span></div>
+<div class="kpi-sub">集中度持续提升</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">硅料产能利用率</div>
+<div class="kpi-value">~40<span class="kpi-unit">%</span></div>
+<div class="kpi-sub">350万吨产能 vs 150万吨需求</div>
+</div>
+</div>
+
+<div class="callout">
+<strong>核心判断：</strong>
+光伏行业正处于 <em>"谷底磨底→复苏初期"</em> 的关键转折点。2025年下半年启动的"反内卷"政策组合拳（反不正当竞争法修订、硅料收储平台成立、能耗标准收紧）正在加速产能出清。多晶硅价格自2025年7月低点已反弹近50%，预计2026年价格中枢稳定于60-80元/kg（对应6-8万/吨），<strong>全行业有望在2026年实现扭亏</strong>。技术端，BC、TOPCon和钙钛矿三条路线并行推进，估值锚正从"GW出货量"切换至"单瓦现金利润+技术领先系数"。
+</div>
+</div>
+
+<div class="section">
+<h2>二、产业链结构映射（Phase 2）</h2>
+
+<h3>四层拆解与价值分配</h3>
+<table>
+<tr><th>层级</th><th>核心环节</th><th>价值占比</th><th>集中度</th><th>利润特征</th></tr>
+<tr><td>上游资源层</td><td>多晶硅、石英砂</td><td>~15%</td><td>CR5>80% 寡头</td><td><span class="tag tag-red">全线亏损→率先修复</span></td></tr>
+<tr><td>中游材料层</td><td>硅片、电池片</td><td>~25%</td><td>CR2>50% 双寡头</td><td><span class="tag tag-red">亏损中</span></td></tr>
+<tr><td>中游制造层</td><td>组件、逆变器、辅材</td><td>~35%</td><td>CR5=76%→80%</td><td><span class="tag tag-amber">分化: 逆变器盈利强劲</span></td></tr>
+<tr><td>下游应用层</td><td>集中式电站、分布式</td><td>~25%</td><td>需求分散</td><td><span class="tag tag-green">需求刚性</span></td></tr>
+</table>
+
+<div class="callout success">
+<strong>利润集中环节分析：</strong>当前利润正向两个方向转移：①上游硅料环节因反内卷+收储，价格修复弹性最大；②逆变器环节因光储融合+全球化，是全产业链唯一持续盈利的环节（阳光电源PE-TTM 25.86x，锦浪PE-TTM 59.24x）。中游硅片/电池片环节仍处全面亏损。
+</div>
+</div>
+
+<div class="section">
+<h2>三、内部产品体系拆解（Phase 3）</h2>
+
+<h3>3.1 逐环节产品清单与定价</h3>
+<table>
+<tr><th>环节</th><th>产品</th><th>规格/技术</th><th>最新价格</th><th>市场占比</th><th>龙头(TOP3)</th></tr>
+<tr><td rowspan="2"><strong>硅料</strong></td><td>多晶硅致密料</td><td>太阳能级 N型</td><td>4.5-5.2万/吨</td><td>~70%</td><td>通威、协鑫、大全</td></tr>
+<tr><td>颗粒硅</td><td>FBR工艺</td><td>~4万/吨</td><td>~15%</td><td>协鑫科技</td></tr>
+<tr><td rowspan="2"><strong>硅片</strong></td><td>N型硅片</td><td>182/210mm</td><td>~1.1元/片</td><td>>90%</td><td>隆基、TCL中环</td></tr>
+<tr><td>P型硅片</td><td>退出主流</td><td>-</td><td>~10%→0</td><td>逐步淘汰</td></tr>
+<tr><td rowspan="3"><strong>电池片</strong></td><td>TOPCon</td><td>效率25-25.4%</td><td>0.28-0.33元/W</td><td>~50%</td><td>晶科、通威、隆基</td></tr>
+<tr><td>HJT</td><td>效率25.6%</td><td>溢价0.05元/W</td><td>~30%</td><td>华晟、东方日升</td></tr>
+<tr><td>BC(HPBC/ABC)</td><td>效率26-26.5%</td><td>溢价0.12-0.18元/W</td><td>~10%快速增长</td><td>隆基、爱旭</td></tr>
+<tr><td rowspan="2"><strong>组件</strong></td><td>N型组件</td><td>570-750W</td><td>0.68-0.75元/W</td><td>>70%</td><td>晶科、隆基、天合</td></tr>
+<tr><td>BC组件</td><td>分布式溢价</td><td>溢价0.08-0.12元/W</td><td>~10%</td><td>隆基、爱旭</td></tr>
+<tr><td rowspan="2"><strong>逆变器</strong></td><td>组串式逆变器</td><td>136-350kW</td><td>0.12-0.18元/W</td><td>~60%</td><td>阳光电源、锦浪</td></tr>
+<tr><td>储能逆变器</td><td>光储一体</td><td>毛利率>35%</td><td>快速增长</td><td>阳光电源、固德威</td></tr>
+<tr><td><strong>辅材-玻璃</strong></td><td>光伏玻璃</td><td>1.6/2.0mm</td><td>-</td><td>双寡头</td><td>福莱特、信义光能</td></tr>
+<tr><td><strong>辅材-胶膜</strong></td><td>EVA/POE胶膜</td><td>N型POE占比60%</td><td>-</td><td>~60%</td><td>福斯特(50%+)</td></tr>
+</table>
+
+<h3>3.2 定价锚识别</h3>
+<div class="callout">
+<p><strong>定价锚 #1：多晶硅价格（全产业链成本基石）</strong></p>
+<p style="font-size:13px;color:#94a3b8">覆盖全产业链成本的核心变量。硅料每涨1万/吨，组件成本上升约0.04-0.05元/W。当前价格4-5.2万/吨，仍低于多数企业现金成本线（6万/吨），反内卷+收储推动向6-8万/吨中枢修复。</p>
+<p><strong>定价锚 #2：组件均价（终端需求信号）</strong></p>
+<p style="font-size:13px;color:#94a3b8">反映全产业链供需平衡的综合指标。当前0.68-0.75元/W处于历史底部，龙头集体涨价是行业回暖的先行信号。</p>
+</div>
+
+<h3>3.3 概念解释模块</h3>
+<table>
+<tr><th>术语</th><th>拆解</th><th>为什么重要</th></tr>
+<tr><td><strong>N型 vs P型</strong></td><td>N型=磷掺杂（电子多数载流子），P型=硼掺杂。N型效率更高、衰减更低</td><td>N型已全面替代P型，2025年N型渗透率>90%，决定电池技术路线选择</td></tr>
+<tr><td><strong>TOPCon</strong></td><td>Tunnel Oxide Passivated Contact（隧穿氧化层钝化接触），N型电池主流路线</td><td>占比~50%，量产效率25-25.4%，成本最低，扩产最快</td></tr>
+<tr><td><strong>BC电池(HPBC/ABC)</strong></td><td>Back Contact（背接触），正面无栅线遮挡，转换效率最高。HPBC=隆基方案，ABC=爱旭方案</td><td>量产效率26-26.5%全球最高，分布式溢价0.12-0.18元/W，是差异化竞争核心</td></tr>
+<tr><td><strong>钙钛矿叠层</strong></td><td>在晶硅电池上叠加钙钛矿薄膜，突破单结晶硅理论效率极限(29.4%)</td><td>2026年进入GW级量产元年，协鑫中试线效率突破33%，是下一代颠覆性技术</td></tr>
+<tr><td><strong>颗粒硅</strong></td><td>硅烷流化床法(FBR)生产的颗粒状多晶硅，vs传统西门子法块状硅</td><td>成本低10-15%，碳足迹<7kg CO₂/kg-Si（获欧盟CBAM豁免），但纯度控制是挑战</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>四、下游需求量化（Phase 4）</h2>
+
+<h3>4.1 需求结构拆解</h3>
+<table>
+<tr><th>终端类别</th><th>2025年装机量</th><th>占比</th><th>2026E预测</th><th>趋势</th></tr>
+<tr><td><strong>中国集中式</strong></td><td>~145 GW</td><td>~50%</td><td>~100-115 GW</td><td><span class="tag tag-red">下降</span> 136号文影响</td></tr>
+<tr><td><strong>中国工商业分布式</strong></td><td>~90 GW</td><td>~31%</td><td>~70 GW</td><td><span class="tag tag-amber">放缓</span></td></tr>
+<tr><td><strong>中国户用</strong></td><td>~55 GW</td><td>~19%</td><td>~30 GW</td><td><span class="tag tag-red">收缩</span></td></tr>
+<tr><td><strong>欧洲</strong></td><td>~70 GW</td><td>-</td><td>~78 GW</td><td><span class="tag tag-green">稳健</span> +11%</td></tr>
+<tr><td><strong>美国</strong></td><td>~50 GW</td><td>-</td><td>~55 GW</td><td><span class="tag tag-green">持平</span></td></tr>
+<tr><td><strong>中东</strong></td><td>~28 GW</td><td>-</td><td>~45 GW</td><td><span class="tag tag-green">爆发</span> +87%</td></tr>
+<tr><td><strong>印度</strong></td><td>~31 GW</td><td>-</td><td>~40 GW</td><td><span class="tag tag-green">增长</span> +29%</td></tr>
+<tr><td><strong>全球合计</strong></td><td><strong>~599 GW</strong></td><td><strong>100%</strong></td><td><strong>~588 GW</strong></td><td><span class="tag tag-red">-2%</span> 国内拖累</td></tr>
+</table>
+
+<h3>4.2 关键拐点识别</h3>
+<div class="callout warning">
+<p><strong>拐点 #1 - 增量拐点：</strong>新兴市场（中东+印度）合计增量有望在2026年首次超越欧洲增量，标志着全球需求重心东移。</p>
+<p><strong>拐点 #2 - 增速拐点：</strong>中东地区CAGR(87%)远超全球均值(-2%)，成为增速最高的增量市场。</p>
+<p><strong>拐点 #3 - 份额拐点：</strong>中国装机占比将从2025年的~53%下降至2026年的~40%以下，海外份额首次超过国内。</p>
+<p><strong>拐点 #4 - 历史性负增长：</strong>2026年大概率出现中国光伏平价上网以来首次年度新增装机负增长（中性预测-21%）。</p>
+</div>
+
+<div class="chart-box">
+<div class="chart-title">全球光伏装机结构变化 (2024-2026E)</div>
+<div class="chart-legend">
+<span><i style="background:#3b82f6"></i>中国</span>
+<span><i style="background:#22c55e"></i>欧洲</span>
+<span><i style="background:#f59e0b"></i>美国</span>
+<span><i style="background:#ef4444"></i>中东</span>
+<span><i style="background:#a855f7"></i>其他</span>
+</div>
+<div style="height:260px"><canvas id="chart1" role="img" aria-label="全球光伏装机结构变化">图表加载中</canvas></div>
+</div>
+</div>
+
+<div class="section">
+<h2>五、供需指标体系（Phase 5）</h2>
+
+<h3>5.1 三层信号框架</h3>
+<table>
+<tr><th>信号类型</th><th>指标</th><th>当前读数</th><th>含义</th></tr>
+<tr><td rowspan="3"><strong>先行信号<br>(领先1-3月)</strong></td><td>硅料企业排产计划</td><td>11月进入枯水期减产</td><td><span class="tag tag-green">供给收缩</span></td></tr>
+<tr><td>组件龙头排产</td><td>底部区间，温和回升</td><td><span class="tag tag-amber">企稳中</span></td></tr>
+<tr><td>光伏招标量</td><td>大基地项目持续推进</td><td><span class="tag tag-green">需求刚性</span></td></tr>
+<tr><td rowspan="2"><strong>同步信号<br>(当月/当季)</strong></td><td>多晶硅月产量</td><td>10.16万吨(5月)</td><td><span class="tag tag-amber">接近需求上限</span></td></tr>
+<tr><td>电池片/组件出货量</td><td>头部企业环比改善</td><td><span class="tag tag-green">底部已现</span></td></tr>
+<tr><td rowspan="3"><strong>价格信号<br>(实时)</strong></td><td>多晶硅致密料</td><td>4.5-5.2万/吨</td><td><span class="tag tag-green">连续8周上涨</span></td></tr>
+<tr><td>N型复投料</td><td>突破5万/吨</td><td><span class="tag tag-green">领涨</span></td></tr>
+<tr><td>组件均价</td><td>0.68-0.75元/W</td><td><span class="tag tag-amber">龙头集体涨价</span></td></tr>
+</table>
+
+<h3>5.2 行业温度计：5个终极先行指标</h3>
+<table>
+<tr><th>#</th><th>指标</th><th>数据源</th><th>频率</th><th>当前状态</th><th>阈值判断</th></tr>
+<tr><td>1</td><td><strong>多晶硅致密料均价</strong></td><td>SMM/硅业分会</td><td>日/周</td><td>4.5-5.2万/吨 ↑</td><td>>6万=偏紧, <3.5万=过剩</td></tr>
+<tr><td>2</td><td><strong>头部硅料企业开工率</strong></td><td>券商跟踪</td><td>月</td><td>~40%底部</td><td>>60%=复苏, <35%=深度谷底</td></tr>
+<tr><td>3</td><td><strong>组件出口量同比</strong></td><td>海关总署</td><td>月</td><td>+12.8%(2024)</td><td>>20%=强需求, <0%=海外受阻</td></tr>
+<tr><td>4</td><td><strong>硅料社会库存</strong></td><td>硅业分会</td><td>月</td><td>~20万吨</td><td><10万吨=紧平衡, >25万吨=高库存</td></tr>
+<tr><td>5</td><td><strong>N型料-P型料价差</strong></td><td>SMM</td><td>日</td><td>0.5-1万/吨</td><td>扩大=N型替代加速</td></tr>
+</table>
+
+<div class="callout">
+<strong>组合解读逻辑：</strong>
+<ul style="margin:8px 0 8px 20px;font-size:13px">
+<li>指标1涨 + 指标4降 = <span class="tag tag-green">强复苏信号</span>（价格上涨+库存去化）</li>
+<li>指标1稳 + 指标2涨 = <span class="tag tag-amber">弱复苏</span>（量先于价修复）</li>
+<li>多指标同涨 = <span class="tag tag-green">超级周期信号</span>（当前尚未达到）</li>
+<li>指标1跌 + 指标4涨 = <span class="tag tag-red">进一步恶化</span></li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<h2>六、标的映射与筛选（Phase 6）</h2>
+
+<h3>6.1 核心标的实时行情（2026-06-12）</h3>
+<table>
+<tr><th>代码</th><th>名称</th><th>股价</th><th>市值(亿)</th><th>PE-TTM</th><th>PB</th><th>52周高/低</th><th>年初至今</th></tr>
+<tr><td>601012.SH</td><td><strong>隆基绿能</strong></td><td>13.46</td><td>1,020</td><td style="color:#f87171">-14.8</td><td>2.02</td><td>23.57 / 12.22</td><td style="color:#f87171">-26.0%</td></tr>
+<tr><td>600438.SH</td><td><strong>通威股份</strong></td><td>13.70</td><td>617</td><td style="color:#f87171">-6.6</td><td>1.76</td><td>27.75 / 12.69</td><td style="color:#f87171">-33.2%</td></tr>
+<tr><td>688223.SH</td><td><strong>晶科能源</strong></td><td>5.16</td><td>530</td><td style="color:#f87171">-7.7</td><td>2.13</td><td>9.66 / 4.85</td><td style="color:#f87171">-8.5%</td></tr>
+<tr><td>688599.SH</td><td><strong>天合光能</strong></td><td>14.65</td><td>343</td><td style="color:#f87171">-5.7</td><td>1.68</td><td>24.26 / 12.95</td><td style="color:#f87171">-11.5%</td></tr>
+<tr><td>002459.SZ</td><td><strong>晶澳科技</strong></td><td>8.85</td><td>293</td><td style="color:#f87171">-7.3</td><td>1.41</td><td>15.54 / 7.92</td><td style="color:#f87171">-22.7%</td></tr>
+<tr><td>002129.SZ</td><td><strong>TCL中环</strong></td><td>9.98</td><td>404</td><td style="color:#f87171">-4.5</td><td>2.02</td><td>11.86 / 7.11</td><td style="color:#86efac">+16.5%</td></tr>
+<tr><td>300274.SZ</td><td><strong>阳光电源</strong></td><td>148.76</td><td>3,084</td><td style="color:#86efac">25.9</td><td>6.53</td><td>209.2 / 60.44</td><td style="color:#f87171">-12.7%</td></tr>
+<tr><td>600732.SH</td><td>爱旭股份</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>002056.SZ</td><td><strong>横店东磁</strong></td><td>24.62</td><td>401</td><td style="color:#86efac">22.5</td><td>3.63</td><td>30.24 / 13.06</td><td style="color:#86efac">+26.3%</td></tr>
+<tr><td>688472.SH</td><td><strong>阿特斯</strong></td><td>11.20</td><td>408</td><td style="color:#86efac">27.4</td><td>1.73</td><td>24.28 / 8.32</td><td style="color:#f87171">-24.9%</td></tr>
+<tr><td>300724.SZ</td><td><strong>捷佳伟创</strong></td><td>70.15</td><td>244</td><td style="color:#86efac">11.2</td><td>1.85</td><td>151.0 / 49.6</td><td style="color:#f87171">-25.7%</td></tr>
+<tr><td>688303.SH</td><td><strong>大全能源</strong></td><td>20.95</td><td>449</td><td style="color:#f87171">-32.8</td><td>1.18</td><td>35.74 / 18.11</td><td style="color:#f87171">-21.9%</td></tr>
+<tr><td>300763.SZ</td><td><strong>锦浪科技</strong></td><td>90.73</td><td>361</td><td style="color:#86efac">59.2</td><td>4.03</td><td>124.8 / 51.61</td><td style="color:#86efac">+27.4%</td></tr>
+<tr><td>601865.SH</td><td><strong>福莱特</strong></td><td>10.82</td><td>254</td><td style="color:#86efac">27.8</td><td>1.15</td><td>20.26 / 10.34</td><td style="color:#f87171">-31.0%</td></tr>
+<tr><td>603806.SH</td><td><strong>福斯特</strong></td><td>14.82</td><td>387</td><td style="color:#86efac">56.8</td><td>2.45</td><td>20.01 / 11.95</td><td style="color:#86efac">+7.3%</td></tr>
+<tr><td>688390.SH</td><td><strong>固德威</strong></td><td>110.46</td><td>268</td><td style="color:#86efac">101.5</td><td>9.44</td><td>159.97 / 40.23</td><td style="color:#86efac">+77.8%</td></tr>
+<tr><td>600089.SH</td><td><strong>特变电工</strong></td><td>23.03</td><td>1,164</td><td style="color:#86efac">18.9</td><td>1.62</td><td>33.28 / 11.16</td><td style="color:#86efac">+3.7%</td></tr>
+</table>
+
+<h3>6.2 确定性三层漏斗筛选</h3>
+<table>
+<tr><th>漏斗层</th><th>条件</th><th>通过标的</th></tr>
+<tr><td><strong>第一层：竞争格局确定性</strong></td><td>CR1>25% 或 CR5>60%</td><td>通威(硅料30%)、隆基(硅片35%)、阳光电源(逆变器30%)、福斯特(胶膜50%)、晶科(组件全球第一)</td></tr>
+<tr><td><strong>第二层：盈利弹性确定性</strong></td><td>固定成本占比大 + 产能利用率提升空间</td><td>通威(硅料弹性最强)、隆基(BC溢价)、爱旭(ABC效率领先)、捷佳伟创(设备高杠杆)</td></tr>
+<tr><td><strong>第三层：资产负债表确定性</strong></td><td>资产负债率<60%, 经营现金流为正</td><td>阳光电源、横店东磁、阿特斯(净负债率最低)、特变电工、捷佳伟创</td></tr>
+</table>
+
+<h3>6.3 确定性 vs 弹性矩阵</h3>
+<div class="matrix-box">
+<div class="matrix-cell title"></div>
+<div class="matrix-cell title" style="font-size:11px">低确定性</div>
+<div class="matrix-cell title" style="font-size:11px">高确定性</div>
+
+<div class="matrix-cell title" style="font-size:11px">高弹性</div>
+<div class="matrix-cell mute">大全能源<br><span style="font-size:10px">纯价格博弈</span></div>
+<div class="matrix-cell best">通威股份 ★<br>爱旭股份<br><span style="font-size:10px">最佳选择</span></div>
+
+<div class="matrix-cell title" style="font-size:11px">低弹性</div>
+<div class="matrix-cell mute">晶科能源<br><span style="font-size:10px">竞争激烈</span></div>
+<div class="matrix-cell best">阳光电源 ★★<br>横店东磁<br>捷佳伟创<br>福斯特<br><span style="font-size:10px">不踏空配置</span></div>
+</div>
+
+<h3>6.4 投资风格组合推荐</h3>
+<table>
+<tr><th>风格</th><th>配置思路</th><th>推荐标的</th><th>仓位建议</th></tr>
+<tr><td><strong>进攻型</strong></td><td>押注价格反弹弹性最大的标的</td><td>通威股份 + 爱旭股份 + TCL中环</td><td>50-60%</td></tr>
+<tr><td><strong>均衡型</strong></td><td>兼顾确定性 + 弹性 + 业绩验证</td><td>阳光电源 + 横店东磁 + 通威 + 捷佳伟创</td><td>40-50%</td></tr>
+<tr><td><strong>保守型</strong></td><td>只配置已盈利 + 现金流稳健的龙头</td><td>阳光电源 + 特变电工 + 阿特斯 + 福斯特</td><td>30-40%</td></tr>
+<tr><td><strong>激进型</strong></td><td>主题驱动 + 技术颠覆</td><td>爱旭(BC) + 协鑫科技(钙钛矿) + 迈为(HJT设备)</td><td>20-30%(高风险)</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>七、周期定位（Phase 7）</h2>
+
+<h3>7.1 周期阶段判断</h3>
+<div class="callout danger">
+<p style="font-size:16px"><strong>当前位置：③ 谷底磨底 → ④ 复苏初期 的过渡区间</strong></p>
+<p style="font-size:13px;margin-top:8px">行业已度过"繁荣顶"(2022)和"衰退期"(2023-2024)，正处于价格触底、行业大面积亏损、尾部产能出清的阶段。反内卷政策正在加速向复苏期过渡，但2026年装机负增长的风险意味着复苏不会一蹴而就。</p>
+</div>
+
+<div class="chart-box">
+<div class="chart-title">光伏周期四阶段定位（2021-2027E）</div>
+<div style="height:280px"><canvas id="chart2" role="img" aria-label="光伏周期定位">图表加载中</canvas></div>
+</div>
+
+<h3>7.2 阶段判断硬证据</h3>
+<table>
+<tr><th>指标</th><th>信号</th><th>当前读数</th><th>指向</th></tr>
+<tr><td>价格信号</td><td>硅料从底部反弹X%</td><td>7月以来涨~50%</td><td><span class="tag tag-green">复苏信号</span></td></tr>
+<tr><td>库存信号</td><td>硅料库存连续X周去化</td><td>~20万吨, 仍在高位</td><td><span class="tag tag-amber">尚未确认去化</span></td></tr>
+<tr><td>排产信号</td><td>头部企业排产同比</td><td>底部区间, 温和回升</td><td><span class="tag tag-amber">底部企稳</span></td></tr>
+<tr><td>盈利信号</td><td>行业净利润同比</td><td>Q3环比减亏明显</td><td><span class="tag tag-green">拐点已现</span></td></tr>
+<tr><td>产能利用率</td><td>从底部回升</td><td>~40% → 目标60%+</td><td><span class="tag tag-amber">需时间</span></td></tr>
+<tr><td>政策信号</td><td>反内卷+收储落地</td><td>光和谦成已注册</td><td><span class="tag tag-green">强力推动</span></td></tr>
+</table>
+
+<h3>7.3 结构性驱动力</h3>
+<table>
+<tr><th>驱动力</th><th>具体内容</th><th>可持续性</th></tr>
+<tr><td><strong>供给侧：反内卷出清</strong></td><td>反不正当竞争法修订(禁止低于成本销售) + 硅料收储平台(目标降至150万吨) + 能耗标准收紧</td><td><span class="tag tag-green">强且持续</span></td></tr>
+<tr><td><strong>需求侧：新兴市场爆发</strong></td><td>中东(+87%)、印度(+29%)贡献核心增量；分布式管理办法引导从规模扩张转向效益优先</td><td><span class="tag tag-amber">中期</span></td></tr>
+<tr><td><strong>技术侧：三线并行</strong></td><td>BC(差异化溢价) + TOPCon(规模化降本) + 钙钛矿(下一代颠覆)</td><td><span class="tag tag-green">长期</span></td></tr>
+</table>
+
+<h3>7.4 "本轮周期的不一样"</h3>
+<div class="callout warning">
+<p><strong>差异 #1：政策驱动型出清 vs 市场自然出清</strong></p>
+<p style="font-size:13px">历史上光伏谷底依靠企业自然破产退出，本次由政府主导（收储平台+反内卷法+能耗标准），出清速度更快但道德风险更高。硅料产能利用率仅40%，大量2022年后新建产能在未投产即面临淘汰。</p>
+<p><strong>差异 #2：K型分化 vs 普涨普跌</strong></p>
+<p style="font-size:13px">本次复苏不会是全产业链普涨。逆变器（阳光电源PE 25x）和设备（捷佳伟创PE 11x）已率先盈利，而硅片/电池片环节仍全面亏损。投资逻辑从"买板块"变为"选标的"。</p>
+<p><strong>差异 #3：技术迭代作为周期变量</strong></p>
+<p style="font-size:13px">钙钛矿2026年进入GW级量产元年，若效率突破30%+，可能在3-5年内颠覆现有晶硅技术路线。这使本轮周期的供给曲线更加陡峭——传统产能的淘汰可能因技术替代而加速。</p>
+</div>
+
+<h3>7.5 未来12个月节奏预判</h3>
+<div class="timeline-box">
+<div class="timeline-item">
+<div class="timeline-time">近期 (1-2月)<br>2026年6-8月</div>
+<div class="timeline-content">
+<strong>硅料价格继续修复，组件龙头排产温和回升</strong><br>
+反内卷政策效果进一步显现，Q2财报有望显示更多企业扭亏。但6-8月为传统淡季，价格涨幅可能放缓。
+</div>
+<div class="timeline-conf">置信度: ★★★★</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-time">中期 (3-6月)<br>2026年9-12月</div>
+<div class="timeline-content">
+<strong>2026年SNEC大会催化 + 钙钛矿GW线投产</strong><br>
+钙钛矿叠层电池产业化里程碑，可能触发板块估值重估。但全年装机负增长(-2%至-21%)将对情绪形成压制。
+</div>
+<div class="timeline-conf">置信度: ★★★</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-time">远期 (6-12月)<br>2026年Q4-2027Q2</div>
+<div class="timeline-content">
+<strong>全行业扭亏关键验证窗口</strong><br>
+若硅料价格稳定于6-8万/吨 + 组件价格回到0.8元/W以上，2026Q4-2027Q1有望看到龙头全面盈利。这是决定复苏是否成立的核心验证点。
+</div>
+<div class="timeline-conf">置信度: ★★</div>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h2>八、风险提示</h2>
+<ul class="risk-list">
+<li><strong>反内卷效果不及预期</strong>：若硅料收储平台推进缓慢、能耗标准执行不到位，产能出清可能延后，价格修复不及预期</li>
+<li><strong>2026年装机负增长加深</strong>：中国136号文+分布式管理办法双重影响下，中性预测国内装机-21%，悲观情景-35%，将严重拖累全球需求</li>
+<li><strong>贸易壁垒升级</strong>：美国UFLPA清单扩大、欧盟CBAM碳关税执行、东南亚双反税率提升，可能压缩中国企业海外利润空间</li>
+<li><strong>钙钛矿技术颠覆风险</strong>：若钙钛矿效率突破30%且成本快速下降，现有晶硅产能可能在3-5年内大规模淘汰，重置资产价值</li>
+<li><strong>现金流断裂风险</strong>：龙头一季度大面积亏损（隆基-14亿、通威-26亿、晶科-14亿），若价格修复延迟，部分企业可能面临资金链断裂</li>
+<li><strong>估值杀跌风险</strong>：当前龙头PE-TTM多为负值或高位（固德威101x、锦浪59x），若业绩验证不达预期，估值可能进一步压缩</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>九、PM判断框架检验</h2>
+<table>
+<tr><th>问题</th><th>回答</th></tr>
+<tr><td><strong>什么被错误定价了？</strong></td><td>市场低估了反内卷政策的力度和硅料收储的执行效率，仍以"自然出清"逻辑定价。实际上政策驱动型出清的速度和确定性远高于自然出清。</td></tr>
+<tr><td><strong>当前价格反映了什么？</strong></td><td>反映了行业全面亏损+2026年装机负增长的最悲观预期。龙头PB已跌至1-2x区间，隆基PB 2.0x、通威1.8x、晶澳1.4x，接近历史底部。</td></tr>
+<tr><td><strong>什么能证明论点？</strong></td><td>硅料价格稳定于6万/吨以上 + Q3-Q4龙头企业单季度扭亏 + 硅料社会库存降至15万吨以下</td></tr>
+<tr><td><strong>什么能推翻论点？</strong></td><td>2026年装机降幅超预期（>-25%）+ 反内卷政策执行不力 + 硅料价格再次跌破3.5万/吨</td></tr>
+<tr><td><strong>为什么是现在？</strong></td><td>政策催化密集期（反不正当竞争法6月生效、收储平台年内完成），叠加价格底部+估值底部+情绪底部的三重共振</td></tr>
+<tr><td><strong>行动建议</strong></td><td><strong>观察名单→选择性加仓</strong>。优先配置已盈利的逆变器/设备龙头（阳光电源、横店东磁），硅料环节博弈价格反弹（通威），BC技术方向布局差异化（爱旭）</td></tr>
+</table>
+</div>
+
+<div class="disclaimer">
+<p><strong>免责声明</strong></p>
+<p>本报告仅供参考，不构成个人投资建议。报告中所有数据来源于公开信息（中国光伏行业协会、券商研报、SMM/硅业分会、上市公司公告、westock-data/neodata金融数据），分析结论基于截至2026年6月14日的可得信息。光伏行业具有强周期属性，价格波动剧烈，投资者应根据自身风险承受能力审慎决策。投资有风险，入市需谨慎。</p>
+<p style="margin-top:8px;color:#334155">数据来源：CPIA、东吴证券、中国银河证券、SMM、硅业分会、westock-data、neodata-financial-search、WebSearch公开信息</p>
+</div>
+
+<script>
+const ctx1 = document.getElementById('chart1');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['2024年', '2025年', '2026E'],
+    datasets: [
+      {label:'中国', data:[278,290,225], backgroundColor:'#3b82f6'},
+      {label:'欧洲', data:[65,70,78], backgroundColor:'#22c55e'},
+      {label:'美国', data:[45,50,55], backgroundColor:'#f59e0b'},
+      {label:'中东', data:[15,28,45], backgroundColor:'#ef4444'},
+      {label:'其他', data:[135,161,185], backgroundColor:'#a855f7'}
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: {display: false},
+      tooltip: {mode:'index', intersect:false}
+    },
+    scales: {
+      x: {stacked:true, ticks:{color:'#94a3b8'}, grid:{color:'rgba(148,163,184,0.08)'}},
+      y: {stacked:true, ticks:{color:'#94a3b8', callback:v=>v+'GW'}, grid:{color:'rgba(148,163,184,0.08)'}}
+    }
+  }
+});
+
+const ctx2 = document.getElementById('chart2');
+const phaseColors = ['#22c55e30','#ef444430','#f59e0b30','#3b82f630'];
+new Chart(ctx2, {
+  type: 'line',
+  data: {
+    labels: ['2021','2022','2023','2024','2025','2026E','2027E'],
+    datasets: [{
+      label: '多晶硅价格(万元/吨)',
+      data: [25, 30, 8, 4, 5, 7, 8],
+      borderColor: '#fbbf24',
+      backgroundColor: 'rgba(251,191,36,0.1)',
+      borderWidth: 2,
+      fill: true,
+      tension: 0.3,
+      pointBackgroundColor: '#fbbf24',
+      pointRadius: 4
+    },{
+      label: '组件均价(元/W)',
+      data: [1.9, 1.8, 1.0, 0.75, 0.72, 0.78, 0.85],
+      borderColor: '#7dd3fc',
+      backgroundColor: 'rgba(125,211,252,0.1)',
+      borderWidth: 2,
+      fill: true,
+      tension: 0.3,
+      yAxisID: 'y1',
+      pointBackgroundColor: '#7dd3fc',
+      pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: {display: false},
+      annotation: {}
+    },
+    scales: {
+      y: {
+        position:'left',
+        ticks:{color:'#fbbf24', callback:v=>v+'万/吨'},
+        grid:{color:'rgba(148,163,184,0.08)'},
+        title:{display:true, text:'硅料(万/吨)', color:'#fbbf24'}
+      },
+      y1: {
+        position:'right',
+        ticks:{color:'#7dd3fc', callback:v=>v+'元/W'},
+        grid:{display:false},
+        title:{display:true, text:'组件(元/W)', color:'#7dd3fc'}
+      },
+      x: {ticks:{color:'#94a3b8'}, grid:{color:'rgba(148,163,184,0.08)'}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>

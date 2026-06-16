@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电力股投资指南：水电、火电、核电，各有各的赚法</title>
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: #f1f3f5;
+    --accent-blue: #2c6fbb;
+    --accent-green: #1a7f4b;
+    --accent-amber: #c47b13;
+    --accent-red: #c0392b;
+    --accent-purple: #6c3fa0;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --border-color: #e0e0e0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent-blue);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .highlight-box {
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent-blue);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .highlight-box p {
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .highlight-box p:last-child { margin-bottom: 0; }
+
+  .data-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+  }
+
+  .data-row:last-child { border-bottom: none; }
+  .data-label { color: var(--text-secondary); }
+  .data-value { font-weight: 600; color: var(--text-primary); }
+  .data-value.green { color: var(--accent-green); }
+  .data-value.red { color: var(--accent-red); }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .tag-hydro { background: #e6f4ea; color: #1a7f4b; }
+  .tag-thermal { background: #fce8e6; color: #c0392b; }
+  .tag-nuclear { background: #ede7f6; color: #6c3fa0; }
+  .tag-wind { background: #e3f2fd; color: #2c6fbb; }
+  .tag-ai { background: #fff3e0; color: #c47b13; }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .comparison-table th {
+    background: var(--bg-card);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .comparison-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  .summary-box {
+    background: linear-gradient(135deg, #f8f9fa, #eef1f5);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 24px 0;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .summary-item:last-child { margin-bottom: 0; }
+
+  .summary-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .disclaimer {
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 16px;
+    margin-top: 40px;
+    line-height: 1.7;
+  }
+
+  .big-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    line-height: 1.2;
+  }
+
+  .big-number-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .number-group {
+    display: flex;
+    gap: 24px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .number-item { flex: 1; min-width: 140px; }
+
+  blockquote {
+    border-left: 3px solid var(--accent-amber);
+    padding: 12px 16px;
+    margin: 16px 0;
+    background: #fffdf5;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .energy-flow {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 16px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .flow-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+  }
+
+  .flow-box {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    flex: 1;
+  }
+
+  .flow-arrow {
+    font-size: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .flow-percent {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 4px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>电力股投资指南：水电、火电、核电，各有各的赚法（附 AI 吃电真相）</h1>
+<p class="subtitle">2026.6.8 | 数据来源：国家能源局、中电联、中国信通院、公司财报</p>
+
+<p>中国去年用了 10 万亿度电。</p>
+
+<p>这个数字超过美国全年用电量的 2 倍，比欧盟、俄罗斯、印度、日本加起来还多。中国是全球唯一一个年用电量突破 10 万亿千瓦时的国家。</p>
+
+<p>电力行业正在经历剧烈的结构转型。风能和太阳能的装机量已经接近总装机量的一半，但发出的电只占总发电量的 17%。煤电装机占比在收缩，核电在建机组排到了 2030 年。</p>
+
+<p>AI 正在成为用电增速最快的领域。今年 1-4 月，互联网数据服务用电量同比飙升 44.4%。</p>
+
+<p>不同类型的电力股，投资逻辑差别很大。水电像债券，火电看煤价，核电看审批节奏，风电光伏还在消纳困境里挣扎。</p>
+
+<h2>10 万亿度电花在了哪里</h2>
+
+<div class="number-group">
+  <div class="number-item">
+    <div class="big-number">10.37万亿</div>
+    <div class="big-number-label">千瓦时（同比+5.0%）</div>
+  </div>
+  <div class="number-item">
+    <div class="big-number">64%</div>
+    <div class="big-number-label">第二产业用电占比</div>
+  </div>
+</div>
+
+<div class="data-card">
+  <div class="data-row">
+    <span class="data-label">第二产业（工业）</span>
+    <span class="data-value">66,366 亿 kWh（64.0%）</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">第三产业（服务业）</span>
+    <span class="data-value">19,942 亿 kWh（19.2%）</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">城乡居民生活</span>
+    <span class="data-value">15,880 亿 kWh（15.3%）</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">第一产业（农业）</span>
+    <span class="data-value">1,494 亿 kWh（1.4%）</span>
+  </div>
+</div>
+
+<p>工业用电增量正在从钢铁、有色、建材、化工这些传统高耗能行业，向新能源车、锂电池、光伏设备这些"新三样"迁移。汽车制造业用电增速 10.9%，是制造业里最高的。</p>
+
+<p>服务业用电增速 8.2%，远超全社会平均。充换电服务业用电增长 48.8%，信息传输/软件服务业增长 17.0%。这两个行业的增速分别是全社会平均的 10 倍和 3.5 倍。</p>
+
+<div class="highlight-box">
+  <p><strong>一个关键变化：</strong>第三产业和居民生活用电对总增量的贡献率已经达到 50%。用电增长不再只靠工厂，普通人的生活方式正在成为电力需求的核心变量。</p>
+</div>
+
+<h2><span class="section-tag tag-ai">AI</span> AI 用电：增速最快的"电力黑洞"</h2>
+
+<div class="number-group">
+  <div class="number-item">
+    <div class="big-number" style="color: var(--accent-amber);">1,960亿</div>
+    <div class="big-number-label">2025年数据中心用电量（kWh）</div>
+  </div>
+  <div class="number-item">
+    <div class="big-number" style="color: var(--accent-red);">39.5%</div>
+    <div class="big-number-label">近三年平均增速</div>
+  </div>
+</div>
+
+<p>听起来占比不高（全社会用电量的 1.6-1.9%），但增速吓人。今年 1-4 月互联网数据服务用电同比再增 44.4%。2025 年已有 42 个万卡级智算集群建成运行。</p>
+
+<h3>AI 用电分两个阶段</h3>
+
+<p><strong>训练</strong>是大模型"学习"的过程。GPT-4 级别的模型，一次训练需要上万张 GPU 连续跑几周到几个月，总耗电约 1,000 万度，相当于一个中型城市几天的用电量。</p>
+
+<p><strong>推理</strong>是 AI 产品日常服务用户的过程。ChatGPT、豆包、Kimi 每天处理数十亿次请求，持续 365 天不断电。推理用电已经超过训练，占比约 80-90%。</p>
+
+<div class="data-card">
+  <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">数据中心内部能耗分布</div>
+  <div class="data-row">
+    <span class="data-label">IT 设备（服务器/存储/网络）</span>
+    <span class="data-value">45-60%</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">制冷系统</span>
+    <span class="data-value">30-40%</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">供配电系统</span>
+    <span class="data-value">5-10%</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">其他辅助设施</span>
+    <span class="data-value">3-5%</span>
+  </div>
+</div>
+
+<blockquote>
+2030 年预测：中国信通院预计数据中心用电量约 5,000 亿千瓦时（占 3%），赛迪研究院预测超 7,000 亿千瓦时（占 5%+）。
+</blockquote>
+
+<h2><span class="section-tag tag-hydro">水电</span> 水电：最像债券的股票</h2>
+
+<p>水电的投资逻辑很简单：一次性投入大，建成之后运营成本极低，电站能用 30-50 年，折旧结束后利润率非常高。</p>
+
+<div class="data-card">
+  <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">核心变量</div>
+  <div class="data-row">
+    <span class="data-label">来水量</span>
+    <span class="data-value">年际波动 15-20%</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">利率</span>
+    <span class="data-value green">降息直接利好 DCF 估值</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">壁垒</span>
+    <span class="data-value">极高，优质水力资源已开发完毕</span>
+  </div>
+</div>
+
+<p>长江电力的经营现金流大约是净利润的 1.8 倍。分红率约 71%，股息率约 3.43%。PE 通常 18-25 倍。</p>
+
+<p>适合作为组合里的压舱石，追求稳定收益的投资者可以逢低配置。</p>
+
+<h2><span class="section-tag tag-thermal">火电</span> 火电：赌煤价下跌</h2>
+
+<p>火电的盈利核心就一个字：煤。煤炭占发电成本的 60-70%。煤价每跌 100 元/吨，华能国际利润增厚约 80-100 亿元。</p>
+
+<div class="data-card">
+  <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">煤价与火电命运</div>
+  <div class="data-row">
+    <span class="data-label">2021年10月（峰值）</span>
+    <span class="data-value red">~2,600 元/吨 → 全行业巨亏</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">2025年6月（低点）</span>
+    <span class="data-value green">~615 元/吨 → 盈利高增</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">2026年4月（当前）</span>
+    <span class="data-value">~701 元/吨 → 合理区间</span>
+  </div>
+</div>
+
+<p>华能国际 2022 年亏损 74 亿，2025 年赚了 144 亿，煤价是关键。火电投资的本质是做多电力需求、做空煤价。煤价 700 以下关注做多，850 以上小心。PE 通常 8-15 倍。</p>
+
+<h2><span class="section-tag tag-nuclear">核电</span> 核电：最确定的成长股</h2>
+
+<p>核电的投资逻辑是"审批驱动型成长"。核电机组从核准到商运约 6 年，一旦获批，未来收入高度可预测。中国核电目前在建和待建 19 台机组，未来 5 年逐台投产。</p>
+
+<p>壁垒是绝对的。整个行业只有两个玩家：中国核电和中国广核。新进入者不可能。</p>
+
+<p>利用小时数是所有电源中最高的，年均约 8,000 小时（煤电约 4,500 小时，风电约 2,000 小时）。数据中心 24/7 的用电需求，核电是最佳匹配。</p>
+
+<p>PE 通常 20-25 倍，反映的是未来装机增长的确定性。5 年维度成长确定性在电力板块中最高。</p>
+
+<h2><span class="section-tag tag-wind">风光</span> 风电和光伏：装机猛，但消纳是硬伤</h2>
+
+<p>风电装机 6.4 亿千瓦（+22.9%），太阳能装机 12 亿千瓦（+35.4%）。新能源装机合计占总装机的 47.3%。</p>
+
+<p>但发电量只占 16.8%。光伏年均利用小时只有 1,200 小时，约为核电的 1/7。更麻烦的是消纳——光伏集中在中午出力，多地已经出现午间电价归零甚至为负。</p>
+
+<p>龙源电力 2025 年归母净利下降 27.9%，核心原因是电价同比下降 11.2%。</p>
+
+<p>目前建议等待。等消纳改善的信号明确之后再介入。</p>
+
+<h2>AI 用电正在重塑电力股估值</h2>
+
+<div class="summary-box">
+  <div style="font-weight: 600; margin-bottom: 12px;">各板块一句话</div>
+  <div class="summary-item">
+    <div class="summary-dot" style="background: #1a7f4b;"></div>
+    <div><strong>水电</strong>：稀缺的债券资产，长线资金压舱石，逢低配置</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-dot" style="background: #c0392b;"></div>
+    <div><strong>火电</strong>：赌煤价下跌的期权，煤价 700 以下关注做多，850 以上小心</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-dot" style="background: #6c3fa0;"></div>
+    <div><strong>核电</strong>：5 年可见装机成长的确定性标的，持有或逢低加仓</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-dot" style="background: #2c6fbb;"></div>
+    <div><strong>风电光伏</strong>：消纳困境未解，等待信号</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-dot" style="background: #888;"></div>
+    <div><strong>气电</strong>：小众板块，主题机会，不适合重仓</div>
+  </div>
+</div>
+
+<p>以前市场把电力股当防御分红股看，现在 AI 用电需求给了它们成长性。从"高股息防御"到"确定性成长+防御底"，这个估值重估过程还在进行中。</p>
+
+<div class="data-card">
+  <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">需要跟踪的关键指标</div>
+  <div class="data-row">
+    <span class="data-label">煤价（秦港 Q5500）</span>
+    <span class="data-value">当前约 701 元/吨</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">来水情况</span>
+    <span class="data-value">三峡/澜沧江每旬数据</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">核电核准节奏</span>
+    <span class="data-value">关注国常会审批信息</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">市场化电价</span>
+    <span class="data-value">各省年度长协电价走势</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">弃风弃光率</span>
+    <span class="data-value">2025年1-11月 94.3%/94.8%</span>
+  </div>
+  <div class="data-row">
+    <span class="data-label">AI 用电增速</span>
+    <span class="data-value red">1-4月 +44.4%</span>
+  </div>
+</div>
+
+<div class="disclaimer">
+  以上内容仅供参考，不构成投资建议。数据来源：国家能源局、中电联、中国信通院、IEA、公司财报。
+</div>
+
+</div>
+</body>
+</html>
