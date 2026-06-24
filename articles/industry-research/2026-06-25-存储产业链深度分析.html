@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存储产业链深度分析报告 | 2026年6月（更新：美光FY26 Q3财报）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-primary: #0a0e27;
+  --bg-card: #131836;
+  --bg-card-hover: #1a2040;
+  --accent-red: #ef4444;
+  --accent-green: #22c55e;
+  --accent-blue: #3b82f6;
+  --accent-yellow: #eab308;
+  --accent-purple: #a855f7;
+  --accent-cyan: #06b6d4;
+  --text-primary: #e8ecf1;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --border-color: #2a3050;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-size: 14px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+}
+.hero-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c4a6e 100%);
+  padding: 48px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-banner h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #60a5fa, #a855f7, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero-banner .subtitle {
+  color: var(--text-secondary);
+  font-size: 15px;
+  position: relative;
+}
+.hero-banner .meta {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  position: relative;
+}
+.container { padding: 24px 20px; }
+
+.exec-summary {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--accent-blue);
+}
+.exec-summary h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #60a5fa;
+}
+.exec-summary p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.exec-summary .highlight {
+  color: var(--accent-yellow);
+  font-weight: 600;
+}
+.exec-summary .red { color: var(--accent-red); font-weight: 600; }
+.exec-summary .green { color: var(--accent-green); font-weight: 600; }
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.data-cell {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: background 0.2s;
+}
+.data-cell:hover { background: var(--bg-card-hover); }
+.data-cell .number {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.data-cell .number.red { color: var(--accent-red); }
+.data-cell .number.blue { color: #60a5fa; }
+.data-cell .number.green { color: var(--accent-green); }
+.data-cell .number.yellow { color: var(--accent-yellow); }
+.data-cell .number.purple { color: var(--accent-purple); }
+.data-cell .number.cyan { color: var(--accent-cyan); }
+.data-cell .label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.data-cell .source {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* 产业链结构图 */
+.chain-map {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.chain-layer {
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.chain-layer.upstream { background: linear-gradient(135deg, #1e3a5f 0%, #1a2b4a 100%); border: 1px solid #2a4a6f; }
+.chain-layer.midstream1 { background: linear-gradient(135deg, #1a3a1a 0%, #162d16 100%); border: 1px solid #2a5a2a; }
+.chain-layer.midstream2 { background: linear-gradient(135deg, #3a3520 0%, #2d2916 100%); border: 1px solid #5a532a; }
+.chain-layer.downstream { background: linear-gradient(135deg, #3a1f3a 0%, #2d182d 100%); border: 1px solid #5a2f5a; }
+.chain-layer .layer-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.chain-layer .layer-share {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+.chain-layer .layer-items {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: left;
+  padding-left: 6px;
+}
+.chain-layer .layer-items li {
+  list-style: none;
+  margin-bottom: 3px;
+}
+
+/* BOM 拆解 */
+.bom-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+.bom-card h3 {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #60a5fa;
+}
+.bom-card .bom-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.bom-chart-container {
+  position: relative;
+  height: 200px;
+}
+
+/* 表格 */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.data-table th {
+  background: var(--bg-card);
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: #60a5fa;
+  border-bottom: 2px solid var(--border-color);
+  font-size: 12px;
+}
+.data-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+.data-table tr:hover { background: var(--bg-card); }
+.data-table .stock-name { color: var(--text-primary); font-weight: 600; }
+.data-table .pos { color: var(--accent-red); }
+.data-table .neg { color: var(--accent-green); }
+.data-table .tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.tag-best { background: rgba(239,68,68,0.15); color: #f87171; }
+.tag-strong { background: rgba(234,179,8,0.15); color: #fbbf24; }
+.tag-mid { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.tag-watch { background: rgba(107,114,128,0.15); color: #9ca3af; }
+
+/* 周期定位 */
+.cycle-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+.cycle-stages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.cycle-stage {
+  padding: 12px 8px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 11px;
+  position: relative;
+}
+.cycle-stage.active {
+  border: 2px solid var(--accent-red);
+}
+.cycle-stage .stage-num { font-size: 20px; font-weight: 800; }
+.cycle-stage .stage-name { margin-top: 4px; font-weight: 600; }
+
+/* 供需信号 */
+.signal-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--accent-green);
+}
+.signal-card .signal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.signal-card .signal-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.signal-card .signal-type {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.signal-card .signal-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* 风险 */
+.risk-list {
+  list-style: none;
+}
+.risk-list li {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent-red);
+}
+
+/* 高价值环节 */
+.value-link {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+.value-link.crown {
+  border: 2px solid var(--accent-yellow);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(234,179,8,0.05) 100%);
+}
+.value-link .crown-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(234,179,8,0.2);
+  color: #fbbf24;
+  font-weight: 600;
+}
+.value-link h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.value-link .vl-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+.value-link .vl-meta span { color: var(--accent-yellow); }
+.value-link p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.value-link .vl-score {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.value-link .vl-score .score-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.value-link .vl-score .score-bar {
+  width: 60px;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.value-link .vl-score .score-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  padding: 24px 16px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 24px;
+}
+
+@media (max-width: 680px) {
+  .data-grid { grid-template-columns: 1fr; }
+  .chain-map { grid-template-columns: 1fr; }
+  .cycle-stages { grid-template-columns: repeat(2, 1fr); }
+  .hero-banner h1 { font-size: 22px; }
+  body { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero-banner">
+  <h1>存储产业链深度分析</h1>
+  <div class="subtitle">AI 超级周期下的供需重构与价值分配</div>
+  <div class="meta">报告日期：2026年6月25日（更新：美光FY26 Q3财报） | 分析师：研股股</div>
+</div>
+
+<div class="container">
+
+<!-- 执行摘要 -->
+<div class="exec-summary">
+  <h2>核心判断（美光 FY2026 Q3 财报更新版）</h2>
+  <p>全球存储行业正经历 <span class="highlight">AI 驱动的结构性超级周期</span>。2026 年全球存储芯片市场规模预计 <span class="red">4,965 亿美元</span>，同比增长 100.6%。</p>
+  <p><span class="highlight">最新验证（2026/6/24 美光财报）：</span>美光 FY2026 Q3 营收 <span class="red">$41.46B</span>（+346% YoY），毛利率 <span class="red">84.9%</span>——<strong style="color:#ef4444;">存储公司毛利率超越英伟达</strong>。Q4 指引营收 <span class="red">$50B</span>、毛利率 ~<span class="red">86%</span>，确认超级周期全面展开。</p>
+  <p>需求端：全球约 <span class="highlight">70% 存储产能</span> 被数据中心吞噬，三巨头被迫砍掉消费级 DRAM/NAND 产能转做 HBM。供给端：扩产周期 2-3 年，美光 2026 年 HBM 全部售罄，HBM4 已量产供应英伟达 Vera Rubin。</p>
+  <p>价值分配正在剧变：英伟达 VR200 机柜 BOM 拆解中，<span class="red">存储价值占比从不足 10% 飙升至 26%</span>（+435%）。</p>
+  <p>国产突破：长江存储 NAND 全球份额升至 <span class="green">16.4%</span>（全球第四），长鑫科技 DRAM 份额升至 <span class="green">7.7%</span>（全球第四），两家冲刺 A 股 IPO。</p>
+</div>
+
+<!-- 关键数据格 -->
+<div class="data-grid">
+  <div class="data-cell">
+    <div class="number red">$41.5B</div>
+    <div class="label">美光FY26 Q3 营收（+346% YoY）</div>
+    <div class="source">来源：Micron 官方财报 2026/6/24</div>
+  </div>
+  <div class="data-cell">
+    <div class="number red">84.9%</div>
+    <div class="label">美光Q3 毛利率（超英伟达）</div>
+    <div class="source">来源：Micron/Quartr</div>
+  </div>
+  <div class="data-cell">
+    <div class="number red">$50B</div>
+    <div class="label">美光Q4营收指引（超预期16%）</div>
+    <div class="source">来源：Micron 指引</div>
+  </div>
+  <div class="data-cell">
+    <div class="number yellow">4,965亿$</div>
+    <div class="label">2026全球存储市场规模</div>
+    <div class="source">来源：知乎/SEMI</div>
+  </div>
+  <div class="data-cell">
+    <div class="number blue">546亿$</div>
+    <div class="label">2026 HBM市场规模</div>
+    <div class="source">来源：SEMI，同比+58%</div>
+  </div>
+  <div class="data-cell">
+    <div class="number green">16.4%</div>
+    <div class="label">长江存储 NAND 全球份额</div>
+    <div class="source">来源：TrendForce 2026Q1</div>
+  </div>
+</div>
+
+<!-- ==================== 美光财报深度分析 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#ef4444; color:white;">MU</div>
+    美光 FY2026 Q3 财报深度分析
+  </div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:16px;">
+    美光科技（NASDAQ: MU）于美东时间 2026 年 6 月 24 日盘后发布 FY2026 第三季度财报（截至 2026 年 5 月）。
+    <strong style="color:#ef4444;">这是一份全面超预期的成绩单</strong>——营收、毛利率、EPS 均大幅超越华尔街预期，Q4 指引更是一骑绝尘。
+    数据来源：Micron 官方新闻稿、Quartr 财报摘要、每经AI。
+  </p>
+
+  <!-- 财报核心数据 -->
+  <div class="bom-card" style="border:2px solid #ef4444;">
+    <h3 style="color:#ef4444;">核心财务数据</h3>
+    <table class="data-table" style="margin-top:12px;">
+      <thead>
+        <tr>
+          <th>指标</th>
+          <th>FY26 Q3（实际）</th>
+          <th>FY26 Q2</th>
+          <th>同比</th>
+          <th>市场预期</th>
+          <th>vs 预期</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stock-name">营收</td>
+          <td class="pos"><strong>$41.46B</strong></td>
+          <td>$23.86B</td>
+          <td class="pos">+346%</td>
+          <td>$35.69B</td>
+          <td class="pos">超 16%</td>
+        </tr>
+        <tr>
+          <td class="stock-name">毛利率（non-GAAP）</td>
+          <td class="pos"><strong>84.9%</strong></td>
+          <td>~81%</td>
+          <td class="pos">+~60pct</td>
+          <td>~81%</td>
+          <td class="pos">超预期</td>
+        </tr>
+        <tr>
+          <td class="stock-name">EPS（non-GAAP）</td>
+          <td class="pos"><strong>$25.11</strong></td>
+          <td>—</td>
+          <td class="pos">+1,213%</td>
+          <td>$20.49</td>
+          <td class="pos">超 23%</td>
+        </tr>
+        <tr>
+          <td class="stock-name">运营收入</td>
+          <td class="pos">$33.68B</td>
+          <td>—</td>
+          <td>—</td>
+          <td>$27.86B</td>
+          <td class="pos">超 21%</td>
+        </tr>
+        <tr>
+          <td class="stock-name">经营现金流</td>
+          <td>$25.39B</td>
+          <td>$11.90B</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 分业务 -->
+  <div class="bom-card">
+    <h3>分业务拆解</h3>
+    <table class="data-table" style="margin-top:12px;">
+      <thead>
+        <tr>
+          <th>业务</th>
+          <th>Q3 营收</th>
+          <th>占比</th>
+          <th>环比</th>
+          <th>驱动力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stock-name">DRAM</td>
+          <td class="pos">$31.3B</td>
+          <td>76%</td>
+          <td class="pos">+67%</td>
+          <td>HBM3E/HBM4 满载 + DDR5 价格暴涨</td>
+        </tr>
+        <tr>
+          <td class="stock-name">NAND</td>
+          <td class="pos">$9.9B</td>
+          <td>24%</td>
+          <td class="pos">+99%</td>
+          <td>数据中心 SSD 需求翻倍</td>
+        </tr>
+        <tr>
+          <td class="stock-name">数据中心</td>
+          <td class="pos">>$25B</td>
+          <td>~60%</td>
+          <td>—</td>
+          <td>年化营收 >$100B</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Q4 指引 -->
+  <div class="bom-card" style="border:2px solid #fbbf24;">
+    <h3 style="color:#fbbf24;">Q4 指引（大幅超预期）</h3>
+    <table class="data-table" style="margin-top:12px;">
+      <thead>
+        <tr>
+          <th>指标</th>
+          <th>Q4 指引</th>
+          <th>市场预期</th>
+          <th>vs 预期</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stock-name">营收</td>
+          <td class="pos"><strong>$50.0B ± $1.0B</strong></td>
+          <td>~$432.4B</td>
+          <td class="pos">超 ~16%</td>
+        </tr>
+        <tr>
+          <td class="stock-name">毛利率</td>
+          <td class="pos">~86%</td>
+          <td>~83%</td>
+          <td class="pos">超预期</td>
+        </tr>
+        <tr>
+          <td class="stock-name">EPS（non-GAAP）</td>
+          <td class="pos"><strong>$31.00 ± $1.00</strong></td>
+          <td>$25.31</td>
+          <td class="pos">超 22%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 财报图表 -->
+  <div class="bom-card">
+    <h3>美光季度营收走势（FY2025 Q3 → FY2026 Q4 指引）</h3>
+    <div class="bom-chart-container" style="height:280px;">
+      <canvas id="micronChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 五大信号 -->
+  <div class="bom-card" style="border-left:4px solid #ef4444;">
+    <h3 style="color:#ef4444;">五大核心信号 → 对 A 股产业链的影响</h3>
+
+    <div style="margin-top:16px;">
+      <div style="font-weight:700; color:#fbbf24; font-size:14px; margin-bottom:6px;">信号 1：毛利率 84.9%→86%，半导体行业史无前例</div>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+        英伟达毛利率约 75%，台积电约 55%。<strong style="color:#ef4444;">存储公司毛利率超过英伟达</strong>，意味着存储从"大宗商品"变为"战略资源"。→ 模组厂（江波龙/佰维/德明利）中报业绩超预期概率从"高"升级为<strong style="color:#f87171;">"极高"</strong>。
+      </p>
+
+      <div style="font-weight:700; color:#fbbf24; font-size:14px; margin-bottom:6px;">信号 2：DRAM 环比 +67%，NAND 环比 +99%</div>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+        涨幅远超此前市场预期（预估 DDR5 环比 +60-64%）。→ <strong style="color:#60a5fa;">兆易创新</strong> NOR 跟涨弹性更大；<strong style="color:#60a5fa;">澜起科技</strong> DRAM 涨价→内存条 ASP 上升→接口芯片量价齐升；<strong style="color:#60a5fa;">江波龙/佰维</strong> 低价库存+高价出货剪刀差远超预期。
+      </p>
+
+      <div style="font-weight:700; color:#fbbf24; font-size:14px; margin-bottom:6px;">信号 3：HBM4 已量产供应 Vera Rubin，2026-2027 全部售罄</div>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+        HBM4（12 层堆叠 vs HBM3E 的 8 层）用量是 HBM3E 的 1.5-2 倍。→ <strong style="color:#4ade80;">雅克科技</strong>前驱体需求暴增 +50-100%；<strong style="color:#4ade80;">华海诚科</strong> GMC 单颗价值量 +50%；<strong style="color:#4ade80;">联瑞新材</strong>球硅同比例增长。
+      </p>
+
+      <div style="font-weight:700; color:#fbbf24; font-size:14px; margin-bottom:6px;">信号 4：16 个战略客户协议（SCA），锁定 20% DRAM + 1/3 NAND</div>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+        存储从"现货大宗品"变为"长协合同品"，价格波动性下降，<strong style="color:#c084fc;">周期属性弱化</strong>。估值中枢应上移，合理 PE 从 30-40 倍→<strong style="color:#c084fc;">40-50 倍</strong>。
+      </p>
+
+      <div style="font-weight:700; color:#fbbf24; font-size:14px; margin-bottom:6px;">信号 5：资本开支 FY2026 ~$27B，Q4 单季 ~$10B</div>
+      <p style="font-size:13px; color:var(--text-secondary);">
+        在建产能信号，2027H2-2028 新增产能逐步释放。→ <strong style="color:#f97316;">设备端</strong>（中微/北方华创）利好全球设备需求；<strong style="color:#f97316;">中期风险</strong>：2027H2-2028 产能释放后供需格局可能逆转。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Phase 2: 产业链结构 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#1e3a5f;">1</div>
+    产业链全景结构
+  </div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:16px;">
+    存储产业链从上游材料到下游应用分为四层。与一般半导体不同，存储的 <strong style="color:#fbbf24;">晶圆制造环节</strong> 高度集中（CR3>90%），是价值量最核心、壁垒最高的环节，但 A 股投资者只能通过材料/设备/封测/模组间接参与。
+  </p>
+
+  <div class="chain-map">
+    <div class="chain-layer upstream">
+      <div class="layer-title">上游材料与设备</div>
+      <div class="layer-share">价值占比约 5-10%</div>
+      <ul class="layer-items">
+        <li>◆ 硅片（信越/胜高）</li>
+        <li>◆ 前驱体（雅克科技）</li>
+        <li>◆ CMP抛光液/垫（安集/鼎龙）</li>
+        <li>◆ 环氧塑封料GMC（华海诚科）</li>
+        <li>◆ 硅微粉/球硅（联瑞新材）</li>
+        <li>◆ 光刻/刻蚀设备（中微/北方华创）</li>
+      </ul>
+    </div>
+    <div class="chain-layer midstream1">
+      <div class="layer-title">中游设计</div>
+      <div class="layer-share">价值占比约 15-20%</div>
+      <ul class="layer-items">
+        <li>◆ DRAM设计（三星/海力士/美光/长鑫）</li>
+        <li>◆ NAND设计（三星/海力士/铠侠/长存）</li>
+        <li>◆ NOR Flash（兆易创新）</li>
+        <li>◆ 内存接口（澜起科技）</li>
+        <li>◆ 利基DRAM/SRAM（北京君正）</li>
+      </ul>
+    </div>
+    <div class="chain-layer midstream2">
+      <div class="layer-title">中游制造+封测</div>
+      <div class="layer-share">价值占比约 50-60%</div>
+      <ul class="layer-items">
+        <li>◆ 晶圆制造（三星/海力士/美光/长鑫/长存）</li>
+        <li>◆ HBM 3D堆叠封装（海力士/三星）</li>
+        <li>◆ OSAT封测（长电/通富/华天/深科技）</li>
+        <li>◆ 先进封装材料整合</li>
+        <li>◆ 晶圆代工（中芯/华虹/晶合）</li>
+      </ul>
+    </div>
+    <div class="chain-layer downstream">
+      <div class="layer-title">下游应用</div>
+      <div class="layer-share">终端覆盖</div>
+      <ul class="layer-items">
+        <li>◆ AI服务器/数据中心（70%产能）</li>
+        <li>◆ 智能手机（DDR5/LPDDR5X/UFS）</li>
+        <li>◆ PC/笔记本（DDR5内存条）</li>
+        <li>◆ 汽车电子（车规级DRAM/NAND）</li>
+        <li>◆ 存储模组品牌（江波龙/佰维/德明利）</li>
+        <li>◆ 消费电子/IoT</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Phase 3: BOM 价值拆解 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a1f3a;">2</div>
+    BOM 价值拆解：100 元花在哪里？
+  </div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:16px;">
+    从 BOM（物料清单）角度拆解终端产品中存储的价值分配。数据来源：摩根士丹利 VR200 拆解报告、SemiAnalysis、华经产业研究院。
+  </p>
+
+  <!-- AI 服务器 BOM -->
+  <div class="bom-card">
+    <h3>英伟达 VR200 AI 服务器机柜（总成本约 400 万美元）</h3>
+    <div class="bom-desc">
+      下一代 AI 服务器中存储价值量从 37 万美元跃升至约 200 万美元（+435%），占整机比例从不足 10% 飙升至 26%。GPU+HBM 合计 51%，存储（不含 HBM 的 DRAM+NAND）占 26%。
+    </div>
+    <div class="bom-chart-container">
+      <canvas id="bomServerChart"></canvas>
+    </div>
+  </div>
+
+  <!-- AI PC BOM -->
+  <div class="bom-card">
+    <h3>AI PC / 笔记本电脑（典型售价 8,000-12,000 元）</h3>
+    <div class="bom-desc">
+      AI PC 的存储配置显著升级：内存从 8GB DDR4 升至 16-32GB DDR5/LPDDR5X，SSD 从 256GB 升至 512GB-1TB NVMe。存储在整机 BOM 中占比约 12-18%。
+    </div>
+    <div class="bom-chart-container">
+      <canvas id="bomPCChart"></canvas>
+    </div>
+  </div>
+
+  <!-- HBM 材料拆解 -->
+  <div class="bom-card">
+    <h3>HBM 存储芯片成本结构（单颗 HBM3E）</h3>
+    <div class="bom-desc">
+      HBM 的核心成本在于 3D 堆叠封装和 TSV（硅通孔）工艺。前驱体占成本的 ~5%，封装材料（GMC+TSV 填料）占 ~15%，测试验证占 ~10%。
+    </div>
+    <div class="bom-chart-container">
+      <canvas id="bomHBMChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Phase 4: 高价值环节识别 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a3520;">3</div>
+    高价值环节：壁垒 × 价值双维筛选
+  </div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:16px;">
+    筛选标准：<strong style="color:#fbbf24;">业务壁垒最高</strong> 且 <strong style="color:#fbbf24;">价值量最大</strong>。按"壁垒分（1-5）× 价值分（1-5）"排序。
+  </p>
+
+  <div class="value-link crown">
+    <div class="crown-badge">价值王冠</div>
+    <h3>HBM 3D 堆叠封装</h3>
+    <div class="vl-meta">
+      <span>壁垒：★★★★★</span>
+      <span>价值量：★★★★★</span>
+      <span>环节毛利：50-70%</span>
+    </div>
+    <p>HBM 是当前 AI 算力最核心的瓶颈。全球仅三星、SK 海力士、美光三家具备量产能力，SK 海力士市占率超 50%。HBM3E 需要 8-12 层芯片通过 TSV 硅通孔堆叠，良率爬坡极其困难。美光 2026 年 HBM 产能全部售罄，2027 年订单已锁。A 股标的通过材料端（前驱体/GMC/球硅）间接参与。</p>
+    <div class="vl-score">
+      <div class="score-item">综合评分 <span style="color:#fbbf24; font-weight:700;">25/25</span></div>
+    </div>
+  </div>
+
+  <div class="value-link" style="border:2px solid #3b82f6;">
+    <div class="crown-badge" style="background:rgba(59,130,246,0.2); color:#60a5fa;">第二梯队</div>
+    <h3>内存接口芯片（DDR5 RCD/MRCD）</h3>
+    <div class="vl-meta">
+      <span>壁垒：★★★★★</span>
+      <span>价值量：★★★★☆</span>
+      <span>毛利率：60-70%</span>
+    </div>
+    <p>每根 DDR5 内存条都需要 1 颗 RCD + 1 颗 SPD Hub + 1 颗 TS（温度传感器），加上 MRCD/MDB 用于 MRDIMM。全球仅澜起科技、瑞萨、瑞萨三家有量产能力，澜起在 DDR5 RCD 市占率约 35-40%。AI 服务器每路使用 12-24 根内存条，接口芯片需求随服务器出货量线性增长。</p>
+    <div class="vl-score">
+      <div class="score-item">综合评分 <span style="color:#60a5fa; font-weight:700;">22/25</span></div>
+    </div>
+  </div>
+
+  <div class="value-link" style="border:2px solid #22c55e;">
+    <div class="crown-badge" style="background:rgba(34,197,94,0.2); color:#4ade80;">第二梯队</div>
+    <h3>DRAM/NAND 晶圆制造</h3>
+    <div class="vl-meta">
+      <span>壁垒：★★★★★</span>
+      <span>价值量：★★★★★</span>
+      <span>资本密集度极高</span>
+    </div>
+    <p>三星、SK 海力士、美光三家垄断 90%+ DRAM 产能。单座晶圆厂投资 150-200 亿美元，技术壁垒和资本壁垒双顶。长鑫科技 DRAM 全球第四（7.7%），长江存储 NAND 全球第四（16.4%），两家正冲刺 A 股 IPO，届时将成为 A 股存储产业链最有价值的标的。A 股投资者目前通过设备/材料间接参与。</p>
+    <div class="vl-score">
+      <div class="score-item">综合评分 <span style="color:#4ade80; font-weight:700;">22/25</span></div>
+    </div>
+  </div>
+
+  <div class="value-link" style="border:2px solid #eab308;">
+    <div class="crown-badge" style="background:rgba(234,179,8,0.2); color:#fbbf24;">第三梯队</div>
+    <h3>HBM 封装材料（前驱体/GMC/球硅）</h3>
+    <div class="vl-meta">
+      <span>壁垒：★★★★☆</span>
+      <span>价值量：★★★☆☆</span>
+      <span>国产替代空间大</span>
+    </div>
+    <p>HBM 封装材料是 A 股投资者能直接参与的高壁垒环节。前驱体全球龙头雅克科技（供应海力士），环氧塑封料 GMC 全球仅 3 家量产（住友/昭和/华海诚科），球硅龙头联瑞新材。材料端毛利率 30-50%，虽不如晶圆制造，但成长确定性和国产替代逻辑清晰。</p>
+    <div class="vl-score">
+      <div class="score-item">综合评分 <span style="color:#fbbf24; font-weight:700;">16/25</span></div>
+    </div>
+  </div>
+
+  <div class="value-link" style="border:2px solid #a855f7;">
+    <div class="crown-badge" style="background:rgba(168,85,247,0.2); color:#c084fc;">第三梯队</div>
+    <h3>存储模组（企业级 SSD + 消费级）</h3>
+    <div class="vl-meta">
+      <span>壁垒：★★★☆☆</span>
+      <span>价值量：★★★★☆</span>
+      <span>弹性最大但风险也最大</span>
+    </div>
+    <p>模组厂是存储周期的最大弹性环节——涨价周期利润暴增，跌价周期存货减值惨烈。江波龙企业级 SSD 搭载长江存储芯片已量产，佰维存储是国内唯一"研发+封测+模组"一体化厂商。2025 年末三家企业存货合计超 230 亿元，既是一轮涨价的弹药也是下行期的定时炸弹。</p>
+    <div class="vl-score">
+      <div class="score-item">综合评分 <span style="color:#c084fc; font-weight:700;">14/25</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Phase 5: 竞争格局 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#1a3a1a;">4</div>
+    全球竞争格局
+  </div>
+
+  <div class="bom-card">
+    <h3>DRAM 市场份额（2026Q1）</h3>
+    <div class="bom-desc">三星一家独大，全球 CR3 超过 95%。长鑫科技快速攀升至第四。</div>
+    <div class="bom-chart-container" style="height:220px;">
+      <canvas id="dramShareChart"></canvas>
+    </div>
+  </div>
+
+  <div class="bom-card">
+    <h3>NAND 市场份额（2026Q1）</h3>
+    <div class="bom-desc">竞争相对分散，长江存储突破至全球第四，超越美光。</div>
+    <div class="bom-chart-container" style="height:220px;">
+      <canvas id="nandShareChart"></canvas>
+    </div>
+  </div>
+
+  <div class="bom-card">
+    <h3>HBM 市场份额（2026E）</h3>
+    <div class="bom-desc">SK 海力士凭借与英伟达深度绑定，HBM 绝对龙头。</div>
+    <div class="bom-chart-container" style="height:220px;">
+      <canvas id="hbmShareChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Phase 6: 需求结构 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a1f3a;">5</div>
+    下游需求结构
+  </div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:16px;">
+    2026 年需求结构发生历史性转变：<strong style="color:#ef4444;">约 70% 存储产能被数据中心消耗</strong>，传统消费电子（手机+PC）份额被大幅压缩。中国市场中企业级应用（数据中心/服务器）占比已达 33.1%。
+  </p>
+
+  <div class="bom-card">
+    <h3>2026 存储芯片下游需求结构</h3>
+    <div class="bom-chart-container" style="height:260px;">
+      <canvas id="demandChart"></canvas>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>终端场景</th>
+        <th>2026 占比</th>
+        <th>增速 (YoY)</th>
+        <th>关键驱动</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="stock-name">AI服务器/数据中心</td>
+        <td class="pos">~70%</td>
+        <td class="pos">+150%+</td>
+        <td>HBM + DDR5 + 企业级 SSD</td>
+      </tr>
+      <tr>
+        <td class="stock-name">智能手机</td>
+        <td>~15%</td>
+        <td class="neg">-5%~-10%</td>
+        <td>AI 手机带动容量升级（16GB+1TB），但出货量下滑</td>
+      </tr>
+      <tr>
+        <td class="stock-name">PC/笔记本</td>
+        <td>~8%</td>
+        <td class="pos">+15%~+20%</td>
+        <td>AI PC 换机潮 + DDR5 渗透</td>
+      </tr>
+      <tr>
+        <td class="stock-name">汽车电子</td>
+        <td>~4%</td>
+        <td class="pos">+30%~+40%</td>
+        <td>智能驾驶等级提升，车规存储需求暴增</td>
+      </tr>
+      <tr>
+        <td class="stock-name">其他消费/IoT</td>
+        <td>~3%</td>
+        <td>持平</td>
+        <td>存量市场，增量有限</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== Phase 7: 供需信号 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#1e3a5f;">6</div>
+    供需指标体系
+  </div>
+
+  <div class="signal-card" style="border-left-color:#ef4444;">
+    <div class="signal-header">
+      <div class="signal-title">DDR5 合约价</div>
+      <div class="signal-type" style="background:rgba(239,68,68,0.2); color:#f87171;">价格信号</div>
+    </div>
+    <div class="signal-body">2026Q1 合约价环比涨 93%-98%，自 2025 年 9 月累计涨幅 288%。消费级 DDR5 内存条从 800 元涨到 4000+ 元（+400%）。<strong style="color:#f87171;">阈值：环比涨幅<20% = 周期见顶信号</strong></div>
+  </div>
+
+  <div class="signal-card" style="border-left-color:#3b82f6;">
+    <div class="signal-header">
+      <div class="signal-title">HBM 产能订单锁定</div>
+      <div class="signal-type" style="background:rgba(59,130,246,0.2); color:#60a5fa;">先行信号</div>
+    </div>
+    <div class="signal-body">美光 2026 年 HBM 全部售罄，2027 年订单已锁，<strong style="color:#f87171;">HBM4 已量产供应英伟达 Vera Rubin</strong>。三星、海力士同样满产。<strong style="color:#60a5fa;">2027-2028 年新增产能释放前，HBM 供给持续偏紧</strong>。美光签署 16 个战略客户协议（SCA），提前锁定 ~20% DRAM 和 1/3 NAND 产能。</div>
+  </div>
+
+  <div class="signal-card" style="border-left-color:#22c55e;">
+    <div class="signal-header">
+      <div class="signal-title">模组厂存货水平</div>
+      <div class="signal-type" style="background:rgba(34,197,94,0.2); color:#4ade80;">同步信号</div>
+    </div>
+    <div class="signal-body">江波龙 + 佰维 + 德明利存货合计超 230 亿元。高存货 = 涨价周期弹药充足 = 业绩弹性大。<strong style="color:#4ade80;">风险：价格反转将触发大额存货减值</strong></div>
+  </div>
+
+  <div class="signal-card" style="border-left-color:#eab308;">
+    <div class="signal-header">
+      <div class="signal-title">云厂商资本开支</div>
+      <div class="signal-type" style="background:rgba(234,179,8,0.2); color:#fbbf24;">先行信号</div>
+    </div>
+    <div class="signal-body">九大云厂商 2026 资本开支预测上调至 ~8,300 亿美元，同比增速从 61% 上调至 79%。<strong style="color:#fbbf24;">资本开支与存储采购量高度相关，领先 1-2 个季度</strong></div>
+  </div>
+
+  <div class="signal-card" style="border-left-color:#a855f7;">
+    <div class="signal-header">
+      <div class="signal-title">长鑫/长存扩产进度</div>
+      <div class="signal-type" style="background:rgba(168,85,247,0.2); color:#c084fc;">供给信号</div>
+    </div>
+    <div class="signal-body">长鑫 2026 年规划月产能 30 万片晶圆。长江存储宣布史上最大扩产计划。<strong style="color:#c084fc;">国产扩产是 2027 年后供给端最大变量</strong></div>
+  </div>
+</div>
+
+<!-- ==================== Phase 8: 周期定位 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a3520;">7</div>
+    周期定位
+  </div>
+
+  <div class="cycle-card">
+    <div class="cycle-stages">
+      <div class="cycle-stage" style="background:rgba(239,68,68,0.08); opacity:0.4;">
+        <div class="stage-num">①</div>
+        <div class="stage-name">繁荣顶</div>
+        <div style="color:var(--text-tertiary); font-size:10px; margin-top:4px;">已过</div>
+      </div>
+      <div class="cycle-stage" style="background:rgba(34,197,94,0.08); opacity:0.4;">
+        <div class="stage-num">②</div>
+        <div class="stage-name">衰退期</div>
+        <div style="color:var(--text-tertiary); font-size:10px; margin-top:4px;">已过</div>
+      </div>
+      <div class="cycle-stage" style="background:rgba(59,130,246,0.08); opacity:0.4;">
+        <div class="stage-num">③</div>
+        <div class="stage-name">谷底磨底</div>
+        <div style="color:var(--text-tertiary); font-size:10px; margin-top:4px;">2024底已过</div>
+      </div>
+      <div class="cycle-stage active" style="background:rgba(239,68,68,0.15);">
+        <div class="stage-num" style="color:#ef4444;">④</div>
+        <div class="stage-name" style="color:#ef4444;">繁荣初期</div>
+        <div style="color:#f87171; font-size:10px; margin-top:4px;">当前位置 ★</div>
+      </div>
+    </div>
+    <p style="color:var(--text-secondary); font-size:13px;">
+      当前处于 <strong style="color:#ef4444;">繁荣初期</strong>（美光 FY2026 Q3 财报确认超级周期）。美光 Q4 指引 $50B（环比+21%），意味着 Q3（7-9月）全球存储价格仍在加速上涨，本轮周期性质不同于以往——AI 驱动的结构性需求爆发使周期斜率极陡。
+    </p>
+  </div>
+
+  <div class="cycle-card">
+    <h3 style="font-size:15px; margin-bottom:12px; color:#60a5fa;">本轮周期的"不一样"</h3>
+    <p style="color:var(--text-secondary); font-size:13px; margin-bottom:10px;">
+      <strong style="color:#fbbf24;">差异一：结构性而非周期性。</strong> 过往存储周期由产能波动驱动，本轮核心驱动力是 AI 算力需求爆发。美银判断 2026-2027 年为"超级周期"而非普通上行，DRAM 市场两年翻倍。<strong style="color:#ef4444;">美光 FY26 Q3 毛利率 84.9%（超过英伟达）+ Q4 指引 86%，确认了这一判断。</strong>
+    </p>
+    <p style="color:var(--text-secondary); font-size:13px; margin-bottom:10px;">
+      <strong style="color:#fbbf24;">差异二：HBM 挤压通用 DRAM。</strong> 三巨头将产能优先供给 HBM（毛利率 60%+），导致 DDR4/NAND 中低端产能被砍，消费级存储供需缺口比 2021 年更严重。
+    </p>
+    <p style="color:var(--text-secondary); font-size:13px;">
+      <strong style="color:#fbbf24;">差异三：国产替代窗口打开。</strong> 海外巨头砍消费级产能留下的真空，正被长鑫/长存快速填补。长鑫 DRAM 份额从 3% 升至 7.7%，长存 NAND 从 5% 升至 16.4%，速度远超预期。
+    </p>
+  </div>
+</div>
+
+<!-- ==================== Phase 9: 标的映射 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a1f3a;">8</div>
+    A 股标的映射与确定性排名
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>标的</th>
+        <th>代码</th>
+        <th>环节</th>
+        <th>投资逻辑</th>
+        <th>确定性</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="stock-name">澜起科技</td>
+        <td>688008</td>
+        <td>内存接口芯片</td>
+        <td>DDR5 RCD 全球寡头，AI 服务器放量直接受益，毛利率 60-70%</td>
+        <td><span class="tag tag-best">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">兆易创新</td>
+        <td>603986</td>
+        <td>NOR Flash 设计</td>
+        <td>全球 NOR 龙头 + MCU 协同，周期+成长双逻辑</td>
+        <td><span class="tag tag-best">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">雅克科技</td>
+        <td>002409</td>
+        <td>前驱体材料</td>
+        <td>HBM 前驱体龙头，供应海力士供应链，长鑫核心供应商</td>
+        <td><span class="tag tag-best">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">华海诚科</td>
+        <td>688535</td>
+        <td>GMC 环氧塑封料</td>
+        <td>HBM 封装必备材料，全球仅 3 家量产，壁垒极高</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">联瑞新材</td>
+        <td>688300</td>
+        <td>硅微粉/球硅</td>
+        <td>GMC 核心原料，三种高端工艺唯一掌握者</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">江波龙 ⬆️</td>
+        <td>301308</td>
+        <td>存储模组</td>
+        <td><strong style="color:#fbbf24;">从第三梯队上调</strong>。美光DRAM环比+67%→中报弹性远超预期，企业级SSD搭载长存芯片量产</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">佰维存储 ⬆️</td>
+        <td>688525</td>
+        <td>模组+先进封测</td>
+        <td><strong style="color:#fbbf24;">从第三梯队上调</strong>。美光NAND环比+99%→存货升值幅度远超预期</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">通富微电</td>
+        <td>002156</td>
+        <td>先进封装</td>
+        <td>存储封测第一方队，2.5D/3D 封装支持 HBM</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">香农芯创</td>
+        <td>300475</td>
+        <td>海力士代理</td>
+        <td>SK 海力士 DDR5/HBM 一级代理商，直接受益涨价</td>
+        <td><span class="tag tag-mid">★★★☆☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">太极实业</td>
+        <td>600667</td>
+        <td>海力士后工序</td>
+        <td>海太半导体为海力士 DRAM 做后工序封装</td>
+        <td><span class="tag tag-watch">★★☆☆☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">鼎龙股份</td>
+        <td>300054</td>
+        <td>CMP/PSPI</td>
+        <td>CMP 抛光垫 + 光敏聚酰亚胺，先进封装材料</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">安集科技</td>
+        <td>688019</td>
+        <td>CMP 抛光液</td>
+        <td>先进制程 + HBM 均受益，国产替代龙头</td>
+        <td><span class="tag tag-strong">★★★★☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">深科技</td>
+        <td>000021</td>
+        <td>存储封测/PCBA</td>
+        <td>沛顿科技主体，存储芯片封测 + PCBA 代工</td>
+        <td><span class="tag tag-mid">★★★☆☆</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">北京君正</td>
+        <td>300223</td>
+        <td>利基 DRAM</td>
+        <td>车载存储 + SRAM，受益汽车电子增长</td>
+        <td><span class="tag tag-mid">★★★☆☆</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== Phase 10: 12个月节奏 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#1a3a1a;">9</div>
+    未来 12 个月节奏预判
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>时间窗口</th>
+        <th>预判</th>
+        <th>置信度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="stock-name">近期（7-8月）</td>
+        <td>DDR5/NAND 合约价延续涨势，HBM 供给缺口持续扩大。<strong style="color:#f87171;">美光Q4指引$50B确认Q3仍在加速</strong>。A股存储标的中报业绩超预期确定性极高（Q2 合约价大涨93%+ 的滞后兑现）</td>
+        <td><span class="tag tag-best">★★★★</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">中期（Q3-Q4）</td>
+        <td>存储价格可能在高位震荡分化：HBM/DDR5 维持强势，NAND 涨幅放缓。模组厂利润弹性在三季报达到峰值</td>
+        <td><span class="tag tag-best">★★★★</span></td>
+      </tr>
+      <tr>
+        <td class="stock-name">远期（2027 H2-2028 H1）</td>
+        <td>新增产能逐步释放（三星/海力士/长鑫/长存），供需缺口收窄。若 AI 资本开支增速放缓，价格可能见顶回落。美光FY26资本开支$27B，在建产能充足</td>
+        <td><span class="tag tag-mid">★★☆☆☆</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== Phase 11: 风险 ==================== -->
+<div class="section">
+  <div class="section-title">
+    <div class="icon" style="background:#3a1f1f;">!</div>
+    风险提示
+  </div>
+  <ul class="risk-list">
+    <li><strong>周期反转风险：</strong>2027 年新增产能释放后，若 AI 需求增速放缓，存储价格可能急速回落。模组厂存货减值是最大杀伤力（参考 2022 年江波龙存货减值超 15 亿）</li>
+    <li><strong>地缘政治风险：</strong>美国对华存储设备/材料出口管制升级可能影响长鑫/长存扩产进度，同时中国对美光等企业的反制措施可能引发连锁反应</li>
+    <li><strong>技术路线风险：</strong>存内计算（CIM）、光互连等颠覆性技术如果商业化加速，可能改变现有存储架构的价值分配</li>
+    <li><strong>估值高位风险：</strong>2026 年存储板块涨幅已大，部分标的 PE 超过 50 倍，隐含了较强的涨价预期。低于预期的业绩兑现将引发回调</li>
+    <li><strong>HBM 技术壁垒被突破：</strong>如果国内厂商突破 HBM 量产，将改变全球 HBM 供给格局，对海外供应链相关标的产生冲击</li>
+    <li><strong>宏观衰退风险：</strong>全球经济衰退导致消费电子需求进一步恶化，与 AI 驱动的结构性增长形成对冲</li>
+  </ul>
+</div>
+
+<!-- 数据来源 -->
+<div style="font-size:11px; color:var(--text-tertiary); padding:16px 0; border-top:1px solid var(--border-color);">
+  <p><strong>数据来源：</strong>Counterpoint Research、TrendForce（集邦咨询）、SEMI、中商产业研究院、美银美林、摩根士丹利 VR200 BOM 拆解报告、SemiAnalysis、CFM 闪存市场、各公司公告/财报、东方财富/雪球公开研报。<strong style="color:#ef4444;">美光 FY2026 Q3 财报数据来源：Micron 官方新闻稿（NASDAQ/GLOBE NEWSWIRE, 2026/6/24）、Quartr 财报摘要、每经AI快讯。</strong>数据截至 2026 年 6 月 24 日。</p>
+</div>
+
+<div class="disclaimer">
+  <p>本报告仅供参考，不构成任何投资建议。报告中的数据和观点基于公开信息整理，不保证完整性和准确性。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:8px;">研股股 | 2026年6月25日（更新美光FY26 Q3财报分析）</p>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// Chart.js 默认配置
+Chart.defaults.color = '#9ca3af';
+Chart.defaults.borderColor = '#2a3050';
+Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, sans-serif';
+
+// A股配色：红涨绿跌
+const RED = '#ef4444';
+const GREEN = '#22c55e';
+const BLUE = '#3b82f6';
+const YELLOW = '#eab308';
+const PURPLE = '#a855f7';
+const CYAN = '#06b6d4';
+const ORANGE = '#f97316';
+
+// === BOM: AI Server ===
+new Chart(document.getElementById('bomServerChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['GPU+HBM (51%)', '存储 DRAM+NAND (26%)', 'PCB+CCL (5%)', '散热/电源 (10%)', '光模块/互联 (6.5%)', 'MLCC+其他 (1.5%)'],
+    datasets: [{
+      data: [51, 26, 5, 10, 6.5, 1.5],
+      backgroundColor: [RED, YELLOW, PURPLE, BLUE, CYAN, GREEN],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 8 } }
+    }
+  }
+});
+
+// === BOM: AI PC ===
+new Chart(document.getElementById('bomPCChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['CPU (20%)', '存储 RAM+SSD (15%)', '屏幕 (15%)', 'GPU (12%)', '电池 (8%)', '主板/其他 (18%)', '结构件 (12%)'],
+    datasets: [{
+      data: [20, 15, 15, 12, 8, 18, 12],
+      backgroundColor: [BLUE, RED, PURPLE, YELLOW, GREEN, CYAN, ORANGE],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 8 } }
+    }
+  }
+});
+
+// === BOM: HBM 材料拆解 ===
+new Chart(document.getElementById('bomHBMChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['晶圆 (35%)', 'TSV堆叠封装 (25%)', '测试验证 (10%)', '基板/interposer (10%)', '前驱体材料 (5%)', 'GMC+封装填料 (8%)', '其他 (7%)'],
+    datasets: [{
+      data: [35, 25, 10, 10, 5, 8, 7],
+      backgroundColor: [BLUE, RED, YELLOW, PURPLE, CYAN, ORANGE, GREEN],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 8 } }
+    }
+  }
+});
+
+// === Micron 季度营收走势 ===
+new Chart(document.getElementById('micronChart'), {
+  type: 'bar',
+  data: {
+    labels: ['FY25 Q3\n(去年同期)', 'FY26 Q1', 'FY26 Q2', 'FY26 Q3\n(实际)', 'FY26 Q4\n(指引中值)'],
+    datasets: [{
+      label: '营收（十亿美元）',
+      data: [9.3, 18.5, 23.86, 41.46, 50.0],
+      backgroundColor: ['#6b7280', '#3b82f6', '#3b82f6', '#ef4444', '#fbbf24'],
+      borderRadius: 6,
+      borderWidth: 0
+    }, {
+      label: '毛利率（%）',
+      type: 'line',
+      data: [20.5, 72, 81, 84.9, 86],
+      borderColor: '#22c55e',
+      backgroundColor: 'rgba(34,197,94,0.1)',
+      yAxisID: 'y1',
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#22c55e'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { font: { size: 11 }, boxWidth: 12, padding: 8 } }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { font: { size: 10 }, maxRotation: 0 }
+      },
+      y: {
+        position: 'left',
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { font: { size: 11 }, callback: function(v) { return '$' + v + 'B'; } },
+        title: { display: true, text: '营收', color: '#9ca3af', font: { size: 11 } }
+      },
+      y1: {
+        position: 'right',
+        grid: { display: false },
+        ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } },
+        min: 0, max: 100,
+        title: { display: true, text: '毛利率', color: '#4ade80', font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// === DRAM 份额 ===
+new Chart(document.getElementById('dramShareChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['三星 40%', 'SK海力士 33%', '美光 20%', '长鑫 7.7%'],
+    datasets: [{
+      data: [40, 33, 20, 7.7],
+      backgroundColor: [BLUE, PURPLE, RED, GREEN],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 6 } }
+    }
+  }
+});
+
+// === NAND 份额 ===
+new Chart(document.getElementById('nandShareChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['三星 27%', 'SK海力士 22%', '铠侠 15%', '西数 13%', '长江存储 16.4%', '美光 ~6%'],
+    datasets: [{
+      data: [27, 22, 15, 13, 16.4, 6],
+      backgroundColor: [BLUE, PURPLE, CYAN, ORANGE, RED, YELLOW],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 6 } }
+    }
+  }
+});
+
+// === HBM 份额 ===
+new Chart(document.getElementById('hbmShareChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['SK海力士 ~55%', '三星 ~35%', '美光 ~10%'],
+    datasets: [{
+      data: [55, 35, 10],
+      backgroundColor: [RED, BLUE, YELLOW],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12, padding: 6 } }
+    }
+  }
+});
+
+// === 需求结构 ===
+new Chart(document.getElementById('demandChart'), {
+  type: 'bar',
+  data: {
+    labels: ['AI服务器/数据中心', '智能手机', 'PC/笔记本', '汽车电子', '其他/IoT'],
+    datasets: [{
+      label: '需求占比 (%)',
+      data: [70, 15, 8, 4, 3],
+      backgroundColor: [RED, BLUE, PURPLE, YELLOW, GREEN],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { font: { size: 11 } }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 12 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
