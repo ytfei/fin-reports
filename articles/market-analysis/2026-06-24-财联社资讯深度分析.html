@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年6月24日 财联社资讯深度分析</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif; background:#f0f2f5; color:#1a1a2e; line-height:1.7; font-size:15px; }
+  .container { max-width:820px; margin:0 auto; background:#fff; }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626); color:#fff; padding:40px 28px 28px; text-align:center; }
+  .hero .badge { display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:3px 14px; font-size:11px; margin-bottom:10px; letter-spacing:1px; }
+  .hero h1 { font-size:24px; font-weight:800; margin-bottom:6px; line-height:1.4; }
+  .hero .sub { font-size:13px; opacity:0.85; margin-bottom:14px; }
+  .hero-stats { display:flex; justify-content:center; gap:24px; font-size:13px; flex-wrap:wrap; }
+  .hero-stats .stat { text-align:center; }
+  .hero-stats .stat-num { font-size:20px; font-weight:800; }
+  .hero-stats .stat-label { font-size:11px; opacity:0.75; }
+  .hero-stats .pos { color:#fde047; }
+  .hero-stats .neg { color:#86efac; }
+
+  /* Content */
+  .content { padding:28px 24px; }
+  .section { margin-bottom:32px; }
+  .section-title { font-size:17px; font-weight:800; color:#991b1b; margin-bottom:16px; padding-left:14px; border-left:5px solid #dc2626; }
+  .section-title .num { background:#dc2626; color:#fff; font-size:13px; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; margin-right:8px; }
+
+  /* Overview cards */
+  .overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:20px; }
+  .ov-card { background:#fef2f2; border-radius:10px; padding:14px; text-align:center; border:1px solid #fecaca; }
+  .ov-card .ov-val { font-size:22px; font-weight:800; color:#dc2626; }
+  .ov-card .ov-label { font-size:12px; color:#64748b; margin-top:2px; }
+
+  /* Theme card */
+  .theme-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+  .theme-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; }
+  .theme-icon { background:#fef2f2; color:#dc2626; font-size:12px; font-weight:800; padding:3px 10px; border-radius:6px; white-space:nowrap; }
+  .theme-title { font-size:16px; font-weight:800; color:#0f172a; flex:1; }
+  .theme-body { font-size:14px; color:#334155; }
+  .theme-body p { margin-bottom:10px; }
+  .theme-body .label { font-weight:700; color:#dc2626; }
+  .theme-body .impact-box { background:#fffbeb; border-left:3px solid #f59e0b; padding:10px 14px; border-radius:6px; margin-top:10px; font-size:13px; }
+  .one-liner { background:#7f1d1d; color:#fff; padding:8px 14px; border-radius:6px; margin-top:10px; font-size:13px; font-weight:600; }
+
+  /* Table */
+  .action-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; }
+  .action-table th { background:#991b1b; color:#fff; padding:10px 8px; text-align:left; font-weight:700; }
+  .action-table td { padding:9px 8px; border-bottom:1px solid #e2e8f0; }
+  .action-table tr:nth-child(even) { background:#fef2f2; }
+  .action-table .dir-bull { color:#dc2626; font-weight:700; }
+  .action-table .dir-neutral { color:#f59e0b; font-weight:600; }
+
+  /* Sentiment bar */
+  .sentiment-bar { display:flex; height:24px; border-radius:12px; overflow:hidden; margin:10px 0; }
+  .sentiment-pos { background:#dc2626; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700; }
+  .sentiment-neg { background:#16a34a; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700; }
+
+  /* Source list */
+  .source-list { font-size:12px; color:#64748b; }
+  .source-list li { padding:3px 0; }
+
+  .footer { text-align:center; padding:20px; font-size:11px; color:#94a3b8; border-top:1px solid #e2e8f0; background:#f8fafc; }
+  .disclaimer { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:12px 16px; margin:16px 24px; font-size:12px; color:#92400e; }
+
+  @media (max-width:600px) {
+    .content { padding:20px 16px; }
+    .hero h1 { font-size:20px; }
+    .hero-stats { gap:16px; }
+    .action-table { font-size:12px; }
+    .action-table th, .action-table td { padding:7px 5px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="badge">FINANCIAL NEWS ANALYSIS</div>
+    <h1>台积电涨价引爆半导体全线<br>SK海力士290亿赴美再添HBM一把火</h1>
+    <div class="sub">2026年6月24日 · 财联社快讯深度分析</div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">1500</div><div class="stat-label">原始快讯</div></div>
+      <div class="stat"><div class="stat-num">1418</div><div class="stat-label">有效资讯</div></div>
+      <div class="stat pos"><div class="stat-num">106</div><div class="stat-label">正面信号</div></div>
+      <div class="stat neg"><div class="stat-num">59</div><div class="stat-label">负面信号</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Market Snapshot -->
+    <div class="section">
+      <div class="section-title"><span class="num">!</span>今日市场速览</div>
+      <div class="overview-grid">
+        <div class="ov-card"><div class="ov-val">+3.82%</div><div class="ov-label">科创50（历史新高）</div></div>
+        <div class="ov-card"><div class="ov-val">+1.24%</div><div class="ov-label">深证成指</div></div>
+        <div class="ov-card"><div class="ov-val">+1.41%</div><div class="ov-label">创业板指</div></div>
+        <div class="ov-card"><div class="ov-val">3.31万亿</div><div class="ov-label">全市场成交额</div></div>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-pos" style="width:64.2%">正面 106 (64%)</div>
+        <div class="sentiment-neg" style="width:35.8%">负面 59 (36%)</div>
+      </div>
+      <p style="font-size:13px;color:#475569;margin-top:8px;">科创50创历史新高，但全市场超4000只个股下跌。资金没有撤退，在疯狂向半导体和算力硬件集中。极端结构性轮动。</p>
+    </div>
+
+    <!-- Theme 1 -->
+    <div class="section">
+      <div class="section-title"><span class="num">1</span>台积电先进制程全线涨价5%-10%</div>
+      <div class="theme-card">
+        <div class="theme-header">
+          <span class="theme-icon">S级·半导体</span>
+          <span class="theme-title">国产替代逻辑再获强化</span>
+        </div>
+        <div class="theme-body">
+          <p><span class="label">事实：</span>科技分析师Tim Culpan报道，台积电通知客户调涨3nm及7nm以下所有先进制程价格，涨幅5%-10%，影响约75%晶圆营收。2026年营收预计增长至少30%，突破1600亿美元。</p>
+          <p><span class="label">衍生判断：</span>台积电敢在75%营收范围内涨价，说明AI芯片需求已将先进制程产能逼到极限。一阶影响已体现（中芯+8.84%、华虹宏力+10%创新高、长电涨停）；二阶传导刚开始——台积电涨价→客户找替代→中芯成熟制程议价提升→国内设备材料商订单加速。</p>
+          <div class="impact-box">
+            <strong>A股影响：</strong>半导体设备材料（北方华创、中微公司、拓荆科技）弹性最大；先进封装（汇成股份20cm涨停）已跑在前面，追高风险加大。
+          </div>
+          <div class="one-liner">一句话：台积电涨价是产能紧张的确认信号，不是涨完就结束，产业链传导才刚开始。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 2 -->
+    <div class="section">
+      <div class="section-title"><span class="num">2</span>SK海力士赴美募资290亿美元</div>
+      <div class="theme-card">
+        <div class="theme-header">
+          <span class="theme-icon">S级·存储</span>
+          <span class="theme-title">HBM军备竞赛进入资本密集期</span>
+        </div>
+        <div class="theme-body">
+          <p><span class="label">事实：</span>SK海力士宣布通过纳斯达克发行ADR筹资约294亿美元，7月10日交易。HBM全球市占率57%，今年股价涨超300%。三星同步规划韩国湖南半导体产业集群，投资或破200万亿韩元。</p>
+          <p><span class="label">衍生判断：</span>290亿美元相当于SK海力士去年全年资本开支的数倍，几乎可以肯定砸向HBM产能扩张。HBM是AI数据中心扩张最大的物理瓶颈。存储芯片涨价周期远未结束。</p>
+          <div class="impact-box">
+            <strong>A股影响：</strong>存储芯片（兆易创新、江波龙）、封测（长电科技、通富微电承接HBM溢出）、上游材料。注意：韩国巨头资本开支暴增意味着2-3年后供给格局可能逆转。
+          </div>
+          <div class="one-liner">一句话：SK海力士用290亿美元为HBM紧缺下了注脚，存储芯片涨价周期远未结束。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 3 -->
+    <div class="section">
+      <div class="section-title"><span class="num">3</span>孙正义豪赌：Arm转型造芯 + 最大数据中心</div>
+      <div class="theme-card">
+        <div class="theme-header">
+          <span class="theme-icon">A·算力</span>
+          <span class="theme-title">软银押注"AI=电力"逻辑</span>
+        </div>
+        <div class="theme-body">
+          <p><span class="label">事实：</span>软银股东大会宣布：Arm将从芯片设计者进化为芯片制造者，"还有10倍以上成长空间"；俄亥俄州筹建"世界最大数据中心"，电力相当于10座核电站；十年净资产目标6.189万亿美元。</p>
+          <p><span class="label">衍生判断：</span>Arm自己做芯片直接挑战台积电、英特尔。更值得关注的是"10座核电站的电力"——AI数据中心电力瓶颈比算力瓶颈更先到来。曾毓群在达沃斯表示AI用电可控，但前提是80%可再生能源，这对绿电、储能是巨大拉动。</p>
+          <div class="impact-box">
+            <strong>A股影响：</strong>短期情绪催化算力链；中期关注算电协同——绿电运营商、储能（宁德方向）、液冷散热。
+          </div>
+          <div class="one-liner">一句话：孙正义画饼能力一流，但"AI=电力"这个判断是对的，算电协同值得中线布局。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 4 -->
+    <div class="section">
+      <div class="section-title"><span class="num">4</span>英伟达Vera Rubin 45℃全面液冷</div>
+      <div class="theme-card">
+        <div class="theme-header">
+          <span class="theme-icon">A·液冷</span>
+          <span class="theme-title">液冷从可选升级变为标配</span>
+        </div>
+        <div class="theme-body">
+          <p><span class="label">事实：</span>英伟达官方博客详述Vera Rubin平台45℃全面液冷技术，称其为"数据中心历史上最重要的能效突破"，Rubin是全球首个100%液冷的AI计算平台。</p>
+          <p><span class="label">衍生判断：</span>45℃液冷散热效率比传统风冷提升数量级。下一代AI服务器必须用液冷，不是可选升级。液冷全产业链是确定性增量，与PCB存量博弈逻辑不同。</p>
+          <div class="impact-box">
+            <strong>A股影响：</strong>直接受益——液冷方案商（英维克、高澜股份、曙光数创）；间接受益——液冷泵（大元泵业）、连接器（胜蓝股份）、代工（立讯精密，高盛目标价翻倍至106元）。
+          </div>
+          <div class="one-liner">一句话：Rubin 100%液冷等于给液冷产业链发了确定性通行证，这比短期涨停更重要。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Table -->
+    <div class="section">
+      <div class="section-title"><span class="num">5</span>操作参考</div>
+      <table class="action-table">
+        <thead>
+          <tr><th>方向</th><th>板块</th><th>时间窗口</th><th>关键观察指标</th><th>参考标的</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="dir-bull">偏多</td><td>半导体设备材料</td><td>1-3个月</td><td>国产替代政策、中芯资本开支</td><td>北方华创、中微公司</td></tr>
+          <tr><td class="dir-bull">偏多</td><td>存储芯片</td><td>1-2个月</td><td>DRAM/NAND现货价、HBM交期</td><td>兆易创新、江波龙</td></tr>
+          <tr><td class="dir-bull">偏多</td><td>液冷散热</td><td>3-6个月</td><td>Rubin量产进度、液冷渗透率</td><td>英维克、高澜股份</td></tr>
+          <tr><td class="dir-neutral">中性偏多</td><td>先进封装</td><td>短期警惕追高</td><td>估值分位、订单能见度</td><td>长电科技</td></tr>
+          <tr><td class="dir-neutral">观察</td><td>算力电力协同</td><td>中长期</td><td>数据中心绿电占比、储能招标</td><td>宁德时代、绿电运营商</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Risk Note -->
+    <div class="section">
+      <div class="section-title"><span class="num">!</span>市场情绪提示</div>
+      <p style="font-size:13px;color:#334155;">今日正面信号106条 vs 负面59条，比值接近1.8:1，情绪中性偏多。但涨幅集中在半导体和算力硬件，全市场4000只个股下跌说明资金在做极端的结构性轮动。如果后续增量资金不能扩散到更多板块，短期需警惕高仓位科技股的回调风险。</p>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    数据来源：财联社快讯（Tushare news接口）1500条，经去噪、聚类、打分后提炼。关键事实已通过公开新闻源交叉验证。本报告仅供参考，不构成个人投资建议。
+  </div>
+
+  <div class="footer">
+    Generated by 今日资讯分析引擎 v2 · 2026-06-24 17:53
+  </div>
+
+</div>
+</body>
+</html>
