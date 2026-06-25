@@ -1,0 +1,34 @@
+{
+  "name": "publish-article-skill",
+  "version": "1.0.0",
+  "description": "自动化发布 HTML 文章到 fin-reports 项目的 Skill",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "publish-article": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "fin-reports",
+    "article",
+    "publish",
+    "automation"
+  ],
+  "author": "Mason",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0"
+  }
+}
