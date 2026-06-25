@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芯片需求八灯监控系统</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0a0e14;
+  --card-bg: #131820;
+  --card-border: #1e2530;
+  --text-primary: #e8edf5;
+  --text-secondary: #8a94a6;
+  --text-muted: #5a6478;
+  --red: #ff3b3b;
+  --red-glow: rgba(255, 59, 59, 0.15);
+  --red-bg: rgba(255, 59, 59, 0.08);
+  --green: #00c853;
+  --green-bg: rgba(0, 200, 83, 0.08);
+  --yellow: #ffb300;
+  --yellow-bg: rgba(255, 179, 0, 0.08);
+  --blue: #2979ff;
+  --accent: #ff6d00;
+  --star: #ffd54f;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1280px; margin: 0 auto; padding: 24px 20px 60px; }
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.header-left h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ff6d00, #ff3b3b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header-left .subtitle {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.header-right {
+  text-align: right;
+}
+.header-right .timestamp {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.header-right .live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red-bg);
+  border: 1px solid rgba(255,59,59,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--red);
+  margin-top: 6px;
+}
+.live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Overall Status Bar */
+.status-bar {
+  background: linear-gradient(135deg, rgba(255,59,59,0.12), rgba(255,109,0,0.08));
+  border: 1px solid rgba(255,59,59,0.25);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.status-bar .status-left { display: flex; align-items: center; gap: 16px; }
+.status-bar .big-status {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1;
+}
+.status-bar .status-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.status-bar .status-label strong { color: var(--text-primary); font-size: 16px; }
+.light-row { display: flex; gap: 8px; margin-top: 8px; }
+.light-bulb {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.light-red {
+  background: var(--red);
+  box-shadow: 0 0 12px rgba(255,59,59,0.5);
+  color: #fff;
+}
+.light-green {
+  background: var(--green);
+  color: #fff;
+}
+.status-bar .status-right {
+  text-align: right;
+}
+.status-bar .verdict {
+  font-size: 15px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Card */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { border-color: rgba(255,59,59,0.3); transform: translateY(-2px); }
+.card.leading { border-color: rgba(255,109,0,0.25); }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.card-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.card-stars { font-size: 11px; letter-spacing: 1px; }
+.card-stars .star-on { color: var(--star); }
+.card-stars .star-off { color: var(--text-muted); }
+.card-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.tag-leading { background: rgba(255,109,0,0.12); color: var(--accent); }
+.tag-sync { background: rgba(41,121,255,0.12); color: var(--blue); }
+
+.card-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.card-unit { font-size: 14px; color: var(--text-secondary); font-weight: 400; }
+.card-change {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.change-up { color: var(--red); }
+.change-down { color: var(--green); }
+.card-note {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.card-source {
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--card-border);
+  padding-top: 8px;
+}
+
+/* Status light on card */
+.card-status {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+.status-red { background: var(--red); box-shadow: 0 0 8px rgba(255,59,59,0.6); }
+.status-green { background: var(--green); }
+.status-yellow { background: var(--yellow); }
+
+/* Section Title */
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon { font-size: 22px; }
+
+/* Chart section */
+.chart-section {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.chart-container {
+  position: relative;
+  height: 320px;
+}
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media (max-width: 768px) {
+  .chart-row { grid-template-columns: 1fr; }
+  .card-value { font-size: 26px; }
+  .header-left h1 { font-size: 22px; }
+}
+
+/* Detail Table */
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+.detail-table th {
+  text-align: left;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--card-border);
+}
+.detail-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text-primary);
+}
+.detail-table tr:last-child td { border-bottom: none; }
+.detail-table .red-text { color: var(--red); font-weight: 600; }
+.detail-table .green-text { color: var(--green); font-weight: 600; }
+
+/* Judgment Matrix */
+.matrix-section {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 768px) { .matrix-grid { grid-template-columns: 1fr; } }
+.matrix-item {
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+.matrix-red { background: var(--red-bg); border: 1px solid rgba(255,59,59,0.2); }
+.matrix-yellow { background: var(--yellow-bg); border: 1px solid rgba(255,179,0,0.2); }
+.matrix-green { background: var(--green-bg); border: 1px solid rgba(0,200,83,0.2); }
+.matrix-item .matrix-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.matrix-item .matrix-desc { font-size: 12px; color: var(--text-secondary); }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px;
+  border-top: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.footer a { color: var(--blue); text-decoration: none; }
+.disclaimer {
+  background: rgba(255,179,0,0.05);
+  border: 1px solid rgba(255,179,0,0.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Data Source Grid */
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.source-item {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 14px;
+}
+.source-item .src-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.source-item .src-desc { font-size: 11px; color: var(--text-secondary); }
+.source-item .src-link { font-size: 11px; color: var(--blue); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>芯片需求八灯监控系统</h1>
+      <div class="subtitle">半导体产业链需求景气度实时仪表盘 | 基于上游先行指标 + 下游同步指标交叉验证</div>
+    </div>
+    <div class="header-right">
+      <div class="timestamp">数据更新：2026-06-25 18:00 (GMT+8)</div>
+      <div class="live-badge"><span class="live-dot"></span> 实时监控中</div>
+    </div>
+  </div>
+
+  <!-- Overall Status -->
+  <div class="status-bar">
+    <div class="status-left">
+      <div>
+        <div class="big-status">8 / 8</div>
+        <div class="status-label">指标亮红 — <strong>强扩张</strong></div>
+        <div class="light-row">
+          <div class="light-bulb light-red">1</div>
+          <div class="light-bulb light-red">2</div>
+          <div class="light-bulb light-red">3</div>
+          <div class="light-bulb light-red">4</div>
+          <div class="light-bulb light-red">5</div>
+          <div class="light-bulb light-red">6</div>
+          <div class="light-bulb light-red">7</div>
+          <div class="light-bulb light-red">8</div>
+        </div>
+      </div>
+    </div>
+    <div class="status-right">
+      <div class="verdict">AI驱动的结构性超级周期</div>
+      <div style="font-size:12px; color: var(--text-secondary); margin-top:4px;">五盏以上红灯 = 景气上行确认</div>
+    </div>
+  </div>
+
+  <!-- 8 Indicator Cards -->
+  <div class="grid">
+
+    <!-- 1. Silicon Wafer -->
+    <div class="card leading">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">硅片出货量</div>
+          <div class="card-stars"><span class="star-on">★★★</span> 先行指标</div>
+        </div>
+        <div class="card-tag tag-leading">领先2-6月</div>
+      </div>
+      <div class="card-value">3,275<span class="card-unit"> MSI</span></div>
+      <div class="card-change change-up">▲ 同比 +13.1% | 环比 -4.7%（季节性）</div>
+      <div class="card-note">2026Q1全球硅晶圆出货32.75亿平方英寸。AI/HBM外延晶圆驱动转正。PC和手机出货疲软，但产能转向AI。信越、胜高已上调硅片价格超10%。</div>
+      <div class="card-source">来源：SEMI SMG 季度报告 | 2026 Q1</div>
+    </div>
+
+    <!-- 2. Equipment Book-to-Bill -->
+    <div class="card leading">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">设备订单出货比</div>
+          <div class="card-stars"><span class="star-on">★★★</span> 先行指标</div>
+        </div>
+        <div class="card-tag tag-leading">领先2-6月</div>
+      </div>
+      <div class="card-value">5,264<span class="card-unit"> 亿日元</span></div>
+      <div class="card-change change-up">▲ 同比 +17.9% | 历史新高</div>
+      <div class="card-note">日本SEAJ 5月设备销售额创历史新高（3个月移动平均）。SEMI全球Q1设备出货$365.5亿，同比+14%，连续创新高。晶圆厂大规模扩产中。</div>
+      <div class="card-source">来源：SEAJ（2026年5月）| SEMI WWSEMS（2026 Q1）</div>
+    </div>
+
+    <!-- 3. TSMC Monthly Revenue -->
+    <div class="card leading">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">台积电月度营收</div>
+          <div class="card-stars"><span class="star-on">★★★</span> 先行指标</div>
+        </div>
+        <div class="card-tag tag-leading">领先1-3月</div>
+      </div>
+      <div class="card-value">~4,300<span class="card-unit"> 亿新台币（6月E）</span></div>
+      <div class="card-change change-up">▲ 同比 +60% | Q1毛利率66.2%</div>
+      <div class="card-note">Q1合并营收1.13万亿新台币（$359亿），同比+35.1%。HPC占比首破60%。6月预估4,250-4,350亿新台币，同比暴涨60%+。净利润率50.5%。</div>
+      <div class="card-source">来源：TSMC 投资者关系 | 2026 Q1财报 + 6月预估</div>
+    </div>
+
+    <!-- 4. DRAM Contract Price -->
+    <div class="card">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">DRAM 合约价</div>
+          <div class="card-stars"><span class="star-on">★★</span><span class="star-off">☆</span> 同步指标</div>
+        </div>
+        <div class="card-tag tag-sync">同步确认</div>
+      </div>
+      <div class="card-value">+58~63<span class="card-unit"> %（Q2环比）</span></div>
+      <div class="card-change change-up">▲ NAND合约价环比 +70~75%</div>
+      <div class="card-note">原厂将产能转向HBM和Server DRAM，导致通用DRAM供应收紧。"补涨"策略拉大价差。Q3涨幅是否收窄是关键观察点。</div>
+      <div class="card-source">来源：TrendForce | 2026 Q2 预估</div>
+    </div>
+
+    <!-- 5. HBM Supply-Demand -->
+    <div class="card">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">HBM 供需缺口</div>
+          <div class="card-stars"><span class="star-on">★★</span><span class="star-off">☆</span> 同步指标</div>
+        </div>
+        <div class="card-tag tag-sync">同步确认</div>
+      </div>
+      <div class="card-value">~2<span class="card-unit"> % 充足率</span></div>
+      <div class="card-change change-up">▲ 2026全年产能已售罄</div>
+      <div class="card-note">需求100份仅能供2份。SK海力士HBM毛利率72%（超英伟达）。三星HBM3E认证连续3次失利。通用DRAM利润率已反超HBM 15pct+。</div>
+      <div class="card-source">来源：SK Hynix财报 | TrendForce | 2026 H1</div>
+    </div>
+
+    <!-- 6. Wafer Fab Utilization -->
+    <div class="card">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">晶圆厂产能利用率</div>
+          <div class="card-stars"><span class="star-on">★★</span><span class="star-off">☆</span> 同步指标</div>
+        </div>
+        <div class="card-tag tag-sync">同步确认</div>
+      </div>
+      <div class="card-value">93.1<span class="card-unit"> %（中芯国际）</span></div>
+      <div class="card-change change-up">▲ >85% = 高景气门槛</div>
+      <div class="card-note">中芯国际Q1稼动率93.1%。华虹12寸+8寸均>100%。TSMC先进制程满载。中芯Q2指引：收入环比+14~16%，毛利率20~22%。</div>
+      <div class="card-source">来源：中芯国际/华虹 2026 Q1财报</div>
+    </div>
+
+    <!-- 7. SIA Global Sales -->
+    <div class="card">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">全球半导体销售额</div>
+          <div class="card-stars"><span class="star-on">★★</span><span class="star-off">☆</span> 同步指标</div>
+        </div>
+        <div class="card-tag tag-sync">同步确认</div>
+      </div>
+      <div class="card-value">$110.5<span class="card-unit"> B（4月）</span></div>
+      <div class="card-change change-up">▲ 同比 +93.9% | 环比 +11%（连续14月增长）</div>
+      <div class="card-note">WSTS上调2026全年预测至$1.5万亿（+90%），2027年$1.9万亿。美洲+115.8%，中国+78.6%，亚太+114.9%。AI基础设施是核心引擎。</div>
+      <div class="card-source">来源：SIA / WSTS | 2026年4月（3个月移动平均）</div>
+    </div>
+
+    <!-- 8. Inventory Days -->
+    <div class="card">
+      <div class="card-status status-red"></div>
+      <div class="card-header">
+        <div>
+          <div class="card-title">库存周转天数</div>
+          <div class="card-stars"><span class="star-on">★★</span><span class="star-off">☆</span> 同步指标</div>
+        </div>
+        <div class="card-tag tag-sync">同步确认</div>
+      </div>
+      <div class="card-value">121<span class="card-unit"> 天（全球均值）</span></div>
+      <div class="card-change change-up">▼ 环比 -15天 | 近三年最低</div>
+      <div class="card-note">天数下降=库存被消化=需求回升。台系、韩系品牌补库动能充足。中芯国际存货271亿元（+6.3%），但产能扩张同步进行。</div>
+      <div class="card-source">来源：各公司Q1财报 | 行业研报</div>
+    </div>
+
+  </div>
+
+  <!-- Charts -->
+  <h2 class="section-title"><span class="icon">📊</span> 核心指标趋势</h2>
+
+  <div class="chart-section">
+    <h3 style="font-size:15px; margin-bottom:16px; color:var(--text-secondary);">台积电月度营收趋势（亿新台币）</h3>
+    <div class="chart-container">
+      <canvas id="tsmcChart"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-section">
+      <h3 style="font-size:15px; margin-bottom:16px; color:var(--text-secondary);">全球硅晶圆出货量（MSI）</h3>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="waferChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-section">
+      <h3 style="font-size:15px; margin-bottom:16px; color:var(--text-secondary);">全球半导体设备季度出货（十亿美元）</h3>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="equipChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h3 style="font-size:15px; margin-bottom:16px; color:var(--text-secondary);">全球半导体月度销售额（十亿美元，3MMA）</h3>
+    <div class="chart-container" style="height:280px;">
+      <canvas id="siaChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CoWoS Special Section -->
+  <h2 class="section-title"><span class="icon">🔧</span> 关键瓶颈：CoWoS 先进封装</h2>
+  <div class="chart-section">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <span style="font-size:28px; font-weight:800; color:var(--red);">供需缺口 ~20%</span>
+        <span style="font-size:14px; color:var(--text-secondary); margin-left:8px;">→ 预计年底收窄至 10%</span>
+      </div>
+      <div style="font-size:13px; color:var(--text-secondary);">
+        2026年月产能目标 <strong style="color:var(--text-primary);">13万片</strong> | 较2025年扩产 <strong style="color:var(--red);">3倍</strong> | 订单排队至 <strong style="color:var(--text-primary);">2027年</strong>
+      </div>
+    </div>
+    <div class="chart-container" style="height:240px;">
+      <canvas id="cowosChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Judgment Matrix -->
+  <h2 class="section-title"><span class="icon">🎯</span> 判断矩阵</h2>
+  <div class="matrix-section">
+    <div class="matrix-grid">
+      <div class="matrix-item matrix-red">
+        <div class="matrix-title" style="color:var(--red);">5盏以上红灯</div>
+        <div class="matrix-desc">景气上行确认。当前状态：8/8 全红。<br>行动参考：持有/加仓，但注意边际变化</div>
+      </div>
+      <div class="matrix-item matrix-yellow">
+        <div class="matrix-title" style="color:var(--yellow);">3-4盏红灯</div>
+        <div class="matrix-desc">结构性分化。需区分AI驱动 vs 传统需求。<br>行动参考：选择性配置，紧盯先行指标</div>
+      </div>
+      <div class="matrix-item matrix-green">
+        <div class="matrix-title" style="color:var(--green);">2盏以下红灯</div>
+        <div class="matrix-desc">需求收缩信号。<br>行动参考：减仓/防守，等待反转信号</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Table -->
+  <h2 class="section-title"><span class="icon">📋</span> 指标详情对照表</h2>
+  <div style="overflow-x:auto; margin-bottom:28px;">
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>指标</th>
+          <th>类型</th>
+          <th>当前值</th>
+          <th>同比/环比</th>
+          <th>状态</th>
+          <th>权重</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>硅片出货量</td><td>先行</td><td>3,275 MSI</td>
+          <td class="red-text">+13.1% YoY</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★★</td>
+        </tr>
+        <tr>
+          <td>2</td><td>设备订单出货比</td><td>先行</td><td>¥5,264亿 / $365.5亿</td>
+          <td class="red-text">+17.9% YoY</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★★</td>
+        </tr>
+        <tr>
+          <td>3</td><td>台积电月营收</td><td>先行</td><td>~4,300亿新台币</td>
+          <td class="red-text">+60% YoY (6月E)</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★★</td>
+        </tr>
+        <tr>
+          <td>4</td><td>DRAM合约价</td><td>同步</td><td>+58~63% QoQ</td>
+          <td class="red-text">环比暴涨</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★☆</td>
+        </tr>
+        <tr>
+          <td>5</td><td>HBM供需缺口</td><td>同步</td><td>充足率 ~2%</td>
+          <td class="red-text">极度紧缺</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★☆</td>
+        </tr>
+        <tr>
+          <td>6</td><td>产能利用率</td><td>同步</td><td>93.1% (中芯)</td>
+          <td class="red-text">>85% 高景气</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★☆</td>
+        </tr>
+        <tr>
+          <td>7</td><td>全球半导体销售</td><td>同步</td><td>$110.5B (4月)</td>
+          <td class="red-text">+93.9% YoY</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★☆</td>
+        </tr>
+        <tr>
+          <td>8</td><td>库存周转天数</td><td>同步</td><td>121天</td>
+          <td class="red-text">-15天 QoQ (下降=好)</td>
+          <td><span class="light-bulb light-red" style="width:20px;height:20px;font-size:10px;display:inline-flex;">红</span></td>
+          <td>★★☆</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Data Sources -->
+  <h2 class="section-title"><span class="icon">🔗</span> 数据来源渠道</h2>
+  <div class="source-grid">
+    <div class="source-item">
+      <div class="src-name">SEMI SMG</div>
+      <div class="src-desc">全球硅晶圆季度出货量报告</div>
+      <div class="src-link">semi.org → Market Data</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">SEMI WWSEMS</div>
+      <div class="src-desc">全球半导体设备月度出货统计</div>
+      <div class="src-link">semi.org → Equipment Market Data</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">SEAJ</div>
+      <div class="src-desc">日本半导体设备协会月度数据</div>
+      <div class="src-link">seaj.or.jp/statistics</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">TSMC IR</div>
+      <div class="src-desc">台积电月度营收（每月10日前公布）</div>
+      <div class="src-link">investor.tsmc.com</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">SIA / WSTS</div>
+      <div class="src-desc">全球半导体月度销售额 + 半年预测</div>
+      <div class="src-link">semiconductors.org → Market Data</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">TrendForce</div>
+      <div class="src-desc">DRAM/NAND/HBM合约价追踪</div>
+      <div class="src-link">trendforce.com → Press Center</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">各公司财报</div>
+      <div class="src-desc">中芯国际/华虹/SK海力士季报</div>
+      <div class="src-link">交易所披露 / 公司IR页面</div>
+    </div>
+    <div class="source-item">
+      <div class="src-name">北美云厂商Capex</div>
+      <div class="src-desc">MSFT/GOOG/META/AMZN资本开支</div>
+      <div class="src-link">各公司10-Q/10-K</div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    ⚠️ <strong>风险提示：</strong>八盏灯全红时，往往也是市场最乐观的时候。任何一个指标从红转绿都值得认真对待。当前最需关注的边际变化：Q3 DRAM合约价涨幅是否收窄、台积电7月营收是否延续60%+增速。本仪表盘仅为研究辅助工具，不构成投资建议。
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>芯片需求八灯监控系统 v1.0 | 数据截至 2026-06-25</p>
+    <p style="margin-top:4px;">数据来源：SEMI · SIA · WSTS · TrendForce · TSMC IR · SEAJ · 各公司财报</p>
+    <p style="margin-top:8px; color:var(--text-muted);">本仪表盘仅供参考研究使用，不构成任何投资建议</p>
+  </div>
+
+</div>
+
+<script>
+// Chart defaults
+Chart.defaults.color = '#8a94a6';
+Chart.defaults.borderColor = '#1e2530';
+Chart.defaults.font.family = "'SF Pro Display', 'PingFang SC', sans-serif";
+
+// A股配色：红涨绿跌
+const redColor = '#ff3b3b';
+const redFill = 'rgba(255, 59, 59, 0.15)';
+const orangeColor = '#ff6d00';
+const blueColor = '#2979ff';
+
+// 1. TSMC Monthly Revenue
+new Chart(document.getElementById('tsmcChart'), {
+  type: 'bar',
+  data: {
+    labels: ['25/07','25/08','25/09','25/10','25/11','25/12','26/01','26/02','26/03','26/04','26/05','26/06(E)'],
+    datasets: [{
+      label: '月营收（亿新台币）',
+      data: [2560, 2890, 2520, 3120, 3220, 3380, 2950, 2600, 3580, 3750, 4020, 4300],
+      backgroundColor: ctx => {
+        const val = ctx.parsed?.y || 0;
+        return val > 3500 ? redFill : 'rgba(41,121,255,0.12)';
+      },
+      borderColor: ctx => {
+        const val = ctx.parsed?.y || 0;
+        return val > 3500 ? redColor : blueColor;
+      },
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#131820',
+        borderColor: '#1e2530',
+        borderWidth: 1,
+        callbacks: {
+          label: ctx => `${ctx.parsed.y.toLocaleString()} 亿新台币`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#1a1f28' },
+        ticks: { callback: v => v.toLocaleString() }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 2. Silicon Wafer Shipment
+new Chart(document.getElementById('waferChart'), {
+  type: 'bar',
+  data: {
+    labels: ['25/Q1','25/Q2','25/Q3','25/Q4','26/Q1'],
+    datasets: [{
+      label: '出货量（MSI）',
+      data: [2896, 3140, 3320, 3437, 3275],
+      backgroundColor: ['rgba(41,121,255,0.12)','rgba(41,121,255,0.12)','rgba(41,121,255,0.12)','rgba(41,121,255,0.12)', redFill],
+      borderColor: [blueColor, blueColor, blueColor, blueColor, redColor],
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#131820',
+        callbacks: { label: ctx => `${ctx.parsed.y.toLocaleString()} MSI` }
+      }
+    },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#1a1f28' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 3. Equipment Quarterly Billings
+new Chart(document.getElementById('equipChart'), {
+  type: 'line',
+  data: {
+    labels: ['25/Q1','25/Q2','25/Q3','25/Q4','26/Q1'],
+    datasets: [{
+      label: '全球设备出货（十亿美元）',
+      data: [28.8, 31.2, 33.8, 36.2, 36.55],
+      borderColor: redColor,
+      backgroundColor: redFill,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: redColor,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#131820',
+        callbacks: { label: ctx => `$${ctx.parsed.y}B` }
+      }
+    },
+    scales: {
+      y: { beginAtZero: false, grid: { color: '#1a1f28' }, ticks: { callback: v => `$${v}B` } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 4. SIA Monthly Sales
+new Chart(document.getElementById('siaChart'), {
+  type: 'line',
+  data: {
+    labels: ['25/10','25/11','25/12','26/01','26/02','26/03','26/04'],
+    datasets: [{
+      label: '全球半导体销售额（十亿美元）',
+      data: [57, 62, 68, 76, 82, 99.5, 110.5],
+      borderColor: orangeColor,
+      backgroundColor: 'rgba(255,109,0,0.1)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 5,
+      pointBackgroundColor: orangeColor,
+      borderWidth: 2.5,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#131820',
+        callbacks: { label: ctx => `$${ctx.parsed.y}B` }
+      }
+    },
+    scales: {
+      y: { beginAtZero: false, grid: { color: '#1a1f28' }, ticks: { callback: v => `$${v}B` } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 5. CoWoS Capacity vs Demand
+new Chart(document.getElementById('cowosChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2024', '2025', '2026E', '2027E'],
+    datasets: [
+      {
+        label: '月产能（万片）',
+        data: [3.5, 5.0, 13.0, 20.0],
+        backgroundColor: 'rgba(41,121,255,0.15)',
+        borderColor: blueColor,
+        borderWidth: 1.5,
+        borderRadius: 4,
+      },
+      {
+        label: '需求估算（万片）',
+        data: [5.0, 7.5, 16.0, 22.0],
+        backgroundColor: redFill,
+        borderColor: redColor,
+        borderWidth: 1.5,
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: { boxWidth: 12, font: { size: 11 } }
+      },
+      tooltip: {
+        backgroundColor: '#131820',
+        callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}万片/月` }
+      }
+    },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#1a1f28' }, title: { display: true, text: '万片/月' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
