@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光纤光缆产业链深度研究报告 — AI算力时代的"隐形超级周期"</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#1a1a2e;line-height:1.75;max-width:960px;margin:0 auto;padding:0 16px 60px}
+.hero{background:linear-gradient(135deg,#0a0e27 0%,#1a2151 30%,#2d4a7a 60%,#1a6b8a 100%);color:#fff;padding:40px 28px 32px;border-radius:0 0 16px 16px;margin-bottom:28px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:0;right:0;bottom:0;left:0;background:radial-gradient(ellipse at 80% 20%,rgba(0,212,255,.08),transparent 50%)}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px;position:relative;z-index:1}
+.hero .sub{font-size:14px;opacity:.7;margin-bottom:16px;position:relative;z-index:1}
+.hero .tags{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.hero .tag{background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.3);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.section{margin-bottom:36px}
+.section h2{font-size:21px;font-weight:800;color:#0a0e27;margin-bottom:16px;padding-left:12px;border-left:4px solid #2d4a7a}
+.section h3{font-size:17px;font-weight:700;color:#1a2151;margin:20px 0 10px}
+.section h4{font-size:15px;font-weight:700;color:#2d4a7a;margin:14px 0 8px}
+p{font-size:14.5px;color:#333;margin-bottom:10px}
+.tldr{background:linear-gradient(135deg,#fff9e6 0%,#fff3d6 100%);border:1px solid #f0d860;border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.tldr .title{font-size:13px;font-weight:800;color:#b8860b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.tldr p{font-size:14px;color:#5a4500;line-height:1.8}
+.tldr strong{color:#b8860b}
+.key-data{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.kd-card{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);border-top:3px solid #2d4a7a}
+.kd-card.alert{border-top-color:#e74c3c}
+.kd-card .label{font-size:11px;color:#888;margin-bottom:6px;font-weight:600}
+.kd-card .value{font-size:24px;font-weight:800;color:#0a0e27}
+.kd-card .unit{font-size:13px;color:#aaa}
+.kd-card .note{font-size:11px;color:#e74c3c;margin-top:4px;font-weight:600}
+.chain-container{background:#fff;border:1px solid #e0e0e8;border-radius:12px;padding:24px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.chain-row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;padding:14px 0;border-bottom:1px solid #f0f0f5}
+.chain-row:last-child{border-bottom:none}
+.chain-layer{font-weight:800;font-size:13px;color:#fff;padding:6px 12px;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;min-height:60px}
+.layer-upstream{background:linear-gradient(135deg,#e17055,#d63031)}
+.layer-midstream{background:linear-gradient(135deg,#0984e3,#74b9ff)}
+.layer-downstream{background:linear-gradient(135deg,#00b894,#55efc4)}
+.layer-application{background:linear-gradient(135deg,#6c5ce7,#a29bfe)}
+.chain-content h4{margin:0 0 6px;font-size:14px;color:#0a0e27}
+.chain-content p{font-size:13px;color:#555;margin:0}
+.chain-companies{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chain-companies span{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}
+.tag-hot{background:#ffeaa7;color:#d63031}
+.tag-mid{background:#dfe6e9;color:#2d3436}
+.tag-weak{background:#fab1a0;color:#c0392b}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.compare-table th{background:#0a0e27;color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:13px}
+.compare-table td{padding:10px 14px;border-bottom:1px solid #f0f0f5;vertical-align:top}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .label{font-weight:700;color:#1a2151;background:#f8f9fc;min-width:100px}
+.pos{color:#d63031;font-weight:700}
+.neg{color:#00a05e;font-weight:700}
+.neu{color:#636e72}
+.star{color:#fdcb6e}
+.chart-box{background:#fff;border-radius:12px;padding:20px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.chart-title{font-size:14px;font-weight:700;color:#0a0e27;margin-bottom:10px}
+.chart-container{width:100%;height:360px}
+.insight{background:#fff;border-left:4px solid #6c5ce7;border-radius:0 8px 8px 0;padding:14px 20px;margin:14px 0;font-size:14px}
+.insight strong{color:#6c5ce7}
+.warning{background:#fff5f5;border-left:4px solid #e74c3c;border-radius:0 8px 8px 0;padding:14px 20px;margin:14px 0;font-size:13.5px}
+.warning strong{color:#e74c3c}
+.opportunity{background:#f0fff4;border-left:4px solid #00b894;border-radius:0 8px 8px 0;padding:14px 20px;margin:14px 0;font-size:13.5px}
+.opportunity strong{color:#00b894}
+.stock-card{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.stock{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);border-left:3px solid #2d4a7a}
+.stock.tier1{border-left-color:#e74c3c}
+.stock.tier2{border-left-color:#f39c12}
+.stock.tier3{border-left-color:#00b894}
+.stock.tier4{border-left-color:#74b9ff}
+.stock .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.stock .name{font-size:15px;font-weight:800;color:#0a0e27}
+.stock .tier-badge{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
+.tier1 .tier-badge{background:#ffeaa7;color:#d63031}
+.tier2 .tier-badge{background:#fff3cd;color:#856404}
+.tier3 .tier-badge{background:#d4edda;color:#155724}
+.tier4 .tier-badge{background:#d1ecfa;color:#0c5460}
+.stock .info{font-size:12px;color:#666;line-height:1.6}
+.stock .info strong{color:#333}
+.stock .metrics{display:flex;gap:12px;margin-top:8px;font-size:12px}
+.stock .metric{text-align:center}
+.stock .metric .v{font-size:16px;font-weight:800;color:#0a0e27}
+.stock .metric .l{font-size:10px;color:#aaa}
+.timeline-box{background:#fff;border-radius:12px;padding:20px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.timeline-item{display:grid;grid-template-columns:140px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid #f0f0f5}
+.timeline-item:last-child{border-bottom:none}
+.timeline-phase{font-weight:800;font-size:13px;padding:6px 10px;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center}
+.phase-done{background:#d4edda;color:#155724}
+.phase-now{background:#ffeaa7;color:#d63031}
+.phase-future{background:#d1ecfa;color:#0c5460}
+.timeline-content p{font-size:13px;margin:0}
+.disclaimer{text-align:center;font-size:12px;color:#999;margin-top:40px;padding:20px;border-top:1px solid #eee}
+@media(max-width:680px){
+  .hero{padding:28px 16px 22px}
+  .hero h1{font-size:20px}
+  .compare-table{font-size:11.5px}
+  .compare-table th,.compare-table td{padding:8px 10px}
+  .key-data{grid-template-columns:repeat(2,1fr)}
+  .chain-row{grid-template-columns:1fr;gap:8px}
+  .stock-card{grid-template-columns:1fr}
+  .timeline-item{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="sub">2026年6月25日 · 光纤光缆产业链深度研究</div>
+  <h1>光纤光缆产业链：AI算力引爆的"隐形超级周期"</h1>
+  <div class="tags">
+    <span class="tag">棒-纤-缆全产业链</span>
+    <span class="tag">AI数据中心光互联</span>
+    <span class="tag">空芯光纤革命</span>
+    <span class="tag">供需缺口1.8亿芯公里</span>
+    <span class="tag">预制棒涨价550%</span>
+  </div>
+</div>
+
+<div class="tldr">
+  <div class="title">▎ 核心结论（TL;DR）</div>
+  <p>光纤光缆正经历由<strong>AI算力需求驱动的结构性超级周期</strong>——这不是普通周期反弹，而是需求结构永久性迁移。2026年全球光纤供需缺口达<strong>1.8亿芯公里</strong>，光纤预制棒（光棒）价格暴涨<strong>550%</strong>，占产业链利润70%。核心投资逻辑沿三条线展开：①<strong>中游一体化龙头</strong>（长飞/亨通/中天）享受光棒涨价红利，2026Q1净利暴增46-226%；②<strong>上游材料链</strong>（四氯化硅/锗/芳纶/UV涂料）弹性最大但尚未被充分定价；③<strong>空芯光纤</strong>和<strong>多模光纤</strong>代表下一代技术方向，微软已计划部署1.5万公里。<strong>全产业链估值已处于历史极端高位</strong>，当前属于趋势行情而非价值投资机会。</p>
+</div>
+
+<div class="key-data">
+  <div class="kd-card alert">
+    <div class="label">2026全球光纤供需缺口</div>
+    <div class="value">1.8<span class="unit">亿芯公里</span></div>
+    <div class="note">需求5.77亿 / 供给3.97亿</div>
+  </div>
+  <div class="kd-card alert">
+    <div class="label">A2光棒价格涨幅</div>
+    <div class="value">550<span class="unit">%</span></div>
+    <div class="note">22元→160元/等效芯公里</div>
+  </div>
+  <div class="kd-card">
+    <div class="label">中国光棒产能全球占比</div>
+    <div class="value">70<span class="unit">%</span></div>
+    <div class="note">国内CR4 ≈ 75%</div>
+  </div>
+  <div class="kd-card">
+    <div class="label">DC光纤需求增速</div>
+    <div class="value">+75.9<span class="unit">%</span></div>
+    <div class="note">2025年同比（CRU）</div>
+  </div>
+</div>
+
+<!-- ============ 第一部分：产业链全景 ============ -->
+<div class="section">
+  <h2>一、产业链全景图</h2>
+  <p>光纤光缆产业链呈"三段式"结构：<strong>上游原材料</strong>（石英+四氯化硅/锗+芳纶+UV涂料）→ <strong>中游棒-纤-缆制造</strong>（技术壁垒递减、利润集中在上游光棒）→ <strong>下游应用</strong>（运营商集采+AI数据中心+电网+海缆+特种场景）。</p>
+
+  <div class="chain-container">
+    <div class="chain-row">
+      <div class="chain-layer layer-upstream">上游<br>核心材料</div>
+      <div class="chain-content">
+        <h4>光纤预制棒四大原料 + 对位芳纶</h4>
+        <p>占光纤总成本65-70%、利润70%，是全产业链利润最集中环节</p>
+        <div class="chain-companies">
+          <span class="tag-hot">高纯四氯化硅 → 三孚股份(603938) 9N级全球龙头</span>
+          <span class="tag-hot">四氯化锗 → 云南锗业(002428) 上游矿产到提纯一体</span>
+          <span class="tag-hot">对位芳纶 → 泰和新材(002254) 1.6万吨产能 / 中化国际(600500) 8000吨</span>
+          <span class="tag-mid">UV涂料 → 飞凯材料(300398) 光纤涂覆市占率领先</span>
+          <span class="tag-mid">高纯石英 → 石英股份(603688) / 菲利华(300395)</span>
+          <span class="tag-mid">氦气 → 水发燃气(603318) / 宝光股份(600379)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-row">
+      <div class="chain-layer layer-midstream">中游<br>棒-纤-缆</div>
+      <div class="chain-content">
+        <h4>预制棒 → 光纤拉丝 → 光缆成缆（利润递减）</h4>
+        <p>预制棒壁垒最高（PCVD/VAD/OVD三大工艺），光纤拉丝和光缆成缆附加值递减。光棒自给率直接决定毛利率。</p>
+        <div class="chain-companies">
+          <span class="tag-hot">长飞光纤(601869) 全球第一，三工艺唯一，光棒自给100%</span>
+          <span class="tag-hot">亨通光电(600487) 全球第四，光纤+海缆双轮，海外86%</span>
+          <span class="tag-hot">中天科技(600522) 全球第三，成本控制最强，电网协同</span>
+          <span class="tag-mid">烽火通信(600498) 央企背景，光设备+光纤协同</span>
+          <span class="tag-weak">通鼎互联(002491) 无自产光棒，被上游挤压</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-row">
+      <div class="chain-layer layer-downstream">下游<br>需求场景</div>
+      <div class="chain-content">
+        <h4>运营商集采 + AI数据中心 + 电力 + 海缆 + 特种</h4>
+        <p>AI数据中心是增量核心驱动力——万卡集群光纤用量是传统IDC的5-10倍</p>
+        <div class="chain-companies">
+          <span class="tag-hot">AI数据中心 → G.654E超低损/空芯/OM5多模（高毛利60-75%）</span>
+          <span class="tag-mid">运营商集采 → 三大运营商普通G.652.D（量大利薄）</span>
+          <span class="tag-mid">海底光缆 → 跨洋通信+海上风电（亨通垄断）</span>
+          <span class="tag-mid">电力通信 → 中天优势赛道</span>
+          <span class="tag-mid">军工/传感/医疗 → 特种高毛利细分</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-row">
+      <div class="chain-layer layer-application">技术<br>演进</div>
+      <div class="chain-content">
+        <h4>下一代光纤技术</h4>
+        <p>空芯光纤（延迟降50%）、G.654E超低损（AI骨干网）、OM5多模（AI机房）、空分复用（容量倍增）</p>
+        <div class="chain-companies">
+          <span class="tag-hot">空芯光纤 → 微软24个月部署1.5万公里，长飞全球最低衰减0.04dB/km</span>
+          <span class="tag-hot">G.654E → 长飞全球份额30%，国内市占85-90%</span>
+          <span class="tag-mid">OM5多模 → AI机房专用，长飞全球市占25%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第二部分：核心驱动力 ============ -->
+<div class="section">
+  <h2>二、核心驱动力：三个不可逆力量</h2>
+
+  <h3>力量一：AI数据中心把光纤从"传输线"变成"算力血管"</h3>
+  <p>传统电信网络中，光纤是长距离传输介质，用量线性增长。但AI算力集群彻底改变了这个等式——单个数万张GPU卡的AI集群，内部互联光纤用量是传统数据中心的<strong>5-10倍</strong>。英伟达Blackwell架构、800G/1.6T光模块大规模部署，让光纤变成了算力基础设施本身的骨架。</p>
+
+  <div class="insight">
+    <strong>关键数据：</strong>据CRU，2025年全球数据中心光纤需求同比暴增<strong>75.9%</strong>，用量达6960万芯公里；2026年预计突破9160万芯公里（+32%），其中AI应用光纤需求到2030年将占DC光纤需求的主导份额。
+  </div>
+
+  <h3>力量二：光棒扩产是"硬约束"而非"意愿问题"</h3>
+  <p>光棒扩产面临三重枷锁：①扩产周期<strong>18-24个月</strong>，2026年无大规模新增产能；②PCVD/VAD/OVD工艺专利壁垒；③高纯锗/四氯化硅原料稀缺。全球头部光棒厂产能利用率已达<strong>95%+</strong>，康宁满产、长飞/亨通/中天高负荷运转。</p>
+
+  <h3>力量三：出口需求打开第二增长曲线</h3>
+  <p>2026年2月中国光纤出口3779.9吨，金额7.9亿元，同比分别增长<strong>63.6%和126.8%</strong>。海外光纤报价高于国内集采30-50%，长飞/亨通海外订单已排产至2027年底。</p>
+</div>
+
+<!-- ============ 第三部分：中游龙头对比 ============ -->
+<div class="section">
+  <h2>三、中游四大龙头深度对比</h2>
+
+  <div class="chart-box">
+    <div class="chart-title">📊 全球光纤厂商市占率（2026年CRU数据）</div>
+    <div id="chart-market" class="chart-container" style="height:300px"></div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>对比维度</th>
+        <th>长飞光纤<br>601869</th>
+        <th>亨通光电<br>600487</th>
+        <th>中天科技<br>600522</th>
+        <th>烽火通信<br>600498</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label">全球市占率</td>
+        <td>13-14.6%<br><strong>全球第二</strong></td>
+        <td>11.2%<br>全球第四</td>
+        <td>11.3-11.4%<br>全球第三</td>
+        <td>3-5%<br>第二梯队</td>
+      </tr>
+      <tr>
+        <td class="label">国内市占率</td>
+        <td><strong>28-30%</strong><br>运营商集采第一</td>
+        <td>14-16%<br>海缆国内龙头</td>
+        <td>12-14%<br>电力光纤优势</td>
+        <td>7-9%</td>
+      </tr>
+      <tr>
+        <td class="label">光棒自给率</td>
+        <td class="pos">100%</td>
+        <td class="pos">90%+</td>
+        <td class="pos">100%</td>
+        <td class="neu">~50%</td>
+      </tr>
+      <tr>
+        <td class="label">核心技术壁垒</td>
+        <td>全球唯一同时掌握<br>PCVD/VAD/OVD三工艺</td>
+        <td>6000芯高密度算力光缆<br>跨洋海缆</td>
+        <td>单位制造成本<br>行业最低</td>
+        <td>央企政企协同<br>光设备+光纤打包</td>
+      </tr>
+      <tr>
+        <td class="label">2025营收</td>
+        <td>142.5亿</td>
+        <td><strong>668.6亿</strong></td>
+        <td><strong>525.0亿</strong></td>
+        <td>~310亿</td>
+      </tr>
+      <tr>
+        <td class="label">2025归母净利</td>
+        <td>8.14亿</td>
+        <td><strong>26.80亿</strong></td>
+        <td><strong>29.02亿</strong></td>
+        <td>~10亿</td>
+      </tr>
+      <tr>
+        <td class="label">2026Q1净利同比</td>
+        <td class="pos">+226.4%</td>
+        <td class="pos">+98.5%</td>
+        <td class="pos">+46.4%</td>
+        <td class="pos">+50%</td>
+      </tr>
+      <tr>
+        <td class="label">光纤业务毛利率</td>
+        <td><strong>31-41.5%</strong><br>（2026Q1 41.5%）</td>
+        <td>27-29%</td>
+        <td>22-25%</td>
+        <td>18-20%</td>
+      </tr>
+      <tr>
+        <td class="label">高端光纤毛利</td>
+        <td><strong>70%+</strong><br>（空芯/G.654E）</td>
+        <td>50-60%</td>
+        <td>45-55%</td>
+        <td>40-50%</td>
+      </tr>
+      <tr>
+        <td class="label">海外收入占比</td>
+        <td>~42%</td>
+        <td><strong>86%</strong></td>
+        <td>~17%</td>
+        <td>~30%</td>
+      </tr>
+      <tr>
+        <td class="label">当前PE(TTM)</td>
+        <td class="neg">411x</td>
+        <td class="neg">94x</td>
+        <td class="neg">73x</td>
+        <td class="neg">275x</td>
+      </tr>
+      <tr>
+        <td class="label">年初至今涨幅</td>
+        <td class="pos">+394%</td>
+        <td class="pos">+397%</td>
+        <td class="pos">+276%</td>
+        <td class="pos">+164%</td>
+      </tr>
+      <tr>
+        <td class="label">核心定位</td>
+        <td>技术天花板<br>业绩弹性之王</td>
+        <td>规模最大<br>盈利稳定性最强</td>
+        <td>成本最优<br>多业务对冲</td>
+        <td>央企平台<br>弹性最弱</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight">
+    <strong>龙头竞争格局判断：</strong><br>
+    ① <strong>长飞光纤</strong>是技术天花板和业绩弹性之王——100%光棒自给完整截留涨价收益，2026Q1扣非净利同比暴增966%，G.654E国内市占85-90%+空芯光纤全球最低衰减。短板是业务高度聚焦光纤，无第二增长曲线，周期弹性最大。<br>
+    ② <strong>亨通光电</strong>是综合均衡龙头——光纤+海缆双赛道，海外收入占比86%行业最高，总利润规模最大（26.8亿），海缆高毛利（35-45%）对冲光纤周期波动。<br>
+    ③ <strong>中天科技</strong>是成本型稳健标的——单位制造成本行业最低，电网业务稳定托底，适合低波动偏好。<br>
+    ④ <strong>烽火通信</strong>弹性最弱——光纤仅占总营收20%，主业重心在光通信设备，但央企背景有政企项目获取能力。
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">📊 四大龙头营收 vs 净利润（2025年报）</div>
+    <div id="chart-leader" class="chart-container"></div>
+  </div>
+</div>
+
+<!-- ============ 第四部分：上游材料链 ============ -->
+<div class="section">
+  <h2>四、上游材料链：超额收益的藏身之处</h2>
+  <p>光棒本身被几大龙头高度一体化把控，但上游那些"他们离不开、却不在他们碗里"的专用材料环节——才是弹性最大的α来源。</p>
+
+  <h3>4.1 高纯四氯化硅 —— 光棒的"主粮"</h3>
+  <p>光棒成本占比30%+，纯度要求9N以上（99.9999999%）。过去被德国瓦克垄断，国产替代加速中。</p>
+  <div class="opportunity">
+    <strong>三孚股份(603938)</strong>：全球最大9N级高纯四氯化硅供应商。9N级恰好是AI超低损耗光纤（G.654.E）和高端光棒不可或缺品级。<br>
+    ⚠️ 注意：公司还有光伏三氯氢硅业务，需关注光伏侧波动拖累估值；高纯四氯化硅以长协定价为主，现货暴涨≠利润同比例跳升。<br>
+    当前PE(TTM) 289x | 年初至今+265% | ROE TTM仅3.63%
+  </div>
+
+  <h3>4.2 四氯化锗 —— 弹性最大的"小占比高卡脖子"</h3>
+  <p>用于调节光纤折射率、降低损耗。锗是稀散金属，没有独立矿，全靠伴生回收，供给刚性极强。</p>
+  <div class="opportunity">
+    <strong>云南锗业(002428)</strong>：从上游矿产到高纯提纯一体化布局，光纤级锗产品收入2.00亿（占比18.75%）。<br>
+    当前PE(TTM) 4459x（极高，因净利基数极低仅0.2亿）| 年初至今+310% | ROE TTM仅1.3%<br>
+    ⚠️ 估值极端，实质业绩贡献尚小，更多是稀缺性叙事溢价。
+  </div>
+
+  <h3>4.3 对位芳纶 —— 新晋"瓶颈材料"</h3>
+  <p>拉伸强度是钢丝6倍，560°C高温下不分解。光纤用芳纶需求量0.03-0.06kg/芯公里，AIDC拉动增量需求1-1.5万吨，可能对全球12万吨总产能产生明显价格影响。</p>
+  <div class="opportunity">
+    <strong>泰和新材(002254)</strong>：A股最纯正对位芳纶标的，"泰普龙®"品牌已在长飞等核心客户扎根，总产能1.6万吨。<br>
+    当前PE(TTM) 369x | 连续涨停 | 但2025扣非净利润为负（-1.43亿），实质盈利能力极弱<br>
+    <strong>中化国际(600500)</strong>：对位芳纶第二极，产能8000吨/年，高模型已进入全球TOP5客户。但芳纶仅为多元化工业务一部分，PE为负。
+  </div>
+
+  <h3>4.4 UV固化涂料 —— 成长确定性最强</h3>
+  <p>光纤拉丝后需立即涂覆UV涂料防护，用量与光纤产量线性绑定，成长确定性最强。</p>
+  <div class="opportunity">
+    <strong>飞凯材料(300398)</strong>：光纤涂覆材料市占率领先，UV固化材料收入6.99亿（占比21.68%），同时布局半导体材料和屏幕显示材料。<br>
+    当前PE(TTM) 80x（四家中最低）| 毛利率37.5% | ROE 8.0% | 是上游材料链中盈利质量最好的标的。
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-title">📊 上游材料企业估值对比（截至2026/06/25）</div>
+    <div id="chart-upstream" class="chart-container" style="height:300px"></div>
+  </div>
+
+  <div class="warning">
+    <strong>上游材料链风险提示：</strong>上游企业多以长协锁价，<strong>现货暴涨≠利润同步暴涨</strong>，需跟踪长协重签窗口。云南锗业PE 4459x、三孚股份PE 289x均处于极端高位，市场已极度透支预期。泰和新材2025扣非净利为负，实质盈利远未兑现。
+  </div>
+</div>
+
+<!-- ============ 第五部分：下游需求分析 ============ -->
+<div class="section">
+  <h2>五、下游需求：四大场景驱动</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>需求场景</th>
+        <th>2026需求量级</th>
+        <th>核心光纤类型</th>
+        <th>毛利率水平</th>
+        <th>主要受益方</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label">AI数据中心</td>
+        <td>9160万芯公里<br>(+32% YoY)</td>
+        <td>G.654E超低损/OM5多模/空芯</td>
+        <td class="pos">60-75%</td>
+        <td>长飞（G.654E市占85%）<br>亨通（6000芯高密度光缆）</td>
+      </tr>
+      <tr>
+        <td class="label">运营商集采</td>
+        <td>~3亿芯公里<br>（稳态）</td>
+        <td>G.652.D普通单模</td>
+        <td class="neu">20-28%</td>
+        <td>长飞28-30%份额<br>中天/亨通紧随</td>
+      </tr>
+      <tr>
+        <td class="label">海底光缆</td>
+        <td>跨洋+海上风电<br>持续高增</td>
+        <td>特种海底光缆</td>
+        <td class="pos">35-45%</td>
+        <td>亨通（PEACE跨洋光缆）</td>
+      </tr>
+      <tr>
+        <td class="label">电力通信</td>
+        <td>稳定增长</td>
+        <td>OPGW/ADSS电力光缆</td>
+        <td class="neu">22-25%</td>
+        <td>中天（电网集采优势）</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 第六部分：供需缺口与价格 ============ -->
+<div class="section">
+  <h2>六、供需缺口与价格走势</h2>
+
+  <div class="chart-box">
+    <div class="chart-title">📊 2026-2027年全球光纤供需缺口预测</div>
+    <div id="chart-supply" class="chart-container" style="height:300px"></div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>指标</th>
+        <th>2025</th>
+        <th>2026E</th>
+        <th>2027E</th>
+        <th>来源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label">全球光纤需求</td>
+        <td>~5亿芯公里</td>
+        <td><strong>5.77亿芯公里</strong></td>
+        <td>~6.5亿芯公里</td>
+        <td>CRU</td>
+      </tr>
+      <tr>
+        <td class="label">全球有效供给</td>
+        <td>~4.2亿芯公里</td>
+        <td><strong>3.97亿芯公里</strong></td>
+        <td>~4.5亿芯公里</td>
+        <td>CRU</td>
+      </tr>
+      <tr>
+        <td class="label">供需缺口率</td>
+        <td>~16%</td>
+        <td><strong>~31%</strong></td>
+        <td><strong>~15%</strong></td>
+        <td>国盛证券/CRU</td>
+      </tr>
+      <tr>
+        <td class="label">DC光纤需求</td>
+        <td>6960万芯公里(+75.9%)</td>
+        <td><strong>9160万芯公里(+32%)</strong></td>
+        <td>1.2亿芯公里+</td>
+        <td>CRU</td>
+      </tr>
+      <tr>
+        <td class="label">A2光棒价格</td>
+        <td>22-30元/等效芯公里</td>
+        <td class="pos"><strong>160元(+550%)</strong></td>
+        <td>预计高位</td>
+        <td>CRU/百川盈孚</td>
+      </tr>
+      <tr>
+        <td class="label">G.652.D光纤价格</td>
+        <td>~16元/芯公里</td>
+        <td class="pos"><strong>83.4元(+418%)</strong></td>
+        <td>预计维持高位</td>
+        <td>百川盈孚</td>
+      </tr>
+      <tr>
+        <td class="label">特种光纤价格</td>
+        <td>—</td>
+        <td class="pos"><strong>+650%</strong></td>
+        <td>—</td>
+        <td>百川盈孚</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight">
+    <strong>关键判断：</strong>国盛证券预计2026年全球光纤供需缺口约6%，2027年扩大至15%。但考虑AI数据中心增量后的实际缺口远大于此——2026年缺口达1.8亿芯公里（31%），<strong>光棒扩产周期18-24个月意味着2026年全年供给刚性</strong>，供需缺口无法在短期内缓解。
+  </div>
+</div>
+
+<!-- ============ 第七部分：技术演进 ============ -->
+<div class="section">
+  <h2>七、下一代光纤技术</h2>
+
+  <h3>7.1 空芯光纤（Hollow Core Fiber）—— AI集群的理想互联</h3>
+  <p>空芯光纤用空气代替玻璃作为传输介质，传输延迟较传统光纤<strong>降低50%</strong>，损耗降至0.04dB/km（长飞全球最低），是AI算力集群内部连接的理想方案。</p>
+  <div class="insight">
+    <strong>产业化进度：</strong>微软宣布未来24个月部署1.5万公里空芯光纤用于AI连接；微软+康宁+贺利氏三巨头联手加速量产；长飞空芯光纤800G传输技术已在中国移动干线试点。单套毛利<strong>70%+</strong>。
+  </div>
+
+  <h3>7.2 G.654E超低损耗光纤 —— AI骨干网标准</h3>
+  <p>大有效面积+超低损耗，适配400G/800G/1.6T高速传输。长飞全球份额30%，国内市占85-90%，是"东数西算"和万卡智算集群的核心供货方。</p>
+
+  <h3>7.3 OM5多模光纤 —— AI机房专用</h3>
+  <p>AI服务器机架内部短距离互联首选，长飞全球市占25%第一。随着AI服务器出货量爆发，OM5需求有望持续高增。
+  </p>
+</div>
+
+<!-- ============ 第八部分：投资标的分层 ============ -->
+<div class="section">
+  <h2>八、投资标的分层</h2>
+
+  <div class="stock-card">
+    <div class="stock tier1">
+      <div class="header">
+        <span class="name">长飞光纤 601869</span>
+        <span class="tier-badge">Tier 1 核心龙头</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>全球唯一三工艺预制棒+AI高端光纤绝对领先<br>
+        <strong>弹性：</strong>2026Q1扣非净利+966%，行业第一<br>
+        <strong>风险：</strong>PE 411x，业务100%光纤，无第二曲线
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">411x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">4,760亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+394%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+
+    <div class="stock tier1">
+      <div class="header">
+        <span class="name">亨通光电 600487</span>
+        <span class="tier-badge">Tier 1 综合龙头</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>光纤+海缆双轮，海外86%收入占比最高<br>
+        <strong>弹性：</strong>2026Q1净利+99%，在手订单超290亿<br>
+        <strong>风险：</strong>PE 94x，光纤仅为第二主业
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">94x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">3,034亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+397%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+
+    <div class="stock tier2">
+      <div class="header">
+        <span class="name">中天科技 600522</span>
+        <span class="tier-badge">Tier 2 成本稳健</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>成本控制最优，电网+光纤+海缆三主业均衡<br>
+        <strong>弹性：</strong>2026Q1净利+46%，多业务平滑周期<br>
+        <strong>风险：</strong>PE 73x，高端光纤研发弱于长飞
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">73x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">2,324亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+276%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+
+    <div class="stock tier3">
+      <div class="header">
+        <span class="name">飞凯材料 300398</span>
+        <span class="tier-badge">Tier 3 上游确定性</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>UV涂料与光纤产量线性绑定，成长确定性最强<br>
+        <strong>弹性：</strong>毛利率37.5%，ROE 8.0%，上游材料中盈利最优<br>
+        <strong>风险：</strong>PE 80x，光纤涂料占总营收22%
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">80x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">321亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+153%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+
+    <div class="stock tier4">
+      <div class="header">
+        <span class="name">三孚股份 603938</span>
+        <span class="tier-badge">Tier 4 上游弹性</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>9N级高纯四氯化硅全球龙头，光棒"主粮"<br>
+        <strong>弹性：</strong>现货暴涨传导，但长协定价滞后<br>
+        <strong>风险：</strong>PE 289x，ROE仅3.63%，光伏业务拖累
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">289x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">267亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+265%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+
+    <div class="stock tier4">
+      <div class="header">
+        <span class="name">泰和新材 002254</span>
+        <span class="tier-badge">Tier 4 新兴瓶颈</span>
+      </div>
+      <div class="info">
+        <strong>逻辑：</strong>对位芳纶A股最纯正标的，AIDC新瓶颈<br>
+        <strong>弹性：</strong>需求增量1-1.5万吨/全球12万吨产能<br>
+        <strong>风险：</strong>PE 369x，2025扣非净利为负，连板炒作
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">369x</div><div class="l">PE(TTM)</div></div>
+        <div class="metric"><div class="v">173亿</div><div class="l">市值</div></div>
+        <div class="metric"><div class="v">+102%</div><div class="l">YTD涨幅</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>标的排序（基本面维度）：</strong><br>
+    ① <strong>亨通光电</strong>——盈利规模最大（26.8亿）、PE最低（94x）、光纤+海缆双赛道对冲，综合性价比最优<br>
+    ② <strong>中天科技</strong>——PE 73x四家最低、成本控制最强、多业务稳健<br>
+    ③ <strong>长飞光纤</strong>——技术天花板+业绩弹性第一，但PE 411x极端<br>
+    ④ <strong>飞凯材料</strong>——上游确定性最强，盈利质量最好<br>
+    ⑤ <strong>三孚/泰和</strong>——弹性最大但实质盈利弱，更多是主题属性
+  </div>
+</div>
+
+<!-- ============ 第九部分：投资时钟 ============ -->
+<div class="section">
+  <h2>九、投资时钟：当前处于什么阶段？</h2>
+
+  <div class="timeline-box">
+    <div class="timeline-item">
+      <div class="timeline-phase phase-done">阶段①<br>2025H2<br>已完成</div>
+      <div class="timeline-content">
+        <p><strong>光棒涨价初现</strong>：AI需求传导至光棒，A2光棒从22元涨至60-80元，龙头开始享受涨价红利</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase phase-now">阶段②<br>2026H1<br>← 当前位置</div>
+      <div class="timeline-content">
+        <p><strong>上游原料跟涨、产能利用率拉满</strong>：光棒暴涨至160元(+550%)，上游材料全线告急，龙头2026Q1净利暴增46-226%。市场已充分认知光纤涨价逻辑，龙头股估值拉到极端高位。</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase phase-future">阶段③<br>2026末~2027<br>过渡期</div>
+      <div class="timeline-content">
+        <p><strong>长协重定价窗口 + 新产能陆续落地</strong>：上游材料长协重签推动利润逐季兑现；光棒新产能开始释放但缺口仍在（2027缺口约15%）；空芯光纤规模化部署启动</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase phase-future">阶段④<br>2027~2028<br>再平衡</div>
+      <div class="timeline-content">
+        <p><strong>供需再平衡 / AI建设节奏成新变量</strong>：新产能集中投放，供需缺口收窄；光纤价格可能回落，毛利率收缩；AI资本开支节奏成为最大变量</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>当前阶段的核心风险：</strong>我们正处于阶段②→③的过渡期，光棒现货价格已被市场充分认知，<strong>所有核心标的PE处于73-411倍、PB处于6-58倍的历史极端高位</strong>。这意味着市场已经极度透支了AI基建预期。如果出现以下任一情况，板块可能剧烈回调：①北美云厂商AI资本开支增速放缓；②光棒新产能提前投产；③光纤价格从高位回落。
+  </div>
+</div>
+
+<!-- ============ 第十部分：风险识别 ============ -->
+<div class="section">
+  <h2>十、风险与伪受益识别</h2>
+
+  <h3>真实风险</h3>
+  <table class="compare-table">
+    <thead>
+      <tr><th>风险类型</th><th>具体描述</th><th>影响程度</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label">AI资本开支放缓</td>
+        <td>北美CSP 7250亿美元capex若不及预期，光纤需求核心增量逻辑削弱</td>
+        <td class="neg">致命</td>
+      </tr>
+      <tr>
+        <td class="label">扩产超预期</td>
+        <td>康宁/博雅/古河新产能若提前投产，供给缺口可能收窄</td>
+        <td class="neg">高</td>
+      </tr>
+      <tr>
+        <td class="label">长协定价滞后</td>
+        <td>上游材料现货暴涨≠利润同步暴涨，长协重签窗口是关键</td>
+        <td class="neu">中</td>
+      </tr>
+      <tr>
+        <td class="label">贸易摩擦</td>
+        <td>光纤出口占比较高（长飞42%/亨通86%），贸易壁垒影响外溢逻辑</td>
+        <td class="neu">中</td>
+      </tr>
+      <tr>
+        <td class="label">估值透支</td>
+        <td>全板块PE 73-411x，处于5年历史99%+分位，回撤风险极大</td>
+        <td class="neg">高</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>伪受益识别</h3>
+  <div class="warning">
+    <strong>通鼎互联(002491)：</strong>2025年扣非净利-0.41亿（亏损），ROE -3.05%，无自产光棒。<strong>市场炒作光纤概念，但公司本质被上游挤压，是"伪受益"典型</strong>。年初至今+542%纯属情绪驱动。
+  </div>
+  <div class="warning">
+    <strong>中化国际(600500)：</strong>对位芳纶仅为其庞大化工业务的一小部分（总营收475亿），PE为负，ROE -20%。芳纶概念虽有，但<strong>弹性被多元业务严重稀释</strong>。
+  </div>
+  <div class="warning">
+    <strong>水发燃气/宝光股份：</strong>氦气业务占比尚需跟踪，属于<strong>偏间接受益+主题属性更强</strong>，适合作为组合里的"期权仓位"而非核心底仓。
+  </div>
+</div>
+
+<div class="disclaimer">
+  本报告数据来源：NeoData金融数据终端（截至2026/06/25）、CRU国际铜业研究组、国盛证券/中邮证券/中信建投研报、百川盈孚、公司年报。<br>
+  报告中所有分析仅供参考，不构成个人投资建议。市场有风险，投资需谨慎。<br>
+  数据更新时间：2026年6月25日（A股收盘后）
+</div>
+
+<script>
+// 全球市占率饼图
+echarts.init(document.getElementById('chart-market')).setOption({
+  tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+  legend: { bottom: 0, type: 'scroll' },
+  series: [{
+    type: 'pie', radius: ['35%', '65%'],
+    center: ['50%', '45%'],
+    label: { formatter: '{b}\n{d}%', fontSize: 11 },
+    data: [
+      { name: '康宁Corning(美)', value: 16, itemStyle: { color: '#e74c3c' } },
+      { name: '长飞光纤(中)', value: 14, itemStyle: { color: '#0984e3' } },
+      { name: '中天科技(中)', value: 11, itemStyle: { color: '#00b894' } },
+      { name: '亨通光电(中)', value: 11, itemStyle: { color: '#f39c12' } },
+      { name: '古河/藤仓(日)', value: 9, itemStyle: { color: '#6c5ce7' } },
+      { name: '其他', value: 39, itemStyle: { color: '#b2bec3' } }
+    ]
+  }]
+});
+
+// 龙头营收净利对比
+echarts.init(document.getElementById('chart-leader')).setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['营收', '归母净利润', '光纤业务毛利率'], bottom: 0 },
+  grid: { left: '10%', right: '12%', top: '10%', bottom: '15%' },
+  xAxis: { type: 'category', data: ['长飞光纤', '亨通光电', '中天科技', '烽火通信'] },
+  yAxis: [
+    { type: 'value', name: '亿元' },
+    { type: 'value', name: '毛利率%', max: 50 }
+  ],
+  series: [
+    { name: '营收', type: 'bar', data: [142.5, 668.6, 525.0, 310], itemStyle: { color: '#0984e3' }, label: { show: true, position: 'top', formatter: '{c}' } },
+    { name: '归母净利润', type: 'bar', data: [8.14, 26.80, 29.02, 10], itemStyle: { color: '#00b894' }, label: { show: true, position: 'top', formatter: '{c}' } },
+    { name: '光纤业务毛利率', type: 'line', yAxisIndex: 1, data: [41.5, 28, 24, 19], itemStyle: { color: '#e74c3c' }, label: { show: true, position: 'top', formatter: '{c}%' } }
+  ]
+});
+
+// 上游材料估值对比
+echarts.init(document.getElementById('chart-upstream')).setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['PE(TTM)', 'ROE_TTM(%)'], bottom: 0 },
+  grid: { left: '12%', right: '8%', top: '8%', bottom: '15%' },
+  xAxis: { type: 'category', data: ['飞凯材料', '三孚股份', '泰和新材', '云南锗业'] },
+  yAxis: [
+    { type: 'value', name: 'PE(倍)' },
+    { type: 'value', name: 'ROE(%)' }
+  ],
+  series: [
+    { name: 'PE(TTM)', type: 'bar', data: [80, 289, 369, 4460], itemStyle: { color: '#e74c3c' }, label: { show: true, position: 'top', formatter: '{c}' } },
+    { name: 'ROE_TTM(%)', type: 'line', yAxisIndex: 1, data: [8.0, 3.6, 0.7, 1.3], itemStyle: { color: '#00b894' }, label: { show: true, position: 'top', formatter: '{c}%' } }
+  ]
+});
+
+// 供需缺口
+echarts.init(document.getElementById('chart-supply')).setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['全球需求', '有效供给', '缺口'], bottom: 0 },
+  grid: { left: '10%', right: '8%', top: '10%', bottom: '15%' },
+  xAxis: { type: 'category', data: ['2025', '2026E', '2027E'] },
+  yAxis: { type: 'value', name: '亿芯公里' },
+  series: [
+    { name: '全球需求', type: 'bar', data: [5.0, 5.77, 6.5], itemStyle: { color: '#e74c3c' }, label: { show: true, position: 'top' } },
+    { name: '有效供给', type: 'bar', data: [4.2, 3.97, 4.5], itemStyle: { color: '#00b894' }, label: { show: true, position: 'top' } },
+    { name: '缺口', type: 'line', data: [0.8, 1.8, 2.0], itemStyle: { color: '#f39c12' }, label: { show: true, position: 'top' }, lineStyle: { width: 3 } }
+  ]
+});
+</script>
+
+</body>
+</html>

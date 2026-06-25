@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存储芯片超级周期信号全面拉响 · 2026年6月26日</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif; background:#f0f2f5; color:#1a1a2e; line-height:1.7; font-size:15px; }
+  .container { max-width:860px; margin:0 auto; background:#fff; }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,#7f1d1d,#991b1b,#b91c1c); color:#fff; padding:40px 28px 28px; }
+  .hero .badge { display:inline-block; background:rgba(255,255,255,0.15); padding:3px 12px; border-radius:20px; font-size:12px; margin-bottom:10px; }
+  .hero h1 { font-size:24px; font-weight:800; line-height:1.35; margin-bottom:8px; }
+  .hero .sub { font-size:13px; opacity:0.85; }
+  .hero .stats { display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; }
+  .hero .stat-item { text-align:center; }
+  .hero .stat-val { font-size:22px; font-weight:800; }
+  .hero .stat-label { font-size:11px; opacity:0.7; }
+
+  /* Signal bar */
+  .signal-bar { display:flex; height:8px; margin-top:16px; border-radius:4px; overflow:hidden; }
+  .signal-bar .pos { background:#dc2626; }
+  .signal-bar .neg { background:#16a34a; }
+  .signal-labels { display:flex; justify-content:space-between; font-size:11px; margin-top:4px; opacity:0.85; }
+
+  /* Content */
+  .content { padding:28px 24px; }
+  .section { margin-bottom:32px; }
+  .section-title { font-size:18px; font-weight:800; color:#0f172a; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .section-title::before { content:''; display:inline-block; width:5px; height:22px; background:#dc2626; border-radius:3px; }
+
+  /* Main thesis card */
+  .thesis-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.05); transition:box-shadow 0.2s; }
+  .thesis-card:hover { box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+  .thesis-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; }
+  .thesis-num { background:#dc2626; color:#fff; font-size:13px; font-weight:800; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .thesis-title { font-size:16px; font-weight:700; color:#0f172a; line-height:1.4; }
+  .thesis-tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+  .tag-red { background:#fef2f2; color:#dc2626; }
+  .tag-orange { background:#fff7ed; color:#ea580c; }
+  .tag-blue { background:#eff6ff; color:#2563eb; }
+
+  .thesis-body { font-size:14px; color:#334155; }
+  .thesis-body p { margin-bottom:8px; }
+  .thesis-body strong { color:#0f172a; }
+  .thesis-body .label { font-weight:700; color:#dc2626; }
+
+  /* Data callout */
+  .data-callout { background:#fef2f2; border-left:4px solid #dc2626; border-radius:6px; padding:10px 14px; margin:10px 0; font-size:13px; }
+  .data-callout .num { font-weight:800; color:#dc2626; font-size:16px; }
+
+  /* Impact list */
+  .impact-list { background:#f8fafc; border-radius:8px; padding:12px 16px; margin-top:10px; }
+  .impact-list .label { font-size:12px; font-weight:700; color:#64748b; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .impact-item { font-size:13px; color:#475569; padding:3px 0; }
+  .impact-item .stock { color:#dc2626; font-weight:600; }
+
+  /* Action table */
+  .action-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .action-table th { background:#fef2f2; color:#991b1b; padding:10px 12px; text-align:left; font-weight:700; border-bottom:2px solid #fecaca; }
+  .action-table td { padding:10px 12px; border-bottom:1px solid #f1f5f9; color:#334155; }
+  .action-table .dir-up { color:#dc2626; font-weight:700; }
+  .action-table .dir-caution { color:#ea580c; font-weight:700; }
+  .action-table .dir-watch { color:#64748b; font-weight:700; }
+
+  /* Market gauge */
+  .gauge-card { background:linear-gradient(135deg,#fef2f2,#fff5f5); border-radius:12px; padding:18px 20px; margin-bottom:16px; }
+  .gauge-title { font-size:15px; font-weight:700; color:#991b1b; margin-bottom:10px; }
+  .gauge-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #fecaca; font-size:13px; }
+  .gauge-row:last-child { border-bottom:none; }
+  .gauge-val { font-weight:700; }
+  .gauge-val.red { color:#dc2626; }
+  .gauge-val.green { color:#16a34a; }
+
+  /* Footer */
+  .footer { text-align:center; padding:24px; font-size:12px; color:#94a3b8; border-top:1px solid #e2e8f0; }
+  .disclaimer { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:12px 16px; margin:16px 24px; font-size:12px; color:#92400e; }
+
+  @media (max-width:520px) {
+    .content { padding:20px 16px; }
+    .hero { padding:28px 20px 20px; }
+    .hero h1 { font-size:20px; }
+    .thesis-card { padding:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="badge">2026年6月26日 · 早间分析</div>
+    <h1>存储芯片"超级周期"信号全面拉响<br>从美光到苹果，供应链正在被AI重塑</h1>
+    <div class="sub">数据覆盖 6月25日 15:11 ~ 6月26日 07:10 · 增量 1521 条快讯</div>
+    <div class="stats">
+      <div class="stat-item"><div class="stat-val">1470</div><div class="stat-label">有效快讯</div></div>
+      <div class="stat-item"><div class="stat-val">7</div><div class="stat-label">热点板块</div></div>
+      <div class="stat-item"><div class="stat-val">15</div><div class="stat-label">事件簇</div></div>
+      <div class="stat-item"><div class="stat-val">5</div><div class="stat-label">主线</div></div>
+    </div>
+    <div class="signal-bar">
+      <div class="pos" style="flex:98"></div>
+      <div class="neg" style="flex:87"></div>
+    </div>
+    <div class="signal-labels">
+      <span>正面信号 98</span>
+      <span>负面信号 87 · 多空均衡偏积极</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 五大主线 -->
+    <div class="section">
+      <div class="section-title">五条核心主线</div>
+
+      <!-- 主线1 -->
+      <div class="thesis-card">
+        <div class="thesis-header">
+          <div class="thesis-num">1</div>
+          <div>
+            <div class="thesis-title">美光财报引爆存储芯片行情<span class="thesis-tag tag-red">S级</span></div>
+          </div>
+        </div>
+        <div class="thesis-body">
+          <p><span class="label">事实：</span>美光Q3营收414.6亿美元（同比+345%），远超预期358亿。数据中心收入同比增七倍，SSD单季破50亿。CEO明确"供需紧张持续至2027年之后"，HBM产能已售罄，客户承诺220亿美元锁定供应。</p>
+          <div class="data-callout">
+            盘后一度涨近 <span class="num">20%</span>，市值短暂突破 <span class="num">1.3万亿</span> 美元，超越Meta和特斯拉
+          </div>
+          <p><span class="label">判断：</span>美光把供需紧张窗口从"2025-2026"拉长到"2027+"，这是关键增量信息。不是一次性超预期——它确认了存储芯片进入AI驱动的结构性超级周期。A股存储产业链估值天花板被打开。</p>
+          <div class="impact-list">
+            <div class="label">A股影响</div>
+            <div class="impact-item"><span class="stock">兆易创新 / 江波龙 / 北京君正</span> — 存储芯片直接受益</div>
+            <div class="impact-item"><span class="stock">长电科技 / 通富微电 / 华天科技</span> — HBM封装外溢</div>
+            <div class="impact-item"><span class="stock">北方华创 / 中微公司</span> — 存储设备国产替代</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主线2 -->
+      <div class="thesis-card">
+        <div class="thesis-header">
+          <div class="thesis-num">2</div>
+          <div>
+            <div class="thesis-title">苹果全线涨价20%——AI对消费电子的"虹吸效应"<span class="thesis-tag tag-orange">S级</span></div>
+          </div>
+        </div>
+        <div class="thesis-body">
+          <p><span class="label">事实：</span>苹果6月25日全球涨价。MacBook Neo 599→699美元，MacBook Air 1099→1299美元，14寸MBP 1699→1999美元，iPad Pro 999→1199美元。平均涨幅约20%。发言人原话："从未见过零部件涨得如此之快"。iPhone暂未调价。</p>
+          <p><span class="label">判断：</span>核心逻辑是AI数据中心大规模吞噬HBM/DRAM产能，消费电子被挤出。传导链：AI算力扩张 → 存储芯片结构性短缺 → 消费电子供给被挤 → 终端涨价 → 需求承压。iPhone不涨价说明苹果把利润让给了出货量更大的手机。</p>
+          <div class="impact-list">
+            <div class="label">A股影响</div>
+            <div class="impact-item"><span class="stock">兆易创新 / 北京君正</span> — 存储现货价上行</div>
+            <div class="impact-item"><span class="stock">立讯精密 / 歌尔股份</span> — 代工利润率承压（谨慎）</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主线3 -->
+      <div class="thesis-card">
+        <div class="thesis-header">
+          <div class="thesis-num">3</div>
+          <div>
+            <div class="thesis-title">SK海力士7月10日纳斯达克ADR上市<span class="thesis-tag tag-blue">S级</span></div>
+          </div>
+        </div>
+        <div class="thesis-body">
+          <p><span class="label">事实：</span>计划筹资近300亿美元（45.45万亿韩元），史上最大ADR发行之一。SK海力士占全球HBM市场57%份额，首尔股价今年涨超300%但估值仍低于美光。资管机构预计未来一年有30%上涨空间。募资用于龙仁集群晶圆厂+清州先进封装厂。</p>
+          <p><span class="label">判断：</span>这是存储超级周期的"资本市场确认"。全球资金将重新定价存储龙头，估值锚上移利好A股存储标的情绪。但SK海力士募资扩产，中期供给格局可能在2027-2028年开始松动。</p>
+        </div>
+      </div>
+
+      <!-- 主线4 -->
+      <div class="thesis-card">
+        <div class="thesis-header">
+          <div class="thesis-num">4</div>
+          <div>
+            <div class="thesis-title">高通投资者日亮出数据中心底牌<span class="thesis-tag tag-blue">A级</span></div>
+          </div>
+        </div>
+        <div class="thesis-body">
+          <p><span class="label">事实：</span>发布Dragonfly C1000数据中心CPU（2028年中量产），Meta签署多代合作、微软Azure部署HBC芯片。收购AI软件公司Modular。2029财年非手机营收目标上调至400亿美元。</p>
+          <p><span class="label">判断：</span>高通从手机芯片向全算力平台转型信号明确。C1000对标Intel Xeon/AMD EPYC，定位"Agentic AI计算"。Meta作为首批客户说明推理层需要低功耗替代方案。2028年量产意味着短期对竞争格局影响有限。</p>
+          <div class="impact-list">
+            <div class="label">A股影响</div>
+            <div class="impact-item"><span class="stock">中科创达 / 卓胜微</span> — 高通供应链</div>
+            <div class="impact-item"><span class="stock">海光信息 / 寒武纪</span> — 国产CPU替代逻辑验证</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主线5 -->
+      <div class="thesis-card">
+        <div class="thesis-header">
+          <div class="thesis-num">5</div>
+          <div>
+            <div class="thesis-title">GPT-5.6被美国政府要求分阶段发布<span class="thesis-tag tag-orange">A级</span></div>
+          </div>
+        </div>
+        <div class="thesis-body">
+          <p><span class="label">事实：</span>特朗普政府要求OpenAI对GPT-5.6分阶段发布，政府将"逐个客户批准访问权限"。同期Anthropic的Fable 5/Mythos 5被关停全球访问。欧盟正就此与美方谈判。OpenAI IPO也推迟到明年。</p>
+          <p><span class="label">判断：</span>美国前沿AI管控从"行业自律"升级为"政府逐案审批"。大模型商业化节奏被迫放缓，国产大模型获得战略窗口期。商汤正在研发对标GPT-Image 2的U1 Pro（7月内测），时间窗口非常有利。</p>
+          <div class="impact-list">
+            <div class="label">A股影响</div>
+            <div class="impact-item"><span class="stock">商汤科技 / 科大讯飞 / 百度</span> — 国产大模型窗口期</div>
+            <div class="impact-item"><span class="stock">数据安全 / 内容审核</span> — AI合规需求上升</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作参考表 -->
+    <div class="section">
+      <div class="section-title">操作参考</div>
+      <table class="action-table">
+        <thead>
+          <tr>
+            <th style="width:18%">方向</th>
+            <th style="width:35%">核心逻辑</th>
+            <th style="width:20%">时间窗口</th>
+            <th style="width:27%">观察指标</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dir-up">存储芯片 ▲</td>
+            <td>美光确认超级周期延续至2027+</td>
+            <td>即时~3个月</td>
+            <td>DDR5/HBM现货价</td>
+          </tr>
+          <tr>
+            <td class="dir-up">先进封装 ▲</td>
+            <td>HBM需求外溢，封测订单可见度提升</td>
+            <td>1~3个月</td>
+            <td>长电/通富Q2业绩</td>
+          </tr>
+          <tr>
+            <td class="dir-caution">消费电子 ⚠</td>
+            <td>苹果涨价验证成本压力传导</td>
+            <td>1~3个月</td>
+            <td>iPhone/Mac Q3销量</td>
+          </tr>
+          <tr>
+            <td class="dir-up">国产大模型 ▲</td>
+            <td>GPT-5.6受限，国产替代窗口打开</td>
+            <td>1~3个月</td>
+            <td>商汤U1 Pro测试</td>
+          </tr>
+          <tr>
+            <td class="dir-watch">数据中心CPU ○</td>
+            <td>高通入局验证市场空间，但2028量产</td>
+            <td>远期跟踪</td>
+            <td>高通C1000进度</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 市场情绪 -->
+    <div class="section">
+      <div class="section-title">市场情绪指标</div>
+      <div class="gauge-card">
+        <div class="gauge-title">A股两融余额历史首破3万亿</div>
+        <div class="gauge-row"><span>两融余额</span><span class="gauge-val red">30,010 亿（6/23）→ 30,150 亿（6/24）</span></div>
+        <div class="gauge-row"><span>融资余额</span><span class="gauge-val red">29,790 亿 · 年内 +4,500 亿（+18%）</span></div>
+        <div class="gauge-row"><span>占流通市值比</span><span class="gauge-val">2.8%（2015年高峰4.27%）</span></div>
+        <div class="gauge-row"><span>融资盘前三行业</span><span class="gauge-val red">电子 6,179亿 / 电力设备 2,492亿 / 非银金融 1,984亿</span></div>
+        <div class="gauge-row"><span>个股融资盘前三</span><span class="gauge-val">中际旭创 465亿 / 中国平安 385亿 / 新易盛</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    本报告基于财联社快讯自动采集与AI分析，所有信息均来自公开渠道。报告仅供研究参考，不构成任何投资建议。投资有风险，决策需谨慎。
+  </div>
+
+  <div class="footer">
+    数据来源：财联社快讯（Tushare news 接口） · 分析引擎 v2 · 2026年6月26日 07:10
+  </div>
+
+</div>
+</body>
+</html>
