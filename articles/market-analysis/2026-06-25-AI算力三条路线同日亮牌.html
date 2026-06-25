@@ -1,388 +1,796 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026年6月25日 资讯深度分析</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif; background:#0a0e1a; color:#e2e8f0; line-height:1.7; font-size:15px; }
-  .container { max-width:820px; margin:0 auto; background:#0f172a; }
-  
-  /* Hero */
-  .hero { background:linear-gradient(135deg,#0c1e3d,#1a1040 40%,#2d0a2e); padding:36px 24px 28px; text-align:center; border-bottom:1px solid #1e293b; }
-  .hero h1 { font-size:24px; font-weight:800; color:#fff; margin-bottom:8px; letter-spacing:0.5px; }
-  .hero .sub { font-size:13px; color:#94a3b8; margin-bottom:16px; }
-  .hero .meta { display:flex; justify-content:center; gap:20px; font-size:12px; color:#64748b; }
-  .hero .meta span { display:flex; align-items:center; gap:4px; }
-  
-  /* Market Bar */
-  .market-bar { background:#162032; padding:16px 20px; border-bottom:1px solid #1e293b; }
-  .market-bar .title { font-size:12px; color:#64748b; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px; }
-  .market-items { display:flex; flex-wrap:wrap; gap:8px; }
-  .market-tag { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 10px; border-radius:4px; background:#1e293b; }
-  .market-tag .name { color:#cbd5e1; }
-  .market-tag .up { color:#ef4444; font-weight:600; }
-  .market-tag .down { color:#22c55e; font-weight:600; }
-  .market-tag .neutral { color:#94a3b8; font-weight:600; }
-  
-  /* Content */
-  .content { padding:28px 22px; }
-  .section { margin-bottom:36px; }
-  .section-title { font-size:18px; font-weight:700; color:#fff; margin-bottom:16px; padding-left:14px; border-left:3px solid #ef4444; }
-  
-  /* Story Card */
-  .story-card { background:#162032; border-radius:10px; padding:20px 18px; margin-bottom:16px; border:1px solid #1e293b; transition:border-color 0.2s; }
-  .story-card:hover { border-color:#334155; }
-  .story-num { display:inline-block; font-size:11px; font-weight:700; color:#0f172a; background:#ef4444; padding:2px 8px; border-radius:3px; margin-bottom:8px; }
-  .story-title { font-size:16px; font-weight:700; color:#fff; margin-bottom:12px; }
-  .story-section { margin-bottom:14px; }
-  .story-label { font-size:11px; font-weight:700; color:#f59e0b; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-  .story-label.judge { color:#3b82f6; }
-  .story-label.impact { color:#a78bfa; }
-  .story-text { font-size:14px; color:#cbd5e1; }
-  .story-text strong { color:#fff; }
-  .story-text .highlight-red { color:#ef4444; font-weight:600; }
-  .story-text .highlight-green { color:#22c55e; font-weight:600; }
-  .story-quote { font-size:14px; color:#94a3b8; font-style:italic; padding:10px 14px; background:#0f172a; border-radius:6px; border-left:3px solid #334155; margin-top:8px; }
-  
-  /* Data Grid */
-  .data-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin:10px 0; }
-  .data-cell { background:#0f172a; border-radius:6px; padding:10px 12px; }
-  .data-cell .label { font-size:11px; color:#64748b; margin-bottom:2px; }
-  .data-cell .value { font-size:16px; font-weight:700; color:#fff; }
-  .data-cell .value.red { color:#ef4444; }
-  .data-cell .value.green { color:#22c55e; }
-  .data-cell .compare { font-size:11px; color:#64748b; margin-top:2px; }
-  .data-cell .compare.up { color:#ef4444; }
-  .data-cell .compare.down { color:#22c55e; }
-  
-  /* Signal Direction */
-  .signal-bar { display:flex; align-items:center; gap:12px; margin:12px 0; }
-  .signal-bar .label { font-size:13px; color:#94a3b8; white-space:nowrap; }
-  .signal-bar .track { flex:1; height:8px; background:#1e293b; border-radius:4px; overflow:hidden; display:flex; }
-  .signal-bar .track .pos { background:#ef4444; }
-  .signal-bar .track .neg { background:#22c55e; }
-  .signal-bar .num { font-size:13px; font-weight:700; }
-  .signal-bar .num.pos { color:#ef4444; }
-  .signal-bar .num.neg { color:#22c55e; }
-  
-  /* Action Table */
-  .action-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
-  .action-table th { text-align:left; padding:10px 12px; background:#1e293b; color:#94a3b8; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #334155; }
-  .action-table td { padding:10px 12px; border-bottom:1px solid #1e293b; color:#cbd5e1; }
-  .action-table tr:hover td { background:#162032; }
-  .dir-badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:3px; }
-  .dir-bull { background:rgba(239,68,68,0.15); color:#ef4444; }
-  .dir-bear { background:rgba(34,197,94,0.15); color:#22c55e; }
-  .dir-neutral { background:rgba(148,163,184,0.15); color:#94a3b8; }
-  
-  /* Sector Heatmap */
-  .sector-heatmap { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:14px; }
-  .sector-cell { background:#162032; border-radius:8px; padding:12px 14px; border-left:3px solid #334155; }
-  .sector-cell.s-rank { border-left-color:#ef4444; }
-  .sector-cell.a-rank { border-left-color:#f97316; }
-  .sector-cell.b-rank { border-left-color:#64748b; }
-  .sector-cell .s-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
-  .sector-cell .s-name { font-size:14px; font-weight:700; color:#fff; }
-  .sector-cell .s-rank { font-size:10px; font-weight:700; padding:1px 6px; border-radius:3px; }
-  .sector-cell .s-rank.s { background:#ef4444; color:#fff; }
-  .sector-cell .s-rank.a { background:#f97316; color:#fff; }
-  .sector-cell .s-rank.b { background:#475569; color:#fff; }
-  .sector-cell .s-count { font-size:12px; color:#64748b; }
-  .sector-cell .s-tags { font-size:11px; color:#818cf8; margin-top:4px; }
-  
-  /* Footer */
-  .footer { text-align:center; padding:24px 20px; font-size:11px; color:#475569; border-top:1px solid #1e293b; }
-  .footer .disclaimer { margin-top:6px; color:#334155; }
-  
-  @media (max-width:520px) {
-    .content { padding:20px 16px; }
-    .data-grid { grid-template-columns:1fr; }
-    .sector-heatmap { grid-template-columns:1fr; }
-    .hero h1 { font-size:20px; }
-    .market-items { gap:6px; }
-    .market-tag { font-size:11px; padding:3px 8px; }
-  }
-</style>
-</head>
-<body>
-<div class="container">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2026年6月25日 AI算力三条路线同日亮牌</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "PingFang SC", "Microsoft YaHei", sans-serif;
+                background: #0a0e1a;
+                color: #e2e8f0;
+                line-height: 1.7;
+                font-size: 15px;
+            }
+            .container {
+                max-width: 820px;
+                margin: 0 auto;
+                background: #0f172a;
+            }
 
-  <!-- Hero -->
-  <div class="hero">
-    <h1>AI算力"三条路线"同日亮牌</h1>
-    <div class="sub">美光炸裂财报 · OpenAI自研芯片 · 高通杀入数据中心</div>
-    <div class="meta">
-      <span>2026年6月25日 07:10</span>
-      <span>356条快讯 → 去噪2% → 346条有效</span>
-    </div>
-  </div>
+            /* Hero */
+            .hero {
+                background: linear-gradient(
+                    135deg,
+                    #0c1e3d,
+                    #1a1040 40%,
+                    #2d0a2e
+                );
+                padding: 36px 24px 28px;
+                text-align: center;
+                border-bottom: 1px solid #1e293b;
+            }
+            .hero h1 {
+                font-size: 24px;
+                font-weight: 800;
+                color: #fff;
+                margin-bottom: 8px;
+                letter-spacing: 0.5px;
+            }
+            .hero .sub {
+                font-size: 13px;
+                color: #94a3b8;
+                margin-bottom: 16px;
+            }
+            .hero .meta {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                font-size: 12px;
+                color: #64748b;
+            }
+            .hero .meta span {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
 
-  <!-- Market Bar -->
-  <div class="market-bar">
-    <div class="title">隔夜市场速览</div>
-    <div class="market-items">
-      <div class="market-tag"><span class="name">道指</span><span class="up">+0.36%</span></div>
-      <div class="market-tag"><span class="name">标普500</span><span class="down">-0.10%</span></div>
-      <div class="market-tag"><span class="name">纳指</span><span class="down">-0.46%</span></div>
-      <div class="market-tag"><span class="name">英伟达</span><span class="down">-0.54%</span></div>
-      <div class="market-tag"><span class="name">美光盘后</span><span class="up">+11%</span></div>
-      <div class="market-tag"><span class="name">WTI原油</span><span class="down">~$70</span></div>
-      <div class="market-tag"><span class="name">金龙指数</span><span class="down">-1.81%</span></div>
-      <div class="market-tag"><span class="name">纳指期货</span><span class="up">+1.5%</span></div>
-    </div>
-  </div>
+            /* Market Bar */
+            .market-bar {
+                background: #162032;
+                padding: 16px 20px;
+                border-bottom: 1px solid #1e293b;
+            }
+            .market-bar .title {
+                font-size: 12px;
+                color: #64748b;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .market-items {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .market-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: #1e293b;
+            }
+            .market-tag .name {
+                color: #cbd5e1;
+            }
+            .market-tag .up {
+                color: #ef4444;
+                font-weight: 600;
+            }
+            .market-tag .down {
+                color: #22c55e;
+                font-weight: 600;
+            }
+            .market-tag .neutral {
+                color: #94a3b8;
+                font-weight: 600;
+            }
 
-  <div class="content">
+            /* Content */
+            .content {
+                padding: 28px 22px;
+            }
+            .section {
+                margin-bottom: 36px;
+            }
+            .section-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #fff;
+                margin-bottom: 16px;
+                padding-left: 14px;
+                border-left: 3px solid #ef4444;
+            }
 
-    <!-- Signal Direction -->
-    <div class="section">
-      <div class="section-title">信号方向</div>
-      <div class="signal-bar">
-        <span class="label">正面信号</span>
-        <div class="track"><div class="pos" style="width:100%"></div></div>
-        <span class="num pos">15</span>
-      </div>
-      <div class="signal-bar">
-        <span class="label">负面信号</span>
-        <div class="track"></div>
-        <span class="num neg">0</span>
-      </div>
-      <div style="font-size:13px;color:#94a3b8;margin-top:8px;">正面信号显著占优，隔夜AI算力相关消息密集催化。</div>
-    </div>
+            /* Story Card */
+            .story-card {
+                background: #162032;
+                border-radius: 10px;
+                padding: 20px 18px;
+                margin-bottom: 16px;
+                border: 1px solid #1e293b;
+                transition: border-color 0.2s;
+            }
+            .story-card:hover {
+                border-color: #334155;
+            }
+            .story-num {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                color: #0f172a;
+                background: #ef4444;
+                padding: 2px 8px;
+                border-radius: 3px;
+                margin-bottom: 8px;
+            }
+            .story-title {
+                font-size: 16px;
+                font-weight: 700;
+                color: #fff;
+                margin-bottom: 12px;
+            }
+            .story-section {
+                margin-bottom: 14px;
+            }
+            .story-label {
+                font-size: 11px;
+                font-weight: 700;
+                color: #f59e0b;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 6px;
+            }
+            .story-label.judge {
+                color: #3b82f6;
+            }
+            .story-label.impact {
+                color: #a78bfa;
+            }
+            .story-text {
+                font-size: 14px;
+                color: #cbd5e1;
+            }
+            .story-text strong {
+                color: #fff;
+            }
+            .story-text .highlight-red {
+                color: #ef4444;
+                font-weight: 600;
+            }
+            .story-text .highlight-green {
+                color: #22c55e;
+                font-weight: 600;
+            }
+            .story-quote {
+                font-size: 14px;
+                color: #94a3b8;
+                font-style: italic;
+                padding: 10px 14px;
+                background: #0f172a;
+                border-radius: 6px;
+                border-left: 3px solid #334155;
+                margin-top: 8px;
+            }
 
-    <!-- Sector Heatmap -->
-    <div class="section">
-      <div class="section-title">热点板块扫描</div>
-      <div class="sector-heatmap">
-        <div class="sector-cell s-rank">
-          <div class="s-header">
-            <span class="s-name">AI算力</span>
-            <div><span class="s-rank s">S</span> <span class="s-count">28条</span></div>
-          </div>
-          <div class="s-tags">HBM存储 · 服务器</div>
-        </div>
-        <div class="sector-cell s-rank">
-          <div class="s-header">
-            <span class="s-name">半导体芯片</span>
-            <div><span class="s-rank s">S</span> <span class="s-count">27条</span></div>
-          </div>
-          <div class="s-tags">CPU/GPU · 存储芯片 · 涨价信号</div>
-        </div>
-        <div class="sector-cell a-rank">
-          <div class="s-header">
-            <span class="s-name">机器人/具身智能</span>
-            <div><span class="s-rank a">A</span> <span class="s-count">9条</span></div>
-          </div>
-        </div>
-        <div class="sector-cell a-rank">
-          <div class="s-header">
-            <span class="s-name">医药生物</span>
-            <div><span class="s-rank a">A</span> <span class="s-count">4条</span></div>
-          </div>
-        </div>
-        <div class="sector-cell a-rank">
-          <div class="s-header">
-            <span class="s-name">低空经济</span>
-            <div><span class="s-rank a">A</span> <span class="s-count">4条</span></div>
-          </div>
-        </div>
-        <div class="sector-cell b-rank">
-          <div class="s-header">
-            <span class="s-name">新能源</span>
-            <div><span class="s-rank b">B</span> <span class="s-count">2条</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
+            /* Data Grid */
+            .data-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                margin: 10px 0;
+            }
+            .data-cell {
+                background: #0f172a;
+                border-radius: 6px;
+                padding: 10px 12px;
+            }
+            .data-cell .label {
+                font-size: 11px;
+                color: #64748b;
+                margin-bottom: 2px;
+            }
+            .data-cell .value {
+                font-size: 16px;
+                font-weight: 700;
+                color: #fff;
+            }
+            .data-cell .value.red {
+                color: #ef4444;
+            }
+            .data-cell .value.green {
+                color: #22c55e;
+            }
+            .data-cell .compare {
+                font-size: 11px;
+                color: #64748b;
+                margin-top: 2px;
+            }
+            .data-cell .compare.up {
+                color: #ef4444;
+            }
+            .data-cell .compare.down {
+                color: #22c55e;
+            }
 
-    <!-- Story 1: Micron -->
-    <div class="section">
-      <div class="section-title">主线一：美光财报炸裂</div>
-      <div class="story-card">
-        <span class="story-num">S级 · 存储链</span>
-        <div class="story-title">存储不再是"周期"，而是"长协锁价"</div>
-        
-        <div class="story-section">
-          <div class="story-label">核心数据</div>
-          <div class="data-grid">
-            <div class="data-cell">
-              <div class="label">Q3营收</div>
-              <div class="value red">$414.6亿</div>
-              <div class="compare up">超预期16%（预期$356.9亿）</div>
+            /* Signal Direction */
+            .signal-bar {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 12px 0;
+            }
+            .signal-bar .label {
+                font-size: 13px;
+                color: #94a3b8;
+                white-space: nowrap;
+            }
+            .signal-bar .track {
+                flex: 1;
+                height: 8px;
+                background: #1e293b;
+                border-radius: 4px;
+                overflow: hidden;
+                display: flex;
+            }
+            .signal-bar .track .pos {
+                background: #ef4444;
+            }
+            .signal-bar .track .neg {
+                background: #22c55e;
+            }
+            .signal-bar .num {
+                font-size: 13px;
+                font-weight: 700;
+            }
+            .signal-bar .num.pos {
+                color: #ef4444;
+            }
+            .signal-bar .num.neg {
+                color: #22c55e;
+            }
+
+            /* Action Table */
+            .action-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+                margin-top: 12px;
+            }
+            .action-table th {
+                text-align: left;
+                padding: 10px 12px;
+                background: #1e293b;
+                color: #94a3b8;
+                font-weight: 600;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border-bottom: 1px solid #334155;
+            }
+            .action-table td {
+                padding: 10px 12px;
+                border-bottom: 1px solid #1e293b;
+                color: #cbd5e1;
+            }
+            .action-table tr:hover td {
+                background: #162032;
+            }
+            .dir-badge {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 3px;
+            }
+            .dir-bull {
+                background: rgba(239, 68, 68, 0.15);
+                color: #ef4444;
+            }
+            .dir-bear {
+                background: rgba(34, 197, 94, 0.15);
+                color: #22c55e;
+            }
+            .dir-neutral {
+                background: rgba(148, 163, 184, 0.15);
+                color: #94a3b8;
+            }
+
+            /* Sector Heatmap */
+            .sector-heatmap {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                margin-top: 14px;
+            }
+            .sector-cell {
+                background: #162032;
+                border-radius: 8px;
+                padding: 12px 14px;
+                border-left: 3px solid #334155;
+            }
+            .sector-cell.s-rank {
+                border-left-color: #ef4444;
+            }
+            .sector-cell.a-rank {
+                border-left-color: #f97316;
+            }
+            .sector-cell.b-rank {
+                border-left-color: #64748b;
+            }
+            .sector-cell .s-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 6px;
+            }
+            .sector-cell .s-name {
+                font-size: 14px;
+                font-weight: 700;
+                color: #fff;
+            }
+            .sector-cell .s-rank {
+                font-size: 10px;
+                font-weight: 700;
+                padding: 1px 6px;
+                border-radius: 3px;
+            }
+            .sector-cell .s-rank.s {
+                background: #ef4444;
+                color: #fff;
+            }
+            .sector-cell .s-rank.a {
+                background: #f97316;
+                color: #fff;
+            }
+            .sector-cell .s-rank.b {
+                background: #475569;
+                color: #fff;
+            }
+            .sector-cell .s-count {
+                font-size: 12px;
+                color: #64748b;
+            }
+            .sector-cell .s-tags {
+                font-size: 11px;
+                color: #818cf8;
+                margin-top: 4px;
+            }
+
+            /* Footer */
+            .footer {
+                text-align: center;
+                padding: 24px 20px;
+                font-size: 11px;
+                color: #475569;
+                border-top: 1px solid #1e293b;
+            }
+            .footer .disclaimer {
+                margin-top: 6px;
+                color: #334155;
+            }
+
+            @media (max-width: 520px) {
+                .content {
+                    padding: 20px 16px;
+                }
+                .data-grid {
+                    grid-template-columns: 1fr;
+                }
+                .sector-heatmap {
+                    grid-template-columns: 1fr;
+                }
+                .hero h1 {
+                    font-size: 20px;
+                }
+                .market-items {
+                    gap: 6px;
+                }
+                .market-tag {
+                    font-size: 11px;
+                    padding: 3px 8px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Hero -->
+            <div class="hero">
+                <h1>AI算力"三条路线"同日亮牌</h1>
+                <div class="sub">
+                    美光炸裂财报 · OpenAI自研芯片 · 高通杀入数据中心
+                </div>
+                <div class="meta">
+                    <span>2026年6月25日 07:10</span>
+                    <span>356条快讯 → 去噪2% → 346条有效</span>
+                </div>
             </div>
-            <div class="data-cell">
-              <div class="label">调整后毛利率</div>
-              <div class="value red">84.9%</div>
-              <div class="compare up">预期81.9%</div>
+
+            <!-- Market Bar -->
+            <div class="market-bar">
+                <div class="title">隔夜市场速览</div>
+                <div class="market-items">
+                    <div class="market-tag">
+                        <span class="name">道指</span
+                        ><span class="up">+0.36%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">标普500</span
+                        ><span class="down">-0.10%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">纳指</span
+                        ><span class="down">-0.46%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">英伟达</span
+                        ><span class="down">-0.54%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">美光盘后</span
+                        ><span class="up">+11%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">WTI原油</span
+                        ><span class="down">~$70</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">金龙指数</span
+                        ><span class="down">-1.81%</span>
+                    </div>
+                    <div class="market-tag">
+                        <span class="name">纳指期货</span
+                        ><span class="up">+1.5%</span>
+                    </div>
+                </div>
             </div>
-            <div class="data-cell">
-              <div class="label">调整后EPS</div>
-              <div class="value red">$25.11</div>
-              <div class="compare up">预期$20.49</div>
+
+            <div class="content">
+                <!-- Signal Direction -->
+                <div class="section">
+                    <div class="section-title">信号方向</div>
+                    <div class="signal-bar">
+                        <span class="label">正面信号</span>
+                        <div class="track">
+                            <div class="pos" style="width: 100%"></div>
+                        </div>
+                        <span class="num pos">15</span>
+                    </div>
+                    <div class="signal-bar">
+                        <span class="label">负面信号</span>
+                        <div class="track"></div>
+                        <span class="num neg">0</span>
+                    </div>
+                    <div
+                        style="font-size: 13px; color: #94a3b8; margin-top: 8px"
+                    >
+                        正面信号显著占优，隔夜AI算力相关消息密集催化。
+                    </div>
+                </div>
+
+                <!-- Sector Heatmap -->
+                <div class="section">
+                    <div class="section-title">热点板块扫描</div>
+                    <div class="sector-heatmap">
+                        <div class="sector-cell s-rank">
+                            <div class="s-header">
+                                <span class="s-name">AI算力</span>
+                                <div>
+                                    <span class="s-rank s">S</span>
+                                    <span class="s-count">28条</span>
+                                </div>
+                            </div>
+                            <div class="s-tags">HBM存储 · 服务器</div>
+                        </div>
+                        <div class="sector-cell s-rank">
+                            <div class="s-header">
+                                <span class="s-name">半导体芯片</span>
+                                <div>
+                                    <span class="s-rank s">S</span>
+                                    <span class="s-count">27条</span>
+                                </div>
+                            </div>
+                            <div class="s-tags">
+                                CPU/GPU · 存储芯片 · 涨价信号
+                            </div>
+                        </div>
+                        <div class="sector-cell a-rank">
+                            <div class="s-header">
+                                <span class="s-name">机器人/具身智能</span>
+                                <div>
+                                    <span class="s-rank a">A</span>
+                                    <span class="s-count">9条</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sector-cell a-rank">
+                            <div class="s-header">
+                                <span class="s-name">医药生物</span>
+                                <div>
+                                    <span class="s-rank a">A</span>
+                                    <span class="s-count">4条</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sector-cell a-rank">
+                            <div class="s-header">
+                                <span class="s-name">低空经济</span>
+                                <div>
+                                    <span class="s-rank a">A</span>
+                                    <span class="s-count">4条</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sector-cell b-rank">
+                            <div class="s-header">
+                                <span class="s-name">新能源</span>
+                                <div>
+                                    <span class="s-rank b">B</span>
+                                    <span class="s-count">2条</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 1: Micron -->
+                <div class="section">
+                    <div class="section-title">主线一：美光财报炸裂</div>
+                    <div class="story-card">
+                        <span class="story-num">S级 · 存储链</span>
+                        <div class="story-title">
+                            存储不再是"周期"，而是"长协锁价"
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label">核心数据</div>
+                            <div class="data-grid">
+                                <div class="data-cell">
+                                    <div class="label">Q3营收</div>
+                                    <div class="value red">$414.6亿</div>
+                                    <div class="compare up">
+                                        超预期16%（预期$356.9亿）
+                                    </div>
+                                </div>
+                                <div class="data-cell">
+                                    <div class="label">调整后毛利率</div>
+                                    <div class="value red">84.9%</div>
+                                    <div class="compare up">预期81.9%</div>
+                                </div>
+                                <div class="data-cell">
+                                    <div class="label">调整后EPS</div>
+                                    <div class="value red">$25.11</div>
+                                    <div class="compare up">预期$20.49</div>
+                                </div>
+                                <div class="data-cell">
+                                    <div class="label">Q4营收指引</div>
+                                    <div class="value red">$490-510亿</div>
+                                    <div class="compare up">预期$432.4亿</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label judge">衍生判断</div>
+                            <div class="story-text">
+                                HBM爆发性需求正在<strong>"吸干"</strong>传统DRAM/NAND的晶圆产能，导致全品类供给紧张。叠加5年期长协定价机制，存储芯片的定价权从"市场供需"转向<span
+                                    class="highlight-red"
+                                    >"合同锁定"</span
+                                >。美光管理层提到"人形机器人存储容量是L2+汽车的10倍"，将存储需求天花板从AI数据中心扩展到具身智能。
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label impact">A股影响</div>
+                            <div class="story-text">
+                                <strong>直接受益</strong
+                                >：HBM封测、存储模组、设备材料<br />
+                                <strong>二阶影响</strong
+                                >：AI服务器BOM成本上行，OEM利润承压<br />
+                                <strong>长线增量</strong
+                                >：具身智能存储需求（2030年后半段启动）
+                            </div>
+                        </div>
+
+                        <div class="story-quote">
+                            美光用一个毛利率近85%的季度证明：HBM不是周期品，是"定价权资产"。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2: OpenAI -->
+                <div class="section">
+                    <div class="section-title">主线二：OpenAI自研芯片</div>
+                    <div class="story-card">
+                        <span class="story-num">S级 · 推理芯片</span>
+                        <div class="story-title">
+                            Jalapeño——推理与训练解耦的第一刀
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label">事实</div>
+                            <div class="story-text">
+                                OpenAI与博通联合发布首款ASIC芯片<strong>Jalapeño</strong>，专为推理设计，台积电3nm工艺，9个月从设计到流片。博通CEO称<span
+                                    class="highlight-red"
+                                    >相比传统GPU节省约50%成本</span
+                                >。工程样片已验证，计划2026年底规模化落地，配套千兆瓦级数据中心。
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label judge">衍生判断</div>
+                            <div class="story-text">
+                                真正含义不是"替代英伟达"，而是<strong>推理算力的商品化已经开始</strong>。训练端仍需GPU通用性，但推理端追求极致能效比。省50%成本如果成立，推理算力单位经济学被彻底改写。
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label impact">A股影响</div>
+                            <div class="story-text">
+                                <strong>博通逻辑</strong
+                                >：ASIC设计费+NRE，高毛利轻资产，每多一个OpenAI级客户就多一条增长曲线<br />
+                                <strong>映射方向</strong
+                                >：先进封装（CoWoS国产替代）、定制ASIC设计、高速互联（光模块/PCB）<br />
+                                <strong>风险点</strong
+                                >：ASIC通用性差，模型架构迭代可能导致芯片快速贬值
+                            </div>
+                        </div>
+
+                        <div class="story-quote">
+                            OpenAI用9个月造出一颗推理芯片，传递的信号是：推理算力的商品化已经开始。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3: Qualcomm -->
+                <div class="section">
+                    <div class="section-title">主线三：高通杀入数据中心</div>
+                    <div class="story-card">
+                        <span class="story-num">A级 · 数据中心CPU</span>
+                        <div class="story-title">
+                            Dragonfly C1000——打破x86垄断
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label">事实</div>
+                            <div class="story-text">
+                                高通发布数据中心CPU
+                                <strong>Dragonfly C1000</strong
+                                >（飞龙C1000），ARM架构。<span
+                                    class="highlight-red"
+                                    >Meta确认2028年量产采用</span
+                                >，签署多代战略协作。微软Azure也将部署高通高带宽计算芯片。高通称未来十年机器人行业将拥有<span
+                                    class="highlight-red"
+                                    >万亿美元市场</span
+                                >。
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label judge">衍生判断</div>
+                            <div class="story-text">
+                                冲击的不是英伟达，而是<strong>Intel和AMD</strong>。数据中心CPU长期被x86垄断，ARM架构核心卖点是"功耗可控下的充足性能"，与AI数据中心电力约束高度契合。Meta和微软同时站台，说明ARM渗透已过"能不能用"阶段。
+                            </div>
+                        </div>
+
+                        <div class="story-quote">
+                            高通用一颗CPU告诉市场：数据中心的"x86垄断"和"手机芯片公司的天花板"这两个叙事同时被打破了。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 4: NVIDIA -->
+                <div class="section">
+                    <div class="section-title">主线四：英伟达"数十年"定调</div>
+                    <div class="story-card">
+                        <span class="story-num">S级 · 叙事管理</span>
+                        <div class="story-title">黄仁勋：有用的AI已经到来</div>
+
+                        <div class="story-section">
+                            <div class="story-label">核心表态</div>
+                            <div class="story-text">
+                                <strong
+                                    >"算力越多，token越多，收入也就越多"</strong
+                                ><br />
+                                <strong>"这轮建设将以数十年为单位来衡量"</strong
+                                ><br />
+                                <strong
+                                    >"这将成为人类历史上规模最大的基础设施建设"</strong
+                                ><br />
+                                已有160万+中国开发者基于英伟达平台研发。
+                            </div>
+                        </div>
+
+                        <div class="story-section">
+                            <div class="story-label judge">衍生判断</div>
+                            <div class="story-text">
+                                本质是<strong>持续性预期管理</strong>。市场最大担忧是"AI基建泡沫何时破裂"，黄仁勋的回答是：AI数据中心是"制造token的工厂"，每个token都是利润单位。如果叙事成立，算力链需求可见度从"1-2年"延长到<span
+                                    class="highlight-red"
+                                    >"3-5年"</span
+                                >。但需注意"数十年"是愿景表述，非财务指引。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Table -->
+                <div class="section">
+                    <div class="section-title">操作参考</div>
+                    <table class="action-table">
+                        <thead>
+                            <tr>
+                                <th>主线</th>
+                                <th>方向</th>
+                                <th>时间窗口</th>
+                                <th>关键观察指标</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HBM存储链</td>
+                                <td>
+                                    <span class="dir-badge dir-bull">偏多</span>
+                                </td>
+                                <td>即时（1-2日）</td>
+                                <td>A股存储板块开盘溢价；HBM封测成交额</td>
+                            </tr>
+                            <tr>
+                                <td>自研ASIC</td>
+                                <td>
+                                    <span class="dir-badge dir-bull">偏多</span>
+                                </td>
+                                <td>1-3个月</td>
+                                <td>博通订单确认；先进封装排期</td>
+                            </tr>
+                            <tr>
+                                <td>数据中心CPU</td>
+                                <td>
+                                    <span class="dir-badge dir-neutral"
+                                        >中性偏多</span
+                                    >
+                                </td>
+                                <td>远期（2028）</td>
+                                <td>ARM服务器渗透率；Intel/AMD份额</td>
+                            </tr>
+                            <tr>
+                                <td>英伟达叙事</td>
+                                <td>
+                                    <span class="dir-badge dir-bull"
+                                        >情绪偏多</span
+                                    >
+                                </td>
+                                <td>短期</td>
+                                <td>算力链成交额；是否"卖事实"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="data-cell">
-              <div class="label">Q4营收指引</div>
-              <div class="value red">$490-510亿</div>
-              <div class="compare up">预期$432.4亿</div>
+
+            <div class="footer">
+                数据来源：Tushare财联社快讯 · 分析引擎v2 · WebSearch交叉验证
+                <div class="disclaimer">仅供研究参考，不构成投资建议</div>
             </div>
-          </div>
         </div>
-
-        <div class="story-section">
-          <div class="story-label judge">衍生判断</div>
-          <div class="story-text">
-            HBM爆发性需求正在<strong>"吸干"</strong>传统DRAM/NAND的晶圆产能，导致全品类供给紧张。叠加5年期长协定价机制，存储芯片的定价权从"市场供需"转向<span class="highlight-red">"合同锁定"</span>。美光管理层提到"人形机器人存储容量是L2+汽车的10倍"，将存储需求天花板从AI数据中心扩展到具身智能。
-          </div>
-        </div>
-
-        <div class="story-section">
-          <div class="story-label impact">A股影响</div>
-          <div class="story-text">
-            <strong>直接受益</strong>：HBM封测、存储模组、设备材料<br>
-            <strong>二阶影响</strong>：AI服务器BOM成本上行，OEM利润承压<br>
-            <strong>长线增量</strong>：具身智能存储需求（2030年后半段启动）
-          </div>
-        </div>
-
-        <div class="story-quote">美光用一个毛利率近85%的季度证明：HBM不是周期品，是"定价权资产"。</div>
-      </div>
-    </div>
-
-    <!-- Story 2: OpenAI -->
-    <div class="section">
-      <div class="section-title">主线二：OpenAI自研芯片</div>
-      <div class="story-card">
-        <span class="story-num">S级 · 推理芯片</span>
-        <div class="story-title">Jalapeño——推理与训练解耦的第一刀</div>
-
-        <div class="story-section">
-          <div class="story-label">事实</div>
-          <div class="story-text">
-            OpenAI与博通联合发布首款ASIC芯片<strong>Jalapeño</strong>，专为推理设计，台积电3nm工艺，9个月从设计到流片。博通CEO称<span class="highlight-red">相比传统GPU节省约50%成本</span>。工程样片已验证，计划2026年底规模化落地，配套千兆瓦级数据中心。
-          </div>
-        </div>
-
-        <div class="story-section">
-          <div class="story-label judge">衍生判断</div>
-          <div class="story-text">
-            真正含义不是"替代英伟达"，而是<strong>推理算力的商品化已经开始</strong>。训练端仍需GPU通用性，但推理端追求极致能效比。省50%成本如果成立，推理算力单位经济学被彻底改写。
-          </div>
-        </div>
-
-        <div class="story-section">
-          <div class="story-label impact">A股影响</div>
-          <div class="story-text">
-            <strong>博通逻辑</strong>：ASIC设计费+NRE，高毛利轻资产，每多一个OpenAI级客户就多一条增长曲线<br>
-            <strong>映射方向</strong>：先进封装（CoWoS国产替代）、定制ASIC设计、高速互联（光模块/PCB）<br>
-            <strong>风险点</strong>：ASIC通用性差，模型架构迭代可能导致芯片快速贬值
-          </div>
-        </div>
-
-        <div class="story-quote">OpenAI用9个月造出一颗推理芯片，传递的信号是：推理算力的商品化已经开始。</div>
-      </div>
-    </div>
-
-    <!-- Story 3: Qualcomm -->
-    <div class="section">
-      <div class="section-title">主线三：高通杀入数据中心</div>
-      <div class="story-card">
-        <span class="story-num">A级 · 数据中心CPU</span>
-        <div class="story-title">Dragonfly C1000——打破x86垄断</div>
-
-        <div class="story-section">
-          <div class="story-label">事实</div>
-          <div class="story-text">
-            高通发布数据中心CPU <strong>Dragonfly C1000</strong>（飞龙C1000），ARM架构。<span class="highlight-red">Meta确认2028年量产采用</span>，签署多代战略协作。微软Azure也将部署高通高带宽计算芯片。高通称未来十年机器人行业将拥有<span class="highlight-red">万亿美元市场</span>。
-          </div>
-        </div>
-
-        <div class="story-section">
-          <div class="story-label judge">衍生判断</div>
-          <div class="story-text">
-            冲击的不是英伟达，而是<strong>Intel和AMD</strong>。数据中心CPU长期被x86垄断，ARM架构核心卖点是"功耗可控下的充足性能"，与AI数据中心电力约束高度契合。Meta和微软同时站台，说明ARM渗透已过"能不能用"阶段。
-          </div>
-        </div>
-
-        <div class="story-quote">高通用一颗CPU告诉市场：数据中心的"x86垄断"和"手机芯片公司的天花板"这两个叙事同时被打破了。</div>
-      </div>
-    </div>
-
-    <!-- Story 4: NVIDIA -->
-    <div class="section">
-      <div class="section-title">主线四：英伟达"数十年"定调</div>
-      <div class="story-card">
-        <span class="story-num">S级 · 叙事管理</span>
-        <div class="story-title">黄仁勋：有用的AI已经到来</div>
-
-        <div class="story-section">
-          <div class="story-label">核心表态</div>
-          <div class="story-text">
-            <strong>"算力越多，token越多，收入也就越多"</strong><br>
-            <strong>"这轮建设将以数十年为单位来衡量"</strong><br>
-            <strong>"这将成为人类历史上规模最大的基础设施建设"</strong><br>
-            已有160万+中国开发者基于英伟达平台研发。
-          </div>
-        </div>
-
-        <div class="story-section">
-          <div class="story-label judge">衍生判断</div>
-          <div class="story-text">
-            本质是<strong>持续性预期管理</strong>。市场最大担忧是"AI基建泡沫何时破裂"，黄仁勋的回答是：AI数据中心是"制造token的工厂"，每个token都是利润单位。如果叙事成立，算力链需求可见度从"1-2年"延长到<span class="highlight-red">"3-5年"</span>。但需注意"数十年"是愿景表述，非财务指引。
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Action Table -->
-    <div class="section">
-      <div class="section-title">操作参考</div>
-      <table class="action-table">
-        <thead>
-          <tr>
-            <th>主线</th>
-            <th>方向</th>
-            <th>时间窗口</th>
-            <th>关键观察指标</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>HBM存储链</td>
-            <td><span class="dir-badge dir-bull">偏多</span></td>
-            <td>即时（1-2日）</td>
-            <td>A股存储板块开盘溢价；HBM封测成交额</td>
-          </tr>
-          <tr>
-            <td>自研ASIC</td>
-            <td><span class="dir-badge dir-bull">偏多</span></td>
-            <td>1-3个月</td>
-            <td>博通订单确认；先进封装排期</td>
-          </tr>
-          <tr>
-            <td>数据中心CPU</td>
-            <td><span class="dir-badge dir-neutral">中性偏多</span></td>
-            <td>远期（2028）</td>
-            <td>ARM服务器渗透率；Intel/AMD份额</td>
-          </tr>
-          <tr>
-            <td>英伟达叙事</td>
-            <td><span class="dir-badge dir-bull">情绪偏多</span></td>
-            <td>短期</td>
-            <td>算力链成交额；是否"卖事实"</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    数据来源：Tushare财联社快讯 · 分析引擎v2 · WebSearch交叉验证
-    <div class="disclaimer">仅供研究参考，不构成投资建议</div>
-  </div>
-
-</div>
-</body>
+    </body>
 </html>
