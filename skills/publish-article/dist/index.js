@@ -8,7 +8,7 @@ import { extractMetadata } from './parser.js';
 import { generateFilename, generateArticleUrl } from './namer.js';
 import { copyArticleFile, cleanupBackup } from './copier.js';
 import { handleError, formatError } from './error-handler.js';
-import { detectProjectPath, buildProject, deployProject, confirmDeploy } from './integrator.js';
+import { detectProjectPath, buildProject, deployProject, confirmDeploy, gitAdd, gitCommit, gitPush } from './integrator.js';
 /**
  * Main function to publish an article
  */
@@ -67,14 +67,43 @@ export async function publishArticle(input) {
             };
             try {
                 copyArticleFile(expandedPath, targetPath, context);
+                console.log('✅ 文件已复制');
             }
             catch (error) {
                 return handleError(error, 'copy', context);
             }
-            // Step 5: Build
+            // Step 5: Git operations
+            let gitResult = {
+                committed: false,
+                pushed: false,
+            };
+            if (!input.dryRun) {
+                try {
+                    console.log('\n🔧 Git 提交中...');
+                    // Generate commit message
+                    const commitMessage = input.commitMessage ||
+                        `add report: ${metadata.title}\n\nDate: ${date}\nCategory: ${category}\nFile: ${filename}`;
+                    // Add file
+                    gitAdd(targetPath, projectPath);
+                    // Commit
+                    const commitHash = gitCommit(commitMessage, projectPath);
+                    gitResult.committed = true;
+                    gitResult.commitHash = commitHash;
+                    console.log(`   [${commitHash}] ${commitMessage.split('\n')[0]}`);
+                    // Push
+                    gitPush(projectPath);
+                    gitResult.pushed = true;
+                    console.log('✅ Git 推送成功');
+                }
+                catch (error) {
+                    console.error('⚠️  Git 操作失败:', error instanceof Error ? error.message : String(error));
+                    console.log('   继续构建和部署...');
+                }
+            }
+            // Step 6: Build
             try {
                 const buildResult = buildProject({ verbose: input.verbose });
-                // Step 6: Deploy
+                // Step 7: Deploy
                 if (!input.skipDeploy) {
                     console.log('\n🚀 部署中...');
                     const deployResult = await confirmDeploy();
@@ -92,6 +121,7 @@ export async function publishArticle(input) {
                                 path: targetPath,
                                 url,
                             },
+                            git: gitResult,
                             build: {
                                 success: true,
                                 outputDir: buildResult.outputDir,

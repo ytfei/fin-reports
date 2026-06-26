@@ -136,4 +136,38 @@ export async function confirmDeploy() {
     // For now, always return true
     return true;
 }
+/**
+ * Git add file
+ */
+export function gitAdd(filePath, projectPath) {
+    const relativePath = path.relative(projectPath, filePath);
+    execSync(`git add "${relativePath}"`, {
+        cwd: projectPath,
+        stdio: 'pipe',
+        encoding: 'utf-8',
+    });
+}
+/**
+ * Git commit with message
+ */
+export function gitCommit(message, projectPath) {
+    const result = execSync(`git commit -m "${message.replace(/"/g, '\\"')}"`, {
+        cwd: projectPath,
+        stdio: 'pipe',
+        encoding: 'utf-8',
+    });
+    // Extract commit hash from output
+    const match = result.match(/\[([a-f0-9]+)\]/);
+    return match ? match[1] : 'unknown';
+}
+/**
+ * Git push to remote
+ */
+export function gitPush(projectPath) {
+    execSync('git push', {
+        cwd: projectPath,
+        stdio: 'pipe',
+        encoding: 'utf-8',
+    });
+}
 //# sourceMappingURL=integrator.js.map

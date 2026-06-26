@@ -28,4 +28,16 @@ export declare function deployProject(options?: DeployOptions): {
  * Confirm deployment with user
  */
 export declare function confirmDeploy(): Promise<boolean>;
+/**
+ * Git add file
+ */
+export declare function gitAdd(filePath: string, projectPath: string): void;
+/**
+ * Git commit with message
+ */
+export declare function gitCommit(message: string, projectPath: string): string;
+/**
+ * Git push to remote
+ */
+export declare function gitPush(projectPath: string): void;
 //# sourceMappingURL=integrator.d.ts.map

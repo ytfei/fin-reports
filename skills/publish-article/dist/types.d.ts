@@ -15,6 +15,8 @@ export interface PublishArticleInput {
     category?: ArticleCategory;
     /** Publication date (YYYY-MM-DD format), defaults to today */
     date?: string;
+    /** Custom git commit message, defaults to auto-generated */
+    commitMessage?: string;
     /** Skip deployment confirmation */
     skipDeploy?: boolean;
     /** Target project path (auto-detected if not provided) */
@@ -60,6 +62,11 @@ export interface PublishResult {
         filename: string;
         path: string;
         url: string;
+    };
+    git: {
+        committed: boolean;
+        commitHash?: string;
+        pushed: boolean;
     };
     build: {
         success: true;
