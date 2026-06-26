@@ -3,6 +3,13 @@ name: publish-article
 title: 发布 HTML 文章到 fin-reports
 description: 完整的文章发布自动化流程：解析元数据、复制文件、git 提交、构建、部署
 version: 2.0.0
+triggers:
+  - 发布文章
+  - 发布 HTML
+  - 上传文章
+  - 添加文章
+  - publish article
+  - 部署文章
 ---
 
 # publish-article
