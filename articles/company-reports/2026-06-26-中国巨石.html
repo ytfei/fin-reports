@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国巨石（600176）个股深度分析</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f5f6f8; color: #1a1a2e; line-height: 1.7; font-size: 15px; }
+.container { max-width: 760px; margin: 0 auto; background: #fff; }
+.hero { background: linear-gradient(135deg, #0a1628 0%, #162d50 50%, #0a1628 100%); padding: 48px 32px 40px; text-align: center; }
+.hero h1 { color: #fff; font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+.hero .subtitle { color: #8faadb; font-size: 14px; margin-bottom: 24px; }
+.hero .badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.hero .badge { background: rgba(255,255,255,0.08); border: 1px solid rgba(143,170,219,0.3); border-radius: 20px; padding: 6px 16px; color: #8faadb; font-size: 12px; }
+.content { padding: 32px 28px; }
+h2 { font-size: 20px; font-weight: 600; color: #0a1628; margin: 36px 0 16px; padding-left: 12px; border-left: 4px solid #185FA5; }
+h3 { font-size: 16px; font-weight: 600; color: #0C447C; margin: 24px 0 12px; }
+p { margin-bottom: 12px; color: #333; }
+strong { color: #0a1628; }
+.highlight-box { background: #f0f4fa; border-left: 4px solid #185FA5; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.red-box { background: #fef5f5; border-left: 4px solid #A32D2D; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.green-box { background: #f0faf4; border-left: 4px solid #0F6E56; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+th { background: #0C447C; color: #fff; padding: 10px 12px; text-align: left; font-weight: 500; }
+td { padding: 10px 12px; border-bottom: 1px solid #e8e8e8; }
+tr:nth-child(even) td { background: #f9fafb; }
+.metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+.metric-card { background: #f5f6f8; border-radius: 8px; padding: 16px; text-align: center; }
+.metric-card .label { font-size: 12px; color: #888; margin-bottom: 6px; }
+.metric-card .value { font-size: 24px; font-weight: 700; color: #0a1628; }
+.metric-card .change { font-size: 12px; margin-top: 4px; }
+.up { color: #E24B4A; }
+.down { color: #3B6D11; }
+.chain-diagram { background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0; }
+.chain-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: stretch; }
+.chain-col { flex: 1; }
+.chain-col-title { font-size: 12px; font-weight: 600; color: #0C447C; text-align: center; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.chain-item { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 6px; padding: 10px 12px; margin-bottom: 6px; font-size: 12px; }
+.chain-item .ci-title { font-weight: 600; color: #1a1a2e; margin-bottom: 2px; }
+.chain-item .ci-desc { color: #888; font-size: 11px; }
+.chain-arrow { display: flex; align-items: center; justify-content: center; font-size: 20px; color: #185FA5; padding: 0 4px; }
+.chain-item.jushi { border: 2px solid #185FA5; background: #e6f1fb; }
+.chain-item.ai-hot { border-left: 4px solid #E24B4A; }
+.moat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.moat-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; }
+.moat-card .moat-num { font-size: 28px; font-weight: 700; color: #185FA5; margin-bottom: 4px; }
+.moat-card .moat-title { font-size: 14px; font-weight: 600; color: #0a1628; margin-bottom: 6px; }
+.moat-card .moat-desc { font-size: 12px; color: #666; }
+.engine-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
+.engine-card { display: flex; gap: 12px; background: #f9fafb; border-radius: 8px; padding: 16px; }
+.engine-card .engine-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff; flex-shrink: 0; }
+.engine-card .engine-body { flex: 1; }
+.engine-card .engine-title { font-weight: 600; color: #0a1628; margin-bottom: 4px; font-size: 14px; }
+.engine-card .engine-detail { font-size: 12px; color: #666; }
+.chart-container { position: relative; width: 100%; margin: 20px 0; }
+.disclaimer { background: #f5f5f5; padding: 20px 28px; font-size: 12px; color: #999; text-align: center; line-height: 1.8; }
+.risk-list { list-style: none; counter-reset: risk-counter; }
+.risk-list li { counter-increment: risk-counter; padding: 12px 16px 12px 44px; position: relative; margin-bottom: 8px; background: #fef9f9; border-radius: 6px; border-left: 3px solid #E24B4A; font-size: 13px; }
+.risk-list li::before { content: counter(risk-counter); position: absolute; left: 12px; top: 12px; width: 24px; height: 24px; background: #E24B4A; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+.action-box { background: linear-gradient(135deg, #0C447C 0%, #185FA5 100%); border-radius: 12px; padding: 24px; color: #fff; margin: 20px 0; }
+.action-box h3 { color: #fff; margin-top: 0; }
+.action-box p { color: #c8ddf2; }
+.timeline { position: relative; padding-left: 24px; margin: 16px 0; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: #185FA5; }
+.timeline-item { position: relative; padding: 8px 0 16px 24px; }
+.timeline-item::before { content: ''; position: absolute; left: -21px; top: 14px; width: 12px; height: 12px; background: #fff; border: 3px solid #185FA5; border-radius: 50%; }
+.timeline-item.current::before { background: #E24B4A; border-color: #E24B4A; }
+.timeline-item .ti-time { font-size: 12px; color: #888; font-weight: 600; }
+.timeline-item .ti-desc { font-size: 13px; color: #333; margin-top: 2px; }
+@media (max-width: 680px) {
+  .hero { padding: 32px 20px; }
+  .hero h1 { font-size: 22px; }
+  .content { padding: 24px 18px; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .moat-grid { grid-template-columns: 1fr; }
+  .chain-row { flex-direction: column; }
+  .chain-arrow { transform: rotate(90deg); padding: 4px 0; }
+  table { font-size: 12px; }
+  th, td { padding: 8px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>中国巨石（600176）</h1>
+    <div class="subtitle">全球玻纤龙头 · AI算力上游新材料</div>
+    <div class="badges">
+      <span class="badge">2025年营收 188.81亿</span>
+      <span class="badge">归母净利 +34.38%</span>
+      <span class="badge">全球市占率 30%</span>
+      <span class="badge">评级：Buy</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="highlight-box">
+      <p style="font-size: 14px;"><strong>一句话定位：</strong>中国巨石是全球玻璃纤维绝对龙头，主业99%来自玻纤及制品。当前正处于"AI电子布需求爆发 + 供给强约束 + 价格上行"三重共振的周期复苏期，利润弹性最大的电子布业务成为核心增长引擎。</p>
+    </div>
+
+    <h2>一、核心主营业务产品</h2>
+
+    <p>中国巨石的主业极度聚焦——<strong>99.01%的收入来自玻璃纤维及制品</strong>（2025年183.45亿元），是典型的单一材料制造商。</p>
+
+    <h3>1. 五大产品体系一览</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>产品类型</th>
+          <th>核心应用</th>
+          <th>2025规模</th>
+          <th>毛利率</th>
+          <th>战略定位</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>粗纱及制品</strong></td>
+          <td>风电叶片、管罐、建材</td>
+          <td>320.26万吨</td>
+          <td>20%-40%</td>
+          <td>压舱石（规模根基）</td>
+        </tr>
+        <tr style="background: #fef5f5;">
+          <td><strong>电子纱/电子布</strong></td>
+          <td>PCB覆铜板基材</td>
+          <td>10.62亿米</td>
+          <td style="color:#E24B4A;font-weight:700;">50%-56%</td>
+          <td style="color:#E24B4A;font-weight:600;">弹性引擎（最赚钱）</td>
+        </tr>
+        <tr>
+          <td>热塑纱/短切纱</td>
+          <td>新能源车轻量化</td>
+          <td>—</td>
+          <td>25%-30%</td>
+          <td>成长赛道</td>
+        </tr>
+        <tr>
+          <td>特种纱</td>
+          <td>储氢瓶、航空航天</td>
+          <td>—</td>
+          <td>40%+</td>
+          <td>萌芽期（增速100%+）</td>
+        </tr>
+        <tr>
+          <td>低介电电子布</td>
+          <td>AI服务器专用</td>
+          <td>—</td>
+          <td>50%+</td>
+          <td>国产替代核心</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2. 最新财务表现</h3>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="label">2025年营收</div>
+        <div class="value">188.81<span style="font-size:14px;">亿</span></div>
+        <div class="change up">+19.08% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">2025年归母净利</div>
+        <div class="value">32.85<span style="font-size:14px;">亿</span></div>
+        <div class="change up">+34.38% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">2026Q1归母净利</div>
+        <div class="value">12.67<span style="font-size:14px;">亿</span></div>
+        <div class="change up">+73.48% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">2025年扣非净利</div>
+        <div class="value">34.82<span style="font-size:14px;">亿</span></div>
+        <div class="change up">+94.70% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">经营现金流</div>
+        <div class="value">42.01<span style="font-size:14px;">亿</span></div>
+        <div class="change up">+106.69% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="label">2026Q1毛利率</div>
+        <div class="value">39.64<span style="font-size:14px;">%</span></div>
+        <div class="change up">大幅修复</div>
+      </div>
+    </div>
+
+    <div class="red-box">
+      <p><strong>关键信号：</strong>2025年扣非净利润增速（+94.70%）远超归母增速（+34.38%），说明盈利改善完全由主业驱动。经营现金流（42亿）大于归母净利润（32.85亿），净利润现金含量128%，盈利质量极高。</p>
+    </div>
+
+    <h2>二、产业链位置与结构</h2>
+
+    <p>玻纤产业链是标准的"上游资源→中游制造→下游应用"三层结构，中国巨石牢牢占据<strong>中游制造端的核心环节</strong>——整条产业链利润最集中的位置。</p>
+
+    <div class="chain-diagram">
+      <div class="chain-row">
+        <div class="chain-col">
+          <div class="chain-col-title">上游 · 资源与设备</div>
+          <div class="chain-item">
+            <div class="ci-title">叶蜡石 / 石英砂</div>
+            <div class="ci-desc">占成本50%+ · 巨石自给70%</div>
+          </div>
+          <div class="chain-item">
+            <div class="ci-title">天然气 / 电力</div>
+            <div class="ci-desc">占成本25% · 能耗低于行业20%</div>
+          </div>
+          <div class="chain-item">
+            <div class="ci-title">铂金漏板 / 高端织机</div>
+            <div class="ci-desc">丰田织机交付期24个月</div>
+          </div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-col">
+          <div class="chain-col-title" style="color:#185FA5;">中游 · 核心制造（巨石主阵地）</div>
+          <div class="chain-item jushi">
+            <div class="ci-title">粗纱及制品</div>
+            <div class="ci-desc">320万吨 · 全球第一</div>
+          </div>
+          <div class="chain-item jushi ai-hot">
+            <div class="ci-title">电子纱 → 电子布</div>
+            <div class="ci-desc">10.62亿米 · 毛利率50%+</div>
+          </div>
+          <div class="chain-item jushi">
+            <div class="ci-title">热塑纱 / 特种纱</div>
+            <div class="ci-desc">汽车/储氢/航空</div>
+          </div>
+          <div class="chain-item jushi ai-hot">
+            <div class="ci-title">低介电电子布（AI专用）</div>
+            <div class="ci-desc">国产替代 · 市占23%→28%</div>
+          </div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-col">
+          <div class="chain-col-title">下游 · 应用领域</div>
+          <div class="chain-item">
+            <div class="ci-title">风电叶片</div>
+            <div class="ci-desc">~28.5% · 增速25%+</div>
+          </div>
+          <div class="chain-item ai-hot">
+            <div class="ci-title">PCB / 覆铜板（AI）</div>
+            <div class="ci-desc" style="color:#E24B4A;font-weight:600;">~24% · 增速50%+ ★★★★★</div>
+          </div>
+          <div class="chain-item">
+            <div class="ci-title">交通运输 / 建材</div>
+            <div class="ci-desc">~28% · 稳定/下滑</div>
+          </div>
+          <div class="chain-item">
+            <div class="ci-title">储氢 / 航空</div>
+            <div class="ci-desc">&lt;5% · 增速100%+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>中游制造端：巨石的定价权来源</h3>
+
+    <p>池窑拉丝是核心壁垒环节，<strong>池窑一旦点火需连续运转7-10年</strong>，供给刚性。新建产线建设+调试18-24个月。玻纤被划入"两高"限制类行业，新建产能必须等量置换。这些约束使得中游成为利润最集中的环节。</p>
+
+    <table>
+      <thead>
+        <tr><th>公司</th><th>2024年单位成本（元/吨）</th><th>全球市占率</th><th>周期底部表现</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#e6f1fb;">
+          <td><strong>中国巨石</strong></td>
+          <td style="color:#E24B4A;font-weight:700;">3,872</td>
+          <td><strong>30%（第一）</strong></td>
+          <td style="color:#E24B4A;">盈利24.45亿</td>
+        </tr>
+        <tr><td>中材科技</td><td>4,686</td><td>17%</td><td>盈利</td></tr>
+        <tr><td>国际复材</td><td>5,718</td><td>14%</td><td style="color:#3B6D11;">亏损3.54亿</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <p>巨石单位成本比国际复材低<strong>48%</strong>。这个成本差意味着：在行业最差的2024年，巨石仍盈利24.45亿，国际复材亏损3.54亿——这就是成本护城河的真金白银。</p>
+    </div>
+
+    <h2>三、投资逻辑：三重共振 + 五大护城河</h2>
+
+    <h3>三重共振驱动力</h3>
+
+    <table>
+      <thead><tr><th>维度</th><th>核心逻辑</th><th>量化信号</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>需求侧</strong></td>
+          <td>AI算力爆发→电子布需求结构性翻倍</td>
+          <td>2025年6857万米→2026年预计1.4亿米</td>
+        </tr>
+        <tr>
+          <td><strong>供给侧</strong></td>
+          <td>政策限产+行业自律+扩产周期长</td>
+          <td>2025年产能同比持平（此前CAGR 10%）</td>
+        </tr>
+        <tr>
+          <td><strong>价格端</strong></td>
+          <td>5轮提价，高端供需缺口25%-30%</td>
+          <td>电子布累计涨幅+78%~100%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>五大护城河</h3>
+
+    <div class="moat-grid">
+      <div class="moat-card">
+        <div class="moat-num">01</div>
+        <div class="moat-title">规模壁垒</div>
+        <div class="moat-desc">300万吨产能，全球市占30%，相当于第2-4名总和。"三个世界第一"</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-num">02</div>
+        <div class="moat-title">成本壁垒</div>
+        <div class="moat-desc">单位成本3872元/吨，较行业低18%。周期底部仍盈利，这是最硬的护城河</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-num">03</div>
+        <div class="moat-title">技术壁垒</div>
+        <div class="moat-desc">E9超高模量+二代低介电电子纱，独家/领先，通过英伟达认证</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-num">04</div>
+        <div class="moat-title">产能置换壁垒</div>
+        <div class="moat-desc">新建必须等量置换，中小厂无资金。2023-25年累计关停100万吨落后产能</div>
+      </div>
+      <div class="moat-card" style="grid-column: span 2;">
+        <div class="moat-num">05</div>
+        <div class="moat-title">客户认证壁垒</div>
+        <div class="moat-desc">AI/汽车/风电客户认证6-12个月，供应链锁定。绑定英伟达、特斯拉、比亚迪、维斯塔斯、金风科技等头部客户。低介电电子布预付款比例达30%</div>
+      </div>
+    </div>
+
+    <h3>三大成长引擎</h3>
+
+    <div class="engine-grid">
+      <div class="engine-card">
+        <div class="engine-icon" style="background: #E24B4A;">AI</div>
+        <div class="engine-body">
+          <div class="engine-title">引擎1：AI电子布（最高弹性）</div>
+          <div class="engine-detail">7628电子布 4.15→7.4元/米（+78%）；AI服务器PCB层数8→16-30层，单机用量×3-8倍；ASP每涨1元/米→净利+12亿。淮安3.9亿米产线已点火，电子布市占率23%→28%。2026年净利润有望冲击60-75亿</div>
+        </div>
+      </div>
+      <div class="engine-card">
+        <div class="engine-icon" style="background: #0F6E56;">风</div>
+        <div class="engine-body">
+          <div class="engine-title">引擎2：风电纱（长期稳健）</div>
+          <div class="engine-detail">风电纱全球市占率33%，海上风电专用纱超40%。1GW叶片≈1万吨玻纤，2025全球新增风电165GW（+40%）。九江20万吨产能2026年满产。2025年风电收入同比+194.61%</div>
+        </div>
+      </div>
+      <div class="engine-card">
+        <div class="engine-icon" style="background: #185FA5;">全</div>
+        <div class="engine-body">
+          <div class="engine-title">引擎3：全球化+产能扩张</div>
+          <div class="engine-detail">国内4大基地+埃及+美国，海外收入占比32.5%。淮安新增5万吨电子纱+3.2亿米电子布（投资44亿），成都新建20万吨，埃及二线技改。总产能从2020年180万吨增至2025年300万吨</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>周期定位：复苏期 → 早期繁荣</h3>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="ti-time">2021年</div>
+        <div class="ti-desc">繁荣顶部（电子布8.75元/米）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="ti-time">2022-2024年</div>
+        <div class="ti-desc">衰退期（产能集中释放，价格跌至3.3元/米，行业大面积亏损）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="ti-time">2024Q4-2025Q3</div>
+        <div class="ti-desc">谷底磨底（协会自律、"反内卷"、产能出清）</div>
+      </div>
+      <div class="timeline-item current">
+        <div class="ti-time">2025Q4至今 ← 当前</div>
+        <div class="ti-desc"><strong>复苏期</strong>（价格反弹+利润修复+AI需求爆发）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="ti-time">未来</div>
+        <div class="ti-desc">向繁荣期演进（取决于AI资本开支持续性 + 供给投放节奏）</div>
+      </div>
+    </div>
+
+    <div class="green-box">
+      <p><strong>本轮周期"不一样"的地方：</strong>① AI驱动取代地产驱动，需求弹性完全不同；② 供给端强约束不可逆；③ 国产替代叠加周期复苏，成长性叠加周期性。</p>
+    </div>
+
+    <div class="chart-container" style="height: 280px;">
+      <canvas id="profitChart" role="img" aria-label="中国巨石归母净利润趋势图">中国巨石2021-2026Q1归母净利润趋势图</canvas>
+    </div>
+
+    <h3>核心风险</h3>
+
+    <ul class="risk-list">
+      <li><strong>供给放量风险（最致命）</strong>：截至2025年底行业在建/拟建特种电子玻纤项目投资额累计133.8亿元，产能预计2027年集中释放。若AI需求不及预期，电子布价格可能见顶回落</li>
+      <li><strong>AI资本开支不及预期</strong>：全球智算中心建设放缓→电子布需求下滑，直接打击本轮最强增长引擎</li>
+      <li><strong>估值风险</strong>：PE处于过去5年高位分位，若中报利润不达预期，短期有回调压力</li>
+      <li><strong>贸易壁垒</strong>：欧盟反倾销税约24.8%，埃及基地双反税率44%；海外收入占比32.5%</li>
+      <li><strong>原材料成本上行</strong>：纯碱、天然气涨价侵蚀利润；高纯石英砂对外依存度40%+</li>
+      <li><strong>短期流动性</strong>：速动比率0.78，2026Q1应收账款大增66.20%</li>
+    </ul>
+
+    <div class="action-box">
+      <h3>行动建议</h3>
+      <p><strong>评级：Buy（买入），12个月维度</strong></p>
+      <p>全球龙头+成本最低+三大赛道共振，是玻纤板块确定性最强的标的。瑞银目标价43元（2027年EPS 2.10元，20倍PE）。</p>
+      <p style="margin-top: 12px; font-size: 13px; color: #8faadb;">仓位建议：电子布价格持续上行+AI资本开支高增 → 适合作为核心仓位持有；需密切跟踪2027年产能投放节奏——中长期最大变量。</p>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>数据来源</strong>：中国巨石2025年报、2026Q1季报、华泰证券、国投证券、西南证券、瑞银、中国玻璃纤维工业协会、GWEC、TrendForce、Wind等。数据截至2026年6月。</p>
+    <p style="margin-top: 8px;"><strong>免责声明</strong>：本报告仅供参考，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  </div>
+</div>
+
+<script>
+new Chart(document.getElementById('profitChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2021', '2022', '2023', '2024', '2025', '2026Q1'],
+    datasets: [
+      {
+        label: '归母净利润（亿元）',
+        data: [60.28, 55.34, 29.74, 24.45, 32.85, 12.67],
+        backgroundColor: ['#378ADD','#378ADD','#888780','#888780','#E24B4A','#E24B4A'],
+        borderRadius: 4,
+        barPercentage: 0.7
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          afterLabel: function(ctx) {
+            const labels = ['周期高点', '衰退开始', '-46%', '周期底部', '+34%修复', '+73%强复苏'];
+            return labels[ctx.dataIndex];
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: '亿元', font: { size: 12 } },
+        grid: { color: '#f0f0f0' }
+      },
+      x: {
+        grid: { display: false }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

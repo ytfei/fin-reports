@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电子纱与电子布：从一把沙子到AI芯片的底座</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.75;font-size:15px}
+.container{max-width:780px;margin:0 auto;background:#fff;overflow:hidden}
+
+.hero{background:linear-gradient(135deg,#0a1628 0%,#162d50 60%,#0a1628 100%);padding:52px 32px 44px;text-align:center}
+.hero h1{color:#fff;font-size:26px;font-weight:700;margin-bottom:10px;letter-spacing:.5px}
+.hero .subtitle{color:#8faadb;font-size:14px;margin-bottom:24px}
+.hero .badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.hero .badge{background:rgba(255,255,255,.06);border:1px solid rgba(143,170,219,.25);border-radius:20px;padding:6px 14px;color:#8faadb;font-size:12px}
+
+.content{padding:32px 28px}
+h2{font-size:20px;font-weight:600;color:#0a1628;margin:40px 0 16px;padding-left:12px;border-left:4px solid #185FA5}
+h3{font-size:16px;font-weight:600;color:#0C447C;margin:24px 0 10px}
+p{margin-bottom:12px;color:#333}
+strong{color:#0a1628}
+.tlabel{font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+
+.note{background:#f0f4fa;border-left:4px solid #185FA5;padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13px;color:#0C447C}
+.warn{background:#fff8f0;border-left:4px solid #EF9F27;padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13px;color:#854F0B}
+.red-note{background:#fef5f5;border-left:4px solid #A32D2D;padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13px;color:#791F1F}
+.green-note{background:#f0faf4;border-left:4px solid #0F6E56;padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13px;color:#085041}
+
+/* ===== 生产线流程图 ===== */
+.chain-flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.chain-stage{display:flex;align-items:stretch;gap:0;position:relative}
+.chain-node{flex:1;padding:16px 14px;border-radius:8px;text-align:center;position:relative;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+.chain-node .cn-icon{font-size:28px;margin-bottom:6px;line-height:1}
+.chain-node .cn-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.chain-node .cn-desc{font-size:11px;color:#888;line-height:1.4}
+.chain-arrow{text-align:center;padding:8px 0;font-size:20px;color:#185FA5;font-weight:300}
+.chain-row{display:flex;gap:8px;margin-bottom:6px;align-items:stretch}
+.chain-row .chain-node{margin:0;border-radius:8px;border:1px solid #e0e0e0}
+
+/* 沙子→PCB 主流程 */
+.mainflow{background:#f9fafb;border-radius:12px;padding:20px;margin:20px 0}
+.mainflow-step{display:flex;align-items:center;gap:12px;margin-bottom:0}
+.mf-box{flex:1;padding:14px;border-radius:8px;text-align:center;font-size:13px;font-weight:500}
+.mf-arrow{font-size:22px;color:#888;flex-shrink:0;padding:0 4px}
+.mf-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+
+/* 颜色 */
+.bg-sand{background:#FAEEDA;border:1px solid #EF9F27;color:#412402}
+.bg-melt{background:#FCEBEB;border:1px solid #E24B4A;color:#501313}
+.bg-yarn{background:#E6F1FB;border:1px solid #378ADD;color:#042C53}
+.bg-cloth{background:#EEEDFE;border:1px solid #534AB7;color:#26215C}
+.bg-ccl{background:#E1F5EE;border:1px solid #0F6E56;color:#085041}
+.bg-pcb{background:#FAECE7;border:1px solid #D85A30;color:#4A1B0C}
+
+/* 八步流程 */
+.step-list{margin:20px 0}
+.step-item{display:flex;gap:16px;margin-bottom:0;position:relative}
+.step-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;flex-shrink:0;z-index:2;position:relative}
+.step-body{flex:1;padding:16px;background:#f9fafb;border-radius:0 12px 12px 12px;margin-bottom:16px;border-left:3px solid transparent}
+.step-body h4{font-size:15px;font-weight:600;margin-bottom:8px;color:#0a1628}
+.step-body p{font-size:13px;color:#444;margin-bottom:6px}
+.step-body .step-params{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.step-body .param-tag{background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:3px 8px;font-size:11px;color:#555}
+.step-line{position:absolute;left:19px;top:40px;bottom:0;width:2px;background:#e0e0e0;z-index:1}
+.step-item:last-child .step-line{display:none}
+
+/* PCB层数对比 */
+.pcb-compare{display:flex;gap:16px;margin:20px 0}
+.pcb-side{flex:1;text-align:center}
+.pcb-label{font-size:13px;font-weight:600;margin-bottom:10px;padding:6px;border-radius:6px}
+.pcb-stack{display:flex;flex-direction:column;gap:1px;align-items:center;padding:12px;border-radius:8px;min-height:200px;justify-content:center}
+.pcb-layer{padding:3px 0;width:80%;border-radius:2px;font-size:10px;text-align:center}
+.layer-cu{background:#b87333;color:#fff;font-weight:500}
+.layer-cloth{background:#E6F1FB;color:#0C447C;font-weight:500}
+.pcb-side-info{margin-top:10px;font-size:12px;color:#888}
+.pcb-side-info .big{font-size:20px;font-weight:700;color:#0a1628}
+
+/* 价格对比表 */
+.price-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.price-table th{background:#0C447C;color:#fff;padding:10px;text-align:left;font-weight:500}
+.price-table td{padding:10px;border-bottom:1px solid #eee}
+.price-table tr.hot td{background:#fef5f5;font-weight:500}
+.price-bar{display:inline-block;height:12px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+/* 三明治比喻 */
+.sandwich{display:flex;flex-direction:column;align-items:center;gap:3px;margin:20px 0;padding:20px;background:#f9fafb;border-radius:12px}
+.sw-layer{display:flex;align-items:center;justify-content:center;width:220px;height:32px;border-radius:4px;font-size:12px;font-weight:500;text-align:center}
+.sw-cu{background:#b87333;color:#fff}
+.sw-cloth{background:#E6F1FB;color:#0C447C;border:1px solid #B5D4F4}
+.sw-resin{background:#F1EFE8;color:#5F5E5A;font-size:11px;height:20px}
+
+/* Chart 容器 */
+.chart-box{position:relative;width:100%;margin:20px 0;padding:16px;background:#f9fafb;border-radius:12px}
+
+/* 供需缺口 */
+.gap-bar{display:flex;height:32px;border-radius:6px;overflow:hidden;margin:10px 0;font-size:11px;font-weight:500}
+.gap-fill{display:flex;align-items:center;justify-content:center;color:#fff}
+.gap-label{font-size:12px;color:#888;margin-bottom:4px}
+
+/* 未来空间 卡片 */
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.future-card{background:#f9fafb;border-radius:8px;padding:16px;text-align:center;border-top:3px solid #185FA5}
+.future-card .fc-num{font-size:28px;font-weight:700;color:#E24B4A;margin-bottom:4px}
+.future-card .fc-label{font-size:12px;color:#888}
+.future-card .fc-desc{font-size:11px;color:#888;margin-top:4px}
+
+/* 弹性公式 */
+.formula-box{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:24px;color:#fff;text-align:center;margin:20px 0}
+.formula-box .formula{font-size:22px;font-weight:700;margin-bottom:8px}
+.formula-box .formula-detail{font-size:13px;color:#c8ddf2}
+
+/* 关键参数高亮 */
+.param-highlight{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.ph-item{flex:1;min-width:140px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:12px;text-align:center}
+.ph-item .ph-label{font-size:11px;color:#888;margin-bottom:4px}
+.ph-item .ph-value{font-size:18px;font-weight:700;color:#0a1628}
+
+/* 产业链传导 */
+.transmission{background:#f9fafb;border-radius:12px;padding:20px;margin:20px 0}
+.trans-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trans-box{padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;flex:1}
+.trans-arrow{font-size:18px;color:#888;flex-shrink:0}
+
+.disclaimer{background:#f5f5f5;padding:20px 28px;font-size:12px;color:#999;text-align:center;line-height:1.8}
+
+/* 股市颜色 */
+.up-red{color:#E24B4A;font-weight:600}
+.down-green{color:#3B6D11;font-weight:600}
+
+@media(max-width:680px){
+  .hero{padding:32px 20px}
+  .hero h1{font-size:20px}
+  .content{padding:24px 16px}
+  .pcb-compare{flex-direction:column}
+  .future-grid{grid-template-columns:1fr}
+  .chain-row{flex-direction:column}
+  .mf-row{flex-direction:column}
+  .mf-arrow{transform:rotate(90deg);padding:4px 0}
+  .price-table{font-size:11px}
+  .price-table th,.price-table td{padding:6px 8px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>电子纱与电子布</h1>
+    <div class="subtitle">从一把沙子到AI芯片的底座 · 通俗全解读</div>
+    <div class="badges">
+      <span class="badge">制造工艺8步走</span>
+      <span class="badge">AI需求×3-8倍</span>
+      <span class="badge">价格差最高100倍</span>
+      <span class="badge">2026缺口35%</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="note">
+      <strong>本文目标</strong>：面向零基础读者，用图表+大白话讲清楚三个问题——电子布<strong>是什么</strong>、AI<strong>为什么需要它</strong>、未来<strong>空间有多大</strong>。
+    </div>
+
+    <!-- ==================== 第一章 ==================== -->
+    <h2>一、电子布到底是什么？</h2>
+
+    <p><strong>一句话版本</strong>：把石英砂在1500℃熔成玻璃液，拉成头发丝1/10细的玻璃纤维丝，织成一匹"玻璃布"——它就是PCB（电路板）里的"钢筋骨架"。</p>
+
+    <h3>从沙子到PCB：完整路径</h3>
+
+    <div class="mainflow">
+      <div class="mf-row">
+        <div class="mf-box bg-sand">
+          <div style="font-size:24px;">🏜️</div>
+          石英砂<br><span style="font-size:11px;color:#888">SiO₂ + 叶蜡石</span>
+        </div>
+        <div class="mf-arrow">→</div>
+        <div class="mf-box bg-melt">
+          <div style="font-size:24px;">🔥</div>
+          池窑熔融<br><span style="font-size:11px;color:#888">1500℃ → 玻璃液</span>
+        </div>
+        <div class="mf-arrow">→</div>
+        <div class="mf-box bg-yarn">
+          <div style="font-size:24px;">🧵</div>
+          电子纱<br><span style="font-size:11px;color:#888">4-9微米 细丝</span>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:20px;color:#888;padding:8px 0;">↓</div>
+      <div class="mf-row">
+        <div class="mf-box bg-cloth">
+          <div style="font-size:24px;">🧶</div>
+          电子布<br><span style="font-size:11px;color:#888">织成布 → 表面处理</span>
+        </div>
+        <div class="mf-arrow">+</div>
+        <div class="mf-box" style="background:#FAECE7;border:1px solid #D85A30;color:#4A1B0C;">
+          <div style="font-size:24px;">🥩</div>
+          铜箔 + 树脂<br><span style="font-size:11px;color:#888">高温热压</span>
+        </div>
+        <div class="mf-arrow">→</div>
+        <div class="mf-box bg-ccl">
+          <div style="font-size:24px;">🟩</div>
+          覆铜板CCL<br><span style="font-size:11px;color:#888">蚀刻线路</span>
+        </div>
+        <div class="mf-arrow">→</div>
+        <div class="mf-box bg-pcb">
+          <div style="font-size:24px;">🔌</div>
+          PCB<br><span style="font-size:11px;color:#888">装上芯片</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>生活化比喻</strong>：PCB就是一块"玻璃纤维三明治"。电子布是面包片（骨架+绝缘），铜箔是夹心的肉（导电），树脂是酱料（粘合剂）。每多一层就多夹一片面包。
+    </div>
+
+    <h3>PCB"三明治"结构示意图</h3>
+    <div class="sandwich">
+      <div class="sw-layer sw-cu">铜箔层 — 蚀刻出电路线路（导电）</div>
+      <div class="sw-layer sw-resin">树脂 — 粘合剂（把铜箔和布粘在一起）</div>
+      <div class="sw-layer sw-cloth">电子布 — 骨架 + 绝缘</div>
+      <div class="sw-layer sw-resin">树脂</div>
+      <div class="sw-layer sw-cu">铜箔层</div>
+      <div class="sw-layer sw-cloth">电子布 — 骨架 + 绝缘</div>
+      <div class="sw-layer sw-resin">树脂</div>
+      <div class="sw-layer sw-cu">铜箔层</div>
+      <div style="font-size:11px;color:#888;margin-top:8px;">↑ 这就是一个3层PCB的简化结构（实际AI服务器有20-40层）</div>
+    </div>
+
+    <h3>电子布在PCB里的四大功能</h3>
+    <table class="price-table">
+      <thead><tr><th>功能</th><th>通俗解释</th><th>没有它会怎样</th></tr></thead>
+      <tbody>
+        <tr><td><strong>电气绝缘</strong></td><td>防止不同层之间串电短路</td><td style="color:#E24B4A;">整块板直接烧掉</td></tr>
+        <tr><td><strong>机械支撑</strong></td><td>像钢筋，给铜箔线路提供刚性骨架</td><td style="color:#E24B4A;">板子软塌塌，无法承载芯片</td></tr>
+        <tr><td><strong>尺寸稳定</strong></td><td>受热不变形，保证线路对齐</td><td style="color:#E24B4A;">线路错位，信号断路</td></tr>
+        <tr><td><strong>散热通道</strong></td><td>玻璃纤维导热性可控</td><td style="color:#E24B4A;">芯片过热，性能下降</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ==================== 第二章 ==================== -->
+    <h2>二、电子布怎么造出来的？8步全流程</h2>
+
+    <p>整个制造过程分两大阶段：<strong>先做纱（Step 1-4），再做布（Step 5-8）</strong>。</p>
+
+    <h3>第一阶段：制纱 — 从沙子到玻璃丝</h3>
+
+    <div class="step-list">
+
+      <div class="step-item">
+        <div class="step-num" style="background:#EF9F27;">1</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#EF9F27;">
+          <h4>配料熔融</h4>
+          <p>石英砂、叶蜡石、纯碱等混合后送入<strong>池窑</strong>（超级大熔炉），1300-1500℃熔成均匀的玻璃液。</p>
+          <div class="step-params">
+            <span class="param-tag">🔥 温度：1300-1500℃</span>
+            <span class="param-tag">⏱️ 一旦点火 → 连续运转7-10年不停</span>
+          </div>
+          <div class="warn" style="margin-top:8px;"><strong>供给刚性</strong>：池窑不能像开关灯一样随意调产能——这就是玻纤行业供给刚性最根本的来源。</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#E24B4A;">2</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#E24B4A;">
+          <h4>漏板拉丝</h4>
+          <p>玻璃液从池窑底部经<strong>铂铑合金漏板</strong>（上面有几百到几千个微米级小孔），被高速拉成连续玻璃纤维丝。</p>
+          <div class="step-params">
+            <span class="param-tag">📏 单丝直径：4-9微米（头发丝的1/10~1/15）</span>
+            <span class="param-tag">⚡ 拉丝速度：3000-5000米/分钟</span>
+            <span class="param-tag">🌡️ 温控精度：±1℃</span>
+          </div>
+          <div class="param-highlight" style="margin-top:10px;">
+            <div class="ph-item">
+              <div class="ph-label">电子纱粗细</div>
+              <div class="ph-value">~7μm</div>
+            </div>
+            <div class="ph-item">
+              <div class="ph-label">头发丝粗细</div>
+              <div class="ph-value">~70μm</div>
+            </div>
+            <div class="ph-item">
+              <div class="ph-label">倍数</div>
+              <div class="ph-value" style="color:#E24B4A;">1/10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#378ADD;">3</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#378ADD;">
+          <h4>涂浸润剂</h4>
+          <p>刚拉出的丝又细又脆，直接织布会断。涂一层<strong>硅烷偶联剂</strong>，既保护纤维，又改善后续和树脂的结合力。</p>
+          <div class="red-note" style="margin-top:8px;"><strong>配方是核心商业机密</strong>：浸润剂配方直接决定电子布最终与树脂的结合质量，也间接影响介电性能。各厂家严格保密。</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#534AB7;">4</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#534AB7;">
+          <h4>退解 + 络纱</h4>
+          <p>多根单丝合股、加一点捻度（像拧麻花），卷绕成纱筒。<strong>到这一步，电子纱就做完了。</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>第二阶段：织布 — 从玻璃丝到布</h3>
+
+    <div class="step-list">
+
+      <div class="step-item">
+        <div class="step-num" style="background:#1D9E75;">5</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#1D9E75;">
+          <h4>整经</h4>
+          <p>成百上千根电子纱按密度平行排列，卷绕到"经轴"上。要求每根纱张力完全一致——差一点，布就不平整。</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#D85A30;">6</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#D85A30;">
+          <h4>织布</h4>
+          <p>用高速<strong>喷气织机</strong>（全球90%来自日本丰田JAT910），经纱和纬纱交织成坯布。</p>
+          <div class="step-params">
+            <span class="param-tag">📐 厚度精度：±1微米</span>
+            <span class="param-tag">🔍 孔隙率：<1%</span>
+            <span class="param-tag">📉 月产量：仅0.7万米/台</span>
+          </div>
+          <div class="red-note" style="margin-top:8px;">
+            <strong>织机 = 行业命脉</strong>：丰田垄断全球90%高端织机，年新增仅1100台，交付排到2028年。<br>
+            你要扩电子布产能？先排队等织机——这就是2027年前供给无法大幅释放的核心原因。
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#A32D2D;">7</div>
+        <div class="step-line"></div>
+        <div class="step-body" style="border-left-color:#A32D2D;">
+          <h4>表面处理（最关键的一步）</h4>
+          <p>坯布经偶联剂浸泡+高温热处理，形成分子级"桥"，使其能和树脂牢牢结合。</p>
+          <div class="red-note" style="margin-top:8px;">
+            <strong>普通布 vs 高端布的核心差距就在这里</strong>：同样的纱，不同的表面处理工艺，做出来的布介电性能（Dk/Df）天差地别。<br>
+            低介电布的技术壁垒，不在于原料，而在于表面处理的配方和工艺。
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num" style="background:#5F5E5A;">8</div>
+        <div class="step-body" style="border-left-color:#5F5E5A;">
+          <h4>检验分等</h4>
+          <p>按厚度、Dk、Df、CTE严格分级。高端布<strong>废品率30%-50%</strong>——每生产2米可能1米不合格。这就是高端布能卖普通布20-40倍的原因。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>不同等级电子布价格对比</h3>
+    <div class="chart-box" style="height:340px;">
+      <canvas id="priceChart" role="img" aria-label="不同等级电子布价格对比">不同等级电子布价格对比柱状图</canvas>
+    </div>
+
+    <table class="price-table">
+      <thead><tr><th>产品</th><th>Dk</th><th>价格（元/米）</th><th>用途</th><th>国产化率</th></tr></thead>
+      <tbody>
+        <tr><td>普通E布(7628)</td><td>6.0-6.2</td><td>4-7</td><td>普通服务器/家电</td><td>80%+</td></tr>
+        <tr><td>低介电一代</td><td>4.5-5.0</td><td>40-60</td><td>5G基站</td><td>50%</td></tr>
+        <tr class="hot"><td><strong>低介电二代</strong></td><td><strong>3.2-3.8</strong></td><td class="up-red">120-160</td><td><strong>AI服务器</strong></td><td><strong>30%↑</strong></td></tr>
+        <tr><td>低膨胀布</td><td>4.0-4.5</td><td>80-120</td><td>先进封装</td><td>20%</td></tr>
+        <tr class="hot"><td><strong>石英布(Q布)</strong></td><td>3.4-3.8</td><td class="up-red">300-450</td><td><strong>1.6T光模块/CPO</strong></td><td><10%</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#888;">价格差最高达 <strong style="color:#E24B4A;">100倍</strong>——这就是巨石拼命往高端做的原因。</p>
+
+    <!-- ==================== 第三章 ==================== -->
+    <h2>三、为什么AI服务器需要更多电子布？</h2>
+
+    <h3>第一层：AI服务器PCB层数暴增</h3>
+
+    <p>PCB不是实心板，而是像<strong>千层饼</strong>——多层铜箔和电子布交替叠压。层与层之间通过"过孔"连通。层数越多，能布的线路就越多。</p>
+
+    <div class="pcb-compare">
+      <div class="pcb-side">
+        <div class="pcb-label" style="background:#E6F1FB;color:#0C447C;">普通服务器 PCB</div>
+        <div class="pcb-stack" style="background:#f0f4fa;">
+          <div class="pcb-layer layer-cu">铜箔 L1</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L2</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L3</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L4</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L5</div>
+          <div style="font-size:10px;color:#aaa;padding:2px;">···</div>
+          <div class="pcb-layer layer-cu">铜箔 L10</div>
+        </div>
+        <div class="pcb-side-info">
+          <span class="big">8-12层</span><br>
+          PCB价值 ~2,425元<br>
+          电子布夹层 ~9层
+        </div>
+      </div>
+      <div class="pcb-side">
+        <div class="pcb-label" style="background:#FCEBEB;color:#A32D2D;">AI服务器 PCB</div>
+        <div class="pcb-stack" style="background:#fef5f5;">
+          <div class="pcb-layer layer-cu">铜箔 L1</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L2</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L3</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L4</div>
+          <div class="pcb-layer layer-cloth">电子布</div>
+          <div class="pcb-layer layer-cu">铜箔 L5</div>
+          <div style="font-size:10px;color:#aaa;padding:2px;">··· ×20+ ···</div>
+          <div class="pcb-layer layer-cu">铜箔 L30</div>
+        </div>
+        <div class="pcb-side-info">
+          <span class="big" style="color:#E24B4A;">20-40层</span><br>
+          PCB价值 <span class="up-red">15,321元</span><br>
+          电子布夹层 ~29层
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>层数翻倍 → 电子布用量 ×3-8倍</strong>。PCB每一层之间都要夹一层电子布做绝缘。10层→30层，布的用量直接3倍。再加上AI服务器PCB面积更大，实际用量可达3-8倍。
+    </div>
+
+    <h3>AI服务器PCB层数为什么必须堆这么高？</h3>
+
+    <div class="param-highlight">
+      <div class="ph-item">
+        <div class="ph-label">原因A</div>
+        <div class="ph-value" style="font-size:14px;color:#185FA5;">GPU引脚太多</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">8颗GPU，几千个引脚<br>8层根本布不下</div>
+      </div>
+      <div class="ph-item">
+        <div class="ph-label">原因B</div>
+        <div class="ph-value" style="font-size:14px;color:#185FA5;">信号速度太快</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">56-112Gbps<br>需隔离高速/低速层</div>
+      </div>
+      <div class="ph-item">
+        <div class="ph-label">原因C</div>
+        <div class="ph-value" style="font-size:14px;color:#185FA5;">散热需求高</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">板厚3-5mm<br>需分散热应力</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>通俗比喻</strong>：普通服务器像双向四车道马路就够了；AI服务器像北京三环立交——必须修三四层高架才能让那么多"车"（信号）同时跑，互不干扰。
+    </div>
+
+    <h3>第二层：为什么AI需要"低介电"布？</h3>
+
+    <p><strong>介电常数（Dk）</strong>衡量材料对电信号的"阻碍"程度。Dk越低，信号跑得越快越稳。</p>
+
+    <div class="chart-box" style="height:300px;">
+      <canvas id="dkChart" role="img" aria-label="不同电子布介电常数Dk对比">不同电子布介电常数Dk对比</canvas>
+    </div>
+
+    <div class="note">
+      <strong>关键公式</strong>：Dk每降低10% → 信号传输速度<strong>翻倍</strong>。<br>
+      AI服务器GPU间传输速度达56-112Gbps，用普通E布（Dk=6.2）信号传不远就衰减成"听不清的耳语"。<strong>低介电布不是选择，是刚需。</strong>
+    </div>
+
+    <h3>第三层：价格传导链</h3>
+
+    <div class="transmission">
+      <div class="trans-row">
+        <div class="trans-box bg-cloth">电子布涨价</div>
+        <div class="trans-arrow">→</div>
+        <div class="trans-box bg-ccl">覆铜板成本上升</div>
+      </div>
+      <div class="trans-row">
+        <div class="trans-box bg-ccl">覆铜板涨价</div>
+        <div class="trans-arrow">→</div>
+        <div class="trans-box bg-pcb">PCB涨价</div>
+      </div>
+      <div class="trans-row">
+        <div class="trans-box bg-pcb">AI服务器成本上升</div>
+        <div class="trans-arrow">→</div>
+        <div class="trans-box bg-sand">英伟达/微软/谷歌买单</div>
+      </div>
+    </div>
+
+    <div class="red-note">
+      <strong>在高端AI覆铜板里，电子布占成本25%-40%</strong>（普通CCL仅15%）。因为低介电布太贵了（120-160元/米 vs 普通布4-7元/米），直接成为第一大成本项。电子布是整个AI PCB产业链价格波动的<strong>核心源头</strong>。
+    </div>
+
+    <!-- ==================== 第四章 ==================== -->
+    <h2>四、未来空间有多大？</h2>
+
+    <h3>需求端：三个核心数字</h3>
+    <div class="future-grid">
+      <div class="future-card">
+        <div class="fc-num">+85%</div>
+        <div class="fc-label">AI服务器2026出货增速</div>
+        <div class="fc-desc">预计120万台+ (TrendForce)</div>
+      </div>
+      <div class="future-card">
+        <div class="fc-num">×3-8</div>
+        <div class="fc-label">单台电子布用量倍数</div>
+        <div class="fc-desc">vs 普通服务器 (国金证券)</div>
+      </div>
+      <div class="future-card">
+        <div class="fc-num">+120%</div>
+        <div class="fc-label">低介电二代布需求增速</div>
+        <div class="fc-desc">Q布增速更达+1482%</div>
+      </div>
+    </div>
+
+    <div class="chart-box" style="height:300px;">
+      <canvas id="demandChart" role="img" aria-label="AI算力电子布需求增长趋势">AI算力电子布需求增长趋势图</canvas>
+    </div>
+
+    <h3>供给端：三大硬约束</h3>
+
+    <div class="gap-bar">
+      <div class="gap-fill" style="background:#378ADD;width:65%;">供给 65%</div>
+      <div class="gap-fill" style="background:#E24B4A;width:35%;">缺口 35%</div>
+    </div>
+    <p style="font-size:12px;color:#888;text-align:center;">2026年高端电子布供需缺口约1800万米</p>
+
+    <div class="param-highlight">
+      <div class="ph-item">
+        <div class="ph-label">约束1：织机瓶颈</div>
+        <div class="ph-value" style="font-size:14px;color:#E24B4A;">排到2028年</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">丰田年增1100台</div>
+      </div>
+      <div class="ph-item">
+        <div class="ph-label">约束2：技术壁垒</div>
+        <div class="ph-value" style="font-size:14px;color:#E24B4A;">认证12-18月</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">新进入者短期无法突破</div>
+      </div>
+      <div class="ph-item">
+        <div class="ph-label">约束3：库存见底</div>
+        <div class="ph-value" style="font-size:14px;color:#E24B4A;">7天→零</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">正常库存30天</div>
+      </div>
+    </div>
+
+    <h3>巨石的份额空间</h3>
+    <div class="chart-box" style="height:300px;">
+      <canvas id="shareChart" role="img" aria-label="巨石电子布市占率与国产化率提升预测">巨石电子布市占率与低介电布国产化率提升预测</canvas>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula">ASP每涨 1元/米 → 净利润 +12亿元</div>
+      <div class="formula-detail">以巨石2025年10.62亿米销量计算 · 瑞银测算</div>
+    </div>
+
+    <h3>更长期的增量市场</h3>
+    <div class="param-highlight">
+      <div class="ph-item">
+        <div class="ph-label">新能源汽车</div>
+        <div class="ph-value" style="font-size:14px;color:#0F6E56;">+18%/年</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">800V平台+自动驾驶<br>单车PCB 5㎡→8㎡</div>
+      </div>
+      <div class="ph-item">
+        <div class="ph-label">先进封装</div>
+        <div class="ph-value" style="font-size:14px;color:#0F6E56;">爆发期</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">FC-BGA载板需求<br>极薄布/Low-CTE布</div>
+      </div>
+    </div>
+
+    <!-- ==================== 总结 ==================== -->
+    <h2>总结：三句话给普通人</h2>
+
+    <div class="green-note" style="margin-bottom:12px;">
+      <strong>1. 电子布是什么</strong><br>
+      把石英砂在1500℃熔成玻璃，拉成头发1/10细的丝，织成布——PCB里的"钢筋骨架"，给芯片线路提供绝缘和支撑。
+    </div>
+
+    <div class="green-note" style="margin-bottom:12px;">
+      <strong>2. 为什么AI需要它</strong><br>
+      AI服务器GPU之间要传海量数据，信号速度极快。PCB从8-12层堆到20-40层，层数翻倍电子布用量×3-8。信号越快，需要介电常数越低的布——低介电布比普通布贵20-40倍。
+    </div>
+
+    <div class="green-note">
+      <strong>3. 未来空间</strong><br>
+      2026年AI服务器出货+85%，高端电子布需求翻倍，供给被织机瓶颈+技术壁垒卡死，缺口35%。巨石是全球龙头，ASP每涨1元/米净利润多12亿。
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>数据来源</strong>：中国电子材料行业协会、覆铜板行业协会、Prismark、TrendForce、中国巨石2025年报、国金证券、瑞银、常识投研等。数据截至2026年6月。</p>
+    <p style="margin-top:8px;"><strong>免责声明</strong>：本文仅供知识学习和研究参考，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  </div>
+
+</div>
+
+<script>
+const C = {
+  sand:'#EF9F27', melt:'#E24B4A', yarn:'#378ADD', cloth:'#534AB7',
+  ccl:'#0F6E56', pcb:'#D85A30', red:'#E24B4A', green:'#3B6D11', blue:'#185FA5', gray:'#888780'
+};
+
+new Chart(document.getElementById('priceChart'), {
+  type:'bar',
+  data:{
+    labels:['普通E布\n(7628)','低介电一代','低介电二代','低膨胀布','石英布(Q布)'],
+    datasets:[{
+      label:'价格区间（元/米）',
+      data:[5.5,50,140,100,375],
+      backgroundColor:[C.sand,'#5DCAA5',C.red,C.coral,C.cloth],
+      borderRadius:4, barPercentage:0.6
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        label:function(ctx){
+          const ranges=['4-7元/米','40-60元/米','120-160元/米','80-120元/米','300-450元/米'];
+          return ranges[ctx.dataIndex];
+        }
+      }}
+    },
+    scales:{
+      y:{beginAtZero:true,title:{display:true,text:'元/米',font:{size:12}},grid:{color:'#f0f0f0'}},
+      x:{grid:{display:false},ticks:{font:{size:11}}}
+    }
+  }
+});
+
+new Chart(document.getElementById('dkChart'), {
+  type:'bar',
+  data:{
+    labels:['普通E布','低介电一代','低介电二代','石英布(Q布)'],
+    datasets:[{
+      label:'介电常数 Dk',
+      data:[6.1,4.75,3.5,3.6],
+      backgroundColor:[C.sand,'#5DCAA5',C.red,C.cloth],
+      borderRadius:4, barPercentage:0.5
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      annotation:{}
+    },
+    scales:{
+      y:{beginAtZero:true,title:{display:true,text:'Dk值（越低越好）',font:{size:12}},grid:{color:'#f0f0f0'}},
+      x:{grid:{display:false}}
+    }
+  }
+});
+
+new Chart(document.getElementById('demandChart'), {
+  type:'bar',
+  data:{
+    labels:['2025年','2026年(预计)'],
+    datasets:[{
+      label:'AI算力电子布需求（万米）',
+      data:[6857,14000],
+      backgroundColor:[C.blue, C.red],
+      borderRadius:4, barPercentage:0.4
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        afterLabel:function(){return '同比翻倍增长'}
+      }}
+    },
+    scales:{
+      y:{beginAtZero:true,title:{display:true,text:'万米',font:{size:12}},grid:{color:'#f0f0f0'}},
+      x:{grid:{display:false}}
+    }
+  }
+});
+
+new Chart(document.getElementById('shareChart'), {
+  type:'bar',
+  data:{
+    labels:['2025年','2026年','2027年'],
+    datasets:[
+      {
+        label:'电子布全球市占率(%)',
+        data:[23,28,31],
+        backgroundColor:C.blue, borderRadius:4
+      },
+      {
+        label:'低介电布国产化率(%)',
+        data:[10,25,40],
+        backgroundColor:C.red, borderRadius:4
+      }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:12}},
+    },
+    scales:{
+      y:{beginAtZero:true,title:{display:true,text:'%',font:{size:12}},grid:{color:'#f0f0f0'}},
+      x:{grid:{display:false}}
+    }
+  }
+});
+</script>
+</body>
+</html>
