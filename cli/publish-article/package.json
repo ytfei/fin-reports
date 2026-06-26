@@ -1,7 +1,7 @@
 {
-  "name": "@yourusername/publish-article",
+  "name": "publish-article-cli",
   "version": "2.0.0",
-  "description": "自动化发布 HTML 文章到 fin-reports 项目的 Skill",
+  "description": "发布 HTML 文章到 fin-reports 项目的 CLI 工具",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -18,7 +18,7 @@
     "fin-reports",
     "article",
     "publish",
-    "automation"
+    "cli"
   ],
   "author": "Mason",
   "license": "MIT",
