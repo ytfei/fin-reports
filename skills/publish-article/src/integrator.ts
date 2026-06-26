@@ -10,35 +10,80 @@ import type { BuildOptions, DeployOptions } from './types.js';
 
 /**
  * Detect fin-reports project path
- * Searches common locations for project with src/build.js
+ * Priority:
+ * 1. Explicitly provided path parameter
+ * 2. Environment variable FIN_REPORTS_PATH
+ * 3. Config file ~/.fin-reports/config.json
+ * 4. Search common locations for project with src/build.js
  */
-export function detectProjectPath(): string {
+export function detectProjectPath(providedPath?: string): string {
+  // 1. Explicit parameter
+  if (providedPath) {
+    if (isValidProjectPath(providedPath)) {
+      return providedPath;
+    }
+    throw new Error(`指定的项目路径无效: ${providedPath}`);
+  }
+
+  // 2. Environment variable
+  const envPath = process.env.FIN_REPORTS_PATH;
+  if (envPath && isValidProjectPath(envPath)) {
+    return envPath;
+  }
+
+  // 3. Config file
+  const configPath = path.join(os.homedir(), '.fin-reports', 'config.json');
+  try {
+    if (fs.existsSync(configPath)) {
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+      if (config.projectPath && isValidProjectPath(config.projectPath)) {
+        return config.projectPath;
+      }
+    }
+  } catch {
+    // Config file doesn't exist or invalid, continue
+  }
+
+  // 4. Search common locations
   const candidates = [
     process.cwd(),
     path.join(process.cwd(), '..'),
     path.join(process.cwd(), '..', 'NexTech', 'fin-reports'),
     path.join(os.homedir(), 'codebase', 'NexTech', 'fin-reports'),
+    path.join(os.homedir(), 'codebase', 'fin-reports'),
     '/Users/mason/codebase/NexTech/fin-reports',
   ];
 
   for (const candidate of candidates) {
-    const buildJsPath = path.join(candidate, 'src', 'build.js');
-    const packageJsonPath = path.join(candidate, 'package.json');
-
-    if (fs.existsSync(buildJsPath) && fs.existsSync(packageJsonPath)) {
-      // Verify it's fin-reports project
-      try {
-        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-        if (packageJson.name === 'fin-reports') {
-          return candidate;
-        }
-      } catch {
-        // Not a valid package.json, continue searching
-      }
+    if (isValidProjectPath(candidate)) {
+      return candidate;
     }
   }
 
-  throw new Error('无法找到 fin-reports 项目路径');
+  throw new Error('无法找到 fin-reports 项目路径。请通过以下方式之一指定：\n' +
+    '  1. 参数: --project-path /path/to/fin-reports\n' +
+    '  2. 环境变量: export FIN_REPORTS_PATH=/path/to/fin-reports\n' +
+    '  3. 配置文件: ~/.fin-reports/config.json 中设置 projectPath');
+}
+
+/**
+ * Verify if a path is a valid fin-reports project
+ */
+function isValidProjectPath(candidatePath: string): boolean {
+  const buildJsPath = path.join(candidatePath, 'src', 'build.js');
+  const packageJsonPath = path.join(candidatePath, 'package.json');
+
+  if (!fs.existsSync(buildJsPath) || !fs.existsSync(packageJsonPath)) {
+    return false;
+  }
+
+  // Verify it's fin-reports project
+  try {
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    return packageJson.name === 'fin-reports';
+  } catch {
+    return false;
+  }
 }
 
 /**

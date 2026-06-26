@@ -28,11 +28,11 @@ export interface PublishArticleInput {
   /** Custom git commit message, defaults to auto-generated */
   commitMessage?: string;
 
+  /** Target project path (fin-reports), auto-detected if not provided */
+  projectPath?: string;
+
   /** Skip deployment confirmation */
   skipDeploy?: boolean;
-
-  /** Target project path (auto-detected if not provided) */
-  projectPath?: boolean;
 
   /** Preview mode without actual changes */
   dryRun?: boolean;

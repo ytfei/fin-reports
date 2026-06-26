@@ -13,6 +13,7 @@ program
     .option('-c, --category <category>', '目标分类目录')
     .option('-d, --date <date>', '发布日期 (YYYY-MM-DD)')
     .option('-m, --message <message>', 'Git 提交消息')
+    .option('-p, --project-path <path>', 'fin-reports 项目路径（默认自动检测）')
     .option('--skip-deploy', '跳过部署，仅构建')
     .option('--dry-run', '预览模式，不执行实际操作')
     .option('-v, --verbose', '详细输出')
@@ -23,6 +24,7 @@ program
             category: options.category,
             date: options.date,
             commitMessage: options.message,
+            projectPath: options.projectPath,
             skipDeploy: options.skipDeploy,
             dryRun: options.dryRun,
             verbose: options.verbose,

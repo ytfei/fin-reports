@@ -45,7 +45,7 @@ export async function publishArticle(input) {
         // Step 3: Generate filename
         const date = input.date || metadata.date;
         const filename = generateFilename(date, metadata.title);
-        const projectPath = detectProjectPath();
+        const projectPath = detectProjectPath(input.projectPath);
         const targetPath = path.join(projectPath, 'articles', category, filename);
         const url = generateArticleUrl(category, filename);
         console.log('\n📝 文件信息');

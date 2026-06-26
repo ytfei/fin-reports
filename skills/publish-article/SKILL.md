@@ -76,9 +76,29 @@ npx publish-article ~/Downloads/article.html --dry-run
 | `category` | string | 否 | 目标分类，默认自动检测 |
 | `date` | string | 否 | 发布日期 YYYY-MM-DD，默认今天 |
 | `commitMessage` | string | 否 | Git 提交消息，默认自动生成 |
+| `projectPath` | string | 否 | fin-reports 项目路径，默认自动检测 |
 | `skipDeploy` | boolean | 否 | 跳过部署，仅构建 |
 | `dryRun` | boolean | 否 | 预览模式，不执行实际操作 |
 | `verbose` | boolean | 否 | 详细输出 |
+
+## 项目路径检测
+
+Skill 会按以下优先级查找 fin-reports 项目：
+
+1. **参数指定**: `--project-path /path/to/fin-reports`
+2. **环境变量**: `FIN_REPORTS_PATH=/path/to/fin-reports`
+3. **配置文件**: `~/.fin-reports/config.json` 中设置 `projectPath`
+4. **自动搜索**: 常见位置（当前目录、上级目录、`~/codebase/` 等）
+
+### 配置文件示例
+
+创建 `~/.fin-reports/config.json`:
+
+```json
+{
+  "projectPath": "/Users/mason/codebase/NexTech/fin-reports"
+}
+```
 
 ## 支持的分类
 

@@ -4,9 +4,13 @@
 import type { BuildOptions, DeployOptions } from './types.js';
 /**
  * Detect fin-reports project path
- * Searches common locations for project with src/build.js
+ * Priority:
+ * 1. Explicitly provided path parameter
+ * 2. Environment variable FIN_REPORTS_PATH
+ * 3. Config file ~/.fin-reports/config.json
+ * 4. Search common locations for project with src/build.js
  */
-export declare function detectProjectPath(): string;
+export declare function detectProjectPath(providedPath?: string): string;
 /**
  * Run build command
  */
