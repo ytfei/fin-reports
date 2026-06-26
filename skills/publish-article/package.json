@@ -1,6 +1,6 @@
 {
-  "name": "publish-article-skill",
-  "version": "1.0.0",
+  "name": "@yourusername/publish-article",
+  "version": "2.0.0",
   "description": "自动化发布 HTML 文章到 fin-reports 项目的 Skill",
   "type": "module",
   "main": "dist/index.js",
