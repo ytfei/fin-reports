@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黄金深度分析 — 从高点跌落30%之后 | 2026.06.25</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --primary: #1a237e;
+    --primary-light: #534bae;
+    --gold: #c5a000;
+    --gold-dark: #8a7000;
+    --red: #d32f2f;
+    --red-light: #ffcdd2;
+    --green: #2e7d32;
+    --green-light: #c8e6c9;
+    --text: #212121;
+    --text-secondary: #616161;
+    --border: #e0e0e0;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 40%, #c5a000 100%);
+    color: white;
+    padding: 50px 30px 40px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .hero .subtitle {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 20px;
+  }
+  .hero .price-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-size: 22px;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+  }
+  .hero .price-badge .change {
+    font-size: 16px;
+    color: #ff8a80;
+  }
+  .hero .meta {
+    margin-top: 16px;
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  /* Main content */
+  .container {
+    padding: 30px 24px;
+  }
+  h2 {
+    font-size: 20px;
+    color: var(--primary);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin: 36px 0 16px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 16px;
+    color: var(--text);
+    margin: 24px 0 12px;
+    font-weight: 700;
+  }
+  p { margin-bottom: 12px; font-size: 14.5px; }
+
+  /* Data cards */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .data-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .data-card .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  .data-card .value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  .data-card .value.red { color: var(--red); }
+  .data-card .value.green { color: var(--green); }
+  .data-card .value.gold { color: var(--gold-dark); }
+  .data-card .sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* Bear/Bull cards */
+  .reason-list {
+    margin: 20px 0;
+  }
+  .reason-item {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--red);
+  }
+  .reason-item.bull { border-left-color: var(--green); }
+  .reason-item h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reason-item .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .tag-bear { background: var(--red-light); color: var(--red); }
+  .tag-bull { background: var(--green-light); color: var(--green); }
+  .reason-item p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+
+  /* Flow chain */
+  .chain {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffebee 100%);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 2;
+    overflow-x: auto;
+  }
+  .chain-step {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .chain-arrow {
+    color: var(--red);
+    font-weight: 700;
+    margin: 0 4px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f5f5f5; }
+  .td-red { color: var(--red); font-weight: 600; }
+  .td-green { color: var(--green); font-weight: 600; }
+
+  /* Scenario cards */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .scenario-card {
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .scenario-card.base { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-left: 4px solid #1976d2; }
+  .scenario-card.bull-sc { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 4px solid var(--green); }
+  .scenario-card.bear-sc { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left: 4px solid var(--red); }
+  .scenario-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scenario-card .prob {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.08);
+  }
+  .scenario-card p { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+  .scenario-card .price-tag {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 14px;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: linear-gradient(135deg, #fffde7, #fff9c4);
+    border: 1px solid #fbc02d;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .highlight-box h4 {
+    color: var(--gold-dark);
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .highlight-box p { font-size: 14px; }
+
+  /* Strategy box */
+  .strategy-box {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--primary);
+  }
+  .strategy-box h4 {
+    font-size: 15px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .strategy-box ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .strategy-box li {
+    padding: 6px 0;
+    font-size: 13.5px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .strategy-box li::before {
+    content: "▸";
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+
+  /* Chart container */
+  .chart-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+  }
+  .chart-container h4 {
+    font-size: 15px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: var(--primary);
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 300px;
+  }
+
+  /* Kelly */
+  .kelly-box {
+    background: linear-gradient(135deg, #ede7f6, #d1c4e9);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 16px 0;
+  }
+
+  /* Conclusion */
+  .conclusion {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .conclusion h3 {
+    color: #ffd54f;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+  .conclusion p {
+    font-size: 14px;
+    opacity: 0.95;
+    margin-bottom: 8px;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 30px;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Mobile */
+  @media (max-width: 680px) {
+    body { font-size: 13px; }
+    .hero { padding: 30px 16px; }
+    .hero h1 { font-size: 20px; }
+    .container { padding: 20px 14px; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    h2 { font-size: 17px; }
+    .data-card .value { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <h1>黄金深度分析</h1>
+  <div class="subtitle">从历史高点跌落30%之后 — 逻辑拆解与未来走势研判</div>
+  <div class="price-badge">
+    $3,984/盎司 <span class="change">▼ -28.7%（距高点）</span>
+  </div>
+  <div class="meta">分析日期：2026年6月25日 · 数据来源：livegoldprice / 东方财富 / 世界黄金协会</div>
+</div>
+
+<div class="container">
+
+<!-- 执行摘要 -->
+<h2>执行摘要</h2>
+<p>黄金从2026年1月28日的历史高点 <strong>$5,589/盎司</strong>，一路跌至今日 <strong>$3,984/盎司</strong>，累计跌幅约 <strong>28.7%</strong>。这是自2023年以来最深度的一次回调。</p>
+<p>本轮下跌并非黄金结构性逻辑的崩塌，而是 <strong>两个特定冲击叠加共振</strong> 的结果：①美伊冲突→油价飙升→通胀反弹→降息预期被杀；②就业数据超预期强劲→加息概率飙升。两者通过同一个渠道——<strong>实际收益率上升</strong>——共同压低了金价。</p>
+<div class="highlight-box">
+  <h4>核心结论</h4>
+  <p>这大概率是 <strong>牛市中的深度调整</strong>，而非熊市的起点。支撑黄金长期牛市的三根柱子——财政恶化、去美元化、央行持续购金——全部完好。所有主流投行目标价仍高于当前价格20%以上。但短期仍有下行风险，不宜一把梭。</p>
+</div>
+
+<!-- 当前价格数据 -->
+<h2>一、当前价格事实</h2>
+<div class="data-grid">
+  <div class="data-card">
+    <div class="label">今日现货价</div>
+    <div class="value red">$3,984</div>
+    <div class="sub">6/25 日跌 -3.08%</div>
+  </div>
+  <div class="data-card">
+    <div class="label">历史高点</div>
+    <div class="value gold">$5,589</div>
+    <div class="sub">2026年1月28日</div>
+  </div>
+  <div class="data-card">
+    <div class="label">累计跌幅</div>
+    <div class="value red">-28.7%</div>
+    <div class="sub">近5个月</div>
+  </div>
+  <div class="data-card">
+    <div class="label">近1月跌幅</div>
+    <div class="value red">-12.65%</div>
+    <div class="sub">加速下跌中</div>
+  </div>
+  <div class="data-card">
+    <div class="label">近1年涨幅</div>
+    <div class="value green">+19.68%</div>
+    <div class="sub">拉长看仍是正收益</div>
+  </div>
+  <div class="data-card">
+    <div class="label">国内品牌金价</div>
+    <div class="value">¥1,261/克</div>
+    <div class="sub">周大福（年内高点超¥1,700）</div>
+  </div>
+</div>
+
+<!-- Chart -->
+<div class="chart-container">
+  <h4>黄金价格走势：2025年1月 — 2026年6月</h4>
+  <div class="chart-wrapper">
+    <canvas id="priceChart"></canvas>
+  </div>
+</div>
+
+<!-- 买家分析 -->
+<h2>二、谁是最大的买手？— 黄金牛市买方全景</h2>
+
+<div class="highlight-box">
+  <h4>核心发现</h4>
+  <p>本轮黄金牛市（2022→2026）的最大推动者是<strong>新兴市场央行</strong>，不是西方机构。2022-2025年央行年均购金量从~500吨翻倍至~1,100吨。截至2026年5月，<strong>中国央行连续19个月增持</strong>，波兰年内已购45吨。第一大买手不仅还在，而且在加速。</p>
+</div>
+
+<h3>央行历史购金趋势</h3>
+<div class="chart-container">
+  <h4>全球央行年度净购金量（吨）</h4>
+  <div class="chart-wrapper">
+    <canvas id="cbHistoryChart"></canvas>
+  </div>
+</div>
+
+<h3>2026年 Q1 央行购金/售金排行</h3>
+<table>
+  <tr><th>央行</th><th>Q1净变化</th><th>总储备</th><th>状态</th></tr>
+  <tr><td>🇵🇱 波兰</td><td class="td-green">+31吨</td><td>582吨</td><td>全场最大买家，剑指700吨</td></tr>
+  <tr><td>🇺🇿 乌兹别克斯坦</td><td class="td-green">+25吨</td><td>416吨（占储备87%）</td><td>连续增持</td></tr>
+  <tr><td>🇰🇿 哈萨克斯坦</td><td class="td-green">+12吨</td><td>—</td><td>稳定增持</td></tr>
+  <tr><td>🇨🇳 中国</td><td class="td-green">+7吨</td><td>2,313吨</td><td>连续19个月（截至5月）</td></tr>
+  <tr><td>🇨🇿 捷克</td><td class="td-green">+5吨</td><td>—</td><td>连续38个月增持</td></tr>
+  <tr><td>🇲🇾 马来西亚</td><td class="td-green">+5吨</td><td>42吨</td><td>时隔7年首次购金</td></tr>
+  <tr style="border-top:2px solid #ccc;"><td>🇹🇷 土耳其</td><td class="td-red">-70吨</td><td>535吨</td><td>swap操作（行长称到期回归）</td></tr>
+  <tr><td>🇷🇺 俄罗斯</td><td class="td-red">-22吨</td><td>2,336吨</td><td>2002年来最快抛售（战时财政）</td></tr>
+  <tr><td>🇦🇿 阿塞拜疆</td><td class="td-red">-22吨</td><td>178吨</td><td>部分回吐2025年购入</td></tr>
+</table>
+<p style="font-size:12px;color:var(--text-secondary);text-align:center;">数据来源：世界黄金协会 Q1 2026 Gold Demand Trends</p>
+
+<h3>中国央行月度增持轨迹：越跌越买</h3>
+<div class="chart-container">
+  <h4>中国央行2026年逐月增持量 vs 金价走势</h4>
+  <div class="chart-wrapper" style="height:320px;">
+    <canvas id="chinaBuyChart"></canvas>
+  </div>
+</div>
+<p style="text-align:center;font-size:13px;color:var(--text-secondary);">
+  <strong>关键信号：</strong>金价越跌，中国央行买得越多。5月增持10吨创近月新高。不是追涨——是在逢低战略吸纳。
+</p>
+
+<h3>2026年央行调研：89%认为还会继续买</h3>
+<div class="data-grid">
+  <div class="data-card">
+    <div class="label">预计全球储备将增加</div>
+    <div class="value green">89%</div>
+    <div class="sub">76家央行调研（历史新高）</div>
+  </div>
+  <div class="data-card">
+    <div class="label">预计自己储备将增加</div>
+    <div class="value green">45%</div>
+    <div class="sub">创历史记录</div>
+  </div>
+  <div class="data-card">
+    <div class="label">认为美元占比将下降</div>
+    <div class="value red">74%</div>
+    <div class="sub">5年维度</div>
+  </div>
+  <div class="data-card">
+    <div class="label">2025年央行购金总量</div>
+    <div class="value gold">1,237吨</div>
+    <div class="sub">创历史新高</div>
+  </div>
+</div>
+
+<div class="highlight-box">
+  <h4>四大买方力量对比</h4>
+  <table style="margin:0;">
+    <tr><th>买方</th><th>角色</th><th>当前状态</th><th>趋势</th></tr>
+    <tr><td><strong>全球央行</strong></td><td>牛市核心引擎</td><td class="td-green">持续增持</td><td>↗ 加速</td></tr>
+    <tr><td>黄金ETF（西方）</td><td>趋势跟风</td><td class="td-red">犹豫/流出</td><td>→ 看利率脸色</td></tr>
+    <tr><td>实物零售</td><td>避险/文化</td><td>分化（中国旺/印度弱）</td><td>↗ 价格回调后恢复</td></tr>
+    <tr><td>首饰需求</td><td>刚需但弹性大</td><td class="td-red">高价抑制</td><td>→ 等价格回落</td></tr>
+  </table>
+  <p style="margin-top:10px;"><strong>结论：</strong>东方央行在战略买入，西方机构在战术犹豫，俄罗斯/土耳其在被迫卖出。净效果——官方购金力量远大于个别抛售，底部支撑依然坚实。</p>
+</div>
+
+<!-- 下跌原因 -->
+<h2>三、为什么会跌？— 五重利空共振</h2>
+
+<div class="reason-list">
+  <div class="reason-item">
+    <h4>利空 1：油价冲击杀死降息预期 <span class="tag tag-bear">核心驱动</span></h4>
+    <div class="chain">
+      <span class="chain-step">美伊冲突爆发</span><span class="chain-arrow">→</span>
+      <span class="chain-step">霍尔木兹海峡封锁</span><span class="chain-arrow">→</span>
+      <span class="chain-step">油价破$110</span><span class="chain-arrow">→</span>
+      <span class="chain-step">能源价格+23.5%</span><span class="chain-arrow">→</span>
+      <span class="chain-step">CPI冲4.2%</span><span class="chain-arrow">→</span>
+      <span class="chain-step">降息预期全面杀死</span><span class="chain-arrow">→</span>
+      <span class="chain-step">实际利率飙升</span><span class="chain-arrow">→</span>
+      <span class="chain-step">黄金承压</span>
+    </div>
+    <p>高盛撤销所有2026降息预测，推迟到2027年。12月加息概率飙升至70%（CME FedWatch）。黄金是无息资产，实际利率上升直接抬升持有成本。</p>
+  </div>
+
+  <div class="reason-item">
+    <h4>利空 2：就业数据异常强劲 <span class="tag tag-bear">催化</span></h4>
+    <p>6月6日公布的5月非农新增 <strong>17.2万人</strong>，是市场预期8万的 <strong>两倍多</strong>。直接打脸"经济放缓需降息"的叙事，市场开始定价"不仅不降息、反而可能加息"。</p>
+  </div>
+
+  <div class="reason-item">
+    <h4>利空 3：鹰派Warsh就任美联储主席 <span class="tag tag-bear">政策不确定性</span></h4>
+    <p>Kevin Warsh 5月22日就任第17任美联储主席。Warsh 是价格稳定鹰派，市场预期其点阵图可能指引12月加息。6月FOMC会议是其首次主持，不确定性本身就压金价。</p>
+  </div>
+
+  <div class="reason-item">
+    <h4>利空 4：地缘避险逻辑反转 <span class="tag tag-bear">溢价挤出</span></h4>
+    <p>6月15日美伊达成停战谅解备忘录，霍尔木兹海峡解封。此前支撑金价的"战争恐慌"逻辑突然消失。但注意：6月22日谈判因特朗普威胁言论再度暂停，<strong>避险逻辑可能在"和平→冲突"之间反复拉锯</strong>。</p>
+  </div>
+
+  <div class="reason-item">
+    <h4>利空 5：印度关税暴击 + 技术面踩踏 <span class="tag tag-bear">供需+技术</span></h4>
+    <p>印度将黄金进口关税从6%暴拉到15%，全球第二大消费国需求骤降。同时金价跌破200日均线（自2023年10月以来首次），程序化交易止损盘加速下跌，形成踩踏式抛售。</p>
+  </div>
+</div>
+
+<!-- 结构性支撑 -->
+<h2>四、但结构性支撑全部完好 — 三根柱子没倒</h2>
+
+<div class="reason-list">
+  <div class="reason-item bull">
+    <h4>支撑 1：央行购金丝毫未减 <span class="tag tag-bull">最强底座</span></h4>
+    <table>
+      <tr><th>央行</th><th>最新动作</th><th>总储备</th></tr>
+      <tr><td>全球（2026 Q1）</td><td>净购 244吨（高于五年均值）</td><td>—</td></tr>
+      <tr><td>中国央行</td><td class="td-green">连续 19个月增持</td><td>2,322吨（占储备9%）</td></tr>
+      <tr><td>波兰</td><td>年内+45吨</td><td>595吨（目标700吨）</td></tr>
+      <tr><td>捷克</td><td class="td-green">连续38个月增持</td><td>—</td></tr>
+      <tr><td>世界黄金协会调研</td><td colspan="2">89%的储备管理者预计未来12个月继续增持</td></tr>
+    </table>
+    <p>中国黄金占储备仅9%，美国和欧洲是60-70%。<strong>去美元化进程远未结束，增持空间巨大。</strong>央行购金是"不看价格的战略配置"——跌了反而买更多。</p>
+  </div>
+
+  <div class="reason-item bull">
+    <h4>支撑 2：美国财政恶化不可逆 <span class="tag tag-bull">系统性支撑</span></h4>
+    <p>联邦债务超过 <strong>$37万亿</strong>，年利息支出超过 <strong>$1万亿</strong>。真正的紧缩（持续加息）会创造财政危机。即便Warsh想鹰，财政约束也不允许无限鹰。美元信用侵蚀的底层逻辑只会加强。</p>
+  </div>
+
+  <div class="reason-item bull">
+    <h4>支撑 3：核心通胀实际在减速 <span class="tag tag-bull">被忽视的利好</span></h4>
+    <p>5月核心CPI环比仅 <strong>0.2%</strong>（预期0.3%），住房从0.6%降到0.3%，交通服务-0.6%。价格压力<strong>几乎全部来自石油</strong>，非广泛通胀。美联储无法通过加息降油价——债市理解这一点。一旦油价问题被充分定价或解决，通胀回落趋势会重新确立。</p>
+  </div>
+</div>
+
+<!-- 投行目标价 -->
+<h2>五、主流投行目标价一览</h2>
+<div class="chart-container">
+  <h4>各机构 2026 年终目标价 vs 当前价格</h4>
+  <div class="chart-wrapper" style="height: 280px;">
+    <canvas id="targetChart"></canvas>
+  </div>
+</div>
+<p style="text-align:center; font-size:13px; color:var(--text-secondary);">
+  所有主流机构目标价均高于当前 $3,984。<strong>没有一家撤回预测或认为这是结构性崩溃。</strong>
+</p>
+
+<!-- 三种情景 -->
+<h2>六、未来走势的三种情景</h2>
+<div class="scenario-grid">
+  <div class="scenario-card base">
+    <h4>情景A：基准 — 震荡筑底后逐步回升 <span class="prob">概率 50%</span></h4>
+    <p><strong>触发条件：</strong>美伊谈判取得进展；通胀数据确认回落；Warsh点阵图不超预期鹰</p>
+    <p><strong>价格路径：</strong><span class="price-tag">$3,800-$4,200 震荡 → Q3末回升 → 年底 $4,800-$5,200</span></p>
+  </div>
+  <div class="scenario-card bull-sc">
+    <h4>情景B：乐观 — 快速V型反转 <span class="prob">概率 25%</span></h4>
+    <p><strong>触发条件：</strong>美伊正式签约和平；油价暴跌回$75-80；就业走弱；Warsh意外偏鸽</p>
+    <p><strong>价格路径：</strong><span class="price-tag">快速反弹$4,500 → Q4冲$5,000+ → 年底$5,400</span></p>
+  </div>
+  <div class="scenario-card bear-sc">
+    <h4>情景C：悲观 — 继续下探 <span class="prob">概率 25%</span></h4>
+    <p><strong>触发条件：</strong>美伊谈判破裂冲突再升级；核心通胀破3%；Warsh指引加息；美元指数破105</p>
+    <p><strong>价格路径：</strong><span class="price-tag">跌破$3,800 → 测试$3,500 → 年底$3,300-$3,600</span></p>
+  </div>
+</div>
+
+<!-- 投资建议 -->
+<h2>七、投资建议</h2>
+
+<div class="highlight-box">
+  <h4>定位判断</h4>
+  <p><strong>当前位置 = 牛市深度回调，非熊市起点。</strong>理由：①结构性三柱全部完好；②所有投行目标价高于当前20%+；③下跌驱动力是特定且非永久性因素；④技术面超卖，空头动能大量释放。</p>
+</div>
+
+<h3>分批建仓策略（DCA）</h3>
+<div class="strategy-box">
+  <h4>对于想新建仓的投资者</h4>
+  <ul>
+    <li>立即建仓 <strong>30%</strong>（当前 $3,984 附近）</li>
+    <li>如果跌到 $3,700-$3,800，加仓 <strong>30%</strong></li>
+    <li>如果跌到 $3,500 以下，加仓最后 <strong>40%</strong>（极端机会区）</li>
+    <li>如果反弹突破 $4,200 确认企稳，补足剩余仓位</li>
+  </ul>
+</div>
+
+<div class="strategy-box">
+  <h4>对于已持仓的投资者</h4>
+  <ul>
+    <li>不建议恐慌割肉。如果在 $4,500 以下建仓的，长期逻辑没变，持有</li>
+    <li>高位 $5,000+ 满仓：可适度减仓1/3缓解心理压力，保留底仓</li>
+    <li>继续执行定投，当前是更好的积累窗口</li>
+  </ul>
+</div>
+
+<div class="strategy-box">
+  <h4>配置方式选择</h4>
+  <ul>
+    <li>建议黄金占总资产 <strong>5%-15%</strong></li>
+    <li>实物金条（长期保值） > 黄金ETF（流动性好） > 纸黄金（交易灵活） > 金矿股（弹性大但波动更大）</li>
+    <li>优先选择实物金/黄金ETF，避免杠杆产品</li>
+  </ul>
+</div>
+
+<h3>关键观测指标</h3>
+<table>
+  <tr><th>指标</th><th>信号</th></tr>
+  <tr><td>明日PCE数据（6/26）</td><td>低于预期→利好黄金；高于预期→短期承压</td></tr>
+  <tr><td>美伊谈判月底恢复</td><td>达成进展→避险降温但油价回落→多空交织</td></tr>
+  <tr><td>7月FOMC / Warsh讲话</td><td>鸽→利好；鹰→利空</td></tr>
+  <tr><td>10年期TIPS实际收益率</td><td>当前约1.9-2.0%，若回落→利好黄金</td></tr>
+  <tr><td>美元指数</td><td>突破100→承压；回落至97以下→反弹</td></tr>
+  <tr><td>央行月度购金数据</td><td>持续增持→底部支撑确认</td></tr>
+</table>
+
+<!-- Kelly -->
+<h3>凯利公式仓位参考</h3>
+<div class="kelly-box">
+  <table>
+    <tr><th>参数</th><th>数值</th><th>依据</th></tr>
+    <tr><td>胜率 p</td><td><strong>65%</strong></td><td>结构性支撑完好 + 所有投行目标价高于当前 + 央行持续购金</td></tr>
+    <tr><td>赔率 b</td><td><strong>1.5</strong></td><td>目标 $5,000 / 止损 $3,600 → 盈亏比 $1,000:$400</td></tr>
+    <tr><td>理论仓位 f*</td><td><strong>42%</strong></td><td>f = (0.65×1.5 - 0.35) / 1.5</td></tr>
+    <tr><td>实操建议</td><td class="td-green"><strong>10%-15%</strong></td><td>理论值打3-4折（考虑波动率、心理承受、流动性）</td></tr>
+  </table>
+</div>
+
+<!-- 结论 -->
+<div class="conclusion">
+  <h3>结论</h3>
+  <p>这轮黄金下跌，跌的是"通胀恐慌 + 加息恐慌"的预期，不是跌黄金本身的价值。</p>
+  <p>支撑黄金长期牛市的底层逻辑——美元信用侵蚀、全球去美元化、央行战略性增储——全部完好。</p>
+  <p>28%+的回调，在有结构性支撑的前提下，更像是 <strong>"上车机会"</strong> 而非"逃命信号"。</p>
+  <p style="margin-top:14px; font-size:15px; font-weight:700; color:#ffd54f;">分批建仓、控制仓位、保持耐心</p>
+</div>
+
+<div class="disclaimer">
+  免责声明：本报告仅供参考，不构成个人投资建议。投资有风险，决策需谨慎。<br>
+  所有数据来源于公开信息，截至 2026年6月25日。
+</div>
+
+</div>
+
+<script>
+// Price chart
+const priceCtx = document.getElementById('priceChart').getContext('2d');
+new Chart(priceCtx, {
+  type: 'line',
+  data: {
+    labels: ['2025.01','2025.03','2025.06','2025.09','2025.12','2026.01','2026.02','2026.03','2026.04','2026.05','2026.06'],
+    datasets: [{
+      label: '黄金价格 ($/oz)',
+      data: [2669, 2900, 3200, 3500, 4200, 5589, 5300, 5000, 4800, 4540, 3984],
+      borderColor: '#c5a000',
+      backgroundColor: 'rgba(197, 160, 0, 0.1)',
+      borderWidth: 2.5,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 4,
+      pointBackgroundColor: function(ctx) {
+        return ctx.dataIndex === 5 ? '#d32f2f' : '#c5a000';
+      },
+      pointRadius: function(ctx) {
+        return ctx.dataIndex === 5 ? 7 : 4;
+      }
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) { return '$' + ctx.parsed.y.toLocaleString() + '/oz'; }
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: { callback: function(v) { return '$' + v.toLocaleString(); } }
+      }
+    }
+  }
+});
+
+// Target price chart
+const targetCtx = document.getElementById('targetChart').getContext('2d');
+new Chart(targetCtx, {
+  type: 'bar',
+  data: {
+    labels: ['当前价格', 'LBMA\n共识均价', '摩根士丹利', '瑞银', '高盛', '摩根大通'],
+    datasets: [{
+      data: [3984, 4742, 5200, 5500, 5400, 6000],
+      backgroundColor: ['#90a4ae', '#64b5f6', '#42a5f5', '#1e88e5', '#1565c0', '#0d47a1'],
+      borderRadius: 8,
+      barThickness: 50
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) { return '$' + ctx.parsed.x.toLocaleString() + '/oz'; }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        ticks: { callback: function(v) { return '$' + v.toLocaleString(); } }
+      }
+    }
+  }
+});
+
+// Central bank history chart
+const cbHistCtx = document.getElementById('cbHistoryChart').getContext('2d');
+new Chart(cbHistCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2012-2021\n均值', '2022', '2023', '2024', '2025', '2026 Q1\n(年化)'],
+    datasets: [{
+      label: '央行净购金（吨）',
+      data: [500, 1082, 1051, 1045, 1237, 244],
+      backgroundColor: ['#90a4ae', '#c5a000', '#c5a000', '#c5a000', '#1a237e', '#42a5f5'],
+      borderRadius: 8,
+      barThickness: 50
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) { return ctx.parsed.y + ' 吨'; }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { callback: function(v) { return v + 't'; } }
+      }
+    }
+  }
+});
+
+// China buying chart
+const chinaCtx = document.getElementById('chinaBuyChart').getContext('2d');
+new Chart(chinaCtx, {
+  type: 'bar',
+  data: {
+    labels: ['1月', '2月', '3月', '4月', '5月'],
+    datasets: [
+      {
+        type: 'bar',
+        label: '增持量（吨）',
+        data: [1.2, 0.9, 5.0, 8.1, 10.0],
+        backgroundColor: 'rgba(197, 160, 0, 0.7)',
+        borderColor: '#c5a000',
+        borderWidth: 1,
+        borderRadius: 6,
+        yAxisID: 'y-bar',
+        barThickness: 45
+      },
+      {
+        type: 'line',
+        label: '月末金价 ($/oz)',
+        data: [5550, 5300, 5000, 4540, 4100],
+        borderColor: '#d32f2f',
+        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+        borderWidth: 2.5,
+        fill: false,
+        tension: 0.3,
+        pointRadius: 5,
+        yAxisID: 'y-line'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 12 } } }
+    },
+    scales: {
+      'y-bar': {
+        type: 'linear',
+        position: 'left',
+        beginAtZero: true,
+        title: { display: true, text: '增持量（吨）' },
+        ticks: { callback: function(v) { return v + 't'; } }
+      },
+      'y-line': {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: '金价 ($/oz)' },
+        ticks: { callback: function(v) { return '$' + v.toLocaleString(); } },
+        grid: { drawOnChartArea: false }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
