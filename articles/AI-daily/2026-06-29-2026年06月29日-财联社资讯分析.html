@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年06月29日 财联社资讯分析</title>
+<style>
+
+:root{--bg:#f5f6fa;--card:#fff;--text:#1a1a2e;--t2:#64748b;--t3:#94a3b8;--border:#e8ecf1;--red:#dc2626;--orange:#ea580c;--gray:#64748b;--r:12px;--rs:8px;--sh1:0 1px 3px rgba(0,0,0,.06);--sh2:0 4px 16px rgba(0,0,0,.08);--sh3:0 12px 40px rgba(0,0,0,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+.container{max-width:900px;margin:0 auto;padding:0 16px 40px}
+.header{background:linear-gradient(135deg,#0f172a,#1e3a5f,#1a2744);color:#fff;padding:32px 24px 20px;text-align:center}
+.header h1{font-size:22px;font-weight:800}
+.header .meta{font-size:13px;opacity:.7;margin-top:4px}
+.stat-bar{display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:13px;flex-wrap:wrap}
+.stat-bar .s{display:flex;align-items:center;gap:5px}
+.stat-bar .dot{width:8px;height:8px;border-radius:50%}
+.stat-bar .up{background:#f87171}.stat-bar .dn{background:#4ade80}
+.search-wrap{background:#fff;padding:10px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99;box-shadow:var(--sh1)}
+.search-box{max-width:868px;margin:0 auto;display:flex;gap:10px;align-items:center;background:#f1f5f9;border-radius:20px;padding:6px 16px;transition:box-shadow .2s}
+.search-box:focus-within{box-shadow:0 0 0 2px var(--red);background:#fff}
+.search-box svg{flex-shrink:0;color:var(--t3)}
+.search-box input{flex:1;border:none;background:transparent;outline:none;font-size:14px;padding:4px 0;color:var(--text)}
+.search-box input::placeholder{color:var(--t3)}
+.search-count{font-size:12px;white-space:nowrap;padding:2px 8px;border-radius:10px;background:#fef2f2;color:var(--red);display:none}
+.search-count.active{display:inline-block}
+.search-clear{display:none;cursor:pointer;color:var(--t3);font-size:18px;padding:0 4px}
+.search-clear.active{display:inline-block}
+.filter-bar{display:flex;gap:6px;padding:10px 0;flex-wrap:wrap}
+.filter-tag{font-size:12px;padding:3px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-tag:hover{border-color:var(--t3)}
+.filter-tag.active{background:var(--text);color:#fff;border-color:var(--text)}
+.sec-title{font-size:18px;font-weight:700;margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--red);display:flex;align-items:center;gap:8px}
+.sec-title .n{font-size:13px;font-weight:400;color:var(--t3)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh1);margin-bottom:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--sh2)}
+.card-hd{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;user-select:none}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.badge.s{background:var(--red)}.badge.a{background:var(--orange)}.badge.b{background:var(--gray)}.badge.p{background:#f59e0b}
+.card-name{font-size:16px;font-weight:700}
+.card-count{font-size:12px;color:var(--t2);background:#f1f5f9;padding:2px 8px;border-radius:10px}
+.arrow{margin-left:auto;font-size:12px;color:var(--t3);transition:transform .2s}
+.card.open .arrow{transform:rotate(180deg)}
+.card-body{display:none;padding:0 18px 14px}
+.card.open .card-body{display:block}
+.summary{font-size:14px;color:var(--t2);line-height:1.7;padding:8px 12px;background:#fafbfc;border-radius:var(--rs);margin-bottom:12px;border-left:3px solid #e2e8f0}
+.subtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.stag{font-size:11px;padding:2px 8px;border-radius:10px;background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.news-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f8fafc;cursor:pointer;transition:background .15s;border-radius:6px;margin:0 -4px;padding:10px 4px}
+.news-item:last-child{border-bottom:none}
+.news-item:hover{background:#fafbfc}
+.rank{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.rank.r1{background:#dc2626}.rank.r2{background:#ea580c}.rank.r3{background:#64748b}
+.ni-body{flex:1;min-width:0}
+.ni-meta{display:flex;gap:8px;align-items:center;margin-bottom:2px;font-size:12px}
+.ni-time{color:var(--t3)}
+.ni-score{font-weight:700;font-size:11px;padding:1px 6px;border-radius:4px}
+.ni-score.hot{background:#fef2f2;color:#dc2626}
+.ni-score.warm{background:#fff7ed;color:#ea580c}
+.ni-score.cool{background:#f1f5f9;color:#64748b}
+.ni-text{font-size:13px;color:var(--t2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.6}
+.ni-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.etag{font-size:11px;padding:1px 6px;border-radius:4px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+.ni-hint{font-size:11px;color:var(--t3);margin-top:2px}
+.mark{background:#fef08a;border-radius:2px;padding:0 1px}
+.ev-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh1);margin-bottom:14px;padding:16px 18px;border:1px solid var(--border)}
+.ev-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ev-name{font-size:16px;font-weight:700}
+.ev-tag{font-size:11px;padding:2px 8px;border-radius:4px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.ev-stat{margin-left:auto;font-size:12px;color:var(--t3)}
+.px-card{background:#fffbeb;border-radius:var(--rs);padding:12px 16px;margin-bottom:10px;border:1px solid #fde68a;font-size:13px;cursor:pointer;transition:box-shadow .15s}
+.px-card:hover{box-shadow:var(--sh1)}
+.px-hd{display:flex;gap:8px;align-items:center;margin-bottom:5px;flex-wrap:wrap}
+.px-type{font-size:11px;padding:2px 8px;border-radius:4px;background:#f59e0b;color:#fff;font-weight:700}
+.px-sec{font-size:12px;color:var(--t2)}
+.px-text{color:var(--t2);line-height:1.6}
+.overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.overlay.active{display:flex}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes su{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal{background:#fff;border-radius:var(--r);box-shadow:var(--sh3);max-width:640px;width:100%;max-height:85vh;display:flex;flex-direction:column;animation:su .25s}
+.modal-hd{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 12px;border-bottom:1px solid var(--border)}
+.modal-bd{padding:14px 18px 18px;overflow-y:auto;flex:1}
+.modal-sec{font-size:14px;font-weight:700;flex:1}
+.modal-close{flex-shrink:0;width:30px;height:30px;border-radius:8px;border:none;background:#f1f5f9;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--t2);transition:background .15s}
+.modal-close:hover{background:#e2e8f0}
+.modal-meta{display:flex;gap:12px;margin-bottom:10px;font-size:13px}
+.modal-time{color:var(--t2)}
+.modal-text{font-size:14px;line-height:1.85;white-space:pre-wrap}
+.modal-ents{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.modal-ents .lbl{font-size:13px;color:var(--t2)}
+.search-results{display:none}
+.search-results.active{display:block}
+.normal-view.hidden{display:none}
+.search-results .news-item{background:#fff;border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px}
+.search-results .ni-text{-webkit-line-clamp:unset;display:block}
+.footer{text-align:center;padding:24px;font-size:12px;color:var(--t3);border-top:1px solid var(--border);margin-top:20px}
+@media(max-width:640px){.container{padding:0 10px 24px}.header{padding:24px 16px 16px}.header h1{font-size:18px}.stat-bar{gap:12px;font-size:12px}.card-hd{padding:12px 14px}.card-body{padding:0 14px 12px}.modal{max-width:100%;max-height:90vh}}
+
+/* ── Floating TOC Navigation ── */
+.toc-fab{position:fixed;right:20px;bottom:24px;width:48px;height:48px;border-radius:50%;background:#1a2744;color:#fff;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform .25s,opacity .25s;font-size:20px}
+.toc-fab:hover{transform:scale(1.08)}
+.toc-fab.hidden{transform:scale(0);opacity:0;pointer-events:none}
+.toc-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s}
+.toc-overlay.active{opacity:1;pointer-events:auto}
+.toc-panel{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:#fff;z-index:400;box-shadow:-4px 0 24px rgba(0,0,0,.12);transition:right .3s ease;display:flex;flex-direction:column}
+.toc-panel.open{right:0}
+.toc-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:linear-gradient(135deg,#0f172a,#1e3a5f);color:#fff}
+.toc-panel-hd .tt{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+.toc-panel-hd .close{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.toc-panel-hd .close:hover{background:rgba(255,255,255,.3)}
+.toc-search{padding:10px 14px;border-bottom:1px solid var(--border)}
+.toc-search input{width:100%;border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;outline:none;transition:border-color .2s}
+.toc-search input:focus{border-color:var(--red)}
+.toc-body{flex:1;overflow-y:auto;padding:6px 0}
+.toc-body::-webkit-scrollbar{width:4px}
+.toc-body::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+.toc-group-hd{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;padding:10px 18px 4px;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.toc-item{display:flex;align-items:center;gap:8px;padding:7px 18px;cursor:pointer;transition:background .12s;border-left:3px solid transparent}
+.toc-item:hover{background:#f5f6fa;border-left-color:var(--red)}
+.toc-item .toc-badge{width:20px;height:20px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item .toc-badge.s{background:var(--red)}.toc-item .toc-badge.a{background:var(--orange)}.toc-item .toc-badge.b{background:var(--gray)}.toc-item .toc-badge.p{background:#f59e0b}.toc-item .toc-badge.e{background:#2563eb}
+.toc-item .toc-label{font-size:13px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toc-item .toc-count{font-size:11px;color:var(--t3);flex-shrink:0}
+.toc-item.active{background:#fef2f2;border-left-color:var(--red)}
+.toc-item.active .toc-label{font-weight:600;color:var(--red)}
+.toc-empty{text-align:center;padding:30px;color:var(--t3);font-size:13px}
+@media(max-width:640px){.toc-fab{right:14px;bottom:18px;width:42px;height:42px;font-size:18px}.toc-panel{width:85vw;right:-85vw}}
+
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>财联社资讯分析</h1>
+  <div class="meta">2026年06月29日 &middot; 420条快讯 &middot; 去噪后 416 条有效</div>
+  <div class="stat-bar">
+    <div class="s"><span class="dot up"></span>正面 <b style="color:#f87171">28</b></div>
+    <div class="s"><span class="dot dn"></span>负面 <b style="color:#4ade80">22</b></div>
+    <div class="s"><span style="color:#fbbf24">信号比 <b>1.3:1</b></span></div>
+  </div>
+</div>
+<div class="search-wrap">
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索关键词，如：美光、存储、高通、苹果..." autocomplete="off">
+    <span class="search-count" id="searchCount"></span>
+    <span class="search-clear" id="searchClear" onclick="clearSearch()">&times;</span>
+  </div>
+</div>
+<div class="container">
+<script>window.NEWS_DATA = [{"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 0, "time": "2026-06-28 19:50:44", "score": 121, "content": "【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、21.69亿元、19.8亿元、15.21亿元；立讯精密、江波龙、东方财富、云南锗业等股紧随其后，融资净买入额均在13亿元以上。", "entities": ["新易盛", "兆易创新", "中际旭创", "长电科技", "江波龙"]}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 1, "time": "2026-06-29 02:08:38", "score": 113, "content": "百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。", "entities": []}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 2, "time": "2026-06-28 21:05:51", "score": 112, "content": "【康宁推出下一代玻璃光互连组件】近日，Corning（康宁）在首尔POSCO Tower Yeoksam举办的AI数据中心光通信与互连技术大会上，正式推出下一代玻璃光互连组件Glass Bridge（玻璃桥）。该产品基于玻璃波导技术，用于实现光纤与光子集成电路（PIC）之间的直接光学连接，主要面向共封装光学（CPO）及玻璃基板半导体封装应用场景。公司方面表示，该方案通过在玻璃内部构建光传播路径，以减少传统光互连中的多级器件与对准环节，从而提升光互连密度与系统集成度。业内人士告诉记者，康宁此次推出的Glass Bridge光互连组件，并非传统意义上的可插拔光模块产品，而是切入CPO封装里非常底层、但未来可能越来越关键的环节：光纤如何低损耗、高密度、可量产地接入光子芯片。这或意味着AI光通信的下一轮竞争，开始向玻璃基板、光耦合、fiber-to-PIC连接和CPO封装接口下沉。（上海证券报）", "entities": []}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 3, "time": "2026-06-28 20:38:09", "score": 112, "content": "【支撑“AI+制造” 中天科技开建南通首座“光电协同智算中心”】6月26日，南通首座“光电协同智算中心”在中天科技正式破土动工，建成后将为 “AI+制造”筑牢自主可控的算力底座。智算中心聚焦“光、电、算”三位一体，深度融合中天科技自研光电技术，兼具智能、绿色、安全核心优势。项目规模化搭载400G/800G/1.6T 高速光模块、MPO光纤连接器、空芯光纤光缆等超低时延互联产品，破解高密度集群数据传输瓶颈；供配电采用自研电力模组与聚丙烯绝缘电缆，制冷采用风液同源一体化方案弹性适配多元冷却场景，设计PUE优于行业平均水平，同步构建“光储联动”清洁供能体系；统一算力调度平台兼容主流异构GPU硬件，让业务用算力与用电同等便捷。项目计划于2026年底完成基建施工，2027年年中实现首期工程正式投运。", "entities": []}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 4, "time": "2026-06-28 18:05:07", "score": 112, "content": "【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 TOPS，支持 L3、L4 自动驾驶，已开始量产。（晚点）", "entities": ["比亚迪"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 0, "time": "2026-06-28 19:50:44", "score": 121, "content": "【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、21.69亿元、19.8亿元、15.21亿元；立讯精密、江波龙、东方财富、云南锗业等股紧随其后，融资净买入额均在13亿元以上。", "entities": ["新易盛", "兆易创新", "中际旭创", "长电科技", "江波龙"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 1, "time": "2026-06-29 02:08:38", "score": 113, "content": "百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。", "entities": []}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 2, "time": "2026-06-28 18:52:34", "score": 113, "content": "【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。", "entities": ["特斯拉"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 3, "time": "2026-06-28 21:05:51", "score": 112, "content": "【康宁推出下一代玻璃光互连组件】近日，Corning（康宁）在首尔POSCO Tower Yeoksam举办的AI数据中心光通信与互连技术大会上，正式推出下一代玻璃光互连组件Glass Bridge（玻璃桥）。该产品基于玻璃波导技术，用于实现光纤与光子集成电路（PIC）之间的直接光学连接，主要面向共封装光学（CPO）及玻璃基板半导体封装应用场景。公司方面表示，该方案通过在玻璃内部构建光传播路径，以减少传统光互连中的多级器件与对准环节，从而提升光互连密度与系统集成度。业内人士告诉记者，康宁此次推出的Glass Bridge光互连组件，并非传统意义上的可插拔光模块产品，而是切入CPO封装里非常底层、但未来可能越来越关键的环节：光纤如何低损耗、高密度、可量产地接入光子芯片。这或意味着AI光通信的下一轮竞争，开始向玻璃基板、光耦合、fiber-to-PIC连接和CPO封装接口下沉。（上海证券报）", "entities": []}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 4, "time": "2026-06-28 20:38:09", "score": 112, "content": "【支撑“AI+制造” 中天科技开建南通首座“光电协同智算中心”】6月26日，南通首座“光电协同智算中心”在中天科技正式破土动工，建成后将为 “AI+制造”筑牢自主可控的算力底座。智算中心聚焦“光、电、算”三位一体，深度融合中天科技自研光电技术，兼具智能、绿色、安全核心优势。项目规模化搭载400G/800G/1.6T 高速光模块、MPO光纤连接器、空芯光纤光缆等超低时延互联产品，破解高密度集群数据传输瓶颈；供配电采用自研电力模组与聚丙烯绝缘电缆，制冷采用风液同源一体化方案弹性适配多元冷却场景，设计PUE优于行业平均水平，同步构建“光储联动”清洁供能体系；统一算力调度平台兼容主流异构GPU硬件，让业务用算力与用电同等便捷。项目计划于2026年底完成基建施工，2027年年中实现首期工程正式投运。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 0, "time": "2026-06-28 15:58:12", "score": 108, "content": "【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。\n\n记者发现，新政坚持“以用促产”核心思路，分层分类布局人工智能应用场景建设，设立梯度化资金支持标准。在重大标杆场景打造上，聚焦智能制造、科学智能、智能医疗、智能政务、智能农业、智能应急、智能服务业、低空智能八大领域布局省级标志性应用场景，符合条件项目最高可获2000万元资金支持；针对区域示范载体，省级人工智能应用场景典型基地（区域）择优给予最高200万元扶持。\n\n同时强化国家级示范培育与大模型创新激励，对成功入", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 1, "time": "2026-06-28 15:50:35", "score": 108, "content": "【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人工智能+”制造领域，动态培育150个工业大模型，新增100个以上可复制可推广典型应用场景。全年在各领域新增典型场景200个，培育入库智能终端产品超300个。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 2, "time": "2026-06-29 07:05:55", "score": 80, "content": "普京表示，乌克兰无人机袭击炼油厂致使俄罗斯面临燃料短缺问题。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 3, "time": "2026-06-28 17:01:39", "score": 79, "content": "【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财政状况承压、供给冲击持续存在，通胀或将再度顽固走高。国际清算银行表示，近几个月全球经济虽展现韧性，但政策制定者必须果断出手，守住经济稳定底线。国际清算银行总经理巴勃罗・埃尔南德斯・德科斯表示：“各项政策需协同发力，避免全球经济面临政策拉扯冲突。归根结底，经济稳定取决于健康的财政与金融根基。”报告列出四大核心风险痛点。通胀再度抬头，该行提醒，全球供应链中断事件频发，可能令居民与企业形成长期固化的高通胀预期。德科斯向媒体表示：“我们传递的核心信号是，一旦央行观测到通胀预期出现固化迹象，必须果断出手调", "entities": ["高通"]}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 4, "time": "2026-06-29 01:45:23", "score": 77, "content": "俄罗斯国防部通报：防空系统单日在俄境内多地及亚速海上空击落72架乌克兰无人机。", "entities": []}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 0, "time": "2026-06-28 18:05:07", "score": 112, "content": "【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 TOPS，支持 L3、L4 自动驾驶，已开始量产。（晚点）", "entities": ["比亚迪"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 1, "time": "2026-06-28 23:33:09", "score": 110, "content": "【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高毅等现身基石名单。消息人士透露，本次新加坡政府投资公司（GIC）和富达国际两家基金强势领投，GIC近年重仓Anthropic与台积电，富达国际此前重仓中际旭创、寒武纪等AI龙头，意味着Momenta正成为物理AI规模化落地的“资本锚点”。梅赛德斯-奔驰和比亚迪既是Momenta的老股东，也是深度合作伙伴，此次作为基石继续加码投资，带来产业端的资本与订单双重护航，意味着双方的合作护城河进一步加深。此", "entities": ["比亚迪", "中际旭创", "台积电"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 2, "time": "2026-06-28 19:30:12", "score": 108, "content": "【中信建投：锂电有望迎来旺季、储能需求持续回暖】中信建投发布研报称，以下因素将决定三季度行情的走势：基本面方面，AI算力仍维持较高景气度，其中报业绩和海外财报值得关注，同时4月以来宏观经济承压情况下，7月政治局会议提振经济举措较为重要；流动性方面，外部扰动加大，内部维持中性；风险偏好方面，地缘事件、行业巨头上市会对市场造成短期波动，而考虑到全球科技股联动效应，日韩美等主要海外算力也需要持续追踪。行业配置上，AI算力虽景气逻辑不变但波动加剧，建议谨慎追高，逢回调布局；锂电有望迎来旺季、储能需求持续回暖，新能源存在阶段估值修复机会；红利有望超跌反弹、配置性价比较高。重点关注：银行、煤炭、公用事业、AI、光模块、存储、芯片、工业金属、锂电材料（VC）等。", "entities": []}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 3, "time": "2026-06-28 16:53:31", "score": 93, "content": "【1—5月深圳3D打印设备产量大增60.8%】近日，深圳市统计局发布2026年1—5月深圳经济数据，全市经济运行保持稳中有进的发展态势。1—5月，深圳工业生产保持较快增长，全市规模以上工业增加值同比增长8.8%。分门类看，采矿业增加值同比增长1.9%，制造业增长9.5%，电力、热力、燃气及水生产和供应业增长4.4%。主要行业大类中，计算机、通信和其他电子设备制造业增长12.8%，专用设备制造业增长12.7%，电力、热力生产和供应业增长11.4%，金属制品业增长8.4%。高技术产品产量保持快速增长，其中，3D打印设备、工业机器人、锂离子电池产品产量分别增长60.8%、47.2%、33.9%。", "entities": []}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 4, "time": "2026-06-29 07:03:09", "score": 70, "content": "【7家车企完成首轮强制ESG信披 精细化提质转型成为改进方向】2026年是A股可持续发展报告强制披露元年，沪深北交易所划定首批强制披露主体需于4月30日前完成2025年度可持续发展报告发布。比亚迪、上汽集团、长安汽车、长城汽车、广汽集团、赛力斯、江淮汽车7家符合强制披露条件的整车企业全部按期提交报告。根据车企发布的可持续发展报告，汽车行业虽搭建起基础ESG披露框架，但量化指标缺失、环境合规披露失真、循环经济数据单薄等短板集中暴露，距离精细化、标准化高质量披露ESG信息仍存在明显差距。（中国证券报）", "entities": ["比亚迪"]}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 0, "time": "2026-06-28 18:52:34", "score": 113, "content": "【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。", "entities": ["特斯拉"]}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 1, "time": "2026-06-28 22:07:27", "score": 108, "content": "【今年前5个月，电子专用材料制造规模以上企业利润同比增长665.4% 专家：AI服务器所消耗的电子材料约为普通服务器的3至10倍】北京师范大学教授、经济学家万喆在接受记者电话采访时表示，电子专用材料厂商数量有限，技术壁垒高，且认证周期较长，导致产能难以在短期内快速扩张。这使得电子专用材料厂商在产业链中拥有较强定价权，能够将成本有效传导至下游，从而实现利润的超额增长。相比之下，终端应用端（如智能手机等）由于成本压力较大，利润反而受到一定压制。记者注意到，计算机、通信和其他电子设备制造业规模以上企业前5个月累计利润同比增速103.9%，较前4个月的107.7%、前3个月的124.5%有所下降，半导体产业链向好趋势能否延续？对此，万喆表示，从支撑逻辑来看，当前AI服务器、HBM存储及先进制程订单已排至今年年底，部分高端产能交付周期有所拉长。晶圆代工价格及自主芯片价格上涨趋势预计贯穿全年，新增产能", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 2, "time": "2026-06-28 15:58:12", "score": 108, "content": "【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。\n\n记者发现，新政坚持“以用促产”核心思路，分层分类布局人工智能应用场景建设，设立梯度化资金支持标准。在重大标杆场景打造上，聚焦智能制造、科学智能、智能医疗、智能政务、智能农业、智能应急、智能服务业、低空智能八大领域布局省级标志性应用场景，符合条件项目最高可获2000万元资金支持；针对区域示范载体，省级人工智能应用场景典型基地（区域）择优给予最高200万元扶持。\n\n同时强化国家级示范培育与大模型创新激励，对成功入", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 3, "time": "2026-06-28 15:39:25", "score": 108, "content": "【AI产业营收超4000亿 苏州发布2026年度“人工智能+”行动方案】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。方案以持续深化“人工智能+”城市建设、打造OPC创业首选城市为目标，围绕加强对上争取、提升科创能力、强化要素支撑、推动产业发展、深化场景应用、完善发展生态六大重点，形成80条具体工作任务，系统推进全市人工智能高质量发展。《行动方案》提出，到2026年底，全市集聚人工智能企业超3500家，人工智能核心产业营收超4000亿元，增速达20%。《行动方案》明确，苏州将对标国家要求，高水平建设国家人工智能应用中试基地，持续做好相关领域平台争取工作，加快推进《苏州市人工智能应用促进条例》立法相关工作，为中国—东盟国家人工智能应用合作中心提供常态化合作支撑。今年，启动建设首批市级人工智能发展驱动中心，培育一批在重点细分领域具有全国影响力的链主企业。围绕AI芯片、具身智能", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 4, "time": "2026-06-28 15:35:44", "score": 108, "content": "【华源控股：股票交易异常波动 提醒投资者注意风险】华源控股公告称，公司股票于2026年6月25日、6月26日连续两个交易日收盘价格涨幅偏离值累计超20%，属异常波动。公司经营正常，内外部环境无重大变化，无应披露未披露重大事项，控股股东和实控人未买卖公司股票。公司主营金属及塑料包装，近年收购半导体相关公司，2026年一季度半导体业务并表营收约1000万，占比低。此外，公司间接持有宇树科技约0.003%股权，对业绩影响不大。提醒投资者理性投资，注意风险。", "entities": ["宇树科技"]}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 0, "time": "2026-06-28 17:52:00", "score": 112, "content": "【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压产业链其它环节的利润空间，后续重点关注7月中下旬美国CSP大厂财报指引情况。", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 1, "time": "2026-06-28 15:50:35", "score": 108, "content": "【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人工智能+”制造领域，动态培育150个工业大模型，新增100个以上可复制可推广典型应用场景。全年在各领域新增典型场景200个，培育入库智能终端产品超300个。", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 2, "time": "2026-06-28 15:45:36", "score": 75, "content": "【创新医疗：控股子公司产品获医疗器械注册证】创新医疗公告称，其控股子公司博灵脑机（杭州）科技有限公司研发的“上肢主被动运动康复训练系统”（即赛博灵科AM5），于2026年6月26日取得浙江省药品监督管理局的注册批准，获得医疗器械注册证，有效期至2031年6月25日，适用于上肢功能障碍患者康复训练。不过，产品实际销售受多种因素影响，对公司业绩影响不确定。博灵脑机2026年1 - 5月营收为14.85万元。", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 3, "time": "2026-06-28 15:32:51", "score": 75, "content": "【创新医疗：控股子公司赛博灵科AM5取得医疗器械注册证】创新医疗公告，控股子公司博灵脑机（杭州）科技有限公司研发的“上肢主被动运动康复训练系统”（即赛博灵科AM5），于2026年6月26日取得了浙江省药品监督管理局的注册批准，获得医疗器械注册证，注册证编号为浙械注准20262190344。产品适用于由中枢神经损伤导致的上肢功能障碍的患者进行康复训练。", "entities": []}, {"type": "sector", "sector": "AI应用/软件", "priority": "A", "rank": 0, "time": "2026-06-28 18:52:34", "score": 113, "content": "【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。", "entities": ["特斯拉"]}, {"type": "sector", "sector": "AI应用/软件", "priority": "A", "rank": 1, "time": "2026-06-28 17:52:00", "score": 112, "content": "【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压产业链其它环节的利润空间，后续重点关注7月中下旬美国CSP大厂财报指引情况。", "entities": []}, {"type": "event", "sector": "英伟达 (半导体/AI算力)", "priority": "A", "rank": 0, "time": "2026-06-28 15:36:47", "score": 112, "content": "【超声电子：未供货英伟达，高速覆铜板等研发项目存在不确定性】超声电子6月28日发布公告，公司股票于2026年6月24日、6月25日、6月26日连续3个交易日收盘价格涨幅偏离值累计超过20%，属于股票交易异常波动情形。经核实，公司经营情况正常，近期公司经营情况及内外部经营环境均没有发生重大变化。公司下属覆铜板公司目前没有生产M8、M9覆铜板，现阶段M7/M8级高速覆铜板处于研发测试阶段；公司800G、1.6T光模块配套PCB在研究跟进中。上述研发项目后续推进进度、客户认证、量产落地均存在不确定性，暂未实现规模化供货，截至目前，上述产品没有产生相应营收。公司生产工业用超声检测仪器，可应用于运输管道", "entities": []}, {"type": "event", "sector": "英伟达 (半导体/AI算力)", "priority": "A", "rank": 1, "time": "2026-06-28 22:02:49", "score": 100, "content": "【澳大利亚Firmus Technologies与英伟达达成人工智能合作协议】澳大利亚人工智能基础设施公司Firmus Technologies周一表示，已与英伟达公司签署战略合作伙伴协议，旨在帮助新兴人工智能企业以更具成本效益的方式获取计算能力。Firmus表示，根据该协议，该公司将采购英伟达的基础设施，并向“AI Native”等客户销售基于英伟达技术的云服务；作为回报，这家在美国上市的芯片巨头将获得产品收入以及部分云服务收入。根据协议，从2027年第一季度至2028年初，将向位于印尼巴淡岛的设施交付17万个图形处理单元（GPU）。", "entities": []}, {"type": "event", "sector": "特斯拉 (机器人/新能源)", "priority": "A", "rank": 1, "time": "2026-06-28 18:51:35", "score": 85, "content": "马斯克：Grok 4.5现已在太空探索技术公司、特斯拉内部开启私有测试版。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 0, "time": "2026-06-29 06:01:36", "score": 41.0, "content": "标普500指数期货上涨0.1%，纳斯达克指数期货下跌0.1%，布伦特原油价格上涨1.4%。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 1, "time": "2026-06-28 17:03:54", "score": 36.0, "content": "【纳斯达克100ETF招商：提示二级市场交易价格溢价风险】纳斯达克100ETF招商公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，收盘价为2.296元，收盘时基金份额参考净值（IOPV）为2.1625元。若6月29日溢价幅度未有效回落，基金有权申请盘中临时停牌等措施。基金运作正常且无应披露未披露信息，提醒投资者关注溢价风险，审慎投资。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 2, "time": "2026-06-28 17:03:21", "score": 36.0, "content": "【纳斯达克100ETF大成：提示基金二级市场交易价格溢价风险】纳斯达克100ETF大成公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，其收盘价为1.774元，收盘时基金份额参考净值为1.6727元。若6月29日溢价幅度未有效回落，基金有权申请停牌等措施警示风险。目前基金运作正常，无应披露而未披露的重大信息。提醒投资者关注溢价风险，审慎投资。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 3, "time": "2026-06-29 06:05:33", "score": 35, "content": "标准普尔500指数期货上涨0.4%，纳斯达克指数期货在震荡交投中上涨0.4%。", "entities": []}, {"type": "event", "sector": "高通 (半导体)", "priority": "A", "rank": 1, "time": "2026-06-29 04:20:08", "score": 47.0, "content": "【美联储巴尔金警示通胀仍处高位，但已观察到通胀缓和迹象】里士满联邦储备银行行长汤姆·巴尔金表示，当前通胀水平过高，不过他已看到物价压力或将很快缓和的初步信号。巴尔金称，截至5月的个人消费支出物价指数同比上行；若联邦基金利率、劳动力市场无法进一步发挥抑制作用，很难有把握让通胀回落至2%目标水平。巴尔金对企业在当前高通胀环境下的定价行为表示担忧。他指出，企业定价时会将当下通胀水平纳入考量，这可能造成通胀黏性、居高不下。", "entities": []}, {"type": "event", "sector": "三星 (半导体)", "priority": "A", "rank": 0, "time": "2026-06-29 06:22:24", "score": 40, "content": "市场资讯：三星与SK集团十年内投资总额或达2万亿韩元。", "entities": []}, {"type": "event", "sector": "三星 (半导体)", "priority": "A", "rank": 1, "time": "2026-06-29 07:08:04", "score": 35, "content": "三星、SK海力士今日将公布投资计划。", "entities": []}, {"type": "event", "sector": "华为 ()", "priority": "A", "rank": 0, "time": "2026-06-28 18:33:43", "score": 30, "content": "【鸿蒙智行披露华为途灵平台技术进展：已完成三轮结构性技术升级，让汽车走向“主动预判”】在近日的鸿蒙智行TECH DAY——华为途灵平台技术专场上，途灵平台技术专家首次与媒体面对面，依托华为数字化能力底座，共同探讨软件定义底盘全新价值。 据悉，作为行业内首个自主研发的智能数字底盘平台，华为途灵平台围绕驾乘体验持续技术迭代，自2023年11月推出至今已经完成三轮结构性技术升级，技术成果全面应用到鸿蒙智行五界系列车型，在迭代过程中不断拓宽感知信息维度、丰富底盘特色功能。 华为途灵平台技术专家介绍，依托华为在计算与通信领域的根技术，华为途灵平台以全维感知+智能控制为核心，围绕算得快、低时延、控得准三大", "entities": []}, {"type": "event", "sector": "华为 ()", "priority": "A", "rank": 1, "time": "2026-06-28 16:25:11", "score": 30, "content": "【奕派M8车型开启预售】6月28日，东风奕派M8车型开启预售，首批搭载华为乾智驾ADS 5 Pro，预售价19.98万元起。", "entities": []}, {"type": "policy", "sector": "货币政策 -> 半导体芯片, AI应用/软件, 医药生物", "priority": "P", "rank": 0, "time": "2026-06-28 17:52:00", "score": 112, "content": "【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力", "priority": "P", "rank": 1, "time": "2026-06-29 06:51:02", "score": 109, "content": "【周一重要财经信息提醒（以下均为北京时间）】 \n① 待定 欧洲央行在辛特拉举行中央银行论坛，至7月1日；北京太空算力大会举办；\n② 07:30 澳洲联储助理主席Kent发表讲话；\n③ 07:50 日本5月零售销售；\n④ 13:00 英国央行首席经济学家Pill发表讲话；\n⑤ 16:30 英国5月央行抵押贷款许可\n⑥ 17:00 欧元区6月经济景气指数，欧元区6月消费者信心指数终值；\n⑦ 22:30 美国6月达拉斯联储商业活动指数\n⑧ 次日00:30 欧洲央行行长拉加德发表讲话。", "entities": []}, {"type": "policy", "sector": "监管政策 -> 半导体芯片, 机器人/具身智能", "priority": "P", "rank": 2, "time": "2026-06-28 15:39:25", "score": 108, "content": "【AI产业营收超4000亿 苏州发布2026年度“人工智能+”行动方案】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。方案以持续深化“人工智能+”城市建设、打造OPC创业首选城市为目标，围绕加强对上争取、提升科创能力、强化要素支撑、推动产业发展、深化场景应用、完善发展生态六大重点，形成80条具体工作任务，系统推进全市人工智能高质量发展。《行动方案》提出，到2026年底，全市集聚人工智能企业超3500家，人工智能核心产业营收超4000亿元，增速达20%。《行动方案》明确，苏州将对标国家要求，高水平建设国家人工智能应用中试基地，持续做好相关领域平台争取工作，加快推进《苏州市人工智", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力", "priority": "P", "rank": 3, "time": "2026-06-28 15:54:31", "score": 107, "content": "【中国开源模型为何在全球大受欢迎】“中国人工智能开源大模型全球累计下载量已突破100亿次”，国务院总理李强日前在大连出席2026年夏季达沃斯论坛开幕式并致辞时表示，“中国的新兴领域技术和产品，带给世界的不是冲击而是机遇，不是威胁而是赋能。”\n\n海量需求背后，是真实的产业落地图景：从硅谷互联网平台，到欧洲传统制造工厂，越来越多海外企业主动选用阿里千问、DeepSeek等国产开源大模型作为技术底座，嵌入自身业务升级和数字化转型流程。\n\n英国《金融时报》实地走访硅谷科创圈发现，Pinterest、爱彼迎等一众知名平台，早已常态化使用中国开源模型优化产品、迭代服务。不同于欧美商业模型高昂的授权费用，中", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力", "priority": "P", "rank": 4, "time": "2026-06-28 20:46:27", "score": 104, "content": "【为应对美国高端 AI 使用限制，奥地利推动欧盟引入 Anthropic 落地运营】奥地利正推动欧盟研究让 Anthropic 公益企业落户欧盟境内，以此抗衡美国限制境外主体使用其顶级人工智能大模型的举措。奥地利数字化国务秘书亚历山大・普罗尔致函欧盟委员会执行副主席亨娜・维尔库宁，信中提出，各成员国应探讨 “推动 Anthropic 在欧盟完成战略性布局、参与欧盟市场发展”。 普罗尔主张双方磋商需聚焦为企业提供 “稳定法律环境、市场准入渠道、配套资金支持以及适配该企业的价值规范体系”；信件并未详述 Anthropic 在欧洲的具体运营模式。", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力", "priority": "P", "rank": 5, "time": "2026-06-28 20:45:19", "score": 104, "content": "受美国出台访问限制政策影响，奥地利正向欧盟积极游说，争取吸引 AI 企业 Anthropic 落户欧盟。", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力", "priority": "P", "rank": 6, "time": "2026-06-28 17:04:51", "score": 104, "content": "【报道：谷歌已限制 Meta 调用 Gemini 算力】谷歌已限制 Meta 调用其 Gemini 大模型算力，原因是谷歌无法满足这家社交媒体企业所需的全部算力供给。报道称，AI 算力基础设施供给紧张的现状再度显现，谷歌母公司 Alphabet 旗下这家搜索引擎巨头已对多名客户实施算力配额管控，其中 Meta 受冲击最为严重。三位不愿具名的知情人士表示，此次限制措施对 Meta 内部多项 AI 项目产生连锁连带影响，公司已要求员工提高 AI 词元（Token）的使用效率、节约调用额度。", "entities": ["Meta", "谷歌"]}, {"type": "policy", "sector": "监管政策 -> 低空经济", "priority": "P", "rank": 7, "time": "2026-06-28 17:01:39", "score": 79, "content": "【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财政状况承压、供给冲击持续存在，通胀或将再度顽固走高。国际清算银行表示，近几个月全球经济虽展现韧性，但政策制定者必须果断出手，守住经济稳定底线。国际清算银行总经理巴勃罗・埃尔南德斯・德科斯表示：“各项政策需协同发力，避免全球经济面临政策拉扯冲突。归根结底，经济稳定取决于健康的财政与金融根基。”报告列出", "entities": ["高通"]}];</script>
+<div class="normal-view" id="normalView">
+<div class="filter-bar">
+<span class="filter-tag active" onclick="filterSector(this,'')">全部</span>
+<span class="filter-tag" onclick="filterSector(this,'半导体芯片')">半导体芯片 <span style="opacity:.6">25</span></span>
+<span class="filter-tag" onclick="filterSector(this,'AI算力')">AI算力 <span style="opacity:.6">22</span></span>
+<span class="filter-tag" onclick="filterSector(this,'低空经济')">低空经济 <span style="opacity:.6">11</span></span>
+<span class="filter-tag" onclick="filterSector(this,'新能源')">新能源 <span style="opacity:.6">10</span></span>
+<span class="filter-tag" onclick="filterSector(this,'机器人/具身智能')">机器人/具身智能 <span style="opacity:.6">8</span></span>
+<span class="filter-tag" onclick="filterSector(this,'医药生物')">医药生物 <span style="opacity:.6">4</span></span>
+<span class="filter-tag" onclick="filterSector(this,'AI应用/软件')">AI应用/软件 <span style="opacity:.6">2</span></span>
+</div>
+<div class="sec-title">&#128293; 热点板块 <span class="n">按信号强度排序</span></div>
+<div class="card open" data-sector="半导体芯片">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge s">S</span>
+      <span class="card-name">半导体芯片</span>
+      <span class="card-count">25条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="subtags"><span class="stag">CPU/GPU</span><span class="stag">存储芯片</span><span class="stag">封测</span><span class="stag">涨价信号</span><span class="stag">设备材料</span></div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-06-28 19:50:44" data-score="121" data-content="【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、21.69亿元、19.8亿元、15.21亿元；立讯精密、江波龙、东方财富、云南锗业等股紧随其后，融资净买入额均在13亿元以上。" data-entities="[&quot;新易盛&quot;, &quot;兆易创新&quot;, &quot;中际旭创&quot;, &quot;长电科技&quot;, &quot;江波龙&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">19:50</span><span class="ni-score hot">&#128293;121</span></div>
+    <div class="ni-text">【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、...</div>
+    <div class="ni-tags"><span class="etag">新易盛</span><span class="etag">兆易创新</span><span class="etag">中际旭创</span><span class="etag">长电科技</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-06-29 02:08:38" data-score="113" data-content="百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">02:08</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-06-28 21:05:51" data-score="112" data-content="【康宁推出下一代玻璃光互连组件】近日，Corning（康宁）在首尔POSCO Tower Yeoksam举办的AI数据中心光通信与互连技术大会上，正式推出下一代玻璃光互连组件Glass Bridge（玻璃桥）。该产品基于玻璃波导技术，用于实现光纤与光子集成电路（PIC）之间的直接光学连接，主要面向共封装光学（CPO）及玻璃基板半导体封装应用场景。公司方面表示，该方案通过在玻璃内部构建光传播路径，以减少传统光互连中的多级器件与对准环节，从而提升光互连密度与系统集成度。业内人士告诉记者，康宁此次推出的Glass Bridge光互连组件，并非传统意义上的可插拔光模块产品，而是切入CPO封装里非常底层、但未来可能越来越关键的环节：光纤如何低损耗、高密度、可量产地接入光子芯片。这或意味着AI光通信的下一轮竞争，开始向玻璃基板、光耦合、fiber-to-PIC连接和CPO封装接口下沉。（上海证券报）" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">21:05</span><span class="ni-score hot">&#128293;112</span></div>
+    <div class="ni-text">【康宁推出下一代玻璃光互连组件】近日，Corning（康宁）在首尔POSCO Tower Yeoksam举办的AI数据中心光通信与互连技术大会上，正式推出下一代玻璃光互连组件Glass Bridge（玻璃桥）。该产品基于玻璃波导技术，用于实现光纤与光子集成电路（PIC）之间的直接光学连接，主要面向共封装光学（CPO）及玻璃基板半导体封装应用场景。公司方面表示，该方案通过在玻璃内部构建光传播路径，以...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card open" data-sector="AI算力">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge s">S</span>
+      <span class="card-name">AI算力</span>
+      <span class="card-count">22条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="subtags"><span class="stag">HBM存储</span><span class="stag">光模块</span><span class="stag">服务器</span><span class="stag">液冷</span></div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-06-28 19:50:44" data-score="121" data-content="【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、21.69亿元、19.8亿元、15.21亿元；立讯精密、江波龙、东方财富、云南锗业等股紧随其后，融资净买入额均在13亿元以上。" data-entities="[&quot;新易盛&quot;, &quot;兆易创新&quot;, &quot;中际旭创&quot;, &quot;长电科技&quot;, &quot;江波龙&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">19:50</span><span class="ni-score hot">&#128293;121</span></div>
+    <div class="ni-text">【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、...</div>
+    <div class="ni-tags"><span class="etag">新易盛</span><span class="etag">兆易创新</span><span class="etag">中际旭创</span><span class="etag">长电科技</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-06-29 02:08:38" data-score="113" data-content="百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">02:08</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">百度AI芯片业务昆仑芯冲击港股IPO，目标估值500亿美元。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-06-28 18:52:34" data-score="113" data-content="【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。" data-entities="[&quot;特斯拉&quot;]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:52</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。...</div>
+    <div class="ni-tags"><span class="etag">特斯拉</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="低空经济">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">低空经济</span>
+      <span class="card-count">11条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-06-28 15:58:12" data-score="108" data-content="【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。
+
+记者发现，新政坚持“以用促产”核心思路，分层分类布局人工智能应用场景建设，设立梯度化资金支持标准。在重大标杆场景打造上，聚焦智能制造、科学智能、智能医疗、智能政务、智能农业、智能应急、智能服务业、低空智能八大领域布局省级标志性应用场景，符合条件项目最高可获2000万元资金支持；针对区域示范载体，省级人工智能应用场景典型基地（区域）择优给予最高200万元扶持。
+
+同时强化国家级示范培育与大模型创新激励，对成功入" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:58</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。
+
+记者发现，新...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-06-28 15:50:35" data-score="108" data-content="【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人工智能+”制造领域，动态培育150个工业大模型，新增100个以上可复制可推广典型应用场景。全年在各领域新增典型场景200个，培育入库智能终端产品超300个。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:50</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-06-29 07:05:55" data-score="80" data-content="普京表示，乌克兰无人机袭击炼油厂致使俄罗斯面临燃料短缺问题。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:05</span><span class="ni-score cool">80</span></div>
+    <div class="ni-text">普京表示，乌克兰无人机袭击炼油厂致使俄罗斯面临燃料短缺问题。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="新能源">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge b">B</span>
+      <span class="card-name">新能源</span>
+      <span class="card-count">10条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-06-28 18:05:07" data-score="112" data-content="【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 TOPS，支持 L3、L4 自动驾驶，已开始量产。（晚点）" data-entities="[&quot;比亚迪&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:05</span><span class="ni-score hot">&#128293;112</span></div>
+    <div class="ni-text">【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 T...</div>
+    <div class="ni-tags"><span class="etag">比亚迪</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-06-28 23:33:09" data-score="110" data-content="【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高毅等现身基石名单。消息人士透露，本次新加坡政府投资公司（GIC）和富达国际两家基金强势领投，GIC近年重仓Anthropic与台积电，富达国际此前重仓中际旭创、寒武纪等AI龙头，意味着Momenta正成为物理AI规模化落地的“资本锚点”。梅赛德斯-奔驰和比亚迪既是Momenta的老股东，也是深度合作伙伴，此次作为基石继续加码投资，带来产业端的资本与订单双重护航，意味着双方的合作护城河进一步加深。此" data-entities="[&quot;比亚迪&quot;, &quot;中际旭创&quot;, &quot;台积电&quot;]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">23:33</span><span class="ni-score hot">&#128293;110</span></div>
+    <div class="ni-text">【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高...</div>
+    <div class="ni-tags"><span class="etag">比亚迪</span><span class="etag">中际旭创</span><span class="etag">台积电</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-06-28 19:30:12" data-score="108" data-content="【中信建投：锂电有望迎来旺季、储能需求持续回暖】中信建投发布研报称，以下因素将决定三季度行情的走势：基本面方面，AI算力仍维持较高景气度，其中报业绩和海外财报值得关注，同时4月以来宏观经济承压情况下，7月政治局会议提振经济举措较为重要；流动性方面，外部扰动加大，内部维持中性；风险偏好方面，地缘事件、行业巨头上市会对市场造成短期波动，而考虑到全球科技股联动效应，日韩美等主要海外算力也需要持续追踪。行业配置上，AI算力虽景气逻辑不变但波动加剧，建议谨慎追高，逢回调布局；锂电有望迎来旺季、储能需求持续回暖，新能源存在阶段估值修复机会；红利有望超跌反弹、配置性价比较高。重点关注：银行、煤炭、公用事业、AI、光模块、存储、芯片、工业金属、锂电材料（VC）等。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">19:30</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【中信建投：锂电有望迎来旺季、储能需求持续回暖】中信建投发布研报称，以下因素将决定三季度行情的走势：基本面方面，AI算力仍维持较高景气度，其中报业绩和海外财报值得关注，同时4月以来宏观经济承压情况下，7月政治局会议提振经济举措较为重要；流动性方面，外部扰动加大，内部维持中性；风险偏好方面，地缘事件、行业巨头上市会对市场造成短期波动，而考虑到全球科技股联动效应，日韩美等主要海外算力也需要持续追踪。行...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="机器人/具身智能">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">机器人/具身智能</span>
+      <span class="card-count">8条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-06-28 18:52:34" data-score="113" data-content="【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。" data-entities="[&quot;特斯拉&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:52</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。...</div>
+    <div class="ni-tags"><span class="etag">特斯拉</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-06-28 22:07:27" data-score="108" data-content="【今年前5个月，电子专用材料制造规模以上企业利润同比增长665.4% 专家：AI服务器所消耗的电子材料约为普通服务器的3至10倍】北京师范大学教授、经济学家万喆在接受记者电话采访时表示，电子专用材料厂商数量有限，技术壁垒高，且认证周期较长，导致产能难以在短期内快速扩张。这使得电子专用材料厂商在产业链中拥有较强定价权，能够将成本有效传导至下游，从而实现利润的超额增长。相比之下，终端应用端（如智能手机等）由于成本压力较大，利润反而受到一定压制。记者注意到，计算机、通信和其他电子设备制造业规模以上企业前5个月累计利润同比增速103.9%，较前4个月的107.7%、前3个月的124.5%有所下降，半导体产业链向好趋势能否延续？对此，万喆表示，从支撑逻辑来看，当前AI服务器、HBM存储及先进制程订单已排至今年年底，部分高端产能交付周期有所拉长。晶圆代工价格及自主芯片价格上涨趋势预计贯穿全年，新增产能" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">22:07</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【今年前5个月，电子专用材料制造规模以上企业利润同比增长665.4% 专家：AI服务器所消耗的电子材料约为普通服务器的3至10倍】北京师范大学教授、经济学家万喆在接受记者电话采访时表示，电子专用材料厂商数量有限，技术壁垒高，且认证周期较长，导致产能难以在短期内快速扩张。这使得电子专用材料厂商在产业链中拥有较强定价权，能够将成本有效传导至下游，从而实现利润的超额增长。相比之下，终端应用端（如智能手机...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-06-28 15:58:12" data-score="108" data-content="【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。
+
+记者发现，新政坚持“以用促产”核心思路，分层分类布局人工智能应用场景建设，设立梯度化资金支持标准。在重大标杆场景打造上，聚焦智能制造、科学智能、智能医疗、智能政务、智能农业、智能应急、智能服务业、低空智能八大领域布局省级标志性应用场景，符合条件项目最高可获2000万元资金支持；针对区域示范载体，省级人工智能应用场景典型基地（区域）择优给予最高200万元扶持。
+
+同时强化国家级示范培育与大模型创新激励，对成功入" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:58</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【最高2000万元！四川加码支持人工智能产业链】记者从省科技厅获悉，《四川省进一步促进人工智能产业链发展若干政策》（以下简称“新政”）于日前正式印发实施，围绕坚持场景牵引以用促产、加大企业培育力度、一体推进科技攻关和成果转化、强化优质算力数据供给、持续优化发展生态五大维度推出一揽子硬核扶持举措，以全链条政策供给助推全省人工智能产业高质量发展，全力打造国内领先的人工智能产业发展高地。
+
+记者发现，新...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="医药生物">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">医药生物</span>
+      <span class="card-count">4条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-06-28 17:52:00" data-score="112" data-content="【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压产业链其它环节的利润空间，后续重点关注7月中下旬美国CSP大厂财报指引情况。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">17:52</span><span class="ni-score hot">&#128293;112</span></div>
+    <div class="ni-text">【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-06-28 15:50:35" data-score="108" data-content="【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人工智能+”制造领域，动态培育150个工业大模型，新增100个以上可复制可推广典型应用场景。全年在各领域新增典型场景200个，培育入库智能终端产品超300个。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:50</span><span class="ni-score warm">108</span></div>
+    <div class="ni-text">【苏州：全年在各领域新增典型场景200个，培育入库智能终端产品超300个】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。《行动方案》坚持“以用促研、以用立业”，全面覆盖金融、科研、医疗、医保、低空经济、农业、能源、文旅、电商、人社、教育、民政服务、政务服务、交通运输、城市管理、应急管理、知识产权等20余个领域，推动人工智能与实体经济、民生服务、社会治理深度融合。其中，重点聚焦“人...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-06-28 15:45:36" data-score="75" data-content="【创新医疗：控股子公司产品获医疗器械注册证】创新医疗公告称，其控股子公司博灵脑机（杭州）科技有限公司研发的“上肢主被动运动康复训练系统”（即赛博灵科AM5），于2026年6月26日取得浙江省药品监督管理局的注册批准，获得医疗器械注册证，有效期至2031年6月25日，适用于上肢功能障碍患者康复训练。不过，产品实际销售受多种因素影响，对公司业绩影响不确定。博灵脑机2026年1 - 5月营收为14.85万元。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:45</span><span class="ni-score cool">75</span></div>
+    <div class="ni-text">【创新医疗：控股子公司产品获医疗器械注册证】创新医疗公告称，其控股子公司博灵脑机（杭州）科技有限公司研发的“上肢主被动运动康复训练系统”（即赛博灵科AM5），于2026年6月26日取得浙江省药品监督管理局的注册批准，获得医疗器械注册证，有效期至2031年6月25日，适用于上肢功能障碍患者康复训练。不过，产品实际销售受多种因素影响，对公司业绩影响不确定。博灵脑机2026年1 - 5月营收为14.85...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="AI应用/软件">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">AI应用/软件</span>
+      <span class="card-count">2条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="AI应用/软件" data-priority="A" data-time="2026-06-28 18:52:34" data-score="113" data-content="【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。" data-entities="[&quot;特斯拉&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:52</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。...</div>
+    <div class="ni-tags"><span class="etag">特斯拉</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI应用/软件" data-priority="A" data-time="2026-06-28 17:52:00" data-score="112" data-content="【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压产业链其它环节的利润空间，后续重点关注7月中下旬美国CSP大厂财报指引情况。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">17:52</span><span class="ni-score hot">&#128293;112</span></div>
+    <div class="ni-text">【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="sec-title">&#127919; 焦点事件 <span class="n">同一公司/标的的多条快讯聚合</span></div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">比亚迪</span>
+    <span class="ev-tag">新能源</span>
+    <span class="ev-stat">3条 &middot; 总分292</span>
+  </div>
+<div class="news-item" data-sector="比亚迪 (新能源)" data-priority="A" data-time="2026-06-28 18:05:07" data-score="112" data-content="【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 TOPS，支持 L3、L4 自动驾驶，已开始量产。（晚点）" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:05</span></div>
+    <div class="ni-text">【比亚迪自研智驾芯片预计2027年首搭量产车型】据悉，比亚迪正计划明年在腾势品牌的量产新车上首搭自研智驾芯片璇玑 A3。 截至发稿，比亚迪没有回复询问。 一位自研芯片的智驾方案供应商员工表示，智驾芯片从流片到上车，通常至少还需要一年，芯片本身、算法部署、整车适配都要逐一验证，因此芯片落地时间很难压缩。 官方信息显示，这颗 4nm 芯片单颗算力超过 700 TOPS，三颗协同总算力超过 2100 T...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="比亚迪 (新能源)" data-priority="A" data-time="2026-06-28 23:33:09" data-score="110" data-content="【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高毅等现身基石名单。消息人士透露，本次新加坡政府投资公司（GIC）和富达国际两家基金强势领投，GIC近年重仓Anthropic与台积电，富达国际此前重仓中际旭创、寒武纪等AI龙头，意味着Momenta正" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">23:33</span></div>
+    <div class="ni-text">【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="比亚迪 (新能源)" data-priority="A" data-time="2026-06-29 07:03:09" data-score="70" data-content="【7家车企完成首轮强制ESG信披 精细化提质转型成为改进方向】2026年是A股可持续发展报告强制披露元年，沪深北交易所划定首批强制披露主体需于4月30日前完成2025年度可持续发展报告发布。比亚迪、上汽集团、长安汽车、长城汽车、广汽集团、赛力斯、江淮汽车7家符合强制披露条件的整车企业全部按期提交报告。根据车企发布的可持续发展报告，汽车行业虽搭建起基础ESG披露框架，但量化指标缺失、环境合规披露失真、循环经济数据单薄等短板集中暴露，距离精细化、标准化高质量披露ESG信息仍存在明显差距。（中国证券报）" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:03</span></div>
+    <div class="ni-text">【7家车企完成首轮强制ESG信披 精细化提质转型成为改进方向】2026年是A股可持续发展报告强制披露元年，沪深北交易所划定首批强制披露主体需于4月30日前完成2025年度可持续发展报告发布。比亚迪、上汽集团、长安汽车、长城汽车、广汽集团、赛力斯、江淮汽车7家符合强制披露条件的整车企业全部按期提交报告。根据车企发布的可持续发展报告，汽车行业虽搭建起基础ESG披露框架，但量化指标缺失、环境合规披露失真...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">中际旭创</span>
+    <span class="ev-tag">AI算力/光模块</span>
+    <span class="ev-stat">2条 &middot; 总分231</span>
+  </div>
+<div class="news-item" data-sector="中际旭创 (AI算力/光模块)" data-priority="A" data-time="2026-06-28 19:50:44" data-score="121" data-content="【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、21.69亿元、19.8亿元、15.21亿元；立讯精密、江波龙、东方财富、云南锗业等股紧随其后，融资净买入额均在13亿元以上。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">19:50</span></div>
+    <div class="ni-text">【A股最新融资余额突破3万亿元 融资资金加仓先进封装、存储板块】近一周（6月22日至25日），A股融资余额续创历史新高，首次站上3万亿元，最新为30101.97亿元（截至6月25日）。A股融资资金呈现净买入态势，金额合计654.68亿元。融资资金加仓先进封装、存储板块。个股方面，近一周，36股融资净买入额在5亿元以上。长电科技、新易盛、中际旭创、兆易创新融资净买入额排名前四，依次为26.53亿元、...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="中际旭创 (AI算力/光模块)" data-priority="A" data-time="2026-06-28 23:33:09" data-score="110" data-content="【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高毅等现身基石名单。消息人士透露，本次新加坡政府投资公司（GIC）和富达国际两家基金强势领投，GIC近年重仓Anthropic与台积电，富达国际此前重仓中际旭创、寒武纪等AI龙头，意味着Momenta正" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">23:33</span></div>
+    <div class="ni-text">【物理AI第一股Momenta明日启动招股，奔驰、比亚迪等现身基石名单】6月28日晚间消息，全球领先的物理AI公司Momenta将于6月29日披露全球发售文件，正式启动招股，成为“物理AI第一股”。新浪科技获得的信息显示，Momenta基石席位空前火爆，阵容豪华，包括国际顶级长线基金及主权基金、顶级战略投资人和中资顶级资本。新加坡政府投资公司、富达国际、贝莱德、橡树资本、梅赛德斯-奔驰、比亚迪、高...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">英伟达</span>
+    <span class="ev-tag">半导体/AI算力</span>
+    <span class="ev-stat">2条 &middot; 总分212</span>
+  </div>
+<div class="news-item" data-sector="英伟达 (半导体/AI算力)" data-priority="A" data-time="2026-06-28 15:36:47" data-score="112" data-content="【超声电子：未供货英伟达，高速覆铜板等研发项目存在不确定性】超声电子6月28日发布公告，公司股票于2026年6月24日、6月25日、6月26日连续3个交易日收盘价格涨幅偏离值累计超过20%，属于股票交易异常波动情形。经核实，公司经营情况正常，近期公司经营情况及内外部经营环境均没有发生重大变化。公司下属覆铜板公司目前没有生产M8、M9覆铜板，现阶段M7/M8级高速覆铜板处于研发测试阶段；公司800G、1.6T光模块配套PCB在研究跟进中。上述研发项目后续推进进度、客户认证、量产落地均存在不确定性，暂未实现规模化供货，截至目前，上述产品没有产生相应营收。公司生产工业用超声检测仪器，可应用于运输管道" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:36</span></div>
+    <div class="ni-text">【超声电子：未供货英伟达，高速覆铜板等研发项目存在不确定性】超声电子6月28日发布公告，公司股票于2026年6月24日、6月25日、6月26日连续3个交易日收盘价格涨幅偏离值累计超过20%，属于股票交易异常波动情形。经核实，公司经营情况正常，近期公司经营情况及内外部经营环境均没有发生重大变化。公司下属覆铜板公司目前没有生产M8、M9覆铜板，现阶段M7/M8级高速覆铜板处于研发测试阶段；公司800G...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="英伟达 (半导体/AI算力)" data-priority="A" data-time="2026-06-28 22:02:49" data-score="100" data-content="【澳大利亚Firmus Technologies与英伟达达成人工智能合作协议】澳大利亚人工智能基础设施公司Firmus Technologies周一表示，已与英伟达公司签署战略合作伙伴协议，旨在帮助新兴人工智能企业以更具成本效益的方式获取计算能力。Firmus表示，根据该协议，该公司将采购英伟达的基础设施，并向“AI Native”等客户销售基于英伟达技术的云服务；作为回报，这家在美国上市的芯片巨头将获得产品收入以及部分云服务收入。根据协议，从2027年第一季度至2028年初，将向位于印尼巴淡岛的设施交付17万个图形处理单元（GPU）。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">22:02</span></div>
+    <div class="ni-text">【澳大利亚Firmus Technologies与英伟达达成人工智能合作协议】澳大利亚人工智能基础设施公司Firmus Technologies周一表示，已与英伟达公司签署战略合作伙伴协议，旨在帮助新兴人工智能企业以更具成本效益的方式获取计算能力。Firmus表示，根据该协议，该公司将采购英伟达的基础设施，并向“AI Native”等客户销售基于英伟达技术的云服务；作为回报，这家在美国上市的芯片巨...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">特斯拉</span>
+    <span class="ev-tag">机器人/新能源</span>
+    <span class="ev-stat">2条 &middot; 总分198</span>
+  </div>
+<div class="news-item" data-sector="特斯拉 (机器人/新能源)" data-priority="A" data-time="2026-06-28 18:52:34" data-score="113" data-content="【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。马斯克表示，SpaceX 今年每个月都会推出一批从零完整训练的全新大模型。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:52</span></div>
+    <div class="ni-text">【马斯克：Grok 4.5现已在SpaceX、特斯拉内部开启私有测试版】马斯克发文称，Grok 4.5 基于自研 1.5 万亿参数 V9 基础大模型打造，并引入 Cursor 数据完成补充训练，目前已在 SpaceX、特斯拉内部开启私有测试。早期评测结果显示，其性能接近甚至有望超越 Opus 模型。基于人类反馈的强化学习（RL）仍在持续大幅提升模型能力，Grok 配套构建调度框架也在每日迭代优化。...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="特斯拉 (机器人/新能源)" data-priority="A" data-time="2026-06-28 18:51:35" data-score="85" data-content="马斯克：Grok 4.5现已在太空探索技术公司、特斯拉内部开启私有测试版。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:51</span></div>
+    <div class="ni-text">马斯克：Grok 4.5现已在太空探索技术公司、特斯拉内部开启私有测试版。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">纳斯达克</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">4条 &middot; 总分148</span>
+  </div>
+<div class="news-item" data-sector="纳斯达克 ()" data-priority="A" data-time="2026-06-29 06:01:36" data-score="41.0" data-content="标普500指数期货上涨0.1%，纳斯达克指数期货下跌0.1%，布伦特原油价格上涨1.4%。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">06:01</span></div>
+    <div class="ni-text">标普500指数期货上涨0.1%，纳斯达克指数期货下跌0.1%，布伦特原油价格上涨1.4%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="纳斯达克 ()" data-priority="A" data-time="2026-06-28 17:03:54" data-score="36.0" data-content="【纳斯达克100ETF招商：提示二级市场交易价格溢价风险】纳斯达克100ETF招商公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，收盘价为2.296元，收盘时基金份额参考净值（IOPV）为2.1625元。若6月29日溢价幅度未有效回落，基金有权申请盘中临时停牌等措施。基金运作正常且无应披露未披露信息，提醒投资者关注溢价风险，审慎投资。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">17:03</span></div>
+    <div class="ni-text">【纳斯达克100ETF招商：提示二级市场交易价格溢价风险】纳斯达克100ETF招商公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，收盘价为2.296元，收盘时基金份额参考净值（IOPV）为2.1625元。若6月29日溢价幅度未有效回落，基金有权申请盘中临时停牌等措施。基金运作正常且无应披露未披露信息，提醒投资者关注溢价风险，审慎投资。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="纳斯达克 ()" data-priority="A" data-time="2026-06-28 17:03:21" data-score="36.0" data-content="【纳斯达克100ETF大成：提示基金二级市场交易价格溢价风险】纳斯达克100ETF大成公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，其收盘价为1.774元，收盘时基金份额参考净值为1.6727元。若6月29日溢价幅度未有效回落，基金有权申请停牌等措施警示风险。目前基金运作正常，无应披露而未披露的重大信息。提醒投资者关注溢价风险，审慎投资。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">17:03</span></div>
+    <div class="ni-text">【纳斯达克100ETF大成：提示基金二级市场交易价格溢价风险】纳斯达克100ETF大成公告称，近期该基金二级市场交易价格明显高于基金份额参考净值，出现较大幅度溢价。2026年6月26日，其收盘价为1.774元，收盘时基金份额参考净值为1.6727元。若6月29日溢价幅度未有效回落，基金有权申请停牌等措施警示风险。目前基金运作正常，无应披露而未披露的重大信息。提醒投资者关注溢价风险，审慎投资。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">高通</span>
+    <span class="ev-tag">半导体</span>
+    <span class="ev-stat">2条 &middot; 总分126</span>
+  </div>
+<div class="news-item" data-sector="高通 (半导体)" data-priority="A" data-time="2026-06-28 17:01:39" data-score="79" data-content="【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财政状况承压、供给冲击持续存在，通胀或将再度顽固走高。国际清算银行表示，近几个月全球经济虽展现韧性，但政策制定者必须果断出手，守住经济稳定底线。国际清算银行总经理巴勃罗・埃尔南德斯・德科斯表示：“各项政策需协同发力，避免全球经济面临政策拉扯冲突。归根结底，经济稳定取决于健康的财政与金融根基。”报告列出" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">17:01</span></div>
+    <div class="ni-text">【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财政状况承压、供给冲击持续存在，通胀或将再度顽固走高。国际清算银行表示，近几个月全球经济虽展现韧性，但...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="高通 (半导体)" data-priority="A" data-time="2026-06-29 04:20:08" data-score="47.0" data-content="【美联储巴尔金警示通胀仍处高位，但已观察到通胀缓和迹象】里士满联邦储备银行行长汤姆·巴尔金表示，当前通胀水平过高，不过他已看到物价压力或将很快缓和的初步信号。巴尔金称，截至5月的个人消费支出物价指数同比上行；若联邦基金利率、劳动力市场无法进一步发挥抑制作用，很难有把握让通胀回落至2%目标水平。巴尔金对企业在当前高通胀环境下的定价行为表示担忧。他指出，企业定价时会将当下通胀水平纳入考量，这可能造成通胀黏性、居高不下。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:20</span></div>
+    <div class="ni-text">【美联储巴尔金警示通胀仍处高位，但已观察到通胀缓和迹象】里士满联邦储备银行行长汤姆·巴尔金表示，当前通胀水平过高，不过他已看到物价压力或将很快缓和的初步信号。巴尔金称，截至5月的个人消费支出物价指数同比上行；若联邦基金利率、劳动力市场无法进一步发挥抑制作用，很难有把握让通胀回落至2%目标水平。巴尔金对企业在当前高通胀环境下的定价行为表示担忧。他指出，企业定价时会将当下通胀水平纳入考量，这可能造成通...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">三星</span>
+    <span class="ev-tag">半导体</span>
+    <span class="ev-stat">2条 &middot; 总分75</span>
+  </div>
+<div class="news-item" data-sector="三星 (半导体)" data-priority="A" data-time="2026-06-29 06:22:24" data-score="40" data-content="市场资讯：三星与SK集团十年内投资总额或达2万亿韩元。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">06:22</span></div>
+    <div class="ni-text">市场资讯：三星与SK集团十年内投资总额或达2万亿韩元。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="三星 (半导体)" data-priority="A" data-time="2026-06-29 07:08:04" data-score="35" data-content="三星、SK海力士今日将公布投资计划。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:08</span></div>
+    <div class="ni-text">三星、SK海力士今日将公布投资计划。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">华为</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">2条 &middot; 总分60</span>
+  </div>
+<div class="news-item" data-sector="华为 ()" data-priority="A" data-time="2026-06-28 18:33:43" data-score="30" data-content="【鸿蒙智行披露华为途灵平台技术进展：已完成三轮结构性技术升级，让汽车走向“主动预判”】在近日的鸿蒙智行TECH DAY——华为途灵平台技术专场上，途灵平台技术专家首次与媒体面对面，依托华为数字化能力底座，共同探讨软件定义底盘全新价值。 据悉，作为行业内首个自主研发的智能数字底盘平台，华为途灵平台围绕驾乘体验持续技术迭代，自2023年11月推出至今已经完成三轮结构性技术升级，技术成果全面应用到鸿蒙智行五界系列车型，在迭代过程中不断拓宽感知信息维度、丰富底盘特色功能。 华为途灵平台技术专家介绍，依托华为在计算与通信领域的根技术，华为途灵平台以全维感知+智能控制为核心，围绕算得快、低时延、控得准三大" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">18:33</span></div>
+    <div class="ni-text">【鸿蒙智行披露华为途灵平台技术进展：已完成三轮结构性技术升级，让汽车走向“主动预判”】在近日的鸿蒙智行TECH DAY——华为途灵平台技术专场上，途灵平台技术专家首次与媒体面对面，依托华为数字化能力底座，共同探讨软件定义底盘全新价值。 据悉，作为行业内首个自主研发的智能数字底盘平台，华为途灵平台围绕驾乘体验持续技术迭代，自2023年11月推出至今已经完成三轮结构性技术升级，技术成果全面应用到鸿蒙智...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="华为 ()" data-priority="A" data-time="2026-06-28 16:25:11" data-score="30" data-content="【奕派M8车型开启预售】6月28日，东风奕派M8车型开启预售，首批搭载华为乾智驾ADS 5 Pro，预售价19.98万元起。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">16:25</span></div>
+    <div class="ni-text">【奕派M8车型开启预售】6月28日，东风奕派M8车型开启预售，首批搭载华为乾智驾ADS 5 Pro，预售价19.98万元起。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="sec-title">&#128203; 政策 &times; 板块 <span class="n">宏观政策对热点板块的影响信号</span></div>
+<div class="px-card news-item" data-sector="货币政策 -&gt; 半导体芯片, AI应用/软件, 医药生物" data-priority="P" data-time="2026-06-28 17:52:00" data-score="0" data-content="【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现错杀的行业如券商、化工、创新药、AI应用在过去一周出现修复，此外，美国PCE数据公布之后，美联储年内加息预期有所回摆，随着油价回落，加息预期最悲观的时候可能已经过去，这对于风格再平衡而言是好事。另一方面，科技目前进入观察期，前期强势的硬件涨价进一步扩散，但美光财报公布之后市场开始交易存储成本走高挤压" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">货币政策</span>
+    <span class="px-sec">&#8594; 半导体芯片, AI应用/软件, 医药生物</span>
+    <span class="ni-time" style="margin-left:auto">17:52</span>
+  </div>
+  <div class="px-text">【方正证券：后续风格继续极致化演绎的概率已经不大】方正证券表示，风格再平衡的必要性进一步增强，当前价值/成长比价来到底部区域，意味着后续风格继续极致化演绎的概率已经不大。从再平衡的潜在方向来看，仍是围绕着中报业绩预期较好的行业做再平衡，而不是无论什么行业都可以“高切低”，部分此前因为科技资金虹吸出现...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力" data-priority="P" data-time="2026-06-29 06:51:02" data-score="0" data-content="【周一重要财经信息提醒（以下均为北京时间）】 
+① 待定 欧洲央行在辛特拉举行中央银行论坛，至7月1日；北京太空算力大会举办；
+② 07:30 澳洲联储助理主席Kent发表讲话；
+③ 07:50 日本5月零售销售；
+④ 13:00 英国央行首席经济学家Pill发表讲话；
+⑤ 16:30 英国5月央行抵押贷款许可
+⑥ 17:00 欧元区6月经济景气指数，欧元区6月消费者信心指数终值；
+⑦ 22:30 美国6月达拉斯联储商业活动指数
+⑧ 次日00:30 欧洲央行行长拉加德发表讲话。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">06:51</span>
+  </div>
+  <div class="px-text">【周一重要财经信息提醒（以下均为北京时间）】 
+① 待定 欧洲央行在辛特拉举行中央银行论坛，至7月1日；北京太空算力大会举办；
+② 07:30 澳洲联储助理主席Kent发表讲话；
+③ 07:50 日本5月零售销售；
+④ 13:00 英国央行首席经济学家Pill发表讲话；
+⑤ 16:30 英国5月央行...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; 半导体芯片, 机器人/具身智能" data-priority="P" data-time="2026-06-28 15:39:25" data-score="0" data-content="【AI产业营收超4000亿 苏州发布2026年度“人工智能+”行动方案】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。方案以持续深化“人工智能+”城市建设、打造OPC创业首选城市为目标，围绕加强对上争取、提升科创能力、强化要素支撑、推动产业发展、深化场景应用、完善发展生态六大重点，形成80条具体工作任务，系统推进全市人工智能高质量发展。《行动方案》提出，到2026年底，全市集聚人工智能企业超3500家，人工智能核心产业营收超4000亿元，增速达20%。《行动方案》明确，苏州将对标国家要求，高水平建设国家人工智能应用中试基地，持续做好相关领域平台争取工作，加快推进《苏州市人工智" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; 半导体芯片, 机器人/具身智能</span>
+    <span class="ni-time" style="margin-left:auto">15:39</span>
+  </div>
+  <div class="px-text">【AI产业营收超4000亿 苏州发布2026年度“人工智能+”行动方案】近日，《苏州市2026年度“人工智能+”行动方案》正式印发实施。方案以持续深化“人工智能+”城市建设、打造OPC创业首选城市为目标，围绕加强对上争取、提升科创能力、强化要素支撑、推动产业发展、深化场景应用、完善发展生态六大重点，...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力" data-priority="P" data-time="2026-06-28 15:54:31" data-score="0" data-content="【中国开源模型为何在全球大受欢迎】“中国人工智能开源大模型全球累计下载量已突破100亿次”，国务院总理李强日前在大连出席2026年夏季达沃斯论坛开幕式并致辞时表示，“中国的新兴领域技术和产品，带给世界的不是冲击而是机遇，不是威胁而是赋能。”
+
+海量需求背后，是真实的产业落地图景：从硅谷互联网平台，到欧洲传统制造工厂，越来越多海外企业主动选用阿里千问、DeepSeek等国产开源大模型作为技术底座，嵌入自身业务升级和数字化转型流程。
+
+英国《金融时报》实地走访硅谷科创圈发现，Pinterest、爱彼迎等一众知名平台，早已常态化使用中国开源模型优化产品、迭代服务。不同于欧美商业模型高昂的授权费用，中" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">15:54</span>
+  </div>
+  <div class="px-text">【中国开源模型为何在全球大受欢迎】“中国人工智能开源大模型全球累计下载量已突破100亿次”，国务院总理李强日前在大连出席2026年夏季达沃斯论坛开幕式并致辞时表示，“中国的新兴领域技术和产品，带给世界的不是冲击而是机遇，不是威胁而是赋能。”
+
+海量需求背后，是真实的产业落地图景：从硅谷互联网平台，到...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力" data-priority="P" data-time="2026-06-28 20:46:27" data-score="0" data-content="【为应对美国高端 AI 使用限制，奥地利推动欧盟引入 Anthropic 落地运营】奥地利正推动欧盟研究让 Anthropic 公益企业落户欧盟境内，以此抗衡美国限制境外主体使用其顶级人工智能大模型的举措。奥地利数字化国务秘书亚历山大・普罗尔致函欧盟委员会执行副主席亨娜・维尔库宁，信中提出，各成员国应探讨 “推动 Anthropic 在欧盟完成战略性布局、参与欧盟市场发展”。 普罗尔主张双方磋商需聚焦为企业提供 “稳定法律环境、市场准入渠道、配套资金支持以及适配该企业的价值规范体系”；信件并未详述 Anthropic 在欧洲的具体运营模式。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">20:46</span>
+  </div>
+  <div class="px-text">【为应对美国高端 AI 使用限制，奥地利推动欧盟引入 Anthropic 落地运营】奥地利正推动欧盟研究让 Anthropic 公益企业落户欧盟境内，以此抗衡美国限制境外主体使用其顶级人工智能大模型的举措。奥地利数字化国务秘书亚历山大・普罗尔致函欧盟委员会执行副主席亨娜・维尔库宁，信中提出，各成员国...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力" data-priority="P" data-time="2026-06-28 20:45:19" data-score="0" data-content="受美国出台访问限制政策影响，奥地利正向欧盟积极游说，争取吸引 AI 企业 Anthropic 落户欧盟。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">20:45</span>
+  </div>
+  <div class="px-text">受美国出台访问限制政策影响，奥地利正向欧盟积极游说，争取吸引 AI 企业 Anthropic 落户欧盟。...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力" data-priority="P" data-time="2026-06-28 17:04:51" data-score="0" data-content="【报道：谷歌已限制 Meta 调用 Gemini 算力】谷歌已限制 Meta 调用其 Gemini 大模型算力，原因是谷歌无法满足这家社交媒体企业所需的全部算力供给。报道称，AI 算力基础设施供给紧张的现状再度显现，谷歌母公司 Alphabet 旗下这家搜索引擎巨头已对多名客户实施算力配额管控，其中 Meta 受冲击最为严重。三位不愿具名的知情人士表示，此次限制措施对 Meta 内部多项 AI 项目产生连锁连带影响，公司已要求员工提高 AI 词元（Token）的使用效率、节约调用额度。" data-entities="[&quot;Meta&quot;, &quot;谷歌&quot;]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">17:04</span>
+  </div>
+  <div class="px-text">【报道：谷歌已限制 Meta 调用 Gemini 算力】谷歌已限制 Meta 调用其 Gemini 大模型算力，原因是谷歌无法满足这家社交媒体企业所需的全部算力供给。报道称，AI 算力基础设施供给紧张的现状再度显现，谷歌母公司 Alphabet 旗下这家搜索引擎巨头已对多名客户实施算力配额管控，其中...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; 低空经济" data-priority="P" data-time="2026-06-28 17:01:39" data-score="0" data-content="【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财政状况承压、供给冲击持续存在，通胀或将再度顽固走高。国际清算银行表示，近几个月全球经济虽展现韧性，但政策制定者必须果断出手，守住经济稳定底线。国际清算银行总经理巴勃罗・埃尔南德斯・德科斯表示：“各项政策需协同发力，避免全球经济面临政策拉扯冲突。归根结底，经济稳定取决于健康的财政与金融根基。”报告列出" data-entities="[&quot;高通&quot;]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; 低空经济</span>
+    <span class="ni-time" style="margin-left:auto">17:01</span>
+  </div>
+  <div class="px-text">【国际清算银行：债务压力、AI 热潮与金融脆弱性加剧全球风险】国际清算银行（BIS）称，全球公共债务攀升、金融体系脆弱性凸显、人工智能投资热潮可持续性存疑等多重因素正在放大全球经济风险，各国必须实施稳健审慎的宏观政策。这家全球央行的联合机构于周日发布年度经济报告，警示当前各类风险隐患交织叠加：各国财...</div>
+</div>
+<div class="footer">本报告由 analyze_news v2 引擎自动生成 &middot; 仅供研究参考，不构成投资建议</div>
+</div>
+</div>
+<div class="search-results" id="searchResults"></div>
+
+<div class="overlay" id="overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-hd">
+      <span class="badge s" id="mBadge">S</span>
+      <span class="modal-sec" id="mSec"></span>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-bd">
+      <div class="modal-meta">
+        <span class="modal-time" id="mTime"></span>
+        <span class="ni-score hot" id="mScore"></span>
+      </div>
+      <div class="modal-text" id="mText"></div>
+      <div class="modal-ents" id="mEnts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating TOC -->
+<button class="toc-fab" id="tocFab" title="目录导航">&#9776;</button>
+<div class="toc-overlay" id="tocOverlay"></div>
+<div class="toc-panel" id="tocPanel">
+  <div class="toc-panel-hd">
+    <span class="tt">&#128194; 目录导航</span>
+    <button class="close" id="tocClose">&#10005;</button>
+  </div>
+  <div class="toc-search">
+    <input type="text" id="tocSearchInput" placeholder="筛选板块/事件..." autocomplete="off">
+  </div>
+  <div class="toc-body" id="tocBody"></div>
+</div>
+
+<script>
+// Event delegation for all news-item clicks
+document.addEventListener('click', function(e) {
+  var item = e.target.closest('.news-item');
+  if (!item || !item.dataset.content) return;
+  openModalFromAttrs(item);
+});
+
+function openModalFromAttrs(el) {
+  var sector = el.dataset.sector || '';
+  var priority = el.dataset.priority || 'S';
+  var time = el.dataset.time || '';
+  var score = parseInt(el.dataset.score) || 0;
+  var content = el.dataset.content || '';
+  var entities = [];
+  try { entities = JSON.parse(el.dataset.entities || '[]'); } catch(e) {}
+
+  var b = document.getElementById('mBadge');
+  b.textContent = priority;
+  b.className = 'badge ' + priority.toLowerCase();
+  document.getElementById('mSec').textContent = sector;
+  document.getElementById('mTime').textContent = time.replace(/^\d{4}-\d{2}-\d{2} /, '');
+
+  var se = document.getElementById('mScore');
+  if (score > 0) {
+    se.textContent = '信号分 ' + score;
+    se.className = 'ni-score ' + (score >= 115 ? 'hot' : score >= 90 ? 'warm' : 'cool');
+    se.style.display = '';
+  } else { se.style.display = 'none'; }
+
+  document.getElementById('mText').textContent = content;
+
+  var entsEl = document.getElementById('mEnts');
+  entsEl.innerHTML = '';
+  if (entities.length > 0) {
+    var lbl = document.createElement('span');
+    lbl.className = 'lbl'; lbl.textContent = '涉及标的：';
+    entsEl.appendChild(lbl);
+    entities.forEach(function(en) {
+      var t = document.createElement('span'); t.className = 'etag'; t.textContent = en;
+      entsEl.appendChild(t);
+    });
+  }
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+function filterSector(el, sector) {
+  document.querySelectorAll('.filter-tag').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelectorAll('.card[data-sector]').forEach(function(c) {
+    c.style.display = (!sector || c.dataset.sector === sector) ? '' : 'none';
+  });
+}
+
+var searchInput = document.getElementById('searchInput');
+var searchCount = document.getElementById('searchCount');
+var searchClear = document.getElementById('searchClear');
+var normalView = document.getElementById('normalView');
+var searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function() {
+  var q = this.value.trim().toLowerCase();
+  if (!q) { clearSearch(); return; }
+  searchClear.classList.add('active');
+
+  var matches = [];
+  window.NEWS_DATA.forEach(function(item) {
+    var text = (item.content + ' ' + item.sector + ' ' + item.entities.join(' ')).toLowerCase();
+    if (text.indexOf(q) !== -1) matches.push(item);
+  });
+
+  searchCount.classList.add('active');
+  searchCount.textContent = matches.length + ' 条匹配';
+  normalView.classList.add('hidden');
+  searchResults.classList.add('active');
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8;">未找到包含 "' + escHtml(q) + '" 的快讯</div>';
+    return;
+  }
+
+  matches.sort(function(a, b) { return b.score - a.score; });
+
+  var html = '<div class="sec-title">&#128269; 搜索结果 <span class="n">' + matches.length + ' 条快讯包含 "' + escHtml(q) + '"</span></div>';
+  matches.forEach(function(item) {
+    var sc = item.score >= 115 ? 'hot' : item.score >= 90 ? 'warm' : 'cool';
+    var time = (item.time || '').replace(/^\d{4}-\d{2}-\d{2} /, '');
+    var fire = item.score >= 115 ? '&#128293;' : '';
+    var highlighted = highlightText(item.content, q);
+
+    var tagsHtml = '';
+    item.entities.slice(0, 4).forEach(function(e) {
+      tagsHtml += '<span class="etag">' + escHtml(e) + '</span>';
+    });
+
+    var contentAttr = escAttr(item.content);
+    var entsAttr = escAttr(JSON.stringify(item.entities));
+
+    html += '<div class="news-item" data-sector="' + escHtml(item.sector) + '" data-priority="' + item.priority + '" data-time="' + item.time + '" data-score="' + item.score + '" data-content="' + contentAttr + '" data-entities="' + entsAttr + '">' +
+      '<div class="ni-body">' +
+        '<div class="ni-meta">' +
+          '<span class="ni-time">' + time + '</span>' +
+          '<span class="ni-score ' + sc + '">' + fire + item.score + '</span>' +
+          '<span class="etag" style="background:#fef2f2;color:#dc2626;border-color:#fecaca">' + escHtml(item.sector) + '</span>' +
+        '</div>' +
+        '<div class="ni-text">' + highlighted + '</div>' +
+        (tagsHtml ? '<div class="ni-tags">' + tagsHtml + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  });
+  searchResults.innerHTML = html;
+});
+
+function clearSearch() {
+  searchInput.value = '';
+  searchCount.classList.remove('active');
+  searchClear.classList.remove('active');
+  normalView.classList.remove('hidden');
+  searchResults.classList.remove('active');
+  searchResults.innerHTML = '';
+}
+
+function escHtml(s) {
+  var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function escAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function highlightText(text, query) {
+  var esc = escHtml(text);
+  var q = escHtml(query);
+  var regex = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return esc.replace(regex, '<span class="mark">$1</span>');
+}
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { this.blur(); clearSearch(); }
+});
+
+// ── Floating TOC Navigation ──
+(function() {
+  var fab = document.getElementById('tocFab');
+  var overlay = document.getElementById('tocOverlay');
+  var panel = document.getElementById('tocPanel');
+  var tocBody = document.getElementById('tocBody');
+  var tocSearchInput = document.getElementById('tocSearchInput');
+  var tocItems = [];
+
+  function togglePanel(open) {
+    var shouldOpen = open !== undefined ? open : !panel.classList.contains('open');
+    panel.classList.toggle('open', shouldOpen);
+    overlay.classList.toggle('active', shouldOpen);
+    if (shouldOpen) buildTOC();
+  }
+
+  fab.addEventListener('click', function() { togglePanel(); });
+  document.getElementById('tocClose').addEventListener('click', function() { togglePanel(false); });
+  overlay.addEventListener('click', function() { togglePanel(false); });
+
+  function buildTOC() {
+    tocItems = [];
+    var html = '';
+
+    // ── Hot Sectors ──
+    html += '<div class="toc-group-hd">&#128293; 热点板块</div>';
+    document.querySelectorAll('.card[data-sector]').forEach(function(card) {
+      var name = card.querySelector('.card-name');
+      var count = card.querySelector('.card-count');
+      var badge = card.querySelector('.badge');
+      if (!name) return;
+      var label = name.textContent;
+      var cnt = count ? count.textContent : '';
+      var bc = badge ? badge.className.match(/(s|a|b)/) : null;
+      var bcCls = bc ? bc[1] : 'b';
+      var bt = badge ? badge.textContent : 'B';
+      tocItems.push({ el: card, label: label, type: 'sector' });
+      html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+        '<span class="toc-badge ' + bcCls + '">' + bt + '</span>' +
+        '<span class="toc-label">' + escHtml(label) + '</span>' +
+        '<span class="toc-count">' + escHtml(cnt) + '</span>' +
+      '</div>';
+    });
+
+    // ── Focus Events ──
+    var events = document.querySelectorAll('.ev-card');
+    if (events.length > 0) {
+      html += '<div class="toc-group-hd">&#127919; 焦点事件</div>';
+      events.forEach(function(ev) {
+        var name = ev.querySelector('.ev-name');
+        var stat = ev.querySelector('.ev-stat');
+        if (!name) return;
+        var label = name.textContent;
+        var cnt = stat ? stat.textContent : '';
+        tocItems.push({ el: ev, label: label, type: 'event' });
+        html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+          '<span class="toc-badge e">E</span>' +
+          '<span class="toc-label">' + escHtml(label) + '</span>' +
+          '<span class="toc-count">' + escHtml(cnt) + '</span>' +
+        '</div>';
+      });
+    }
+
+    // ── Policy ──
+    var policies = document.querySelectorAll('.px-card');
+    if (policies.length > 0) {
+      html += '<div class="toc-group-hd">&#128203; 政策信号</div>';
+      policies.forEach(function(px, idx) {
+        var typeEl = px.querySelector('.px-type');
+        var secEl = px.querySelector('.px-sec');
+        var label = (typeEl ? typeEl.textContent : '') + ' ' + (secEl ? secEl.textContent : '');
+        tocItems.push({ el: px, label: label, type: 'policy' });
+        html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+          '<span class="toc-badge p">P</span>' +
+          '<span class="toc-label">' + escHtml(label) + '</span>' +
+        '</div>';
+      });
+    }
+
+    tocBody.innerHTML = html;
+
+    // ── Highlight current section on scroll ──
+    updateActiveTOC();
+  }
+
+  function updateActiveTOC() {
+    var scrollPos = window.scrollY + 120;
+    var activeIdx = -1;
+    for (var i = 0; i < tocItems.length; i++) {
+      var rect = tocItems[i].el.getBoundingClientRect();
+      var absTop = rect.top + window.scrollY;
+      if (absTop <= scrollPos) activeIdx = i;
+    }
+    document.querySelectorAll('.toc-item').forEach(function(el, i) {
+      el.classList.toggle('active', i === activeIdx);
+    });
+    if (activeIdx >= 0) {
+      var activeEl = document.querySelectorAll('.toc-item')[activeIdx];
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }
+
+  // Throttled scroll listener
+  var scrollTimer = null;
+  window.addEventListener('scroll', function() {
+    if (!panel.classList.contains('open')) return;
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(function() {
+      updateActiveTOC();
+      scrollTimer = null;
+    }, 100);
+  });
+
+  // ── TOC search filter ──
+  tocSearchInput.addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    document.querySelectorAll('.toc-item').forEach(function(el) {
+      var label = el.dataset.label || '';
+      el.style.display = (!q || label.indexOf(q) !== -1) ? '' : 'none';
+    });
+    // Hide empty group headers
+    document.querySelectorAll('.toc-group-hd').forEach(function(hd) {
+      var next = hd.nextElementSibling;
+      var hasVisible = false;
+      while (next && !next.classList.contains('toc-group-hd')) {
+        if (next.style.display !== 'none' && next.classList.contains('toc-item')) { hasVisible = true; break; }
+        next = next.nextElementSibling;
+      }
+      hd.style.display = hasVisible ? '' : 'none';
+    });
+  });
+
+  // ── Jump to element ──
+  window.tocJump = function(idx) {
+    var item = tocItems[idx];
+    if (!item) return;
+    // Expand the card if collapsed
+    if (item.type === 'sector') {
+      item.el.classList.add('open');
+    }
+    // Smooth scroll
+    var rect = item.el.getBoundingClientRect();
+    var top = rect.top + window.scrollY - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    // Close panel on mobile
+    if (window.innerWidth <= 640) {
+      setTimeout(function() { togglePanel(false); }, 300);
+    }
+  };
+
+  // Rebuild TOC when opening
+  fab.addEventListener('click', function() {});
+})();
+</script>
+
+</body>
+</html>
