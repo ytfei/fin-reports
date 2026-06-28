@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本对华半导体材料断供：全产业链冲击与国产替代图谱</title>
+<meta name="date" content="2026-06-28">
+<meta name="description" content="从中日双向供应链脱钩视角，深度拆解光刻胶、六氟化钨、大硅片等六大核心材料断供影响，梳理18只国产替代标的及A股估值分档">
+<meta name="category" content="industry-research">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-sub: #555;
+    --border: #e0e0e0;
+    --red: #d32f2f;
+    --red-light: #ffebee;
+    --green: #2e7d32;
+    --green-light: #e8f5e9;
+    --blue: #1565c0;
+    --orange: #e65100;
+    --gold: #f9a825;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5b 50%, #0d47a1 100%);
+    color: white;
+    padding: 60px 30px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(211,47,47,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(211,47,47,0.9);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    opacity: 0.85;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    opacity: 0.7;
+    flex-wrap: wrap;
+  }
+  .hero-meta span::before { content: '▸ '; opacity: 0.6; }
+
+  /* Container */
+  .container { max-width: 820px; margin: 0 auto; padding: 30px 20px; }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    padding-left: 12px;
+    border-left: 4px solid var(--red);
+    color: #1a1a1a;
+  }
+  .section-title.blue { border-left-color: var(--blue); }
+  .section-title.green { border-left-color: var(--green); }
+
+  /* Alert Box */
+  .alert-box {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-left: 5px solid var(--orange);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .alert-box strong { color: var(--orange); font-size: 16px; }
+  .alert-box p { margin-top: 6px; font-size: 14px; color: #424242; }
+
+  /* Stat Grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .stat-card {
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1.2;
+  }
+  .stat-card .num.green { color: var(--green); }
+  .stat-card .num.blue { color: var(--blue); }
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 6px;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  thead th {
+    background: #1b3a5b;
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child { border-radius: 0 8px 0 0; }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: #f0f4f8; }
+  .risk-red { color: var(--red); font-weight: 700; }
+  .risk-orange { color: var(--orange); font-weight: 700; }
+  .risk-green { color: var(--green); font-weight: 700; }
+  .risk-yellow { color: var(--gold); font-weight: 700; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), var(--blue), var(--green));
+  }
+  .tl-item { position: relative; margin-bottom: 22px; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 3px solid var(--red);
+    z-index: 1;
+  }
+  .tl-item.blue::before { border-color: var(--blue); }
+  .tl-item.green::before { border-color: var(--green); }
+  .tl-date {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .tl-item.blue .tl-date { color: var(--blue); }
+  .tl-item.green .tl-date { color: var(--green); }
+  .tl-content { font-size: 14px; color: var(--text); }
+  .tl-content strong { color: var(--text); }
+
+  /* Card list */
+  .card-list { display: grid; gap: 16px; margin: 16px 0; }
+  .info-card {
+    background: #f8f9fb;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    border-left: 4px solid var(--blue);
+  }
+  .info-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1b3a5b;
+  }
+  .info-card p { font-size: 14px; color: var(--text-sub); margin-bottom: 6px; }
+  .info-card .tags { margin-top: 8px; }
+  .tag {
+    display: inline-block;
+    background: #e3f2fd;
+    color: var(--blue);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  .tag.red { background: var(--red-light); color: var(--red); }
+  .tag.green { background: var(--green-light); color: var(--green); }
+
+  /* Chart */
+  .chart-wrap {
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 18px 0;
+    border: 1px solid var(--border);
+  }
+  .chart-wrap canvas { max-height: 320px; }
+
+  /* Callout */
+  .callout {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-left: 5px solid var(--green);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 18px 0;
+  }
+  .callout strong { color: var(--green); }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-left: 5px solid var(--blue);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 18px 0;
+  }
+  .highlight-box strong { color: var(--blue); }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: #fafafa;
+    border-top: 2px solid var(--border);
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #999;
+    border-radius: 8px;
+    text-align: justify;
+  }
+
+  p { margin-bottom: 12px; color: var(--text); }
+  .sub-h {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 18px 0 10px;
+    color: #1b3a5b;
+  }
+  ul { margin-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; font-size: 14px; }
+  .source { font-size: 11px; color: #999; margin-top: 4px; font-style: italic; }
+
+  @media (max-width: 680px) {
+    .hero { padding: 40px 20px; }
+    .hero h1 { font-size: 22px; }
+    .section { padding: 18px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    table { font-size: 12px; }
+    thead th, tbody td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">产业链深度研究</span>
+    <h1>日本对华半导体材料断供：全产业链冲击与国产替代图谱</h1>
+    <p class="hero-sub">从光刻胶到六氟化钨，从高端材料冻结到上游矿产反制——一场双向供应链脱钩正在重塑全球半导体材料格局</p>
+    <div class="hero-meta">
+      <span>报告日期：2026-06-28</span>
+      <span>分析师：研股股</span>
+      <span>覆盖环节：7大材料 + 4类设备</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ============ 执行摘要 ============ -->
+  <div class="section">
+    <h2 class="section-title">执行摘要</h2>
+    <div class="alert-box">
+      <strong>核心判断</strong>
+      <p>这不是一次单向断供，而是一场<strong>双向供应链脱钩</strong>。日本卡的是光刻胶等高端化工材料，中国反制的是钨、稀土等上游矿产。双方都在打对方最痛的地方——且短期内都找不到替代方案。这种"新常态"为A股国产替代标的创造了持续数年的结构性机会。</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">14/19</div>
+        <div class="label">日本份额超50%的<br>关键材料品类</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">~100%</div>
+        <div class="label">EUV光刻胶<br>日本全球份额</div>
+      </div>
+      <div class="stat-card">
+        <div class="num green">+204%</div>
+        <div class="label">六氟化钨出口价<br>环比涨幅（2026.4）</div>
+      </div>
+      <div class="stat-card">
+        <div class="num green">80%</div>
+        <div class="label">中国占全球<br>钨资源比例</div>
+      </div>
+    </div>
+
+    <p><strong>事件脉络一句话概括：</strong>2025年11月起，日本经产省以"逐案审批90天+配额压缩"的方式对华变相断供高端光刻胶；2026年1月，中国商务部以两用物项出口管制反制，切断对日高纯钨粉供应，直接导致日本六氟化钨巨头关东电化、中央硝子宣布2026年7月永久停产。</p>
+  </div>
+
+  <!-- ============ 第一部分：时间线 ============ -->
+  <div class="section">
+    <h2 class="section-title">一、事件全时间线：从"温水煮青蛙"到双向脱钩</h2>
+    <p>中日半导体博弈经历了从"渐进收紧"到"全面对抗"的升级过程。关键节点如下：</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025年11月</div>
+        <div class="tl-content">日本经产省将<strong>ArF/EUV光刻胶</strong>纳入出口管制，逐案审批周期拉长至90天，对华配额削减20-30%</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025年12月</div>
+        <div class="tl-content">管制加码至<strong>i线/KrF光刻胶</strong>；要求提交最终用途追溯报告</div>
+      </div>
+      <div class="tl-item green">
+        <div class="tl-date">2026年1月6日</div>
+        <div class="tl-content"><strong>中国商务部发布2026年第1号公告</strong>，对日本两用物项实施出口管制，稀土/镓/锗/钨列入管控清单</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年2月</div>
+        <div class="tl-content">日本管制扩展至<strong>37类半导体材料/设备</strong>；中国将40家日本实体列入出口管制名单</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年4月</div>
+        <div class="tl-content">日本关东电化、中央硝子向三星发出预警：<strong>钨粉库存仅支撑至5月底</strong>，下半年六氟化钨供应"无保障"</div>
+      </div>
+      <div class="tl-item green">
+        <div class="tl-date">2026年6月</div>
+        <div class="tl-content">中国<strong>矿产资源法施行</strong>，36种关键矿产列入战略目录；日本宣布7月1日起永久停产六氟化钨</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年6月22日</div>
+        <div class="tl-content">四大日系光刻胶企业（TOK/JSR/信越化学/富士胶片）<strong>同步停接中国ArF/EUV新订单</strong>，撤走全部驻场技术团队</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 第二部分：断供全景 ============ -->
+  <div class="section">
+    <h2 class="section-title">二、断供全景：日本卡了什么？中国反制了什么？</h2>
+
+    <p class="sub-h">2.1 日本端：19种关键材料中14种份额超50%</p>
+    <p>日本在半导体材料领域的基础垄断力极强。以下是受影响最严重的核心环节：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>材料/环节</th>
+          <th>日本全球份额</th>
+          <th>中国对日依赖</th>
+          <th>当前国产化率</th>
+          <th>断供风险</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EUV光刻胶</td>
+          <td>~100%</td>
+          <td>~100%</td>
+          <td>0%</td>
+          <td class="risk-red">已断供</td>
+        </tr>
+        <tr>
+          <td>ArF光刻胶（14-65nm）</td>
+          <td>~87%</td>
+          <td>~90%</td>
+          <td>~15%</td>
+          <td class="risk-red">实质断供</td>
+        </tr>
+        <tr>
+          <td>KrF光刻胶（28-180nm）</td>
+          <td>~80%+</td>
+          <td>~90%</td>
+          <td>~40%</td>
+          <td class="risk-orange">配额压缩</td>
+        </tr>
+        <tr>
+          <td>12英寸大硅片</td>
+          <td>~66%（信越+SUMCO）</td>
+          <td>~58%</td>
+          <td>~25-30%</td>
+          <td class="risk-yellow">可替代</td>
+        </tr>
+        <tr>
+          <td>高纯度氟化氢（蚀刻）</td>
+          <td>~70%</td>
+          <td>~60%</td>
+          <td>~30%</td>
+          <td class="risk-orange">配额压缩</td>
+        </tr>
+        <tr>
+          <td>六氟化钨（WF6）</td>
+          <td>~25%（关东+中央硝子）</td>
+          <td>—</td>
+          <td>中国全球第一</td>
+          <td class="risk-green">反向卡脖</td>
+        </tr>
+        <tr>
+          <td>溅射靶材</td>
+          <td>~50%</td>
+          <td>~80%</td>
+          <td>江丰电子全球第一</td>
+          <td class="risk-green">已突破</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="source">数据来源：SEMI、TrendForce、中信证券研报、新浪财经产业链整理（2026年6月）</p>
+
+    <p class="sub-h">2.2 日本断供的具体执行方式</p>
+    <div class="card-list">
+      <div class="info-card">
+        <h4>① 先进制程——新订单彻底冰封</h4>
+        <p>针对14nm-28nm逻辑芯片及先进存储所需的ArF（含浸没式）光刻胶、7nm以下EUV光刻胶：<strong>永久停止接收中国大陆新增订单</strong>，特例申请通道全部封死。</p>
+        <div class="tags"><span class="tag red">ArF</span><span class="tag red">EUV</span><span class="tag red">14nm-28nm</span></div>
+      </div>
+      <div class="info-card">
+        <h4>② 成熟制程——配额深度挤压</h4>
+        <p>28nm以上KrF光刻胶：新增订单配额统一缩减<strong>60%以上</strong>，大批量采购申请直接驳回。存量合同交货期从1-2个月拉长至6-8个月，且分批减量发货。</p>
+        <div class="tags"><span class="tag">KrF</span><span class="tag">配额-60%</span></div>
+      </div>
+      <div class="info-card">
+        <h4>③ 驻场技术团队——全线撤离</h4>
+        <p>四大日企撤出全部在华驻场工艺技术团队，售后、调试、配方适配完全中断，仅保留最低限度远程邮件咨询。这对晶圆厂的<strong>良率稳定性</strong>构成直接威胁。</p>
+        <div class="tags"><span class="tag red">技术断供</span><span class="tag red">配方适配中断</span></div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>数据印证：</strong>中国海关数据显示，2025年Q1自日本进口光刻胶约2200吨，2026年Q1骤降至<strong>111.3吨</strong>，同比暴跌95%。其中ArF及EUV光刻胶在2026年前5个月报关量<strong>连续归零</strong>。
+    </div>
+
+    <p class="sub-h">2.3 中国反制：精准打击上游矿产</p>
+    <p>中国的反制不在芯片端，而在日本半导体材料生产的<strong>上游原料</strong>。效果立竿见影：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>反制措施</th>
+          <th>对日冲击</th>
+          <th>效果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>高纯钨粉出口管制</td>
+          <td>关东电化/中央硝子钨原料断供</td>
+          <td class="risk-red">2026年7月永久停产WF6</td>
+        </tr>
+        <tr>
+          <td>稀土出口管制</td>
+          <td>日本军工95%重稀土依赖中国</td>
+          <td class="risk-red">经产省预警库存仅4.5个月</td>
+        </tr>
+        <tr>
+          <td>电子级氢氟酸管控</td>
+          <td>中国占全球供给48%</td>
+          <td class="risk-orange">光刻胶提纯原料受限</td>
+        </tr>
+        <tr>
+          <td>高纯石英砂管控</td>
+          <td>日本硅片生产原料</td>
+          <td class="risk-orange">信越/SUMCO成本承压</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ 第三部分：六大材料深度拆解 ============ -->
+  <div class="section">
+    <h2 class="section-title">三、六大核心材料断供深度拆解</h2>
+
+    <!-- 光刻胶 -->
+    <p class="sub-h">3.1 光刻胶：最紧迫的替代战场</p>
+    <p>光刻胶是整个断供事件中<strong>最核心、最紧迫、弹性最大</strong>的环节。日本在EUV光刻胶拥有100%全球份额，ArF约87%，KrF约80%。当这些产品从"审批慢"变成"进不来"——国内晶圆厂先进制程产线面临"库存耗尽→产线停摆"的物理风险。</p>
+
+    <div class="chart-wrap">
+      <canvas id="photoresistChart"></canvas>
+    </div>
+
+    <p>更致命的是光刻胶的<strong>"保质期死线"</strong>：高端光刻胶含极易分解的光敏剂（PAG），常温冷链保质期仅<strong>6-9个月</strong>。日方将交货期拉长至6-8个月，意味着即使拿到货也逼近保质期临界点，彻底打消了囤货幻想。</p>
+
+    <div class="callout">
+      <strong>关键认知：</strong>光刻胶不是"通用化学品"——每款产品需要原厂工程师在晶圆厂现场，根据光刻机光源、镜头NA、涂胶转速等参数做数月精细适配。日本技术团队撤离后，<strong>配方适配完全中断</strong>，存量日系光刻胶极易因化学放大效应失调引发良率崩塌。
+    </div>
+
+    <!-- 六氟化钨 -->
+    <p class="sub-h">3.2 六氟化钨（WF6）：中国反向卡脖子的典范</p>
+    <p>六氟化钨是芯片制造中沉积钨薄膜的关键特种气体，主要用于<strong>3D NAND层数攀升</strong>（每层都需要WF6沉积）和逻辑芯片制程微缩。全球需求从2020年4620吨增至2025年8901吨，年复合增长14%。</p>
+
+    <p>中国对钨出口管制后，价格传导链极为清晰：</p>
+
+    <table>
+      <thead>
+        <tr><th>环节</th><th>2025年初</th><th>2026年近期</th><th>涨幅</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>黑钨精矿</td><td>14.3万元/吨</td><td>103万元/吨</td><td class="risk-red">+600%</td></tr>
+        <tr><td>钨粉</td><td>~315元/kg</td><td>2,340元/kg</td><td class="risk-red">+644%</td></tr>
+        <tr><td>六氟化钨（内销）</td><td>47万元/吨</td><td>90万元/吨</td><td class="risk-orange">+91%</td></tr>
+        <tr><td>六氟化钨（出口）</td><td>116.8美元/kg</td><td>149.79美元/kg</td><td class="risk-red">+204%环比</td></tr>
+      </tbody>
+    </table>
+    <p class="source">数据来源：证券日报、中信证券研报、中国海关出口数据</p>
+
+    <p>日本两大WF6巨头——关东电化（产能约1400吨/年）和中央硝子（产能约700吨/年），因高纯钨粉原料断供，宣布<strong>2026年7月1日起永久停产</strong>。两家合计占全球WF6市场约25%份额。</p>
+
+    <!-- 大硅片 -->
+    <p class="sub-h">3.3 12英寸大硅片：价值量最大的单一品类</p>
+    <p>硅片占半导体材料成本的<strong>37%</strong>，是价值量最大的单一品类。日本信越化学和SUMCO掌控全球60%产能。2024年中国12英寸硅片国产化率仅10%，2025年底已提升至25-30%，预计2026年突破30%。</p>
+
+    <!-- 氟化氢 -->
+    <p class="sub-h">3.4 高纯度氟化氢：蚀刻工艺的"隐形刀锋"</p>
+    <p>电子级氢氟酸是芯片清洗和蚀刻的核心湿电子化学品，纯度要求达到<strong>12N级别</strong>（99.9999999999%）。日本Stella、森田化学等企业掌控约70%的高端市场份额。2019年日本曾对韩国断供，迫使韩国SK Materials紧急扩产。本次对华管制中，氟化氢同样被纳入配额压缩范围。</p>
+
+    <!-- CMP -->
+    <p class="sub-h">3.5 CMP抛光材料：双寡头垄断</p>
+    <p>CMP抛光液由美国Cabot（卡博特）和日本Fujimi（富士美）主导，抛光垫则被美国Dow（陶氏）垄断约79%。日本企业在抛光液端的份额约30-40%，国产替代正在加速。</p>
+
+    <!-- 靶材 -->
+    <p class="sub-h">3.6 溅射靶材：中国已实现全球领先</p>
+    <p>靶材是半导体PVD工艺的核心耗材，日矿金属（日本）和霍尼韦尔（美国）长期主导。但<strong>江丰电子</strong>已在高纯度金属靶材领域实现全球出货第一，国产化率快速提升，属于"已突破"环节。</p>
+  </div>
+
+  <!-- ============ 第四部分：国产替代图谱 ============ -->
+  <div class="section">
+    <h2 class="section-title blue">四、国产替代图谱：谁在替代第一线？</h2>
+    <p>断供倒逼出"不得不替代"的刚需。以下是按产业链环节梳理的核心标的（仅供产业研究，不构成投资建议）：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>环节</th>
+          <th>核心标的</th>
+          <th>去日化逻辑</th>
+          <th>替代进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4"><strong>光刻胶</strong></td>
+          <td>南大光电 (300346)</td>
+          <td>国内唯一量产ArF（28nm），良率99.7%</td>
+          <td class="risk-green">已批量供货中芯国际</td>
+        </tr>
+        <tr>
+          <td>彤程新材 (603650)</td>
+          <td>KrF国内市占超40%，ArF同比增长800%+</td>
+          <td class="risk-green">成熟制程绝对龙头</td>
+        </tr>
+        <tr>
+          <td>鼎龙股份 (300054)</td>
+          <td>300吨KrF/ArF产线投产，已获千加仑订单</td>
+          <td class="risk-green">平台型降维打击</td>
+        </tr>
+        <tr>
+          <td>上海新阳 (300236)</td>
+          <td>ArF浸没式已获订单，Baseline覆盖70%+产线</td>
+          <td class="risk-green">渠道优势极强</td>
+        </tr>
+        <tr>
+          <td rowspan="3"><strong>电子特气</strong></td>
+          <td>中船特气 (688146)</td>
+          <td>WF6全球产能第一，已入台积电3nm供应链</td>
+          <td class="risk-green">反向卡脖子</td>
+        </tr>
+        <tr>
+          <td>昊华科技 (600378)</td>
+          <td>WF6 600吨/年，6N级纯度</td>
+          <td class="risk-green">央企扩产确定</td>
+        </tr>
+        <tr>
+          <td>华特气体</td>
+          <td>气体平台型公司，产品线协同</td>
+          <td class="risk-orange">产能爬坡中</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><strong>大硅片</strong></td>
+          <td>沪硅产业 (688126)</td>
+          <td>12英寸产能爬坡，良率95%，已入中芯供应链</td>
+          <td class="risk-green">国产化率25%→30%</td>
+        </tr>
+        <tr>
+          <td>立昂微 / TCL中环</td>
+          <td>12英寸硅片替代信越/SUMCO</td>
+          <td class="risk-orange">加速验证</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><strong>溅射靶材</strong></td>
+          <td>江丰电子 (300666)</td>
+          <td>全球出货第一，替代日矿金属</td>
+          <td class="risk-green">已突破</td>
+        </tr>
+        <tr>
+          <td>有研新材 (600206)</td>
+          <td>靶材+稀土金属平台</td>
+          <td class="risk-green">稳定供货</td>
+        </tr>
+        <tr>
+          <td><strong>CMP抛光</strong></td>
+          <td>安集科技 / 鼎龙股份</td>
+          <td>抛光液+抛光垫替代富士美/陶氏</td>
+          <td class="risk-orange">加速渗透</td>
+        </tr>
+        <tr>
+          <td><strong>测试机</strong></td>
+          <td>长川科技 (300604)</td>
+          <td>SoC测试机替代爱德万（~50%份额）</td>
+          <td class="risk-green">业绩先兑现</td>
+        </tr>
+        <tr>
+          <td><strong>涂胶显影</strong></td>
+          <td>芯源微</td>
+          <td>替代东京电子TEL（~90%份额）</td>
+          <td class="risk-orange">工程突破</td>
+        </tr>
+        <tr>
+          <td><strong>清洗设备</strong></td>
+          <td>盛美上海 / 北方华创</td>
+          <td>替代迪恩士DNS（~50%份额）</td>
+          <td class="risk-green">进度较快</td>
+        </tr>
+        <tr>
+          <td><strong>钨刀具</strong></td>
+          <td>华锐精密 / 欧科亿</td>
+          <td>替代富士精工（利润暴跌88%）</td>
+          <td class="risk-orange">替代窗口</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <strong>投资节奏提示：</strong>设备端的替代壁垒低于材料端。测试机、涂胶显影、清洗设备的国产化进度快于ArF光刻胶和大硅片——因为设备替代更多依赖工程能力和客户验证，材料替代涉及化工配方和纯度的长期积累。<strong>设备端的业绩兑现会先于材料端。</strong>
+    </div>
+  </div>
+
+  <!-- ============ 第五部分：深层逻辑 ============ -->
+  <div class="section">
+    <h2 class="section-title green">五、这场博弈的四个底层判断</h2>
+
+    <div class="card-list">
+      <div class="info-card" style="border-left-color: var(--red);">
+        <h4>判断一：这场博弈是长期的，不是短期事件</h4>
+        <p>中日双方都在用"对方最依赖的东西"施加压力——日本用高纯度化工材料（光刻胶/硅片），中国用战略矿产（稀土/钨/镓）。双方都有让对方痛的筹码，也都找不到短期替代方案。当前紧张态势会成为<strong>新常态</strong>。</p>
+      </div>
+      <div class="info-card" style="border-left-color: var(--orange);">
+        <h4>判断二：国产替代加速，但非同步突破</h4>
+        <p>光刻胶（尤其ArF）是最难、最慢、弹性最大的环节。设备（测试机/涂胶显影/清洗）是相对容易、进度快、业绩先兑现的环节。钨/特气是中国可以<strong>反向卡脖子</strong>的环节——叠加了"涨价"弹性。</p>
+      </div>
+      <div class="info-card" style="border-left-color: var(--blue);">
+        <h4>判断三："去日化"不同于"去美化"</h4>
+        <p>去美化的核心在设备和EDA，壁垒极高。去日化的核心在材料和部分设备——日本垄断的不只是技术，还有上游原料的配方和纯度控制。但材料端的替代路径比设备端更清晰：化工配方的突破不依赖极端物理精度，更多依赖工艺积累和客户验证。</p>
+      </div>
+      <div class="info-card" style="border-left-color: var(--green);">
+        <h4>判断四：最大的催化剂是日企自己给的窗口</h4>
+        <p>东京应化福岛地震炸掉25%产能、关东电化面临停产、信越/JSR撤离技术团队——这些事件在创造"非替代不可"的刚需。政策和情绪可以推高估值，但只有"不替代就停产"的刚需才能转化为真实订单和业绩。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 第六部分：风险提示 ============ -->
+  <div class="section">
+    <h2 class="section-title">六、风险提示</h2>
+    <ul>
+      <li><strong>地缘政治转向风险：</strong>中日双向管制本质是政治博弈。若两国关系阶段性缓和，"紧迫性溢价"会降温。但产业层面的"不可靠供应商"标签已被贴上，供应链多元化策略不会因外交改善而停止。</li>
+      <li><strong>国产替代"质"与"量"的差距：</strong>ArF光刻胶15%国产化率，不等于"15%市场被良好占据"——而是"15%用量在实验室和小批量验证中"。从"能用"到"好用"再到"大批量稳定供应"，每一步都是门槛。</li>
+      <li><strong>日企差异化供应策略：</strong>日本企业半导体材料营收20-30%来自中国，全面断供对自身也是损失。更可能采取"中低端继续卖、高端断供"的差异化策略，导致国产替代呈现"偏科"状态。</li>
+      <li><strong>估值已反映部分预期：</strong>部分标的2026年以来已有显著涨幅，需警惕短期回调风险。</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>免责声明：</strong>本报告仅供参考，不构成个人投资建议。报告中涉及的上市公司信息仅用于产业链研究目的，不代表对其证券的推荐。文中数据来源于公开渠道（SEMI、TrendForce、海关总署、企业公告、券商研报等），不保证完全准确、完整、及时。投资有风险，入市需谨慎。本报告版权归作者所有，未经授权不得转载。
+  </div>
+
+</div>
+
+<script>
+// 光刻胶市占率图表
+const ctx = document.getElementById('photoresistChart');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['EUV光刻胶', 'ArF光刻胶', 'KrF光刻胶'],
+    datasets: [{
+      label: '日本全球份额',
+      data: [100, 87, 80],
+      backgroundColor: ['#d32f2f', '#e65100', '#f9a825'],
+      borderRadius: 6,
+      barPercentage: 0.6
+    }, {
+      label: '中国国产化率',
+      data: [0, 15, 40],
+      backgroundColor: ['#2e7d32', '#2e7d32', '#2e7d32'],
+      borderRadius: 6,
+      barPercentage: 0.6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '光刻胶：日本份额 vs 中国国产化率（%）', font: { size: 14, weight: 'bold' } },
+      legend: { position: 'bottom', labels: { font: { size: 12 } } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 110,
+        ticks: { callback: v => v + '%', font: { size: 11 } },
+        grid: { color: '#eee' }
+      },
+      x: { ticks: { font: { size: 12 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
