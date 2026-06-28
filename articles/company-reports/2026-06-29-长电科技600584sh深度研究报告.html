@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>长电科技（600584.SH）深度研究报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-card: #131826;
+            --bg-card-hover: #1a2035;
+            --text-primary: #e4e7eb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --accent-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --border-color: #2a3142;
+            --up-color: #ef4444;
+            --down-color: #22c55e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 48px 32px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 32px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+        .hero .ticker {
+            display: inline-block;
+            background: rgba(239,68,68,0.15);
+            color: var(--accent-red);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #fff, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        .hero .price-box {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .hero .price-item {
+            text-align: center;
+        }
+        .hero .price-item .label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .hero .price-item .value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .hero .rating {
+            display: inline-block;
+            background: var(--accent-red);
+            color: #fff;
+            padding: 6px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 16px;
+        }
+
+        /* Section */
+        .section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 28px 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+        .section h2 {
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section h2 .icon {
+            font-size: 18px;
+        }
+        .section h3 {
+            font-size: 17px;
+            color: var(--accent-blue);
+            margin: 24px 0 12px 0;
+        }
+        .section p {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .section strong {
+            color: var(--text-primary);
+        }
+
+        /* Key Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: var(--bg-card-hover);
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .metric-card .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .metric-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .metric-card .change {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .change-up { color: var(--up-color); }
+        .change-down { color: var(--down-color); }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+        th {
+            background: var(--bg-card-hover);
+            color: var(--accent-gold);
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        tr:hover td {
+            background: var(--bg-card-hover);
+        }
+        td.highlight {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--bg-card-hover);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+        .chart-container canvas {
+            max-height: 350px;
+        }
+        .chart-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: rgba(59,130,246,0.1);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .callout.warning {
+            background: rgba(245,158,11,0.1);
+            border-left-color: var(--accent-gold);
+        }
+        .callout.danger {
+            background: rgba(239,68,68,0.1);
+            border-left-color: var(--accent-red);
+        }
+        .callout.success {
+            background: rgba(34,197,94,0.1);
+            border-left-color: var(--accent-green);
+        }
+
+        /* Kelly Box */
+        .kelly-box {
+            background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .kelly-formula {
+            text-align: center;
+            font-size: 20px;
+            font-family: "Courier New", monospace;
+            color: var(--accent-gold);
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        /* Risk Badge */
+        .risk-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .risk-high { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+        .risk-mid { background: rgba(245,158,11,0.2); color: var(--accent-gold); }
+        .risk-low { background: rgba(34,197,94,0.2); color: var(--accent-green); }
+
+        /* SWOT */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .swot-item {
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 13px;
+        }
+        .swot-s { background: rgba(34,197,94,0.1); border: 1px solid var(--accent-green); }
+        .swot-w { background: rgba(239,68,68,0.1); border: 1px solid var(--accent-red); }
+        .swot-o { background: rgba(59,130,246,0.1); border: 1px solid var(--accent-blue); }
+        .swot-t { background: rgba(245,158,11,0.1); border: 1px solid var(--accent-gold); }
+        .swot-item h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .swot-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .swot-item li {
+            padding: 2px 0;
+            color: var(--text-secondary);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: rgba(107,114,128,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 32px 16px; }
+            .hero h1 { font-size: 24px; }
+            .hero .price-box { gap: 16px; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .swot-grid { grid-template-columns: 1fr; }
+            table { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+    <span class="ticker">600584.SH · A股</span>
+    <h1>长电科技 深度研究报告</h1>
+    <p class="subtitle">全球第三大 · 中国大陆第一大 半导体封测企业 | XDFOI®先进封装平台</p>
+    <div class="price-box">
+        <div class="price-item">
+            <div class="label">现价</div>
+            <div class="value" style="color:var(--accent-red)">¥100.89</div>
+        </div>
+        <div class="price-item">
+            <div class="label">目标价</div>
+            <div class="value" style="color:var(--accent-gold)">¥115-130</div>
+        </div>
+        <div class="price-item">
+            <div class="label">2025 PE</div>
+            <div class="value">~78x</div>
+        </div>
+        <div class="price-item">
+            <div class="label">2026E PE</div>
+            <div class="value" style="color:var(--accent-green)">~40x</div>
+        </div>
+    </div>
+    <div class="rating">评级：买入（BUY）· 12个月维度</div>
+</div>
+
+<!-- 核心指标 -->
+<div class="section">
+    <h2><span class="icon">📊</span> 核心指标速览</h2>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="label">2025营收</div>
+            <div class="value">388.71亿</div>
+            <div class="change change-up">+8.09%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">2025归母净利</div>
+            <div class="value">15.65亿</div>
+            <div class="change change-down">-2.75%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">26Q1净利</div>
+            <div class="value">2.90亿</div>
+            <div class="change change-up">+42.74%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">毛利率</div>
+            <div class="value">14.55%</div>
+            <div class="change change-up">+15.16%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">全球市占率</div>
+            <div class="value">12.2%</div>
+            <div class="change" style="color:var(--accent-gold)">第3名</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">2026资本开支</div>
+            <div class="value">~100亿</div>
+            <div class="change change-up">+58.7%</div>
+        </div>
+    </div>
+</div>
+
+<!-- 一、核心结论 -->
+<div class="section">
+    <h2><span class="icon">🎯</span> 核心投资逻辑</h2>
+    <div class="callout success">
+        <strong>一句话逻辑：</strong>全球第三大封测厂，正通过XDFOI®先进封装技术完成从"薄利代工"到"高壁垒平台"的蜕变。AI算力刚需驱动2.5D/3D Chiplet封测供不应求，长电是国内唯一全栈量产企业。
+    </div>
+    <div class="callout warning">
+        <strong>变异认知：</strong>市场仍以传统封测周期股框架给长电估值，未充分定价XDFOI先进封装的成长属性。花旗6月将目标价从42元上调至110元，理由是"OSAT行业正从周期性重资本服务商转变为先进封装的关键赋能者"。
+    </div>
+    <p><strong>看多逻辑链：</strong>AI算力爆发 → 2.5D/3D Chiplet封装刚需 → XDFOI技术领先+量产能力 → 先进封装占比提升 → 毛利率从14%向18-20%爬升 → 利润弹性释放 → 估值从周期股重构为成长股</p>
+</div>
+
+<!-- 二、业务与技术 -->
+<div class="section">
+    <h2><span class="icon">🔧</span> 业务定位与技术平台</h2>
+    <h3>技术平台矩阵</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>技术平台</th>
+                <th>定位</th>
+                <th>状态</th>
+                <th>壁垒</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="highlight">XDFOI®</td>
+                <td>高密度多维异构集成（2.5D/3D Chiplet）</td>
+                <td><span class="risk-badge risk-low">已量产</span></td>
+                <td>★★★★★</td>
+            </tr>
+            <tr>
+                <td>SiP</td>
+                <td>系统级封装</td>
+                <td><span class="risk-badge risk-low">成熟量产</span></td>
+                <td>★★★★</td>
+            </tr>
+            <tr>
+                <td>FCBGA</td>
+                <td>倒装芯片BGA</td>
+                <td><span class="risk-badge risk-low">成熟量产</span></td>
+                <td>★★★</td>
+            </tr>
+            <tr>
+                <td>HBM</td>
+                <td>高带宽存储封装</td>
+                <td><span class="risk-badge risk-low">量产中</span></td>
+                <td>★★★★</td>
+            </tr>
+            <tr>
+                <td>CPO</td>
+                <td>光电共封装</td>
+                <td><span class="risk-badge risk-mid">研发导入</span></td>
+                <td>★★★★★</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="callout">
+        <strong>关键突破：</strong>4nm Chiplet量产能力——全球仅台积电、日月光、长电科技三家具备。这是长电最核心的技术护城河。
+    </div>
+</div>
+
+<!-- 三、产能与全球布局 -->
+<div class="section">
+    <h2><span class="icon">🌍</span> 全球八大生产基地</h2>
+    <div class="chart-container">
+        <div class="chart-title">全球产能分布与功能定位</div>
+        <canvas id="capacityChart"></canvas>
+    </div>
+    <h3>资本开支趋势</h3>
+    <div class="chart-container">
+        <div class="chart-title">资本开支变化（亿元）— 进入高强度投资期</div>
+        <canvas id="capexChart"></canvas>
+    </div>
+    <div class="callout warning">
+        <strong>风险规避策略：</strong>中国+韩国+新加坡三地制造基地，满足客户"China+1/2"供应链分散需求。英伟达等美系客户高端封装可由新加坡SCS承接，韩国SCK覆盖韩系客户，有效对冲地缘政治风险。
+    </div>
+</div>
+
+<!-- 四、财务分析 -->
+<div class="section">
+    <h2><span class="icon">💰</span> 财务深度分析</h2>
+    <h3>营收与利润趋势</h3>
+    <div class="chart-container">
+        <div class="chart-title">季度营收与净利润变化（亿元）</div>
+        <canvas id="revenueChart"></canvas>
+    </div>
+    <h3>毛利率变化趋势</h3>
+    <div class="chart-container">
+        <div class="chart-title">单季度毛利率持续改善</div>
+        <canvas id="marginChart"></canvas>
+    </div>
+    <div class="callout success">
+        <strong>利润拐点确认：</strong>2026Q1营收微降1.76%，但归母净利润大增42.74%，毛利率提升至14.55%。核心驱动力是先进封装业务放量+海外工厂扭亏。
+    </div>
+    <h3>定价话语权分析</h3>
+    <div class="chart-container">
+        <div class="chart-title">产业链各环节毛利率对比 — 封测端定价力正在分化</div>
+        <canvas id="pricingChart"></canvas>
+    </div>
+    <p><strong>关键判断：</strong>传统封测是高度竞争的代工业务，定价话语权弱（毛利率10-15%）。但先进封装（2.5D/3D/Chiplet）技术壁垒高，全球能做的厂商屈指可数，定价话语权正向掌握技术的封测厂倾斜。长电XDFOI正是这一趋势的受益者。</p>
+</div>
+
+<!-- 五、同行竞争 -->
+<div class="section">
+    <h2><span class="icon">⚔️</span> 同行竞争对比</h2>
+    <h3>封测三巨头核心指标</h3>
+    <div class="chart-container">
+        <div class="chart-title">2025年营收与净利润对比（亿元）</div>
+        <canvas id="competitorChart"></canvas>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>维度</th>
+                <th>长电科技</th>
+                <th>通富微电</th>
+                <th>华天科技</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>全球排名</td>
+                <td class="highlight">第3</td>
+                <td>第4</td>
+                <td>第6</td>
+            </tr>
+            <tr>
+                <td>先进封装平台</td>
+                <td class="highlight">XDFOI®（2.5D/3D Chiplet量产）</td>
+                <td>Chiplet扩产中</td>
+                <td>以传统封装为主</td>
+            </tr>
+            <tr>
+                <td>核心客户</td>
+                <td>英伟达/高通/三星/AMD</td>
+                <td class="highlight">AMD（深度绑定）</td>
+                <td>国内客户为主</td>
+            </tr>
+            <tr>
+                <td>海外产能</td>
+                <td class="highlight">韩国+新加坡</td>
+                <td>以国内为主</td>
+                <td>以国内为主</td>
+            </tr>
+            <tr>
+                <td>HBM封装</td>
+                <td class="highlight">✅</td>
+                <td>🔄</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>2026E PE</td>
+                <td class="highlight">~40x</td>
+                <td>~69x</td>
+                <td>~62x</td>
+            </tr>
+            <tr>
+                <td>花旗目标价</td>
+                <td class="highlight">110元</td>
+                <td>80元</td>
+                <td>23.5元</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SWOT -->
+<div class="section">
+    <h2><span class="icon">🔍</span> SWOT 分析</h2>
+    <div class="swot-grid">
+        <div class="swot-item swot-s">
+            <h4 style="color:var(--accent-green)">💪 优势 (S)</h4>
+            <ul>
+                <li>• 全球第三、大陆第一大封测厂</li>
+                <li>• XDFOI®技术平台领先，4nm Chiplet量产</li>
+                <li>• 全球八大生产基地，供应链分散</li>
+                <li>• 客户覆盖全球头部芯片设计公司</li>
+            </ul>
+        </div>
+        <div class="swot-item swot-w">
+            <h4 style="color:var(--accent-red)">⚠️ 劣势 (W)</h4>
+            <ul>
+                <li>• 整体毛利率仅14%，低于国际同行</li>
+                <li>• 资本开支高峰，折旧压制短期利润</li>
+                <li>• 有息负债124亿元，财务费用较高</li>
+                <li>• 传统封装占比仍大，拖累利润率</li>
+            </ul>
+        </div>
+        <div class="swot-item swot-o">
+            <h4 style="color:var(--accent-blue)">🚀 机会 (O)</h4>
+            <ul>
+                <li>• AI算力封测需求爆发</li>
+                <li>• HBM封装放量（存储高景气）</li>
+                <li>• 国产替代加速（大陆封测国产化率超60%）</li>
+                <li>• 估值体系从周期股到成长股重构</li>
+            </ul>
+        </div>
+        <div class="swot-item swot-t">
+            <h4 style="color:var(--accent-gold)">⚡ 威胁 (T)</h4>
+            <ul>
+                <li>• 地缘政治风险（出口管制/关税）</li>
+                <li>• 日月光/安靠技术竞争加剧</li>
+                <li>• 台积电CoWoS向下延伸挤压OSAT</li>
+                <li>• 资本开支回报周期不确定</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 凯利公式 -->
+<div class="section">
+    <h2><span class="icon">🎲</span> 凯利公式投资分析</h2>
+    <div class="kelly-box">
+        <div class="kelly-formula">
+            f* = (bp - q) / b = (1.14 × 0.55 - 0.45) / 1.14 = <span style="color:var(--accent-red)">15.5%</span>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="label">胜率 (p)</div>
+                <div class="value" style="color:var(--accent-blue)">55%</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">赔率 (b)</div>
+                <div class="value" style="color:var(--accent-gold)">1.14:1</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">理论仓位</div>
+                <div class="value" style="color:var(--accent-red)">15.5%</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">建议实操</div>
+                <div class="value" style="color:var(--accent-green)">5-8%</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>胜率 (p=55%) 依据</h3>
+    <table>
+        <thead>
+            <tr><th>支撑因素</th><th>权重</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>AI算力封测刚需</td><td>30%</td><td>2.5D/3D封装是AI芯片刚需，需求确定性极高</td></tr>
+            <tr><td>XDFOI技术壁垒</td><td>25%</td><td>国内唯一全栈量产，短期难追赶</td></tr>
+            <tr><td>海外工厂扭亏</td><td>15%</td><td>SCK/SCS盈利改善，利润弹性释放</td></tr>
+            <tr><td>国产替代趋势</td><td>15%</td><td>政策支持+供应链安全</td></tr>
+            <tr><td>管理层执行力</td><td>15%</td><td>100亿资本开支果断，战略清晰</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--text-muted)">折扣因素：短期估值偏高(-10%)、折旧压力(-8%)、地缘政治(-7%)</p>
+
+    <h3>赔率 (b=1.14) 依据</h3>
+    <table>
+        <thead>
+            <tr><th>价格节点</th><th>价格</th><th>依据</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="risk-badge risk-down" style="background:rgba(34,197,94,0.2);color:var(--accent-green)">止损线</span></td>
+                <td style="color:var(--accent-green)">82元</td>
+                <td>周线突破缺口下沿（82.93元）+ 筹码集中度成本（86元）</td>
+            </tr>
+            <tr>
+                <td><span class="risk-badge risk-mid">目标价1</span></td>
+                <td style="color:var(--accent-gold)">115元</td>
+                <td>花旗目标价110元 + 先进封装溢价10%</td>
+            </tr>
+            <tr>
+                <td><span class="risk-badge risk-high">目标价2</span></td>
+                <td style="color:var(--accent-red)">130元</td>
+                <td>2026E净利40亿 × PE 45x ÷ 17.89亿股 + 成长溢价30%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout danger">
+        <strong>实操降仓至5-8%原因：</strong>流动性约束(-3%)、行业集中度(-2%)、高Beta波动心理承受(-2%)、估值安全垫不足(-2.5%)。建议分批建仓3-3-4节奏。
+    </div>
+</div>
+
+<!-- 公司概况 -->
+<div class="section">
+    <h2><span class="icon">🏢</span> 公司概况：股东·管理·研发</h2>
+
+    <h3>公司规模一览</h3>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="label">成立时间</div>
+            <div class="value" style="font-size:16px">1972年</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">员工总数</div>
+            <div class="value" style="color:var(--accent-gold)">24,952</div>
+            <div class="change" style="color:var(--text-muted)">2025年末</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">研发人员</div>
+            <div class="value" style="color:var(--accent-blue)">3,948</div>
+            <div class="change change-up">占比15.82%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">累计专利</div>
+            <div class="value" style="color:var(--accent-red)">3,123</div>
+            <div class="change" style="color:var(--text-muted)">发明2,601件</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">研发费用</div>
+            <div class="value" style="color:var(--accent-purple)">20.86亿</div>
+            <div class="change change-up">+21.37%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">研发/营收</div>
+            <div class="value" style="color:var(--accent-gold)">5.37%</div>
+        </div>
+    </div>
+
+    <div class="callout success">
+        <strong>2024年底实控人变更——央企华润正式入主：</strong>磐石润企（华润全资子公司）以约117亿元受让大基金和芯电半导体持股，以22.53%成为控股股东，中国华润成为实际控制人。大基金保留3.50%战略持股。华润旗下已拥有华润微电子（晶圆制造）+长电科技（封测），形成半导体全产业链布局。
+    </div>
+
+    <h3>第九届董事会核心管理团队（2025年12月换届）</h3>
+    <table>
+        <thead>
+            <tr><th>职务</th><th>姓名</th><th>背景</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="highlight">董事长</td>
+                <td>周响华（51岁）</td>
+                <td>70后女掌门，连任。带领公司完成星科金朋整合及华润入主后战略转型</td>
+            </tr>
+            <tr>
+                <td class="highlight">CEO（首席执行长）</td>
+                <td>郑力</td>
+                <td>2019年出任，半导体行业资深管理者。SEMI全球董事、中国半导体行业协会副理事长。年薪超900万</td>
+            </tr>
+            <tr>
+                <td>非独立董事</td>
+                <td>全华强</td>
+                <td>华润集团总会计师（华润方代表）</td>
+            </tr>
+            <tr>
+                <td>非独立董事</td>
+                <td>陈荣</td>
+                <td>华润集团首席战略官（华润方代表）</td>
+            </tr>
+            <tr>
+                <td>高级副总裁/总法律顾问</td>
+                <td>Keith McDonnell</td>
+                <td>2025年2月加入，前安谋科技执行副总裁、飞思卡尔亚太区总法律顾问</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--text-muted)">董事会：7名非独立董事+4名独立董事+1名职工代表=12人 | 高管平均年龄53岁 | 2025底换届全部续聘，团队稳定</p>
+
+    <h3>研发人员结构</h3>
+    <div class="chart-container">
+        <div class="chart-title">研发人员学历构成（3,948人）</div>
+        <canvas id="rdEducationChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <div class="chart-title">研发人员年龄分布 — 橄榄型结构，30-40岁为核心</div>
+        <canvas id="rdAgeChart"></canvas>
+    </div>
+
+    <h3>员工规模与人均效能</h3>
+    <div class="chart-container">
+        <div class="chart-title">封测三巨头人均营收对比（万元）</div>
+        <canvas id="efficiencyChart"></canvas>
+    </div>
+    <div class="callout">
+        <strong>团队评价：</strong>长电在三大封测厂中人均营收（~156万）和人均利润（~6.3万）均为最高，反映规模化优势和高附加值业务占比领先。2024年人均薪酬22.23万元，在半导体制造业中有竞争力。
+    </div>
+</div>
+
+<!-- 股东结构 -->
+<div class="section">
+    <h2><span class="icon">🏦</span> 股东结构</h2>
+    <div class="callout success">
+        <strong>央企背景入主：</strong>2024年底，磐石润企（实控人中国华润）成为控股股东（22.53%），长电科技正式纳入央企体系，在国产替代大背景下具有战略意义。
+    </div>
+    <div class="chart-container">
+        <div class="chart-title">十大股东持股比例（2026Q1）</div>
+        <canvas id="shareholderChart"></canvas>
+    </div>
+    <p><strong>筹码集中趋势：</strong>股东户数从2025Q3的37.6万下降至2026Q1的32万，降幅15%，机构收集筹码特征突出。北向资金大幅增持2783万股。</p>
+</div>
+
+<!-- 风险提示 -->
+<div class="section">
+    <h2><span class="icon">⚠️</span> 风险提示</h2>
+    <table>
+        <thead>
+            <tr><th>风险类型</th><th>等级</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>估值回调风险</td>
+                <td><span class="risk-badge risk-high">高</span></td>
+                <td>当前PE 78x，若先进封装放量不及预期，估值可能大幅回调</td>
+            </tr>
+            <tr>
+                <td>资本开支回报不确定</td>
+                <td><span class="risk-badge risk-mid">中</span></td>
+                <td>100亿资本开支需2-3年产能爬坡</td>
+            </tr>
+            <tr>
+                <td>地缘政治风险</td>
+                <td><span class="risk-badge risk-mid">中</span></td>
+                <td>出口管制、关税可能影响海外客户订单</td>
+            </tr>
+            <tr>
+                <td>技术竞争加剧</td>
+                <td><span class="risk-badge risk-mid">中</span></td>
+                <td>台积电CoWoS、日月光FOPLP等竞争技术</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 技术面 -->
+<div class="section">
+    <h2><span class="icon">📈</span> 技术面快照</h2>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="label">月涨幅</div>
+            <div class="value" style="color:var(--accent-red)">+59%</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">MACD</div>
+            <div class="value" style="color:var(--accent-red)">金叉</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">RSI(6)</div>
+            <div class="value" style="color:var(--accent-gold)">72.93</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">均线排列</div>
+            <div class="value" style="color:var(--accent-red)">多头</div>
+        </div>
+    </div>
+    <div class="callout warning">
+        <strong>技术判断：</strong>短期涨幅过大（月涨59%），RSI接近超买区，有技术回调需求。中期趋势依然向上（均线多头排列、MACD金叉），回调即为布局机会。
+    </div>
+</div>
+
+<!-- 免责声明 -->
+<div class="disclaimer">
+    <p><strong>免责声明：</strong>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+    <p style="margin-top:8px">数据来源：公司年报/季报、东方财富、同花顺、芯思想研究院、花旗研报 | 研究截止日：2026年6月29日</p>
+</div>
+
+<script>
+// Chart.js 全局配置
+Chart.defaults.color = '#9ca3af';
+Chart.defaults.borderColor = '#2a3142';
+Chart.defaults.font.family = '-apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+
+// A股配色：红涨绿跌
+const UP = '#ef4444';
+const DOWN = '#22c55e';
+const GOLD = '#f59e0b';
+const BLUE = '#3b82f6';
+const PURPLE = '#8b5cf6';
+
+// 1. 产能分布图
+new Chart(document.getElementById('capacityChart'), {
+    type: 'bar',
+    data: {
+        labels: ['江阴', '滁州', '上海', '宿迁', '韩国SCK', '新加坡SCS', '晟碟半导体'],
+        datasets: [{
+            label: '功能定位',
+            data: [100, 85, 60, 40, 90, 95, 50],
+            backgroundColor: [
+                'rgba(239,68,68,0.7)', 'rgba(245,158,11,0.7)', 'rgba(59,130,246,0.7)',
+                'rgba(107,114,128,0.7)', 'rgba(139,92,246,0.7)', 'rgba(139,92,246,0.7)', 'rgba(34,197,94,0.7)'
+            ],
+            borderColor: [UP, GOLD, BLUE, '#6b7280', PURPLE, PURPLE, DOWN],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        const funcs = ['总部·先进封装主力（扩产中）', '主流+先进封装扩建', '研发中心+高端封装', '中低端封装', '高端FCBGA/SiP（已盈利）', 'Fan-out/XDFOI技术源（已盈利）', '存储封测（2024收购）'];
+                        return funcs[ctx.dataIndex];
+                    }
+                }
+            }
+        },
+        scales: { y: { display: false }, x: { ticks: { font: { size: 11 } } } }
+    }
+});
+
+// 2. 资本开支趋势
+new Chart(document.getElementById('capexChart'), {
+    type: 'bar',
+    data: {
+        labels: ['2023', '2024', '2025', '2026E'],
+        datasets: [{
+            label: '资本开支（亿元）',
+            data: [45, 45.91, 62.98, 100],
+            backgroundColor: ['rgba(107,114,128,0.5)', 'rgba(59,130,246,0.5)', 'rgba(245,158,11,0.7)', 'rgba(239,68,68,0.8)'],
+            borderColor: ['#6b7280', BLUE, GOLD, UP],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    afterLabel: function(ctx) {
+                        const growth = ['—', '+2%', '+37.2%', '+58.7%'];
+                        return '同比: ' + growth[ctx.dataIndex];
+                    }
+                }
+            }
+        },
+        scales: { y: { beginAtZero: true, title: { display: true, text: '亿元' } } }
+    }
+});
+
+// 3. 营收与利润趋势
+new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+        labels: ['2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1'],
+        datasets: [
+            {
+                type: 'bar',
+                label: '营业收入',
+                data: [93.35, 92.70, 100.94, 101.72, 91.71],
+                backgroundColor: 'rgba(59,130,246,0.5)',
+                borderColor: BLUE,
+                borderWidth: 1,
+                yAxisID: 'y'
+            },
+            {
+                type: 'line',
+                label: '归母净利润',
+                data: [2.03, 2.68, 4.83, 6.11, 2.90],
+                borderColor: UP,
+                backgroundColor: 'rgba(239,68,68,0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y1'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+            y: { position: 'left', title: { display: true, text: '营收（亿）' } },
+            y1: { position: 'right', title: { display: true, text: '净利（亿）' }, grid: { drawOnChartArea: false } }
+        }
+    }
+});
+
+// 4. 毛利率趋势
+new Chart(document.getElementById('marginChart'), {
+    type: 'line',
+    data: {
+        labels: ['2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1'],
+        datasets: [{
+            label: '单季度毛利率 (%)',
+            data: [13.8, 14.3, 15.1, 14.9, 14.55],
+            borderColor: GOLD,
+            backgroundColor: 'rgba(245,158,11,0.15)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 6,
+            pointBackgroundColor: GOLD
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: false, min: 12, max: 16, title: { display: true, text: '%' } } },
+        plugins: { legend: { display: false } }
+    }
+});
+
+// 5. 产业链定价对比
+new Chart(document.getElementById('pricingChart'), {
+    type: 'bar',
+    data: {
+        labels: ['EDA/IP', '芯片设计', '晶圆制造', '封测(传统)', '封测(先进)', '材料/设备'],
+        datasets: [{
+            label: '毛利率区间 (%)',
+            data: [77.5, 65, 50, 12.5, 32.5, 42.5],
+            backgroundColor: [
+                'rgba(139,92,246,0.7)', 'rgba(239,68,68,0.7)', 'rgba(59,130,246,0.7)',
+                'rgba(34,197,94,0.7)', 'rgba(245,158,11,0.7)', 'rgba(107,114,128,0.7)'
+            ],
+            borderColor: [PURPLE, UP, BLUE, DOWN, GOLD, '#6b7280'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        indexAxis: 'y',
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    afterLabel: function(ctx) {
+                        const ranges = ['70-85%', '55-75%', '45-55%', '10-15%', '25-40%', '35-50%'];
+                        return '区间: ' + ranges[ctx.dataIndex];
+                    }
+                }
+            }
+        },
+        scales: { x: { title: { display: true, text: '毛利率 (%)' } } }
+    }
+});
+
+// 6. 竞争对手对比
+new Chart(document.getElementById('competitorChart'), {
+    type: 'bar',
+    data: {
+        labels: ['长电科技', '通富微电', '华天科技'],
+        datasets: [
+            {
+                label: '营业收入',
+                data: [388.71, 279.21, 172.14],
+                backgroundColor: 'rgba(239,68,68,0.6)',
+                borderColor: UP,
+                borderWidth: 2
+            },
+            {
+                label: '归母净利润',
+                data: [15.65, 12.19, 7.11],
+                backgroundColor: 'rgba(59,130,246,0.6)',
+                borderColor: BLUE,
+                borderWidth: 2
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, title: { display: true, text: '亿元' } } }
+    }
+});
+
+// 6a. 研发人员学历
+new Chart(document.getElementById('rdEducationChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['本科 2,330人', '专科及以下 1,105人', '硕士 479人', '博士 34人'],
+        datasets: [{
+            data: [2330, 1105, 479, 34],
+            backgroundColor: ['rgba(59,130,246,0.7)', 'rgba(107,114,128,0.6)', 'rgba(245,158,11,0.7)', 'rgba(139,92,246,0.8)'],
+            borderColor: [BLUE, '#6b7280', GOLD, PURPLE],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'right', labels: { font: { size: 12 } } },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        const pct = (ctx.raw / 3948 * 100).toFixed(1);
+                        return ctx.label + ' (' + pct + '%)';
+                    }
+                }
+            }
+        }
+    }
+});
+
+// 6b. 研发人员年龄
+new Chart(document.getElementById('rdAgeChart'), {
+    type: 'bar',
+    data: {
+        labels: ['30岁以下', '30-40岁', '40岁以上'],
+        datasets: [{
+            label: '人数',
+            data: [970, 1860, 1118],
+            backgroundColor: ['rgba(34,197,94,0.6)', 'rgba(245,158,11,0.8)', 'rgba(139,92,246,0.6)'],
+            borderColor: [DOWN, GOLD, PURPLE],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    afterLabel: function(ctx) {
+                        const pct = (ctx.raw / 3948 * 100).toFixed(1);
+                        return '占比: ' + pct + '%';
+                    }
+                }
+            }
+        },
+        scales: { y: { beginAtZero: true, title: { display: true, text: '人数' } } }
+    }
+});
+
+// 6c. 人均效能对比
+new Chart(document.getElementById('efficiencyChart'), {
+    type: 'bar',
+    data: {
+        labels: ['长电科技', '通富微电', '华天科技'],
+        datasets: [{
+            label: '人均营收（万元）',
+            data: [155.8, 126.9, 95.6],
+            backgroundColor: 'rgba(239,68,68,0.6)',
+            borderColor: UP,
+            borderWidth: 2
+        }, {
+            label: '人均净利润（万元）',
+            data: [6.3, 5.5, 4.0],
+            backgroundColor: 'rgba(59,130,246,0.6)',
+            borderColor: BLUE,
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, title: { display: true, text: '万元' } } }
+    }
+});
+
+// 7. 股东结构
+new Chart(document.getElementById('shareholderChart'), {
+    type: 'bar',
+    data: {
+        labels: ['磐石润企(控股)', '香港中央结算', '国家大基金', '银河创新基金', '华夏半导体ETF', '中国人寿', '其他'],
+        datasets: [{
+            label: '持股比例 (%)',
+            data: [22.53, 4.19, 3.20, 1.23, 0.98, 0.74, 2.24],
+            backgroundColor: [
+                'rgba(239,68,68,0.8)', 'rgba(59,130,246,0.6)', 'rgba(245,158,11,0.7)',
+                'rgba(139,92,246,0.5)', 'rgba(139,92,246,0.4)', 'rgba(34,197,94,0.5)', 'rgba(107,114,128,0.4)'
+            ],
+            borderColor: [UP, BLUE, GOLD, PURPLE, PURPLE, DOWN, '#6b7280'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        indexAxis: 'y',
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    afterLabel: function(ctx) {
+                        const changes = ['不变（控股）', '+2783万股（增持）', '-358万股（减持）', '不变', '-58万股', '+429万股（增持）', '—'];
+                        return '变动: ' + changes[ctx.dataIndex];
+                    }
+                }
+            }
+        },
+        scales: { x: { title: { display: true, text: '%' } } }
+    }
+});
+</script>
+
+</body>
+</html>
