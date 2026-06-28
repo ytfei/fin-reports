@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>比亚迪（002594.SZ / 01211.HK）深度分析 | 研股股</title>
+<meta name="date" content="2026-06-26">
+<meta name="description" content="比亚迪股价持续下跌全景拆解：政策退坡、汇兑损失、价格战、资本开支四重打击，产业链垂直整合双刃剑、海外销量爆发、多空辩论与投资判断框架">
+<meta name="category" content="company-reports">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --primary: #0f2a4f;
+    --accent: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --gray: #6b7280;
+    --light-gray: #e5e7eb;
+    --text: #1f2937;
+    --border: #d1d5db;
+    --bear: #991b1b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 14px;
+  }
+  .container { max-width: 780px; margin: 0 auto; padding: 0 16px; padding-bottom: 60px; }
+
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, #0a1f3c 0%, #1a3a6b 60%, #2563eb 100%);
+    color: white;
+    padding: 44px 24px 40px;
+    text-align: center;
+  }
+  .hero .ticker { font-size: 12px; opacity: 0.7; letter-spacing: 2px; margin-bottom: 6px; }
+  .hero h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; letter-spacing: 1px; }
+  .hero .subtitle { font-size: 14px; opacity: 0.85; margin-bottom: 20px; }
+  .hero .price-block {
+    display: flex; justify-content: center; align-items: baseline; gap: 16px;
+    flex-wrap: wrap; margin-top: 8px;
+  }
+  .hero .price { font-size: 36px; font-weight: 800; }
+  .hero .change { font-size: 16px; font-weight: 600; }
+  .hero .meta-row {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .hero .badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+  }
+
+  /* Rating Card */
+  .rating-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    margin: -24px 0 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+  }
+  .rating-card .rating-row {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .rating-box { text-align: center; min-width: 80px; }
+  .rating-box .label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .rating-box .value { font-size: 24px; font-weight: 800; }
+  .rating-box .sub { font-size: 11px; color: var(--gray); }
+
+  /* Section */
+  .section { margin: 28px 0; }
+  .section-title {
+    font-size: 18px; font-weight: 700; color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 12px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title .num {
+    background: var(--accent);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+  }
+
+  /* Data Grid */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .data-cell {
+    background: var(--card);
+    border-radius: 8px;
+    padding: 12px 10px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .data-cell .label { font-size: 10px; color: var(--gray); margin-bottom: 4px; }
+  .data-cell .value { font-size: 16px; font-weight: 700; color: var(--primary); }
+  .data-cell .chg { font-size: 11px; margin-top: 2px; }
+  .chg.red { color: var(--red); } /* A股惯例：红涨 */
+  .chg.green { color: var(--green); } /* 绿跌 */
+
+  @media (max-width: 600px) {
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .data-cell .value { font-size: 14px; }
+  }
+
+  /* Chart container */
+  .chart-box {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .chart-box canvas { max-height: 320px; }
+  .chart-title { font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 10px; }
+
+  /* Bull / Bear */
+  .debate-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) { .debate-box { grid-template-columns: 1fr; } }
+  .bull-card { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 14px; }
+  .bear-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px; }
+  .bull-card h4 { color: var(--red); font-size: 14px; margin-bottom: 8px; }
+  .bear-card h4 { color: var(--green); font-size: 14px; margin-bottom: 8px; }
+  .bull-card ul, .bear-card ul { padding-left: 16px; font-size: 12px; line-height: 1.8; }
+  .bull-card li, .bear-card li { margin-bottom: 4px; }
+
+  /* Table */
+  .fin-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
+  .fin-table th { background: var(--primary); color: white; padding: 8px 6px; text-align: right; font-weight: 600; }
+  .fin-table th:first-child { text-align: left; }
+  .fin-table td { padding: 7px 6px; border-bottom: 1px solid var(--light-gray); text-align: right; }
+  .fin-table td:first-child { text-align: left; font-weight: 500; }
+  .fin-table tr:hover { background: #f8fafc; }
+
+  /* Callout */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    border-left: 4px solid;
+  }
+  .callout-warn { background: #fffbeb; border-color: var(--orange); }
+  .callout-info { background: #eff6ff; border-color: var(--accent); }
+  .callout-danger { background: #fef2f2; border-color: var(--red); }
+  .callout strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* TL list */
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--light-gray); }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--card); }
+  .tl-date { font-size: 11px; color: var(--gray); }
+  .tl-content { font-size: 13px; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 11px;
+    color: var(--gray);
+    border-top: 1px solid var(--light-gray);
+    margin-top: 20px;
+  }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag-red { background: #fee2e2; color: var(--red); }
+  .tag-green { background: #dcfce7; color: var(--green); }
+  .tag-blue { background: #dbeafe; color: var(--accent); }
+  .tag-orange { background: #ffedd5; color: var(--orange); }
+
+  .highlight-num { color: var(--red); font-weight: 700; }
+  .highlight-neg { color: var(--green); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div class="ticker">002594.SZ &nbsp;|&nbsp; 01211.HK</div>
+  <h1>比亚迪 深度分析</h1>
+  <div class="subtitle">股价为何持续下跌？产业链 · 销量 · 资本开支 · 市场定价逻辑全景拆解</div>
+  <div class="price-block">
+    <div class="price">¥79.92</div>
+    <div class="change" style="color:#ff6b6b;">▼ -2.77%</div>
+  </div>
+  <div class="meta-row">
+    <span class="badge">A股年内 -18.22%</span>
+    <span class="badge">港股年内 -23.06%</span>
+    <span class="badge">52周高 ¥116.59</span>
+    <span class="badge">52周低 ¥79.55</span>
+    <span class="badge">PE(TTM) 26.5x</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Rating Card -->
+<div class="rating-card">
+  <div class="rating-row">
+    <div class="rating-box">
+      <div class="label">评级</div>
+      <div class="value" style="color:var(--orange);">持有</div>
+      <div class="sub">等待拐点确认</div>
+    </div>
+    <div class="rating-box">
+      <div class="label">目标价(A)</div>
+      <div class="value" style="color:var(--accent);">¥105</div>
+      <div class="sub">+31% / 12个月</div>
+    </div>
+    <div class="rating-box">
+      <div class="label">当前价(A)</div>
+      <div class="value">¥79.92</div>
+      <div class="sub">2026-06-26</div>
+    </div>
+    <div class="rating-box">
+      <div class="label">PE(TTM)</div>
+      <div class="value">26.5x</div>
+      <div class="sub">PB 3.14x</div>
+    </div>
+    <div class="rating-box">
+      <div class="label">市值</div>
+      <div class="value">¥7286亿</div>
+      <div class="sub">港股HK$6660亿</div>
+    </div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="section">
+  <div class="section-title"><span class="num">摘</span>执行摘要：市场在定价什么？</div>
+  <div class="callout callout-danger">
+    <strong>核心判断：当前下跌 = 短期盈利拐点证伪 + 中期资本回报率怀疑 + 长期竞争壁垒稀释，三层逻辑叠加杀估值</strong>
+    比亚迪A股从2026年3月的¥111.82高点跌至¥79.92（-28.5%），港股同期跌33%。市场并非简单看空公司基本面——5月销量已转正、海外创历史新高——而是在重新定价一个结构性变化：<b>当国内价格战常态化、海外利润占比提升但面临贸易壁垒、资本开支持续高位吞噬自由现金流</b>时，比亚迪的利润率和资本回报率能否回到2023-2025年的水平？
+  </div>
+
+  <div class="data-grid">
+    <div class="data-cell">
+      <div class="label">Q1营收</div>
+      <div class="value">1502亿</div>
+      <div class="chg green">同比 -11.8%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1归母净利</div>
+      <div class="value">40.8亿</div>
+      <div class="chg green">同比 -55.4%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1毛利率</div>
+      <div class="value">18.8%</div>
+      <div class="chg green">同比 -1.3pct</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1经营现金流</div>
+      <div class="value">27.9亿</div>
+      <div class="chg green">同比 -67.5%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1汇兑损失</div>
+      <div class="value">-21.0亿</div>
+      <div class="chg green">去年同期+19亿</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1研发费用</div>
+      <div class="value">113.4亿</div>
+      <div class="chg green">同比 -20.2%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">2025资本开支</div>
+      <div class="value">¥1745亿</div>
+      <div class="chg red">历史最高</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">Q1自由现金流</div>
+      <div class="value">-505亿</div>
+      <div class="chg green">严重失血</div>
+    </div>
+  </div>
+</div>
+
+<!-- Stock Price Chart -->
+<div class="section">
+  <div class="section-title"><span class="num">图</span>股价走势：120天跌去28%</div>
+  <div class="chart-box">
+    <div class="chart-title">比亚迪A股日K线（前复权，2026.02–2026.06）</div>
+    <canvas id="priceChart"></canvas>
+  </div>
+  <div class="callout callout-warn">
+    <strong>关键价格节点</strong>
+    3/23 股价冲高至¥111.82后见顶回落 → 3/27 跌破¥104 → 4/28 一季报发布后加速下跌 → 5月底 ¥93 → 6/26 收¥79.92创新低。<b>A股年内跌幅18.2%，港股跌幅23%，跑输沪深300约22个百分点。</b>
+  </div>
+</div>
+
+<!-- Part 1: Why is it falling -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>为什么市场不买单？四重打击</div>
+
+  <div class="card">
+    <h4 style="color:var(--bear); margin-bottom:10px;">🔴 打击一：政策退坡 + 需求透支 → 销量断崖</h4>
+    <p style="font-size:13px;">2026年1月1日起，新能源汽车购置税从<b>免征调整为减半征收</b>（单车最高减税1.5万），直接导致2025年Q4需求抢跑。2025年12月新能源渗透率达50%，2026年1-2月骤降至32%。</p>
+    <p style="font-size:13px; margin-top:8px;">比亚迪Q1销量从100万辆暴跌至<b>70万辆（-30%）</b>。虽然5月已转正（38.35万辆），但市场担心这只是脉冲式恢复而非趋势反转。</p>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--bear); margin-bottom:10px;">🔴 打击二：汇兑损失40亿级摆动 → 利润腰斩</h4>
+    <p style="font-size:13px;">一季度人民币升值，比亚迪财务费用从去年同期的<b>收益19亿转为亏损21亿</b>，单这一项就形成近40亿元利润波动。归母净利从91.55亿降至40.85亿（<b>-55.4%</b>），经营现金流从85.8亿降至27.9亿（<b>-67.5%</b>）。</p>
+    <p style="font-size:13px; margin-top:8px;">更令市场不安的是：汇率波动是非经营性因素，但利润腰斩幅度远超营收下滑幅度（-11.8%），说明<b>经营杠杆在反向放大</b>——收入少12%，利润却少55%，固定成本（资本开支折旧、研发摊销）的刚性正在显现。</p>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--bear); margin-bottom:10px;">🔴 打击三：价格战 + 毛利率压缩 → 盈利能力结构性下移</h4>
+    <p style="font-size:13px;">截至Q1末，全行业超16家车企、近70款车型卷入价格战。新能源车平均降价3.8万（降幅13.7%），燃油车降幅14.3%。汽车行业整体利润率被压到<b>2.9%（十年冰点）</b>。</p>
+    <p style="font-size:13px; margin-top:8px;">比亚迪Q1毛利率从20.1%降至<b>18.8%</b>，在1500亿收入体量上意味着数十亿利润蒸发。但真正的担忧不是毛利率下降1.3个百分点——而是<b>第二代刀片电池产能爬坡期供应不足，制约了高毛利车型（闪充版）的交付</b>，而低价车型出货占比反而提升，结构恶化。</p>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--bear); margin-bottom:10px;">🔴 打击四：资本开支失控 + 自由现金流转负 → 投资回报存疑</h4>
+    <p style="font-size:13px;">2025年资本开支<b>¥1745亿</b>（历史最高），2026年Q1投资现金流净流出202亿。叠加经营现金流入萎缩，Q1自由现金流为<b>-505亿</b>。</p>
+    <p style="font-size:13px; margin-top:8px;">资本开支主要投向：①下一代电池技术（半固态量产）②闪充站建设（年底2万座目标）③海外工厂（泰国、巴西、匈牙利、印尼）④智驾芯片（璇玑A3）。市场质疑的核心：<b>这些巨量投入何时能产生回报？投资回报率（ROIC）是否在持续下降？</b></p>
+  </div>
+</div>
+
+<!-- Financials Chart -->
+<div class="section">
+  <div class="chart-box">
+    <div class="chart-title">比亚迪季度财务指标对比（2025 vs 2026 Q1）</div>
+    <canvas id="finChart"></canvas>
+  </div>
+</div>
+
+<!-- Part 2: Industry Chain -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>产业链全景：垂直整合的"双刃剑"</div>
+
+  <div class="chart-box">
+    <div class="chart-title">比亚迪产业链垂直整合地图</div>
+    <canvas id="chainChart" style="max-height:400px;"></canvas>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--primary); margin-bottom:10px;">核心特征：内化75%车辆价值</h4>
+    <p style="font-size:13px;">比亚迪是全球唯一做到<b>"矿→材料→电池→芯片→电机→电控→整车→销售"</b>全链条自研自产的车企。垂直整合在2022-2024年是超级武器：碳酸锂暴涨时，比亚迪内部消化电池成本；芯片短缺时，自研IGBT不受制于人。</p>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--orange); margin-bottom:10px;">⚡ 但2026年的问题来了：垂直整合的固定成本刚性</h4>
+    <p style="font-size:13px;">当销量下滑30%时，全产业链的固定资产折旧、产线维护、人工成本无法同步削减。这就是为什么<b>收入降12%，利润却降55%</b>——垂直整合放大了经营杠杆。</p>
+    <p style="font-size:13px; margin-top:8px;">竞争对手（吉利、零跑、小米）走"轻资产+外采"模式，下行周期可以砍供应商订单，灵活性更高。比亚迪却要养着整个产业链的产能。</p>
+  </div>
+
+  <table class="fin-table">
+    <thead>
+      <tr>
+        <th>产业链环节</th>
+        <th>比亚迪自产率</th>
+        <th>竞争格局</th>
+        <th>2026变化</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>锂矿/原材料</td><td>参股上游</td><td>碳酸锂价格回升</td><td><span class="tag tag-orange">成本压力</span></td></tr>
+      <tr><td>电池（刀片）</td><td>100%自产</td><td>第二代产能瓶颈</td><td><span class="tag tag-red">供应不足</span></td></tr>
+      <tr><td>芯片（IGBT/智驾）</td><td>80%+自研</td><td>璇玑A3 4nm发布</td><td><span class="tag tag-blue">技术领先</span></td></tr>
+      <tr><td>电机/电控</td><td>100%自产</td><td>八合一动力总成</td><td><span class="tag tag-blue">稳定</span></td></tr>
+      <tr><td>整车制造</td><td>100%</td><td>产能利用率Q1降至~70%</td><td><span class="tag tag-red">折旧压力</span></td></tr>
+      <tr><td>销售渠道</td><td>王朝/海洋/腾势/仰望</td><td>5大网络覆盖</td><td><span class="tag tag-blue">渠道加密</span></td></tr>
+      <tr><td>充电基础设施</td><td>自建闪充站</td><td>5499座→年底2万座</td><td><span class="tag tag-orange">重资产投入</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Part 3: Sales & Market Share -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>销量与市场份额：国内失守、海外救场</div>
+
+  <div class="chart-box">
+    <div class="chart-title">比亚迪月度销量走势：国内 vs 海外（2025.10–2026.5）</div>
+    <canvas id="salesChart"></canvas>
+  </div>
+
+  <div class="data-grid">
+    <div class="data-cell">
+      <div class="label">5月总销量</div>
+      <div class="value">38.35万</div>
+      <div class="chg red">同比+0.3%（转正）</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">5月海外销量</div>
+      <div class="value">16.06万</div>
+      <div class="chg red">同比+80.4%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">1-5月累计</div>
+      <div class="value">140.5万</div>
+      <div class="chg green">同比-20.3%</div>
+    </div>
+    <div class="data-cell">
+      <div class="label">海外占比</div>
+      <div class="value">~42%</div>
+      <div class="chg red">持续提升</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--primary); margin-bottom:10px;">国内：份额仍第一，但被蚕食</h4>
+    <p style="font-size:13px;">5月国内销量约22万辆，仍是单一品牌销冠，但同比基本持平。竞争对手强势崛起：</p>
+    <ul style="font-size:12px; padding-left:18px; margin-top:6px; line-height:2;">
+      <li><b>吉利</b>（含极氪、领克）：23.76万辆，新能源过半，贴身紧逼</li>
+      <li><b>奇瑞</b>：24.78万辆，出口18万辆，海外增速80.5%</li>
+      <li><b>小米汽车</b>：月销稳定8万+，SU7/YU7抢占15-25万价格带</li>
+      <li><b>零跑</b>：一季度同比+25.8%，性价比路线分食比亚迪基本盘</li>
+      <li><b>蔚来/问界/极氪</b>：高端市场分流腾势/仰望</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--red); margin-bottom:10px;">海外：唯一亮点，但暗藏风险</h4>
+    <p style="font-size:13px;">5月海外销量<b>16.06万辆（+80.4%）</b>，创历史新高。单车利润约1.1万元，是国内（4800元）的2.3倍。全年目标150万辆有望超额完成。</p>
+    <p style="font-size:13px; margin-top:8px; color:var(--orange);"><b>但市场担忧：</b></p>
+    <ul style="font-size:12px; padding-left:18px; margin-top:4px; line-height:1.9;">
+      <li>欧盟反补贴关税（17.4%）仍在执行，匈牙利工厂能否规避存疑</li>
+      <li>巴西、东南亚工厂刚投产，产能爬坡+本地化成本高于预期</li>
+      <li>地缘政治风险：中美博弈升级可能波及墨西哥/东南亚市场</li>
+      <li>海外品牌力仍弱于特斯拉，高端化进程缓慢</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Part 4: Capex & Cash Flow -->
+<div class="section">
+  <div class="section-title"><span class="num">4</span>资本开支与现金流：钱花在哪了？</div>
+
+  <div class="chart-box">
+    <div class="chart-title">资本开支 vs 自由现金流（年度，亿元）</div>
+    <canvas id="capexChart"></canvas>
+  </div>
+
+  <div class="callout callout-warn">
+    <strong>⚠️ 核心矛盾：资本开支持续高位（1745亿），但自由现金流转负（-505亿）</strong>
+    2022-2024年比亚迪的自由现金流为正是最大看点——<b>负现金转换周期</b>曾被视为比亚迪的"超能力"（供应商垫资+客户预付款）。但Q1 2026数据表明，当销量下行+资本开支高企同时发生，这个超能力正在以惊人速度逆转。
+  </div>
+
+  <table class="fin-table">
+    <thead>
+      <tr><th>资本开支去向</th><th>2025金额(估)</th><th>用途</th><th>回报周期</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>海外工厂建设</td><td>~500亿</td><td>泰国/巴西/匈牙利/印尼</td><td>3-5年</td></tr>
+      <tr><td>第二代刀片电池产线</td><td>~400亿</td><td>替换一代产线、扩产</td><td>2-3年</td></tr>
+      <tr><td>闪充基础设施</td><td>~300亿</td><td>年底2万座目标</td><td>5-8年（生态投入）</td></tr>
+      <tr><td>智能化/芯片研发</td><td>~250亿</td><td>璇玑A3、天神之眼</td><td>2-4年</td></tr>
+      <tr><td>国内产能扩张</td><td>~295亿</td><td>新车型产线、产能升级</td><td>1-2年</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <p style="font-size:13px;"><b>市场核心疑虑：</b>资本开支从2022年的约800亿暴增至2025年的1745亿，翻了一倍多。但同期销量增速从+150%降至-20%。这意味着<b>每投入1元资本开支带来的增量销量在急剧递减</b>——边际资本回报率（Incremental ROIC）可能在显著恶化。</p>
+  </div>
+</div>
+
+<!-- Part 5: Valuation -->
+<div class="section">
+  <div class="section-title"><span class="num">5</span>估值与市场定价</div>
+
+  <table class="fin-table">
+    <thead>
+      <tr><th>指标</th><th>比亚迪A股</th><th>比亚迪港股</th><th>特斯拉</th><th>行业中位数</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PE(TTM)</td><td>26.5x</td><td>21.4x</td><td>~80x</td><td>~18x</td></tr>
+      <tr><td>PE(2026E)</td><td>~17x*</td><td>~14x</td><td>~60x</td><td>~15x</td></tr>
+      <tr><td>PB</td><td>3.14x</td><td>2.54x</td><td>~10x</td><td>~2x</td></tr>
+      <tr><td>PS</td><td>0.93x</td><td>0.85x</td><td>~8x</td><td>~0.5x</td></tr>
+      <tr><td>市值</td><td>¥7286亿</td><td>HK$6660亿</td><td>~$1.2万亿</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px; color:var(--gray); margin-bottom:16px;">*2026E PE基于机构平均盈利预测，可能偏乐观</p>
+
+  <div class="callout callout-info">
+    <strong>估值解读</strong>
+    当前PE(TTM) 26.5x，看似不贵，但这是建立在TTM利润275亿（含2025年高基数）之上。如果2026全年利润下滑至160-180亿区间（Q1年化），<b>真实前瞻PE将升至40-45x</b>——这在汽车行业属于偏贵水平。市场正在做的事，就是从26x杀到17-20x的估值回归。
+  </div>
+</div>
+
+<!-- Part 6: Bull vs Bear -->
+<div class="section">
+  <div class="section-title"><span class="num">6</span>多空辩论：到底谁对？</div>
+
+  <div class="debate-box">
+    <div class="bull-card">
+      <h4>🔴 多方逻辑（看涨）</h4>
+      <ul>
+        <li><b>最坏已过：</b>5月销量转正，Q2有望环比大幅改善</li>
+        <li><b>二代刀片电池爬坡：</b>每月+2-3万片产能，Q3供应瓶颈解除</li>
+        <li><b>海外爆发：</b>5月16万辆创历史，全年200万+可期，利润率2.3x国内</li>
+        <li><b>技术壁垒仍在：</b>闪充5分钟10%→70%、4nm智驾芯片自研</li>
+        <li><b>估值已反映悲观：</b>26家机构17家"买入"，均价¥127</li>
+        <li><b>汇丰认为BYDvs特斯拉市值差14倍不合理</b></li>
+      </ul>
+    </div>
+    <div class="bear-card">
+      <h4>🟢 空方逻辑（看跌）</h4>
+      <ul>
+        <li><b>利润率结构性下移：</b>价格战常态化，毛利率难回20%+</li>
+        <li><b>资本回报率恶化：</b>Capex翻倍但增量产出递减</li>
+        <li><b>自由现金流转负：</b>"超能力"逆转，融资压力上升</li>
+        <li><b>竞争白热化：</b>小米/吉利/零跑全面蚕食各价格带</li>
+        <li><b>贸易壁垒升级：</b>欧盟关税、美国限制持续加码</li>
+        <li><b>机构持仓减持：</b>Q1陆股通持股减少2000万股</li>
+        <li><b>巴菲特清仓阴影：</b>长期估值锚缺失</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Part 7: Investment Framework -->
+<div class="section">
+  <div class="section-title"><span class="num">7</span>投资判断框架</div>
+
+  <div class="card">
+    <h4 style="color:var(--primary); margin-bottom:12px;">PM七问检验</h4>
+    <table class="fin-table">
+      <tbody>
+        <tr><td style="width:45%;">什么被错误定价了？</td><td>市场过度定价了短期利润波动，但可能<b>低估了资本回报率的长期恶化</b>。真相在两者之间。</td></tr>
+        <tr><td>当前价格反映了什么？</td><td>反映了2026全年利润腰斩+毛利率难以回升+海外受阻的三重悲观假设</td></tr>
+        <tr><td>什么能证明多头论点？</td><td>Q2销量突破42万辆 + 毛利率回升至19%以上 + 二代刀片电池产能突破月30万片</td></tr>
+        <tr><td>什么能推翻多头论点？</td><td>Q2毛利率继续下滑至18%以下 + 海外增速放缓至50%以下 + 新一轮价格战爆发</td></tr>
+        <tr><td>为什么是现在？</td><td>Q1极端数据释放 + 6月披露产能瓶颈仍在 + 二季报前夕（8月）真空期</td></tr>
+        <tr><td>什么会改变评级？</td><td>若7-8月销量持续40万+/月 → 升级为"加仓"；若Q2利润不及预期 → 降级为"减仓"</td></tr>
+        <tr><td>还缺少什么证据？</td><td>二代刀片电池实际成本数据、海外工厂盈亏平衡点、L3智驾商业化时间表</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>行动建议：持有 / 等待证据</strong>
+    当前价位不宜追空（跌幅已深，技术超卖），也不宜大举抄底（基本面拐点未确认）。建议<b>等待三个信号</b>再决策：<br>
+    ① 7月初公布的6月销量是否维持38万+ → 确认趋势反转<br>
+    ② 8月中报毛利率是否回升至19%+ → 确认盈利能力修复<br>
+    ③ 二代刀片电池产能是否突破月30万片 → 确认供应瓶颈解除<br>
+    <b>若三个信号中确认两个，可分批建仓。</b>
+  </div>
+</div>
+
+<!-- Catalyst Calendar -->
+<div class="section">
+  <div class="section-title"><span class="num">8</span>催化剂日历</div>
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2026年7月初</div>
+        <div class="tl-content">6月销量快报 → 确认Q2趋势</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年8月中旬</div>
+        <div class="tl-content"><b>2026年中报发布</b> → 全年盈利锚点确认</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年Q3</div>
+        <div class="tl-content">半固态电池量产 → 技术里程碑</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年Q3-Q4</div>
+        <div class="tl-content">匈牙利工厂投产 → 欧洲本地化突破</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026年底</div>
+        <div class="tl-content">闪充站达2万座 → 生态护城河</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2027年Q1</div>
+        <div class="tl-content">L3自动驾驶商业化 → 智能化估值重估</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Risk Warning -->
+<div class="callout callout-danger" style="margin-top:20px;">
+  <strong>⚠️ 风险提示</strong>
+  本报告基于公开数据和分析师研判，不构成投资建议。比亚迪面临的主要风险包括：价格战进一步升级、海外贸易壁垒加码、二代刀片电池产能爬坡不及预期、汇率大幅波动、新能源政策进一步退坡等。投资者应基于自身风险承受能力独立决策。
+</div>
+
+<div class="footer">
+  <p>研股股 · 股票研究专家 | 数据截至 2026-06-26</p>
+  <p style="margin-top:4px;">数据来源：腾讯自选股、公司财报、CnEVPost、乘联会、机构研报 | 仅供研究参考</p>
+</div>
+
+</div><!-- /container -->
+
+<script>
+const COLORS = {
+  red: '#dc2626',
+  green: '#16a34a',
+  blue: '#2563eb',
+  orange: '#ea580c',
+  gray: '#9ca3af',
+  primary: '#0f2a4f',
+  lightRed: 'rgba(220,38,38,0.15)',
+  lightGreen: 'rgba(22,163,74,0.15)',
+};
+
+// Price Chart
+const priceData = [
+  {d:'02-06',p:89.82},{d:'02-09',p:90.06},{d:'02-10',p:90.81},{d:'02-11',p:92.28},
+  {d:'02-12',p:91.16},{d:'02-13',p:90.27},{d:'02-24',p:90.87},{d:'02-25',p:91.45},
+  {d:'02-26',p:89.85},{d:'02-27',p:89.32},{d:'03-02',p:96.79},{d:'03-03',p:95.21},
+  {d:'03-04',p:95.99},{d:'03-05',p:94.47},{d:'03-06',p:93.62},{d:'03-09',p:97.52},
+  {d:'03-10',p:96.6},{d:'03-11',p:99.22},{d:'03-12',p:99.1},{d:'03-13',p:99.67},
+  {d:'03-16',p:104.62},{d:'03-17',p:102.87},{d:'03-18',p:101.69},{d:'03-19',p:102.31},
+  {d:'03-20',p:103.03},{d:'03-23',p:107.63},{d:'03-24',p:106.64},{d:'03-25',p:106.6},
+  {d:'03-26',p:103.14},{d:'03-27',p:105.3},{d:'04-28',p:93.0},{d:'05-19',p:96.0},
+  {d:'05-20',p:93.36},{d:'05-21',p:93.51},{d:'05-22',p:93.75},{d:'05-25',p:95.96},
+  {d:'05-26',p:96.55},{d:'05-27',p:95.22},{d:'05-28',p:95.88},{d:'05-29',p:96.18},
+  {d:'06-01',p:93.65},{d:'06-02',p:96.76},{d:'06-03',p:94.82},{d:'06-04',p:93.44},
+  {d:'06-05',p:93.01},{d:'06-08',p:91.19},{d:'06-09',p:91.89},{d:'06-10',p:90.31},
+  {d:'06-11',p:89.8},{d:'06-12',p:91.6},{d:'06-15',p:90.82},{d:'06-16',p:89.64},
+  {d:'06-17',p:87.47},{d:'06-18',p:88.13},{d:'06-22',p:87.59},{d:'06-23',p:85.0},
+  {d:'06-24',p:83.3},{d:'06-25',p:82.2},{d:'06-26',p:79.92}
+];
+
+new Chart(document.getElementById('priceChart'), {
+  type: 'line',
+  data: {
+    labels: priceData.map(d=>d.d),
+    datasets: [{
+      label: '收盘价(元)',
+      data: priceData.map(d=>d.p),
+      borderColor: COLORS.red,
+      backgroundColor: 'rgba(220,38,38,0.08)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { position: 'right', grid: { color: '#f0f0f0' } },
+      x: { grid: { display: false }, ticks: { maxTicksLimit: 12, font:{size:10} } }
+    }
+  }
+});
+
+// Financials Chart
+new Chart(document.getElementById('finChart'), {
+  type: 'bar',
+  data: {
+    labels: ['营收(亿元)', '归母净利(亿元)', '经营现金流(亿元)', '研发费用(亿元)'],
+    datasets: [
+      { label: '2025 Q1', data: [1703.6, 91.55, 85.8, 142.23], backgroundColor: COLORS.red, borderRadius: 4 },
+      { label: '2026 Q1', data: [1502.3, 40.85, 27.9, 113.44], backgroundColor: COLORS.green, borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'top', labels:{font:{size:11}} } },
+    scales: { y: { position: 'right', grid:{color:'#f0f0f0'} }, x:{grid:{display:false}} }
+  }
+});
+
+// Sales Chart (domestic vs overseas)
+new Chart(document.getElementById('salesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['25.10','25.11','25.12','26.01','26.02','26.03','26.04','26.05'],
+    datasets: [
+      { label:'国内(万辆)', data:[28.0,30.2,34.5,18.5,12.0,28.5,20.0,22.3], backgroundColor:COLORS.blue, borderRadius:3 },
+      { label:'海外(万辆)', data:[8.5,9.2,10.5,8.0,7.0,13.5,13.5,16.1], backgroundColor:COLORS.red, borderRadius:3 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position:'top', labels:{font:{size:11}} } },
+    scales: { x:{stacked:true, grid:{display:false}}, y:{stacked:true, position:'right', grid:{color:'#f0f0f0'} } }
+  }
+});
+
+// Capex Chart
+new Chart(document.getElementById('capexChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2022', '2023', '2024', '2025', '2026Q1*'],
+    datasets: [
+      { type:'bar', label:'资本开支(亿元)', data:[800,1200,1450,1745,202], backgroundColor:COLORS.orange, borderRadius:4, yAxisID:'y' },
+      { type:'line', label:'自由现金流(亿元)', data:[280,450,620,180,-505], borderColor:COLORS.red, backgroundColor:'transparent', tension:0.3, borderWidth:2, pointRadius:4, yAxisID:'y' },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position:'top', labels:{font:{size:11}} } },
+    scales: {
+      y: { position:'right', grid:{color:'#f0f0f0'}, title:{display:true, text:'亿元', font:{size:10}} },
+      x: { grid:{display:false} }
+    }
+  }
+});
+
+// Chain Chart (horizontal bar)
+new Chart(document.getElementById('chainChart'), {
+  type: 'bar',
+  data: {
+    labels: ['锂矿/原材料', '正极材料', '刀片电池', 'IGBT/芯片', '智驾芯片(璇玑)', '电机/电控', '整车制造', '销售渠道', '充电基础设施', '电池回收'],
+    datasets: [{
+      label: '自产率(%)',
+      data: [30, 60, 100, 80, 100, 100, 100, 100, 100, 50],
+      backgroundColor: [COLORS.gray, COLORS.blue, COLORS.red, COLORS.blue, COLORS.red, COLORS.red, COLORS.red, COLORS.red, COLORS.red, COLORS.gray],
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { max: 100, grid:{color:'#f0f0f0'}, title:{display:true, text:'自产化率 %', font:{size:10}} },
+      y: { grid:{display:false}, ticks:{font:{size:11}} }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
