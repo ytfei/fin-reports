@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光模块产业链深度研究 · 易中天对比分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card-bg: #f8f9fb;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --border: #e2e6ef;
+    --accent: #1a56db;
+    --red: #dc2626;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --teal: #0d9488;
+    --upstream: #dc2626;
+    --midstream: #ea580c;
+    --downstream: #2563eb;
+    --max-width: 860px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #1a1a2e 100%);
+    color: #fff;
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(220,38,38,0.10) 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+  .hero .subtitle { font-size: 1rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.6; }
+  .hero .meta { font-size: 0.82rem; color: #64748b; }
+  .hero .badge-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .hero .badge {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge-sector { background: rgba(37,99,235,0.25); color: #93c5fd; }
+  .badge-depth { background: rgba(234,88,12,0.25); color: #fdba74; }
+  .badge-date { background: rgba(148,163,184,0.2); color: #cbd5e1; }
+
+  /* Main Container */
+  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+  /* Section */
+  .section { margin: 40px 0; }
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    padding: 12px 0 8px;
+    border-bottom: 3px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon { font-size: 1.3rem; }
+  .sub-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 24px 0 12px;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 16px 0;
+  }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Executive Summary */
+  .exec-summary {
+    background: linear-gradient(135deg, #f0f4ff, #fef2f2);
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin: 28px 0;
+  }
+  .exec-summary h3 { font-size: 1rem; margin-bottom: 12px; color: #1e40af; }
+  .exec-summary ul { padding-left: 18px; }
+  .exec-summary li { margin-bottom: 6px; color: #334155; font-size: 0.93rem; line-height: 1.65; }
+
+  /* Data Grid */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .data-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .data-card .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .data-card .label {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .data-card.red .value { color: var(--red); }
+  .data-card.green .value { color: var(--green); }
+
+  /* Table */
+  .tbl-wrapper { overflow-x: auto; margin: 16px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  thead th {
+    background: #1e293b;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: center;
+  }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody tr:hover { background: #eff6ff; }
+  .td-left { text-align: left !important; }
+  .td-red { color: var(--red); font-weight: 600; }
+  .td-green { color: var(--green); font-weight: 600; }
+
+  /* Comparison Box */
+  .compare-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .compare-card {
+    border-radius: 10px;
+    padding: 18px 16px;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  .compare-card.c1 { border-top: 3px solid var(--blue); }
+  .compare-card.c2 { border-top: 3px solid var(--red); }
+  .compare-card.c3 { border-top: 3px solid var(--purple); }
+  .compare-card .c-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .compare-card .c-role { font-size: 0.78rem; color: #64748b; margin-bottom: 12px; }
+  .compare-card .c-stat { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.83rem; border-bottom: 1px dotted #e2e8f0; }
+  .compare-card .c-stat:last-child { border-bottom: none; }
+  .compare-card .c-stat-val { font-weight: 600; }
+
+  /* Chain visualization */
+  .chain-viz {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  /* Canvas wrapper */
+  .chart-wrap {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 18px 0;
+  }
+  .chart-wrap canvas { max-height: 380px; }
+
+  /* Highlight */
+  .highlight { color: var(--red); font-weight: 700; }
+  .highlight-blue { color: var(--blue); font-weight: 700; }
+  .highlight-green { color: var(--green); font-weight: 700; }
+
+  /* Risk Box */
+  .risk-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .risk-box h4 { color: #991b1b; margin-bottom: 8px; font-size: 0.9rem; }
+  .risk-box ul { padding-left: 16px; font-size: 0.85rem; color: #7f1d1d; }
+  .risk-box li { margin-bottom: 4px; }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 32px 0 20px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+
+  /* Process Flow */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 16px 0;
+  }
+  .flow-block {
+    background: #fff;
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 110px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .flow-block.up { border-color: var(--red); background: #fef2f2; color: #991b1b; }
+  .flow-block.mid { border-color: var(--orange); background: #fff7ed; color: #9a3412; }
+  .flow-block.down { border-color: var(--blue); background: #eff6ff; color: #1e40af; }
+  .flow-arrow { font-size: 1.3rem; color: #94a3b8; font-weight: 700; }
+
+  /* Mobile */
+  @media (max-width: 680px) {
+    body { font-size: 14px; }
+    .hero { padding: 36px 16px 30px; }
+    .hero h1 { font-size: 1.4rem; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .compare-box { grid-template-columns: 1fr; }
+    .container { padding: 0 12px; }
+    table { font-size: 0.75rem; }
+    thead th, tbody td { padding: 6px 7px; }
+    .flow-row { gap: 4px; }
+    .flow-block { min-width: 80px; padding: 10px; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>光模块产业链深度研究</h1>
+    <p class="subtitle">
+      从上游芯片到下游AI算力需求，拆解光模块产业链全景图谱<br>
+      横向对比「易中天」三巨头——新易盛 · 中际旭创 · 天孚通信
+    </p>
+    <div class="badge-row">
+      <span class="badge badge-sector">产业研究</span>
+      <span class="badge badge-depth">深度覆盖</span>
+      <span class="badge badge-date">2026年6月</span>
+    </div>
+    <p class="meta" style="margin-top:16px;">研股股 · 股票研究 | 数据截至 2026年6月30日</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="exec-summary">
+  <h3>📋 核心结论速览</h3>
+  <ul>
+    <li><strong>产业链格局</strong>：光模块产业链呈金字塔结构——上游芯片（BOM成本占比60%+）由海外巨头垄断、国产替代攻坚中；中游制造中国厂商全球份额超60%，中际旭创全球市占率28%-30%居首；下游AI数通市场2026年占比超70%，是核心增长引擎。</li>
+    <li><strong>市场规模</strong>：LightCounting数据显示，2025年全球光模块市场197亿美元（+31% YoY），2026年预计达260-287亿美元（+42%-60%），2026-2031年CAGR约18.7%。</li>
+    <li><strong>"易中天"定位分化</strong>：中际旭创是全球化整机龙头（规模第一），新易盛是LPO差异化弹性之王（增速断层领先），天孚通信是上游光器件隐形冠军（毛利率全行业最高）。三者既合作又竞争，构成独特的"铁三角"生态。</li>
+    <li><strong>关键变量</strong>：技术路线迭代（LPO/CPO/硅光）、AI资本开支节奏、地缘政治与关税、上游芯片供给是未来3-5年核心观测指标。</li>
+  </ul>
+</div>
+
+<!-- ============ PART 1: 产业链结构分析 ============ -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔬</span> 第一章 · 光模块产业链全景分析</div>
+
+  <!-- 1.1 产业定义 -->
+  <p>光模块（Optical Transceiver）是光通信系统中实现<strong>电信号 ↔ 光信号</strong>相互转换的核心器件。在AI算力集群中，它的角色好比数据高速公路上的"信号翻译官"——将GPU/服务器输出的电信号转为光信号进行长距离低损耗传输，到达终端后再还原为电信号供算力设备读取。</p>
+
+  <div class="card" style="margin-top:18px;">
+    <div class="card-title">🔑 光模块在AI集群中的两层互联</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.88rem;">
+      <div style="padding:12px;background:#fef2f2;border-radius:8px;">
+        <strong style="color:#991b1b;">Scale-Up（机柜内互联）</strong>
+        <p style="margin-top:6px;color:#555;">同机柜GPU之间，高速光模块/AOC替代铜缆，解决铜缆距离短、功耗高的瓶颈</p>
+      </div>
+      <div style="padding:12px;background:#eff6ff;border-radius:8px;">
+        <strong style="color:#1e40af;">Scale-Out（跨机柜互联）</strong>
+        <p style="margin-top:6px;color:#555;">跨POD/机房的胖树以太网、InfiniBand网络依赖800G/1.6T光模块承载海量数据交互</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.2 产业链总览 -->
+  <div class="sub-title">1.1 产业链四大层级总览</div>
+  <p>光模块产业链围绕「研发→生产→封装→测试→应用」全流程，分为四大核心层级：</p>
+
+  <div class="flow-row">
+    <div class="flow-block up">🔴 上游<br>芯片/器件/材料<br><small>BOM 60%+</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-block mid">🟠 中游<br>设计/封装/制造<br><small>价值实现</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-block down">🔵 下游<br>终端应用/客户<br><small>需求引擎</small></div>
+    <div class="flow-arrow">←</div>
+    <div style="background:#f1f5f9;border-radius:8px;padding:10px 14px;text-align:center;font-size:0.78rem;color:#64748b;border:1px dashed #cbd5e1;">
+      配套支撑<br>制造设备 · 测试仪器<br><small>量产保障</small>
+    </div>
+  </div>
+
+  <!-- 1.3 上游详解 -->
+  <div class="sub-title">1.2 上游：核心芯片与器件层（BOM成本60%+，壁垒最高）</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:14%;">细分赛道</th>
+        <th style="width:20%;">核心产品</th>
+        <th style="width:18%;">BOM占比</th>
+        <th style="width:18%;">全球主导方</th>
+        <th style="width:30%;">国内代表厂商</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-left"><strong>高速电芯片</strong></td>
+        <td>DSP、驱动、TIA、CDR</td>
+        <td class="td-red">~25%</td>
+        <td>博通、Marvell（美）</td>
+        <td class="td-left">国产化率&lt;10%，最大短板</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>光芯片</strong></td>
+        <td>EML激光器、CW光源、探测器</td>
+        <td class="td-red">~20%</td>
+        <td>Coherent、Lumentum、住友、三菱</td>
+        <td class="td-left">源杰科技(CW量产)、仕佳光子(InP)、长光华芯</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>光无源器件</strong></td>
+        <td>光引擎、FAU、TOSA/ROSA、隔离器</td>
+        <td>~15%</td>
+        <td>天孚通信（中）全球领先</td>
+        <td class="td-left"><strong>天孚通信</strong>(光引擎/FAU龙头)、光库科技(TFLN调制器)</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>PCB/结构件</strong></td>
+        <td>高速PCB、陶瓷外壳、连接器</td>
+        <td>~10%</td>
+        <td>分散</td>
+        <td class="td-left">胜宏科技(高速PCB)、中瓷电子(陶瓷外壳)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:0.82rem;color:#64748b;margin-top:8px;">
+    ⚠️ 核心卡脖子点：800G及以上光模块中，光芯片+电芯片合计占BOM成本超60%，国产化率仍低，是产业链最大利润来源和最大风险敞口。
+  </div>
+
+  <!-- 产业链上游 vs 中游 vs 下游价值分布图 -->
+  <div class="chart-wrap">
+    <h4 style="font-size:0.9rem;margin-bottom:10px;color:#334155;">产业链各环节价值量分布（800G光模块BOM拆分估算）</h4>
+    <canvas id="chartBom"></canvas>
+  </div>
+
+  <!-- 1.4 中游 -->
+  <div class="sub-title">1.3 中游：光模块设计制造与封装测试（中国主导，全球份额超60%）</div>
+
+  <p>中国厂商在中游制造环节具备碾压级优势——全球前十大光模块厂商中，中国占据七席。按竞争力分层：</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;">
+    <div style="border:2px solid var(--blue);border-radius:10px;padding:16px;background:#eff6ff;">
+      <strong style="color:#1e40af;">🥇 第一梯队：全球双龙头</strong>
+      <p style="margin-top:6px;font-size:0.85rem;color:#555;">
+        <strong>中际旭创</strong>：800G全球出货第一，1.6T率先批量交付，深度绑定英伟达/谷歌/亚马逊<br>
+        <strong>新易盛</strong>：全球第二，LPO技术领先，客户覆盖Meta/亚马逊/英伟达
+      </p>
+    </div>
+    <div style="border:2px solid #e2e8f0;border-radius:10px;padding:16px;background:#f8fafc;">
+      <strong style="color:#64748b;">🥈 第二梯队：1.6T量产能力</strong>
+      <p style="margin-top:6px;font-size:0.85rem;color:#555;">
+        长芯博创、联特科技、剑桥科技、汇绿生态（钧恒科技）
+      </p>
+      <strong style="color:#64748b;display:block;margin-top:10px;">🥉 第三梯队：电信基本盘</strong>
+      <p style="margin-top:6px;font-size:0.85rem;color:#555;">
+        光迅科技、华工科技——以电信低速模块为主，高速数通追赶中
+      </p>
+    </div>
+  </div>
+
+  <!-- 1.5 下游 -->
+  <div class="sub-title">1.4 下游：终端应用与采购流程</div>
+
+  <table>
+    <thead>
+      <tr><th>应用场景</th><th>2026占比</th><th>增速</th><th>核心需求</th><th>典型终端客户</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-left"><strong>AI数通市场</strong></td>
+        <td class="td-red">~70%</td>
+        <td class="td-red">+80% YoY</td>
+        <td>800G/1.6T/3.2T高速光模块、LPO/CPO</td>
+        <td class="td-left">英伟达、谷歌、Meta、AWS、微软、阿里云</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>电信市场</strong></td>
+        <td>~20%</td>
+        <td>+14% YoY</td>
+        <td>5G前传/中回传、PON、相干长距</td>
+        <td class="td-left">三大运营商、设备商（华为/中兴/爱立信）</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>特种市场</strong></td>
+        <td>~10%</td>
+        <td>稳定</td>
+        <td>车规级、工业级、航空航天</td>
+        <td class="td-left">车企、电网、军工</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">📦 下游采购流程（以北美云厂商为例）</div>
+    <div style="font-size:0.85rem;color:#555;line-height:1.8;">
+      <p><strong>第一步：认证导入</strong>（6-18个月）——云厂商对光模块进行性能/可靠性/互操作性测试，通过后才能进入供应商名录</p>
+      <p><strong>第二步：设计定标</strong>——云厂商发布数据中心网络架构方案，确定所需光模块速率（800G/1.6T）、封装形式（QSFP-DD/OSFP）、技术路线</p>
+      <p><strong>第三步：份额分配</strong>——向认证供应商分配订单份额，通常采用双/三供策略分散风险，龙头厂商获得50-70%份额</p>
+      <p><strong>第四步：持续交付</strong>——按季度滚动下单，供应商排产交付，云厂商持续验货</p>
+      <p style="color:#991b1b;font-weight:600;">核心壁垒：客户认证周期长+切换成本高，一旦进入核心供应链，粘性极强</p>
+    </div>
+  </div>
+
+  <!-- 1.6 产业趋势 -->
+  <div class="sub-title">1.5 技术迭代趋势：800G→1.6T→3.2T + LPO/CPO/硅光</div>
+
+  <div class="chart-wrap">
+    <h4 style="font-size:0.9rem;margin-bottom:10px;color:#334155;">光模块速率迭代时间线 &amp; 三大技术路线并行</h4>
+    <canvas id="chartTimeline"></canvas>
+  </div>
+
+  <p style="font-size:0.85rem;color:#555;margin-top:8px;">
+    三条技术路线并行演进：<strong>传统可插拔模块</strong>（当前主流，2026-2027仍为1.6T主力）、<strong>LPO线性直驱</strong>（移除DSP降功耗，利好天孚通信等光引擎厂商）、<strong>CPO共封装光学</strong>（光引擎与交换ASIC集成，英伟达2026H2启动验证，大规模放量或至2028-2029）。硅光集成渗透率预计从2026年的&lt;30%升至2027年的44%。
+  </p>
+
+</div>
+
+<!-- ============ PART 2: 易中天对比 ============ -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚔️</span> 第二章 · 「易中天」三股深度对比</div>
+
+  <p>市场将<strong>新易盛</strong>、<strong>中际旭创</strong>、<strong>天孚通信</strong>合称为光模块「易中天」组合——三家合计市值超万亿，代表了中国在全球高端光模块市场的统治力。但它们虽同处光通信赛道，业务本质、增长逻辑和风险特征却<strong>截然不同</strong>。</p>
+
+  <!-- 2.1 三家公司总览 -->
+  <div class="sub-title">2.1 三家公司定位速览</div>
+
+  <div class="compare-box">
+    <div class="compare-card c1">
+      <div class="c-name">🔵 中际旭创 300308</div>
+      <div class="c-role">全球化整机龙头 · 规模第一</div>
+      <div class="c-stat"><span>2025营收</span><span class="c-stat-val" style="color:#2563eb;">382.4亿</span></div>
+      <div class="c-stat"><span>2025净利</span><span class="c-stat-val" style="color:#2563eb;">107.97亿</span></div>
+      <div class="c-stat"><span>毛利率</span><span class="c-stat-val">42.5%</span></div>
+      <div class="c-stat"><span>ROE</span><span class="c-stat-val">41.2%</span></div>
+      <div class="c-stat"><span>全球市占</span><span class="c-stat-val">28-30% 🥇</span></div>
+      <div class="c-stat"><span>核心客户</span><span class="c-stat-val" style="font-size:0.75rem;">英伟达/谷歌/Meta</span></div>
+      <div class="c-stat"><span>海外占比</span><span class="c-stat-val">92%</span></div>
+    </div>
+    <div class="compare-card c2">
+      <div class="c-name">🔴 新易盛 300502</div>
+      <div class="c-role">LPO弹性之王 · 增速断层领先</div>
+      <div class="c-stat"><span>2025营收</span><span class="c-stat-val" style="color:#dc2626;">243.85亿</span></div>
+      <div class="c-stat"><span>2025净利</span><span class="c-stat-val" style="color:#dc2626;">96.32亿</span></div>
+      <div class="c-stat"><span>毛利率</span><span class="c-stat-val">48.7%</span></div>
+      <div class="c-stat"><span>ROE</span><span class="c-stat-val" style="color:#dc2626;">68.5% 🥇</span></div>
+      <div class="c-stat"><span>全球市占</span><span class="c-stat-val">15-18% 🥈</span></div>
+      <div class="c-stat"><span>核心客户</span><span class="c-stat-val" style="font-size:0.75rem;">Meta/亚马逊/英伟达</span></div>
+      <div class="c-stat"><span>海外占比</span><span class="c-stat-val">94%</span></div>
+    </div>
+    <div class="compare-card c3">
+      <div class="c-name">🟣 天孚通信 300394</div>
+      <div class="c-role">上游器件隐形冠军 · 毛利最高</div>
+      <div class="c-stat"><span>2025营收</span><span class="c-stat-val" style="color:#7c3aed;">51.63亿</span></div>
+      <div class="c-stat"><span>2025净利</span><span class="c-stat-val" style="color:#7c3aed;">20.17亿</span></div>
+      <div class="c-stat"><span>毛利率</span><span class="c-stat-val" style="color:#7c3aed;">53.6% 🥇</span></div>
+      <div class="c-stat"><span>ROE</span><span class="c-stat-val">32.8%</span></div>
+      <div class="c-stat"><span>光引擎市占</span><span class="c-stat-val">60%+</span></div>
+      <div class="c-stat"><span>核心客户</span><span class="c-stat-val" style="font-size:0.75rem;">英伟达/中际/新易盛</span></div>
+      <div class="c-stat"><span>研发占比</span><span class="c-stat-val" style="color:#7c3aed;">6.0% 🥇</span></div>
+    </div>
+  </div>
+
+  <!-- 2.2 核心财务对比 -->
+  <div class="sub-title">2.2 核心财务数据深度对比（2025年年报）</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="td-left">指标</th>
+        <th>中际旭创</th>
+        <th>新易盛</th>
+        <th>天孚通信</th>
+        <th>行业含义</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-left">营业收入</td>
+        <td class="td-red" style="font-size:1.05rem;">382.4亿</td>
+        <td>243.85亿</td>
+        <td>51.63亿</td>
+        <td>中际规模≈新易盛1.57x≈天孚7.4x</td>
+      </tr>
+      <tr>
+        <td class="td-left">营收增速</td>
+        <td>+60.3%</td>
+        <td class="td-red" style="font-size:1.05rem;">+182.0%</td>
+        <td>+58.8%</td>
+        <td>新易盛增速断层领先</td>
+      </tr>
+      <tr>
+        <td class="td-left">归母净利润</td>
+        <td class="td-red">107.97亿</td>
+        <td>96.32亿</td>
+        <td>20.17亿</td>
+        <td>中际与新易盛利润接近，天孚规模较小</td>
+      </tr>
+      <tr>
+        <td class="td-left">净利润增速</td>
+        <td>+108.8%</td>
+        <td class="td-red">+235.9%</td>
+        <td>+50.2%</td>
+        <td>新易盛利润增速碾压级</td>
+      </tr>
+      <tr>
+        <td class="td-left">毛利率</td>
+        <td>42.5%</td>
+        <td>48.7%</td>
+        <td class="td-red">53.6%</td>
+        <td>上游器件天然高毛利，中游制造受规模稀释</td>
+      </tr>
+      <tr>
+        <td class="td-left">净利率</td>
+        <td>28.2%</td>
+        <td class="td-red">39.5%</td>
+        <td>39.1%</td>
+        <td>新易盛效率极致，天孚技术溢价</td>
+      </tr>
+      <tr>
+        <td class="td-left">ROE</td>
+        <td>41.2%</td>
+        <td class="td-red">68.5%</td>
+        <td>32.8%</td>
+        <td>新易盛ROE全A股罕见，高周转驱动</td>
+      </tr>
+      <tr>
+        <td class="td-left">经营现金流</td>
+        <td class="td-red">89.6亿</td>
+        <td>62.4亿</td>
+        <td>18.68亿</td>
+        <td>中际现金流最充沛</td>
+      </tr>
+      <tr>
+        <td class="td-left">资产负债率</td>
+        <td>48.3%</td>
+        <td>32.1%</td>
+        <td class="td-green">16.5%</td>
+        <td>天孚资产最轻、风险最低</td>
+      </tr>
+      <tr>
+        <td class="td-left">研发费用率</td>
+        <td>4.0%</td>
+        <td>3.6%</td>
+        <td class="td-red">6.0%</td>
+        <td>天孚研发强度最高</td>
+      </tr>
+      <tr>
+        <td class="td-left">2026Q1营收</td>
+        <td class="td-red">194.96亿</td>
+        <td>83.38亿</td>
+        <td>13.30亿</td>
+        <td>中际Q1爆发力最强</td>
+      </tr>
+      <tr>
+        <td class="td-left">2026Q1净利</td>
+        <td class="td-red">57.35亿</td>
+        <td>27.80亿</td>
+        <td>4.92亿</td>
+        <td>中际Q1利润=新易盛2x+天孚11x+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="chart-wrap">
+    <h4 style="font-size:0.9rem;margin-bottom:10px;color:#334155;">三家公司2025年财务雷达图对比</h4>
+    <canvas id="chartRadar"></canvas>
+  </div>
+
+  <!-- 2.3a 主营业务与竞争力 -->
+  <div class="sub-title">2.3(a) 主营业务与核心竞争力</div>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;margin:16px 0;">
+
+    <!-- 中际旭创 -->
+    <div class="card" style="border-left:4px solid var(--blue);">
+      <div class="card-title">🔵 中际旭创：全球光模块整机「全能冠军」</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>主营业务</strong>：800G/1.6T高速数通光模块的研发、制造与销售，100%聚焦AI数通市场。<br>
+        <strong>核心产品</strong>：800G占营收主体，1.6T硅光模块已批量出货，3.2T CPO预研中。<br>
+        <strong>核心竞争力</strong>：
+        <span style="color:#dc2626;">① 客户壁垒最深</span>——英伟达800G份额超70%，谷歌/Meta/微软均为核心客户，客户认证周期长+切换成本极高；
+        <span style="color:#dc2626;">② 规模效应最强</span>——年产能800万只，全球最大光模块制造基地（铜陵产业园），单位成本持续下降；
+        <span style="color:#dc2626;">③ 技术布局最全</span>——硅光/CPO/LPO三条路线并行，1.6T率先通过英伟达认证。<br>
+        <strong>最大风险</strong>：体量越大增速越难维持；毛利率受规模扩张和竞争稀释压力；重资产折旧。
+      </p>
+    </div>
+
+    <!-- 新易盛 -->
+    <div class="card" style="border-left:4px solid var(--red);">
+      <div class="card-title">🔴 新易盛：LPO差异化「弹性之王」</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>主营业务</strong>：高速数通光模块（占比85%）+ 电信光模块（占比15%），多技术路线并行。<br>
+        <strong>核心产品</strong>：800G LPO光模块（全球市占75%）、1.6T可插拔模块（批量交付），泰国工厂二期满产。<br>
+        <strong>核心竞争力</strong>：
+        <span style="color:#dc2626;">① LPO技术差异化</span>——移除DSP芯片，功耗降50%、成本降15%，获Meta大单，形成细分垄断；
+        <span style="color:#dc2626;">② 运营效率极致</span>——ROE 68.5%全A股罕见，资产周转率行业最高，泰国工厂产能利用率92%；
+        <span style="color:#dc2626;">③ 供应链保障强</span>——收购Alpine+与博通战略合作保障光芯片供应，避免中际曾出现的"缺芯被迫减出货"困境。<br>
+        <strong>最大风险</strong>：LPO技术路线若被CPO取代则优势丧失；高基数后增速放缓；大客户集中度偏高。
+      </p>
+    </div>
+
+    <!-- 天孚通信 -->
+    <div class="card" style="border-left:4px solid var(--purple);">
+      <div class="card-title">🟣 天孚通信：上游光器件「隐形冠军」</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>主营业务</strong>：高端光无源器件和有源光器件的研发制造，不做整机光模块。<br>
+        <strong>核心产品</strong>：光引擎（英伟达CPO交换机核心组件）、FAU光纤阵列（全球市占超50%）、TOSA/ROSA封装器件、微透镜、隔离器。<br>
+        <strong>核心竞争力</strong>：
+        <span style="color:#dc2626;">① 技术垄断定价权</span>——毛利率53.6%全行业最高，产品具备不可替代性，技术路径不敏感（无论下游走LPO还是CPO都需其器件）；
+        <span style="color:#dc2626;">② 平台化一站式供应</span>——客户可在一家公司完成多种关键器件采购，粘性极强；
+        <span style="color:#dc2626;">③ CPO时代核心受益</span>——光引擎占CPO模块BOM成本的40%+，天孚在CPO中的价值量远高于传统可插拔模块时代。<br>
+        <strong>最大风险</strong>：第一大客户（Fabrinet/英伟达）占比超60%，客户集中度高；体量较小抗风险能力弱；光器件技术也存在被新集成方案绕开的风险。
+      </p>
+    </div>
+  </div>
+
+  <!-- 2.3b 产业链位置 -->
+  <div class="sub-title">2.3(b) 产业链位置对比</div>
+
+  <div class="chart-wrap">
+    <h4 style="font-size:0.9rem;margin-bottom:10px;color:#334155;">「易中天」在产业链中的位置</h4>
+    <canvas id="chartChainPosition"></canvas>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>维度</th><th>中际旭创</th><th>新易盛</th><th>天孚通信</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-left"><strong>产业链环节</strong></td>
+        <td>中游整机制造</td>
+        <td>中游整机制造</td>
+        <td class="td-red">上游核心器件</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>产品形态</strong></td>
+        <td>成品光模块</td>
+        <td>成品光模块</td>
+        <td class="td-red">光引擎/器件/组件</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>终端客户</strong></td>
+        <td>云厂商（英伟达/谷歌/Meta）</td>
+        <td>云厂商（Meta/亚马逊/英伟达）</td>
+        <td class="td-red">模块厂+云厂商（中际/新易盛/英伟达）</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>上游依赖</strong></td>
+        <td>光芯片（海外）+ 光器件（天孚等）</td>
+        <td>光芯片（博通/Alpine）+ 光器件</td>
+        <td class="td-red">原材料/精密加工设备</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>BOM地位</strong></td>
+        <td>集成商，BOM大头在采购</td>
+        <td>集成商，BOM大头在采购</td>
+        <td class="td-red">供BOM 15-40%（CPO中更高）</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>对下游议价力</strong></td>
+        <td>中等偏强（大客户强势）</td>
+        <td>中等（LPO差异化提升）</td>
+        <td class="td-red">强（技术垄断定价权）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 2.3c 竞合关系 -->
+  <div class="sub-title">2.3(c) 竞合关系深度分析</div>
+
+  <p>「易中天」之间的关系绝非简单的"同行竞争"，而是构成了一个<strong>既竞争又深度合作的"铁三角"生态</strong>：</p>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;margin:16px 0;">
+
+    <div class="card" style="border-left:4px solid var(--teal);">
+      <div class="card-title">🤝 合作关系：天孚通信是共同的「上游供应商」</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>天孚 → 中际旭创</strong>：天孚向中际提供光引擎、FAU阵列、隔离器等核心光器件。中际的800G/1.6T光模块中大量使用天孚器件，是国内最大的单一客户之一。<br>
+        <strong>天孚 → 新易盛</strong>：同样的供应关系，新易盛的LPO光模块同样需要天孚的光引擎和精密器件。<br>
+        <strong>天孚 → 英伟达</strong>：天孚是英伟达CPO交换机光引擎的独家供应商，这条线不通过中际或新易盛，直接对接终端芯片厂。<br><br>
+        <span style="color:#dc2626;font-weight:600;">💡 关键逻辑</span>：天孚通信相当于"卖顶级食材"的，中际和新易盛相当于"开饭店卖饭菜"的——中际和新易盛规模越大，对天孚器件的采购量越大，形成<span style="color:#dc2626;">"下游需求爆发→器件放量"的正向传导效应</span>。天孚的增长不依赖某一家客户，而是受益于整个AI光模块行业的β。
+      </p>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--red);">
+      <div class="card-title">⚔️ 竞争关系：中际 vs 新易盛——第一与第二的正面交锋</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>客户争夺</strong>：两家在英伟达、Meta、谷歌等核心客户处直接竞争。中际在英伟达份额70%+占绝对优势，新易盛在Meta的LPO份额75%形成差异化壁垒。<br>
+        <strong>技术路线竞争</strong>：中际主打硅光+CPO，新易盛主打LPO+传统分立。两种路线在1.6T时代存在替代竞争——如果LPO大规模渗透，中际的DSP依赖型模块市场份额会受影响；如果CPO提前成熟，新易盛的LPO优势可能被削弱。<br>
+        <strong>产能竞赛</strong>：两家都在泰国和国内扩产，争夺有限的高端光电芯片供应（博通DSP、Coherent EML）。谁拿到更多芯片分配，谁就能多出货。<br><br>
+        <span style="color:#dc2626;font-weight:600;">💡 核心差异</span>：中际靠规模和客户深度取胜（"做大"），新易盛靠技术差异化和效率取胜（"做精"）。两者目前在不同技术路线和客户上各有侧重，尚未进入你死我活的白热化阶段，但随着1.6T大规模放量，竞争将加剧。
+      </p>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--purple);">
+      <div class="card-title">🔗 天孚 vs 中际/新易盛：不是竞争对手，但存在「跷跷板效应」</div>
+      <p style="font-size:0.85rem;color:#555;line-height:1.7;">
+        <strong>为什么不是直接竞争</strong>：天孚不做整机光模块，所以不和中际/新易盛抢终端客户。天孚是它们的供应商，属于上下游关系。<br>
+        <strong>但存在结构性矛盾</strong>：CPO技术路线中，光引擎与交换芯片集成封装，传统可插拔光模块的形态可能被颠覆。这意味着天孚在CPO中的价值量占比大幅提升（从传统模块的~15%提升到CPO的40%+），而中际/新易盛作为传统模块制造商，在CPO时代可能面临价值量下降。这是投资者最关注的<span style="color:#dc2626;">"产业链价值重新分配"</span>风险。<br>
+        <strong>股价联动</strong>：三者股价高度联动——AI算力预期向上时齐涨，算力资本开支担忧出现时齐跌。任何一方的财报/订单消息都会引发另两家的波动，体现了"一荣俱荣、一损俱损"的板块属性。
+      </p>
+    </div>
+  </div>
+
+  <!-- 2.4 估值与未来展望 -->
+  <div class="sub-title">2.4 2026年展望与投资框架</div>
+
+  <table>
+    <thead>
+      <tr><th class="td-left">维度</th><th>中际旭创</th><th>新易盛</th><th>天孚通信</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-left"><strong>2026E净利增速</strong></td>
+        <td>+50%~+70%</td>
+        <td>+40%~+60%</td>
+        <td>+30%~+40%</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>核心增长驱动</strong></td>
+        <td>1.6T放量+CPO贡献</td>
+        <td>LPO持续溢价+订单饱满</td>
+        <td>光引擎量价齐升+CPO配套</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>确定性</strong></td>
+        <td class="td-red">★★★★★ 最高</td>
+        <td>★★★★☆ 高</td>
+        <td>★★★★ 较高</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>弹性</strong></td>
+        <td>★★★☆</td>
+        <td class="td-red">★★★★★ 最高</td>
+        <td>★★★</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>防御性</strong></td>
+        <td>★★★</td>
+        <td>★★</td>
+        <td class="td-red">★★★★ 最高</td>
+      </tr>
+      <tr>
+        <td class="td-left"><strong>适合投资者</strong></td>
+        <td>追求确定性、大资金配置</td>
+        <td>追求高弹性、景气投资</td>
+        <td>追求稳健、高毛利防御</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ============ RISKS ============ -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚠️</span> 核心风险提示</div>
+
+  <div class="risk-box">
+    <h4>系统性风险（全行业共享）</h4>
+    <ul>
+      <li><strong>AI资本开支不及预期</strong>：北美/国内云厂商若大模型商业化放缓，将直接削减光模块采购预算</li>
+      <li><strong>地缘政治与贸易制裁</strong>：美国关税调整、实体清单扩容影响海外订单交付和芯片采购</li>
+      <li><strong>技术路线迭代风险</strong>：LPO/CPO/硅光等架构变革重新分配产业链价值，技术储备不足的厂商将被边缘化</li>
+      <li><strong>上游芯片供给瓶颈</strong>：海外EML/DSP芯片扩产周期长（12-18个月），若持续紧缺将限制中游产能释放</li>
+      <li><strong>估值泡沫风险</strong>：板块整体估值处于历史高位，若业绩增速不及预期面临估值回调</li>
+    </ul>
+  </div>
+
+  <div class="risk-box" style="margin-top:12px;">
+    <h4>个股特有风险</h4>
+    <ul>
+      <li><strong>中际旭创</strong>：竞争加剧致毛利率下滑；扩产带来折旧压力；英伟达自研光模块的潜在替代风险</li>
+      <li><strong>新易盛</strong>：LPO技术路线被CPO替代的风险；高基数后增速放缓；大客户集中度偏高</li>
+      <li><strong>天孚通信</strong>：第一大客户（Fabrinet/英伟达）占比超60%，客户集中度极高；新集成方案可能绕开其器件</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ DISCLAIMER ============ -->
+<div class="disclaimer">
+  <strong>免责声明</strong><br>
+  本报告仅基于公开信息进行行业与公司研究分析，所有数据来源于LightCounting、Omdia、中国信通院、上市公司年报/季报、公开研报等渠道。本报告仅供参考，不构成任何投资建议、买卖推荐或理财操作指导。光模块行业受AI算力需求、技术迭代、贸易政策、汇率波动、行业竞争、芯片供应等多重因素影响，业绩与估值存在较大波动风险。投资者应独立审慎决策，自行承担投资风险。<br><br>
+  <strong>数据来源</strong>：中际旭创/新易盛/天孚通信2025年年报及2026年一季报 | LightCounting 2026Q1报告 | Omdia白皮书 | 中国信通院产业报告 | 公开券商研报（太平洋证券、国盛证券等）<br>
+  <strong>报告日期</strong>：2026年6月30日 | 数据可能存在滞后，请以最新披露为准。<br><br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。
+</div>
+
+</div><!-- /container -->
+
+<!-- ============ CHARTS JS ============ -->
+<script>
+// A-share convention: 红涨绿跌
+// Color palette
+const red = '#dc2626';
+const green = '#16a34a';
+const blue = '#2563eb';
+const purple = '#7c3aed';
+const orange = '#ea580c';
+
+// Chart 1: BOM cost breakdown (pie)
+new Chart(document.getElementById('chartBom'), {
+  type: 'doughnut',
+  data: {
+    labels: ['光芯片 (EML/CW/探测器)', '电芯片 (DSP/驱动/TIA)', '光无源器件 (光引擎/FAU等)', 'PCB及结构件', '其他（封装/测试/人工）'],
+    datasets: [{
+      data: [20, 25, 15, 10, 30],
+      backgroundColor: [red, '#ef4444', orange, '#f59e0b', '#94a3b8'],
+      borderColor: '#fff',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 14 } },
+      title: { display: false }
+    }
+  }
+});
+
+// Chart 2: Timeline (bar)
+new Chart(document.getElementById('chartTimeline'), {
+  type: 'bar',
+  data: {
+    labels: ['2023', '2024', '2025', '2026E', '2027E', '2028E', '2029E'],
+    datasets: [
+      { label: '400G 出货量（百万只）', data: [45, 55, 40, 20, 8, 3, 1], backgroundColor: '#94a3b8' },
+      { label: '800G 出货量（百万只）', data: [2, 15, 48, 80, 60, 35, 18], backgroundColor: blue },
+      { label: '1.6T 出货量（百万只）', data: [0, 0, 2, 18, 55, 85, 70], backgroundColor: red },
+      { label: '3.2T (预研/验证)', data: [0, 0, 0, 0, 2, 10, 35], backgroundColor: purple }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 10 } }
+    },
+    scales: {
+      x: { stacked: false },
+      y: { stacked: false, title: { display: true, text: '百万只' } }
+    }
+  }
+});
+
+// Chart 3: Radar comparison
+new Chart(document.getElementById('chartRadar'), {
+  type: 'radar',
+  data: {
+    labels: ['营收规模', '营收增速', '毛利率', '净利率', 'ROE', '研发强度', '经营现金流', '资产负债健康度'],
+    datasets: [
+      {
+        label: '中际旭创',
+        data: [95, 55, 79, 71, 60, 67, 100, 50],
+        borderColor: blue, backgroundColor: 'rgba(37,99,235,0.1)',
+        borderWidth: 2, pointRadius: 4
+      },
+      {
+        label: '新易盛',
+        data: [64, 100, 91, 100, 100, 60, 70, 76],
+        borderColor: red, backgroundColor: 'rgba(220,38,38,0.1)',
+        borderWidth: 2, pointRadius: 4
+      },
+      {
+        label: '天孚通信',
+        data: [13, 50, 100, 99, 48, 100, 21, 100],
+        borderColor: purple, backgroundColor: 'rgba(124,58,237,0.1)',
+        borderWidth: 2, pointRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: {
+        beginAtZero: false, min: 0, max: 100,
+        ticks: { display: false, stepSize: 20 },
+        pointLabels: { font: { size: 10 } }
+      }
+    },
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 14 } }
+    }
+  }
+});
+
+// Chart 4: Supply chain position (stacked bar)
+new Chart(document.getElementById('chartChainPosition'), {
+  type: 'bar',
+  data: {
+    labels: ['上游 芯片/器件', '中游 封装/制造', '下游 终端客户'],
+    datasets: [
+      {
+        label: '天孚通信',
+        data: [90, 10, 0],
+        backgroundColor: 'rgba(124,58,237,0.7)', borderColor: purple, borderWidth: 1
+      },
+      {
+        label: '中际旭创',
+        data: [5, 80, 15],
+        backgroundColor: 'rgba(37,99,235,0.7)', borderColor: blue, borderWidth: 1
+      },
+      {
+        label: '新易盛',
+        data: [5, 75, 20],
+        backgroundColor: 'rgba(220,38,38,0.7)', borderColor: red, borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 14 } },
+      title: { display: true, text: '业务重心在产业链的分布（估算，%）', font: { size: 12 }, color: '#64748b' }
+    },
+    scales: {
+      x: { stacked: true, max: 100, title: { display: true, text: '业务占比 %' } },
+      y: { stacked: true }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
