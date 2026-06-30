@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三花智控（002050.SZ）全面分析报告</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f5f0; color: #2c2c2a; line-height: 1.7; font-size: 14px; }
+.container { max-width: 820px; margin: 0 auto; padding: 0 16px; }
+
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 24px; border-radius: 0 0 16px 16px; margin-bottom: 24px; }
+.hero h1 { font-size: 26px; font-weight: 600; margin-bottom: 8px; }
+.hero .subtitle { font-size: 14px; opacity: 0.8; margin-bottom: 16px; }
+.hero .meta { display: flex; gap: 16px; font-size: 12px; opacity: 0.7; flex-wrap: wrap; }
+.hero .rating { display: inline-block; background: #e24b4a; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; margin-top: 12px; }
+
+.section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.section h2 { font-size: 18px; font-weight: 600; color: #16213e; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e0; }
+.section h3 { font-size: 15px; font-weight: 600; color: #333; margin: 16px 0 8px; }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 12px 0; }
+.metric-card { background: #f8f8f4; border-radius: 8px; padding: 12px 14px; }
+.metric-card .label { font-size: 11px; color: #888; margin-bottom: 4px; }
+.metric-card .value { font-size: 20px; font-weight: 600; color: #16213e; }
+.metric-card .change { font-size: 11px; margin-top: 2px; }
+.pos { color: #c41e3a; }
+.neg { color: #2e7d32; }
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #16213e; color: #fff; padding: 8px 10px; text-align: left; font-weight: 500; font-size: 12px; }
+td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+tr:nth-child(even) td { background: #fafaf8; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 500; }
+.tag-red { background: #fcebeb; color: #c41e3a; }
+.tag-green { background: #e8f5e9; color: #2e7d32; }
+.tag-blue { background: #e3f2fd; color: #1565c0; }
+.tag-orange { background: #fff3e0; color: #e65100; }
+
+.highlight-box { background: #fff8e1; border-left: 3px solid #ffa000; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px; }
+.risk-box { background: #fce4ec; border-left: 3px solid #e91e63; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px; }
+.positive-box { background: #e8f5e9; border-left: 3px solid #4caf50; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px; }
+
+.chart-container { position: relative; width: 100%; margin: 12px 0; }
+
+.kelly-table th { background: #0f3460; }
+.kelly-table td:first-child { font-weight: 500; }
+
+.footer { text-align: center; padding: 24px; font-size: 12px; color: #888; margin-top: 16px; line-height: 1.8; }
+
+.competitor-logo { display: inline-block; width: 28px; height: 28px; border-radius: 50%; background: #16213e; color: #fff; text-align: center; line-height: 28px; font-size: 11px; font-weight: 600; margin-right: 6px; vertical-align: middle; }
+
+.timeline { position: relative; padding-left: 20px; margin: 12px 0; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: #e0e0d8; }
+.timeline-item { position: relative; margin-bottom: 14px; padding-left: 12px; }
+.timeline-item::before { content: ''; position: absolute; left: -18px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #16213e; border: 2px solid #fff; }
+
+@media (max-width: 680px) {
+  body { font-size: 13px; }
+  .hero { padding: 28px 16px; }
+  .hero h1 { font-size: 20px; }
+  .section { padding: 16px; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  table { font-size: 12px; }
+  th, td { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>三花智控（002050.SZ）全面分析</h1>
+  <div class="subtitle">全球热管理龙头 × 人形机器人执行器核心标的</div>
+  <div class="meta">
+    <span>报告日期：2026-06-29</span>
+    <span>收盘价：41.27元</span>
+    <span>总市值：1735亿</span>
+    <span>PE(TTM)：42.7x</span>
+  </div>
+  <div class="rating">投资评级：持有（HOLD） | 目标价：48-52元（12个月）</div>
+</div>
+
+<div class="container">
+
+<div class="section">
+  <h2>执行摘要</h2>
+  <p>三花智控是全球<strong>制冷空调阀件绝对龙头</strong>，核心产品四通换向阀、电子膨胀阀、电磁阀全球市占率均超50%，构建了深厚的护城河。公司同时切入<strong>新能源车热管理</strong>（集成组件市占65.7%）和<strong>人形机器人执行器</strong>两大增量赛道，形成"传统基本盘+第二曲线+第三曲线"的三级增长架构。</p>
+
+  <div class="highlight-box">
+    <strong>核心判断：</strong>三花是一只"下有底、上有弹性"的标的。制冷+车热管理提供稳定现金流（2025年经营性现金流51亿），机器人执行器是看涨期权。当前PE 42.7x处于中性偏高区间，近期股价从60元高位回落至41元（-32%），筹码快速分散（股东户数从25.8万暴增至67.5万），短期需要消化获利盘，但中长期逻辑完好。
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="label">2025营收</div>
+      <div class="value">310亿</div>
+      <div class="change pos">+11.0% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">2025归母净利</div>
+      <div class="value">40.6亿</div>
+      <div class="change pos">+31.1% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">毛利率(TTM)</div>
+      <div class="value">28.7%</div>
+      <div class="change neg">-0.6pct QoQ</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">经营现金流</div>
+      <div class="value">50.9亿</div>
+      <div class="change pos">强现金流</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>一、核心产品与业务结构</h2>
+  <p>三花的业务可以拆成<strong>三大板块</strong>，对应三条增长曲线：</p>
+
+  <h3>1. 制冷空调电器零部件（第一曲线，收入压舱石）</h3>
+  <table>
+    <tr><th>核心产品</th><th>全球市占率</th><th>竞争地位</th></tr>
+    <tr><td>四通换向阀</td><td><strong>58.7%</strong></td><td><span class="tag tag-red">全球第一</span></td></tr>
+    <tr><td>电子膨胀阀（家电）</td><td><strong>58.1%</strong></td><td><span class="tag tag-red">全球第一</span></td></tr>
+    <tr><td>电磁阀</td><td><strong>52.6%</strong></td><td><span class="tag tag-red">全球第一</span></td></tr>
+    <tr><td>微通道换热器</td><td>42.9%</td><td><span class="tag tag-blue">全球前三</span></td></tr>
+    <tr><td>截止阀</td><td>37%</td><td><span class="tag tag-blue">全球前三</span></td></tr>
+  </table>
+  <p style="font-size:12px;color:#888;margin-top:4px;">数据来源：公司年报、行业第三方机构（2024-2025）</p>
+  <p><strong>护城河分析：</strong>制冷阀件是典型的"隐形冠军"品类——单价低、可靠性要求高、认证周期长。三花通过2007年收购全球四通阀龙头兰柯（Lanco），在多个核心品类做到全球第一，客户切换成本极高（涉及整机设计、认证流程、质量稳定性）。这是公司最硬的底牌。</p>
+
+  <h3>2. 汽车零部件/新能源车热管理（第二曲线，增长主力）</h3>
+  <table>
+    <tr><th>核心产品</th><th>市占率/地位</th><th>主要客户</th></tr>
+    <tr><td>车用电子膨胀阀（EXV）</td><td><strong>53%</strong> 全球第一</td><td>特斯拉、比亚迪等</td></tr>
+    <tr><td>新能源车热管理集成组件</td><td><strong>65.7%</strong></td><td>特斯拉、比亚迪等</td></tr>
+    <tr><td>电子水泵、多通阀</td><td>国内领先</td><td>主流新能源车企</td></tr>
+    <tr><td>电池冷却板/Chiller</td><td>快速放量</td><td>动力电池企业</td></tr>
+  </table>
+  <p>2026Q1汽车业务收入31.2亿元（<span class="pos">+15% YoY</span>），是各板块中增速最快的。新能源车热管理渗透率仍在提升，且向"集成化"演进（从散件到总成），三花作为Tier 1直接受益于"量价齐升"。</p>
+
+  <h3>3. 第三曲线：人形机器人执行器 + 数据中心液冷</h3>
+  <div class="highlight-box">
+    <strong>这是市场分歧最大的部分，也是估值弹性的核心来源。</strong>
+  </div>
+  <table>
+    <tr><th>项目</th><th>进展</th><th>数据来源</th></tr>
+    <tr><td>2025年机器人执行器营收</td><td><strong>约8.2亿元</strong>（占比2.6%）</td><td>产业链调研/公司年报</td></tr>
+    <tr><td>特斯拉Optimus框架订单</td><td><strong>>60亿元</strong>（含12亿定点）</td><td>产业链调研</td></tr>
+    <tr><td>2025年已交付特斯拉</td><td>5000-10000台旋转执行器</td><td>产业链调研</td></tr>
+    <tr><td>国内客户</td><td>宇树（1.2万台）、优必选、小鹏（>12亿定点）</td><td>公开报道</td></tr>
+    <tr><td>墨西哥工厂</td><td>已投产，年产能100万套</td><td>公司公告</td></tr>
+    <tr><td>单台Optimus价值量</td><td>约2.8万元（份额50-70%）</td><td>行业测算</td></tr>
+  </table>
+  <div class="risk-box">
+    <strong>需要警惕的信息矛盾：</strong>2025年10月市场传闻"特斯拉向三花下达50亿订单"，公司当晚<strong>澄清"不属实"</strong>。部分分析引用"8.2亿营收"可能来自产业链调研而非审计报告，实际年报中机器人业务描述仍为"配合研发、试制、迭代、送样"。建议以年报口径为准，将机器人业务视为<strong>看涨期权而非已兑现利润</strong>。
+  </div>
+  <p>数据中心液冷业务2025年实现翻倍增长，是确定性的增量。</p>
+</div>
+
+<div class="section">
+  <h2>二、财务数据分析</h2>
+
+  <div class="chart-container" style="height:300px;">
+    <canvas id="revenueChart" role="img" aria-label="三花智控近6期营收与净利润趋势图">三花智控近6期营收与净利润趋势图</canvas>
+  </div>
+
+  <table>
+    <tr><th>财务指标</th><th>2024全年</th><th>2025全年</th><th>同比变化</th></tr>
+    <tr><td>营业总收入</td><td>279.5亿</td><td><strong>310.1亿</strong></td><td class="pos">+11.0%</td></tr>
+    <tr><td>归母净利润</td><td>31.0亿</td><td><strong>40.6亿</strong></td><td class="pos">+31.1%</td></tr>
+    <tr><td>基本EPS</td><td>0.84元</td><td><strong>1.03元</strong></td><td class="pos">+22.6%</td></tr>
+    <tr><td>毛利率(TTM)</td><td>27.5%</td><td>28.7%</td><td class="pos">+1.2pct</td></tr>
+    <tr><td>经营现金流净额</td><td>43.7亿</td><td>50.9亿</td><td class="pos">+16.5%</td></tr>
+    <tr><td>研发费用</td><td>10.2亿</td><td>13.7亿</td><td class="pos">+34.3%</td></tr>
+    <tr><td>总资产</td><td>363.5亿</td><td>494.1亿</td><td>+35.9%</td></tr>
+    <tr><td>有息负债</td><td>44.3亿</td><td>40.5亿</td><td class="neg">-8.6%</td></tr>
+  </table>
+
+  <div class="positive-box">
+    <strong>财务亮点：</strong>①净利润增速(31%)显著快于营收增速(11%)，说明经营杠杆释放+产品结构优化；②经营现金流持续大于净利润，盈利质量优异；③研发费用大幅增长34%，为第三曲线蓄力；④有息负债下降，资产负债表更健康。
+  </div>
+
+  <h3>杜邦分析（2025年）</h3>
+  <table>
+    <tr><th>分解项</th><th>数值</th><th>说明</th></tr>
+    <tr><td>净利率</td><td>13.1%</td><td>同比提升2.0pct</td></tr>
+    <tr><td>总资产周转率</td><td>0.63次</td><td>资产扩张期，周转略降</td></tr>
+    <tr><td>权益乘数</td><td>~3.1x</td><td>有息负债降，杠杆温和</td></tr>
+    <tr><td><strong>ROE</strong></td><td><strong>~25.6%</strong></td><td><span class="tag tag-red">优秀</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>三、产业链结构与上下游关系</h2>
+
+  <h3>上游：原材料与零部件</h3>
+  <table>
+    <tr><th>原材料</th><th>影响</th><th>代表供应商</th></tr>
+    <tr><td>铜管/铜材</td><td><strong>最大成本项</strong>，占阀件成本20-30%</td><td>海亮股份、精达股份、金田铜业</td></tr>
+    <tr><td>铝材</td><td>微通道换热器核心原料</td><td>南山铝业等</td></tr>
+    <tr><td>钢材</td><td>结构件原料</td><td>宝钢、沙钢等</td></tr>
+    <tr><td>稀土永磁材料</td><td>电机核心，执行器关键</td><td>北方稀土、金力永磁</td></tr>
+    <tr><td>芯片/MCU</td><td>电子膨胀阀/执行器控制</td><td>意法半导体、兆易创新等</td></tr>
+  </table>
+  <p><strong>成本敏感性：</strong>铜价是最大变量。2025年铜价高位运行，对毛利率形成压制。但三花作为阀件龙头，具备一定的定价权（通过年度调价机制转嫁），且微通道换热器（铝代铜）长期有利于降低铜依赖。</p>
+
+  <h3>下游：核心客户</h3>
+  <table>
+    <tr><th>领域</th><th>核心客户</th><th>三花角色</th></tr>
+    <tr><td>空调/制冷家电</td><td><strong>格力、美的、海尔、大金、三星</strong></td><td>核心供应商，多品类全球第一</td></tr>
+    <tr><td>新能源车热管理</td><td><strong>特斯拉、比亚迪、蔚来、理想</strong></td><td>Tier 1集成供应商</td></tr>
+    <tr><td>人形机器人</td><td><strong>特斯拉Optimus、宇树、优必选、小鹏</strong></td><td>旋转/直线执行器核心供应商</td></tr>
+    <tr><td>数据中心液冷</td><td>国内外云厂商</td><td>CDU/冷板方案供应商</td></tr>
+  </table>
+  <p>客户结构的特点是<strong>"双轨制"</strong>：传统家电客户（格力/美的/大金）提供稳定量，新能源车客户（特斯拉/比亚迪）提供增量，机器人客户提供期权价值。这种结构使得三花抗周期能力较强——家电和汽车周期不完全同步。</p>
+</div>
+
+<div class="section">
+  <h2>四、竞争格局与竞争对手</h2>
+
+  <h3>制冷阀件领域：三花绝对主导</h3>
+  <table>
+    <tr><th>竞争对手</th><th>代码</th><th>定位</th><th>与三花差距</th></tr>
+    <tr><td><span class="competitor-logo">盾</span><strong>盾安环境</strong></td><td>002011</td><td>制冷阀件国内第二</td><td>四通阀份额约15%，三花58.7%</td></tr>
+    <tr><td><span class="competitor-logo">海</span><strong>海立股份</strong></td><td>600619</td><td>压缩机为主</td><td>产品线差异大，非直接竞争</td></tr>
+    <tr><td>日本电产/不二越</td><td>—</td><td>海外阀件企业</td><td>份额持续萎缩，已被三花超越</td></tr>
+  </table>
+  <p>制冷阀件领域三花处于<strong>绝对主导地位</strong>，竞争对手难以构成实质威胁。盾安环境是格力系企业，主要在格力供应链内有一定份额，但全球层面与三花差距悬殊。</p>
+
+  <h3>汽车热管理领域：多家混战，三花领先</h3>
+  <table>
+    <tr><th>竞争对手</th><th>代码</th><th>2025营收</th><th>特色</th></tr>
+    <tr><td><span class="competitor-logo">银</span><strong>银轮股份</strong></td><td>002126</td><td>~130亿（估）</td><td>热交换器专家，商用车强</td></tr>
+    <tr><td><span class="competitor-logo">松</span><strong>松芝股份</strong></td><td>002454</td><td>~50亿（估）</td><td>客车空调，乘用车弱</td></tr>
+    <tr><td><span class="competitor-logo">飞</span><strong>飞龙股份</strong></td><td>002536</td><td>~40亿（估）</td><td>散热器细分</td></tr>
+    <tr><td><span class="competitor-logo">克</span><strong>克来机电</strong></td><td>603960</td><td>~10亿</td><td>汽车电子+机器人概念</td></tr>
+    <tr><td>法雷奥/电装/翰昂</td><td>海外</td><td>千亿级</td><td>全球Tier 1，但新能源转型慢</td></tr>
+  </table>
+  <p><strong>竞争分析：</strong>汽车热管理赛道比制冷阀件复杂得多。法雷奥、电装、翰昂等国际巨头体量巨大但在新能源热管理转型上偏慢，给三花留下了窗口期。国内银轮股份是最直接的竞争对手，但银轮优势在商用车热交换器，三花优势在乘用车集成组件，两者赛道有一定差异。真正决定胜负的是<strong>谁能成为头部新能源车企的集成Tier 1</strong>——目前三花在特斯拉/比亚迪供应链中地位稳固。</p>
+
+  <div class="chart-container" style="height:320px;">
+    <canvas id="competitorChart" role="img" aria-label="三花智控与主要竞争对手财务对比">三花智控与主要竞争对手财务对比</canvas>
+  </div>
+
+  <h3>人形机器人执行器领域：新赛道，格局未定</h3>
+  <table>
+    <tr><th>竞争者</th><th>优势</th><th>劣势</th></tr>
+    <tr><td><strong>三花智控</strong></td><td>精密制造底蕴、特斯拉深度绑定、全球产能</td><td>机器人业务盈利尚需验证</td></tr>
+    <tr><td>绿的谐波</td><td>谐波减速器龙头</td><td>只做单部件，非总成</td></tr>
+    <tr><td>汇川技术</td><td>伺服电机/驱动器巨头</td><td>机器人执行器布局较晚</td></tr>
+    <tr><td>拓普集团</td><td>同为特斯拉供应商，线性执行器</td><td>与三花在旋转执行器正面竞争</td></tr>
+  </table>
+  <p>人形机器人执行器是全新赛道，竞争格局远未稳定。三花的核心优势是<strong>"精密制造+特斯拉深度绑定+全球产能"</strong>三位一体，但拓普集团、汇川技术等也在积极切入。<strong>谁能最终胜出，取决于量产良率、成本控制和客户拓展能力</strong>，现在下结论为时尚早。</p>
+</div>
+
+<div class="section">
+  <h2>五、估值分析</h2>
+
+  <h3>相对估值（PE/PB分位）</h3>
+  <table>
+    <tr><th>估值指标</th><th>当前值</th><th>5年中位数</th><th>分位</th></tr>
+    <tr><td>PE(TTM)</td><td><strong>42.7x</strong></td><td>~35x</td><td><span class="tag tag-orange">60-65%分位</span></td></tr>
+    <tr><td>PE(2026E)</td><td>~36x</td><td>—</td><td>预测净利47.8亿</td></tr>
+    <tr><td>PB</td><td>~5.5x</td><td>~4.5x</td><td><span class="tag tag-orange">偏高</span></td></tr>
+    <tr><td>PS(TTM)</td><td>5.6x</td><td>~4.0x</td><td><span class="tag tag-orange">偏高</span></td></tr>
+  </table>
+  <p><strong>估值解读：</strong>当前PE 42.7x处于历史60-65%分位，不算便宜也不算泡沫。如果只看制冷+车热管理，合理PE在25-30x（对应合理市值1000-1200亿）；溢价部分（约700亿）是市场给的"机器人期权"。这个期权是否值700亿，取决于你对Optimus量产节奏的判断。</p>
+
+  <h3>目标价推导</h3>
+  <table class="kelly-table">
+    <tr><th>情景</th><th>2026E净利</th><th>给予PE</th><th>对应市值</th><th>目标价</th></tr>
+    <tr><td>悲观（机器人0贡献）</td><td>45亿</td><td>25x</td><td>1125亿</td><td>26.7元</td></tr>
+    <tr><td>中性（机器人小批量）</td><td>48亿</td><td>35x</td><td>1680亿</td><td><strong>40.0元</strong></td></tr>
+    <tr><td>乐观（机器人放量）</td><td>52亿</td><td>40x</td><td>2080亿</td><td>49.4元</td></tr>
+    <tr><td>极度乐观（Optimus超预期）</td><td>55亿</td><td>45x</td><td>2475亿</td><td>58.8元</td></tr>
+  </table>
+  <p><strong>12个月目标价区间：48-52元</strong>（对应中性偏乐观情景），较当前41.27元有16-26%的上行空间。</p>
+</div>
+
+<div class="section">
+  <h2>六、风险因素</h2>
+
+  <div class="risk-box">
+    <strong>风险1：机器人业务不及预期（最大风险）</strong><br>
+    市场已将机器人业务计入估值（溢价约700亿），但2025年年报口径仍为"配合研发、试制"。如果Optimus量产延迟、订单取消或份额被拓普等对手分食，估值溢价将快速消失。2025年10月公司已澄清"50亿订单不属实"，说明市场预期管理存在风险。
+  </div>
+
+  <div class="risk-box">
+    <strong>风险2：铜价持续上行</strong><br>
+    铜是最大成本项（占阀件成本20-30%）。2025年铜价高位运行，若2026年继续攀升，毛利率有继续下行压力。虽然公司有调价机制，但存在6-12个月的滞后。
+  </div>
+
+  <div class="risk-box">
+    <strong>风险3：筹码分散化</strong><br>
+    股东户数从2025年6月的25.8万暴增至2026年3月的67.5万（+162%），人均持股从1.6万股降至5530股。这是典型的<strong>主力派发、散户接盘</strong>信号，短期股价可能继续承压。
+  </div>
+
+  <div class="risk-box">
+    <strong>风险4：新能源车价格战传导</strong><br>
+    车企价格战可能向供应链传导，要求零部件降价。如果头部车企（特斯拉/比亚迪）大幅压价，车热管理利润率有压缩风险。
+  </div>
+
+  <div class="risk-box">
+    <strong>风险5：国际巨头反击</strong><br>
+    电装、法雷奥等加速新能源热管理转型，可能在三花尚未完全巩固的细分领域发起价格战。
+  </div>
+</div>
+
+<div class="section">
+  <h2>七、凯利公式仓位测算</h2>
+  <table class="kelly-table">
+    <tr><th>参数</th><th>数值</th><th>依据</th></tr>
+    <tr><td><strong>胜率 p</strong></td><td>55%</td><td>制冷+车热管理基本盘确定性高（占80%信心），机器人业务不确定性大（拖累综合胜率至55%）。参考三花过去5年股价年化正收益概率65%，但当前估值偏高+筹码分散扣减10pct</td></tr>
+    <tr><td><strong>赔率 b</strong></td><td>1.5</td><td>止盈价52元（乐观情景目标），止损价36元（跌破2025年8月低点且破长期支撑），盈亏比(52-41)/(41-36)=2.2，但考虑中间波动降赔率至1.5</td></tr>
+    <tr><td><strong>理论仓位 f*</strong></td><td>25%</td><td>f* = (bp-q)/b = (1.5×0.55-0.45)/1.5 = 25%</td></tr>
+    <tr><td><strong>实操建议仓位</strong></td><td><strong>5-8%</strong></td><td>理论仓位25%需大幅折扣：①单一标的集中度约束 ②筹码分散期波动大 ③机器人业务待验证。实际取理论仓位的1/3至1/4</td></tr>
+    <tr><td><strong>止盈位</strong></td><td>分批：48/50/52元</td><td>分别对应中性/偏乐观/乐观情景目标价</td></tr>
+    <tr><td><strong>止损位</strong></td><td>36元</td><td>跌破2025年8月平台（30-34元区间上沿），且月线MACD死叉确认</td></tr>
+  </table>
+  <p style="font-size:12px;color:#888;">注：以上为基于公开数据的框架性测算，不构成投资建议。实际仓位应结合个人风险偏好、组合配置综合决定。</p>
+</div>
+
+<div class="section">
+  <h2>八、技术面观察</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+    <tr><td>最新价</td><td>41.27元</td><td>—</td></tr>
+    <tr><td>MA5/MA20/MA60</td><td>42.8 / 45.0 / 46.7</td><td><span class="tag tag-green">空头排列</span>（价<所有均线）</td></tr>
+    <tr><td>MACD</td><td>-0.79</td><td><span class="tag tag-green">绿柱，空头</span></td></tr>
+    <tr><td>RSI(6/12)</td><td>22.6 / 31.4</td><td><span class="tag tag-orange">接近超卖</span></td></tr>
+    <tr><td>BOLL</td><td>下轨41.66</td><td><span class="tag tag-orange">触及下轨</span></td></tr>
+    <tr><td>120日高点</td><td>60.77元（1月）</td><td>从高点回落32%</td></tr>
+    <tr><td>融资余额</td><td>62.5亿</td><td>较高，杠杆资金集中</td></tr>
+  </table>
+  <p><strong>技术面判断：</strong>短期处于下降通道，所有均线空头排列。但RSI接近超卖区、触及布林下轨，技术性反弹概率增大。<strong>不建议追涨杀跌</strong>，等待MA20走平或MACD底背离信号再考虑左侧布局。</p>
+</div>
+
+<div class="section">
+  <h2>九、多空观点平衡</h2>
+  <table>
+    <tr><th style="width:50%">多头核心逻辑</th><th style="width:50%">空头核心逻辑</th></tr>
+    <tr>
+      <td>
+        <span class="tag tag-red">制冷阀件全球垄断</span><br>
+        四通阀58.7%、EXV 58.1%，护城河极深，基本盘不可动摇<br><br>
+        <span class="tag tag-red">新能源车热管理放量</span><br>
+        集成组件65.7%份额，受益于新能源渗透率提升<br><br>
+        <span class="tag tag-red">机器人执行器看涨期权</span><br>
+        特斯拉深度绑定，60亿框架订单，2026量产元年<br><br>
+        <span class="tag tag-red">财务质量优异</span><br>
+        ROE 25.6%，现金流>净利润，有息负债下降
+      </td>
+      <td>
+        <span class="tag tag-green">估值偏高</span><br>
+        PE 42.7x处于历史60%+分位，含700亿机器人溢价<br><br>
+        <span class="tag tag-green">筹码分散</span><br>
+        股东户数暴增162%，主力疑似派发<br><br>
+        <span class="tag tag-green">机器人业务待验证</span><br>
+        公司澄清50亿订单不属实，年报口径保守<br><br>
+        <span class="tag tag-green">铜价+价格战双杀</span><br>
+        原材料成本上行+车企压价，利润率有压缩风险
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>结论与行动建议</h2>
+  <div class="highlight-box">
+    <strong>定性结论：</strong>三花智控是一家基本面优秀、护城河深厚的好公司，制冷阀件的全球垄断地位提供了坚实的安全垫。但当前估值已计入较多机器人预期，近期筹码分散、技术面走弱，<strong>不是最佳买入时机</strong>。
+  </div>
+  <table>
+    <tr><th>投资者类型</th><th>建议操作</th><th>理由</th></tr>
+    <tr><td>已持有</td><td><span class="tag tag-blue">持有</span></td><td>基本面完好，短期波动可承受</td></tr>
+    <tr><td>观望中</td><td><span class="tag tag-orange">等待</span></td><td>等筹码稳定（股东户数回落）+技术面企稳</td></tr>
+    <tr><td>新建仓</td><td><span class="tag tag-blue">小仓位左侧</span></td><td>36-38元区间可建底仓，分批吸纳</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>本报告仅供参考，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  <p>数据来源：腾讯自选股、公司年报、产业链调研报告（2025-2026）<br>报告日期：2026-06-29 | 分析框架：产业链分析+竞争格局+估值+凯利公式</p>
+</div>
+
+</div>
+
+<script>
+const ctx1 = document.getElementById('revenueChart');
+if (ctx1) {
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['2024Q3', '2024Q4', '2025Q1', '2025Q2', '2025Q3', '2025Q4'],
+      datasets: [
+        {
+          label: '单季营收(亿元)',
+          data: [68.9, 73.8, 76.7, 85.9, 77.7, 69.8],
+          backgroundColor: '#1565c0',
+          borderRadius: 3
+        },
+        {
+          label: '单季归母净利(亿元)',
+          data: [7.9, 8.0, 9.0, 12.1, 11.3, 8.2],
+          backgroundColor: '#c41e3a',
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '三花智控近6季度营收与净利润趋势', font: { size: 13 } }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '亿' } }
+      }
+    }
+  });
+}
+
+const ctx2 = document.getElementById('competitorChart');
+if (ctx2) {
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['三花智控', '银轮股份', '松芝股份', '盾安环境', '飞龙股份'],
+      datasets: [
+        {
+          label: '2025营收(亿元)',
+          data: [310, 130, 50, 95, 40],
+          backgroundColor: ['#c41e3a', '#1565c0', '#1565c0', '#1565c0', '#1565c0'],
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '三花智控 vs 竞争对手：2025营收规模对比', font: { size: 13 } }
+      },
+      scales: {
+        x: { beginAtZero: true, ticks: { callback: v => v + '亿' } }
+      }
+    }
+  });
+}
+</script>
+
+</body>
+</html>
