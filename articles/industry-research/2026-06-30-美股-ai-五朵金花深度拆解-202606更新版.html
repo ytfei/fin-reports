@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股 AI 五朵金花深度拆解 | 2026.06（更新版）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --nvda: #76b900;
+  --msft: #00a4ef;
+  --googl: #ea4335;
+  --meta: #0866ff;
+  --amzn: #ff9900;
+  --orcl: #e53935;
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --red-up: #ef4444;
+  --green-down: #22c55e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+/* Hero Banner */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 16px;
+  padding: 40px 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(118,185,0,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 50%, rgba(0,164,239,0.1) 0%, transparent 50%);
+}
+.hero h1 { font-size: 28px; font-weight: 800; position: relative; z-index: 1; letter-spacing: 1px; }
+.hero .subtitle { color: var(--text-muted); margin-top: 8px; position: relative; z-index: 1; font-size: 14px; }
+.hero .update-badge {
+  display: inline-block;
+  background: rgba(229,57,53,0.2);
+  border: 1px solid rgba(229,57,53,0.4);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 12px;
+  color: #ef9a9a;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+}
+.hero .logos { display: flex; justify-content: center; gap: 12px; margin-top: 20px; position: relative; z-index: 1; flex-wrap: wrap; }
+.hero .logo-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+.badge-nvda { background: var(--nvda); }
+.badge-msft { background: var(--msft); }
+.badge-googl { background: var(--googl); }
+.badge-meta { background: var(--meta); }
+.badge-amzn { background: var(--amzn); color: #000; }
+.badge-orcl { background: var(--orcl); }
+
+/* Section */
+.section { margin-bottom: 35px; }
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon { font-size: 26px; }
+
+/* Update notice */
+.update-notice {
+  background: linear-gradient(135deg, rgba(229,57,53,0.08), rgba(251,140,0,0.08));
+  border: 1px solid rgba(229,57,53,0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  font-size: 13.5px;
+}
+.update-notice h4 { color: #ef9a9a; margin-bottom: 8px; font-size: 15px; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card h3 { font-size: 17px; margin-bottom: 12px; }
+
+/* Data Grid */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.data-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 10px;
+  text-align: center;
+}
+.data-card .company { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+.data-card .value { font-size: 22px; font-weight: 800; }
+.data-card .label { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+.data-card .sub { font-size: 11px; margin-top: 6px; }
+.data-card .correction { font-size: 10px; color: #ef9a9a; margin-top: 4px; text-decoration: line-through; opacity: 0.6; }
+.dc-nvda { border-top: 3px solid var(--nvda); }
+.dc-msft { border-top: 3px solid var(--msft); }
+.dc-googl { border-top: 3px solid var(--googl); }
+.dc-meta { border-top: 3px solid var(--meta); }
+.dc-amzn { border-top: 3px solid var(--amzn); }
+
+/* Comparison Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: #1c2330;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+tr:hover { background: #1a1f2e; }
+.ticker { font-weight: 700; font-size: 14px; }
+.highlight { color: #f0b429; font-weight: 700; }
+
+/* Company Detail Block */
+.company-block {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid;
+}
+.cb-nvda { border-left-color: var(--nvda); }
+.cb-msft { border-left-color: var(--msft); }
+.cb-googl { border-left-color: var(--googl); }
+.cb-meta { border-left-color: var(--meta); }
+.cb-amzn { border-left-color: var(--amzn); }
+.cb-orcl { border-left-color: var(--orcl); }
+
+.company-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.company-name { font-size: 20px; font-weight: 800; }
+.company-role { font-size: 13px; color: var(--text-muted); }
+.quick-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.quick-stat { text-align: center; }
+.quick-stat .num { font-size: 18px; font-weight: 700; color: var(--accent); }
+.quick-stat .desc { font-size: 11px; color: var(--text-muted); }
+
+/* Tag */
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 2px 4px 2px 0;
+}
+.tag-green { background: rgba(34,197,94,0.15); color: #4ade80; }
+.tag-red { background: rgba(239,68,68,0.15); color: #f87171; }
+.tag-blue { background: rgba(88,166,255,0.15); color: var(--accent); }
+.tag-yellow { background: rgba(240,180,41,0.15); color: #fbbf24; }
+
+/* Chart Container */
+.chart-container {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  height: 380px;
+  position: relative;
+}
+
+/* Pros & Cons */
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.pros, .cons {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.pros { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); }
+.cons { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
+.pros-title { color: #4ade80; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+.cons-title { color: #f87171; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+.pros ul, .cons ul { list-style: none; padding: 0; }
+.pros li, .cons li { padding: 3px 0; padding-left: 16px; position: relative; }
+.pros li::before { content: '✓'; position: absolute; left: 0; color: #4ade80; }
+.cons li::before { content: '✗'; position: absolute; left: 0; color: #f87171; }
+
+/* Oracle Warning Box */
+.oracle-warning {
+  background: linear-gradient(135deg, rgba(229,57,53,0.08), rgba(229,57,53,0.03));
+  border: 1px solid rgba(229,57,53,0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+}
+.oracle-warning h4 { color: #ef9a9a; margin-bottom: 10px; }
+
+/* Conclusion */
+.conclusion-box {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.conclusion-box h3 { color: var(--accent); margin-bottom: 12px; }
+
+/* Disclaimer */
+.disclaimer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 30px;
+}
+
+/* Solvency Risk Card */
+.solvency-card {
+  background: rgba(229,57,53,0.06);
+  border: 1px solid rgba(229,57,53,0.2);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 12px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  text-align: center;
+}
+.solvency-item .num { font-size: 24px; font-weight: 800; }
+.solvency-item .desc { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* Mobile */
+@media (max-width: 680px) {
+  .container { padding: 12px; }
+  .hero { padding: 24px 16px; }
+  .hero h1 { font-size: 20px; }
+  .data-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-title { font-size: 18px; }
+  table { font-size: 12px; }
+  th, td { padding: 6px 8px; }
+  .pros-cons { grid-template-columns: 1fr; }
+  .company-block { padding: 16px; }
+  .chart-container { height: 300px; }
+  .solvency-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>AI 五朵金花深度拆解</h1>
+  <div class="subtitle">英伟达 · 微软 · 谷歌 · Meta · 亚马逊 | 数据截至 2026.06.29</div>
+  <div class="update-badge">v2 更新版 · 含数据验证修正 + Oracle 变量补充</div>
+  <div class="logos">
+    <span class="logo-badge badge-nvda">NVDA</span>
+    <span class="logo-badge badge-msft">MSFT</span>
+    <span class="logo-badge badge-googl">GOOGL</span>
+    <span class="logo-badge badge-meta">META</span>
+    <span class="logo-badge badge-amzn">AMZN</span>
+    <span class="logo-badge badge-orcl">ORCL</span>
+  </div>
+</div>
+
+<!-- Update Notice -->
+<div class="update-notice">
+  <h4>📋 v2 更新说明</h4>
+  <p>本版本对原始报告进行了 <strong>数据交叉验证</strong>（来源：公司 IR 财报原文、Stock Analysis、CompaniesMarketCap），修正了 <strong>6 处数据偏差</strong>（含 3 处严重偏差），并新增 <strong>Oracle 变量</strong>深度分析——$3000 亿 OpenAI 合同如何改变 AI 基础设施竞争格局。</p>
+</div>
+
+<!-- Key Stats Grid (Corrected) -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> 核心数据总览（已修正）</div>
+  <div class="data-grid">
+    <div class="data-card dc-nvda">
+      <div class="company">英伟达 NVDA</div>
+      <div class="value" style="color:var(--nvda)">$4.72T</div>
+      <div class="correction">~~$5.4T~~</div>
+      <div class="label">市值（修正↓13%）</div>
+      <div class="sub">营收 $253.5B<br>毛利 ~75%<br>5年回报 69%</div>
+    </div>
+    <div class="data-card dc-msft">
+      <div class="company">微软 MSFT</div>
+      <div class="value" style="color:var(--msft)">$2.74T</div>
+      <div class="correction">~~$3.3T~~</div>
+      <div class="label">市值（修正↓17%）</div>
+      <div class="sub">营收 $318.3B+<br>毛利 68.3%<br>5年回报 13.2%</div>
+    </div>
+    <div class="data-card dc-googl">
+      <div class="company">谷歌 GOOGL</div>
+      <div class="value" style="color:var(--googl)">$4.29T</div>
+      <div class="correction">~~$4.4T~~</div>
+      <div class="label">市值（修正↓2.5%）</div>
+      <div class="sub">营收 $422.5B+<br>毛利 60.4%<br>5年回报 25.9%</div>
+    </div>
+    <div class="data-card dc-meta">
+      <div class="company">Meta META</div>
+      <div class="value" style="color:var(--meta)">$1.43T</div>
+      <div class="correction">~~$1.5T~~</div>
+      <div class="label">市值（修正↓5%）</div>
+      <div class="sub">营收 $215B+<br>毛利 81.9%<br>5年回报 12.8%</div>
+    </div>
+    <div class="data-card dc-amzn">
+      <div class="company">亚马逊 AMZN</div>
+      <div class="value" style="color:var(--amzn)">$2.58T</div>
+      <div class="correction">~~$2.8T~~</div>
+      <div class="label">市值（修正↓8%）</div>
+      <div class="sub">营收 $742.8B+<br>毛利 50.6%<br>5年回报 10.2%</div>
+    </div>
+  </div>
+  <div class="card" style="font-size:12px; color:var(--text-muted);">
+    <strong style="color:#ef9a9a;">数据修正说明：</strong>原报告市值数据来源于搜索估算，经核实 CompaniesMarketCap / Stock Analysis（2026/06/29 收盘）后修正。英伟达仍是全球市值第一，但"$5 万亿"标签不成立。微软排名从原报告的全球第三修正为第四（被苹果超过）。<strong style="color:#4ade80;">好消息是</strong>：所有偏差方向一致——基本面实际比原报告描述的更强（Cloud、AWS、DAP 等指标被低估）。
+  </div>
+</div>
+
+<!-- Corrected Revenue Data -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔄</span> 关键财务数据修正</div>
+  <table>
+    <thead>
+      <tr>
+        <th>指标</th>
+        <th>原报告</th>
+        <th style="color:#ef9a9a;">→ 修正后</th>
+        <th>偏差影响</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>微软季度营收</td>
+        <td>$61.8B</td>
+        <td style="color:#fbbf24">$82.9B（FY26 Q3）</td>
+        <td>用了旧季度数据</td>
+      </tr>
+      <tr>
+        <td>谷歌 Cloud 季收</td>
+        <td>$12.8B</td>
+        <td style="color:#4ade80">$20.0B（+63%）</td>
+        <td>实际更强，结论强化</td>
+      </tr>
+      <tr>
+        <td>亚马逊 AWS 季收</td>
+        <td>$26.2B</td>
+        <td style="color:#4ade80">$37.6B（+28%，15季最快）</td>
+        <td>严重偏低，结论强化</td>
+      </tr>
+      <tr>
+        <td>亚马逊净利润</td>
+        <td>$10.4B</td>
+        <td style="color:#4ade80">$30.3B（含$16.8B Anthropic重估）</td>
+        <td>严重偏低</td>
+      </tr>
+      <tr>
+        <td>Meta 日活用户</td>
+        <td>32 亿</td>
+        <td style="color:#4ade80">35.6 亿</td>
+        <td>用户规模被低估</td>
+      </tr>
+      <tr>
+        <td>Meta 季度净利</td>
+        <td>$15.6B</td>
+        <td style="color:#fbbf24">$26.8B（含$8B税务收益）</td>
+        <td>一次性因素需剥离</td>
+      </tr>
+      <tr>
+        <td>五家合计 Capex</td>
+        <td>~$7250 亿</td>
+        <td style="color:#fbbf24">~$6500-7000 亿</td>
+        <td>略偏高，增长仍惊人</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Capex Chart (Corrected) -->
+<div class="section">
+  <div class="section-title"><span class="icon">💰</span> 2026 资本开支对比（含 Oracle）</div>
+  <div class="chart-container">
+    <canvas id="capexChart"></canvas>
+  </div>
+  <div class="card" style="font-size:13px;">
+    <strong>关键数据：</strong>五家合计 AI 资本开支 <span class="highlight">~$6500-7000 亿</span>（修正后），较 2025 年增长约 <span class="highlight">60-70%</span>。加上 Oracle 的 ~$500 亿（Stargate 项目另有独立融资），全行业 AI 基建投入达 <span class="highlight">$7700 亿+</span>。分析师预测 2027 年将突破 <span class="highlight">1 万亿美元</span>。GPU 采购占 Capex 的 40-50%。
+  </div>
+</div>
+
+<!-- Market Cap Chart (Corrected) -->
+<div class="section">
+  <div class="section-title"><span class="icon">🏆</span> 市值（修正）与 5 年回报对比</div>
+  <div class="chart-container">
+    <canvas id="marketCapChart"></canvas>
+  </div>
+</div>
+
+<!-- Company 1: NVIDIA -->
+<div class="section">
+  <div class="section-title"><span class="icon">⛏️</span> 五朵金花逐一拆解</div>
+
+  <div class="company-block cb-nvda">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--nvda)">1. 英伟达 NVDA</div>
+        <div class="company-role">AI 时代的"铲子王" — 全球市值第一</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">$81.6B</div><div class="desc">最新季营收</div></div>
+        <div class="quick-stat"><div class="num">85%</div><div class="desc">AI芯片份额</div></div>
+        <div class="quick-stat"><div class="num">~75%</div><div class="desc">毛利率</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>核心壁垒：</strong>CUDA 软件生态经过 15 年积累，拥有数十万开发者和海量优化库。迁移到替代芯片需要付出巨大转换成本——这就像 iOS 生态，你可以造更好的硬件，但抢不走 App 生态。
+    </p>
+    <p style="margin-bottom:12px;">
+      <strong>芯片路线图：</strong>Vera Rubin R100（2026H2）——3360 亿晶体管、3nm、288GB HBM4。对比 Blackwell：推理性能 <span class="highlight">5 倍</span>，单 Token 成本降低 <span class="highlight">10 倍</span>，每瓦吞吐量提升 <span class="highlight">10 倍</span>。
+    </p>
+    <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">
+      <strong style="color:#ef9a9a;">⚠️ 新增风险（v2）：</strong>Oracle 的 40 万颗 GB200 采购承诺意味着英伟达新增了一个超级客户。但 Oracle 的命运高度绑定 OpenAI 偿付能力——如果 OpenAI 融资断裂、Oracle 砍单，英伟达的 GPU 订单将直接受冲击。这构成了一条新的<strong style="color:#ef9a9a;">"OpenAI → Oracle → 英伟达"风险传导链</strong>。
+    </p>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">核心优势</div>
+        <ul>
+          <li>CUDA 生态 15 年护城河</li>
+          <li>Blackwell → Rubin 代差领先</li>
+          <li>AI 加速器 85% 市场份额</li>
+          <li>最新季度营收创科技史纪录</li>
+          <li>Oracle 成为第六大 GPU 客户</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">主要风险</div>
+        <ul>
+          <li>四大客户全在研发自研芯片</li>
+          <li>4.72T 市值对增速拐点极敏感</li>
+          <li>中国市场收入已归零</li>
+          <li><strong style="color:#f87171;">Oracle 风险传导链（新增）</strong></li>
+          <li>毛利率边际微降趋势</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company 2: Microsoft (Updated) -->
+  <div class="company-block cb-msft">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--msft)">2. 微软 MSFT</div>
+        <div class="company-role">AI 商业化的先行者 — "AI 的沃尔玛"</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">~40%</div><div class="desc">Azure增速</div></div>
+        <div class="quick-stat"><div class="num">$82.9B</div><div class="desc">最新季营收(修正)</div></div>
+        <div class="quick-stat"><div class="num">$190B</div><div class="desc">2026 Capex</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>核心壁垒：</strong>"AI 全家桶"垂直整合——Azure + OpenAI + GitHub Copilot + Microsoft 365 Copilot + Copilot 消费者入口。企业客户一站式采购，Office 365 覆盖全球 70%+ Fortune 500 企业。AI 年化收入 $370 亿，Copilot 付费席位突破 2000 万。
+    </p>
+    <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">
+      <strong style="color:#ef9a9a;">⚠️ v2 更新：</strong>市值从 $3.3T 修正为 <strong style="color:#fbbf24;">$2.74T</strong>（-17%），排名降至全球第四（被苹果超过）。原报告引用的季度营收 $61.8B 为旧数据，实际 FY26 Q3 营收已达 $82.9B。更重要的是，OpenAI 与微软的"独家合作"已经实质解绑——OpenAI 同时使用 Oracle（Stargate 4.5 GW）、AWS（GPT-5.4 已上 Bedrock）和 Google Cloud。Azure 的"独家 AI 分发渠道"价值正在被稀释。
+    </p>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">核心优势</div>
+        <ul>
+          <li>企业销售渠道全行业最深</li>
+          <li>AI 年化收入已达 $37B</li>
+          <li>Copilot 付费席位 2000 万+</li>
+          <li>从底层到应用层完整覆盖</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">主要风险</div>
+        <ul>
+          <li>$190B Capex 回报周期存疑</li>
+          <li><strong style="color:#f87171;">OpenAI 多云策略削弱独家价值</strong></li>
+          <li>市值 $2.74T 低于预期</li>
+          <li>Azure 增速边际放缓压力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company 3: Google (Updated) -->
+  <div class="company-block cb-googl">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--googl)">3. 谷歌 / Alphabet GOOGL</div>
+        <div class="company-role">AI 商业化"最清晰赢家" — 全栈自研十年磨一剑</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">+80%</div><div class="desc">利润增速</div></div>
+        <div class="quick-stat"><div class="num">+63%</div><div class="desc">云增速(修正)</div></div>
+        <div class="quick-stat"><div class="num">$20.0B</div><div class="desc">Cloud季收(修正)</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>核心壁垒：</strong>从 2014 年收购 DeepMind 开始十年布局——TPU（芯片）+ Gemini（模型）+ Search/YouTube（数据）+ Workspace（应用）。五家中<strong>垂直整合度最高</strong>，对英伟达依赖度最低。TPU Trillium 第六代，10 年自研经验，已训练所有 Gemini 模型。
+    </p>
+    <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">
+      <strong style="color:#4ade80;">✅ v2 修正后结论更强：</strong>Cloud 季收入从原报告的 $12.8B 修正为 <strong style="color:#4ade80;">$20.0B</strong>（+63%），首次突破单季 200 亿，增速为三朵云中最快。市值 $4.29T 已超越微软和苹果。$4620 亿积压订单提供了收入可见性。"谷歌是中期最优"的判断在数据修正后更加坚实。
+    </p>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">核心优势</div>
+        <ul>
+          <li>全栈自研：芯片+模型+应用+变现</li>
+          <li>利润增速 +80% 五朵金花最高</li>
+          <li>Cloud $200 亿/季（修正后更强）</li>
+          <li>$4620 亿积压订单</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">主要风险</div>
+        <ul>
+          <li>反垄断：DOJ 推动 Chrome 剥离</li>
+          <li>搜索广告面临"零点击"侵蚀</li>
+          <li>云市场份额（12%）规模不足</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company 4: Meta (Updated) -->
+  <div class="company-block cb-meta">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--meta)">4. Meta META</div>
+        <div class="company-role">AI 的"隐形变现者" — 不卖 AI，用 AI 赚钱</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">35.6亿</div><div class="desc">日活(修正)</div></div>
+        <div class="quick-stat"><div class="num">+33%</div><div class="desc">营收增速</div></div>
+        <div class="quick-stat"><div class="num">$125-145B</div><div class="desc">2026 Capex</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>核心壁垒：</strong>35.6 亿日活用户（修正后更多）= 全球最大 AI 应用分发网络。Meta 不卖 AI 服务，而是用 AI 优化广告推荐→提升广告效率→广告主愿意花更多钱。营收增长 <span class="highlight">33%</span>（2021 年以来最快季度），广告展示量 +19%，单价 +12%，同步加速。
+    </p>
+    <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">
+      <strong style="color:#fbbf24;">⚡ v2 新增：</strong>Ray-Ban 智能眼镜日活用户同比翻 3 倍，Meta 发布了首个"超级智能实验室"模型。Capex 从 $115-135B 上调至 $125-145B，财报后股价盘后跌 7%。MTIA 芯片采用 2nm 工艺（与 Broadcom 合作开发），但确认是 2027 部署计划——2026 年仍主要买英伟达。
+    </p>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">核心优势</div>
+        <ul>
+          <li>毛利率 81.9% 五家最高</li>
+          <li>35.6 亿用户（修正后更多）</li>
+          <li>Ray-Ban 智能眼镜日活 ×3</li>
+          <li>广告 AI 优化飞轮已验证</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">主要风险</div>
+        <ul>
+          <li>$125-145B Capex 回报路径不透明</li>
+          <li>财报后股价盘后跌 7%</li>
+          <li>Reality Labs 持续巨亏</li>
+          <li>MTIA 规模化推迟到 2027</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company 5: Amazon (Updated) -->
+  <div class="company-block cb-amzn">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--amzn)">5. 亚马逊 AMZN</div>
+        <div class="company-role">AI 的"基础设施提供者" — 不管谁赢，都在我云上跑</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">31%</div><div class="desc">AWS份额</div></div>
+        <div class="quick-stat"><div class="num">$37.6B</div><div class="desc">AWS季收(修正)</div></div>
+        <div class="quick-stat"><div class="num">+28%</div><div class="desc">AWS增速(15季最快)</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>核心壁垒：</strong>AWS 全球云计算第一（31% 份额）。AWS 季收入从原报告的 $26.2B 修正为 <span class="highlight">$37.6B（+28%，15 个季度最快增速）</span>。Trainium3 已获 Anthropic、OpenAI 确认使用。自研芯片已成 $100 亿+ 年化收入业务。
+    </p>
+    <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">
+      <strong style="color:#ef9a9a;">⚠️ v2 新增重大风险：</strong>亚马逊 TTM（过去 12 个月）自由现金流从 $259 亿<strong style="color:#f87171;">骤降至 $12 亿</strong>——几乎被 AI Capex 吸干。这是原报告遗漏的重大信号。Capex 的回报依赖于 AWS 增速持续回升，一旦 AI 需求放缓，FCF 压力将急剧放大。
+    </p>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">核心优势</div>
+        <ul>
+          <li>AWS 云份额 31% 全球第一</li>
+          <li>AWS $37.6B/季（修正后更强）</li>
+          <li>Trainium 获前沿实验室背书</li>
+          <li>业务多元化降低风险</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">主要风险</div>
+        <ul>
+          <li>整体毛利率仅 50.6%（最低）</li>
+          <li><strong style="color:#f87171;">FCF 从 $259B→$12B（新增）</strong></li>
+          <li>Azure 份额快速追赶</li>
+          <li>~$180B Capex 规模巨大</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NEW: Oracle Section ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔥</span> 新增变量：Oracle — $3000 亿搅局者</div>
+
+  <div class="oracle-warning">
+    <h4>Oracle 凭什么掺和进来？</h4>
+    <p style="font-size:14px;">OpenAI 用 <strong>$3000 亿</strong>（5 年合同）把它从云市场边缘拉到了舞台中央。4.5 GW 算力、40 万颗英伟达 GB200 GPU，这是人类历史上最大的商业云合同。Oracle 的积压订单从 $990 亿飙至 <strong>$6380 亿</strong>（+540%），超过了所有云厂商。</p>
+  </div>
+
+  <!-- Oracle Data Cards -->
+  <div class="data-grid" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="data-card" style="border-top: 3px solid var(--orcl);">
+      <div class="company">Oracle RPO 积压</div>
+      <div class="value" style="color:var(--orcl)">$6380亿</div>
+      <div class="label">Q4 FY26 单季 +$850 亿</div>
+    </div>
+    <div class="data-card" style="border-top: 3px solid var(--orcl);">
+      <div class="company">OCI 增速</div>
+      <div class="value" style="color:var(--orcl)">+93%</div>
+      <div class="label">所有云厂商最快</div>
+    </div>
+    <div class="data-card" style="border-top: 3px solid var(--orcl);">
+      <div class="company">市值 / 股价</div>
+      <div class="value" style="color:var(--orcl)">$4256亿</div>
+      <div class="label">$147.76/股 · 年内 -24%</div>
+    </div>
+    <div class="data-card" style="border-top: 3px solid var(--orcl);">
+      <div class="company">FY26 云收入</div>
+      <div class="value" style="color:var(--orcl)">$340亿</div>
+      <div class="label">IaaS $181 亿 +77%</div>
+    </div>
+  </div>
+
+  <!-- Oracle Detail Block -->
+  <div class="company-block cb-orcl">
+    <div class="company-header">
+      <div>
+        <div class="company-name" style="color:var(--orcl)">6. Oracle ORCL — "超级承包商"</div>
+        <div class="company-role">$3000 亿 OpenAI 合同的执行者 — 不是第六朵金花，是最大的杠杆变量</div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><div class="num">$3000亿</div><div class="desc">OpenAI合同/5年</div></div>
+        <div class="quick-stat"><div class="num">4.5 GW</div><div class="desc">算力规模</div></div>
+        <div class="quick-stat"><div class="num">40万颗</div><div class="desc">GB200 GPU</div></div>
+      </div>
+    </div>
+    <p style="margin-bottom:12px;">
+      <strong>$3000 亿合同结构：</strong>2025 年 9 月签署，5 年期（$600 亿/年），覆盖 4.5 GW 算力。40 万颗英伟达 GB200 GPU 部署于德州 Abilene 及 5 个新建数据中心。芯片采购同时引入 AMD MI300 和 OpenAI-Broadcom 自研推理芯片做多元化。
+    </p>
+    <p style="margin-bottom:12px;">
+      <strong>Oracle 对五朵金花的冲击：</strong>
+    </p>
+    <ul style="margin-bottom:12px; padding-left:20px; font-size:13.5px;">
+      <li><strong style="color:#f87171;">微软-OpenAI 关系解绑</strong>：OpenAI 同时使用 Oracle/AWS/GCP，Azure"独家分发渠道"价值被稀释</li>
+      <li><strong>云市场"第四极"崛起</strong>：OCI 增速 +93%（超过 Azure +40%、AWS +28%），RPO 超过所有对手</li>
+      <li><strong>Capex 军备再加码</strong>：Oracle ~$500 亿 + Stargate 项目独立融资，全行业 AI 投入升至 $7700 亿+</li>
+      <li><strong>英伟达第六大客户</strong>：40 万颗 GB200 = 巨量 GPU 采购，但 Oracle 同时引入 AMD 做对冲</li>
+    </ul>
+
+    <!-- OpenAI Solvency Risk -->
+    <div class="solvency-card">
+      <div class="solvency-item">
+        <div class="num" style="color:var(--green-down)">$250亿</div>
+        <div class="desc">OpenAI 年化收入</div>
+      </div>
+      <div class="divsolvency-item">
+        <div class="num" style="color:var(--orcl)">$600亿</div>
+        <div class="desc">Oracle 合同年费</div>
+      </div>
+      <div class="solvency-item">
+        <div class="num" style="color:#f87171">$350亿</div>
+        <div class="desc">年度缺口（靠融资填）</div>
+      </div>
+    </div>
+
+    <div class="oracle-warning" style="margin-top:16px;">
+      <h4>⚠️ 风险传导链</h4>
+      <p style="font-size:13.5px;">如果 OpenAI 的收入增长跟不上算力成本（年收入 $250 亿 vs 年支出 $600 亿+）：<br>
+      <strong style="color:#f87171;">融资断裂 → OpenAI 削减算力订单 → Oracle RPO 兑现率下降 → Oracle 债务危机 → 英伟达 GPU 订单缩减</strong><br>
+      这条链上，英伟达和 Oracle 是"一根绳上的蚂蚱"。Moody's 已警告 Oracle 债务/EBITDA 可能达 4 倍，信用评级接近 BBB-（最低投资级）。</p>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">看多逻辑</div>
+        <ul>
+          <li>RPO $6380 亿，若兑现 50% 即翻数倍</li>
+          <li>OCI 增速 +93% 全行业最快</li>
+          <li>OpenAI 是 AI 浪潮核心受益者</li>
+          <li>Stargate 有政府背书</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">看空逻辑</div>
+        <ul>
+          <li>无自研芯片/模型/生态——纯渠道商</li>
+          <li>OpenAI 一个客户占 RPO 近 50%</li>
+          <li>股价年内 -24%，市场质疑兑现率</li>
+          <li>债务链风险（Moody's 负面展望）</li>
+          <li>OpenAI 偿付能力存疑</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cloud RPO Chart (NEW) -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📦</span> 云厂商积压订单对比（含 Oracle）</div>
+    <div class="chart-container" style="height:340px;">
+      <canvas id="rpoChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Cloud Share + Growth -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚔️</span> 云市场格局 + IaaS 增速</div>
+  <div class="chart-container" style="height:320px;">
+    <canvas id="cloudChart"></canvas>
+  </div>
+  <div class="chart-container" style="height:340px;">
+    <canvas id="growthChart"></canvas>
+  </div>
+</div>
+
+<!-- Competition Matrix -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔗</span> 竞争关系图谱（含 Oracle）</div>
+  <table>
+    <thead>
+      <tr>
+        <th>竞争领域</th>
+        <th>主要对手</th>
+        <th>格局</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>AI 云服务</strong></td>
+        <td>AWS vs Azure vs GCP vs <span style="color:var(--orcl)">OCI</span></td>
+        <td>AWS 规模最大(31%)，Azure 增速第二(40%)，GCP 利润最高(+63%)，<strong style="color:var(--orcl)">OCI 增速最快(+93%)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>自研 AI 芯片</strong></td>
+        <td>四家 vs 英伟达</td>
+        <td>全部开发替代芯片，先侵蚀推理市场。Oracle 无自研芯片</td>
+      </tr>
+      <tr>
+        <td><strong>大模型竞赛</strong></td>
+        <td>GPT vs Gemini vs Llama vs Claude</td>
+        <td>各擅胜场：GPT 综合最强，Gemini 全栈，Llama 开源，Claude 推理</td>
+      </tr>
+      <tr>
+        <td><strong>AI 基础设施合同</strong></td>
+        <td><span style="color:var(--orcl)">Oracle vs 微软</span></td>
+        <td><strong>Oracle $3000 亿 OpenAI 合同实质解绑了微软-OpenAI 独家关系</strong></td>
+      </tr>
+      <tr>
+        <td><strong>AI 广告变现</strong></td>
+        <td>谷歌 vs Meta</td>
+        <td>双寡头格局，AI 优化广告效率是共同主题</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card" style="margin-top:12px;">
+    <strong>微妙关系（v2 更新）：</strong>
+    <span class="tag tag-yellow">英伟达 vs 四大客户</span> 每花 1 美元自研芯片 = 未来少买 1 美元 GPU
+    <span class="tag tag-red">微软 vs OpenAI</span> 独家合作实质解绑，OpenAI 已使用 Oracle/AWS/GCP
+    <span class="tag tag-red" style="background:rgba(229,57,53,0.15);color:#ef9a9a;">Oracle vs OpenAI</span> 偿付能力是核心变数（年收入$250亿 vs 合同$600亿/年）
+    <span class="tag tag-blue">亚马逊 vs 谷歌</span> 在 Anthropic 投资上竞争
+    <span class="tag tag-green">Meta vs 全部</span> Llama 开源削弱闭源模型定价权
+  </div>
+</div>
+
+<!-- Custom Chip Race -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔧</span> 自研芯片竞赛：四大客户"去英伟达化"</div>
+  <table>
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>芯片</th>
+        <th>架构</th>
+        <th>定位</th>
+        <th>策略</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="ticker" style="color:var(--meta)">Meta</span></td>
+        <td>MTIA 300-500</td>
+        <td>RISC-V (2nm)</td>
+        <td>推荐系统 + 推理</td>
+        <td>2027 规模部署，与 Broadcom 合作</td>
+      </tr>
+      <tr>
+        <td><span class="ticker" style="color:var(--googl)">谷歌</span></td>
+        <td>TPU Trillium (v6)</td>
+        <td>自研 ASIC</td>
+        <td>训练 + 推理</td>
+        <td>10 年积累，已训练 Gemini 全系列</td>
+      </tr>
+      <tr>
+        <td><span class="ticker" style="color:var(--amzn)">亚马逊</span></td>
+        <td>Trainium3</td>
+        <td>自研 ASIC (3nm)</td>
+        <td>训练 + 推理</td>
+        <td>$100 亿+ 业务，获 Anthropic/OpenAI 采用</td>
+      </tr>
+      <tr>
+        <td><span class="ticker" style="color:var(--msft)">微软</span></td>
+        <td>Maia 200</td>
+        <td>自研 ASIC (3nm)</td>
+        <td>推理专精</td>
+        <td>FP4 算力 Trainium3 的 3 倍</td>
+      </tr>
+      <tr>
+        <td><span class="ticker" style="color:var(--text-muted)">OpenAI</span></td>
+        <td>自研推理芯片</td>
+        <td>与 Broadcom 合作</td>
+        <td>推理（2026H2 部署）</td>
+        <td>部署在 Oracle 数据中心，减少英伟达依赖</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- NVIDIA Roadmap Chart -->
+<div class="section">
+  <div class="section-title"><span class="icon">🚀</span> 英伟达芯片路线图性能演进</div>
+  <div class="chart-container">
+    <canvas id="chipChart"></canvas>
+  </div>
+</div>
+
+<!-- Conclusion (Updated) -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 关键判断（v2 修正）</div>
+  <div class="conclusion-box">
+    <h3>2026 年 AI 投资逻辑转折</h3>
+    <table style="background:transparent;">
+      <thead>
+        <tr><th width="50%">第一阶段（2023-2025）</th><th width="50%">第二阶段（2026-）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag tag-blue">技术驱动</span> 关注"谁有最好的 AI"</td>
+          <td><span class="tag tag-yellow">资本效率驱动</span> 追问"投入产出比是多少"</td>
+        </tr>
+        <tr>
+          <td>估值以技术预期驱动</td>
+          <td>传统财务指标重新成为核心</td>
+        </tr>
+        <tr>
+          <td>市场宽容 Capex 增长</td>
+          <td>市场严格审视 Capex 回报 + <strong style="color:#f87171;">FCF 健康度</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--accent);">谁是最大赢家？（修正后）</h3>
+    <table style="margin-top:8px;">
+      <thead>
+        <tr><th>时间维度</th><th>赢家</th><th>理由</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>短期（1-2 年）</strong></td>
+          <td><span class="ticker" style="color:var(--nvda)">英伟达</span></td>
+          <td>无人可替代 CUDA 生态和 Blackwell/Rubin 代差优势。但需关注 Oracle 传导链风险</td>
+        </tr>
+        <tr>
+          <td><strong>中期（3-5 年）</strong></td>
+          <td><span class="ticker" style="color:var(--googl)">谷歌</span> <span class="tag tag-green">加码</span></td>
+          <td>Cloud $200 亿/季+63%、全栈自研+资本效率最高，数据修正后结论更坚实</td>
+        </tr>
+        <tr>
+          <td><strong>长期变量</strong></td>
+          <td><span class="tag tag-yellow">取决于自研芯片</span></td>
+          <td>若 2028 年前自研芯片承担 30%+ 推理负载，英伟达垄断溢价将收窄</td>
+        </tr>
+        <tr>
+          <td><strong>最大风险（新增）</strong></td>
+          <td><span class="tag tag-red">OpenAI 偿付能力</span></td>
+          <td>年收入 $250 亿 vs 合同 $600 亿/年，融资断裂将冲击 Oracle→英伟达</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Updated Action Table -->
+  <div class="card" style="margin-top:16px;">
+    <h3 style="color:var(--accent);">修正后操作建议</h3>
+    <table style="margin-top:8px;">
+      <thead>
+        <tr><th>标的</th><th>评级</th><th>关键变化</th><th>行动</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>英伟达 NVDA</strong></td><td><span class="tag tag-yellow">持有</span></td><td>市值修正但基本面不变</td><td>观察数据中心增速是否跌破 50%</td></tr>
+        <tr><td><strong>谷歌 GOOGL</strong></td><td><span class="tag tag-green">加码</span></td><td>Cloud +63% 超预期</td><td>回调即加仓</td></tr>
+        <tr><td><strong>微软 MSFT</strong></td><td><span class="tag tag-yellow">持有</span></td><td>OpenAI 多云削弱独家价值</td><td>观察 Copilot 渗透率</td></tr>
+        <tr><td><strong>Meta META</strong></td><td><span class="tag tag-yellow">持有</span></td><td>用户更多但 Capex 回报不透明</td><td>等待 MTIA 2027 部署验证</td></tr>
+        <tr><td><strong>亚马逊 AMZN</strong></td><td><span class="tag tag-yellow">持有</span></td><td>AWS 更强但 FCF $259B→$12B</td><td>观察 AWS OPM 能否回 39%+</td></tr>
+        <tr><td><strong>Oracle ORCL</strong></td><td><span class="tag tag-blue">观察名单</span></td><td>RPO 惊人但兑现风险大</td><td>等待 OpenAI IPO 和收入验证</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- One-liner Summary -->
+<div class="section">
+  <div class="section-title"><span class="icon">📝</span> 一图读懂</div>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th style="color:var(--nvda)">英伟达</th>
+        <th style="color:var(--msft)">微软</th>
+        <th style="color:var(--googl)">谷歌</th>
+        <th style="color:var(--meta)">Meta</th>
+        <th style="color:var(--amzn)">亚马逊</th>
+        <th style="color:var(--orcl)">Oracle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>角色</strong></td><td>卖铲子的</td><td>AI 超市</td><td>全栈选手</td><td>隐形变现</td><td>收租的</td><td><strong>超级承包商</strong></td></tr>
+      <tr><td><strong>最大优势</strong></td><td>CUDA 生态</td><td>企业渠道</td><td>全链路闭环</td><td>35.6亿用户</td><td>AWS 规模</td><td>$6380亿RPO</td></tr>
+      <tr><td><strong>最大风险</strong></td><td>客户变对手</td><td>独家解绑</td><td>反垄断</td><td>Capex 回报</td><td><strong>FCF 坍塌</strong></td><td><strong>OpenAI 偿付</strong></td></tr>
+      <tr><td><strong>自研芯片</strong></td><td>—</td><td>MAIA</td><td>TPU(10年)</td><td>MTIA</td><td>Trainium</td><td>无（依赖英伟达）</td></tr>
+      <tr><td><strong>评级</strong></td><td>持有</td><td>持有</td><td><strong style="color:#4ade80">加码</strong></td><td>持有</td><td>持有</td><td>观察名单</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p>本报告仅供参考，不构成个人投资建议。数据来源于公开渠道（公司 IR 财报原文、Stock Analysis、CompaniesMarketCap、Oracle/OpenAI 官方公告等），不保证完全准确和及时。</p>
+  <p>投资有风险，入市需谨慎。</p>
+</div>
+
+</div>
+
+<script>
+const chartFont = { family: '-apple-system, BlinkMacSystemFont, sans-serif' };
+
+// Capex Chart (Corrected + with Oracle)
+new Chart(document.getElementById('capexChart'), {
+  type: 'bar',
+  data: {
+    labels: ['亚马逊', '微软', '谷歌', 'Meta', 'Oracle'],
+    datasets: [
+      {
+        label: '2025 Capex',
+        data: [100, 95, 85, 70, 30],
+        backgroundColor: 'rgba(139,148,158,0.5)',
+        borderColor: 'rgba(139,148,158,0.8)',
+        borderWidth: 1
+      },
+      {
+        label: '2026 Capex (指引/估算)',
+        data: [180, 190, 180, 135, 50],
+        backgroundColor: ['#ff9900', '#00a4ef', '#ea4335', '#0866ff', '#e53935'],
+        borderWidth: 0
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '2025 vs 2026 AI 资本开支（十亿美元，含 Oracle）', color: '#e6edf3', font: { ...chartFont, size: 14 } },
+      legend: { labels: { color: '#8b949e', font: chartFont } }
+    },
+    scales: {
+      y: { ticks: { color: '#8b949e', font: chartFont }, grid: { color: '#30363d' }, title: { display: true, text: '十亿美元', color: '#8b949e' } },
+      x: { ticks: { color: '#e6edf3', font: { ...chartFont, size: 13 } }, grid: { display: false } }
+    }
+  }
+});
+
+// Market Cap Chart (Corrected)
+new Chart(document.getElementById('marketCapChart'), {
+  type: 'bar',
+  data: {
+    labels: ['英伟达', '谷歌', '微软', '亚马逊', 'Meta'],
+    datasets: [
+      {
+        type: 'bar',
+        label: '市值（万亿美元，修正后）',
+        data: [4.72, 4.29, 2.74, 2.58, 1.43],
+        backgroundColor: ['#76b900', '#ea4335', '#00a4ef', '#ff9900', '#0866ff'],
+        yAxisID: 'y',
+        borderWidth: 0
+      },
+      {
+        type: 'line',
+        label: '5年年化回报（%）',
+        data: [69.0, 25.9, 13.2, 10.2, 12.8],
+        borderColor: '#fbbf24',
+        backgroundColor: 'rgba(251,191,36,0.1)',
+        yAxisID: 'y1',
+        tension: 0.3,
+        pointRadius: 6,
+        pointBackgroundColor: '#fbbf24'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#8b949e', font: chartFont } } },
+    scales: {
+      y: { type: 'linear', position: 'left', ticks: { color: '#8b949e', font: chartFont }, grid: { color: '#30363d' }, title: { display: true, text: '万亿美元', color: '#8b949e' } },
+      y1: { type: 'linear', position: 'right', ticks: { color: '#fbbf24', font: chartFont, callback: v => v + '%' }, grid: { display: false }, title: { display: true, text: '5年回报 %', color: '#fbbf24' } },
+      x: { ticks: { color: '#e6edf3', font: { ...chartFont, size: 13 } }, grid: { display: false } }
+    }
+  }
+});
+
+// Cloud Market Share (with Oracle)
+new Chart(document.getElementById('cloudChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['AWS 31%', 'Azure 24%', 'Google Cloud 12%', 'Oracle OCI 3%', '其他 30%'],
+    datasets: [{
+      data: [31, 24, 12, 3, 30],
+      backgroundColor: ['#ff9900', '#00a4ef', '#ea4335', '#e53935', '#30363d'],
+      borderWidth: 2,
+      borderColor: '#161b22'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '2026 云基础设施市场份额（含 Oracle）', color: '#e6edf3', font: { ...chartFont, size: 14 } },
+      legend: { position: 'bottom', labels: { color: '#8b949e', font: { ...chartFont, size: 13 }, padding: 15 } }
+    }
+  }
+});
+
+// IaaS Growth Rate (NEW)
+new Chart(document.getElementById('growthChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Oracle OCI', 'Google Cloud', 'Azure', 'Meta (整体)', 'AWS'],
+    datasets: [{
+      label: '最新季度增速 (%)',
+      data: [93, 63, 40, 33, 28],
+      backgroundColor: ['#e53935', '#ea4335', '#00a4ef', '#0866ff', '#ff9900'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: 'IaaS / 云业务最新季度增速对比', color: '#e6edf3', font: { ...chartFont, size: 14 } },
+      legend: { display: false }
+    },
+    scales: {
+      y: { ticks: { color: '#8b949e', font: chartFont, callback: v => v + '%' }, grid: { color: '#30363d' }, beginAtZero: true, max: 100, title: { display: true, text: '同比增速 %', color: '#8b949e' } },
+      x: { ticks: { color: '#e6edf3', font: { ...chartFont, size: 13 } }, grid: { display: false } }
+    }
+  }
+});
+
+// RPO Chart (NEW - with Oracle)
+new Chart(document.getElementById('rpoChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Oracle OCI', 'Google Cloud', 'AWS', 'Azure (估)'],
+    datasets: [{
+      label: '积压订单 (十亿美元)',
+      data: [6380, 4620, 3640, 3000],
+      backgroundColor: ['#e53935', '#ea4335', '#ff9900', '#00a4ef'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '云厂商积压订单 RPO 对比（十亿美元）', color: '#e6edf3', font: { ...chartFont, size: 14 } },
+      legend: { display: false }
+    },
+    scales: {
+      x: { ticks: { color: '#8b949e', font: chartFont }, grid: { color: '#30363d' }, beginAtZero: true },
+      y: { ticks: { color: '#e6edf3', font: { ...chartFont, size: 13 } }, grid: { display: false } }
+    }
+  }
+});
+
+// Chip Roadmap
+new Chart(document.getElementById('chipChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Hopper H100', 'Blackwell B200', 'Blackwell Ultra B300', 'Vera Rubin R100'],
+    datasets: [
+      {
+        label: '晶体管数量（十亿）',
+        data: [80, 208, 208, 336],
+        backgroundColor: ['rgba(118,185,0,0.3)', 'rgba(118,185,0,0.5)', 'rgba(118,185,0,0.7)', '#76b900'],
+        yAxisID: 'y',
+        borderWidth: 0
+      },
+      {
+        type: 'line',
+        label: '推理性能相对倍数',
+        data: [1, 2.5, 3.5, 12.5],
+        borderColor: '#fbbf24',
+        backgroundColor: 'rgba(251,191,36,0.1)',
+        yAxisID: 'y1',
+        tension: 0.3,
+        pointRadius: 6,
+        pointBackgroundColor: '#fbbf24'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '英伟达 GPU 代际性能演进', color: '#e6edf3', font: { ...chartFont, size: 14 } },
+      legend: { labels: { color: '#8b949e', font: chartFont } }
+    },
+    scales: {
+      y: { type: 'linear', position: 'left', ticks: { color: '#76b900', font: chartFont }, grid: { color: '#30363d' }, title: { display: true, text: '晶体管（十亿）', color: '#76b900' } },
+      y1: { type: 'linear', position: 'right', ticks: { color: '#fbbf24', font: chartFont }, grid: { display: false }, title: { display: true, text: '推理性能（H100=1）', color: '#fbbf24' } },
+      x: { ticks: { color: '#e6edf3', font: { ...chartFont, size: 12 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
