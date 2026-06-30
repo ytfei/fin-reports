@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下一批5倍股潜力挖掘 — 基于"三重共振"模型的前瞻筛选</title>
+<meta name="date" content="2026-07-01">
+<meta name="description" content="基于5倍股'三重共振'模型（需求爆发+供给约束+技术拐点），前瞻扫描7大新兴方向60+A股标的：人形机器人、AI眼镜、功率半导体、液冷、低空经济、固态电池、核电SMR，附五维度评分与分阶段布局思路">
+<meta name="category" content="market-analysis">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --red: #e74c3c;
+  --red-light: #fdf2f0;
+  --red-bg: #fef5f4;
+  --green: #27ae60;
+  --green-light: #f0faf4;
+  --green-bg: #f4fcf7;
+  --blue: #3498db;
+  --blue-light: #f0f7fc;
+  --blue-bg: #f5fafe;
+  --orange: #e67e22;
+  --gray: #7f8c8d;
+  --gray-light: #f8f9fa;
+  --dark: #2c3e50;
+  --gold: #f39c12;
+  --purple: #9b59b6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  background: #f5f6fa;
+  color: var(--dark);
+  line-height: 1.8;
+  font-size: 15px;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* Hero Banner */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  color: white;
+  padding: 48px 32px;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(231,76,60,0.15), transparent 70%);
+  border-radius: 50%;
+}
+.hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 12px; position: relative; }
+.hero .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 16px; position: relative; }
+.hero .meta { display: flex; gap: 20px; font-size: 13px; opacity: 0.7; position: relative; }
+.hero .meta span { display: flex; align-items: center; gap: 6px; }
+.hero .meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+/* Section */
+.section { margin-bottom: 36px; }
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--red);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon { font-size: 22px; }
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+/* Framework Diagram */
+.framework {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.framework-item {
+  text-align: center;
+  padding: 20px 12px;
+  border-radius: 12px;
+  border: 2px solid;
+}
+.framework-item:nth-child(1) { border-color: var(--red); background: var(--red-bg); }
+.framework-item:nth-child(2) { border-color: var(--orange); background: #fef9f3; }
+.framework-item:nth-child(3) { border-color: var(--blue); background: var(--blue-bg); }
+.framework-item .icon { font-size: 32px; margin-bottom: 8px; }
+.framework-item .title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+.framework-item .desc { font-size: 12px; color: var(--gray); }
+.framework-arrow {
+  text-align: center;
+  font-size: 24px;
+  color: var(--gray);
+  margin: 4px 0;
+}
+
+/* Data Grid */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.data-cell {
+  background: var(--gray-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-align: center;
+}
+.data-cell .label { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+.data-cell .value { font-size: 22px; font-weight: 800; }
+.data-cell .unit { font-size: 12px; color: var(--gray); }
+
+/* Theme Card */
+.theme-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-top: 4px solid var(--red);
+}
+.theme-card.blue-top { border-top-color: var(--blue); }
+.theme-card.green-top { border-top-color: var(--green); }
+.theme-card.orange-top { border-top-color: var(--orange); }
+.theme-card.purple-top { border-top-color: var(--purple); }
+.theme-card.gold-top { border-top-color: var(--gold); }
+
+.theme-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.theme-header .title-group { display: flex; align-items: center; gap: 10px; }
+.theme-header .emoji { font-size: 28px; }
+.theme-header .title { font-size: 18px; font-weight: 700; }
+.theme-header .potential {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.potential.high { background: var(--red-bg); color: var(--red); }
+.potential.medium-high { background: #fef9f3; color: var(--orange); }
+.potential.medium { background: var(--blue-bg); color: var(--blue); }
+.potential.speculative { background: #f5eef8; color: var(--purple); }
+
+.theme-body { font-size: 14px; color: #555; margin-bottom: 14px; }
+
+/* Catalyst tags */
+.catalyst-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag.red { background: var(--red-bg); color: var(--red); }
+.tag.blue { background: var(--blue-bg); color: var(--blue); }
+.tag.orange { background: #fef9f3; color: var(--orange); }
+.tag.gray { background: var(--gray-light); color: var(--gray); }
+
+/* Stock Table */
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 10px;
+}
+.stock-table th {
+  background: var(--gray-light);
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--gray);
+  font-size: 12px;
+  border-bottom: 2px solid #e0e0e0;
+}
+.stock-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.stock-table tr:hover { background: #fafbfc; }
+.stock-table .up { color: var(--red); font-weight: 700; }
+.stock-table .down { color: var(--green); font-weight: 700; }
+.stock-table .flat { color: var(--gray); }
+.stock-table .stock-name { font-weight: 700; }
+.stock-table .sector { font-size: 11px; color: var(--gray); }
+
+/* Chart containers */
+.chart-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.chart-container canvas { max-height: 320px; }
+
+/* Summary box */
+.summary-box {
+  background: linear-gradient(135deg, var(--red-bg), #fef9f3);
+  border: 2px solid var(--red);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+.summary-box h3 { color: var(--red); font-size: 16px; margin-bottom: 10px; }
+
+/* Warning box */
+.warning-box {
+  background: #fff8e1;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.warning-box strong { color: var(--gold); }
+
+/* Disclaimer */
+.disclaimer {
+  background: var(--gray-light);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-top: 24px;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  body { font-size: 13px; }
+  .container { padding: 0 12px 40px; }
+  .hero { padding: 32px 20px; border-radius: 0 0 16px 16px; }
+  .hero h1 { font-size: 20px; }
+  .framework { grid-template-columns: 1fr; }
+  .data-grid { grid-template-columns: repeat(2, 1fr); }
+  .stock-table { font-size: 11px; }
+  .stock-table th, .stock-table td { padding: 6px 4px; }
+  .theme-card { padding: 16px; }
+  .section-title { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>下一批5倍股潜力挖掘</h1>
+  <div class="subtitle">基于"三重共振"模型的前瞻筛选 — 从已验证的5倍股共性出发，寻找尚未启动的超级牛股</div>
+  <div class="meta">
+    <span><span class="dot"></span> 数据截止 2026-06-30</span>
+    <span><span class="dot"></span> 研股股 · 股票研究专家</span>
+    <span><span class="dot"></span> 60+ 标的扫描</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Part 1: Framework Summary -->
+<div class="section">
+  <div class="section-title"><span class="icon">📋</span> 一、5倍股核心特性："三重共振"模型</div>
+
+  <div class="card">
+    <p>从上一份分析中，132只5倍股的七大共性可以提炼为一个核心框架——<strong>"三重共振"模型</strong>。当以下三个条件同时满足时，5倍乃至10倍股批量诞生：</p>
+
+    <div class="framework">
+      <div class="framework-item">
+        <div class="icon">🚀</div>
+        <div class="title">需求指数级爆发</div>
+        <div class="desc">不是线性增长，而是10x乃至100x的跃升<br>如：Token调用量2年增1000倍<br>AI服务器BOM价值+233%</div>
+      </div>
+      <div class="framework-item">
+        <div class="icon">🔒</div>
+        <div class="title">供给端刚性约束</div>
+        <div class="desc">产能扩张周期≥18个月<br>资源稀缺/地缘断供/政策管制<br>技术壁垒极高（良率/工艺）</div>
+      </div>
+      <div class="framework-item">
+        <div class="icon">⚡</div>
+        <div class="title">技术拐点出现</div>
+        <div class="desc">从实验室走向量产（0→1）<br>从样品走向规模交付（1→100）<br>单机柜价值量数倍提升</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px; padding:14px; background:var(--gray-light); border-radius:8px; font-size:13px;">
+      <strong>传导链条</strong>：需求爆发 → BOM扩张 → 上游涨价 → 供给收缩放大 → 业绩验证 → 估值从周期股切到成长股（PE 30→300） → 趋势抱团 → 正反馈循环
+    </div>
+
+    <div style="margin-top:12px; padding:14px; background:var(--red-bg); border-radius:8px; font-size:13px;">
+      <strong style="color:var(--red)">关键筛选标准</strong>：① 有明确的涨价/增量逻辑 ② 供给端有刚性约束 ③ 技术拐点即将或正在发生 ④ <strong>当前涨幅还不算极端</strong>（YTD &lt;100%为佳） ⑤ 有业绩验证路径（不是纯PPT概念）
+    </div>
+  </div>
+</div>
+
+<!-- Part 2: Screening Overview -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔍</span> 二、七大方向扫描总览</div>
+
+  <div class="chart-container">
+    <canvas id="overviewChart"></canvas>
+  </div>
+
+  <div class="card">
+    <p>以"三重共振"模型为标尺，扫描了60+只A股标的，覆盖8个新兴方向。核心发现：<strong>机器人产业链和AI眼镜是当前最具"5倍潜力"但尚未被充分定价的两个方向</strong>——多数标的YTD为负，与上一轮AI算力链5倍股启动前的形态高度相似。</p>
+  </div>
+</div>
+
+<!-- Part 3: Theme Details -->
+
+<!-- Theme 1: Humanoid Robots -->
+<div class="theme-card">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">🤖</span>
+      <span class="title">人形机器人产业链</span>
+    </div>
+    <span class="potential high">★ 最高潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：Tesla Optimus 2026年试产，Figure 02已获宝马订单，国产宇树/智元/傅利叶开始小批量交付。马斯克目标2030年年产1亿台，即使实现10%也是1000万台。</p>
+    <p><strong>供给端</strong>：谐波减速器全球仅3家量产（哈默纳科、新宝、绿的谐波），行星滚柱丝杠全球被GSK/THK垄断，国产替代率&lt;5%。产能建设周期18-24个月。</p>
+    <p><strong>技术拐点</strong>：具身智能大模型（VLA）突破让机器人从"会走"到"会干活"，2026年是从Demo走向量产的转折年。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">2026H2 Optimus试产</span>
+    <span class="tag red">减速器国产替代&lt;5%</span>
+    <span class="tag orange">丝杠单价5000元/台</span>
+    <span class="tag blue">VLA大模型突破</span>
+    <span class="tag gray">多数标的YTD为负</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sz002472</td><td class="stock-name">双环传动</td><td class="sector">精密齿轮/减速器</td><td>41.51</td><td class="down">-12.4</td><td>352.8</td><td>27.8</td><td>3.42</td></tr>
+      <tr><td>sh603728</td><td class="stock-name">鸣志电器</td><td class="sector">空心杯电机</td><td>60.92</td><td class="down">-15.8</td><td>255.2</td><td>376.6</td><td>8.61</td></tr>
+      <tr><td>sz300660</td><td class="stock-name">江苏雷利</td><td class="sector">微特电机</td><td>27.86</td><td class="down">-33.7</td><td>161.9</td><td>59.7</td><td>4.64</td></tr>
+      <tr><td>sh603009</td><td class="stock-name">北特科技</td><td class="sector">丝杠</td><td>47.97</td><td class="flat">-0.1</td><td>166.2</td><td>134.4</td><td>8.28</td></tr>
+      <tr><td>sz300580</td><td class="stock-name">贝斯特</td><td class="sector">精密加工/丝杠</td><td>20.11</td><td class="down">-23.1</td><td>101.0</td><td>35.9</td><td>3.07</td></tr>
+      <tr><td>sh601100</td><td class="stock-name">恒立液压</td><td class="sector">丝杠/液压</td><td>107.56</td><td class="flat">-2.1</td><td>1442.2</td><td>52.1</td><td>8.06</td></tr>
+      <tr><td>sz002896</td><td class="stock-name">中大力德</td><td class="sector">精密减速器</td><td>76.38</td><td class="down">-14.5</td><td>150.1</td><td>266.3</td><td>12.46</td></tr>
+      <tr><td>sz002979</td><td class="stock-name">雷赛智能</td><td class="sector">运动控制</td><td>55.78</td><td class="up">+32.6</td><td>176.3</td><td>72.9</td><td>9.34</td></tr>
+      <tr><td>sh603662</td><td class="stock-name">柯力传感</td><td class="sector">力控传感器</td><td>71.17</td><td class="flat">-1.2</td><td>199.9</td><td>65.3</td><td>7.16</td></tr>
+      <tr><td>sz300007</td><td class="stock-name">汉威科技</td><td class="sector">气体/触觉传感器</td><td>38.20</td><td class="down">-28.7</td><td>125.1</td><td>75.1</td><td>4.26</td></tr>
+      <tr><td>sz002708</td><td class="stock-name">光洋股份</td><td class="sector">轴承/丝杠</td><td>13.19</td><td class="flat">-0.7</td><td>74.1</td><td>68.9</td><td>4.19</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; padding:12px; background:var(--red-bg); border-radius:8px; font-size:13px;">
+    <strong style="color:var(--red)">变异认知</strong>：市场把机器人当成"远期概念"，定价的是2028-2030年的事。但如果Optimus 2026H2真的试产，产业链订单从Q4开始兑现，<strong>减速器/丝杠/电机环节可能复刻2024年光模块"从概念到业绩验证"的走势</strong>。当前双环传动PE仅27.8倍，在机器人概念股中属于极低估值的"隐形冠军"。
+  </div>
+</div>
+
+<!-- Theme 2: AI Glasses -->
+<div class="theme-card blue-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">🕶️</span>
+      <span class="title">AI眼镜产业链</span>
+    </div>
+    <span class="potential high">★ 最高潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：苹果AI眼镜2026H2发布（供应链消息），Meta Ray-Ban眼镜销量已破千万级。AI眼镜是"消费电子最后一块未占领的入口"，全球眼镜市场年出货量10亿+副。</p>
+    <p><strong>供给端</strong>：光波导良率是核心瓶颈——衍射光波导良率仅30-50%，晶圆级光波导刚突破80%。微型光机模组产能极度有限。歌尔掌握了光波导+光机+整机代工的全链条。</p>
+    <p><strong>技术拐点</strong>：从"蓝牙音频眼镜"升级到"AI+AR显示眼镜"，BOM价值从200元跳到2000元+。端侧AI SoC让眼镜具备独立推理能力。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">苹果眼镜2026H2发布</span>
+    <span class="tag red">Meta眼镜破千万销量</span>
+    <span class="tag orange">BOM从200→2000元</span>
+    <span class="tag blue">光波导良率突破80%</span>
+    <span class="tag gray">歌尔PE仅20倍</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sz002241</td><td class="stock-name">歌尔股份</td><td class="sector">代工/光波导/光机</td><td>22.53</td><td class="down">-21.0</td><td>799.9</td><td>20.1</td><td>2.18</td></tr>
+      <tr><td>sh688608</td><td class="stock-name">恒玄科技</td><td class="sector">端侧AI SoC</td><td>167.19</td><td class="down">-26.3</td><td>282.9</td><td>57.4</td><td>3.94</td></tr>
+      <tr><td>sh688049</td><td class="stock-name">炬芯科技</td><td class="sector">AIoT SoC</td><td>46.91</td><td class="down">-10.4</td><td>82.2</td><td>38.8</td><td>4.01</td></tr>
+      <tr><td>sz002273</td><td class="stock-name">水晶光电</td><td class="sector">光学薄膜/光波导</td><td>35.48</td><td class="up">+42.4</td><td>493.4</td><td>41.2</td><td>4.97</td></tr>
+      <tr><td>sz300622</td><td class="stock-name">博士眼镜</td><td class="sector">渠道/零售</td><td>13.94</td><td class="down">-36.6</td><td>44.5</td><td>28.1</td><td>5.02</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; padding:12px; background:var(--blue-bg); border-radius:8px; font-size:13px;">
+    <strong style="color:var(--blue)">变异认知</strong>：歌尔PE仅20倍，市场把它当"传统声学代工"定价。但歌尔实际已垄断全球60%+AI眼镜代工份额，自研StarG-E1光波导良率80%，华为350万台订单已锁定。如果AI眼镜出货量从千万级跳到亿级，歌尔将从"代工厂"重估为"AI入口级平台"。
+  </div>
+</div>
+
+<!-- Theme 3: Power Semiconductors -->
+<div class="theme-card orange-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">⚡</span>
+      <span class="title">功率半导体 / SiC / GaN</span>
+    </div>
+    <span class="potential medium-high">中高潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：AI数据中心800V HVDC架构全面铺开，单台固态变压器SiC器件价值量是传统硅基的5-8倍。英飞凌预计2027财年AI数据中心相关营收25亿欧元（3年增3倍）。国内扬杰/宏微已发新一轮涨价通知。</p>
+    <p><strong>供给端</strong>：SiC衬底生长周期6个月，8英寸量产刚起步。GaN晶圆产能全球紧张。功率器件IDM产能扩张周期2-3年。</p>
+    <p><strong>技术拐点</strong>：800V架构从电动车渗透到AI数据中心，SiC/GaN在数据中心CAGR分别达29.5%/46.3%（Yole预测）。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">功率半导体全产业链涨价</span>
+    <span class="tag red">AI数据中心800V HVDC</span>
+    <span class="tag orange">SiC衬底产能紧张</span>
+    <span class="tag blue">GaN数据中心CAGR 46%</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sh688187</td><td class="stock-name">时代电气</td><td class="sector">IGBT/SiC（IDM）</td><td>68.66</td><td class="up">+33.9</td><td>925.3</td><td>22.5</td><td>2.15</td></tr>
+      <tr><td>sh603290</td><td class="stock-name">斯达半导</td><td class="sector">IGBT龙头</td><td>152.94</td><td class="up">+60.0</td><td>366.2</td><td>111.6</td><td>5.35</td></tr>
+      <tr><td>sh688261</td><td class="stock-name">东微半导</td><td class="sector">高压MOSFET</td><td>104.93</td><td class="up">+28.0</td><td>128.6</td><td>292.6</td><td>4.36</td></tr>
+      <tr><td>sh688234</td><td class="stock-name">天岳先进</td><td class="sector">SiC衬底</td><td>173.51</td><td class="up">+95.2</td><td>840.9</td><td>亏损</td><td>11.82</td></tr>
+      <tr><td>sh600460</td><td class="stock-name">士兰微</td><td class="sector">IDM全产业链</td><td>54.66</td><td class="up">+92.4</td><td>909.6</td><td>198.2</td><td>7.46</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; padding:12px; background:#fef9f3; border-radius:8px; font-size:13px;">
+    <strong style="color:var(--orange)">变异认知</strong>：时代电气PE仅22.5倍，是功率半导体板块中最便宜的标的。市场仍把它当"高铁IGBT"定价，但公司SiC业务已在光伏储能和AI电源领域获批量订单。如果800V HVDC在AI数据中心普及，时代电气的SiC营收占比将从5%跳到30%+，估值体系从"轨交周期股"切换到"AI电源成长股"。
+  </div>
+</div>
+
+<!-- Theme 4: Liquid Cooling -->
+<div class="theme-card blue-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">💧</span>
+      <span class="title">液冷产业链</span>
+    </div>
+    <span class="potential medium-high">中高潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：英伟达Rubin平台全面液冷，工信部强制PUE≤1.25。"液冷+800V高压直流"成下一代AIDC标配。全球液冷市场规模2025年67亿美元→2030年350亿美元（CAGR 39%）。</p>
+    <p><strong>供给端</strong>：液冷板/CDU精密制造壁垒高，快接头专利被海外垄断。浸没式冷却液配方极少数企业掌握。产能建设周期12-18个月。</p>
+    <p><strong>技术拐点</strong>：从"冷板式液冷"升级到"浸没式/液态金属"散热。相变浸没冷却能效比冷板再降40%。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">英伟达Rubin强制液冷</span>
+    <span class="tag red">政策PUE≤1.25</span>
+    <span class="tag orange">液冷市场CAGR 39%</span>
+    <span class="tag blue">浸没式冷却新拐点</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sz002837</td><td class="stock-name">英维克</td><td class="sector">液冷龙头</td><td>79.56</td><td class="flat">-3.1</td><td>1013.9</td><td>210.1</td><td>30.77</td></tr>
+      <tr><td>sz300499</td><td class="stock-name">高澜股份</td><td class="sector">液冷/CDU</td><td>38.70</td><td class="up">+26.4</td><td>118.1</td><td>386.9</td><td>8.61</td></tr>
+      <tr><td>sz300249</td><td class="stock-name">依米康</td><td class="sector">IDC制冷</td><td>15.40</td><td class="up">+5.3</td><td>70.6</td><td>214.3</td><td>11.32</td></tr>
+      <tr><td>sh603912</td><td class="stock-name">佳力图</td><td class="sector">精密空调</td><td>7.78</td><td class="down">-9.2</td><td>42.2</td><td>亏损</td><td>2.45</td></tr>
+      <tr><td>sh688676</td><td class="stock-name">金盘科技</td><td class="sector">变压器/液冷</td><td>84.64</td><td class="flat">-5.6</td><td>389.2</td><td>58.5</td><td>8.01</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Theme 5: Low Altitude Economy -->
+<div class="theme-card purple-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">✈️</span>
+      <span class="title">低空经济 / eVTOL</span>
+    </div>
+    <span class="potential speculative">高风险高赔率</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：低空经济首次升级为国家新兴支柱产业（与集成电路并列）。eVTOL 2026年进入适航取证高峰期，亿航EH216-S已获全球首张型号合格证。</p>
+    <p><strong>供给端</strong>：整机适航认证周期3-5年，电池能量密度要求≥300Wh/kg，电机功率密度要求极高。空管系统需从零建设。</p>
+    <p><strong>技术拐点</strong>：从"演示飞行"到"商业运营"的跨越。2026-2027年是eVTOL取证+运营元年。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">国家新兴支柱产业定位</span>
+    <span class="tag orange">2026适航取证高峰</span>
+    <span class="tag blue">亿航获全球首证</span>
+    <span class="tag gray">全线标的YTD为负</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sz000099</td><td class="stock-name">中信海直</td><td class="sector">通航运营</td><td>14.56</td><td class="down">-29.5</td><td>113.0</td><td>36.4</td><td>2.05</td></tr>
+      <tr><td>sz002085</td><td class="stock-name">万丰奥威</td><td class="sector">eVTOL整机</td><td>11.09</td><td class="down">-30.5</td><td>235.5</td><td>24.6</td><td>3.13</td></tr>
+      <tr><td>sh688070</td><td class="stock-name">纵横股份</td><td class="sector">工业无人机</td><td>37.33</td><td class="down">-32.6</td><td>33.0</td><td>163.0</td><td>5.53</td></tr>
+      <tr><td>sh688631</td><td class="stock-name">莱斯信息</td><td class="sector">空管系统</td><td>46.91</td><td class="down">-30.9</td><td>76.7</td><td>133.5</td><td>4.09</td></tr>
+      <tr><td>sz301091</td><td class="stock-name">深城交</td><td class="sector">低空基建</td><td>15.50</td><td class="down">-42.0</td><td>81.7</td><td>227.3</td><td>3.51</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; padding:12px; background:#f5eef8; border-radius:8px; font-size:13px;">
+    <strong style="color:var(--purple)">风险提示</strong>：低空经济标的<strong>全线下跌30%+</strong>，反映市场对商业化节奏的悲观。eVTOL取证→运营→盈利的链条极长，可能需要2-3年才能看到业绩兑现。这是"高风险高赔率"方向——如果2026H2有eVTOL获运营许可并开始收费，板块可能报复性反弹。
+  </div>
+</div>
+
+<!-- Theme 6: Solid State Battery -->
+<div class="theme-card green-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">🔋</span>
+      <span class="title">固态电池产业链</span>
+    </div>
+    <span class="potential medium">中等潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：2026年底中国企业发布全球首款可量产500Wh/kg全固态电池A样电芯。宁德时代/比亚迪/广汽密集宣布2026-2027年量产计划。固态电池能量密度400-600Wh/kg（传统仅180-250Wh/kg）。</p>
+    <p><strong>供给端</strong>：硫化物电解质全球产能极低（吨级中试），扩产到百吨级需2-3年。硅碳负极产能同样受限。核心设备（等静压、辊压）依赖进口。</p>
+    <p><strong>技术拐点</strong>：从半固态（已有量产）到全固态（2026-2027年GWh级量产）的跨越。全固态彻底解决热失控问题。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">2026底GWh级量产</span>
+    <span class="tag red">500Wh/kg突破</span>
+    <span class="tag orange">硫化物电解质紧缺</span>
+    <span class="tag blue">比亚迪2027装车</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sh603659</td><td class="stock-name">璞泰来</td><td class="sector">负极/固态配套</td><td>28.93</td><td class="up">+6.7</td><td>620.2</td><td>24.1</td><td>3.02</td></tr>
+      <tr><td>sz300073</td><td class="stock-name">当升科技</td><td class="sector">正极材料</td><td>48.04</td><td class="down">-16.5</td><td>261.5</td><td>32.7</td><td>1.77</td></tr>
+      <tr><td>sh688778</td><td class="stock-name">厦钨新能</td><td class="sector">正极材料</td><td>54.40</td><td class="down">-29.4</td><td>274.6</td><td>32.2</td><td>2.96</td></tr>
+      <tr><td>sh603200</td><td class="stock-name">上海洗霸</td><td class="sector">固态电解质</td><td>43.36</td><td class="down">-39.0</td><td>76.1</td><td>92.8</td><td>6.95</td></tr>
+      <tr><td>sh688006</td><td class="stock-name">杭可科技</td><td class="sector">电池设备</td><td>36.55</td><td class="up">+25.5</td><td>220.6</td><td>58.0</td><td>4.06</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Theme 7: Nuclear/SMR -->
+<div class="theme-card gold-top">
+  <div class="theme-header">
+    <div class="title-group">
+      <span class="emoji">☢️</span>
+      <span class="title">核电 / SMR小型堆</span>
+    </div>
+    <span class="potential medium">中等潜力</span>
+  </div>
+  <div class="theme-body">
+    <p><strong>需求端</strong>：AI数据中心电力需求爆发，谷歌/亚马逊/甲骨文集体押注SMR。美股OKLO年内涨116%、Vistra涨343%、NuScale涨485%。亚马逊投资X-Energy（首日涨27%，市值120亿美元）。</p>
+    <p><strong>供给端</strong>：核电设备制造周期3-5年，核安全级材料（锆合金包壳管、核级不锈钢）产能有限。SMR小型堆全球尚无量产先例。</p>
+    <p><strong>技术拐点</strong>：SMR从"设计图"走向"首堆建设"。中国玲龙一号（ACP100）已进入调试阶段，是全球首个陆上商用SMR。</p>
+  </div>
+  <div class="catalyst-tags">
+    <span class="tag red">AI巨头集体押注SMR</span>
+    <span class="tag orange">玲龙一号调试中</span>
+    <span class="tag blue">设备制造周期3-5年</span>
+    <span class="tag gray">美股SMR涨5倍在先</span>
+  </div>
+  <table class="stock-table">
+    <thead>
+      <tr><th>代码</th><th>名称</th><th>细分</th><th>现价</th><th>YTD%</th><th>市值(亿)</th><th>PE</th><th>PB</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>sh600875</td><td class="stock-name">东方电气</td><td class="sector">核电设备龙头</td><td>28.77</td><td class="up">+18.5</td><td>995.0</td><td>23.3</td><td>2.12</td></tr>
+      <tr><td>sh603308</td><td class="stock-name">应流股份</td><td class="sector">核电铸件/叶片</td><td>60.40</td><td class="up">+44.7</td><td>410.1</td><td>108.9</td><td>8.07</td></tr>
+      <tr><td>sz002318</td><td class="stock-name">久立特材</td><td class="sector">核电管材</td><td>23.90</td><td class="down">-14.5</td><td>233.5</td><td>15.4</td><td>2.87</td></tr>
+      <tr><td>sh601985</td><td class="stock-name">中国核电</td><td class="sector">运营/SMR</td><td>9.03</td><td class="up">+4.6</td><td>1857.3</td><td>22.6</td><td>1.55</td></tr>
+      <tr><td>sh601727</td><td class="stock-name">上海电气</td><td class="sector">核电设备</td><td>7.00</td><td class="down">-18.7</td><td>1087.8</td><td>84.0</td><td>1.98</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; padding:12px; background:#fef9f3; border-radius:8px; font-size:13px;">
+    <strong style="color:var(--gold)">变异认知</strong>：久立特材PE仅15.4倍，是核电板块最便宜的标的。公司核级不锈钢管通过华龙一号/玲龙一号认证，SMR管材价值量是传统核电站的2-3倍。如果SMR建设加速，久立将从"周期钢管股"重估为"SMR核心材料股"。
+  </div>
+</div>
+
+<!-- Part 4: Comparison Chart -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> 三、七大方向潜力对比</div>
+  <div class="chart-container">
+    <canvas id="radarChart"></canvas>
+  </div>
+</div>
+
+<!-- Part 5: Top Picks -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 四、"三重共振"评分 TOP 15 标的</div>
+  <div class="card">
+    <p>综合"需求爆发程度、供给刚性、技术拐点接近度、当前估值水平、市值弹性"五维度评分（1-10分），筛选出最具5-10倍潜力的15只标的：</p>
+    <table class="stock-table" style="font-size:12px;">
+      <thead>
+        <tr>
+          <th>#</th><th>代码</th><th>名称</th><th>方向</th><th>需求</th><th>供给</th><th>技术</th><th>估值</th><th>弹性</th><th>总分</th>
+        </tr>
+      </thead>
+      <tbody id="scoreTable">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Part 6: Strategy -->
+<div class="section">
+  <div class="section-title"><span class="icon">💡</span> 五、投资策略建议</div>
+
+  <div class="summary-box">
+    <h3>核心判断</h3>
+    <p>上一轮5倍股的核心特征是"AI算力硬件需求爆发+上游涨价+供给冲击"，传导路径已被验证。下一轮5倍股大概率出现在<strong>AI需求的"第二波外溢"</strong>——从算力硬件传导到端侧（AI眼镜）、具身（机器人）、能源（功率半导体/液冷/核电）和材料（固态电池）。</p>
+    <p>最值得关注的现象是：<strong>机器人产业链和AI眼镜板块整体跑输大盘</strong>，与2024年中光模块板块启动前的状态高度相似——产业催化即将到来，但市场尚未定价。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">分阶段布局思路</div>
+    <table class="stock-table">
+      <thead>
+        <tr><th>阶段</th><th>方向</th><th>逻辑</th><th>代表标的</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>近期（0-6月）</strong></td>
+          <td>功率半导体涨价</td>
+          <td>涨价已启动，业绩Q3-Q4兑现</td>
+          <td>时代电气、斯达半导</td>
+        </tr>
+        <tr>
+          <td><strong>近期（0-6月）</strong></td>
+          <td>液冷放量</td>
+          <td>Rubin量产+政策强制</td>
+          <td>英维克、高澜股份</td>
+        </tr>
+        <tr>
+          <td><strong>中期（6-12月）</strong></td>
+          <td>人形机器人量产</td>
+          <td>Optimus试产→订单兑现</td>
+          <td>双环传动、中大力德、恒立液压</td>
+        </tr>
+        <tr>
+          <td><strong>中期（6-12月）</strong></td>
+          <td>AI眼镜爆发</td>
+          <td>苹果发布→供应链放量</td>
+          <td>歌尔股份、恒玄科技</td>
+        </tr>
+        <tr>
+          <td><strong>远期（12-24月）</strong></td>
+          <td>固态电池量产</td>
+          <td>GWh级产线投产</td>
+          <td>璞泰来、当升科技</td>
+        </tr>
+        <tr>
+          <td><strong>远期（12-24月）</strong></td>
+          <td>SMR核电</td>
+          <td>首堆商运→批量建设</td>
+          <td>东方电气、久立特材</td>
+        </tr>
+        <tr>
+          <td><strong>远期（12-24月）</strong></td>
+          <td>低空经济运营</td>
+          <td>eVTOL取证→商业收费</td>
+          <td>万丰奥威、莱斯信息</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ 重要提醒</strong>：以上分析基于"三重共振"模型的逻辑推演，<strong>不等于这些股票一定会涨5倍</strong>。5倍股的诞生需要"对的时间+对的催化+对的资金共识"三者共振。当前筛选的方向和标的，部分可能需要等待1-2年催化落地，部分可能因技术路线变更或商业化不及预期而证伪。建议作为<strong>研究跟踪清单</strong>而非即时买入清单，等待催化信号确认后再行动。
+  </div>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:8px;">数据来源：腾讯自选股行情接口、东方财富网、雪球研报、WebSearch公开信息。行情数据截止2026年6月30日收盘。评分系作者基于"三重共振"模型的主观判断，仅供参考。</p>
+</div>
+
+</div>
+
+<script>
+// Overview Chart - YTD performance by theme
+const themeData = {
+  labels: ['机器人', 'AI眼镜', '功率半导体', '液冷', '低空经济', '固态电池', '核电'],
+  ytdAvg: [-13.5, -10.3, +62.0, +7.0, -33.0, -10.5, +6.8],
+  potential: [9.5, 9.0, 7.5, 7.0, 8.5, 6.5, 6.0]
+};
+
+const ctx1 = document.getElementById('overviewChart');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: themeData.labels,
+    datasets: [{
+      label: '板块平均YTD涨幅(%)',
+      data: themeData.ytdAvg,
+      backgroundColor: function(ctx) {
+        const v = ctx.raw;
+        return v >= 0 ? '#e74c3c' : '#27ae60';
+      },
+      borderRadius: 6,
+      barThickness: 40
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '七大方向：板块平均YTD涨幅 vs 5倍潜力评分', font: { size: 14 } },
+      legend: { display: false }
+    },
+    scales: {
+      y: {
+        title: { display: true, text: 'YTD涨幅(%)' },
+        grid: { color: '#f0f0f0' }
+      }
+    }
+  }
+});
+
+// Radar Chart
+const ctx2 = document.getElementById('radarChart');
+new Chart(ctx2, {
+  type: 'radar',
+  data: {
+    labels: ['需求爆发', '供给刚性', '技术拐点', '估值低位', '市值弹性', '催化接近'],
+    datasets: [
+      {
+        label: '人形机器人',
+        data: [10, 9, 8, 9, 8, 7],
+        borderColor: '#e74c3c',
+        backgroundColor: 'rgba(231,76,60,0.1)',
+        borderWidth: 2
+      },
+      {
+        label: 'AI眼镜',
+        data: [9, 8, 9, 9, 7, 8],
+        borderColor: '#3498db',
+        backgroundColor: 'rgba(52,152,219,0.1)',
+        borderWidth: 2
+      },
+      {
+        label: '功率半导体',
+        data: [8, 7, 8, 5, 7, 9],
+        borderColor: '#e67e22',
+        backgroundColor: 'rgba(230,126,34,0.1)',
+        borderWidth: 2
+      },
+      {
+        label: '低空经济',
+        data: [8, 8, 7, 9, 9, 5],
+        borderColor: '#9b59b6',
+        backgroundColor: 'rgba(155,89,182,0.1)',
+        borderWidth: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '四大高潜力方向：六维度雷达对比', font: { size: 14 } },
+      legend: { position: 'bottom' }
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 10,
+        ticks: { stepSize: 2 }
+      }
+    }
+  }
+});
+
+// Score Table
+const scores = [
+  {code:'sz002472',name:'双环传动',sector:'机器人/齿轮',demand:9,supply:9,tech:8,valuation:9,elasticity:7,total:42},
+  {code:'sz002241',name:'歌尔股份',sector:'AI眼镜/代工',demand:9,supply:8,tech:9,valuation:10,elasticity:7,total:43},
+  {code:'sh688187',name:'时代电气',sector:'功率/SiC',demand:8,supply:7,tech:8,valuation:10,elasticity:6,total:39},
+  {code:'sh601100',name:'恒立液压',sector:'机器人/丝杠',demand:9,supply:9,tech:7,valuation:7,elasticity:6,total:38},
+  {code:'sh688608',name:'恒玄科技',sector:'AI眼镜/SoC',demand:9,supply:8,tech:9,valuation:7,elasticity:7,total:40},
+  {code:'sz002896',name:'中大力德',sector:'机器人/减速器',demand:10,supply:10,tech:7,valuation:5,elasticity:8,total:40},
+  {code:'sh603662',name:'柯力传感',sector:'机器人/传感器',demand:9,supply:7,tech:7,valuation:7,elasticity:8,total:38},
+  {code:'sh603009',name:'北特科技',sector:'机器人/丝杠',demand:9,supply:9,tech:7,valuation:6,elasticity:8,total:39},
+  {code:'sz300499',name:'高澜股份',sector:'液冷/CDU',demand:8,supply:7,tech:8,valuation:5,elasticity:9,total:37},
+  {code:'sh688049',name:'炬芯科技',sector:'AI眼镜/SoC',demand:8,supply:7,tech:8,valuation:7,elasticity:9,total:39},
+  {code:'sh603659',name:'璞泰来',sector:'固态电池/负极',demand:7,supply:8,tech:8,valuation:8,elasticity:6,total:37},
+  {code:'sz002318',name:'久立特材',sector:'核电/管材',demand:7,supply:8,tech:7,valuation:10,elasticity:6,total:38},
+  {code:'sh603728',name:'鸣志电器',sector:'机器人/电机',demand:9,supply:8,tech:7,valuation:5,elasticity:8,total:37},
+  {code:'sh688070',name:'纵横股份',sector:'低空/无人机',demand:8,supply:8,tech:7,valuation:8,elasticity:9,total:40},
+  {code:'sh600875',name:'东方电气',sector:'核电设备',demand:7,supply:9,tech:7,valuation:8,elasticity:6,total:37},
+];
+
+const tbody = document.getElementById('scoreTable');
+scores.sort((a,b) => b.total - a.total).forEach((s, i) => {
+  const tr = document.createElement('tr');
+  const color = s.total >= 40 ? '#e74c3c' : s.total >= 38 ? '#e67e22' : '#3498db';
+  tr.innerHTML = `
+    <td><strong>${i+1}</strong></td>
+    <td>${s.code}</td>
+    <td class="stock-name">${s.name}</td>
+    <td class="sector">${s.sector}</td>
+    <td style="text-align:center">${s.demand}</td>
+    <td style="text-align:center">${s.supply}</td>
+    <td style="text-align:center">${s.tech}</td>
+    <td style="text-align:center">${s.valuation}</td>
+    <td style="text-align:center">${s.elasticity}</td>
+    <td style="text-align:center"><strong style="color:${color};font-size:15px;">${s.total}</strong></td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
