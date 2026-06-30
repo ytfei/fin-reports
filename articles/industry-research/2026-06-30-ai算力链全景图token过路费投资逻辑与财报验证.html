@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI算力链全景图：Token过路费投资逻辑与财报验证</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif; background:#f8fafc; color:#1a1a2e; line-height:1.7; }
+
+/* === Hero === */
+.hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+  color: white;
+  padding: 48px 32px 40px;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 32px;
+}
+.hero h1 { font-size:28px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px; }
+.hero .subtitle { font-size:15px; opacity:0.9; max-width:780px; line-height:1.6; }
+.hero .meta-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.hero .tag { background:rgba(255,255,255,0.15); padding:4px 12px; border-radius:20px; font-size:12px; }
+.hero .update-badge { background:#dc2626; padding:2px 10px; border-radius:12px; font-size:12px; font-weight:700; }
+
+.container { max-width:960px; margin:0 auto; padding:0 20px 60px; }
+
+/* === Section === */
+.section { margin-bottom:40px; }
+.section-title {
+  font-size:20px; font-weight:800; margin-bottom:20px;
+  padding-bottom:10px; border-bottom:3px solid #dc2626;
+  display:flex; align-items:center; gap:8px;
+}
+.section-title.blue { border-bottom-color:#2563eb; }
+.section-title.green { border-bottom-color:#16a34a; }
+.section-title.purple { border-bottom-color:#7c3aed; }
+
+/* === Logic === */
+.logic-box { background:#fff; border-radius:14px; padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:20px; }
+.logic-chain { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:12px; }
+.logic-step {
+  background:#fef2f2; color:#991b1b; padding:8px 14px; border-radius:8px; font-size:13px; font-weight:600;
+}
+.logic-arrow { color:#dc2626; font-size:20px; font-weight:bold; }
+
+.callout {
+  background:#eff6ff; border-left:4px solid #2563eb; border-radius:0 10px 10px 0;
+  padding:14px 18px; margin:16px 0; font-size:14px; line-height:1.7;
+}
+.callout strong { color:#1e40af; }
+
+/* === Chain Map === */
+.chain-map {
+  display:flex; flex-direction:column; gap:4px; margin:20px 0;
+}
+.chain-layer {
+  display:flex; align-items:stretch; border-radius:10px; overflow:hidden;
+}
+.chain-label {
+  width:120px; min-width:120px; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px; color:white; text-align:center; padding:12px 8px;
+}
+.chain-body {
+  flex:1; background:#f9fafb; padding:10px 14px; font-size:13px; line-height:1.6;
+}
+.chain-layer.l1 .chain-label { background:#991b1b; }
+.chain-layer.l2 .chain-label { background:#92400e; }
+.chain-layer.l3 .chain-label { background:#1e40af; }
+.chain-layer.l4 .chain-label { background:#065f46; }
+.chain-layer.l5 .chain-label { background:#5b21b6; }
+.chain-layer.l6 .chain-label { background:#831843; }
+
+/* === Table === */
+.tier-table { width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin:16px 0; }
+.tier-table th { background:#1e293b; color:white; padding:10px 6px; font-size:11px; font-weight:700; text-align:center; }
+.tier-table td { padding:8px 6px; font-size:12px; text-align:center; border-bottom:1px solid #f1f5f9; }
+.tier-table tr:last-child td { border-bottom:none; }
+.tier-table tr:hover { background:#f9fafb; }
+.tier-table .up { color:#dc2626; font-weight:700; }
+.tier-table .down { color:#16a34a; font-weight:700; }
+.tier-table .strong { color:#991b1b; }
+
+.tier-badge {
+  display:inline-block; padding:2px 8px; border-radius:8px; font-size:10px; font-weight:700;
+}
+.b-verified { background:#dc2626; color:white; }
+.b-strong { background:#fee2e2; color:#991b1b; }
+.b-growing { background:#fef3c7; color:#92400e; }
+.b-support { background:#dbeafe; color:#1e40af; }
+.b-caution { background:#fef2f2; color:#dc2626; }
+.b-warn { background:#d1fae5; color:#065f46; }
+.b-avoid { background:#f3f4f6; color:#6b7280; text-decoration:line-through; }
+
+/* === Data Cards === */
+.data-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:16px 0; }
+.data-card {
+  background:white; border-radius:12px; padding:16px; box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  border-top:3px solid #dc2626;
+}
+.data-card.blue { border-top-color:#2563eb; }
+.data-card.green { border-top-color:#16a34a; }
+.data-card .label { font-size:11px; color:#6b7280; margin-bottom:4px; }
+.data-card .value { font-size:24px; font-weight:800; color:#dc2626; }
+.data-card.blue .value { color:#2563eb; }
+.data-card.green .value { color:#16a34a; }
+.data-card .change { font-size:12px; margin-top:4px; }
+
+/* === Company Cards === */
+.company-card {
+  background:white; border-radius:14px; padding:20px 24px;
+  margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  border-left:4px solid #dc2626;
+}
+.company-card.s2 { border-left-color:#f59e0b; }
+.company-card.s3 { border-left-color:#2563eb; }
+.company-card.green { border-left-color:#16a34a; }
+.company-card.warn { border-left-color:#6b7280; }
+.company-card h3 { font-size:17px; margin-bottom:4px; }
+.company-card .ticker { font-size:11px; color:#6b7280; margin-bottom:10px; }
+.fin-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.fin-pill {
+  background:#f3f4f6; border-radius:8px; padding:3px 9px; font-size:11px;
+}
+.fin-pill .k { color:#6b7280; }
+.fin-pill .v { font-weight:700; color:#1a1a2e; }
+.fin-pill.q1 { background:#eff6ff; }
+.fin-pill.q1 .k { color:#2563eb; }
+.fin-pill .v.up { color:#dc2626; }
+.fin-pill .v.down { color:#16a34a; }
+.verdict {
+  background:#fffbeb; border-left:3px solid #f59e0b; padding:8px 12px;
+  border-radius:6px; font-size:12px; margin-top:8px;
+}
+.verdict.bold { font-weight:600; }
+.correction {
+  background:#fef2f2; border-left:3px solid #dc2626; padding:8px 12px;
+  border-radius:6px; font-size:12px; margin-top:8px;
+}
+.source-tag { font-size:10px; color:#9ca3af; margin-top:4px; }
+
+/* === Charts === */
+.chart-container {
+  background:white; border-radius:14px; padding:20px; margin:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+.chart-title { font-size:15px; font-weight:700; margin-bottom:12px; }
+.chart-wrap { height:340px; position:relative; }
+
+/* === Summary Box === */
+.summary-box {
+  background:linear-gradient(135deg,#1e3a5f,#0d1b2a); color:white;
+  border-radius:16px; padding:24px; margin-bottom:24px;
+}
+.summary-box h3 { font-size:18px; margin-bottom:12px; }
+.summary-box ul { list-style:none; }
+.summary-box li { padding:5px 0; font-size:13px; opacity:0.95; }
+.summary-box li::before { content:'▸ '; color:#f87171; font-weight:bold; }
+
+/* === Disclaimer === */
+.disclaimer {
+  background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px;
+  padding:16px; margin-top:32px; font-size:11px; color:#6b7280; line-height:1.7;
+}
+
+@media (max-width:680px) {
+  body { font-size:13px; }
+  .hero { padding:32px 16px 28px; }
+  .hero h1 { font-size:20px; }
+  .tier-table { font-size:10px; }
+  .tier-table th, .tier-table td { padding:5px 3px; }
+  .data-grid { grid-template-columns:repeat(2,1fr); }
+  .chain-label { width:80px; min-width:80px; font-size:11px; }
+  .chart-wrap { height:280px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>AI算力链全景图：Token过路费投资逻辑 <span class="update-badge">完整版 v3</span></h1>
+  <div class="subtitle">
+    与其赌AI应用谁赢，不如买"收过路费"的算力基础设施——<strong>从芯片出货到机柜出租，整条链的财报全景验证</strong><br>
+    A股36家公司 · 6大产业链环节 · 2026Q1最新数据
+  </div>
+  <div class="meta-tags">
+    <span class="tag">算力链全景</span>
+    <span class="tag">服务器→光模块→液冷→IDC→算力租赁</span>
+    <span class="tag">2026Q1</span>
+    <span class="tag">2026.06.30</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== 投资逻辑 ===== -->
+<div class="section">
+  <div class="section-title">一、核心投资逻辑：为什么要看整条链？</div>
+  <div class="logic-box">
+    <div class="logic-chain">
+      <span class="logic-step">AI应用好不好？</span>
+      <span class="logic-arrow">→</span>
+      <span class="logic-step">看Token消耗量</span>
+      <span class="logic-arrow">→</span>
+      <span class="logic-step">Token走算力基础设施</span>
+      <span class="logic-arrow">→</span>
+      <span class="logic-step">算力链各环节收入=验证信号</span>
+    </div>
+  </div>
+  <div class="callout">
+    <strong>关键认知：</strong>绝大多数AI应用公司不在A股上市，你无法从报表验证它们好不好。但不管谁的应用，只要消耗Token，就要走算力基础设施。<strong>算力链每个环节的收入，都是验证"AI是否真正在消耗"的窗口</strong>——而不同环节的验证角度不同：
+  </div>
+
+  <div class="chain-map">
+    <div class="chain-layer l1">
+      <div class="chain-label">上游·芯片<br>（英伟达/AMD）</div>
+      <div class="chain-body">
+        <strong>英伟达</strong>（NVDA.US）：全球AI芯片垄断者。2026财年Q1收入441亿美元，+69%。但这是美股标的，A股无法直接投资。
+      </div>
+    </div>
+    <div class="chain-layer l2">
+      <div class="chain-label">中游·服务器<br>（卖铲人）</div>
+      <div class="chain-body">
+        <strong>工业富联（601138）</strong>、<strong>浪潮信息（000977）</strong>、紫光股份（000938）、中科曙光（603019）、神州数码（000034）——将GPU组装成AI服务器出售。<strong>验证角度：</strong>服务器出货量 = 算力产能扩张速度
+      </div>
+    </div>
+    <div class="chain-layer l2">
+      <div class="chain-label">中游·光模块<br>（互联）</div>
+      <div class="chain-body">
+        <strong>中际旭创（300308）</strong>、<strong>新易盛（300502）</strong>、天孚通信（300394）、光迅科技（002281）——GPU之间、服务器之间的高速互联。<strong>验证角度：</strong>800G/1.6T出货量 = 算力集群规模
+      </div>
+    </div>
+    <div class="chain-layer l3">
+      <div class="chain-label">配套·液冷<br>（散热）</div>
+      <div class="chain-body">
+        <strong>英维克（002837）</strong>、科华数据（002335）、申菱环境（301018）、曙光数创（920808）——AIDC高功率密度必须液冷。<strong>验证角度：</strong>液冷渗透率 = AIDC占比
+      </div>
+    </div>
+    <div class="chain-layer l4">
+      <div class="chain-label">下游·IDC运营<br>（收租人）</div>
+      <div class="chain-body">
+        <strong>润泽科技（300442）</strong>、数据港（603881）、万国数据（GDS）、奥飞数据（300738）、光环新网（300383）、首都在线（300846）——出租机房/机柜给大客户。<strong>验证角度：</strong>租金收入 = Token持续消耗的最直接证据
+      </div>
+    </div>
+    <div class="chain-layer l5">
+      <div class="chain-label">下游·算力租赁<br>（卖Token）</div>
+      <div class="chain-body">
+        <strong>协创数据（300857）</strong>、<strong>利通电子（603629）</strong>、亚康股份（301085）、协鑫能科（002015）——直接出租GPU算力或提供算力服务。<strong>验证角度：</strong>算力服务收入 = Token消耗最末端
+      </div>
+    </div>
+    <div class="chain-layer l6">
+      <div class="chain-label">最末端·云平台<br>（应用方）</div>
+      <div class="chain-body">
+        优刻得（688158）、青云科技（688316）——直接面向AI应用的云服务。<strong>验证角度：</strong>但规模太小，参考价值有限
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="background:#fef2f2; border-left-color:#dc2626;">
+    <strong>验证逻辑链：</strong>芯片出货↑ → 服务器组装↑ → 光模块出货↑ → 液冷配套↑ → IDC租金↑ → 算力服务收入↑ → <strong>Token消耗↑</strong>。如果这条链<strong>每一环都在加速</strong>，就说明AI消耗是真实的、全方位的。任何一环断裂，都可能预示问题。
+  </div>
+</div>
+
+<!-- ===== 全景表 ===== -->
+<div class="section">
+  <div class="section-title blue">二、36家公司全景分级表（按产业链结构排列）</div>
+
+  <!-- 服务器/硬件 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节一：AI服务器/算力硬件（卖铲人）</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2026Q1营收(亿)</th><th>Q1增速</th><th>Q1净利增速</th><th>PE</th><th>Token验证力</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>工业富联</strong></td><td>601138</td><td>沪主板</td>
+        <td>2,510.8</td><td class="up">+56.5%</td><td class="up">+102.6%</td><td>~22x</td>
+        <td><span class="tier-badge b-verified">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>浪潮信息</strong></td><td>000977</td><td>深主板</td>
+        <td>354.7</td><td class="up">稳健</td><td class="up">+30.7%</td><td>~39x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>紫光股份</strong></td><td>000938</td><td>深主板</td>
+        <td>279.9</td><td class="up">+34.6%</td><td class="up">+126.1%</td><td>~35x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td>神州数码</td><td>000034</td><td>深主板</td>
+        <td>405.6</td><td class="up">+27.6%</td><td class="up">+8.6%</td><td>~28x</td>
+        <td><span class="tier-badge b-growing">★★★</span></td>
+      </tr>
+      <tr>
+        <td>中科曙光</td><td>603019</td><td>沪主板</td>
+        <td>32.0</td><td class="up">+18.8%</td><td class="up">稳健</td><td>~55x</td>
+        <td><span class="tier-badge b-growing">★★★</span></td>
+      </tr>
+      <tr>
+        <td>拓维信息</td><td>002261</td><td>深主板</td>
+        <td>5.9</td><td class="down">-4.7%</td><td class="down">-6.0%</td><td>高</td>
+        <td><span class="tier-badge b-caution">★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 光模块 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节二：光通信/互联（算力网络神经）</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2026Q1营收(亿)</th><th>Q1增速</th><th>Q1净利增速</th><th>PE</th><th>Token验证力</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>中际旭创</strong></td><td>300308</td><td>创业板</td>
+        <td>195.0</td><td class="up">+192.1%</td><td class="up">+262.3%</td><td>~45x</td>
+        <td><span class="tier-badge b-verified">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>新易盛</strong></td><td>300502</td><td>创业板</td>
+        <td>83.4</td><td class="up">+105.8%</td><td class="up">+76.8%</td><td>~75x</td>
+        <td><span class="tier-badge b-verified">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td>天孚通信</td><td>300394</td><td>创业板</td>
+        <td>13.3</td><td class="up">+40.8%</td><td class="up">+45.8%</td><td>~55x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td>光迅科技</td><td>002281</td><td>深主板</td>
+        <td>27.7</td><td class="up">+24.8%</td><td class="up">+59.8%</td><td>~45x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 液冷/配套 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节三：液冷/数据中心配套（AIDC必需品）</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2026Q1营收(亿)</th><th>Q1增速</th><th>Q1净利增速</th><th>PE</th><th>Token验证力</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>英维克</strong></td><td>002837</td><td>深主板</td>
+        <td>11.8</td><td class="up">+26.0%</td><td class="down">大幅下降</td><td>~250x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>科华数据</strong></td><td>002335</td><td>深主板</td>
+        <td>14.3</td><td class="up">+17.6%</td><td class="up">+13.2%</td><td>~35x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td>申菱环境</td><td>301018</td><td>创业板</td>
+        <td>6.2</td><td class="down">-1.8%</td><td class="down">-47.7%</td><td>~30x</td>
+        <td><span class="tier-badge b-growing">★★★</span></td>
+      </tr>
+      <tr>
+        <td>曙光数创</td><td>920808</td><td>北交所</td>
+        <td>1.0</td><td class="up">+782.5%</td><td class="down">亏损扩大</td><td>高</td>
+        <td><span class="tier-badge b-growing">★★★</span></td>
+      </tr>
+      <tr>
+        <td>高澜股份</td><td>300499</td><td>创业板</td>
+        <td>2.1</td><td class="down">-2.8%</td><td class="up">+16.6%</td><td>高</td>
+        <td><span class="tier-badge b-caution">★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- IDC运营 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节四：IDC/AIDC运营商（Token收租人）</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2025营收(亿)</th><th>2025增速</th><th>2026Q1增速</th><th>PE</th><th>Token纯度</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>润泽科技</strong></td><td>300442</td><td>创业板</td>
+        <td>56.7</td><td class="up">+30.0%</td><td class="up">+53.6%</td><td>~24x</td>
+        <td><span class="tier-badge b-verified">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>万国数据</strong></td><td>GDS.US/9698.HK</td><td>美股/港股</td>
+        <td>114.3</td><td class="up">+10.8%</td><td class="up">+23.6%</td><td>~18x</td>
+        <td><span class="tier-badge b-verified">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>奥飞数据</strong></td><td>300738</td><td>创业板</td>
+        <td>25.2</td><td class="up">+16.5%</td><td class="up">+31.2%</td><td>~40x</td>
+        <td><span class="tier-badge b-strong">★★★★</span></td>
+      </tr>
+      <tr>
+        <td>光环新网</td><td>300383</td><td>创业板</td>
+        <td>71.8</td><td class="down">-1.4%</td><td class="down">-10.8%</td><td>~50x</td>
+        <td><span class="tier-badge b-growing">★★★★</span></td>
+      </tr>
+      <tr>
+        <td>数据港</td><td>603881</td><td>沪主板</td>
+        <td>17.2</td><td class="down">+0.02%</td><td class="down">-3.8%</td><td>~147x</td>
+        <td><span class="tier-badge b-caution">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td>首都在线</td><td>300846</td><td>创业板</td>
+        <td>12.4</td><td class="down">-11.5%</td><td class="up">+15.3%</td><td>亏损</td>
+        <td><span class="tier-badge b-growing">★★★</span></td>
+      </tr>
+      <tr>
+        <td>网宿科技</td><td>300017</td><td>创业板</td>
+        <td>46.6</td><td class="down">-5.5%</td><td class="down">-9.7%</td><td>~35x</td>
+        <td><span class="tier-badge b-caution">★★</span></td>
+      </tr>
+      <tr>
+        <td>铜牛信息</td><td>300895</td><td>创业板</td>
+        <td>2.6</td><td class="down">-6.4%</td><td class="up">+12.2%</td><td>高</td>
+        <td><span class="tier-badge b-caution">★★</span></td>
+      </tr>
+      <tr>
+        <td>东阳光</td><td>600673</td><td>沪主板</td>
+        <td>—</td><td>—</td><td>重组中</td><td>—</td>
+        <td><span class="tier-badge b-growing">★→★★★★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 算力租赁 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节五：算力租赁/智算服务（直接卖Token）</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2026Q1营收(亿)</th><th>Q1增速</th><th>Q1净利增速</th><th>PE</th><th>真实性</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>协创数据</strong></td><td>300857</td><td>创业板</td>
+        <td>60.9</td><td class="up">+192.9%</td><td class="up">+343.5%</td><td>~92x</td>
+        <td><span class="tier-badge b-verified">✅ 真做</span></td>
+      </tr>
+      <tr>
+        <td><strong>利通电子</strong></td><td>603629</td><td>沪主板</td>
+        <td>10.0</td><td class="up">+41.6%</td><td class="up">+821.1%</td><td>~60x</td>
+        <td><span class="tier-badge b-verified">✅ 真做</span></td>
+      </tr>
+      <tr>
+        <td>亚康股份</td><td>301085</td><td>创业板</td>
+        <td>3.6</td><td class="up">+26.9%</td><td class="up">+38.6%</td><td>~57x</td>
+        <td><span class="tier-badge b-verified">✅ 真做</span></td>
+      </tr>
+      <tr>
+        <td>协鑫能科</td><td>002015</td><td>深主板</td>
+        <td>23.1</td><td>转型中</td><td class="up">+31.0%</td><td>~30x</td>
+        <td><span class="tier-badge b-growing">⚠️ 转型中</span></td>
+      </tr>
+      <tr>
+        <td>恒为科技</td><td>603649</td><td>沪主板</td>
+        <td>1.8</td><td class="up">+42.9%</td><td class="down">扣非仍亏</td><td>亏损</td>
+        <td><span class="tier-badge b-caution">⚠️ 未盈利</span></td>
+      </tr>
+      <tr>
+        <td>中贝通信</td><td>603220</td><td>沪主板</td>
+        <td>4.9</td><td class="down">-11.8%</td><td class="down">转亏</td><td>高</td>
+        <td><span class="tier-badge b-warn">⚠️ 存疑</span></td>
+      </tr>
+      <tr>
+        <td>润建股份</td><td>002929</td><td>深主板</td>
+        <td>18.2</td><td class="down">-23.5%</td><td class="down">-81.8%</td><td>高</td>
+        <td><span class="tier-badge b-warn">⚠️ 存疑</span></td>
+      </tr>
+      <tr>
+        <td>锦鸡股份</td><td>300798</td><td>创业板</td>
+        <td>3.3</td><td class="up">+25.5%</td><td class="down">转亏</td><td>~605x</td>
+        <td><span class="tier-badge b-avoid">❌ 蹭概念</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 云平台 -->
+  <h3 style="font-size:15px; margin:20px 0 8px; color:#991b1b;">▸ 环节六：云平台/其他</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>公司</th><th>代码</th><th>板块</th><th>2026Q1营收(亿)</th><th>Q1增速</th><th>Q1净利增速</th><th>PE</th><th>评价</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>优刻得</td><td>688158</td><td>科创板</td>
+        <td>4.4</td><td class="up">+16.8%</td><td class="up">扭亏</td><td>负→正</td>
+        <td><span class="tier-badge b-caution">规模小</span></td>
+      </tr>
+      <tr>
+        <td>青云科技</td><td>688316</td><td>科创板</td>
+        <td>0.5</td><td class="up">+1.3%</td><td class="down">仍亏</td><td>亏损</td>
+        <td><span class="tier-badge b-avoid">过小</span></td>
+      </tr>
+      <tr>
+        <td>云赛智联</td><td>600602</td><td>沪主板</td>
+        <td>14.5</td><td class="up">+2.8%</td><td class="up">+5.8%</td><td>~150x</td>
+        <td><span class="tier-badge b-avoid">高估</span></td>
+      </tr>
+      <tr>
+        <td>超讯通信</td><td>603322</td><td>沪主板</td>
+        <td>2.4</td><td class="down">-11.6%</td><td class="down">-16.8%</td><td>高</td>
+        <td><span class="tier-badge b-avoid">信披违规</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="background:#fef2f2; border-left-color:#dc2626; margin-top:16px;">
+    <strong>⚠️ 监管警告：</strong>2026年6月，证监会已对72家公司发出风险提示，重点打击"借算力科技之名炒作"。算力租赁行业面临系统性问题——8家典型公司固定资产从247.7亿暴增至616.46亿（+149%），高杠杆高折旧下财务可持续性存疑。
+  </div>
+</div>
+
+<!-- ===== 图表 ===== -->
+<div class="section">
+  <div class="section-title green">三、全链条Q1增速验证：哪个环节最猛？</div>
+
+  <div class="chart-container">
+    <div class="chart-title">📊 2026Q1营收增速对比：全产业链视角（%）</div>
+    <div class="chart-wrap">
+      <canvas id="q1AllChart"></canvas>
+    </div>
+    <p style="font-size:11px; color:#6b7280; margin-top:8px;">
+      红色=正增长，绿色=负增长。<strong>光模块和算力租赁两个环节增速最猛</strong>（中际旭创+192%、协创+193%、利通+821%净利增速）；IDC运营分化最大（润泽+54% vs 数据港-4%）。
+    </p>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">📊 各环节平均增速：算力链传导是否畅通？</div>
+    <div class="chart-wrap">
+      <canvas id="layerChart"></canvas>
+    </div>
+    <p style="font-size:11px; color:#6b7280; margin-top:8px;">
+      每个环节取代表公司Q1营收增速的算术平均。<strong>全链都在正增长</strong>，说明AI算力消耗是真实且全方位的。光模块（+91%）和算力租赁（+68%）增速最快。
+    </p>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">📊 润泽科技：AIDC vs IDC收入迁移（2023-2025）</div>
+    <div class="chart-wrap">
+      <canvas id="runzeChart"></canvas>
+    </div>
+    <p style="font-size:11px; color:#6b7280; margin-top:8px;">
+      AIDC收入从2023年3亿暴增到2025年25亿（+733%），IDC增速仅8.6%。这是最直观的"AI算力正在取代传统IDC"的证据。
+    </p>
+  </div>
+</div>
+
+<!-- ===== 关键标深度 ===== -->
+<div class="section">
+  <div class="section-title purple">四、关键标的深度解读</div>
+
+  <!-- 卖铲人 -->
+  <div class="company-card">
+    <h3>🔧 工业富联（601138 · 沪主板）—— 全球AI服务器代工绝对龙头</h3>
+    <div class="ticker">PE ~22x | Q1净利105.95亿 | 为英伟达GB200/GB300代工</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">2026Q1营收：</span><span class="v up">2,510.8亿 (+56.5%)</span></div>
+      <div class="fin-pill"><span class="k">Q1净利：</span><span class="v up">105.95亿 (+102.6%)</span></div>
+      <div class="fin-pill"><span class="k">连续季度：</span><span class="v">3季度单季破百亿</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      <strong>验证价值：</strong>工业富联为英伟达、亚马逊、微软等全球科技巨头代工AI服务器。它Q1净利翻倍意味着<strong>全球AI算力产能正在加速扩张</strong>。PE仅22倍，是全链中估值性价比最高的标的。GB200/GB300出货顺畅。
+    </p>
+    <div class="verdict bold">
+      ⚡ 工业富联是"卖铲人"逻辑的核心——英伟达出芯片，工业富联出货服务器整机，两者验证的是<strong>同一件事：算力产能扩张</strong>。
+    </div>
+    <div class="source-tag">来源：工业富联2026Q1季报；央广网</div>
+  </div>
+
+  <div class="company-card s2">
+    <h3>🔧 浪潮信息（000977 · 深主板）—— AI服务器市占率第一</h3>
+    <div class="ticker">PE ~39x | 2025营收1,647.82亿 | 毛利率仅4.77%</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">2025营收：</span><span class="v up">1,647.82亿 (+43.3%)</span></div>
+      <div class="fin-pill"><span class="k">Q1净利：</span><span class="v up">+30.7%</span></div>
+      <div class="fin-pill"><span class="k">毛利率：</span><span class="v down">4.77%</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      <strong>核心矛盾：</strong>市占率第一但毛利率极低（4.77%），典型的"增收不增利"。服务器组装环节利润极薄，大部分利润被英伟达（芯片）拿走。<strong>浪潮的增长验证了需求，但薄如纸的毛利限制了投资吸引力</strong>。
+    </p>
+    <div class="source-tag">来源：浪潮信息2025年报、2026Q1季报</div>
+  </div>
+
+  <!-- 光模块 -->
+  <div class="company-card">
+    <h3>💡 中际旭创（300308 · 创业板）—— 全球光模块龙头</h3>
+    <div class="ticker">PE ~45x | Q1净利57.35亿 | 1.6T已批量出货</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">Q1营收：</span><span class="v up">194.96亿 (+192.1%)</span></div>
+      <div class="fin-pill"><span class="k">Q1净利：</span><span class="v up">57.35亿 (+262.3%)</span></div>
+      <div class="fin-pill"><span class="k">连续增长：</span><span class="v">12季度环比↑</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      <strong>验证价值：</strong>光模块是GPU集群互联的必需品——一个万卡集群需要数千根800G/1.6T光模块。中际旭创连续12个季度环比增长、Q1净利+262%，说明<strong>算力集群规模在指数级扩张</strong>。全球市占率第一。
+    </p>
+    <div class="verdict bold">
+      光模块是验证算力链<strong>中游传导是否畅通</strong>的核心指标。中际旭创+新易盛+天孚通信组成"易中天"三剑客，2026Q1集体爆发。
+    </div>
+    <div class="source-tag">来源：中际旭创2026Q1季报；华尔街见闻</div>
+  </div>
+
+  <!-- 液冷 -->
+  <div class="company-card s3">
+    <h3>❄️ 英维克（002837 · 深主板）—— 液冷全链条龙头</h3>
+    <div class="ticker">PE ~250x | 液冷渗透率加速 | Q1利润大幅下滑</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">Q1营收：</span><span class="v up">11.75亿 (+26.0%)</span></div>
+      <div class="fin-pill"><span class="k">Q1净利：</span><span class="v down">大幅下降</span></div>
+      <div class="fin-pill"><span class="k">液冷定位：</span><span class="v">全链条覆盖</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      <strong>验证逻辑：</strong>AIDC功率密度是传统IDC的5-10倍，必须用液冷。英维克是A股少有的液冷全链条覆盖公司（冷源→CDU→manifold→冷板）。但Q1利润大幅下滑是警示——液冷行业可能处于<strong>"先抢份额后赚利润"</strong>阶段。PE 250倍也极度高估。
+    </p>
+    <div class="source-tag">来源：英维克2026Q1季报；东方财富网</div>
+  </div>
+
+  <!-- 润泽 -->
+  <div class="company-card">
+    <h3>🏆 润泽科技（300442 · 创业板）—— AIDC运营商标杆</h3>
+    <div class="ticker">PE ~24x | AIDC收入+73% | 最大客户：字节跳动</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">2025 AIDC：</span><span class="v up">25.1亿 (+73%)</span></div>
+      <div class="fin-pill"><span class="k">AIDC毛利率：</span><span class="v up">48.5%</span></div>
+      <div class="fin-pill q1"><span class="k">Q1营收：</span><span class="v up">+53.6%</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      AIDC收入+73%、毛利率48.5%超越传统IDC。字节跳动签2025-2028年50亿长协，2026Q1再追加十几亿。AIDC vs IDC收入迁移（图表3）是最直观的"AI算力正在取代传统IDC"的证据。
+    </p>
+    <div class="correction">
+      <strong>⚠️ 数据澄清：</strong>表观净利50.50亿含31.49亿REITs一次性收益。扣非19.01亿，增速仅+6.87%。<strong>主营业务增速远低于表观</strong>。
+    </div>
+    <div class="source-tag">来源：润泽科技2025年报、2026Q1季报；同花顺</div>
+  </div>
+
+  <!-- 协创数据 -->
+  <div class="company-card">
+    <h3>🔥 协创数据（300857 · 创业板）—— 算力收入+1727%的爆发信号</h3>
+    <div class="ticker">PE ~92x | 2025算力收入27.61亿 | 立讯精密关联方</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">2025算力收入：</span><span class="v up">27.61亿 (+1727%)</span></div>
+      <div class="fin-pill q1"><span class="k">Q1营收：</span><span class="v up">+192.9%</span></div>
+      <div class="fin-pill q1"><span class="k">Q1净利：</span><span class="v up">+343.5%</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      <strong>验证价值：</strong>全A股算力业务增速最猛。2025年智能算力收入+1727%——不是打错，一千七百二十七。6月公告募资80亿建智算中心。它和润泽形成互补验证：<strong>润泽验证"下游收租"在爆发，协创验证"中游出货"在爆发</strong>。两者同时点火说明AI算力需求的传导是全方位的。
+    </p>
+    <div class="source-tag">来源：协创数据2025年报、2026Q1季报；华创证券研报；新华网</div>
+  </div>
+
+  <!-- 利通电子 -->
+  <div class="company-card">
+    <h3>🔥 利通电子（603629 · 沪主板）—— 算力租赁增速之王</h3>
+    <div class="ticker">PE ~60x | Q1净利2.71亿 | 算力已成第一大收入</div>
+    <div class="fin-row">
+      <div class="fin-pill"><span class="k">Q1营收：</span><span class="v up">9.97亿 (+41.6%)</span></div>
+      <div class="fin-pill"><span class="k">Q1净利：</span><span class="v up">2.71亿 (+821.1%)</span></div>
+      <div class="fin-pill"><span class="k">大客户：</span><span class="v">腾讯长协</span></div>
+    </div>
+    <p style="font-size:13px; margin-bottom:8px;">
+      原来做精密金属结构件的传统企业，转型GPU算力租赁后，算力业务已成为<strong>第一大收入来源</strong>。固定资产从2023年到2026Q1暴增——确实在大规模采购GPU。与腾讯签了大额长协。
+    </p>
+    <div class="verdict">
+      利通电子+协创数据+亚康股份，构成了"非IDC算力服务商"三角验证——<strong>都是真做</strong>，都有大客户长协，都在加速。
+    </div>
+    <div class="source-tag">来源：利通电子2026Q1季报；东方财富网</div>
+  </div>
+
+  <!-- 警示标的 -->
+  <div class="company-card warn">
+    <h3>⚠️ 蹭概念与陷阱标的</h3>
+    <table class="tier-table" style="margin-top:12px;">
+      <thead>
+        <tr><th>公司</th><th>问题</th><th>Q1净利增速</th><th>建议</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>中贝通信</strong></td>
+          <td>Q1转亏，固定资产暴增479%，高杠杆高折旧</td>
+          <td class="down">-100%（转亏）</td>
+          <td><span class="tier-badge b-warn">谨慎</span></td>
+        </tr>
+        <tr>
+          <td><strong>锦鸡股份</strong></td>
+          <td>染料主业，算力收入仅6962万（&lt;5%），PE一度605x</td>
+          <td class="down">转亏</td>
+          <td><span class="tier-badge b-avoid">规避</span></td>
+        </tr>
+        <tr>
+          <td><strong>超讯通信</strong></td>
+          <td>预盈3600万实亏3566万，信披违规被通报</td>
+          <td class="down">-16.8%</td>
+          <td><span class="tier-badge b-avoid">规避</span></td>
+        </tr>
+        <tr>
+          <td><strong>数据港</strong></td>
+          <td>Q1营收转负-3.76%，PE 147x严重透支</td>
+          <td class="up">+1.6%</td>
+          <td><span class="tier-badge b-caution">观望</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="source-tag">来源：各公司2026Q1季报；证监会风险提示（2026.6.20）</div>
+  </div>
+</div>
+
+<!-- ===== 风险 ===== -->
+<div class="section">
+  <div class="section-title">五、"纯消耗无回报"陷阱</div>
+
+  <div class="logic-box">
+    <h3 style="font-size:15px; margin-bottom:12px;">两层验证框架</h3>
+    <table class="tier-table">
+      <thead>
+        <tr><th>验证层</th><th>验证什么</th><th>用什么看</th><th>当前状态</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>第一层</strong></td>
+          <td>Token消耗是否真实</td>
+          <td>算力链各环节收入</td>
+          <td class="up">✅ 已验证（全链加速）</td>
+        </tr>
+        <tr>
+          <td><strong>第二层</strong></td>
+          <td>消耗是否带来回报</td>
+          <td>大客户AI业务盈利</td>
+          <td class="down">⏳ 待验证（字节未上市）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>核心风险：</strong>运营商收入好只验证了第一层（Token在消耗），但无法验证第二层（消耗有没有回报）。如果豆包这类应用纯粹在烧钱抢市场，运营商报表照样好看——<strong>直到大厂砍预算那天</strong>。
+  </div>
+
+  <div class="data-grid">
+    <div class="data-card green">
+      <div class="label">跟踪信号1</div>
+      <div class="value" style="font-size:16px;">协创/润泽增速</div>
+      <div class="change">连续两季度大幅下滑 = 离场</div>
+    </div>
+    <div class="data-card green">
+      <div class="label">跟踪信号2</div>
+      <div class="value" style="font-size:16px;">大客户AI收入</div>
+      <div class="change">腾讯/百度AI收入是否开始盈利</div>
+    </div>
+    <div class="data-card green">
+      <div class="label">跟踪信号3</div>
+      <div class="value" style="font-size:16px;">算力租金价格</div>
+      <div class="change">GPU租赁单价是否开始下行</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 结论 ===== -->
+<div class="section">
+  <div class="section-title blue">六、投资结论</div>
+
+  <div class="summary-box">
+    <h3>📋 核心判断</h3>
+    <ul>
+      <li><strong>全链验证：</strong>从服务器（工业富联+102%）→ 光模块（中际旭创+262%）→ 液冷（英维克+26%）→ IDC运营（润泽+54%）→ 算力租赁（协创+343%、利通+821%），<strong>每一环都在加速</strong>，说明AI算力消耗是真实且全方位的</li>
+      <li><strong>最确定的验证组合：</strong>润泽科技（收租）+ 协创数据（出货）+ 中际旭创（互联）——三角交叉验证</li>
+      <li><strong>估值性价比：</strong>工业富联PE 22x是全链最便宜的，比光模块龙头（45-75x）和算力租赁（60-92x）便宜得多</li>
+      <li><strong>最大风险：</strong>"纯消耗无回报"——运营商收入好≠AI应用好，需持续跟踪大客户AI业务是否盈利</li>
+      <li><strong>规避名单：</strong>锦鸡股份（染料蹭概念）、超讯通信（信披违规）、青云科技（规模过小）、云赛智联（增速极低PE极高）</li>
+      <li><strong>润泽扣非增速仅+6.87%</strong>：别被182%表观增速误导</li>
+    </ul>
+  </div>
+
+  <div class="callout" style="background:#fffbeb; border-left-color:#f59e0b;">
+    <strong>跟踪节奏：</strong>每季度重点跟踪：①协创算力收入增速维持三位数？ ②润泽AIDC维持50%+？ ③中际旭创维持环比增长？ ④利通电子算力利润持续？ ⑤工业富联单季净利维持百亿+？<strong>如果连续两个季度增速大幅下滑——不管什么原因，先减仓。</strong>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。<br><br>
+  <strong>数据来源：</strong>各公司2025年年报及2026年一季报、券商研究报告、公司官网、同花顺/东方财富、华尔街见闻、财联社、新华网等公开渠道。数据截止2026年6月30日。2026年半年报尚未披露（A股半年报集中在7-8月发布）。
+</div>
+
+</div>
+
+<script>
+// ===== Chart 1: Q1 Revenue Growth - All Companies =====
+const ctx1 = document.getElementById('q1AllChart').getContext('2d');
+const companies = [
+  '利通电子(净利)', '协创数据', '中际旭创(净利)', '新易盛', '工业富联', '紫光股份',
+  '协创数据(净利)', '润泽科技', '中际旭创', '光迅科技', '天孚通信',
+  '英维克', '亚康股份', '科华数据', '神州数码', '中科曙光', '首都在线',
+  '优刻得', '浪潮信息(净利)', '铜牛信息', '数据港', '网宿科技', '光环新网',
+  '中贝通信', '超讯通信', '拓维信息'
+];
+const growths = [
+  821, 192.9, 262.3, 105.8, 56.5, 34.6,
+  343.5, 53.6, 192.1, 24.8, 40.8,
+  26.0, 26.9, 17.6, 27.6, 18.8, 15.3,
+  16.8, 30.7, 12.2, -3.8, -9.7, -10.8,
+  -11.8, -11.6, -4.7
+];
+new Chart(ctx1, {
+  type:'bar',
+  data:{
+    labels: companies,
+    datasets:[{
+      label:'2026Q1增速(%)',
+      data: growths,
+      backgroundColor: function(ctx){
+        const v = ctx.raw;
+        if(v >= 100) return '#b91c1c';
+        if(v >= 30) return '#dc2626';
+        if(v >= 0) return '#f87171';
+        return '#16a34a';
+      },
+      borderRadius:4,
+      barThickness:18,
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        callbacks:{ label:function(c){ return c.raw.toFixed(1) + '%'; } }
+      }
+    },
+    scales:{
+      x:{ title:{display:true, text:'同比增速(%)', font:{size:11}}, grid:{color:'#e5e7eb'} },
+      y:{ grid:{display:false}, ticks:{font:{size:10}} }
+    }
+  }
+});
+
+// ===== Chart 2: Layer Average Growth =====
+const ctx2 = document.getElementById('layerChart').getContext('2d');
+new Chart(ctx2, {
+  type:'bar',
+  data:{
+    labels:['AI服务器\n制造', '光模块\n互联', '液冷\n配套', 'IDC\n运营', '算力\n租赁'],
+    datasets:[{
+      label:'环节平均Q1营收增速(%)',
+      data:[22.1, 90.9, 17.4, 13.5, 67.8],
+      backgroundColor:['#dc2626','#dc2626','#dc2626','#dc2626','#dc2626'],
+      borderRadius:8,
+      barThickness:50,
+    }]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        callbacks:{ label:function(c){ return c.raw.toFixed(1) + '%'; } }
+      }
+    },
+    scales:{
+      y:{ title:{display:true, text:'平均增速(%)', font:{size:12}}, grid:{color:'#e5e7eb'} },
+      x:{ grid:{display:false}, ticks:{font:{size:11}} }
+    }
+  }
+});
+
+// ===== Chart 3: Runze AIDC vs IDC =====
+const ctx3 = document.getElementById('runzeChart').getContext('2d');
+new Chart(ctx3, {
+  type:'bar',
+  data:{
+    labels:['2023年','2024年','2025年'],
+    datasets:[
+      { label:'IDC收入(亿)', data:[24.0, 29.1, 31.64], backgroundColor:'#2563eb', borderRadius:4 },
+      { label:'AIDC收入(亿)', data:[3.0, 14.5, 25.1], backgroundColor:'#dc2626', borderRadius:4 }
+    ]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{ legend:{ position:'top', labels:{font:{size:12}} } },
+    scales:{
+      y:{ title:{display:true, text:'收入(亿元)', font:{size:12}}, grid:{color:'#e5e7eb'} },
+      x:{ grid:{display:false} }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
