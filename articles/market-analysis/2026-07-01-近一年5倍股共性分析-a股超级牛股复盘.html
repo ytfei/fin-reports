@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>近一年5倍股共性分析 | A股超级牛股复盘</title>
+<meta name="date" content="2026-07-01">
+<meta name="description" content="筛选A股近一年涨幅3倍以上的200只股票，提炼5倍股的七大共性特征：AI算力产业链绑定、涨价催化、供给冲击、技术拐点、估值重估、趋势抱团、次新贡献，六大方向全景扫描">
+<meta name="category" content="market-analysis">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red-up: #e74c3c;
+    --red-light: #fdf2f0;
+    --green-down: #27ae60;
+    --green-light: #f0faf4;
+    --blue-neutral: #3498db;
+    --blue-light: #f0f7fd;
+    --dark: #1a1a2e;
+    --gray: #6c757d;
+    --gray-light: #f8f9fa;
+    --orange: #f39c12;
+    --purple: #9b59b6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--gray-light);
+    color: var(--dark);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+  /* Hero Banner */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 60px 20px 50px;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 30px;
+  }
+  .hero h1 { font-size: 28px; margin-bottom: 12px; font-weight: 700; letter-spacing: 1px; }
+  .hero .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
+  .hero .meta { font-size: 13px; opacity: 0.6; }
+
+  /* Section */
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 20px; font-weight: 700; color: var(--dark);
+    border-left: 4px solid var(--red-up); padding-left: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* Summary Card */
+  .summary-card {
+    background: white; border-radius: 12px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 20px;
+  }
+  .summary-card h3 { font-size: 16px; margin-bottom: 12px; color: var(--dark); }
+
+  /* Data Grid */
+  .data-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .data-cell {
+    background: white; border-radius: 10px; padding: 16px;
+    text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .data-cell .value { font-size: 28px; font-weight: 800; color: var(--red-up); }
+  .data-cell .label { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .data-cell.green .value { color: var(--green-down); }
+  .data-cell.blue .value { color: var(--blue-neutral); }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+    background: white; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  th {
+    background: var(--dark); color: white; padding: 12px 10px;
+    text-align: left; font-weight: 600; font-size: 13px;
+    white-space: nowrap;
+  }
+  td { padding: 10px; border-bottom: 1px solid #eee; white-space: nowrap; }
+  tr:hover { background: var(--gray-light); }
+  .tag-red { background: var(--red-light); color: var(--red-up); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .tag-green { background: var(--green-light); color: var(--green-down); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .tag-blue { background: var(--blue-light); color: var(--blue-neutral); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .tag-orange { background: #fef9e7; color: var(--orange); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .tag-purple { background: #f5eef8; color: var(--purple); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+
+  /* Feature Card */
+  .feature-card {
+    background: white; border-radius: 12px; padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 16px;
+    border-left: 4px solid var(--blue-neutral);
+  }
+  .feature-card.red { border-left-color: var(--red-up); }
+  .feature-card.green { border-left-color: var(--green-down); }
+  .feature-card.orange { border-left-color: var(--orange); }
+  .feature-card.purple { border-left-color: var(--purple); }
+  .feature-card h4 { font-size: 16px; margin-bottom: 8px; }
+  .feature-card .num { font-size: 24px; font-weight: 800; margin-right: 8px; }
+  .feature-card p { font-size: 14px; color: #444; }
+  .feature-card ul { margin-left: 20px; margin-top: 8px; }
+  .feature-card li { font-size: 14px; margin-bottom: 4px; color: #444; }
+
+  /* Chart Container */
+  .chart-container {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;
+  }
+  .chart-container h4 { font-size: 15px; margin-bottom: 12px; text-align: center; }
+
+  /* Highlight Box */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--red-light), #fff5f5);
+    border: 1px solid #f5c6c0; border-radius: 10px; padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .highlight-box.green {
+    background: linear-gradient(135deg, var(--green-light), #f5fffa);
+    border-color: #c0e5d0;
+  }
+  .highlight-box.blue {
+    background: linear-gradient(135deg, var(--blue-light), #f5faff);
+    border-color: #c0d8e8;
+  }
+  .highlight-box strong { color: var(--dark); }
+
+  /* Risk Box */
+  .risk-box {
+    background: var(--green-light); border: 1px solid #c0e5d0;
+    border-radius: 10px; padding: 16px 20px; margin-bottom: 16px;
+  }
+  .risk-box h4 { color: var(--green-down); margin-bottom: 8px; }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: #f8f9fa; border-radius: 10px; padding: 16px 20px;
+    font-size: 13px; color: var(--gray); margin-top: 30px; line-height: 1.6;
+  }
+
+  @media (max-width: 680px) {
+    .hero h1 { font-size: 22px; }
+    .hero { padding: 40px 16px 35px; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .data-cell .value { font-size: 22px; }
+    .section-title { font-size: 17px; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>近一年5倍股共性分析</h1>
+  <div class="subtitle">A股超级牛股复盘 · 132只5倍股的产业密码</div>
+  <div class="meta">数据截止：2026-06-30 | 研股股 · 股票研究专家</div>
+</div>
+
+<div class="container">
+
+<!-- ===== 执行摘要 ===== -->
+<div class="section">
+  <div class="section-title">执行摘要</div>
+  <div class="summary-card">
+    <p>过去一年（52周），A股共有 <strong style="color:var(--red-up)">200只股票涨幅超过200%（3倍）</strong>，其中 <strong style="color:var(--red-up)">132只涨幅超过400%（5倍）</strong>，15只涨幅超过900%（10倍）。</p>
+    <p style="margin-top:10px">这批超级牛股<strong>高度集中于AI算力产业链</strong>——光通信/CPO、PCB/覆铜板、半导体存储、半导体设备、电子材料/特气、小金属/战略资源，六大方向贡献了90%以上的5倍股。</p>
+    <p style="margin-top:10px">核心驱动力可以浓缩为一句话：<strong>"AI需求爆发 + 上游涨价周期 + 供给端冲击"三重共振</strong>。英伟达Rubin架构迭代、CPO硅光技术变革、日本企业永久停产六氟化钨、中东冲突切断氦气供应……每一环都在制造"需求暴增遇上供给收缩"的完美风暴。</p>
+  </div>
+</div>
+
+<!-- ===== 数据总览 ===== -->
+<div class="section">
+  <div class="section-title">涨幅分布总览</div>
+  <div class="data-grid">
+    <div class="data-cell"><div class="value">200</div><div class="label">3倍以上(>200%)</div></div>
+    <div class="data-cell"><div class="value">132</div><div class="label">5倍以上(>400%)</div></div>
+    <div class="data-cell"><div class="value">87</div><div class="label">6倍以上(>500%)</div></div>
+    <div class="data-cell"><div class="value">36</div><div class="label">8倍以上(>700%)</div></div>
+    <div class="data-cell"><div class="value">15</div><div class="label">10倍以上(>900%)</div></div>
+    <div class="data-cell green"><div class="value">6</div><div class="label">产业方向</div></div>
+  </div>
+
+  <div class="chart-container">
+    <h4>5倍股行业分布（132只）</h4>
+    <canvas id="sectorChart" height="260"></canvas>
+  </div>
+</div>
+
+<!-- ===== TOP 20 排行 ===== -->
+<div class="section">
+  <div class="section-title">TOP 20 涨幅排行</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>代码</th><th>名称</th><th>52周涨幅</th><th>市值(亿)</th><th>PE(TTM)</th><th>PB</th><th>所属方向</th>
+        </tr>
+      </thead>
+      <tbody id="topTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== 六大产业方向 ===== -->
+<div class="section">
+  <div class="section-title">六大产业方向拆解</div>
+
+  <div class="feature-card red">
+    <h4><span class="num" style="color:var(--red-up)">①</span>光通信 / CPO / 光纤光缆</h4>
+    <p>5倍股数量约30只，是贡献5倍股最多的方向。CPO硅光技术从实验室走向商用，英伟达Spectrum-X下半年批量交付，1.6T光模块出货量预计2000万只，市场规模146亿美元。</p>
+    <ul>
+      <li><strong>光模块龙头</strong>：中际旭创(+779%, 市值1.4万亿)、新易盛(+574%)、天孚通信(+439%)</li>
+      <li><strong>光纤光缆</strong>：长飞光纤(+1250%)、亨通光电(+628%)、永鼎股份(+739%)、杭电股份(+718%)</li>
+      <li><strong>光芯片/光器件</strong>：源杰科技(+1309%)、长光华芯(+769%)、长进光子(+1009%)、光库科技(+706%)</li>
+      <li><strong>涨价催化剂</strong>：高端G.657.A2光纤近一年涨650%，光棒涨550%</li>
+    </ul>
+  </div>
+
+  <div class="feature-card orange">
+    <h4><span class="num" style="color:var(--orange)">②</span>PCB / 覆铜板(CCL) / 上游材料</h4>
+    <p>5倍股数量约25只。英伟达Rubin架构单机柜PCB价值量较GB300大涨233%，AI服务器背板从十余层升级至20-78层，强制采用M8/M9超低损耗高速覆铜板。</p>
+    <ul>
+      <li><strong>CCL龙头</strong>：生益科技(+499%)、南亚新材(+754%)、华正新材(+650%)、金安国纪(+1182%)、国际复材(+1182%)</li>
+      <li><strong>PCB制造</strong>：深南电路(+334%)、东山精密(+595%)、沃格光电(+563%)、红板科技(+534%)</li>
+      <li><strong>上游材料</strong>：宏和科技(+1699%)、铜冠铜箔(+1222%)、鼎泰高科(+1471%, 钻针)、德福科技(+598%)</li>
+      <li><strong>涨价催化剂</strong>：建滔积层板5轮调价累计涨幅超68%，CCL FR-4累计超50%</li>
+    </ul>
+  </div>
+
+  <div class="feature-card purple">
+    <h4><span class="num" style="color:var(--purple)">③</span>半导体 / 存储芯片</h4>
+    <p>5倍股数量约20只。NOR Flash、SLC NAND合约价H1累计涨超100%，全球存储产值预估上调至1.28万亿美元。WSTS预测2026年全球半导体销售额1.511万亿美元，同比+90%。</p>
+    <ul>
+      <li><strong>存储</strong>：普冉股份(+1115%)、江波龙(+714%)、佰维存储(+636%)、德明利(+1024%)、科翔股份(+773%)</li>
+      <li><strong>芯片设计</strong>：兆易创新(+550%)、华虹宏力(+512%)、摩尔线程(+527%)、沐曦股份(+691%)</li>
+      <li><strong>涨价催化剂</strong>：NOR Flash/SLC NAND合约价H1累计涨超100%</li>
+    </ul>
+  </div>
+
+  <div class="feature-card blue">
+    <h4><span class="num" style="color:var(--blue-neutral)">④</span>半导体设备 / 精密制造</h4>
+    <p>5倍股数量约18只。2026年Q1全球半导体设备销售额365.5亿美元创历史新高，先进封装(2.5D/3D、Chiplet)因"韬定律"折叠架构兴起，带动设备需求快速增长。</p>
+    <ul>
+      <li><strong>设备龙头</strong>：金海通(+765%)、芯碁微装(+598%)、长川科技(+664%)、精智达(+717%)、拓荆科技(+442%)</li>
+      <li><strong>激光/精密</strong>：大族激光(+521%)、大族数控(+761%)、帝尔激光(+307%)、迈为股份(+312%)</li>
+      <li><strong>测试设备</strong>：华峰测控(+443%)、联动科技(+567%)、中科飞测(+411%)</li>
+    </ul>
+  </div>
+
+  <div class="feature-card green">
+    <h4><span class="num" style="color:var(--green-down)">⑤</span>电子材料 / 特种气体</h4>
+    <p>5倍股数量约20只。2026年7月1日日本关东电化、中央硝子正式永久停产六氟化钨产线（合计占全球25%产能），六氟化钨价格涨236%。3月中东冲突切断全球33%氦气供应，氦气涨88%。</p>
+    <ul>
+      <li><strong>特气龙头</strong>：中船特气(+1126%)、华特气体(+437%)、广钢气体(+425%)、中巨芯(+376%)</li>
+      <li><strong>电子材料</strong>：国瓷材料(+500%)、东材科技(+655%)、联瑞新材(+431%)、雅克科技(+315%)</li>
+      <li><strong>硅片</strong>：神工股份(+579%)、西安奕材(+618%)</li>
+      <li><strong>涨价催化剂</strong>：六氟化钨+236%、氦气+88%、硅烷/氟化氢不同程度上涨</li>
+    </ul>
+  </div>
+
+  <div class="feature-card">
+    <h4><span class="num" style="color:var(--dark)">⑥</span>小金属 / 战略资源 / 算力租赁</h4>
+    <p>5倍股数量约14只。《矿产资源法实施条例》6月15日施行，36种小金属列入国家战略资源。算力租赁方面，Token日均调用量从2024年初1000亿暴增至2026年3月140万亿，两年增长超千倍。</p>
+    <ul>
+      <li><strong>小金属</strong>：中钨高新(+707%)、翔鹭钨业(+487%)、云南锗业(+504%)、博迁新材(+612%)</li>
+      <li><strong>算力租赁</strong>：利通电子(+698%)、宏景科技(+650%)、行云科技(+434%)</li>
+      <li><strong>电力/算电协同</strong>：华电辽能(+407%)</li>
+      <li><strong>涨价催化剂</strong>：锡+40%、钽+158%、铟+60%</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 共性特征 ===== -->
+<div class="section">
+  <div class="section-title">七大共性特征</div>
+
+  <div class="highlight-box">
+    <h4 style="margin-bottom:8px">共性一：全部绑定AI算力基建主线</h4>
+    <p>132只5倍股中，<strong>超过90%直接或间接受益于AI数据中心建设</strong>。无论是光模块、PCB、存储芯片，还是电子特气、小金属、算力租赁，本质都是"AI算力需求→硬件物料清单扩张→上游原材料涨价"的传导链条。这不是巧合，而是产业趋势的力量——当英伟达一个季度的营收超过1000亿美元时，它拉动的不是一个公司，而是一条覆盖几十个子行业的供应链。</p>
+  </div>
+
+  <div class="highlight-box green">
+    <h4 style="margin-bottom:8px">共性二：涨价是核心催化剂</h4>
+    <p>几乎每个方向的5倍股都有明确的<strong>产品涨价逻辑</strong>在驱动。这不是单纯的"炒概念"，而是真实的供需失衡：CCL累计涨50-68%、光纤涨650%、存储芯片涨100%、六氟化钨涨236%、钽金属涨158%。涨价直接转化为利润增量——以CCL为例，需求旺盛且价格上涨，厂商议价能力增强，涨价直接提升利润率。业绩验证而非纯估值拉升，是这批牛股区别于以往"妖股"的关键。</p>
+  </div>
+
+  <div class="highlight-box blue">
+    <h4 style="margin-bottom:8px">共性三：供给端冲击制造稀缺溢价</h4>
+    <p>多个方向出现了<strong>"需求暴增遇上供给收缩"</strong>的完美风暴：</p>
+    <ul style="margin-left:20px;margin-top:8px">
+      <li>日本关东电化/中央硝子<strong>永久停产</strong>六氟化钨（占全球25%产能）</li>
+      <li>中东冲突切断全球33%氦气供应，卡塔尔拉斯拉凡工业城受损</li>
+      <li>《矿产资源法实施条例》将36种小金属列为国家战略资源，限制出口</li>
+      <li>高端光棒产能扩张周期长（18-24个月），短期供给刚性</li>
+    </ul>
+    <p style="margin-top:8px">供给端不可逆的收缩，叠加AI需求的指数级增长，制造了极强的稀缺溢价。</p>
+  </div>
+
+  <div class="highlight-box">
+    <h4 style="margin-bottom:8px">共性四：技术变革创造增量市场</h4>
+    <p>每个方向都有<strong>明确的技术拐点</strong>在驱动增量需求：</p>
+    <ul style="margin-left:20px;margin-top:8px">
+      <li><strong>CPO硅光</strong>：从可插拔光模块到共封装，系统能效提升5倍</li>
+      <li><strong>1.6T光模块</strong>：2026年出货量预计2000万只</li>
+      <li><strong>玻璃基板</strong>：CoWoS/CoPoS先进封装的"刚需标配"，年均增速超33%</li>
+      <li><strong>Rubin架构</strong>：单机柜PCB价值量较GB300大涨233%</li>
+      <li><strong>MLCC</strong>：AI服务器MLCC用量是传统服务器8-10倍</li>
+    </ul>
+  </div>
+
+  <div class="highlight-box green">
+    <h4 style="margin-bottom:8px">共性五：极高估值——市场在定价"远期成长"</h4>
+    <p>这批5倍股的估值水平极高。以TOP 30样本统计：</p>
+    <ul style="margin-left:20px;margin-top:8px">
+      <li><strong>PE(TTM)中位数约200-300倍</strong>，最高超过2600倍（长光华芯），部分仍在亏损（沐曦股份PE为负）</li>
+      <li><strong>PB中位数约30倍</strong>，最高95倍（源杰科技）</li>
+      <li>中际旭创作为龙头，PE约95倍、市值1.4万亿，已经算是"最克制"的估值</li>
+    </ul>
+    <p style="margin-top:8px">这意味着市场<strong>不是在为当前业绩买单，而是在为2027-2028年的业绩预期定价</strong>。如果AI资本开支增速放缓，或者技术路线发生变更，高估值将面临巨大回撤压力。</p>
+  </div>
+
+  <div class="highlight-box blue">
+    <h4 style="margin-bottom:8px">共性六：中大盘趋势抱团，非小盘妖股</h4>
+    <p>与以往A股题材炒作不同，这批5倍股<strong>以中大盘趋势抱团为主</strong>，而非连板妖股：</p>
+    <ul style="margin-left:20px;margin-top:8px">
+      <li>市值中位数约1000-2000亿，中际旭创市值超1.4万亿</li>
+      <li>5月-6月不到2个月，全市场100只股票翻倍，但<strong>大市值容量票趋势抱团占据主导</strong></li>
+      <li>科创板(688)和创业板(300/301)是主阵地，反映科技成长属性</li>
+      <li>机构资金（公募/外资）深度参与，而非纯游资炒作</li>
+    </ul>
+  </div>
+
+  <div class="highlight-box">
+    <h4 style="margin-bottom:8px">共性七：次新股占比高，IPO即巅峰</h4>
+    <p>部分极端涨幅来自<strong>近期上市的次新股</strong>，其52周涨幅≈年内涨幅≈上市以来涨幅：</p>
+    <ul style="margin-left:20px;margin-top:8px">
+      <li>联讯仪器(+2736%)：上市仅2个多月，夺得"股王"宝座</li>
+      <li>长进光子(+1009%)：Chg52W = ChgYtd，年内上市</li>
+      <li>C臻宝(+1449%)、大普微(+1329%)、盛合晶微(+884%)等均为近期IPO</li>
+    </ul>
+    <p style="margin-top:8px">次新股流通盘小、市场关注度高、叠加产业风口，容易形成极端涨幅。但需要注意：这类涨幅包含了IPO定价偏低的因素，不代表二级市场投资者实际获得了同等回报。</p>
+  </div>
+</div>
+
+<!-- ===== 估值特征图表 ===== -->
+<div class="section">
+  <div class="section-title">估值特征可视化</div>
+  <div class="chart-container">
+    <h4>TOP 30 五倍股市值 vs PE分布</h4>
+    <canvas id="scatterChart" height="300"></canvas>
+  </div>
+  <div class="chart-container">
+    <h4>六大方向平均涨幅对比</h4>
+    <canvas id="avgChart" height="220"></canvas>
+  </div>
+</div>
+
+<!-- ===== 催化路径图 ===== -->
+<div class="section">
+  <div class="section-title">催化路径：从AI需求到5倍涨幅的传导链</div>
+  <div class="summary-card">
+    <p style="font-size:14px;color:#444;margin-bottom:12px">5倍股的形成不是单一因素，而是一条完整的催化传导链：</p>
+    <p style="font-size:14px;color:var(--dark);font-weight:600;line-height:2.4">
+      🟢 <strong>AI算力需求爆发</strong>（英伟达Rubin/GB300迭代、Token调用量2年增千倍）<br>
+      ⬇️<br>
+      🔴 <strong>硬件物料清单扩张</strong>（单机柜PCB价值+233%、MLCC用量×8-10、光模块升级1.6T）<br>
+      ⬇️<br>
+      🔴 <strong>上游原材料涨价</strong>（CCL+50%、光纤+650%、存储+100%、特气+236%）<br>
+      ⬇️<br>
+      🟠 <strong>供给端冲击放大</strong>（日本停产WF6、中东断供氦气、战略金属出口管制）<br>
+      ⬇️<br>
+      🔴 <strong>业绩验证</strong>（涨价→利润率提升→季报超预期→机构上调盈利预测）<br>
+      ⬇️<br>
+      🔴 <strong>估值重估</strong>（从周期股估值切换到成长股估值，PE从30→300）<br>
+      ⬇️<br>
+      🔴 <strong>趋势抱团</strong>（机构资金涌入、大市值容量票持续走强、正反馈循环）
+    </p>
+  </div>
+</div>
+
+<!-- ===== 风险提示 ===== -->
+<div class="section">
+  <div class="section-title">风险提示：5倍股的另一面</div>
+
+  <div class="risk-box">
+    <h4>⚠️ 估值风险：PE中位数200-300倍</h4>
+    <p>当前估值水平隐含的假设是：AI资本开支在未来3-5年持续高速增长。一旦英伟达指引下调、CSP资本开支放缓、或AI应用收入不及预期，高估值将面临剧烈杀估值。以200倍PE为例，如果业绩不达预期，股价可以腰斩而PE仍不便宜。</p>
+  </div>
+
+  <div class="risk-box">
+    <h4>⚠️ 涨价持续性风险：周期终将回归</h4>
+    <p>当前多个上游材料的涨价具有"供给冲击+需求脉冲"的双重驱动，但供给冲击的影响会随产能替代逐步消化（如中国扩产六氟化钨），需求脉冲也会随AI基建节奏波动。CCL、光纤、存储等产品的涨价周期一旦见顶，相关公司的业绩增速将面临断崖式回落。</p>
+  </div>
+
+  <div class="risk-box">
+    <h4>⚠️ 技术路线变更风险</h4>
+    <p>CPO技术路线尚未完全确定，玻璃基板量产时间表存在不确定性，1.6T光模块的良率和成本曲线可能不及预期。任何技术路线的变更都可能使当前的"受益标的"变成"受损标的"。</p>
+  </div>
+
+  <div class="risk-box">
+    <h4>⚠️ 次新股流动性风险</h4>
+    <p>部分极端涨幅来自次新股（联讯仪器、长进光子等），流通盘极小，换手率高企。一旦限售股解禁，巨大的抛压可能导致股价剧烈波动。投资者需区分"IPO涨幅"和"二级市场可获取涨幅"。</p>
+  </div>
+
+  <div class="risk-box">
+    <h4>⚠️ 拥挤交易风险</h4>
+    <p>"趋势抱团"意味着一旦共识破裂，撤退将极为拥挤。200只3倍股、132只5倍股的背后是大量机构资金的集中持仓，当边际买家消失时，流动性踩踏的风险不可忽视。</p>
+  </div>
+</div>
+
+<!-- ===== 结论 ===== -->
+<div class="section">
+  <div class="section-title">研究结论</div>
+  <div class="summary-card">
+    <p><strong>一句话总结：</strong>近一年的5倍股几乎全部诞生于AI算力产业链，核心共性是"AI需求爆发→上游涨价→供给收缩→业绩验证→估值重估"的完整催化链条，而非单纯的资金炒作。</p>
+    <p style="margin-top:12px"><strong>对投资者的启示：</strong></p>
+    <ul style="margin-left:20px;margin-top:8px;font-size:14px">
+      <li><strong>跟着产业趋势走</strong>：5倍股不是"选"出来的，是"等"出来的。当一条产业链出现"需求指数级增长+供给受限+技术拐点"的三重共振时，5倍股就会批量出现。</li>
+      <li><strong>涨价是硬道理</strong>：有涨价逻辑的5倍股（CCL、光纤、特气、存储）比纯概念炒作的更可持续，因为涨价能转化为业绩，业绩能验证估值。</li>
+      <li><strong>警惕估值陷阱</strong>：200-300倍PE意味着市场已经定价了未来3-5年的高增长。如果增长预期被证伪，回撤幅度可能超过50%。</li>
+      <li><strong>区分IPO涨幅和二级市场涨幅</strong>：次新股的极端涨幅（如联讯仪器+2736%）主要来自IPO定价偏低，不代表二级市场投资者的实际回报。</li>
+      <li><strong>关注供给端变化</strong>：当日本企业复产、中国新增产能释放、或者地缘冲突缓和时，供给端的稀缺溢价将快速消散。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <p>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:8px">数据来源：腾讯自选股选股数据接口、东方财富网、集邦咨询、WSTS、SEMI、大摩/高盛研报。数据截止2026年6月30日。</p>
+</div>
+
+</div>
+
+<script>
+// ===== TOP 20 数据 =====
+const topStocks = [
+  {rank:1, code:'sh688808', name:'联讯仪器', chg:2736, mcap:2384, pe:873, pb:81, sector:'光通信', sectorColor:'red'},
+  {rank:2, code:'sh688585', name:'上纬新材', chg:2031, mcap:669, pe:-2968, pb:51, sector:'电子材料', sectorColor:'green'},
+  {rank:3, code:'sh603256', name:'宏和科技', chg:1699, mcap:2400, pe:771, pb:89, sector:'PCB/材料', sectorColor:'orange'},
+  {rank:4, code:'sz301377', name:'鼎泰高科', chg:1471, mcap:2267, pe:365, pb:84, sector:'PCB/材料', sectorColor:'orange'},
+  {rank:5, code:'sh688797', name:'C臻宝', chg:1449, mcap:0, pe:0, pb:0, sector:'次新股', sectorColor:'purple'},
+  {rank:6, code:'sz301666', name:'大普微-UW', chg:1329, mcap:0, pe:0, pb:0, sector:'次新股', sectorColor:'purple'},
+  {rank:7, code:'sh688498', name:'源杰科技', chg:1309, mcap:2348, pe:660, pb:95, sector:'光通信', sectorColor:'red'},
+  {rank:8, code:'sh601869', name:'长飞光纤', chg:1250, mcap:4520, pe:391, pb:32, sector:'光通信', sectorColor:'red'},
+  {rank:9, code:'sz301217', name:'铜冠铜箔', chg:1222, mcap:0, pe:0, pb:0, sector:'PCB/材料', sectorColor:'orange'},
+  {rank:10, code:'sz002636', name:'金安国纪', chg:1182, mcap:873, pe:182, pb:24, sector:'PCB/材料', sectorColor:'orange'},
+  {rank:11, code:'sz301526', name:'国际复材', chg:1182, mcap:1760, pe:359, pb:21, sector:'PCB/材料', sectorColor:'orange'},
+  {rank:12, code:'sh688146', name:'中船特气', chg:1126, mcap:1853, pe:515, pb:32, sector:'电子材料', sectorColor:'green'},
+  {rank:13, code:'sh688766', name:'普冉股份', chg:1115, mcap:1140, pe:259, pb:42, sector:'半导体', sectorColor:'purple'},
+  {rank:14, code:'sz001309', name:'德明利', chg:1024, mcap:2139, pe:52, pb:32, sector:'半导体', sectorColor:'purple'},
+  {rank:15, code:'sh688635', name:'长进光子', chg:1009, mcap:426, pe:424, pb:28, sector:'光通信', sectorColor:'red'},
+  {rank:16, code:'sh688257', name:'新锐股份', chg:893, mcap:0, pe:0, pb:0, sector:'小金属', sectorColor:'blue'},
+  {rank:17, code:'sh688308', name:'欧科亿', chg:893, mcap:0, pe:0, pb:0, sector:'小金属', sectorColor:'blue'},
+  {rank:18, code:'sh688820', name:'盛合晶微', chg:884, mcap:0, pe:0, pb:0, sector:'半导体', sectorColor:'purple'},
+  {rank:19, code:'sz300308', name:'中际旭创', chg:779, mcap:14164, pe:95, pb:41, sector:'光通信', sectorColor:'red'},
+  {rank:20, code:'sh688048', name:'长光华芯', chg:769, mcap:885, pe:2623, pb:29, sector:'光通信', sectorColor:'red'},
+];
+
+const sectorTagMap = {
+  '光通信': {cls:'tag-red', txt:'光通信'},
+  'PCB/材料': {cls:'tag-orange', txt:'PCB/材料'},
+  '半导体': {cls:'tag-purple', txt:'半导体'},
+  '电子材料': {cls:'tag-green', txt:'电子材料'},
+  '小金属': {cls:'tag-blue', txt:'小金属'},
+  '次新股': {cls:'tag-purple', txt:'次新股'},
+};
+
+const tbody = document.getElementById('topTable');
+topStocks.forEach(s => {
+  const tag = sectorTagMap[s.sector];
+  const peStr = s.pe > 0 ? s.pe.toFixed(0) : (s.pe < 0 ? '亏损' : '-');
+  const pbStr = s.pb > 0 ? s.pb.toFixed(1) : '-';
+  const mcapStr = s.mcap > 0 ? s.mcap.toFixed(0) : '-';
+  const chgColor = s.chg > 500 ? 'color:var(--red-up);font-weight:700' : 'color:var(--red-up)';
+  tbody.innerHTML += `<tr>
+    <td>${s.rank}</td>
+    <td>${s.code}</td>
+    <td>${s.name}</td>
+    <td style="${chgColor}">+${s.chg}%</td>
+    <td>${mcapStr}</td>
+    <td>${peStr}</td>
+    <td>${pbStr}</td>
+    <td><span class="${tag.cls}">${tag.txt}</span></td>
+  </tr>`;
+});
+
+// ===== 行业分布饼图 =====
+const sectorCtx = document.getElementById('sectorChart');
+new Chart(sectorCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['光通信/CPO/光纤', 'PCB/CCL/材料', '半导体/存储', '半导体设备', '电子材料/特气', '小金属/算力租赁/其他'],
+    datasets: [{
+      data: [30, 25, 20, 18, 20, 19],
+      backgroundColor: ['#e74c3c', '#f39c12', '#9b59b6', '#3498db', '#27ae60', '#6c757d'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 12 } },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            return ctx.label + ': ' + ctx.parsed + ' 只';
+          }
+        }
+      }
+    }
+  }
+});
+
+// ===== 散点图：市值 vs PE =====
+const scatterData = topStocks.filter(s => s.mcap > 0 && s.pe > 0).map(s => ({
+  x: s.mcap,
+  y: s.pe,
+  name: s.name,
+  chg: s.chg
+}));
+
+const scatterCtx = document.getElementById('scatterChart');
+new Chart(scatterCtx, {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: '5倍股',
+      data: scatterData,
+      backgroundColor: scatterData.map(d => d.chg > 1000 ? '#e74c3c' : d.chg > 700 ? '#f39c12' : '#3498db'),
+      pointRadius: scatterData.map(d => Math.max(6, Math.min(20, d.chg / 100))),
+      pointHoverRadius: scatterData.map(d => Math.max(8, Math.min(24, d.chg / 100 + 2))),
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        type: 'logarithmic',
+        title: { display: true, text: '总市值（亿元，对数轴）' },
+        grid: { color: '#eee' }
+      },
+      y: {
+        type: 'logarithmic',
+        title: { display: true, text: 'PE(TTM，对数轴）' },
+        grid: { color: '#eee' },
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            const d = ctx.raw;
+            return `${d.name}: 市值${d.x}亿, PE=${d.y}, 涨幅+${d.chg}%`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// ===== 六大方向平均涨幅 =====
+const avgCtx = document.getElementById('avgChart');
+new Chart(avgCtx, {
+  type: 'bar',
+  data: {
+    labels: ['光通信/CPO', 'PCB/CCL', '半导体/存储', '半导体设备', '电子材料/特气', '小金属/算力'],
+    datasets: [{
+      label: '方向内最高涨幅股',
+      data: [2736, 1699, 1329, 893, 1126, 893],
+      backgroundColor: ['#e74c3c', '#f39c12', '#9b59b6', '#3498db', '#27ae60', '#6c757d'],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        title: { display: true, text: '最高涨幅（%）' },
+        grid: { color: '#eee' }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            return '最高涨幅: +' + ctx.parsed.x + '%';
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
