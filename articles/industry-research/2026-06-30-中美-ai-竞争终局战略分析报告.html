@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中美 AI 竞争终局：战略分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-card: #131826;
+  --bg-card-hover: #1a2033;
+  --border: #2a3450;
+  --border-light: #3a4a6a;
+  --text-primary: #e8ecf4;
+  --text-secondary: #8a96b0;
+  --text-muted: #5a6680;
+  --us-color: #4d8fd6;
+  --cn-color: #e8534a;
+  --energy-color: #f5a623;
+  --accent-purple: #a855f7;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --gradient-hero: linear-gradient(135deg, #0a0e1a 0%, #1a1040 50%, #0a1520 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Hero Banner */
+.hero {
+  background: var(--gradient-hero);
+  padding: 60px 30px 50px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(77,143,214,0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(232,83,74,0.08) 0%, transparent 50%);
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-label {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-light);
+  padding: 4px 16px;
+  border-radius: 20px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #e8ecf4 0%, #a8b8d8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.hero-date {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Main Content */
+.content { padding: 30px 24px; }
+
+section { margin-bottom: 40px; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title .icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* Core Judgment Box */
+.judgment-box {
+  background: linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(77,143,214,0.05) 100%);
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.judgment-box .label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.judgment-box p { font-size: 15px; color: var(--text-primary); }
+.judgment-box strong { color: var(--accent-purple); }
+
+/* Data Grid */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.data-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: border-color 0.2s;
+}
+
+.data-card:hover { border-color: var(--border-light); }
+
+.data-card .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.data-card .value {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.data-card .sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.data-card.us .value { color: var(--us-color); }
+.data-card.cn .value { color: var(--cn-color); }
+.data-card.neutral .value { color: var(--text-primary); }
+
+/* Comparison Table */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.compare-table th {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  font-size: 12px;
+}
+
+.compare-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-table tr:hover { background: var(--bg-card); }
+
+.flag-us { color: var(--us-color); font-weight: 600; }
+.flag-cn { color: var(--cn-color); font-weight: 600; }
+
+/* Scenario Cards */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.scenario-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid var(--border-light);
+}
+
+.scenario-card.high { border-left-color: var(--cn-color); }
+.scenario-card.mid { border-left-color: var(--us-color); }
+.scenario-card.low { border-left-color: var(--accent-purple); }
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.scenario-title { font-size: 16px; font-weight: 700; }
+
+.probability-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.prob-high { background: rgba(232,83,74,0.15); color: var(--cn-color); }
+.prob-mid { background: rgba(77,143,214,0.15); color: var(--us-color); }
+.prob-low { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+
+.scenario-body { font-size: 14px; color: var(--text-secondary); }
+.scenario-body strong { color: var(--text-primary); }
+
+/* Chart Container */
+.chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 300px;
+}
+
+/* Stack Split Visualization */
+.stack-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stack-side {
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.stack-side.us { background: rgba(77,143,214,0.05); border-color: rgba(77,143,214,0.2); }
+.stack-side.cn { background: rgba(232,83,74,0.05); border-color: rgba(232,83,74,0.2); }
+
+.stack-side .header {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stack-side.us .header { color: var(--us-color); }
+.stack-side.cn .header { color: var(--cn-color); }
+
+.stack-layer {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.stack-layer:last-child { border-bottom: none; }
+.stack-layer .layer-name { color: var(--text-muted); }
+.stack-layer .layer-value { color: var(--text-primary); font-weight: 500; }
+
+/* Investment Opportunities */
+.invest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.invest-column {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.invest-header {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.invest-header.us { background: rgba(77,143,214,0.1); color: var(--us-color); }
+.invest-header.cn { background: rgba(232,83,74,0.1); color: var(--cn-color); }
+
+.invest-body { padding: 12px 16px; }
+
+.invest-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.invest-item:last-child { border-bottom: none; }
+
+.invest-item .sector { font-weight: 600; color: var(--text-primary); }
+.invest-item .logic { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+.invest-item .tickers { color: var(--energy-color); font-size: 12px; margin-top: 2px; }
+
+/* Key Takeaway */
+.takeaway-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.takeaway-box .quote {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  background: linear-gradient(135deg, var(--us-color), var(--cn-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.takeaway-box .source { text-align: center; font-size: 12px; color: var(--text-muted); }
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 20px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 6px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent-purple);
+  border: 2px solid var(--bg-primary);
+}
+
+.timeline-item .time { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
+.timeline-item .title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.timeline-item .desc { font-size: 13px; color: var(--text-secondary); }
+
+/* Action Card */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.15s;
+}
+
+.action-card:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
+
+.action-card .icon { font-size: 24px; margin-bottom: 8px; }
+.action-card .title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.action-card .desc { font-size: 12px; color: var(--text-secondary); }
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 40px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  .hero h1 { font-size: 24px; }
+  .data-grid { grid-template-columns: 1fr 1fr; }
+  .stack-split { grid-template-columns: 1fr; }
+  .invest-grid { grid-template-columns: 1fr; }
+  .data-card .value { font-size: 22px; }
+  .content { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-label">战略研究报告</div>
+    <h1>中美 AI 竞争终局<br>一场只有两个玩家的博弈</h1>
+    <p class="hero-subtitle">地缘战略 × 产业链 × 投资机会 — 基于 Stanford AI Index 2026 及多源前沿数据</p>
+    <div class="hero-date">2026 年 6 月 30 日</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- Core Judgment -->
+<div class="judgment-box">
+  <div class="label">核心判断</div>
+  <p>AI 是<strong>生产性武器</strong>而非威慑性武器——不会形成冷战的恐怖平衡，而是持续的消耗竞赛。终局不是"一方获胜"，而是<strong>两套技术栈永久并行的"双轨世界"</strong>。</p>
+</div>
+
+<!-- Section 1: Current State -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(77,143,214,0.15);">📊</span>
+    竞争现状：差距比你想象的小
+  </div>
+  <p class="section-desc">模型性能差距 2.7%，中国论文产出已反超，美国资本面碾压但国家资本被低估</p>
+
+  <div class="data-grid">
+    <div class="data-card us">
+      <div class="label">🇺🇸 Arena 最高分</div>
+      <div class="value">1,503</div>
+      <div class="sub">Claude Opus 4.6</div>
+    </div>
+    <div class="data-card cn">
+      <div class="label">🇨🇳 Arena 最高分</div>
+      <div class="value">1,464</div>
+      <div class="sub">Dola-Seed-2.0 | 差距仅 2.7%</div>
+    </div>
+    <div class="data-card us">
+      <div class="label">🇺🇸 2025 私人 AI 投资</div>
+      <div class="value">$285.9B</div>
+      <div class="sub">是中国的 23 倍（私人口径）</div>
+    </div>
+    <div class="data-card cn">
+      <div class="label">🇨🇳 AI 论文全球占比</div>
+      <div class="value">17.8%</div>
+      <div class="sub">全球第一 | 美国仅 7.6%</div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">中美 AI 关键指标对比（多维度）</div>
+    <div class="chart-wrapper">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th>🇺🇸 美国</th>
+        <th>🇨🇳 中国</th>
+        <th>领先方</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Notable 模型发布 (2025)</td>
+        <td class="flag-us">50 个</td>
+        <td class="flag-cn">30 个</td>
+        <td class="flag-us">美国</td>
+      </tr>
+      <tr>
+        <td>模型总发布增长 (22→25)</td>
+        <td>—</td>
+        <td class="flag-cn">151 → 849</td>
+        <td class="flag-cn">中国 5.6 倍</td>
+      </tr>
+      <tr>
+        <td>AI 专利全球占比</td>
+        <td class="flag-us">12.1%</td>
+        <td class="flag-cn">74.2%</td>
+        <td class="flag-cn">中国碾压</td>
+      </tr>
+      <tr>
+        <td>专利前向引用占比</td>
+        <td class="flag-us">51.9%</td>
+        <td class="flag-cn">29.8%</td>
+        <td class="flag-us">美国（质量）</td>
+      </tr>
+      <tr>
+        <td>AI CapEx 累计 (23-25)</td>
+        <td class="flag-us">$694B</td>
+        <td class="flag-cn">~$250B</td>
+        <td class="flag-us">美国 5-7x</td>
+      </tr>
+      <tr>
+        <td>工业机器人安装量</td>
+        <td>下降中</td>
+        <td class="flag-cn">全球 54%</td>
+        <td class="flag-cn">中国绝对领先</td>
+      </tr>
+      <tr>
+        <td>民众 AI 支持率</td>
+        <td><45%</td>
+        <td class="flag-cn">>85%</td>
+        <td class="flag-cn">中国</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Section 2: Stack Bifurcation -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(232,83,74,0.15);">🔀</span>
+    技术栈分裂：两个平行世界正在形成
+  </div>
+  <p class="section-desc">一旦生态分叉到足够深，融合成本高于维持成本——这是终局判断的核心结构变化</p>
+
+  <div class="stack-split">
+    <div class="stack-side us">
+      <div class="header">🇺🇸 美国技术栈</div>
+      <div class="stack-layer"><span class="layer-name">芯片</span><span class="layer-value">NVIDIA H200 (CUDA)</span></div>
+      <div class="stack-layer"><span class="layer-name">云</span><span class="layer-value">AWS / Azure / GCP</span></div>
+      <div class="stack-layer"><span class="layer-name">模型</span><span class="layer-value">GPT-5.5 / Claude (闭源)</span></div>
+      <div class="stack-layer"><span class="layer-name">定价</span><span class="layer-value">$11.25/百万 token</span></div>
+      <div class="stack-layer"><span class="layer-name">策略</span><span class="layer-value">前沿 + 高溢价</span></div>
+    </div>
+    <div class="stack-side cn">
+      <div class="header">🇨🇳 中国技术栈</div>
+      <div class="stack-layer"><span class="layer-name">芯片</span><span class="layer-value">华为昇腾 910C (CANN)</span></div>
+      <div class="stack-layer"><span class="layer-name">云</span><span class="layer-value">阿里云 / 华为云</span></div>
+      <div class="stack-layer"><span class="layer-name">模型</span><span class="layer-value">DeepSeek / Qwen (开源)</span></div>
+      <div class="stack-layer"><span class="layer-name">定价</span><span class="layer-value">$1.71/百万 token</span></div>
+      <div class="stack-layer"><span class="layer-name">策略</span><span class="layer-value">低成本 + 高渗透</span></div>
+    </div>
+  </div>
+
+  <div class="judgment-box" style="margin-top:16px;">
+    <div class="label">关键信号</div>
+    <p>DeepSeek V4（2026.4）已专门针对华为昇腾芯片优化推理。中国强制政府数据中心使用国产芯片。生态分叉正在<strong>自我强化</strong>——越分越远，回头成本越高。</p>
+  </div>
+</section>
+
+<!-- Section 3: Scenarios -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(168,85,247,0.15);">🔮</span>
+    终局推演：三种情景（2040 年）
+  </div>
+  <p class="section-desc">基于能源约束、资本持续性、技术范式三大变量</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-card high">
+      <div class="scenario-header">
+        <div class="scenario-title">情景二：能源现实主义 — 中国胜</div>
+        <div class="probability-badge prob-high">概率 45%</div>
+      </div>
+      <div class="scenario-body">
+        AI scaling law 在 2030 年撞上能源天花板。美国电网延迟拖累 20-30% 扩容，中国"东数西算"持续低成本建设，chiplet 效率差距缩小到 <20%。<br>
+        <strong>核心逻辑：</strong>解决能源问题的制度优势比解决芯片问题的技术突破更可靠。中国工业电价低 30-40%，华为 CloudMatrix 384 已达 300 petaFLOPS。
+      </div>
+    </div>
+
+    <div class="scenario-card mid">
+      <div class="scenario-header">
+        <div class="scenario-title">情景一：资本碾压局 — 美国胜</div>
+        <div class="probability-badge prob-mid">概率 30%</div>
+      </div>
+      <div class="scenario-body">
+        美国维持 5-7 倍资本优势至 2035 年，中国被锁定在成熟制程，CUDA 生态护城河持续加深。<br>
+        <strong>为什么概率不高：</strong>能源约束比资本约束更持久。美国需 $7200 亿升级电网，但分散审批体制严重拖慢进度。约 20% 规划数据中心面临接入延迟。
+      </div>
+    </div>
+
+    <div class="scenario-card low">
+      <div class="scenario-header">
+        <div class="scenario-title">情景三：范式颠覆 — 推倒重来</div>
+        <div class="probability-badge prob-low">概率 25%</div>
+      </div>
+      <div class="scenario-body">
+        量子计算、类脑计算或全新 AI 架构在 2035 年前根本性改变计算需求，既有投资全部沉没。<br>
+        <strong>信号：</strong>IBM 预计 2028 年 200 逻辑量子比特；OpenAI o1 / DeepSeek R1 展示的 test-time scaling 正将计算推向分布式推理——反而有利于中国"东数西算"架构。
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="quote">最可能终局不是"一方获胜"<br>而是"两套体系永久并行"</div>
+    <div class="source">就像冷战北约 vs 华约，或 Unicode vs GBK——技术栈一旦分裂到足够深，融合成本高于维持成本</div>
+  </div>
+</section>
+
+<!-- Section 4: Two Strategies -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(34,197,94,0.15);">⚔️</span>
+    两条路径：政府与市场如何博弈
+  </div>
+
+  <div class="stack-split">
+    <div class="stack-side us">
+      <div class="header">🇺🇸 美国：商业驱动 + 国家安全护栏</div>
+      <div style="font-size:13px; color:var(--text-secondary); line-height:1.8;">
+        <strong style="color:var(--text-primary)">政府侧（护栏）：</strong><br>
+        • 出口管制：7nm 以下封锁、EUV 禁运<br>
+        • Stargate：4 年 $5000 亿<br>
+        • 电网升级需 $7200 亿（到 2030）<br><br>
+        <strong style="color:var(--text-primary)">市场侧（进攻）：</strong><br>
+        • 四大企业各年 CapEx >$1000 亿<br>
+        • 交叉投资网络 >$1.5 万亿<br>
+        • 高盛预计 25-27 累计 $1.15 万亿<br><br>
+        <strong style="color:var(--accent-red)">⚠️ 核心风险：交叉投资网络高度互联，一家出事连锁反应</strong>
+      </div>
+    </div>
+    <div class="stack-side cn">
+      <div class="header">🇨🇳 中国：国家主导 + 成本效率突围</div>
+      <div style="font-size:13px; color:var(--text-secondary); line-height:1.8;">
+        <strong style="color:var(--text-primary)">政府侧（主导）：</strong><br>
+        • 大基金三期 ¥3440 亿，50% 国产设备<br>
+        • 强制政府 DC 使用国产芯片<br>
+        • "东数西算"：10 集群，300 EFLOPS<br>
+        • "AI+"计划：2027 渗透率 >70%<br><br>
+        <strong style="color:var(--text-primary)">市场侧（执行）：</strong><br>
+        • 阿里 3 年 $530 亿承诺<br>
+        • 开源模型下载量超美国<br>
+        • 模型价格便宜 6.5 倍<br>
+        • 预计处理全球 >50% token<br><br>
+        <strong style="color:var(--accent-green)">✅ 核心优势：基建部署能力和能源成本结构是持久的</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="judgment-box">
+    <div class="label">两个不对称变量</div>
+    <p><strong>TSMC</strong> 是双方共同咽喉——全球几乎所有先进 AI 芯片由一家公司代工。<strong>应用扩散速度</strong>差异巨大——美国造 AI 但不太用（采用率 28.3%，排名 24），中国以行政力量强制推动各行各业渗透。长期看，AI 的战略价值不在"谁的模型更强"，而在"谁的社会经济更快被 AI 重构"。</p>
+  </div>
+</section>
+
+<!-- Section 5: Investment Opportunities -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(245,166,35,0.15);">💰</span>
+    投资机会映射
+  </div>
+  <p class="section-desc">双边下注 + 重仓能源 + 买瓶颈环节</p>
+
+  <div class="invest-grid">
+    <div class="invest-column">
+      <div class="invest-header us">🇺🇸 美国侧：卖铲子的人继续赚</div>
+      <div class="invest-body">
+        <div class="invest-item">
+          <div class="sector">AI 芯片</div>
+          <div class="logic">Scaling law 仍在，NVIDIA 垄断高端</div>
+          <div class="tickers">NVDA / AMD / AVGO</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">能源基建</div>
+          <div class="logic">$7200 亿电网升级刚需</div>
+          <div class="tickers">CEG / VST（核电）</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">HBM 存储</div>
+          <div class="logic">AI 记忆墙瓶颈，比 GPU 更紧缺</div>
+          <div class="tickers">MU / 海力士</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">数据中心 REITs</div>
+          <div class="logic">算力需求指数增长，基建稀缺</div>
+          <div class="tickers">EQIX / DLR</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">液冷散热</div>
+          <div class="logic">200W+ 芯片功耗逼出刚需</div>
+          <div class="tickers">VRT</div>
+        </div>
+      </div>
+    </div>
+    <div class="invest-column">
+      <div class="invest-header cn">🇨🇳 中国侧：国产替代 + 能源效率 + 应用落地</div>
+      <div class="invest-body">
+        <div class="invest-item">
+          <div class="sector">国产 AI 芯片</div>
+          <div class="logic">大基金 + 强制国产化双驱动</div>
+          <div class="tickers">寒武纪 / 海光信息</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">先进封装 / Chiplet</div>
+          <div class="logic">绕开制程封锁的关键路径</div>
+          <div class="tickers">长电科技 / 通富微电 / 中微公司</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">AI 算力运营</div>
+          <div class="logic">"东数西算"基建红利</div>
+          <div class="tickers">润泽科技 / 万国数据</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">电力 / 能源</div>
+          <div class="logic">算力即电力，最大受益方</div>
+          <div class="tickers">长江电力 / 中广核</div>
+        </div>
+        <div class="invest-item">
+          <div class="sector">AI + 制造 / 具身</div>
+          <div class="logic">"AI+"政策 + 54% 工业机器人</div>
+          <div class="tickers">宁德时代 / 汇川技术 / 埃斯顿</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">AI CapEx 趋势：美国 vs 中国（$B）</div>
+    <div class="chart-wrapper">
+      <canvas id="capexChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Key Determinants -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(245,166,35,0.15);">🎯</span>
+    四个确定性趋势
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="time">确定性 1</div>
+      <div class="title">AI 基建投资至少持续到 2028 不退潮</div>
+      <div class="desc">已投入的沉没成本推动持续扩容；四大企业 CapEx 指引锁定 2027 开支；中国"东数西算"不受经济周期影响</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">确定性 2</div>
+      <div class="title">HBM 是比 GPU 更紧缺的瓶颈</div>
+      <div class="desc">全球 80% 产能在韩国；HBM3E 产能制约 GPU 产出；美国扶持美光，中国攻坚国产替代</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">确定性 3</div>
+      <div class="title">中国选了开源，用免费换生态</div>
+      <div class="desc">DeepSeek/Qwen 全球下载量超美国模型；本质是用渗透率换定价权；目标成为全球南方事实标准</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">确定性 4</div>
+      <div class="title">AI 应用价值爆发：中国先于美国</div>
+      <div class="desc">模型便宜 6.5 倍 + 政策更强 + 民众接受度更高 + 制造业基础更厚 = 中国应用层更早兑现</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Actions -->
+<section>
+  <div class="section-title">
+    <span class="icon" style="background:rgba(168,85,247,0.15);">📌</span>
+    投资行动指引
+  </div>
+
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="icon">⚖️</div>
+      <div class="title">双边下注</div>
+      <div class="desc">中美两侧核心标的都要配置</div>
+    </div>
+    <div class="action-card">
+      <div class="icon">⚡</div>
+      <div class="title">重仓能源</div>
+      <div class="desc">电力/核电/储能是所有情景的 winner</div>
+    </div>
+    <div class="action-card">
+      <div class="icon">🔓</div>
+      <div class="title">买瓶颈</div>
+      <div class="desc">HBM、先进封装、电力设备</div>
+    </div>
+    <div class="action-card">
+      <div class="icon">⚠️</div>
+      <div class="title">警惕泡沫</div>
+      <div class="desc">美国 >$1.5T 交叉投资网络有系统性风险</div>
+    </div>
+    <div class="action-card">
+      <div class="icon">📱</div>
+      <div class="title">关注渗透率</div>
+      <div class="desc">中国 AI 应用层更早进入价值兑现</div>
+    </div>
+    <div class="action-card">
+      <div class="icon">🛡️</div>
+      <div class="title">对冲台海</div>
+      <div class="desc">TSMC 断供是尾部风险</div>
+    </div>
+  </div>
+</section>
+
+<!-- Final Quote -->
+<div class="takeaway-box" style="border-color: var(--energy-color);">
+  <div class="quote" style="background: linear-gradient(135deg, var(--energy-color), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    "当算力成为主权基础设施，<br>解决能源方程的国家才能赢。其他都是噪音。"
+  </div>
+  <div class="source">— Strategic Foresight in AI</div>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告基于公开数据和分析，仅供战略参考，不构成投资建议。数据来源包括 Stanford AI Index 2026、BCG、Substack Strategic Foresight、Epoch AI 等。报告中涉及的具体标的仅为分析示例，不代表买卖推荐。投资有风险，入市需谨慎。
+</div>
+
+</div>
+
+<script>
+// Radar Chart
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['模型性能', '私人投资', '论文产出', '专利数量', '专利质量', '数据中心', '工业机器人', '民众接受度'],
+    datasets: [{
+      label: '美国',
+      data: [98, 100, 43, 12, 90, 100, 40, 33],
+      borderColor: '#4d8fd6',
+      backgroundColor: 'rgba(77,143,214,0.1)',
+      pointBackgroundColor: '#4d8fd6',
+      borderWidth: 2
+    }, {
+      label: '中国',
+      data: [97, 8, 100, 100, 52, 40, 100, 100],
+      borderColor: '#e8534a',
+      backgroundColor: 'rgba(232,83,74,0.1)',
+      pointBackgroundColor: '#e8534a',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: { color: '#8a96b0', font: { size: 12 } }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: { color: '#2a3450' },
+        grid: { color: '#2a3450' },
+        pointLabels: { color: '#8a96b0', font: { size: 11 } },
+        ticks: { display: false, max: 100, min: 0 },
+        suggestedMin: 0,
+        suggestedMax: 100
+      }
+    }
+  }
+});
+
+// CapEx Chart
+const capexCtx = document.getElementById('capexChart').getContext('2d');
+new Chart(capexCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2023', '2024', '2025', '2026E'],
+    datasets: [{
+      label: '美国',
+      data: [130, 256, 443, 602],
+      backgroundColor: 'rgba(77,143,214,0.7)',
+      borderColor: '#4d8fd6',
+      borderWidth: 1,
+      borderRadius: 4
+    }, {
+      label: '中国',
+      data: [35, 52, 70, 98],
+      backgroundColor: 'rgba(232,83,74,0.7)',
+      borderColor: '#e8534a',
+      borderWidth: 1,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: { color: '#8a96b0', font: { size: 12 } }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) { return ctx.dataset.label + ': $' + ctx.parsed.y + 'B'; }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: '#8a96b0' },
+        grid: { color: '#1a2033' }
+      },
+      y: {
+        ticks: { color: '#8a96b0', callback: function(v) { return '$' + v + 'B'; } },
+        grid: { color: '#1a2033' }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
