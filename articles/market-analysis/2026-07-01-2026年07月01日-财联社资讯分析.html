@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年07月01日 财联社资讯分析</title>
+<style>
+
+:root{--bg:#f5f6fa;--card:#fff;--text:#1a1a2e;--t2:#64748b;--t3:#94a3b8;--border:#e8ecf1;--red:#dc2626;--orange:#ea580c;--gray:#64748b;--r:12px;--rs:8px;--sh1:0 1px 3px rgba(0,0,0,.06);--sh2:0 4px 16px rgba(0,0,0,.08);--sh3:0 12px 40px rgba(0,0,0,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+.container{max-width:900px;margin:0 auto;padding:0 16px 40px}
+.header{background:linear-gradient(135deg,#0f172a,#1e3a5f,#1a2744);color:#fff;padding:32px 24px 20px;text-align:center}
+.header h1{font-size:22px;font-weight:800}
+.header .meta{font-size:13px;opacity:.7;margin-top:4px}
+.stat-bar{display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:13px;flex-wrap:wrap}
+.stat-bar .s{display:flex;align-items:center;gap:5px}
+.stat-bar .dot{width:8px;height:8px;border-radius:50%}
+.stat-bar .up{background:#f87171}.stat-bar .dn{background:#4ade80}
+.search-wrap{background:#fff;padding:10px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99;box-shadow:var(--sh1)}
+.search-box{max-width:868px;margin:0 auto;display:flex;gap:10px;align-items:center;background:#f1f5f9;border-radius:20px;padding:6px 16px;transition:box-shadow .2s}
+.search-box:focus-within{box-shadow:0 0 0 2px var(--red);background:#fff}
+.search-box svg{flex-shrink:0;color:var(--t3)}
+.search-box input{flex:1;border:none;background:transparent;outline:none;font-size:14px;padding:4px 0;color:var(--text)}
+.search-box input::placeholder{color:var(--t3)}
+.search-count{font-size:12px;white-space:nowrap;padding:2px 8px;border-radius:10px;background:#fef2f2;color:var(--red);display:none}
+.search-count.active{display:inline-block}
+.search-clear{display:none;cursor:pointer;color:var(--t3);font-size:18px;padding:0 4px}
+.search-clear.active{display:inline-block}
+.filter-bar{display:flex;gap:6px;padding:10px 0;flex-wrap:wrap}
+.filter-tag{font-size:12px;padding:3px 12px;border-radius:14px;background:#fff;border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-tag:hover{border-color:var(--t3)}
+.filter-tag.active{background:var(--text);color:#fff;border-color:var(--text)}
+.sec-title{font-size:18px;font-weight:700;margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--red);display:flex;align-items:center;gap:8px}
+.sec-title .n{font-size:13px;font-weight:400;color:var(--t3)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh1);margin-bottom:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--sh2)}
+.card-hd{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;user-select:none}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.badge.s{background:var(--red)}.badge.a{background:var(--orange)}.badge.b{background:var(--gray)}.badge.p{background:#f59e0b}
+.card-name{font-size:16px;font-weight:700}
+.card-count{font-size:12px;color:var(--t2);background:#f1f5f9;padding:2px 8px;border-radius:10px}
+.arrow{margin-left:auto;font-size:12px;color:var(--t3);transition:transform .2s}
+.card.open .arrow{transform:rotate(180deg)}
+.card-body{display:none;padding:0 18px 14px}
+.card.open .card-body{display:block}
+.summary{font-size:14px;color:var(--t2);line-height:1.7;padding:8px 12px;background:#fafbfc;border-radius:var(--rs);margin-bottom:12px;border-left:3px solid #e2e8f0}
+.subtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.stag{font-size:11px;padding:2px 8px;border-radius:10px;background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.news-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f8fafc;cursor:pointer;transition:background .15s;border-radius:6px;margin:0 -4px;padding:10px 4px}
+.news-item:last-child{border-bottom:none}
+.news-item:hover{background:#fafbfc}
+.rank{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.rank.r1{background:#dc2626}.rank.r2{background:#ea580c}.rank.r3{background:#64748b}
+.ni-body{flex:1;min-width:0}
+.ni-meta{display:flex;gap:8px;align-items:center;margin-bottom:2px;font-size:12px}
+.ni-time{color:var(--t3)}
+.ni-score{font-weight:700;font-size:11px;padding:1px 6px;border-radius:4px}
+.ni-score.hot{background:#fef2f2;color:#dc2626}
+.ni-score.warm{background:#fff7ed;color:#ea580c}
+.ni-score.cool{background:#f1f5f9;color:#64748b}
+.ni-text{font-size:13px;color:var(--t2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.6}
+.ni-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.etag{font-size:11px;padding:1px 6px;border-radius:4px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+.ni-hint{font-size:11px;color:var(--t3);margin-top:2px}
+.mark{background:#fef08a;border-radius:2px;padding:0 1px}
+.ev-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh1);margin-bottom:14px;padding:16px 18px;border:1px solid var(--border)}
+.ev-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ev-name{font-size:16px;font-weight:700}
+.ev-tag{font-size:11px;padding:2px 8px;border-radius:4px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.ev-stat{margin-left:auto;font-size:12px;color:var(--t3)}
+.px-card{background:#fffbeb;border-radius:var(--rs);padding:12px 16px;margin-bottom:10px;border:1px solid #fde68a;font-size:13px;cursor:pointer;transition:box-shadow .15s}
+.px-card:hover{box-shadow:var(--sh1)}
+.px-hd{display:flex;gap:8px;align-items:center;margin-bottom:5px;flex-wrap:wrap}
+.px-type{font-size:11px;padding:2px 8px;border-radius:4px;background:#f59e0b;color:#fff;font-weight:700}
+.px-sec{font-size:12px;color:var(--t2)}
+.px-text{color:var(--t2);line-height:1.6}
+.overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.overlay.active{display:flex}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes su{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal{background:#fff;border-radius:var(--r);box-shadow:var(--sh3);max-width:640px;width:100%;max-height:85vh;display:flex;flex-direction:column;animation:su .25s}
+.modal-hd{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 12px;border-bottom:1px solid var(--border)}
+.modal-bd{padding:14px 18px 18px;overflow-y:auto;flex:1}
+.modal-sec{font-size:14px;font-weight:700;flex:1}
+.modal-close{flex-shrink:0;width:30px;height:30px;border-radius:8px;border:none;background:#f1f5f9;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--t2);transition:background .15s}
+.modal-close:hover{background:#e2e8f0}
+.modal-meta{display:flex;gap:12px;margin-bottom:10px;font-size:13px}
+.modal-time{color:var(--t2)}
+.modal-text{font-size:14px;line-height:1.85;white-space:pre-wrap}
+.modal-ents{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.modal-ents .lbl{font-size:13px;color:var(--t2)}
+.search-results{display:none}
+.search-results.active{display:block}
+.normal-view.hidden{display:none}
+.search-results .news-item{background:#fff;border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px}
+.search-results .ni-text{-webkit-line-clamp:unset;display:block}
+.footer{text-align:center;padding:24px;font-size:12px;color:var(--t3);border-top:1px solid var(--border);margin-top:20px}
+@media(max-width:640px){.container{padding:0 10px 24px}.header{padding:24px 16px 16px}.header h1{font-size:18px}.stat-bar{gap:12px;font-size:12px}.card-hd{padding:12px 14px}.card-body{padding:0 14px 12px}.modal{max-width:100%;max-height:90vh}}
+
+/* ── Floating TOC Navigation ── */
+.toc-fab{position:fixed;right:20px;bottom:24px;width:48px;height:48px;border-radius:50%;background:#1a2744;color:#fff;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform .25s,opacity .25s;font-size:20px}
+.toc-fab:hover{transform:scale(1.08)}
+.toc-fab.hidden{transform:scale(0);opacity:0;pointer-events:none}
+.toc-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s}
+.toc-overlay.active{opacity:1;pointer-events:auto}
+.toc-panel{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:#fff;z-index:400;box-shadow:-4px 0 24px rgba(0,0,0,.12);transition:right .3s ease;display:flex;flex-direction:column}
+.toc-panel.open{right:0}
+.toc-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:linear-gradient(135deg,#0f172a,#1e3a5f);color:#fff}
+.toc-panel-hd .tt{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+.toc-panel-hd .close{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.toc-panel-hd .close:hover{background:rgba(255,255,255,.3)}
+.toc-search{padding:10px 14px;border-bottom:1px solid var(--border)}
+.toc-search input{width:100%;border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;outline:none;transition:border-color .2s}
+.toc-search input:focus{border-color:var(--red)}
+.toc-body{flex:1;overflow-y:auto;padding:6px 0}
+.toc-body::-webkit-scrollbar{width:4px}
+.toc-body::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+.toc-group-hd{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;padding:10px 18px 4px;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.toc-item{display:flex;align-items:center;gap:8px;padding:7px 18px;cursor:pointer;transition:background .12s;border-left:3px solid transparent}
+.toc-item:hover{background:#f5f6fa;border-left-color:var(--red)}
+.toc-item .toc-badge{width:20px;height:20px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item .toc-badge.s{background:var(--red)}.toc-item .toc-badge.a{background:var(--orange)}.toc-item .toc-badge.b{background:var(--gray)}.toc-item .toc-badge.p{background:#f59e0b}.toc-item .toc-badge.e{background:#2563eb}
+.toc-item .toc-label{font-size:13px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toc-item .toc-count{font-size:11px;color:var(--t3);flex-shrink:0}
+.toc-item.active{background:#fef2f2;border-left-color:var(--red)}
+.toc-item.active .toc-label{font-weight:600;color:var(--red)}
+.toc-empty{text-align:center;padding:30px;color:var(--t3);font-size:13px}
+@media(max-width:640px){.toc-fab{right:14px;bottom:18px;width:42px;height:42px;font-size:18px}.toc-panel{width:85vw;right:-85vw}}
+
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>财联社资讯分析</h1>
+  <div class="meta">2026年07月01日 &middot; 903条快讯 &middot; 去噪后 858 条有效</div>
+  <div class="stat-bar">
+    <div class="s"><span class="dot up"></span>正面 <b style="color:#f87171">91</b></div>
+    <div class="s"><span class="dot dn"></span>负面 <b style="color:#4ade80">21</b></div>
+    <div class="s"><span style="color:#fbbf24">信号比 <b>4.3:1</b></span></div>
+  </div>
+</div>
+<div class="search-wrap">
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索关键词，如：美光、存储、高通、苹果..." autocomplete="off">
+    <span class="search-count" id="searchCount"></span>
+    <span class="search-clear" id="searchClear" onclick="clearSearch()">&times;</span>
+  </div>
+</div>
+<div class="container">
+<script>window.NEWS_DATA = [{"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 0, "time": "2026-07-01 15:02:26", "score": 122, "content": "【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。", "entities": ["创业板指"]}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 1, "time": "2026-07-01 12:26:08", "score": 116, "content": "【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心光通信网络：公司扩大光通信及交换机设备陶瓷封装外壳产能，以适配海量数据传输需求。③高端基板产品：京瓷正推进新型多层陶瓷核心基板商业化落地，该产品专为高性能AI处理器（xPU）与专用集成电路（ASIC）打造。", "entities": []}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 2, "time": "2026-07-01 13:23:49", "score": 115, "content": "【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波长约（LTA）变革中的关键特征如下：不设上限：有别于其他竞争对手通常设立的「价格上限（Ceiling Price）」。周期红利：在市况火热且供不应求时，SK海力士能完整吃到完整涨价红利，将市场价值最大化。合约年限：因应AI需求大增，SK海力士与三星皆已将合约从过往的一年期，拉长为3至5年的长期供应协议。", "entities": ["SK海力士", "三星"]}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 3, "time": "2026-07-01 11:49:39", "score": 115, "content": "【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、大成港股精选、中信保诚全球商品主题等业绩相对靠后，期内净值跌幅均超过10%。（每经）", "entities": ["台积电", "新易盛", "英伟达"]}, {"type": "sector", "sector": "半导体芯片", "priority": "S", "rank": 4, "time": "2026-07-01 09:44:40", "score": 115, "content": "【氟化工板块反复活跃 昊华科技触及涨停续创历史新高】氟化工板块反复活跃，昊华科技触及涨停，续创历史新高，此前多氟多走出3连板，三美股份触及涨停，中巨芯、雅克科技、永和股份、金石资源跟涨。", "entities": []}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 0, "time": "2026-07-01 15:02:26", "score": 122, "content": "【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。", "entities": ["创业板指"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 1, "time": "2026-07-01 12:26:08", "score": 116, "content": "【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心光通信网络：公司扩大光通信及交换机设备陶瓷封装外壳产能，以适配海量数据传输需求。③高端基板产品：京瓷正推进新型多层陶瓷核心基板商业化落地，该产品专为高性能AI处理器（xPU）与专用集成电路（ASIC）打造。", "entities": []}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 2, "time": "2026-07-01 11:49:39", "score": 115, "content": "【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、大成港股精选、中信保诚全球商品主题等业绩相对靠后，期内净值跌幅均超过10%。（每经）", "entities": ["台积电", "新易盛", "英伟达"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 3, "time": "2026-07-01 08:05:08", "score": 115, "content": "【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国家资源向光州（存储器），大邱（机器人），忠清（数据中心，显示）等首都圈以外地区倾斜，对韩国科技产业发展是标志性事件。1.3万亿美元的投资规模相当于台积电在美国亚利桑那州投资规模（1650亿美元）的7.8倍，对全球半导体产业的竞争格局，供需关系都或将产生深远影响。 华泰证券认为，AI高景气下先进制程、HBM与先进封装产能扩张将带来持续的设备增量需求，设备厂商在本轮跨越十年的长线投资下或迎来长期结构性", "entities": ["台积电", "三星"]}, {"type": "sector", "sector": "AI算力", "priority": "S", "rank": 4, "time": "2026-07-01 08:44:09", "score": 114, "content": "【优必选人形机器人规模化量产提速 机构扎堆盯上这几只人形机器人概念股】 6月30日，优必选首次公开展示了50余款全尺寸超仿生人形机器人，此次最新推出的全尺寸超仿生人形机器人主要用于家庭陪伴场景。据悉，自今年6月初登陆京东开启预售后，目前该系列机器人已经获得11000预定订单。今年以来，相比AI赛道的光模块、存储芯片、MLCC、PCB、AI芯片等题材，人形机器人概念整体表现并不抢眼。据证券时报·数据宝统计，截至6月30日收盘，年内涨幅翻倍的人形机器人概念股仅9只，包括泰晶科技、索辰科技、智微智能、沃尔德、江苏北人等。机构调研频次可以反映相关概念股热度。据数据宝统计，截至6月30日收盘，今年以来获得5次及以上机构调研的人形机器人概念股有21只。在上述机构高频调研的21只人形机器人概念股中，以6月30日收盘价与年内高点相比，8股回撤幅度超30%，其中安培龙、利亚德、斯菱智驱、步科股份、拓邦股份回", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 0, "time": "2026-07-01 08:05:08", "score": 115, "content": "【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国家资源向光州（存储器），大邱（机器人），忠清（数据中心，显示）等首都圈以外地区倾斜，对韩国科技产业发展是标志性事件。1.3万亿美元的投资规模相当于台积电在美国亚利桑那州投资规模（1650亿美元）的7.8倍，对全球半导体产业的竞争格局，供需关系都或将产生深远影响。 华泰证券认为，AI高景气下先进制程、HBM与先进封装产能扩张将带来持续的设备增量需求，设备厂商在本轮跨越十年的长线投资下或迎来长期结构性", "entities": ["台积电", "三星"]}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 1, "time": "2026-07-01 08:44:09", "score": 114, "content": "【优必选人形机器人规模化量产提速 机构扎堆盯上这几只人形机器人概念股】 6月30日，优必选首次公开展示了50余款全尺寸超仿生人形机器人，此次最新推出的全尺寸超仿生人形机器人主要用于家庭陪伴场景。据悉，自今年6月初登陆京东开启预售后，目前该系列机器人已经获得11000预定订单。今年以来，相比AI赛道的光模块、存储芯片、MLCC、PCB、AI芯片等题材，人形机器人概念整体表现并不抢眼。据证券时报·数据宝统计，截至6月30日收盘，年内涨幅翻倍的人形机器人概念股仅9只，包括泰晶科技、索辰科技、智微智能、沃尔德、江苏北人等。机构调研频次可以反映相关概念股热度。据数据宝统计，截至6月30日收盘，今年以来获得5次及以上机构调研的人形机器人概念股有21只。在上述机构高频调研的21只人形机器人概念股中，以6月30日收盘价与年内高点相比，8股回撤幅度超30%，其中安培龙、利亚德、斯菱智驱、步科股份、拓邦股份回", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 2, "time": "2026-07-01 07:26:27", "score": 114, "content": "【机构密集调研A股上市公司 人形机器人、半导体材料受追捧】据Wind数据统计，6月份，共有989家A股上市公司迎来机构调研。从调研逻辑看，硬科技赛道凭借清晰的产业升级路径、持续推进的国产替代进程以及充足的中长期成长空间，成为当前机构调研和中长期资金布局的主线。受访专家表示，当前公募、私募、外资、券商等各类机构布局风格差异化凸显，但对科技成长赛道的看多共识高度一致。其中，人形机器人、AI硬件、高端半导体材料等前沿细分领域，受益于产业迭代提速、上市公司业绩集中兑现、市场流动性持续改善三重利好共振，成为市场资金重点关注领域。（证券日报）", "entities": []}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 3, "time": "2026-07-01 15:01:21", "score": 113, "content": "软银：对OpenAI进行了100亿美元的后续投资。", "entities": ["OpenAI", "软银"]}, {"type": "sector", "sector": "机器人/具身智能", "priority": "A", "rank": 4, "time": "2026-07-01 14:18:19", "score": 113, "content": "【小摩：欧车企跟进“以铝代铜”浪潮 今年或冲击全球2%铜需求】摩根大通称，继特斯拉及中国电动汽车车企掀起“以铝代铜”浪潮后，欧洲传统车企的此番集体转身，标志着整个汽车工业迎来了颠覆性的材料供应链转移。据预测，仅在今年，这一趋势就将直接冲击全球约2%的铜消费需求。全球第二大电缆制造商Nexans高管表示，由于铜在某些应用中性能更优，制造商仍会以更高价格购买铜——但当铜价达到铝价约3.5倍时，他们就会开始采购铝。目前，铜价约是铝价的4.2倍以上。", "entities": ["特斯拉"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 0, "time": "2026-07-01 13:41:04", "score": 113, "content": "【韩国投资者上半年持续加仓A股】据中证报，2026年上半年，韩国投资者持续加码配置中国市场。韩国证券存托结算院（KSD）数据显示，在韩国投资者净买入金额居前的中国市场标的中，多只ETF强势挤进榜单前列，科技、人工智能、半导体、新能源等主题产品尤为受到追捧。A股市场中，韩国投资者净买入前20名中，有8只ETF产品，包括通信ETF华夏、芯片ETF华夏、人工智能ETF易方达、上证指数ETF富国、云计算ETF易方达、科创50ETF华夏、电网设备ETF华夏、机器人ETF华夏。个股方面，韩国资金重点投向人工智能、先进制造等成长领域。A股市场中，上半年被韩国资金买入最多的三一重工，获999.75万美元净买入；东山精密、宁德时代紧随其后，分别获558.20万美元、555.24万美元净买入；此外，亨通光电、麦格米特、云南锗业、长飞光纤等也获得韩国资金持续增持。", "entities": ["宁德时代", "科创50"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 1, "time": "2026-07-01 08:22:12", "score": 110, "content": "【韩国投资者上半年借道ETF配置中国资产 半导体、沪深300、通信等产品受青睐】今年上半年，韩国投资者积极配置中国资产，借道多只ETF进行投资。韩国证券存托结算院数据显示，港股市场方面，Global X中国半导体ETF上半年获净买入金额最多，达4239.46万美元；Global X中国电动车及电池ETF和华夏沪深300指数ETF上半年获净买入金额分别为2942.49万美元和1834.17万美元。A股市场方面，华夏中证5G通信主题ETF上半年获韩国投资者净买入437.64万美元，在所有A股上市ETF中排名第一。此外，华夏国证半导体芯片ETF、易方达中证人工智能ETF、富国上证综指ETF上半年获净买入金额分别为290.11万美元、263.40万美元和191.25万美元。", "entities": ["沪深300"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 2, "time": "2026-07-01 13:10:16", "score": 103, "content": "【松下计划进一步拓展人工智能业务 在未来两个财年投资约5000亿日元】报道称，作为曾经的全球消费电子龙头，松下近年来逐渐降低对家电业务的依赖，并成为特斯拉的重要电池供货商。松下计划借助与行业主要企业的合作，力争在未来三年实现约1.4万亿日元的AI基础设施相关业务销售额，并在近日宣布，将在未来两个财年投资约5000亿日元用于该业务。该公司还将裁员规模从此前公布的1万人扩大至1.2万人，预计到2024财年将节省1450亿日元。", "entities": ["特斯拉"]}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 3, "time": "2026-07-01 14:27:57", "score": 98, "content": "【均胜电子将推出机器人灵巧手和半固态电池方案】据均胜电子官方消息，均胜电子将在2026年世界人工智能大会上推出机器人灵巧手、固液混合能源解决方案（半固态电池）、具身智能体大脑以及第三代AI头部总成等新产品。", "entities": []}, {"type": "sector", "sector": "新能源", "priority": "B", "rank": 4, "time": "2026-07-01 07:08:08", "score": 83, "content": "【6月IPO迎受理小高峰 未来产业“新生”密集赶考】6月，伴随财报更新时间节点来临，拟IPO企业通常会掀起一轮受理小高峰。与往年不同的是，今年一批未来产业“新考生”加速叩响资本市场大门，为IPO“考场”增添了不少暖意与新意。据记者不完全统计，截至6月30日21时，沪深交易所6月合计新受理IPO企业98家，其中上交所39家、深交所59家，申报北交所上市获受理的企业68家，合计拟上市企业达到166家。记者注意到，今年IPO受理企业“画像”呈现两大鲜明特色：一是未来产业“新面孔”纷至沓来，包括人工智能、商业航天、新型储能、脑机接口等未来产业企业明显增多；二是折戟再战的“老面孔”重返考场，包括IPO撤单企业、IPO上会被否企业，纷纷重整旗鼓向新一轮IPO发起冲刺。“IPO的审核和发行速度比以往更快，A股新股市场继续迈向一个十分正面和健康的发展方向。连同一些具有代表性的超大型和大型新股在准备上市的名", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 0, "time": "2026-07-01 15:02:26", "score": 122, "content": "【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。", "entities": ["创业板指"]}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 1, "time": "2026-07-01 13:34:12", "score": 84, "content": "【创新药概念股震荡回暖 千红制药触及涨停】创新药概念股震荡回暖，千红制药触及涨停，亚虹医药、益方生物、三生国健、前沿生物等股跟涨。", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 2, "time": "2026-07-01 08:31:40", "score": 84, "content": "【中金公司2026年下半年生物医药展望：创新药产业链发展明确 短期调整不改中长期崛起趋势】中金公司2026年下半年生物医药展望指出，虽然受宏观环境、大国关系扰动、流动性轮转等因素影响，创新药板块进入短期估值回调阶段。但从产业趋势来看，中国创新药BD与临床数据读出依旧保持良好的发展趋势，license out和new co等形式证明中国创新药正在不断国际化。国内外良好的医药产业投融资，为产业带来新一轮研发投入的同时，也为上游CXO等产业带来潜在订单，制药供应有着较强业绩增长确定性。一方面看好医疗科技进取属性：除创新药的突破与国际化外，AI制药与脑机接口等新技术的发展同样可圈可点，部分国产器械也慢慢走出结构性的国际化机会；另一方面，高分红医药股估值相对低位，并购整合带来价值重估机会的同时，也有望积聚新的成长动力。", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 3, "time": "2026-07-01 07:08:08", "score": 83, "content": "【6月IPO迎受理小高峰 未来产业“新生”密集赶考】6月，伴随财报更新时间节点来临，拟IPO企业通常会掀起一轮受理小高峰。与往年不同的是，今年一批未来产业“新考生”加速叩响资本市场大门，为IPO“考场”增添了不少暖意与新意。据记者不完全统计，截至6月30日21时，沪深交易所6月合计新受理IPO企业98家，其中上交所39家、深交所59家，申报北交所上市获受理的企业68家，合计拟上市企业达到166家。记者注意到，今年IPO受理企业“画像”呈现两大鲜明特色：一是未来产业“新面孔”纷至沓来，包括人工智能、商业航天、新型储能、脑机接口等未来产业企业明显增多；二是折戟再战的“老面孔”重返考场，包括IPO撤单企业、IPO上会被否企业，纷纷重整旗鼓向新一轮IPO发起冲刺。“IPO的审核和发行速度比以往更快，A股新股市场继续迈向一个十分正面和健康的发展方向。连同一些具有代表性的超大型和大型新股在准备上市的名", "entities": []}, {"type": "sector", "sector": "医药生物", "priority": "A", "rank": 4, "time": "2026-07-01 10:35:42", "score": 81, "content": "创新药板块触底反弹，瑞联新材盘中创新高，万泽股份涨停，宣泰医药涨超10%，海南海药、润都股份、前沿生物、塞力医疗、汇宇制药跟涨。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 0, "time": "2026-07-01 13:12:59", "score": 84, "content": "【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。宏观方面，美国5月JOLTS职位空缺数小幅增至759.4万个，略高于4月的758.5万和预期值730万，凸显就业市场韧性，市场也在等待周五美国6月非农就业数据的指引。地缘政治方面，中东局势再添变数，虽然美伊签署谅解备忘录，但局势依然复杂，霍尔木兹海峡通航问题进展偏缓慢，而以色列继续扩大针对巴勒斯坦地区的军事行动，并维持对伊朗的高压威慑。当前贵金属市场定价逻辑仍将由美联储货币政策路径主导，美联储是否加息也需要更多数据进行佐证，比如非农就业数据以及后期的通胀数据等，在此之前市场或依然处于鹰派政策预期", "entities": ["纳斯达克"]}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 1, "time": "2026-07-01 07:33:30", "score": 81, "content": "【7月起，这些新规将施行】7月起，一批涉及民生、就业、维权、投资等领域的新规正式施行，涵盖民族团结、社会救助、民航出行、超龄劳动者权益、行政复议、信访登记等多个方面内容。其中，社会救助法首次将六类困难群众纳入法治保障；超龄劳动者权益保障新规填补了老年务工群体的制度空白；民用航空法修订聚焦低空经济与旅客权益。此外，对外投资领域首部行政法规正式出台，行政复议制度进一步健全……一系列新规从不同维度织密法治之网。（澎湃）", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 2, "time": "2026-07-01 14:24:39", "score": 80, "content": "伊朗国防部长：在与国会经济委员会成员们的会议中，我强调，伊朗伊斯兰共和国的防御、导弹和无人机能力是国家安全的红线，这些能力不可谈判，永远不会被谈判。这些能力将依靠国内力量进行发展。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 3, "time": "2026-07-01 13:23:14", "score": 80, "content": "阿富汗称对巴基斯坦发动空袭；巴基斯坦方面称击落无人机。", "entities": []}, {"type": "sector", "sector": "低空经济", "priority": "A", "rank": 4, "time": "2026-07-01 09:44:33", "score": 77, "content": "科创50日内涨幅达1.01%，成分股中，格科微涨15.02%，中科飞测涨5.79%，澜起科技涨5.33%，中无人机涨4.77%。", "entities": ["科创50"]}, {"type": "sector", "sector": "AI应用/软件", "priority": "A", "rank": 0, "time": "2026-07-01 13:46:19", "score": 113, "content": "【上海：攻关端侧AI芯片、轻量模型、AR空间计算、柔性显示技术 发展轻量时尚的AI手机、AIPC、智能音箱等终端和智能眼镜、智能耳机等可穿戴产品】上海市经济信息化委、市委宣传部、市商务委 市文化旅游局、市市场监管局印发《上海市促进时尚消费品产业高质量发展行动方案（2026-2028年）》。方案指出，聚焦主动智能、无感交互、统一协议、端云协同技术趋势，推动“居家、办公、出行”全场景智慧联动。攻关端侧AI芯片、轻量模型、AR空间计算、柔性显示技术，发展轻量时尚的AI手机、AIPC、智能音箱等终端和智能眼镜、智能耳机等可穿戴产品，布局家庭服务和陪伴机器人。研发高效电机、多维清洁、绿色低碳技术，推动智能空调、洗涤、厨卫、个护家电更具设计感和功能性，打造智能光环境。优化汽车智能座舱和辅助驾驶体验。", "entities": []}, {"type": "sector", "sector": "AI应用/软件", "priority": "A", "rank": 1, "time": "2026-07-01 14:27:57", "score": 98, "content": "【均胜电子将推出机器人灵巧手和半固态电池方案】据均胜电子官方消息，均胜电子将在2026年世界人工智能大会上推出机器人灵巧手、固液混合能源解决方案（半固态电池）、具身智能体大脑以及第三代AI头部总成等新产品。", "entities": []}, {"type": "event", "sector": "特斯拉 (机器人/新能源)", "priority": "A", "rank": 1, "time": "2026-07-01 07:21:34", "score": 110, "content": "【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国政府道德办公室(Office of Government Ethics)的这份文件，去年的收益包括通过一家与特朗普模因币相关的实体获得的6.35亿美元特许权使用费。该模因币就在他宣誓就职前几天推出。此", "entities": []}, {"type": "event", "sector": "特斯拉 (机器人/新能源)", "priority": "A", "rank": 2, "time": "2026-07-01 04:16:23", "score": 108, "content": "“大空头”Michael Burry： 做空特斯拉、英伟达和应用材料。", "entities": []}, {"type": "event", "sector": "特斯拉 (机器人/新能源)", "priority": "A", "rank": 3, "time": "2026-07-01 04:00:48", "score": 108, "content": "【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。", "entities": []}, {"type": "event", "sector": "三星 (半导体)", "priority": "A", "rank": 2, "time": "2026-07-01 10:14:34", "score": 106, "content": "【巨头抢购电子级氢氟酸 部分供货商年内已涨价三成】据报道，业内传出，台积电、三星、SK海力士都在抢购电子级氢氟酸（HF）。报道称，今年以来中东地缘政治紧张推升硫磺、硫酸及无水氢氟酸价格，带动电子级氢氟酸成本垫高，部分供货商已陆续调涨售价，涨幅约二至三成。 (台湾经济日报)", "entities": []}, {"type": "event", "sector": "三星 (半导体)", "priority": "A", "rank": 3, "time": "2026-07-01 09:16:09", "score": 102, "content": "【韩国政府否认有关设立新智库以利用芯片巨头超额利润的传言】韩国产业通商资源部周三否认了有关政府推动成立一个新智库，专门统筹利用全球人工智能热潮为芯片企业带来的巨额利润的传言。韩国产业通商资源部在一份声明中表示：“网上流传的有关首尔已致函三星电子和SK海力士，要求成立一个政府主导的、与利润分享相关的智库的传言完全是虚假的。”韩国产业通商资源部补充道：“我们将采取强硬措施，打击恶意传播此类误导性信息的行为，并将此事移交调查机关。”", "entities": []}, {"type": "event", "sector": "三星 (半导体)", "priority": "A", "rank": 4, "time": "2026-07-01 00:20:31", "score": 100, "content": "【芯片设备类股走强 受三星和SK海力士宣布投资计划提振】三星和SK海力士宣布计划建设两座芯片制造厂后，芯片设备类股连续第二天跑赢更广泛的半导体板块。阿斯麦在阿姆斯特丹上涨6.8%，早前一度上涨8%，创4月8日以来最大涨幅；美国芯片设备类股中，应用材料上涨5.3%，泛林集团涨4.0%，科磊公司涨5.9%。就两日累计涨幅来看，这四只股票在费城半导体指数成份股中涨幅居前：科磊两日累计涨幅为18%，应用材料为17%，泛林集团为13%，阿斯麦为10%，而费城半导体指数同期涨幅为7%。", "entities": []}, {"type": "event", "sector": "谷歌 ()", "priority": "A", "rank": 1, "time": "2026-07-01 11:47:41", "score": 102, "content": "【Anthropic：Claude Fable 5 将于明天全球重新上线】Anthropic发文称，Claude Fable 5 将于明天全球重新上线。在与美国政府进行一系列富有成效的对话后，我们将使用一组新的分类器重新部署该模型，以针对并阻止更多网络安全任务。在短期内，一些常规任务如编码和调试将回退至 Opus 4.8。我们将在未来几周继续优化这些分类器，以减少误报，并更好地区分真正的滥用与合法请求。我们还已开始起草一个共识框架——与亚马逊、微软、谷歌以及其他 Glasswing 合作伙伴一起——用于评估 AI 越狱的严重程度，以及 AI 开发者应如何应对。我们邀请其他行业合作伙伴和模型提供", "entities": []}, {"type": "event", "sector": "谷歌 ()", "priority": "A", "rank": 2, "time": "2026-07-01 11:17:04", "score": 102, "content": "Anthropic：与亚马逊、微软、谷歌及其他 Glasswing 合作伙伴共同起草人工智能越狱风险严重程度评估框架。", "entities": []}, {"type": "event", "sector": "谷歌 ()", "priority": "A", "rank": 3, "time": "2026-07-01 10:29:02", "score": 102, "content": "【泰凌微盛文军：端侧AI产品将改变行业格局 短期看好智能家居、游戏外设等赛道】近期，泰凌微总经理盛文军表示，公司持续向端侧AI转型，多款端侧AI产品已受到市场积极反馈；包含支持WiFi-7在内的多款端侧AI产品，将在近两年持续问世。同时，其表示，公司芯片已应用于谷歌电视棒遥控器、智能耳机等产品，随着谷歌大力推进Matter智能家居标准，双方在智能家居领域的合作空间正快速扩大。“公司正处于从‘产品公司’向‘平台型公司’演进的阶段，将加速出海布局，持续绑定全球头部客户，瞄准智能家居、游戏外设等赛道。”", "entities": []}, {"type": "event", "sector": "谷歌 ()", "priority": "A", "rank": 4, "time": "2026-07-01 04:01:17", "score": 100, "content": "  谷歌推出面向表格数据的 TabFM 基础大模型。", "entities": []}, {"type": "event", "sector": "英伟达 (半导体/AI算力)", "priority": "A", "rank": 4, "time": "2026-07-01 04:59:46", "score": 100, "content": "美国总统特朗普2025年度的财务报告称，特朗普持有至少500万美元英伟达股票，持有至少100万美元PALANTIR股票。", "entities": []}, {"type": "event", "sector": "科创50 ()", "priority": "A", "rank": 1, "time": "2026-07-01 07:25:11", "score": 111, "content": "【A股上半年行情收官：成交额刷新纪录 半导体板块市值超越国有大行】A股2026年上半年行情收官，市场主要指数多数上涨，其中上证指数上涨3.16%，深证成指上涨19.82%；创业板指数和科创50指数表现最为亮眼，指数双双创出历史新高，上半年涨幅分别达35.58%、64.25%。A股最新总市值也升至118.95万亿元，较去年末增长9.41%。市场交易热度同步创下阶段新高，上半年全市场成交额超317万亿元，金额刷新半年度纪录。半导体板块A股市值历史性超越国有大行，登顶申万二级行业榜首。与此同时，全市场千亿市值公司阵营跨越式扩容至206家，硬科技公司为新增主力。（证券时报）", "entities": []}, {"type": "event", "sector": "科创50 ()", "priority": "A", "rank": 2, "time": "2026-07-01 10:24:06", "score": 102, "content": "科创50日内涨幅达2.05%，成分股中，格科微涨16.16%，华海清科涨10.02%，沪硅产业涨8.35%，中微公司涨6.72%。", "entities": []}, {"type": "event", "sector": "科创50 ()", "priority": "A", "rank": 4, "time": "2026-07-01 13:50:34", "score": 35, "content": "科创50日内跌幅达3.03%，成分股中，源杰科技跌7.48%，芯原股份跌7.37%，生益电子跌7.36%，时代电气跌7.31%。", "entities": []}, {"type": "event", "sector": "SK海力士 (半导体/存储)", "priority": "A", "rank": 4, "time": "2026-07-01 10:05:20", "score": 32, "content": "韩国KOSPI指数跌3％，三星电子跌超5%，SK海力士（SKHY）跌超4%。", "entities": []}, {"type": "event", "sector": "兆易创新 (半导体/存储)", "priority": "A", "rank": 0, "time": "2026-07-01 14:44:20", "score": 105, "content": "【兆易创新A股成交额超400亿元】7月1日下午，兆易创新A股成交额超400亿元，现跌5.52%。", "entities": []}, {"type": "event", "sector": "兆易创新 (半导体/存储)", "priority": "A", "rank": 1, "time": "2026-07-01 13:38:40", "score": 105, "content": "兆易创新成交额达300亿元，现跌4.79%。", "entities": []}, {"type": "event", "sector": "兆易创新 (半导体/存储)", "priority": "A", "rank": 2, "time": "2026-07-01 10:52:39", "score": 105, "content": "兆易创新成交额达200亿元，现涨0.37%。", "entities": []}, {"type": "event", "sector": "兆易创新 (半导体/存储)", "priority": "A", "rank": 3, "time": "2026-07-01 11:02:39", "score": 102, "content": "【兆易创新推出首款GD24CL系列I²C EEPROM】7月1日，兆易创新（GigaDevice）推出全新GD24CL系列I²C通信接口的EEPROM，首发容量为256Kb。该产品能够切实满足工业、电表、能源、数字基础设施等领域对关键配置信息长期、稳定保存的严苛需求。作为兆易创新推出的首款EEPROM产品，该系列的发布进一步完善了公司的非易失性存储产品线。", "entities": []}, {"type": "event", "sector": "兆易创新 (半导体/存储)", "priority": "A", "rank": 4, "time": "2026-07-01 08:59:06", "score": 102, "content": "【6月30日641股获融资买入超亿元 京东方Ａ获买入62.20亿元居首】6月30日共有3463只个股获融资资金买入，有641股买入金额超亿元。其中，京东方Ａ、兆易创新、澜起科技融资买入金额排名前三，分别获买入62.20亿元、56.53亿元、49.25亿元。", "entities": []}, {"type": "event", "sector": "创业板指 ()", "priority": "A", "rank": 2, "time": "2026-07-01 11:33:06", "score": 46.0, "content": "【午评：沪指半日涨1.08%，全市场超4500只个股上涨，制冷剂、家禽、证券IT等概念走强】A股三大指数早盘涨跌不一，截至午间收盘，上证指数涨1.08%，深证成指涨0.41%，创业板指跌0.39%；北证50涨0.35%。沪深两市成交额约24199.64亿元，较前一个交易日放量约3151.19亿元。截至午盘，全市场4553只股票上涨、931只股票下跌，其中198只涨停、6只跌停。", "entities": []}, {"type": "event", "sector": "创业板指 ()", "priority": "A", "rank": 3, "time": "2026-07-01 15:01:02", "score": 41.0, "content": "A股收盘，上证指数涨0.44%，深证成指跌0.53%，创业板指跌1.89%。", "entities": []}, {"type": "event", "sector": "创业板指 ()", "priority": "A", "rank": 4, "time": "2026-07-01 13:52:26", "score": 35, "content": "深证成指跌1.00%，现报16043.019点；上证指数涨0.14%，现报4100.229点；创业板指跌2.18%，现报4248.088点。", "entities": []}, {"type": "event", "sector": "微软 ()", "priority": "A", "rank": 3, "time": "2026-07-01 11:15:34", "score": 32, "content": "ANTHROPIC：我们将尽快在AWS、谷歌云和微软FOUNDRY上重新启用FABLE 5的访问权限。", "entities": []}, {"type": "event", "sector": "微软 ()", "priority": "A", "rank": 4, "time": "2026-07-01 07:12:15", "score": 32, "content": "【微软计划新一轮裁员，数千岗位受波及】据知情人士透露，微软持续推进成本管控工作，这家科技巨头即将宣布新一轮裁员计划。知情人士称，本次裁员将波及数千个岗位，涵盖销售、咨询部门，Xbox 游戏业务板块也在裁员范围内。知情人士补充道，本轮裁员规模大概率小于去年同类裁员动作，本次裁减人数不足公司 22 万名员工总规模的 2.5%。因涉及敏感信息，相关消息源要求匿名。微软计划于下周公布裁员消息，不过确切发布时间仍存在变动可能。其中一名知情人士表示，部分受影响员工会直接获得内部转岗机会。", "entities": []}, {"type": "event", "sector": "Meta ()", "priority": "A", "rank": 2, "time": "2026-07-01 03:19:55", "score": 30, "content": "   Meta：Discord 今日登陆 Meta Quest。", "entities": []}, {"type": "event", "sector": "Meta ()", "priority": "A", "rank": 3, "time": "2026-07-01 01:13:14", "score": 30, "content": "Meta：6月30日至9月30日期间，Quest设备用户完成Discord下载即可获赠一个月Discord Nitro会员。", "entities": []}, {"type": "event", "sector": "Meta ()", "priority": "A", "rank": 4, "time": "2026-07-01 01:12:07", "score": 30, "content": "Meta：Meta Horzion商店免费提供Discord应用。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 0, "time": "2026-07-01 07:19:13", "score": 102, "content": "【数字基础设施公司ITG美国IPO定价低于区间，筹资3.122亿美元】由橡树资本（Oaktree）支持的ITG周二表示，其美国首次公开募股（IPO）定价为每股16美元，低于目标区间，共筹集3.122亿美元。这家数字基础设施公司此次共售出1950万股，最初的发行定价区间为每股19至22美元。ITG在美国各地提供端到端的数字基础设施服务，支持宽带、无线、数据中心、公用事业及民用基础设施的规划、建设、运营和维护。随着高速宽带已成为一项基本公共设施，且人工智能公司斥资数十亿美元建设其技术所需的数据中心，对该公司服务的需求随之增长。2021年，投资公司橡树资本管理与ITG管理层合作，收购了该公司。摩根士", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 2, "time": "2026-07-01 11:54:03", "score": 38.0, "content": "【AOL母公司Bending Spoons的16.8亿美元IPO定价高于指导区间】互联网先驱AOL的母公司Bending Spoons已宣布其首次公开募股(IPO)的定价高于指导区间，估值约为180亿美元。这家总部位于意大利的公司表示，此次发行总计募资16.8亿美元，定价为每股29.00美元，高于26.00-28.00美元的指导区间。Bending Spoons旗下还拥有票务平台Eventbrite和视频平台Vimeo。在本次发行的近5,800万股股票中，该公司发售了3,440万股，其余股份由部分现有股东出售。标普全球评级(S&P Global Ratings)的分析师在最近的一份报告中表示，", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 3, "time": "2026-07-01 10:15:45", "score": 38.0, "content": "标普500指数期货下跌0.3%，纳斯达克指数期货下跌0.4%。", "entities": []}, {"type": "event", "sector": "纳斯达克 ()", "priority": "A", "rank": 4, "time": "2026-07-01 04:03:30", "score": 36.0, "content": "  标普 500 指数与纳斯达克指数创下 2020 年二季度以来最大季度涨幅。\n本季度，标普 500 指数上涨 14.9%，道琼斯工业平均指数上涨 12.9%，纳斯达克指数上涨 21.4%。\n本月，标普 500 指数下跌 1.1%，道琼斯指数上涨 2.5%，纳斯达克指数下跌 2.8%。", "entities": []}, {"type": "event", "sector": "佰维存储 (半导体/存储)", "priority": "A", "rank": 0, "time": "2026-07-01 09:40:23", "score": 111, "content": "【存储芯片概念快速拉升 时空科技涨停创历史新高】存储芯片概念快速拉升，时空科技涨停，创历史新高，金太阳涨超10%，香农芯创、朗科科技、北京君正、普冉股份、佰维存储跟涨。", "entities": []}, {"type": "event", "sector": "佰维存储 (半导体/存储)", "priority": "A", "rank": 1, "time": "2026-07-01 10:10:32", "score": 106, "content": "【存储芯片概念延续强势 盈新发展等多股涨停】存储芯片概念延续强势，盈新发展4天3板，此前领先股份、时空科技涨停，普冉股份、北京君正涨超10%，江波龙、香农芯创、佰维存储等跟涨。", "entities": []}, {"type": "event", "sector": "佰维存储 (半导体/存储)", "priority": "A", "rank": 2, "time": "2026-07-01 09:45:00", "score": 102, "content": "【A股封测概念板块异动拉升】敏芯股份涨17.33%，太极实业、富满微、宏达电子、长电科技、探路者、佰维存储跟涨。", "entities": []}, {"type": "event", "sector": "软银 ()", "priority": "A", "rank": 1, "time": "2026-07-01 08:13:44", "score": 91, "content": "【日经指数上涨2.3%，电子和科技股领涨】得益于对人工智能相关需求增长的持续预期，以及追随美国科技股的涨势，日本股市走高。电子和科技股领涨。东京电子上涨4.9%，软银集团上涨3.8%。美元报162.65日元，周二东京股市收盘时为162.24日元。投资者正密切关注美伊和平谈判的任何进展，以及日本政府官员对日元贬值的任何评论。日经指数上涨2.3%，报71701.04点。", "entities": []}, {"type": "event", "sector": "软银 ()", "priority": "A", "rank": 2, "time": "2026-07-01 15:02:02", "score": 90, "content": "软银计划于10月1日完成对OPENAI的第三笔投资。", "entities": []}, {"type": "event", "sector": "宁德时代 (新能源)", "priority": "A", "rank": 1, "time": "2026-07-01 11:19:42", "score": 70, "content": "【宁德时代“巧克力换电”累计落站2000座】宁德时代旗下巧克力换电今日宣布，上半年公司全国换电站累计落地2000座，覆盖31个省份180座城市，中小城市覆盖率突破80%，高速网络同步破局，网络已从重点城市连片延伸至县域市场，香港首批换电站投入实质性运营。据悉，下半年巧克力换电站站点总量将冲击3000座，覆盖城市超190座。", "entities": []}, {"type": "event", "sector": "宁德时代 (新能源)", "priority": "A", "rank": 2, "time": "2026-07-01 09:11:08", "score": 69, "content": "【宁德时代10万吨碳酸锂产能复产】一则重磅消息搅动锂电产业链。有市场消息称，宁德时代新能源科技股份有限公司（以下简称“宁德时代”）已于6月29日获批枧下窝锂矿安全生产许可证。6月30日，记者从权威渠道证实了上述消息，并进一步获悉，枧下窝锂矿已于29日晚间正式复产。 （大河财立方）", "entities": []}, {"type": "policy", "sector": "监管政策 -> AI算力, 半导体芯片", "priority": "P", "rank": 0, "time": "2026-07-01 11:49:39", "score": 115, "content": "【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、", "entities": ["台积电", "新易盛", "英伟达"]}, {"type": "policy", "sector": "监管政策 -> AI算力, 半导体芯片", "priority": "P", "rank": 1, "time": "2026-07-01 08:11:58", "score": 110, "content": "【韩国出口保持强劲增长 人工智能热潮继续提振芯片需求】韩国6月出口延续强劲表现，凸显支撑经济增长的芯片产业景气仍具韧性。韩国政府周三公布，经工作日差异调整后，6月出口同比增长59.5%。进口增长30.1%，贸易顺差达到361亿美元。未经调整的出口增长70.9%，相比之下，5月份出口增幅经修正后为53.4%。半导体再次引领出口增长，受到与AI和数据中心相关的强劲投资支持。最新数据表明，韩国经济由出口驱动的扩张仍在持续，这将支持韩国央行日趋鹰派的立场。韩国央行行长申铉松表示，半导体热潮正外溢至更广泛的消费、投资和加薪，增加了通胀压力可能变得更加根深蒂固的风险。", "entities": []}, {"type": "policy", "sector": "国际贸易/监管政策 -> AI算力", "priority": "P", "rank": 2, "time": "2026-07-01 07:06:36", "score": 109, "content": "【消息人士：美国将于周二解除对Anthropic公司Fable AI模型的出口管制】据一位知情人士透露，美国商务部预计将于周二解除对Anthropic公司Fable 5人工智能模型的出口管制，此前不到三周，该公司曾因国家安全风险被勒令暂停对其最先进人工智能模型的访问。6月12日收到出口管制令后，Anthropic立即停用了其Mythos 5和Fable 5模型。上周五，Anthropic表示美国政府已允许其向部分“可信”的美国组织发布其Claude Mythos 5人工智能模型，这标志着该禁令部分被撤销。", "entities": []}, {"type": "policy", "sector": "国际贸易/监管政策 -> AI算力", "priority": "P", "rank": 3, "time": "2026-07-01 08:09:59", "score": 106, "content": "【美国政府取消Anthropic的Fable 5模型的限制】美国政府已经取消外国人士存取Anthropic PBC的Fable 5 AI模型的限制。 自从美国政府下令Anthropic公司停用Mythos 5 AI模型和Fable 5(功能较弱、应用范围更广的模型)以来，这家AI公司和商务部官员一直在磋商。美国商务部6月12日通过一封非公开信件实施出口管制规定，要求Anthropic在允许任何外国人士(不论身处何地)存取上述两款模型之前，必须先取得美国政府批准；此外，在将这两款模型出口至全球任何目的地之前，也须取得美方许可。针对Mythos的部分限制已于6月26日解除。媒体先前已报道，涉及Fa", "entities": []}, {"type": "policy", "sector": "国际贸易 -> AI算力", "priority": "P", "rank": 4, "time": "2026-07-01 07:56:53", "score": 106, "content": "人工智能公司Anthropic：我们已接到通知，美国商务部已解除对Claude Fable 5和 Mythos 5的出口管制。将于明天开始恢复访问。", "entities": []}, {"type": "policy", "sector": "国际贸易/海外市场 -> AI算力", "priority": "P", "rank": 5, "time": "2026-07-01 06:53:28", "score": 104, "content": "【7月1日隔夜要闻一览】\n1、美国高级官员透露多哈会谈相关情况： 威特科夫、库什纳与地区领导人举行了积极会谈。技术性谈判仍在进行，已取得良好进展。\n2、财务披露显示特朗普2025年加密货币收入至少14亿美元。\n3、特朗普：共和党中期选举大会将在德克萨斯州达拉斯举行。\n4、美国航空航天局6月30日表示，国际空间站两名美国宇航员当天完成太空行走任务，更换空间站机械臂“加拿大臂2号”出现故障的关键部件，任务总共持续约7小时20分钟。\n5、一位白宫高级官员透露，美国商务部预计将于当地时间今晚解除对Anthropic AI模型Fable的出口管制。\n6、俄下令临时关闭连通芬兰等三国的多个铁路口岸。\n7、", "entities": []}, {"type": "policy", "sector": "国际贸易 -> AI算力", "priority": "P", "rank": 6, "time": "2026-07-01 06:22:30", "score": 104, "content": "据Politico：一位白宫高级官员透露，美国商务部预计将于当地时间今晚解除对Anthropic AI模型Fable的出口管制。", "entities": []}, {"type": "policy", "sector": "货币政策/海外市场 -> 低空经济", "priority": "P", "rank": 7, "time": "2026-07-01 13:12:59", "score": 84, "content": "【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。宏观方面，美国5月JOLTS职位空缺数小幅增至759.4万个，略高于4月的758.5万和预期值730万，凸显就业市场韧性，市场也在等待周五美国6月非农就业数据的指引。地缘政治方面，中东局势再添变数，虽然美伊签署谅解备忘录，但局势依然复杂，霍尔木兹海峡通航问题进展偏缓慢，而以色列继续扩大针对巴勒斯坦地", "entities": ["纳斯达克"]}, {"type": "policy", "sector": "监管政策 -> 医药生物", "priority": "P", "rank": 8, "time": "2026-07-01 09:06:53", "score": 81, "content": "【中药饮片将实现一物一码 全程可追溯】据国家医保局消息，7月1日，国家医保局公开征求《国家医疗保障局办公室 国家药品监督管理局综合司关于印发〈中药饮片追溯码编码要求〉的通知（征求意见稿）》意见。为健全中药饮片全链条追溯体系，提升药品质量安全保障能力，强化医保基金使用监管效能，国家医保局组织力量开展中药饮片追溯码编码要求的研究制定工作，秉持“实用性、唯一性、可扩展性、通用性”基本原则，形成《中药饮片追溯码编码要求》，拟联合国家药监局印发，以实现中药饮片“一物一码、全程可溯”。", "entities": []}, {"type": "policy", "sector": "监管政策 -> 低空经济", "priority": "P", "rank": 9, "time": "2026-07-01 07:33:30", "score": 81, "content": "【7月起，这些新规将施行】7月起，一批涉及民生、就业、维权、投资等领域的新规正式施行，涵盖民族团结、社会救助、民航出行、超龄劳动者权益、行政复议、信访登记等多个方面内容。其中，社会救助法首次将六类困难群众纳入法治保障；超龄劳动者权益保障新规填补了老年务工群体的制度空白；民用航空法修订聚焦低空经济与旅客权益。此外，对外投资领域首部行政法规正式出台，行政复议制度进一步健全……一系列新规从不同维度织密法治之网。（澎湃）", "entities": []}];</script>
+<div class="normal-view" id="normalView">
+<div class="filter-bar">
+<span class="filter-tag active" onclick="filterSector(this,'')">全部</span>
+<span class="filter-tag" onclick="filterSector(this,'半导体芯片')">半导体芯片 <span style="opacity:.6">65</span></span>
+<span class="filter-tag" onclick="filterSector(this,'AI算力')">AI算力 <span style="opacity:.6">45</span></span>
+<span class="filter-tag" onclick="filterSector(this,'机器人/具身智能')">机器人/具身智能 <span style="opacity:.6">31</span></span>
+<span class="filter-tag" onclick="filterSector(this,'新能源')">新能源 <span style="opacity:.6">14</span></span>
+<span class="filter-tag" onclick="filterSector(this,'医药生物')">医药生物 <span style="opacity:.6">11</span></span>
+<span class="filter-tag" onclick="filterSector(this,'低空经济')">低空经济 <span style="opacity:.6">6</span></span>
+<span class="filter-tag" onclick="filterSector(this,'AI应用/软件')">AI应用/软件 <span style="opacity:.6">2</span></span>
+</div>
+<div class="sec-title">&#128293; 热点板块 <span class="n">按信号强度排序</span></div>
+<div class="card open" data-sector="半导体芯片">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge s">S</span>
+      <span class="card-name">半导体芯片</span>
+      <span class="card-count">65条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="subtags"><span class="stag">CPU/GPU</span><span class="stag">存储芯片</span><span class="stag">封测</span><span class="stag">涨价信号</span><span class="stag">设备材料</span></div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-07-01 15:02:26" data-score="122" data-content="【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。" data-entities="[&quot;创业板指&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:02</span><span class="ni-score hot">&#128293;122</span></div>
+    <div class="ni-text">【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成...</div>
+    <div class="ni-tags"><span class="etag">创业板指</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-07-01 12:26:08" data-score="116" data-content="【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心光通信网络：公司扩大光通信及交换机设备陶瓷封装外壳产能，以适配海量数据传输需求。③高端基板产品：京瓷正推进新型多层陶瓷核心基板商业化落地，该产品专为高性能AI处理器（xPU）与专用集成电路（ASIC）打造。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">12:26</span><span class="ni-score hot">&#128293;116</span></div>
+    <div class="ni-text">【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="半导体芯片" data-priority="S" data-time="2026-07-01 13:23:49" data-score="115" data-content="【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波长约（LTA）变革中的关键特征如下：不设上限：有别于其他竞争对手通常设立的「价格上限（Ceiling Price）」。周期红利：在市况火热且供不应求时，SK海力士能完整吃到完整涨价红利，将市场价值最大化。合约年限：因应AI需求大增，SK海力士与三星皆已将合约从过往的一年期，拉长为3至5年的长期供应协议。" data-entities="[&quot;SK海力士&quot;, &quot;三星&quot;]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:23</span><span class="ni-score hot">&#128293;115</span></div>
+    <div class="ni-text">【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波...</div>
+    <div class="ni-tags"><span class="etag">SK海力士</span><span class="etag">三星</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card open" data-sector="AI算力">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge s">S</span>
+      <span class="card-name">AI算力</span>
+      <span class="card-count">45条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="subtags"><span class="stag">HBM存储</span><span class="stag">光模块</span><span class="stag">服务器</span></div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-07-01 15:02:26" data-score="122" data-content="【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。" data-entities="[&quot;创业板指&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:02</span><span class="ni-score hot">&#128293;122</span></div>
+    <div class="ni-text">【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成...</div>
+    <div class="ni-tags"><span class="etag">创业板指</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-07-01 12:26:08" data-score="116" data-content="【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心光通信网络：公司扩大光通信及交换机设备陶瓷封装外壳产能，以适配海量数据传输需求。③高端基板产品：京瓷正推进新型多层陶瓷核心基板商业化落地，该产品专为高性能AI处理器（xPU）与专用集成电路（ASIC）打造。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">12:26</span><span class="ni-score hot">&#128293;116</span></div>
+    <div class="ni-text">【日本京瓷将投资6500亿日元与东陶角逐半导体、数据中心陶瓷零部件市场】据报道，日本京瓷计划在2031年3月前，向旗下零部件业务投入6500亿日元（约合40亿美元）。本次资金将重点投向半导体制造设备与人工智能数据中心等高增长市场，投入规模较上一个六年周期提升20%。核心投资方向：①半导体制造设备：京瓷计划扩产高端精细陶瓷零部件（如静电吸盘、曝光设备载台），该类产品目前全球市占率约50%。②数据中心...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI算力" data-priority="S" data-time="2026-07-01 11:49:39" data-score="115" data-content="【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、大成港股精选、中信保诚全球商品主题等业绩相对靠后，期内净值跌幅均超过10%。（每经）" data-entities="[&quot;台积电&quot;, &quot;新易盛&quot;, &quot;英伟达&quot;]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:49</span><span class="ni-score hot">&#128293;115</span></div>
+    <div class="ni-text">【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMEN...</div>
+    <div class="ni-tags"><span class="etag">台积电</span><span class="etag">新易盛</span><span class="etag">英伟达</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="机器人/具身智能">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">机器人/具身智能</span>
+      <span class="card-count">31条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="subtags"><span class="stag">减速器</span></div>
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-07-01 08:05:08" data-score="115" data-content="【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国家资源向光州（存储器），大邱（机器人），忠清（数据中心，显示）等首都圈以外地区倾斜，对韩国科技产业发展是标志性事件。1.3万亿美元的投资规模相当于台积电在美国亚利桑那州投资规模（1650亿美元）的7.8倍，对全球半导体产业的竞争格局，供需关系都或将产生深远影响。 华泰证券认为，AI高景气下先进制程、HBM与先进封装产能扩张将带来持续的设备增量需求，设备厂商在本轮跨越十年的长线投资下或迎来长期结构性" data-entities="[&quot;台积电&quot;, &quot;三星&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">08:05</span><span class="ni-score hot">&#128293;115</span></div>
+    <div class="ni-text">【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国...</div>
+    <div class="ni-tags"><span class="etag">台积电</span><span class="etag">三星</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-07-01 08:44:09" data-score="114" data-content="【优必选人形机器人规模化量产提速 机构扎堆盯上这几只人形机器人概念股】 6月30日，优必选首次公开展示了50余款全尺寸超仿生人形机器人，此次最新推出的全尺寸超仿生人形机器人主要用于家庭陪伴场景。据悉，自今年6月初登陆京东开启预售后，目前该系列机器人已经获得11000预定订单。今年以来，相比AI赛道的光模块、存储芯片、MLCC、PCB、AI芯片等题材，人形机器人概念整体表现并不抢眼。据证券时报·数据宝统计，截至6月30日收盘，年内涨幅翻倍的人形机器人概念股仅9只，包括泰晶科技、索辰科技、智微智能、沃尔德、江苏北人等。机构调研频次可以反映相关概念股热度。据数据宝统计，截至6月30日收盘，今年以来获得5次及以上机构调研的人形机器人概念股有21只。在上述机构高频调研的21只人形机器人概念股中，以6月30日收盘价与年内高点相比，8股回撤幅度超30%，其中安培龙、利亚德、斯菱智驱、步科股份、拓邦股份回" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">08:44</span><span class="ni-score hot">&#128293;114</span></div>
+    <div class="ni-text">【优必选人形机器人规模化量产提速 机构扎堆盯上这几只人形机器人概念股】 6月30日，优必选首次公开展示了50余款全尺寸超仿生人形机器人，此次最新推出的全尺寸超仿生人形机器人主要用于家庭陪伴场景。据悉，自今年6月初登陆京东开启预售后，目前该系列机器人已经获得11000预定订单。今年以来，相比AI赛道的光模块、存储芯片、MLCC、PCB、AI芯片等题材，人形机器人概念整体表现并不抢眼。据证券时报·数据...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="机器人/具身智能" data-priority="A" data-time="2026-07-01 07:26:27" data-score="114" data-content="【机构密集调研A股上市公司 人形机器人、半导体材料受追捧】据Wind数据统计，6月份，共有989家A股上市公司迎来机构调研。从调研逻辑看，硬科技赛道凭借清晰的产业升级路径、持续推进的国产替代进程以及充足的中长期成长空间，成为当前机构调研和中长期资金布局的主线。受访专家表示，当前公募、私募、外资、券商等各类机构布局风格差异化凸显，但对科技成长赛道的看多共识高度一致。其中，人形机器人、AI硬件、高端半导体材料等前沿细分领域，受益于产业迭代提速、上市公司业绩集中兑现、市场流动性持续改善三重利好共振，成为市场资金重点关注领域。（证券日报）" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:26</span><span class="ni-score hot">&#128293;114</span></div>
+    <div class="ni-text">【机构密集调研A股上市公司 人形机器人、半导体材料受追捧】据Wind数据统计，6月份，共有989家A股上市公司迎来机构调研。从调研逻辑看，硬科技赛道凭借清晰的产业升级路径、持续推进的国产替代进程以及充足的中长期成长空间，成为当前机构调研和中长期资金布局的主线。受访专家表示，当前公募、私募、外资、券商等各类机构布局风格差异化凸显，但对科技成长赛道的看多共识高度一致。其中，人形机器人、AI硬件、高端半...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="新能源">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge b">B</span>
+      <span class="card-name">新能源</span>
+      <span class="card-count">14条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-07-01 13:41:04" data-score="113" data-content="【韩国投资者上半年持续加仓A股】据中证报，2026年上半年，韩国投资者持续加码配置中国市场。韩国证券存托结算院（KSD）数据显示，在韩国投资者净买入金额居前的中国市场标的中，多只ETF强势挤进榜单前列，科技、人工智能、半导体、新能源等主题产品尤为受到追捧。A股市场中，韩国投资者净买入前20名中，有8只ETF产品，包括通信ETF华夏、芯片ETF华夏、人工智能ETF易方达、上证指数ETF富国、云计算ETF易方达、科创50ETF华夏、电网设备ETF华夏、机器人ETF华夏。个股方面，韩国资金重点投向人工智能、先进制造等成长领域。A股市场中，上半年被韩国资金买入最多的三一重工，获999.75万美元净买入；东山精密、宁德时代紧随其后，分别获558.20万美元、555.24万美元净买入；此外，亨通光电、麦格米特、云南锗业、长飞光纤等也获得韩国资金持续增持。" data-entities="[&quot;宁德时代&quot;, &quot;科创50&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:41</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">【韩国投资者上半年持续加仓A股】据中证报，2026年上半年，韩国投资者持续加码配置中国市场。韩国证券存托结算院（KSD）数据显示，在韩国投资者净买入金额居前的中国市场标的中，多只ETF强势挤进榜单前列，科技、人工智能、半导体、新能源等主题产品尤为受到追捧。A股市场中，韩国投资者净买入前20名中，有8只ETF产品，包括通信ETF华夏、芯片ETF华夏、人工智能ETF易方达、上证指数ETF富国、云计算E...</div>
+    <div class="ni-tags"><span class="etag">宁德时代</span><span class="etag">科创50</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-07-01 08:22:12" data-score="110" data-content="【韩国投资者上半年借道ETF配置中国资产 半导体、沪深300、通信等产品受青睐】今年上半年，韩国投资者积极配置中国资产，借道多只ETF进行投资。韩国证券存托结算院数据显示，港股市场方面，Global X中国半导体ETF上半年获净买入金额最多，达4239.46万美元；Global X中国电动车及电池ETF和华夏沪深300指数ETF上半年获净买入金额分别为2942.49万美元和1834.17万美元。A股市场方面，华夏中证5G通信主题ETF上半年获韩国投资者净买入437.64万美元，在所有A股上市ETF中排名第一。此外，华夏国证半导体芯片ETF、易方达中证人工智能ETF、富国上证综指ETF上半年获净买入金额分别为290.11万美元、263.40万美元和191.25万美元。" data-entities="[&quot;沪深300&quot;]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">08:22</span><span class="ni-score hot">&#128293;110</span></div>
+    <div class="ni-text">【韩国投资者上半年借道ETF配置中国资产 半导体、沪深300、通信等产品受青睐】今年上半年，韩国投资者积极配置中国资产，借道多只ETF进行投资。韩国证券存托结算院数据显示，港股市场方面，Global X中国半导体ETF上半年获净买入金额最多，达4239.46万美元；Global X中国电动车及电池ETF和华夏沪深300指数ETF上半年获净买入金额分别为2942.49万美元和1834.17万美元。A...</div>
+    <div class="ni-tags"><span class="etag">沪深300</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="新能源" data-priority="B" data-time="2026-07-01 13:10:16" data-score="103" data-content="【松下计划进一步拓展人工智能业务 在未来两个财年投资约5000亿日元】报道称，作为曾经的全球消费电子龙头，松下近年来逐渐降低对家电业务的依赖，并成为特斯拉的重要电池供货商。松下计划借助与行业主要企业的合作，力争在未来三年实现约1.4万亿日元的AI基础设施相关业务销售额，并在近日宣布，将在未来两个财年投资约5000亿日元用于该业务。该公司还将裁员规模从此前公布的1万人扩大至1.2万人，预计到2024财年将节省1450亿日元。" data-entities="[&quot;特斯拉&quot;]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:10</span><span class="ni-score warm">103</span></div>
+    <div class="ni-text">【松下计划进一步拓展人工智能业务 在未来两个财年投资约5000亿日元】报道称，作为曾经的全球消费电子龙头，松下近年来逐渐降低对家电业务的依赖，并成为特斯拉的重要电池供货商。松下计划借助与行业主要企业的合作，力争在未来三年实现约1.4万亿日元的AI基础设施相关业务销售额，并在近日宣布，将在未来两个财年投资约5000亿日元用于该业务。该公司还将裁员规模从此前公布的1万人扩大至1.2万人，预计到2024...</div>
+    <div class="ni-tags"><span class="etag">特斯拉</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="医药生物">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">医药生物</span>
+      <span class="card-count">11条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-07-01 15:02:26" data-score="122" data-content="【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。" data-entities="[&quot;创业板指&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:02</span><span class="ni-score hot">&#128293;122</span></div>
+    <div class="ni-text">【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成...</div>
+    <div class="ni-tags"><span class="etag">创业板指</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-07-01 13:34:12" data-score="84" data-content="【创新药概念股震荡回暖 千红制药触及涨停】创新药概念股震荡回暖，千红制药触及涨停，亚虹医药、益方生物、三生国健、前沿生物等股跟涨。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:34</span><span class="ni-score cool">84</span></div>
+    <div class="ni-text">【创新药概念股震荡回暖 千红制药触及涨停】创新药概念股震荡回暖，千红制药触及涨停，亚虹医药、益方生物、三生国健、前沿生物等股跟涨。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="医药生物" data-priority="A" data-time="2026-07-01 08:31:40" data-score="84" data-content="【中金公司2026年下半年生物医药展望：创新药产业链发展明确 短期调整不改中长期崛起趋势】中金公司2026年下半年生物医药展望指出，虽然受宏观环境、大国关系扰动、流动性轮转等因素影响，创新药板块进入短期估值回调阶段。但从产业趋势来看，中国创新药BD与临床数据读出依旧保持良好的发展趋势，license out和new co等形式证明中国创新药正在不断国际化。国内外良好的医药产业投融资，为产业带来新一轮研发投入的同时，也为上游CXO等产业带来潜在订单，制药供应有着较强业绩增长确定性。一方面看好医疗科技进取属性：除创新药的突破与国际化外，AI制药与脑机接口等新技术的发展同样可圈可点，部分国产器械也慢慢走出结构性的国际化机会；另一方面，高分红医药股估值相对低位，并购整合带来价值重估机会的同时，也有望积聚新的成长动力。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">08:31</span><span class="ni-score cool">84</span></div>
+    <div class="ni-text">【中金公司2026年下半年生物医药展望：创新药产业链发展明确 短期调整不改中长期崛起趋势】中金公司2026年下半年生物医药展望指出，虽然受宏观环境、大国关系扰动、流动性轮转等因素影响，创新药板块进入短期估值回调阶段。但从产业趋势来看，中国创新药BD与临床数据读出依旧保持良好的发展趋势，license out和new co等形式证明中国创新药正在不断国际化。国内外良好的医药产业投融资，为产业带来新一...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="低空经济">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">低空经济</span>
+      <span class="card-count">6条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-07-01 13:12:59" data-score="84" data-content="【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。宏观方面，美国5月JOLTS职位空缺数小幅增至759.4万个，略高于4月的758.5万和预期值730万，凸显就业市场韧性，市场也在等待周五美国6月非农就业数据的指引。地缘政治方面，中东局势再添变数，虽然美伊签署谅解备忘录，但局势依然复杂，霍尔木兹海峡通航问题进展偏缓慢，而以色列继续扩大针对巴勒斯坦地区的军事行动，并维持对伊朗的高压威慑。当前贵金属市场定价逻辑仍将由美联储货币政策路径主导，美联储是否加息也需要更多数据进行佐证，比如非农就业数据以及后期的通胀数据等，在此之前市场或依然处于鹰派政策预期" data-entities="[&quot;纳斯达克&quot;]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:12</span><span class="ni-score cool">84</span></div>
+    <div class="ni-text">【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。宏观方面，美国5月JOLTS职位空缺数小幅增至759.4万个，略高于4月的758.5万和预期值730...</div>
+    <div class="ni-tags"><span class="etag">纳斯达克</span></div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-07-01 07:33:30" data-score="81" data-content="【7月起，这些新规将施行】7月起，一批涉及民生、就业、维权、投资等领域的新规正式施行，涵盖民族团结、社会救助、民航出行、超龄劳动者权益、行政复议、信访登记等多个方面内容。其中，社会救助法首次将六类困难群众纳入法治保障；超龄劳动者权益保障新规填补了老年务工群体的制度空白；民用航空法修订聚焦低空经济与旅客权益。此外，对外投资领域首部行政法规正式出台，行政复议制度进一步健全……一系列新规从不同维度织密法治之网。（澎湃）" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:33</span><span class="ni-score cool">81</span></div>
+    <div class="ni-text">【7月起，这些新规将施行】7月起，一批涉及民生、就业、维权、投资等领域的新规正式施行，涵盖民族团结、社会救助、民航出行、超龄劳动者权益、行政复议、信访登记等多个方面内容。其中，社会救助法首次将六类困难群众纳入法治保障；超龄劳动者权益保障新规填补了老年务工群体的制度空白；民用航空法修订聚焦低空经济与旅客权益。此外，对外投资领域首部行政法规正式出台，行政复议制度进一步健全……一系列新规从不同维度织密法...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="低空经济" data-priority="A" data-time="2026-07-01 14:24:39" data-score="80" data-content="伊朗国防部长：在与国会经济委员会成员们的会议中，我强调，伊朗伊斯兰共和国的防御、导弹和无人机能力是国家安全的红线，这些能力不可谈判，永远不会被谈判。这些能力将依靠国内力量进行发展。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">14:24</span><span class="ni-score cool">80</span></div>
+    <div class="ni-text">伊朗国防部长：在与国会经济委员会成员们的会议中，我强调，伊朗伊斯兰共和国的防御、导弹和无人机能力是国家安全的红线，这些能力不可谈判，永远不会被谈判。这些能力将依靠国内力量进行发展。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="card " data-sector="AI应用/软件">
+<div class="card-hd" onclick="this.parentElement.classList.toggle('open')">
+      <span class="badge a">A</span>
+      <span class="card-name">AI应用/软件</span>
+      <span class="card-count">2条</span>
+      <span class="arrow">&#9660;</span>
+    </div>
+<div class="card-body">
+<div class="news-item" data-sector="AI应用/软件" data-priority="A" data-time="2026-07-01 13:46:19" data-score="113" data-content="【上海：攻关端侧AI芯片、轻量模型、AR空间计算、柔性显示技术 发展轻量时尚的AI手机、AIPC、智能音箱等终端和智能眼镜、智能耳机等可穿戴产品】上海市经济信息化委、市委宣传部、市商务委 市文化旅游局、市市场监管局印发《上海市促进时尚消费品产业高质量发展行动方案（2026-2028年）》。方案指出，聚焦主动智能、无感交互、统一协议、端云协同技术趋势，推动“居家、办公、出行”全场景智慧联动。攻关端侧AI芯片、轻量模型、AR空间计算、柔性显示技术，发展轻量时尚的AI手机、AIPC、智能音箱等终端和智能眼镜、智能耳机等可穿戴产品，布局家庭服务和陪伴机器人。研发高效电机、多维清洁、绿色低碳技术，推动智能空调、洗涤、厨卫、个护家电更具设计感和功能性，打造智能光环境。优化汽车智能座舱和辅助驾驶体验。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:46</span><span class="ni-score hot">&#128293;113</span></div>
+    <div class="ni-text">【上海：攻关端侧AI芯片、轻量模型、AR空间计算、柔性显示技术 发展轻量时尚的AI手机、AIPC、智能音箱等终端和智能眼镜、智能耳机等可穿戴产品】上海市经济信息化委、市委宣传部、市商务委 市文化旅游局、市市场监管局印发《上海市促进时尚消费品产业高质量发展行动方案（2026-2028年）》。方案指出，聚焦主动智能、无感交互、统一协议、端云协同技术趋势，推动“居家、办公、出行”全场景智慧联动。攻关端侧...</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="AI应用/软件" data-priority="A" data-time="2026-07-01 14:27:57" data-score="98" data-content="【均胜电子将推出机器人灵巧手和半固态电池方案】据均胜电子官方消息，均胜电子将在2026年世界人工智能大会上推出机器人灵巧手、固液混合能源解决方案（半固态电池）、具身智能体大脑以及第三代AI头部总成等新产品。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">14:27</span><span class="ni-score warm">98</span></div>
+    <div class="ni-text">【均胜电子将推出机器人灵巧手和半固态电池方案】据均胜电子官方消息，均胜电子将在2026年世界人工智能大会上推出机器人灵巧手、固液混合能源解决方案（半固态电池）、具身智能体大脑以及第三代AI头部总成等新产品。</div>
+    
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div></div>
+<div class="sec-title">&#127919; 焦点事件 <span class="n">同一公司/标的的多条快讯聚合</span></div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">特斯拉</span>
+    <span class="ev-tag">机器人/新能源</span>
+    <span class="ev-stat">11条 &middot; 总分1077</span>
+  </div>
+<div class="news-item" data-sector="特斯拉 (机器人/新能源)" data-priority="A" data-time="2026-07-01 14:18:19" data-score="113" data-content="【小摩：欧车企跟进“以铝代铜”浪潮 今年或冲击全球2%铜需求】摩根大通称，继特斯拉及中国电动汽车车企掀起“以铝代铜”浪潮后，欧洲传统车企的此番集体转身，标志着整个汽车工业迎来了颠覆性的材料供应链转移。据预测，仅在今年，这一趋势就将直接冲击全球约2%的铜消费需求。全球第二大电缆制造商Nexans高管表示，由于铜在某些应用中性能更优，制造商仍会以更高价格购买铜——但当铜价达到铝价约3.5倍时，他们就会开始采购铝。目前，铜价约是铝价的4.2倍以上。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">14:18</span></div>
+    <div class="ni-text">【小摩：欧车企跟进“以铝代铜”浪潮 今年或冲击全球2%铜需求】摩根大通称，继特斯拉及中国电动汽车车企掀起“以铝代铜”浪潮后，欧洲传统车企的此番集体转身，标志着整个汽车工业迎来了颠覆性的材料供应链转移。据预测，仅在今年，这一趋势就将直接冲击全球约2%的铜消费需求。全球第二大电缆制造商Nexans高管表示，由于铜在某些应用中性能更优，制造商仍会以更高价格购买铜——但当铜价达到铝价约3.5倍时，他们就会...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="特斯拉 (机器人/新能源)" data-priority="A" data-time="2026-07-01 07:21:34" data-score="110" data-content="【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国政府道德办公室(Office of Government Ethics)的这份文件，去年的收益包括通过一家与特朗普模因币相关的实体获得的6.35亿美元特许权使用费。该模因币就在他宣誓就职前几天推出。此" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:21</span></div>
+    <div class="ni-text">【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="特斯拉 (机器人/新能源)" data-priority="A" data-time="2026-07-01 04:16:23" data-score="108" data-content="“大空头”Michael Burry： 做空特斯拉、英伟达和应用材料。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:16</span></div>
+    <div class="ni-text">“大空头”Michael Burry： 做空特斯拉、英伟达和应用材料。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">三星</span>
+    <span class="ev-tag">半导体</span>
+    <span class="ev-stat">11条 &middot; 总分744</span>
+  </div>
+<div class="news-item" data-sector="三星 (半导体)" data-priority="A" data-time="2026-07-01 13:23:49" data-score="115" data-content="【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波长约（LTA）变革中的关键特征如下：不设上限：有别于其他竞争对手通常设立的「价格上限（Ceiling Price）」。周期红利：在市况火热且供不应求时，SK海力士能完整吃到完整涨价红利，将市场价值最大" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:23</span></div>
+    <div class="ni-text">【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="三星 (半导体)" data-priority="A" data-time="2026-07-01 08:05:08" data-score="115" data-content="【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国家资源向光州（存储器），大邱（机器人），忠清（数据中心，显示）等首都圈以外地区倾斜，对韩国科技产业发展是标志性事件。1.3万亿美元的投资规模相当于台积电在美国亚利桑那州投资规模（1650亿美元）的7." data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">08:05</span></div>
+    <div class="ni-text">【华泰证券：韩国1.3万亿美元战略落地，聚焦存储周期下全球半导体设备企业卡位】华泰证券指出，6月29日，韩国总统李在明在青瓦台主持“大韩民国大飞跃三大超级项目”国民报告会，三星电子董事长李在镕、SK集团董事长崔泰源同台直接发布投资计划。该战略覆盖2026—2036年，总投资约2000万亿韩元（约1.3万亿美元）。该项目以“半导体、AI数据中心、物理AI”为三大支柱，旨在打破韩国首都圈工业垄断、将国...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="三星 (半导体)" data-priority="A" data-time="2026-07-01 10:14:34" data-score="106" data-content="【巨头抢购电子级氢氟酸 部分供货商年内已涨价三成】据报道，业内传出，台积电、三星、SK海力士都在抢购电子级氢氟酸（HF）。报道称，今年以来中东地缘政治紧张推升硫磺、硫酸及无水氢氟酸价格，带动电子级氢氟酸成本垫高，部分供货商已陆续调涨售价，涨幅约二至三成。 (台湾经济日报)" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">10:14</span></div>
+    <div class="ni-text">【巨头抢购电子级氢氟酸 部分供货商年内已涨价三成】据报道，业内传出，台积电、三星、SK海力士都在抢购电子级氢氟酸（HF）。报道称，今年以来中东地缘政治紧张推升硫磺、硫酸及无水氢氟酸价格，带动电子级氢氟酸成本垫高，部分供货商已陆续调涨售价，涨幅约二至三成。 (台湾经济日报)</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">谷歌</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">10条 &middot; 总分666</span>
+  </div>
+<div class="news-item" data-sector="谷歌 ()" data-priority="A" data-time="2026-07-01 04:00:48" data-score="108" data-content="【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:00</span></div>
+    <div class="ni-text">【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="谷歌 ()" data-priority="A" data-time="2026-07-01 11:47:41" data-score="102" data-content="【Anthropic：Claude Fable 5 将于明天全球重新上线】Anthropic发文称，Claude Fable 5 将于明天全球重新上线。在与美国政府进行一系列富有成效的对话后，我们将使用一组新的分类器重新部署该模型，以针对并阻止更多网络安全任务。在短期内，一些常规任务如编码和调试将回退至 Opus 4.8。我们将在未来几周继续优化这些分类器，以减少误报，并更好地区分真正的滥用与合法请求。我们还已开始起草一个共识框架——与亚马逊、微软、谷歌以及其他 Glasswing 合作伙伴一起——用于评估 AI 越狱的严重程度，以及 AI 开发者应如何应对。我们邀请其他行业合作伙伴和模型提供" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:47</span></div>
+    <div class="ni-text">【Anthropic：Claude Fable 5 将于明天全球重新上线】Anthropic发文称，Claude Fable 5 将于明天全球重新上线。在与美国政府进行一系列富有成效的对话后，我们将使用一组新的分类器重新部署该模型，以针对并阻止更多网络安全任务。在短期内，一些常规任务如编码和调试将回退至 Opus 4.8。我们将在未来几周继续优化这些分类器，以减少误报，并更好地区分真正的滥用与合法...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="谷歌 ()" data-priority="A" data-time="2026-07-01 11:17:04" data-score="102" data-content="Anthropic：与亚马逊、微软、谷歌及其他 Glasswing 合作伙伴共同起草人工智能越狱风险严重程度评估框架。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:17</span></div>
+    <div class="ni-text">Anthropic：与亚马逊、微软、谷歌及其他 Glasswing 合作伙伴共同起草人工智能越狱风险严重程度评估框架。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">英伟达</span>
+    <span class="ev-tag">半导体/AI算力</span>
+    <span class="ev-stat">6条 &middot; 总分641</span>
+  </div>
+<div class="news-item" data-sector="英伟达 (半导体/AI算力)" data-priority="A" data-time="2026-07-01 11:49:39" data-score="115" data-content="【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:49</span></div>
+    <div class="ni-text">【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMEN...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="英伟达 (半导体/AI算力)" data-priority="A" data-time="2026-07-01 07:21:34" data-score="110" data-content="【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国政府道德办公室(Office of Government Ethics)的这份文件，去年的收益包括通过一家与特朗普模因币相关的实体获得的6.35亿美元特许权使用费。该模因币就在他宣誓就职前几天推出。此" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:21</span></div>
+    <div class="ni-text">【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="英伟达 (半导体/AI算力)" data-priority="A" data-time="2026-07-01 04:16:23" data-score="108" data-content="“大空头”Michael Burry： 做空特斯拉、英伟达和应用材料。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:16</span></div>
+    <div class="ni-text">“大空头”Michael Burry： 做空特斯拉、英伟达和应用材料。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">科创50</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">8条 &middot; 总分540</span>
+  </div>
+<div class="news-item" data-sector="科创50 ()" data-priority="A" data-time="2026-07-01 13:41:04" data-score="113" data-content="【韩国投资者上半年持续加仓A股】据中证报，2026年上半年，韩国投资者持续加码配置中国市场。韩国证券存托结算院（KSD）数据显示，在韩国投资者净买入金额居前的中国市场标的中，多只ETF强势挤进榜单前列，科技、人工智能、半导体、新能源等主题产品尤为受到追捧。A股市场中，韩国投资者净买入前20名中，有8只ETF产品，包括通信ETF华夏、芯片ETF华夏、人工智能ETF易方达、上证指数ETF富国、云计算ETF易方达、科创50ETF华夏、电网设备ETF华夏、机器人ETF华夏。个股方面，韩国资金重点投向人工智能、先进制造等成长领域。A股市场中，上半年被韩国资金买入最多的三一重工，获999.75万美元净买入" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:41</span></div>
+    <div class="ni-text">【韩国投资者上半年持续加仓A股】据中证报，2026年上半年，韩国投资者持续加码配置中国市场。韩国证券存托结算院（KSD）数据显示，在韩国投资者净买入金额居前的中国市场标的中，多只ETF强势挤进榜单前列，科技、人工智能、半导体、新能源等主题产品尤为受到追捧。A股市场中，韩国投资者净买入前20名中，有8只ETF产品，包括通信ETF华夏、芯片ETF华夏、人工智能ETF易方达、上证指数ETF富国、云计算E...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="科创50 ()" data-priority="A" data-time="2026-07-01 07:25:11" data-score="111" data-content="【A股上半年行情收官：成交额刷新纪录 半导体板块市值超越国有大行】A股2026年上半年行情收官，市场主要指数多数上涨，其中上证指数上涨3.16%，深证成指上涨19.82%；创业板指数和科创50指数表现最为亮眼，指数双双创出历史新高，上半年涨幅分别达35.58%、64.25%。A股最新总市值也升至118.95万亿元，较去年末增长9.41%。市场交易热度同步创下阶段新高，上半年全市场成交额超317万亿元，金额刷新半年度纪录。半导体板块A股市值历史性超越国有大行，登顶申万二级行业榜首。与此同时，全市场千亿市值公司阵营跨越式扩容至206家，硬科技公司为新增主力。（证券时报）" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:25</span></div>
+    <div class="ni-text">【A股上半年行情收官：成交额刷新纪录 半导体板块市值超越国有大行】A股2026年上半年行情收官，市场主要指数多数上涨，其中上证指数上涨3.16%，深证成指上涨19.82%；创业板指数和科创50指数表现最为亮眼，指数双双创出历史新高，上半年涨幅分别达35.58%、64.25%。A股最新总市值也升至118.95万亿元，较去年末增长9.41%。市场交易热度同步创下阶段新高，上半年全市场成交额超317万亿...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="科创50 ()" data-priority="A" data-time="2026-07-01 10:24:06" data-score="102" data-content="科创50日内涨幅达2.05%，成分股中，格科微涨16.16%，华海清科涨10.02%，沪硅产业涨8.35%，中微公司涨6.72%。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">10:24</span></div>
+    <div class="ni-text">科创50日内涨幅达2.05%，成分股中，格科微涨16.16%，华海清科涨10.02%，沪硅产业涨8.35%，中微公司涨6.72%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">SK海力士</span>
+    <span class="ev-tag">半导体/存储</span>
+    <span class="ev-stat">7条 &middot; 总分519</span>
+  </div>
+<div class="news-item" data-sector="SK海力士 (半导体/存储)" data-priority="A" data-time="2026-07-01 13:23:49" data-score="115" data-content="【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波长约（LTA）变革中的关键特征如下：不设上限：有别于其他竞争对手通常设立的「价格上限（Ceiling Price）」。周期红利：在市况火热且供不应求时，SK海力士能完整吃到完整涨价红利，将市场价值最大" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:23</span></div>
+    <div class="ni-text">【消息称SK 海力士长期供货协议未设置价格上限，有望全额享受涨价收益】据台湾电子时报，有消息指出，SK 海力士近期与客户签订的长期供货协议（LTA）和竞品厂商条款存在差异，采用无价格上限的特殊合约模式。这一策略使SK海力士成为市场上唯一不设价格上限的厂商，有望在未来的涨价周期中最大化红利。此举打破了半导体存储器长约的传统定价模式，能有效避免因设定价格上限而错失供不应求时的暴涨收益。SK海力士在这波...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="SK海力士 (半导体/存储)" data-priority="A" data-time="2026-07-01 10:14:34" data-score="106" data-content="【巨头抢购电子级氢氟酸 部分供货商年内已涨价三成】据报道，业内传出，台积电、三星、SK海力士都在抢购电子级氢氟酸（HF）。报道称，今年以来中东地缘政治紧张推升硫磺、硫酸及无水氢氟酸价格，带动电子级氢氟酸成本垫高，部分供货商已陆续调涨售价，涨幅约二至三成。 (台湾经济日报)" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">10:14</span></div>
+    <div class="ni-text">【巨头抢购电子级氢氟酸 部分供货商年内已涨价三成】据报道，业内传出，台积电、三星、SK海力士都在抢购电子级氢氟酸（HF）。报道称，今年以来中东地缘政治紧张推升硫磺、硫酸及无水氢氟酸价格，带动电子级氢氟酸成本垫高，部分供货商已陆续调涨售价，涨幅约二至三成。 (台湾经济日报)</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="SK海力士 (半导体/存储)" data-priority="A" data-time="2026-07-01 09:16:09" data-score="102" data-content="【韩国政府否认有关设立新智库以利用芯片巨头超额利润的传言】韩国产业通商资源部周三否认了有关政府推动成立一个新智库，专门统筹利用全球人工智能热潮为芯片企业带来的巨额利润的传言。韩国产业通商资源部在一份声明中表示：“网上流传的有关首尔已致函三星电子和SK海力士，要求成立一个政府主导的、与利润分享相关的智库的传言完全是虚假的。”韩国产业通商资源部补充道：“我们将采取强硬措施，打击恶意传播此类误导性信息的行为，并将此事移交调查机关。”" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">09:16</span></div>
+    <div class="ni-text">【韩国政府否认有关设立新智库以利用芯片巨头超额利润的传言】韩国产业通商资源部周三否认了有关政府推动成立一个新智库，专门统筹利用全球人工智能热潮为芯片企业带来的巨额利润的传言。韩国产业通商资源部在一份声明中表示：“网上流传的有关首尔已致函三星电子和SK海力士，要求成立一个政府主导的、与利润分享相关的智库的传言完全是虚假的。”韩国产业通商资源部补充道：“我们将采取强硬措施，打击恶意传播此类误导性信息的...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">兆易创新</span>
+    <span class="ev-tag">半导体/存储</span>
+    <span class="ev-stat">5条 &middot; 总分519</span>
+  </div>
+<div class="news-item" data-sector="兆易创新 (半导体/存储)" data-priority="A" data-time="2026-07-01 14:44:20" data-score="105" data-content="【兆易创新A股成交额超400亿元】7月1日下午，兆易创新A股成交额超400亿元，现跌5.52%。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">14:44</span></div>
+    <div class="ni-text">【兆易创新A股成交额超400亿元】7月1日下午，兆易创新A股成交额超400亿元，现跌5.52%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="兆易创新 (半导体/存储)" data-priority="A" data-time="2026-07-01 13:38:40" data-score="105" data-content="兆易创新成交额达300亿元，现跌4.79%。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">13:38</span></div>
+    <div class="ni-text">兆易创新成交额达300亿元，现跌4.79%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="兆易创新 (半导体/存储)" data-priority="A" data-time="2026-07-01 10:52:39" data-score="105" data-content="兆易创新成交额达200亿元，现涨0.37%。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">10:52</span></div>
+    <div class="ni-text">兆易创新成交额达200亿元，现涨0.37%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">创业板指</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">8条 &middot; 总分454</span>
+  </div>
+<div class="news-item" data-sector="创业板指 ()" data-priority="A" data-time="2026-07-01 15:02:26" data-score="122" data-content="【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成指跌0.53%，创业板指跌1.89%。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">15:02</span></div>
+    <div class="ni-text">【收评：沪指冲高回落涨0.44%，全市场上涨个股超4300只】沪指全天冲高回落，创业板指跌近2%。保险、券商等金融股走强，天风证券、国盛证券、华安证券等涨停。养殖板块大幅反弹，新希望、湘佳股份、益生股份等涨停。创新药概念再度拉升，汇宇制药、海南海药、昂利康等涨停。下跌方面，算力芯片股走低，寒武纪跌超6%。个股涨多跌少，沪深京三市超4300股飘红，今日成交3.68万亿。截止收盘沪指涨0.44%，深成...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="创业板指 ()" data-priority="A" data-time="2026-07-01 07:25:11" data-score="111" data-content="【A股上半年行情收官：成交额刷新纪录 半导体板块市值超越国有大行】A股2026年上半年行情收官，市场主要指数多数上涨，其中上证指数上涨3.16%，深证成指上涨19.82%；创业板指数和科创50指数表现最为亮眼，指数双双创出历史新高，上半年涨幅分别达35.58%、64.25%。A股最新总市值也升至118.95万亿元，较去年末增长9.41%。市场交易热度同步创下阶段新高，上半年全市场成交额超317万亿元，金额刷新半年度纪录。半导体板块A股市值历史性超越国有大行，登顶申万二级行业榜首。与此同时，全市场千亿市值公司阵营跨越式扩容至206家，硬科技公司为新增主力。（证券时报）" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:25</span></div>
+    <div class="ni-text">【A股上半年行情收官：成交额刷新纪录 半导体板块市值超越国有大行】A股2026年上半年行情收官，市场主要指数多数上涨，其中上证指数上涨3.16%，深证成指上涨19.82%；创业板指数和科创50指数表现最为亮眼，指数双双创出历史新高，上半年涨幅分别达35.58%、64.25%。A股最新总市值也升至118.95万亿元，较去年末增长9.41%。市场交易热度同步创下阶段新高，上半年全市场成交额超317万亿...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="创业板指 ()" data-priority="A" data-time="2026-07-01 11:33:06" data-score="46.0" data-content="【午评：沪指半日涨1.08%，全市场超4500只个股上涨，制冷剂、家禽、证券IT等概念走强】A股三大指数早盘涨跌不一，截至午间收盘，上证指数涨1.08%，深证成指涨0.41%，创业板指跌0.39%；北证50涨0.35%。沪深两市成交额约24199.64亿元，较前一个交易日放量约3151.19亿元。截至午盘，全市场4553只股票上涨、931只股票下跌，其中198只涨停、6只跌停。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:33</span></div>
+    <div class="ni-text">【午评：沪指半日涨1.08%，全市场超4500只个股上涨，制冷剂、家禽、证券IT等概念走强】A股三大指数早盘涨跌不一，截至午间收盘，上证指数涨1.08%，深证成指涨0.41%，创业板指跌0.39%；北证50涨0.35%。沪深两市成交额约24199.64亿元，较前一个交易日放量约3151.19亿元。截至午盘，全市场4553只股票上涨、931只股票下跌，其中198只涨停、6只跌停。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">微软</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">6条 &middot; 总分406</span>
+  </div>
+<div class="news-item" data-sector="微软 ()" data-priority="A" data-time="2026-07-01 04:00:48" data-score="108" data-content="【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:00</span></div>
+    <div class="ni-text">【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="微软 ()" data-priority="A" data-time="2026-07-01 11:47:41" data-score="102" data-content="【Anthropic：Claude Fable 5 将于明天全球重新上线】Anthropic发文称，Claude Fable 5 将于明天全球重新上线。在与美国政府进行一系列富有成效的对话后，我们将使用一组新的分类器重新部署该模型，以针对并阻止更多网络安全任务。在短期内，一些常规任务如编码和调试将回退至 Opus 4.8。我们将在未来几周继续优化这些分类器，以减少误报，并更好地区分真正的滥用与合法请求。我们还已开始起草一个共识框架——与亚马逊、微软、谷歌以及其他 Glasswing 合作伙伴一起——用于评估 AI 越狱的严重程度，以及 AI 开发者应如何应对。我们邀请其他行业合作伙伴和模型提供" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:47</span></div>
+    <div class="ni-text">【Anthropic：Claude Fable 5 将于明天全球重新上线】Anthropic发文称，Claude Fable 5 将于明天全球重新上线。在与美国政府进行一系列富有成效的对话后，我们将使用一组新的分类器重新部署该模型，以针对并阻止更多网络安全任务。在短期内，一些常规任务如编码和调试将回退至 Opus 4.8。我们将在未来几周继续优化这些分类器，以减少误报，并更好地区分真正的滥用与合法...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="微软 ()" data-priority="A" data-time="2026-07-01 11:17:04" data-score="102" data-content="Anthropic：与亚马逊、微软、谷歌及其他 Glasswing 合作伙伴共同起草人工智能越狱风险严重程度评估框架。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">11:17</span></div>
+    <div class="ni-text">Anthropic：与亚马逊、微软、谷歌及其他 Glasswing 合作伙伴共同起草人工智能越狱风险严重程度评估框架。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="ev-card">
+  <div class="ev-hd">
+    <span class="ev-name">Meta</span>
+    <span class="ev-tag"></span>
+    <span class="ev-stat">7条 &middot; 总分368</span>
+  </div>
+<div class="news-item" data-sector="Meta ()" data-priority="A" data-time="2026-07-01 07:21:34" data-score="110" data-content="【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国政府道德办公室(Office of Government Ethics)的这份文件，去年的收益包括通过一家与特朗普模因币相关的实体获得的6.35亿美元特许权使用费。该模因币就在他宣誓就职前几天推出。此" data-entities="[]">
+  <span class="rank r1">1</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">07:21</span></div>
+    <div class="ni-text">【特朗普靠加密货币交易进账逾10亿美元 成为2025年“意外收益”一部分】根据最新的财务披露报告，美国总统唐纳德.特朗普涉足加密货币领域，在去年为他带来了超过10亿美元的“意外收益”；这一史无前例的收入激增，伴随著他从特许权使用费协议、房地产和法律和解中获得的收益一同到来。在第二任期的第一年，特朗普及其家人在加密货币业务上投入了大量资金。这种投资不仅产生了账面财富，还带来了实实在在的利润。根据美国...</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="Meta ()" data-priority="A" data-time="2026-07-01 04:00:48" data-score="108" data-content="【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。" data-entities="[]">
+  <span class="rank r2">2</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">04:00</span></div>
+    <div class="ni-text">【美股收盘：三大股指集体收涨】道指涨0.26%，标普500指数涨0.78%，纳指涨1.50%。闪迪涨10.72%，Axon Enterprise涨9.84%，VRT涨8.99%，科磊涨8.54%。“七姐妹”方面：苹果涨2.59%，英伟达涨2.56%，特斯拉涨2.16%，微软涨1.22%，谷歌涨0.61%，Meta Platforms涨0.14%，亚马逊跌0.76%。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+<div class="news-item" data-sector="Meta ()" data-priority="A" data-time="2026-07-01 03:19:55" data-score="30" data-content="   Meta：Discord 今日登陆 Meta Quest。" data-entities="[]">
+  <span class="rank r3">3</span>
+  <div class="ni-body">
+    <div class="ni-meta"><span class="ni-time">03:19</span></div>
+    <div class="ni-text">   Meta：Discord 今日登陆 Meta Quest。</div>
+    <div class="ni-hint">点击查看完整快讯 &#8594;</div>
+  </div>
+</div>
+</div>
+<div class="sec-title">&#128203; 政策 &times; 板块 <span class="n">宏观政策对热点板块的影响信号</span></div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力, 半导体芯片" data-priority="P" data-time="2026-07-01 11:49:39" data-score="0" data-content="【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元A上半年业绩录得108.36%，在所有主动型QDII中业绩居首；一季度末重仓股中，台积电、LUMENTUM、新易盛、康宁等配置居前。不过，头部业绩产品大部分已经暂停了申赎，这也是整个QDII基金行业较普遍的现象。反观一季度末持仓没有聚焦热门科技赛道的基金，整个上半年的业绩也相对靠后，易方达优质精选、" data-entities="[&quot;台积电&quot;, &quot;新易盛&quot;, &quot;英伟达&quot;]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力, 半导体芯片</span>
+    <span class="ni-time" style="margin-left:auto">11:49</span>
+  </div>
+  <div class="px-text">【上半年主动QDII基金业绩揭晓：8只产品业绩翻倍，普遍重仓台积电、英伟达、康宁等个股】今年上半年，主动型QDII基金业绩突出，有8只产品上半年净值增长率超过100%（统计所有份额）。从一季度末持仓的情况看，普遍重仓了台积电、英伟达、康宁、闪迪、新易盛等个股。Wind统计显示，易方达全球成长精选美元...</div>
+</div>
+<div class="px-card news-item" data-sector="监管政策 -&gt; AI算力, 半导体芯片" data-priority="P" data-time="2026-07-01 08:11:58" data-score="0" data-content="【韩国出口保持强劲增长 人工智能热潮继续提振芯片需求】韩国6月出口延续强劲表现，凸显支撑经济增长的芯片产业景气仍具韧性。韩国政府周三公布，经工作日差异调整后，6月出口同比增长59.5%。进口增长30.1%，贸易顺差达到361亿美元。未经调整的出口增长70.9%，相比之下，5月份出口增幅经修正后为53.4%。半导体再次引领出口增长，受到与AI和数据中心相关的强劲投资支持。最新数据表明，韩国经济由出口驱动的扩张仍在持续，这将支持韩国央行日趋鹰派的立场。韩国央行行长申铉松表示，半导体热潮正外溢至更广泛的消费、投资和加薪，增加了通胀压力可能变得更加根深蒂固的风险。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">监管政策</span>
+    <span class="px-sec">&#8594; AI算力, 半导体芯片</span>
+    <span class="ni-time" style="margin-left:auto">08:11</span>
+  </div>
+  <div class="px-text">【韩国出口保持强劲增长 人工智能热潮继续提振芯片需求】韩国6月出口延续强劲表现，凸显支撑经济增长的芯片产业景气仍具韧性。韩国政府周三公布，经工作日差异调整后，6月出口同比增长59.5%。进口增长30.1%，贸易顺差达到361亿美元。未经调整的出口增长70.9%，相比之下，5月份出口增幅经修正后为53...</div>
+</div>
+<div class="px-card news-item" data-sector="国际贸易/监管政策 -&gt; AI算力" data-priority="P" data-time="2026-07-01 07:06:36" data-score="0" data-content="【消息人士：美国将于周二解除对Anthropic公司Fable AI模型的出口管制】据一位知情人士透露，美国商务部预计将于周二解除对Anthropic公司Fable 5人工智能模型的出口管制，此前不到三周，该公司曾因国家安全风险被勒令暂停对其最先进人工智能模型的访问。6月12日收到出口管制令后，Anthropic立即停用了其Mythos 5和Fable 5模型。上周五，Anthropic表示美国政府已允许其向部分“可信”的美国组织发布其Claude Mythos 5人工智能模型，这标志着该禁令部分被撤销。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">国际贸易/监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">07:06</span>
+  </div>
+  <div class="px-text">【消息人士：美国将于周二解除对Anthropic公司Fable AI模型的出口管制】据一位知情人士透露，美国商务部预计将于周二解除对Anthropic公司Fable 5人工智能模型的出口管制，此前不到三周，该公司曾因国家安全风险被勒令暂停对其最先进人工智能模型的访问。6月12日收到出口管制令后，An...</div>
+</div>
+<div class="px-card news-item" data-sector="国际贸易/监管政策 -&gt; AI算力" data-priority="P" data-time="2026-07-01 08:09:59" data-score="0" data-content="【美国政府取消Anthropic的Fable 5模型的限制】美国政府已经取消外国人士存取Anthropic PBC的Fable 5 AI模型的限制。 自从美国政府下令Anthropic公司停用Mythos 5 AI模型和Fable 5(功能较弱、应用范围更广的模型)以来，这家AI公司和商务部官员一直在磋商。美国商务部6月12日通过一封非公开信件实施出口管制规定，要求Anthropic在允许任何外国人士(不论身处何地)存取上述两款模型之前，必须先取得美国政府批准；此外，在将这两款模型出口至全球任何目的地之前，也须取得美方许可。针对Mythos的部分限制已于6月26日解除。媒体先前已报道，涉及Fa" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">国际贸易/监管政策</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">08:09</span>
+  </div>
+  <div class="px-text">【美国政府取消Anthropic的Fable 5模型的限制】美国政府已经取消外国人士存取Anthropic PBC的Fable 5 AI模型的限制。 自从美国政府下令Anthropic公司停用Mythos 5 AI模型和Fable 5(功能较弱、应用范围更广的模型)以来，这家AI公司和商务部官员一直...</div>
+</div>
+<div class="px-card news-item" data-sector="国际贸易 -&gt; AI算力" data-priority="P" data-time="2026-07-01 07:56:53" data-score="0" data-content="人工智能公司Anthropic：我们已接到通知，美国商务部已解除对Claude Fable 5和 Mythos 5的出口管制。将于明天开始恢复访问。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">国际贸易</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">07:56</span>
+  </div>
+  <div class="px-text">人工智能公司Anthropic：我们已接到通知，美国商务部已解除对Claude Fable 5和 Mythos 5的出口管制。将于明天开始恢复访问。...</div>
+</div>
+<div class="px-card news-item" data-sector="国际贸易/海外市场 -&gt; AI算力" data-priority="P" data-time="2026-07-01 06:53:28" data-score="0" data-content="【7月1日隔夜要闻一览】
+1、美国高级官员透露多哈会谈相关情况： 威特科夫、库什纳与地区领导人举行了积极会谈。技术性谈判仍在进行，已取得良好进展。
+2、财务披露显示特朗普2025年加密货币收入至少14亿美元。
+3、特朗普：共和党中期选举大会将在德克萨斯州达拉斯举行。
+4、美国航空航天局6月30日表示，国际空间站两名美国宇航员当天完成太空行走任务，更换空间站机械臂“加拿大臂2号”出现故障的关键部件，任务总共持续约7小时20分钟。
+5、一位白宫高级官员透露，美国商务部预计将于当地时间今晚解除对Anthropic AI模型Fable的出口管制。
+6、俄下令临时关闭连通芬兰等三国的多个铁路口岸。
+7、" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">国际贸易/海外市场</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">06:53</span>
+  </div>
+  <div class="px-text">【7月1日隔夜要闻一览】
+1、美国高级官员透露多哈会谈相关情况： 威特科夫、库什纳与地区领导人举行了积极会谈。技术性谈判仍在进行，已取得良好进展。
+2、财务披露显示特朗普2025年加密货币收入至少14亿美元。
+3、特朗普：共和党中期选举大会将在德克萨斯州达拉斯举行。
+4、美国航空航天局6月30日表示...</div>
+</div>
+<div class="px-card news-item" data-sector="国际贸易 -&gt; AI算力" data-priority="P" data-time="2026-07-01 06:22:30" data-score="0" data-content="据Politico：一位白宫高级官员透露，美国商务部预计将于当地时间今晚解除对Anthropic AI模型Fable的出口管制。" data-entities="[]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">国际贸易</span>
+    <span class="px-sec">&#8594; AI算力</span>
+    <span class="ni-time" style="margin-left:auto">06:22</span>
+  </div>
+  <div class="px-text">据Politico：一位白宫高级官员透露，美国商务部预计将于当地时间今晚解除对Anthropic AI模型Fable的出口管制。...</div>
+</div>
+<div class="px-card news-item" data-sector="货币政策/海外市场 -&gt; 低空经济" data-priority="P" data-time="2026-07-01 13:12:59" data-score="0" data-content="【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。宏观方面，美国5月JOLTS职位空缺数小幅增至759.4万个，略高于4月的758.5万和预期值730万，凸显就业市场韧性，市场也在等待周五美国6月非农就业数据的指引。地缘政治方面，中东局势再添变数，虽然美伊签署谅解备忘录，但局势依然复杂，霍尔木兹海峡通航问题进展偏缓慢，而以色列继续扩大针对巴勒斯坦地" data-entities="[&quot;纳斯达克&quot;]" style="display:block">
+  <div class="px-hd">
+    <span class="px-type">货币政策/海外市场</span>
+    <span class="px-sec">&#8594; 低空经济</span>
+    <span class="ni-time" style="margin-left:auto">13:12</span>
+  </div>
+  <div class="px-text">【光大期货：黄金跌势放缓，本周关注美就业数据】7月1日隔夜伦敦现货贵金属先抑后扬，SHFE黄金上涨0.80%。本周即将公布非农就业数据，市场预测6月将新增就业岗位11万，失业率保持在4.3%，劳动力市场表现或影响美联储未来政策方向，一旦就业数据表现强劲，进一步强化美联储加息预期，黄金下行压力或加大。...</div>
+</div>
+<div class="footer">本报告由 analyze_news v2 引擎自动生成 &middot; 仅供研究参考，不构成投资建议</div>
+</div>
+</div>
+<div class="search-results" id="searchResults"></div>
+
+<div class="overlay" id="overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-hd">
+      <span class="badge s" id="mBadge">S</span>
+      <span class="modal-sec" id="mSec"></span>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-bd">
+      <div class="modal-meta">
+        <span class="modal-time" id="mTime"></span>
+        <span class="ni-score hot" id="mScore"></span>
+      </div>
+      <div class="modal-text" id="mText"></div>
+      <div class="modal-ents" id="mEnts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating TOC -->
+<button class="toc-fab" id="tocFab" title="目录导航">&#9776;</button>
+<div class="toc-overlay" id="tocOverlay"></div>
+<div class="toc-panel" id="tocPanel">
+  <div class="toc-panel-hd">
+    <span class="tt">&#128194; 目录导航</span>
+    <button class="close" id="tocClose">&#10005;</button>
+  </div>
+  <div class="toc-search">
+    <input type="text" id="tocSearchInput" placeholder="筛选板块/事件..." autocomplete="off">
+  </div>
+  <div class="toc-body" id="tocBody"></div>
+</div>
+
+<script>
+// Event delegation for all news-item clicks
+document.addEventListener('click', function(e) {
+  var item = e.target.closest('.news-item');
+  if (!item || !item.dataset.content) return;
+  openModalFromAttrs(item);
+});
+
+function openModalFromAttrs(el) {
+  var sector = el.dataset.sector || '';
+  var priority = el.dataset.priority || 'S';
+  var time = el.dataset.time || '';
+  var score = parseInt(el.dataset.score) || 0;
+  var content = el.dataset.content || '';
+  var entities = [];
+  try { entities = JSON.parse(el.dataset.entities || '[]'); } catch(e) {}
+
+  var b = document.getElementById('mBadge');
+  b.textContent = priority;
+  b.className = 'badge ' + priority.toLowerCase();
+  document.getElementById('mSec').textContent = sector;
+  document.getElementById('mTime').textContent = time.replace(/^\d{4}-\d{2}-\d{2} /, '');
+
+  var se = document.getElementById('mScore');
+  if (score > 0) {
+    se.textContent = '信号分 ' + score;
+    se.className = 'ni-score ' + (score >= 115 ? 'hot' : score >= 90 ? 'warm' : 'cool');
+    se.style.display = '';
+  } else { se.style.display = 'none'; }
+
+  document.getElementById('mText').textContent = content;
+
+  var entsEl = document.getElementById('mEnts');
+  entsEl.innerHTML = '';
+  if (entities.length > 0) {
+    var lbl = document.createElement('span');
+    lbl.className = 'lbl'; lbl.textContent = '涉及标的：';
+    entsEl.appendChild(lbl);
+    entities.forEach(function(en) {
+      var t = document.createElement('span'); t.className = 'etag'; t.textContent = en;
+      entsEl.appendChild(t);
+    });
+  }
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+function filterSector(el, sector) {
+  document.querySelectorAll('.filter-tag').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelectorAll('.card[data-sector]').forEach(function(c) {
+    c.style.display = (!sector || c.dataset.sector === sector) ? '' : 'none';
+  });
+}
+
+var searchInput = document.getElementById('searchInput');
+var searchCount = document.getElementById('searchCount');
+var searchClear = document.getElementById('searchClear');
+var normalView = document.getElementById('normalView');
+var searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function() {
+  var q = this.value.trim().toLowerCase();
+  if (!q) { clearSearch(); return; }
+  searchClear.classList.add('active');
+
+  var matches = [];
+  window.NEWS_DATA.forEach(function(item) {
+    var text = (item.content + ' ' + item.sector + ' ' + item.entities.join(' ')).toLowerCase();
+    if (text.indexOf(q) !== -1) matches.push(item);
+  });
+
+  searchCount.classList.add('active');
+  searchCount.textContent = matches.length + ' 条匹配';
+  normalView.classList.add('hidden');
+  searchResults.classList.add('active');
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8;">未找到包含 "' + escHtml(q) + '" 的快讯</div>';
+    return;
+  }
+
+  matches.sort(function(a, b) { return b.score - a.score; });
+
+  var html = '<div class="sec-title">&#128269; 搜索结果 <span class="n">' + matches.length + ' 条快讯包含 "' + escHtml(q) + '"</span></div>';
+  matches.forEach(function(item) {
+    var sc = item.score >= 115 ? 'hot' : item.score >= 90 ? 'warm' : 'cool';
+    var time = (item.time || '').replace(/^\d{4}-\d{2}-\d{2} /, '');
+    var fire = item.score >= 115 ? '&#128293;' : '';
+    var highlighted = highlightText(item.content, q);
+
+    var tagsHtml = '';
+    item.entities.slice(0, 4).forEach(function(e) {
+      tagsHtml += '<span class="etag">' + escHtml(e) + '</span>';
+    });
+
+    var contentAttr = escAttr(item.content);
+    var entsAttr = escAttr(JSON.stringify(item.entities));
+
+    html += '<div class="news-item" data-sector="' + escHtml(item.sector) + '" data-priority="' + item.priority + '" data-time="' + item.time + '" data-score="' + item.score + '" data-content="' + contentAttr + '" data-entities="' + entsAttr + '">' +
+      '<div class="ni-body">' +
+        '<div class="ni-meta">' +
+          '<span class="ni-time">' + time + '</span>' +
+          '<span class="ni-score ' + sc + '">' + fire + item.score + '</span>' +
+          '<span class="etag" style="background:#fef2f2;color:#dc2626;border-color:#fecaca">' + escHtml(item.sector) + '</span>' +
+        '</div>' +
+        '<div class="ni-text">' + highlighted + '</div>' +
+        (tagsHtml ? '<div class="ni-tags">' + tagsHtml + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  });
+  searchResults.innerHTML = html;
+});
+
+function clearSearch() {
+  searchInput.value = '';
+  searchCount.classList.remove('active');
+  searchClear.classList.remove('active');
+  normalView.classList.remove('hidden');
+  searchResults.classList.remove('active');
+  searchResults.innerHTML = '';
+}
+
+function escHtml(s) {
+  var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function escAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function highlightText(text, query) {
+  var esc = escHtml(text);
+  var q = escHtml(query);
+  var regex = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return esc.replace(regex, '<span class="mark">$1</span>');
+}
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { this.blur(); clearSearch(); }
+});
+
+// ── Floating TOC Navigation ──
+(function() {
+  var fab = document.getElementById('tocFab');
+  var overlay = document.getElementById('tocOverlay');
+  var panel = document.getElementById('tocPanel');
+  var tocBody = document.getElementById('tocBody');
+  var tocSearchInput = document.getElementById('tocSearchInput');
+  var tocItems = [];
+
+  function togglePanel(open) {
+    var shouldOpen = open !== undefined ? open : !panel.classList.contains('open');
+    panel.classList.toggle('open', shouldOpen);
+    overlay.classList.toggle('active', shouldOpen);
+    if (shouldOpen) buildTOC();
+  }
+
+  fab.addEventListener('click', function() { togglePanel(); });
+  document.getElementById('tocClose').addEventListener('click', function() { togglePanel(false); });
+  overlay.addEventListener('click', function() { togglePanel(false); });
+
+  function buildTOC() {
+    tocItems = [];
+    var html = '';
+
+    // ── Hot Sectors ──
+    html += '<div class="toc-group-hd">&#128293; 热点板块</div>';
+    document.querySelectorAll('.card[data-sector]').forEach(function(card) {
+      var name = card.querySelector('.card-name');
+      var count = card.querySelector('.card-count');
+      var badge = card.querySelector('.badge');
+      if (!name) return;
+      var label = name.textContent;
+      var cnt = count ? count.textContent : '';
+      var bc = badge ? badge.className.match(/(s|a|b)/) : null;
+      var bcCls = bc ? bc[1] : 'b';
+      var bt = badge ? badge.textContent : 'B';
+      tocItems.push({ el: card, label: label, type: 'sector' });
+      html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+        '<span class="toc-badge ' + bcCls + '">' + bt + '</span>' +
+        '<span class="toc-label">' + escHtml(label) + '</span>' +
+        '<span class="toc-count">' + escHtml(cnt) + '</span>' +
+      '</div>';
+    });
+
+    // ── Focus Events ──
+    var events = document.querySelectorAll('.ev-card');
+    if (events.length > 0) {
+      html += '<div class="toc-group-hd">&#127919; 焦点事件</div>';
+      events.forEach(function(ev) {
+        var name = ev.querySelector('.ev-name');
+        var stat = ev.querySelector('.ev-stat');
+        if (!name) return;
+        var label = name.textContent;
+        var cnt = stat ? stat.textContent : '';
+        tocItems.push({ el: ev, label: label, type: 'event' });
+        html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+          '<span class="toc-badge e">E</span>' +
+          '<span class="toc-label">' + escHtml(label) + '</span>' +
+          '<span class="toc-count">' + escHtml(cnt) + '</span>' +
+        '</div>';
+      });
+    }
+
+    // ── Policy ──
+    var policies = document.querySelectorAll('.px-card');
+    if (policies.length > 0) {
+      html += '<div class="toc-group-hd">&#128203; 政策信号</div>';
+      policies.forEach(function(px, idx) {
+        var typeEl = px.querySelector('.px-type');
+        var secEl = px.querySelector('.px-sec');
+        var label = (typeEl ? typeEl.textContent : '') + ' ' + (secEl ? secEl.textContent : '');
+        tocItems.push({ el: px, label: label, type: 'policy' });
+        html += '<div class="toc-item" data-label="' + escHtml(label.toLowerCase()) + '" onclick="tocJump(' + (tocItems.length - 1) + ')">' +
+          '<span class="toc-badge p">P</span>' +
+          '<span class="toc-label">' + escHtml(label) + '</span>' +
+        '</div>';
+      });
+    }
+
+    tocBody.innerHTML = html;
+
+    // ── Highlight current section on scroll ──
+    updateActiveTOC();
+  }
+
+  function updateActiveTOC() {
+    var scrollPos = window.scrollY + 120;
+    var activeIdx = -1;
+    for (var i = 0; i < tocItems.length; i++) {
+      var rect = tocItems[i].el.getBoundingClientRect();
+      var absTop = rect.top + window.scrollY;
+      if (absTop <= scrollPos) activeIdx = i;
+    }
+    document.querySelectorAll('.toc-item').forEach(function(el, i) {
+      el.classList.toggle('active', i === activeIdx);
+    });
+    if (activeIdx >= 0) {
+      var activeEl = document.querySelectorAll('.toc-item')[activeIdx];
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }
+
+  // Throttled scroll listener
+  var scrollTimer = null;
+  window.addEventListener('scroll', function() {
+    if (!panel.classList.contains('open')) return;
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(function() {
+      updateActiveTOC();
+      scrollTimer = null;
+    }, 100);
+  });
+
+  // ── TOC search filter ──
+  tocSearchInput.addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    document.querySelectorAll('.toc-item').forEach(function(el) {
+      var label = el.dataset.label || '';
+      el.style.display = (!q || label.indexOf(q) !== -1) ? '' : 'none';
+    });
+    // Hide empty group headers
+    document.querySelectorAll('.toc-group-hd').forEach(function(hd) {
+      var next = hd.nextElementSibling;
+      var hasVisible = false;
+      while (next && !next.classList.contains('toc-group-hd')) {
+        if (next.style.display !== 'none' && next.classList.contains('toc-item')) { hasVisible = true; break; }
+        next = next.nextElementSibling;
+      }
+      hd.style.display = hasVisible ? '' : 'none';
+    });
+  });
+
+  // ── Jump to element ──
+  window.tocJump = function(idx) {
+    var item = tocItems[idx];
+    if (!item) return;
+    // Expand the card if collapsed
+    if (item.type === 'sector') {
+      item.el.classList.add('open');
+    }
+    // Smooth scroll
+    var rect = item.el.getBoundingClientRect();
+    var top = rect.top + window.scrollY - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    // Close panel on mobile
+    if (window.innerWidth <= 640) {
+      setTimeout(function() { togglePanel(false); }, 300);
+    }
+  };
+
+  // Rebuild TOC when opening
+  fab.addEventListener('click', function() {});
+})();
+</script>
+
+</body>
+</html>
