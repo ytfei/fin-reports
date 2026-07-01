@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电网储能"错杀"机会分析 | 逆变器禁令下的分化与机遇</title>
+<meta name="date" content="2026-07-01">
+<meta name="description" content="6月30日美国起草逆变器禁令冲击电网板块全线下跌，但变压器与逆变器存在本质差异。变压器具备原材料壁垒+交付周期壁垒+关税验证的绝对优势，识别真正被错杀的标的。">
+<meta name="category" content="market-analysis">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red: #d93025;
+    --green: #1a8a3f;
+    --blue: #1a56db;
+    --orange: #e67e22;
+    --bg: #fafbfc;
+    --card-bg: #fff;
+    --text: #1a1a2e;
+    --text-secondary: #666;
+    --border: #e8ecf1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; max-width: 680px; margin: 0 auto; padding: 16px; }
+  
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; border-radius: 12px; padding: 28px 24px; margin-bottom: 20px; }
+  .hero h1 { font-size: 22px; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .hero .subtitle { font-size: 14px; opacity: 0.85; margin-bottom: 12px; }
+  .hero .date-badge { font-size: 12px; opacity: 0.6; }
+  
+  .alert-red { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+  .alert-red h3 { color: var(--red); font-size: 15px; margin-bottom: 8px; }
+  .alert-red p { font-size: 14px; color: #991b1b; }
+  
+  .alert-green { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+  .alert-green h3 { color: var(--green); font-size: 15px; margin-bottom: 8px; }
+  .alert-green p { font-size: 14px; color: #166534; }
+  
+  .info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+  .info-box h3 { color: var(--blue); font-size: 15px; margin-bottom: 8px; }
+  
+  section { margin-bottom: 28px; }
+  h2 { font-size: 18px; color: #1a1a2e; border-bottom: 2px solid #0f3460; padding-bottom: 8px; margin-bottom: 16px; }
+  h3 { font-size: 15px; color: #333; margin: 16px 0 8px; }
+  p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  
+  .timeline { position: relative; padding-left: 24px; margin: 16px 0; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e0e0e0; }
+  .timeline-item { position: relative; margin-bottom: 16px; padding-left: 16px; }
+  .timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+  .timeline-item.future::before { background: var(--orange); }
+  .timeline-item .date { font-size: 12px; color: #999; }
+  .timeline-item .event { font-size: 14px; font-weight: 600; }
+  .timeline-item .detail { font-size: 13px; color: var(--text-secondary); }
+  
+  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .card.red-border { border-left: 4px solid var(--red); }
+  .card.green-border { border-left: 4px solid var(--green); }
+  .card.blue-border { border-left: 4px solid var(--blue); }
+  
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th { background: #f5f7fa; padding: 10px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--border); }
+  .up { color: var(--red); font-weight: 600; }
+  .down { color: var(--green); font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .badge-buy { background: #fef2f2; color: var(--red); }
+  .badge-hold { background: #fffbeb; color: #b45309; }
+  .badge-risk { background: #f0fdf4; color: var(--green); }
+  .badge-star { background: #fefce8; color: #a16207; }
+  
+  .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 480px) { .evidence-grid { grid-template-columns: 1fr; } }
+  .evidence-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .evidence-card .num { font-size: 28px; font-weight: 800; color: var(--red); line-height: 1; }
+  .evidence-card .label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  
+  .chart-container { position: relative; margin: 16px 0; background: var(--card-bg); border-radius: 8px; padding: 12px; border: 1px solid var(--border); }
+  
+  .rating-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .rating-row:last-child { border-bottom: none; }
+  .rating-tag { min-width: 56px; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-align: center; }
+  .rating-A { background: #fef2f2; color: var(--red); }
+  .rating-B { background: #fffbeb; color: #b45309; }
+  .rating-C { background: #f0fdf4; color: var(--green); }
+  
+  .disclaimer { background: #f9fafb; border: 1px solid var(--border); border-radius: 8px; padding: 14px; font-size: 12px; color: #999; margin-top: 24px; line-height: 1.6; }
+  
+  .highlight { background: linear-gradient(180deg, transparent 60%, #fef9c3 60%); padding: 0 2px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>电网储能"错杀"机会分析</h1>
+  <div class="subtitle">美欧逆变器禁令冲击下的行业分化——变压器vs逆变器，谁是真正的受害者？</div>
+  <div class="date-badge">2026年7月1日 · 事件驱动分析 · 研股股</div>
+</div>
+
+<div class="alert-red">
+  <h3>⚡ 触发事件：2026年6月30日</h3>
+  <p>路透社独家报道：特朗普政府正在起草禁令，拟禁止中国产逆变器进入美国市场。FCC可能在年内发布。此前欧盟已于4月23日起禁止为中国逆变器项目提供公共资金。消息公布后，A股电网设备板块全线下跌。</p>
+</div>
+
+<!-- ====== 一、政策全景 ====== -->
+<section>
+  <h2>一、政策全景：到底在禁什么？</h2>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">2025年中</div>
+      <div class="event">美国DOD将宁德时代、比亚迪等列入"中国涉军企业"</div>
+      <div class="detail">禁止DOD采购，2027年生效。覆盖光伏组件和逆变器（NDAA FY2026）</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2026年4月23日</div>
+      <div class="event">欧盟正式禁止中国逆变器公共融资</div>
+      <div class="detail">首次将中国划为"高风险国家"，覆盖光伏、风电、独立储能全场景。影响欧洲10-20%项目（政府补贴部分）</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2026年5月</div>
+      <div class="event">欧盟扩大范围至储能PCS</div>
+      <div class="detail">储能变流器明确纳入限制清单。商务部回应："拒绝接受，坚决反对"</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2026年6月30日 🔴</div>
+      <div class="event">美国FCC起草逆变器进口禁令</div>
+      <div class="detail">路透社独家：5位知情人士确认，覆盖太阳能和储能逆变器。"可能年内公布"。可能参考此前无人机/路由器禁令模式（可申请豁免，但对中国企业均未批准）</div>
+    </div>
+    <div class="timeline-item future">
+      <div class="date">待观察</div>
+      <div class="event">禁令可能扩大范围？</div>
+      <div class="detail">目前禁令明确针对【逆变器/PCS】，未涉及变压器、开关设备。但政策存在溢出风险</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>🔑 被禁的对象：逆变器 (Inverter/PCS)</h3>
+    <p style="font-size:13px;line-height:1.8;">
+      逆变器是将直流电（光伏板/电池）转换为交流电（电网）的电力电子设备。核心组件：IGBT/SiC功率半导体 + 控制芯片 + 软件。<br><br>
+      <strong>技术特征</strong>：偏电子、偏软件，存在"后门"植入的理论可能。美欧有替代供应商（SolarEdge、Enphase、SMA、Fronius）。<br><br>
+      <strong>受直接影响的中国公司</strong>：阳光电源（全球逆变器第一）、华为（已被制裁）、固德威、锦浪科技、派能科技。<br><br>
+      <strong>不被禁令覆盖的设备</strong>：<span class="highlight">变压器、GIS开关、断路器、特高压设备、电缆</span>——这些属于纯电力设备，无"网络安全"顾虑，且美欧严重依赖中国供应。
+    </p>
+  </div>
+</section>
+
+<!-- ====== 二、绝对优势论证 ====== -->
+<section>
+  <h2>二、变压器：六重证据论证"绝对优势"</h2>
+  <p>以下六项事实构成逻辑链：中国在变压器领域拥有结构性、难以短期逆转的供应优势。即便政策想限制，也做不到。</p>
+  
+  <div class="evidence-grid">
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">182%</div>
+      <div class="label">2026年1-2月中国变压器对美出口增速<br><span style="color:#999;font-size:11px;">来源：海关总署，搜狐报道2026.05.28</span></div>
+    </div>
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">104%</div>
+      <div class="label">美国对中国变压器现行关税<br><span style="color:#999;font-size:11px;">关税翻倍，进口量反而翻倍——价格弹性为零</span></div>
+    </div>
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">127周</div>
+      <div class="label">美国大功率变压器交付周期<br><span style="color:#999;font-size:11px;">中国：4个月。美国2.5年 vs 中国4个月</span></div>
+    </div>
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">80%</div>
+      <div class="label">美国大型变压器进口依赖度<br><span style="color:#999;font-size:11px;">来源：Wood Mackenzie, POWER Magazine</span></div>
+    </div>
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">56%</div>
+      <div class="label">中国取向硅钢全球产能占比<br><span style="color:#999;font-size:11px;">来源：中研普华2026；美国仅7%，日本11%</span></div>
+    </div>
+    <div class="evidence-card">
+      <div class="num" style="color:var(--red);">646亿</div>
+      <div class="label">2025年中国变压器出口总额(元)<br><span style="color:#999;font-size:11px;">同比+36%，均价+73%，订单排至2028年</span></div>
+    </div>
+  </div>
+
+  <div class="card blue-border" style="margin-top:16px;">
+    <h3 style="margin-top:0;">🧱 壁垒拆解：为什么美国造不了变压器？</h3>
+    <table>
+      <tr><th style="width:25%">壁垒层级</th><th>具体内容</th><th style="width:20%">中国优势</th></tr>
+      <tr>
+        <td><strong>原材料</strong></td>
+        <td>取向硅钢：变压器铁芯专用材料。中国产能56%全球份额，宝钢一家占国内30%。美国本土产能仅7%，且产线单一</td>
+        <td><span class="up">压倒性</span></td>
+      </tr>
+      <tr>
+        <td><strong>核心部件</strong></td>
+        <td>超高压绝缘套管：中国西电产品已用于国内外多项特高压工程，同类进口价格是中国设备的数倍</td>
+        <td><span class="up">技术领先</span></td>
+      </tr>
+      <tr>
+        <td><strong>熟练工人</strong></td>
+        <td>绕线工培养周期3-5年。美国技术工人断层持续30年，制造业外包导致年轻人远离工厂。日立能源南波士顿工厂工人自述"手忙脚乱是常态"</td>
+        <td><span class="up">不可复制</span></td>
+      </tr>
+      <tr>
+        <td><strong>特高压技术</strong></td>
+        <td>1000千伏特高压变压器曾长期被西门子、东芝垄断。中国企业自研攻克，并在智能监测、数字化运维上实现反超</td>
+        <td><span class="up">反超领先</span></td>
+      </tr>
+      <tr>
+        <td><strong>产能密度</strong></td>
+        <td>中国变压器产能占全球六成。东莞、江苏、山东工厂满负荷运转，订单排到2028年。美国建新厂需3-5年，且绕不开硅钢和工人</td>
+        <td><span class="up">规模碾压</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="alert-green">
+    <h3>✅ 104%关税 = 绝对优势的最强证明</h3>
+    <p>如果美国有替代供应商，104%关税足以将中国变压器逐出市场。现实是：关税翻倍，进口量反而翻倍（+182%）。这是市场用真金白银投票的结果——<strong>美国买不到别家的变压器，加多少钱都得从中国买</strong>。</p>
+  </div>
+</section>
+
+<!-- ====== 三、收入暴露与影响分析 ====== -->
+<section>
+  <h2>三、公司收入暴露与政策影响矩阵</h2>
+
+  <div class="chart-container" style="height:300px;">
+    <canvas id="exposureChart"></canvas>
+  </div>
+
+  <table>
+    <tr>
+      <th>股票</th>
+      <th>行业定位</th>
+      <th>海外收入占比</th>
+      <th>美/欧暴露</th>
+      <th>是否被禁令覆盖</th>
+      <th>5日涨跌</th>
+      <th>YTD</th>
+      <th>PE</th>
+    </tr>
+    <tr style="background:#fef2f2;">
+      <td><strong>阳光电源</strong></td>
+      <td>逆变器+储能PCS</td>
+      <td>~60%</td>
+      <td>欧40-45%/美5-10%</td>
+      <td><span class="down">⚠️ 是</span></td>
+      <td class="down">-12.41%</td>
+      <td class="down">-20.41%</td>
+      <td>23.6</td>
+    </tr>
+    <tr style="background:#fef2f2;">
+      <td><strong>固德威</strong></td>
+      <td>户用逆变器</td>
+      <td>~65%</td>
+      <td>欧为主</td>
+      <td><span class="down">⚠️ 是</span></td>
+      <td class="down">-10.84%</td>
+      <td class="up">+62.43%</td>
+      <td>92.8</td>
+    </tr>
+    <tr style="background:#fef2f2;">
+      <td><strong>派能科技</strong></td>
+      <td>户用储能</td>
+      <td>~75%</td>
+      <td>欧为主</td>
+      <td><span class="down">⚠️ 间接是</span></td>
+      <td class="down">-7.84%</td>
+      <td class="down">-7.58%</td>
+      <td>88.5</td>
+    </tr>
+    <tr style="background:#fffbeb;">
+      <td><strong>宁德时代</strong></td>
+      <td>储能电池</td>
+      <td>~33%</td>
+      <td>全球</td>
+      <td><span style="color:#b45309;">DOD清单</span></td>
+      <td class="down">-2.40%</td>
+      <td class="up">+7.08%</td>
+      <td>22.6</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>特变电工</strong></td>
+      <td>变压器（全球龙头）</td>
+      <td>~28%</td>
+      <td>全球90+国</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-6.27%</td>
+      <td class="down">-1.13%</td>
+      <td>18.0</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>思源电气</strong></td>
+      <td>GIS/开关/电力电子</td>
+      <td>~25%</td>
+      <td>全球</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-10.29%</td>
+      <td class="up">+8.52%</td>
+      <td>40.4</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>中国西电</strong></td>
+      <td>特高压/变压器/开关</td>
+      <td>~15%</td>
+      <td>一带一路为主</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-10.65%</td>
+      <td class="up">+60.07%</td>
+      <td>56.2</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>金盘科技</strong></td>
+      <td>干式变压器（数据中心）</td>
+      <td>~40%</td>
+      <td>北美50%/全球87国</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-7.06%</td>
+      <td class="down">-7.45%</td>
+      <td>57.4</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>平高电气</strong></td>
+      <td>GIS/高压开关</td>
+      <td>~12%</td>
+      <td>一带一路</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-5.58%</td>
+      <td>0%</td>
+      <td>19.9</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>许继电气</strong></td>
+      <td>特高压/柔直/配网</td>
+      <td>~10%</td>
+      <td>一带一路</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-5.10%</td>
+      <td class="down">-17.65%</td>
+      <td>20.0</td>
+    </tr>
+    <tr style="background:#f0fdf4;">
+      <td><strong>国电南瑞</strong></td>
+      <td>电网自动化/储能</td>
+      <td>~8%</td>
+      <td>低</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="up">+0.50%</td>
+      <td class="up">+2.64%</td>
+      <td>21.8</td>
+    </tr>
+    <tr style="background:#fef2f2;">
+      <td><strong>四方股份</strong></td>
+      <td>继保/配网自动化</td>
+      <td>中低</td>
+      <td>低</td>
+      <td><span class="up">✅ 否</span></td>
+      <td class="down">-14.71%</td>
+      <td class="up">+100.72%</td>
+      <td>57.2</td>
+    </tr>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-secondary);">
+    数据来源：行情数据来自腾讯自选股（2026.07.01盘中）；海外收入占比来自各公司2025年报/券商研报，均为近似值。<br>
+    <span class="up">红色高亮</span> = 受禁令直接影响；<span style="color:#b45309;">黄色</span> = 间接影响；<span style="color:var(--green);">绿色</span> = 不受影响但被连带抛售（潜在错杀）。
+  </p>
+</section>
+
+<!-- ====== 四、错杀识别 ====== -->
+<section>
+  <h2>四、"错杀"识别：谁跌错了？</h2>
+
+  <div class="chart-container" style="height:280px;">
+    <canvas id="killChart"></canvas>
+  </div>
+
+  <div class="card green-border">
+    <h3 style="margin-top:0;">🟢 Tier 1 — 确定错杀（高置信度）</h3>
+    <p style="font-size:13px;">变压器/开关设备公司，禁令不覆盖，核心技术有壁垒，5日跌幅6-11%过度反应。</p>
+    
+    <div style="margin-top:12px;">
+      <div class="rating-row">
+        <span class="rating-tag rating-A">A</span>
+        <strong>特变电工 (600089)</strong> &nbsp; PE 18.0 · PB 1.54 · YTD -1.13%
+      </div>
+      <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+        全球变压器出货量第一。中标沙特164亿元超高压项目，海外覆盖90+国。ROE未披露（待补季报），负债率56.6%。104%关税挡不住美国订单，已经是最强证明。5日跌6.27%无基本面依据。
+      </p>
+
+      <div class="rating-row" style="margin-top:10px;">
+        <span class="rating-tag rating-A">A</span>
+        <strong>思源电气 (002028)</strong> &nbsp; PE 40.4 · ROE 20.2% · YTD +8.52%
+      </div>
+      <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+        GIS开关设备龙头。ROE 20.2%，净利率14.2%，海外毛利率35.69%行业最高。负债率45.8%，财务质量优异。核心产品GIS/开关不属于逆变器范畴。5日跌10.29%明显过度。
+      </p>
+
+      <div class="rating-row" style="margin-top:10px;">
+        <span class="rating-tag rating-B">B+</span>
+        <strong>金盘科技 (688676)</strong> &nbsp; PE 57.4 · YTD -7.45%
+      </div>
+      <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+        北美最深入的中国变压器企业——深耕20年，墨西哥基地主力供应。Q1海外收入+67.55%，数据中心订单+103.77%。Google/Meta/Amazon直接客户。干式变压器AI数据中心专用。5日跌7.06%。风险：若禁令扩大至变压器则受损最重。
+      </p>
+    </div>
+  </div>
+
+  <div class="card blue-border">
+    <h3 style="margin-top:0;">🔵 Tier 2 — 大概率错杀（中等置信度）</h3>
+    
+    <div class="rating-row">
+      <span class="rating-tag rating-B">B</span>
+      <strong>中国西电 (601179)</strong> &nbsp; PE 56.2 · YTD +60.07%
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+      特高压交直流全产业链。海外收入+64%，超高压绝缘套管全球领先。PE偏高因前期涨幅大，5日-10.65%部分属于获利回吐+情绪杀。海外市场主要在一带一路，美欧直接暴露有限。
+    </p>
+
+    <div class="rating-row" style="margin-top:10px;">
+      <span class="rating-tag rating-B">B</span>
+      <strong>平高电气 (600312)</strong> &nbsp; PE 19.9 · ROE 10.1% · YTD +0.02%
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+      GIS/高压开关，海外+285%增长（基数低）。PE 19.9合理，毛利率24%。不涉及逆变器/PCS。5日-5.58%。
+    </p>
+
+    <div class="rating-row" style="margin-top:10px;">
+      <span class="rating-tag rating-B">B-</span>
+      <strong>许继电气 (000400)</strong> &nbsp; PE 20.0 · YTD -17.65%
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+      特高压柔直阀/智能电网。海外订单覆盖周期长，收入占比~10%。YTD跌幅大（-17.65%）体现前期市场对电力设备板块的系统性回调，此次5日-5.10%加剧。
+    </p>
+  </div>
+
+  <div class="card red-border">
+    <h3 style="margin-top:0;">🔴 非错杀 — 利空真实且重大（回避）</h3>
+    
+    <div class="rating-row">
+      <span class="rating-tag rating-C">回-避</span>
+      <strong>阳光电源 (300274)</strong> &nbsp; PE 23.6 · ROE 24.5% · YTD -20.41%
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+      逆变器+储能PCS双线被禁。ROE 24.5%是真实的好公司，但政策利空是真实的。欧洲占海外40-45%，美国的禁令将直接封杀其美国市场（虽已降至5-10%）。波兰工厂2026年底投产后可规避部分欧盟禁令。持有，不加仓，等波兰工厂投产验证。
+    </p>
+
+    <div class="rating-row" style="margin-top:10px;">
+      <span class="rating-tag rating-C">回-避</span>
+      <strong>固德威 (688390)</strong> &nbsp; PE 92.8 · YTD +62.43%
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0 58px;">
+      户用逆变器，欧洲为主。禁令直接影响其最大市场。PE 92.8极高，且面临SMA/Fronius替代。YTD+62.43%已反映前期乐观预期，此次利空需要充分消化。
+    </p>
+  </div>
+</section>
+
+<!-- ====== 五、公司质量深度评估 ====== -->
+<section>
+  <h2>五、公司质量深度评估</h2>
+
+  <div class="chart-container" style="height:320px;">
+    <canvas id="qualityChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>股票</th><th>ROE</th><th>毛利率</th><th>净利率</th><th>负债率</th><th>评级</th><th>核心优势</th></tr>
+    <tr><td>阳光电源</td><td><span class="up">24.5%</span></td><td>31.4%</td><td>13.9%</td><td>57.5%</td><td>A-</td><td>全球储能系统出货量第一</td></tr>
+    <tr><td>宁德时代</td><td><span class="up">22.1%</span></td><td>26.2%</td><td>16.9%</td><td>62.3%</td><td>A-</td><td>全球储能电池份额第一</td></tr>
+    <tr><td>思源电气</td><td><span class="up">20.2%</span></td><td>30.5%</td><td>14.2%</td><td>45.8%</td><td>A</td><td>海外毛利率行业最高35.7%</td></tr>
+    <tr><td>国电南瑞</td><td><span class="up">15.6%</span></td><td>25.9%</td><td>12.4%</td><td>40.2%</td><td>A-</td><td>电网自动化绝对龙头</td></tr>
+    <tr><td>平高电气</td><td>10.1%</td><td>24.0%</td><td>9.4%</td><td>43.7%</td><td>B+</td><td>GIS全球前三，海外+285%</td></tr>
+    <tr><td>特变电工</td><td>[待补]</td><td>[待补]</td><td>[待补]</td><td>56.6%</td><td>B+*</td><td>全球变压器出货第一</td></tr>
+    <tr><td>中国西电</td><td>[待补]</td><td>[待补]</td><td>[待补]</td><td>[待补]</td><td>B*</td><td>特高压全产业链</td></tr>
+    <tr><td>金盘科技</td><td>[待补]</td><td>[待补]</td><td>[待补]</td><td>[待补]</td><td>B+*</td><td>北美数据中心变压器市占第一</td></tr>
+  </table>
+  <p style="font-size:12px;color:#999;">* 标注为部分ROE/毛利率数据报告期不匹配或待补最新季报数据。ROE为近四个季度滚动(TTM)。来源：腾讯自选股财务数据接口。</p>
+</section>
+
+<!-- ====== 六、风险因素 ====== -->
+<section>
+  <h2>六、风险因素——什么会推翻这个逻辑？</h2>
+
+  <div class="card red-border">
+    <h3 style="margin-top:0;">⚠️ 风险1：禁令扩大至变压器</h3>
+    <p style="font-size:13px;">
+      <strong>概率：低（<15%）</strong>。逻辑依据：<br>
+      ① 逆变器禁令基于"网络安全"，变压器是纯电力设备，无法植入"后门"，在法理上难以沿用同一理由。<br>
+      ② 美国AI数据中心急需变压器。谷歌微软砸6500亿美元基建，约30-50%项目因变压器短缺面临延期。禁令会导致AI军备竞赛自残。<br>
+      ③ 104%关税都挡不住的进口需求 —— 如果美国政府真有替代方案，早就通过关税解决了。<br>
+      <br>
+      <strong>但如果发生</strong>：金盘科技受损最大（北美收入占比高），特变电工/思源电气/中国西电次之（全球化布局分散）。
+    </p>
+  </div>
+
+  <div class="card red-border">
+    <h3 style="margin-top:0;">⚠️ 风险2：美国本土产能建设超预期</h3>
+    <p style="font-size:13px;">
+      <strong>概率：低（<10%）。</strong> 美国本土建变压器厂需要3-5年，且绕不开取向硅钢（全球56%在中国）和熟练绕线工（培养3-5年）。日立能源和西门子能源在美国扩产中，但新增产能远不足以替代进口。
+    </p>
+  </div>
+
+  <div class="card red-border">
+    <h3 style="margin-top:0;">⚠️ 风险3：情绪蔓延导致板块持续杀跌</h3>
+    <p style="font-size:13px;">
+      <strong>概率：中等（30-40%）。</strong> 短期市场可能不区分逆变器/变压器差异，统一抛售电网板块。情绪杀可能在1-2周内持续，带来更深的介入机会（而非恐慌割肉的理由）。
+    </p>
+  </div>
+
+  <div class="card red-border">
+    <h3 style="margin-top:0;">⚠️ 风险4：宁德时代DOD清单传导到储能电池</h3>
+    <p style="font-size:13px;">
+      <strong>概率：中低（20%）。</strong> DOD禁止与宁德时代做生意（2027年生效）。储能电池暂未被逆变器禁令覆盖，但如果DOD清单扩散至更广泛的美军供应链或政府采购，可能间接影响储能电池出口。宁德时代海外收入33%，影响不可忽视。
+    </p>
+  </div>
+</section>
+
+<!-- ====== 七、结论与行动建议 ====== -->
+<section>
+  <h2>七、结论与行动建议</h2>
+
+  <div class="chart-container" style="height:300px;">
+    <canvas id="summaryChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>标的</th><th>错杀评级</th><th>质量评级</th><th>PE</th><th>5日跌幅</th><th>核心逻辑</th><th>建议</th></tr>
+    <tr>
+      <td><strong>思源电气</strong></td>
+      <td><span class="badge badge-buy">⭐⭐⭐</span></td>
+      <td>A</td>
+      <td>40.4</td>
+      <td class="down">-10.29%</td>
+      <td style="font-size:12px;">GIS龙头，ROE 20.2%，禁令不覆盖。海外毛利率35.7%行业最高。5日跌10%是纯情绪</td>
+      <td><span class="badge badge-buy">买入</span></td>
+    </tr>
+    <tr>
+      <td><strong>特变电工</strong></td>
+      <td><span class="badge badge-buy">⭐⭐⭐</span></td>
+      <td>B+</td>
+      <td>18.0</td>
+      <td class="down">-6.27%</td>
+      <td style="font-size:12px;">全球变压器第一，104%关税挡不住订单。PE 18、PB 1.54，估值安全边际充足</td>
+      <td><span class="badge badge-buy">买入</span></td>
+    </tr>
+    <tr>
+      <td><strong>金盘科技</strong></td>
+      <td><span class="badge badge-buy">⭐⭐</span></td>
+      <td>B+</td>
+      <td>57.4</td>
+      <td class="down">-7.06%</td>
+      <td style="font-size:12px;">北美数据中心变压器，Q1海外+67.55%。最大风险是禁令万一扩大</td>
+      <td><span class="badge badge-hold">小仓观察</span></td>
+    </tr>
+    <tr>
+      <td><strong>平高电气</strong></td>
+      <td><span class="badge badge-buy">⭐⭐</span></td>
+      <td>B+</td>
+      <td>19.9</td>
+      <td class="down">-5.58%</td>
+      <td style="font-size:12px;">GIS+海外+285%，PE 20。情绪杀，弹性取决于特高压招标节奏</td>
+      <td><span class="badge badge-hold">持有/观察</span></td>
+    </tr>
+    <tr>
+      <td><strong>中国西电</strong></td>
+      <td><span class="badge badge-star">⭐</span></td>
+      <td>B</td>
+      <td>56.2</td>
+      <td class="down">-10.65%</td>
+      <td style="font-size:12px;">特高压全链，但PE偏高+YTD涨60%，10%跌幅含获利盘回吐</td>
+      <td><span class="badge badge-hold">等回调</span></td>
+    </tr>
+    <tr>
+      <td><strong>阳光电源</strong></td>
+      <td><span class="badge badge-risk">非错杀</span></td>
+      <td>A-</td>
+      <td>23.6</td>
+      <td class="down">-12.41%</td>
+      <td style="font-size:12px;">逆变器+PCS直接受禁令打击。好公司，利空真实。等波兰工厂投产</td>
+      <td><span class="badge badge-hold">持有不增</span></td>
+    </tr>
+  </table>
+
+  <div class="info-box" style="margin-top:20px;">
+    <h3>🎯 核心判断</h3>
+    <p style="font-size:14px;line-height:1.8;">
+      美欧逆变器禁令是真实利空，但<strong>变压器≠逆变器</strong>。市场在6月30日新闻后无差别抛售电网板块，创造了变压器企业的"错杀"窗口。<br><br>
+      变压器具备三重不可替代性：①原材料（取向硅钢56%全球份额在中国）②交付周期（中国4个月 vs 美国127周）③104%关税已用真金白银投票——加税翻倍，进口反增182%。<br><br>
+      <strong>最确定的错杀标的</strong>：思源电气（ROE 20.2%/海外毛利率行业第一）、特变电工（全球第一/PE 18/PB 1.54）。<br>
+      <strong>最大赔率的错杀标的</strong>：金盘科技（北美数据中心变压器/Google Meta Amazon客户），但若禁令扩大则风险最大。<br>
+      <strong>非错杀，利空真实</strong>：阳光电源/固德威/派能科技——逆变器禁令直击核心业务，等待事件落地而非逆势抄底。
+    </p>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>免责声明</strong><br>
+  本报告基于公开信息和数据的客观分析，仅供研究参考，不构成任何投资建议。所有结论均建立在现有政策框架和信息基础上，政策后续可能变化。报告中涉及的海外收入占比、市场份额等数据来自公司年报、海关总署及券商研报，部分为近似值。<br><br>
+  数据来源：路透社(Reuters)、pv magazine USA、搜狐财经、海关总署、腾讯自选股、Wood Mackenzie、POWER Magazine、中研普华、各公司2025年报。<br><br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。
+</div>
+
+<script>
+// Chart 1: 5-day decline by company
+(function() {
+  const ctx = document.getElementById('exposureChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['四方','阳光电源','固德威','中国西电','思源电气','三变科技','保变电气','金盘科技','特变电工','平高电气','许继电气'],
+      datasets: [{
+        label: '5日涨跌幅%',
+        data: [-14.71, -12.41, -10.84, -10.65, -10.29, -8.66, -8.39, -7.06, -6.27, -5.58, -5.10],
+        backgroundColor: function(ctx) {
+          const labels = ['四方','阳光电源','固德威','中国西电','三变科技','保变电气'];
+          const name = ctx.chart.data.labels[ctx.dataIndex];
+          return labels.includes(name) ? '#d93025' : '#2d6a4f';
+        },
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '6月30日消息公布后5日板块跌幅（%）', font: { size: 13 }, color: '#666', padding: { bottom: 10 } }
+      },
+      scales: {
+        y: { grid: { color: '#f0f0f0' } },
+        x: { ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+})();
+
+// Chart 2: Mis-kill vs real kill scatter
+(function() {
+  const ctx = document.getElementById('killChart').getContext('2d');
+  const colors = ['#d93025','#d93025','#d93025','#2d6a4f','#2d6a4f','#2d6a4f','#2d6a4f','#2d6a4f','#2d6a4f','#2d6a4f'];
+  new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: '被错杀（变压器/开关）',
+        data: [
+          {x: 1, y: -10.29, name: '思源电气'},
+          {x: 2, y: -6.27, name: '特变电工'},
+          {x: 3, y: -7.06, name: '金盘科技'},
+          {x: 4, y: -10.65, name: '中国西电'},
+          {x: 5, y: -5.58, name: '平高电气'},
+          {x: 6, y: -5.10, name: '许继电气'},
+        ],
+        backgroundColor: '#2d6a4f', borderColor: '#2d6a4f', pointRadius: 8, pointHoverRadius: 12
+      }, {
+        label: '真实利空（逆变器）',
+        data: [
+          {x: 1, y: -12.41, name: '阳光电源'},
+          {x: 2, y: -10.84, name: '固德威'},
+          {x: 3, y: -7.84, name: '派能科技'},
+        ],
+        backgroundColor: '#d93025', borderColor: '#d93025', pointRadius: 8, pointHoverRadius: 12
+      }, {
+        label: '过度连带',
+        data: [
+          {x: 1, y: -14.71, name: '四方股份'},
+          {x: 2, y: -8.66, name: '三变科技'},
+        ],
+        backgroundColor: '#e67e22', borderColor: '#e67e22', pointRadius: 8, pointHoverRadius: 12
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 15 } },
+        title: { display: true, text: '错杀 vs 真实利空：5日跌幅分组', font: { size: 13 }, color: '#666' },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const d = ctx.raw;
+              return d.name + ': ' + d.y + '%';
+            }
+          }
+        }
+      },
+      scales: {
+        x: { display: false },
+        y: { 
+          min: -16, max: -3,
+          grid: { color: '#f0f0f0' },
+          ticks: { callback: function(v) { return v + '%'; } }
+        }
+      }
+    }
+  });
+})();
+
+// Chart 3: Quality bubble chart (ROE vs PE)
+(function() {
+  const ctx = document.getElementById('qualityChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bubble',
+    data: {
+      datasets: [{
+        label: '变压器/开关',
+        data: [
+          {x: 40.4, y: 20.2, r: 18, name: '思源电气'},
+          {x: 19.9, y: 10.1, r: 10, name: '平高电气'},
+          {x: 56.2, y: 8, r: 12, name: '中国西电'},
+          {x: 21.8, y: 15.6, r: 16, name: '国电南瑞'},
+          {x: 18.0, y: 6, r: 12, name: '特变电工'},
+          {x: 20.0, y: 9, r: 10, name: '许继电气'},
+        ],
+        backgroundColor: 'rgba(45,106,79,0.5)', borderColor: '#2d6a4f'
+      }, {
+        label: '逆变器/储能',
+        data: [
+          {x: 23.6, y: 24.5, r: 22, name: '阳光电源'},
+          {x: 22.6, y: 22.1, r: 25, name: '宁德时代'},
+          {x: 92.8, y: 12, r: 7, name: '固德威'},
+          {x: 88.5, y: 5, r: 5, name: '派能科技'},
+        ],
+        backgroundColor: 'rgba(217,48,37,0.5)', borderColor: '#d93025'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 15 } },
+        title: { display: true, text: '质量-估值矩阵：ROE vs PE（气泡大小≈市值）', font: { size: 13 }, color: '#666' },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const d = ctx.raw;
+              return [d.name, 'PE: ' + d.x, 'ROE: ' + d.y + '%'];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'PE（越低越好←）', font: { size: 11 } }, grid: { color: '#f0f0f0' } },
+        y: { title: { display: true, text: 'ROE%（越高越好↑）', font: { size: 11 } }, grid: { color: '#f0f0f0' } }
+      }
+    }
+  });
+})();
+
+// Chart 4: Summary comparison
+(function() {
+  const ctx = document.getElementById('summaryChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['思源电气','特变电工','金盘科技','平高电气','中国西电','许继电气','阳光电源'],
+      datasets: [
+        { label: '错杀程度（跌幅越大≈越被错杀）', data: [10.29, 6.27, 7.06, 5.58, 10.65, 5.10, null], backgroundColor: '#2d6a4f', borderRadius: 6, yAxisID: 'y' },
+        { label: '真实利空跌幅', data: [null, null, null, null, null, null, 12.41], backgroundColor: '#d93025', borderRadius: 6, yAxisID: 'y' },
+        { label: 'PE估值', data: [40.4, 18.0, 57.4, 19.9, 56.2, 20.0, 23.6], backgroundColor: 'rgba(26,86,219,0.3)', borderColor: '#1a56db', borderWidth: 2, type: 'line', yAxisID: 'y1', tension: 0.3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8 } },
+        title: { display: true, text: '综合对比：跌幅 vs PE估值（红色=真实利空，绿色=错杀）', font: { size: 13 }, color: '#666' }
+      },
+      scales: {
+        y: { position: 'left', title: { display: true, text: '5日跌幅绝对值%', font: { size: 11 } }, grid: { color: '#f0f0f0' }, min: 0, max: 16 },
+        y1: { position: 'right', title: { display: true, text: 'PE', font: { size: 11 } }, grid: { drawOnChartArea: false }, min: 0, max: 70 }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
