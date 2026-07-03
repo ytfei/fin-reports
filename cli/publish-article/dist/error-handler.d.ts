@@ -7,7 +7,8 @@ import type { PublishError, PublishContext } from './types.js';
  */
 export declare function createPublishError(step: PublishError['step'], code: string, message: string, details?: unknown): PublishError;
 /**
- * Handle error with automatic rollback
+ * Handle error — reports error but does NOT delete published files.
+ * The copied article file in fin-reports/articles/ is preserved.
  */
 export declare function handleError(error: unknown, step: PublishError['step'], context: PublishContext): PublishError;
 /**

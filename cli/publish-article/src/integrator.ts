@@ -181,26 +181,19 @@ export function deployProject(options: DeployOptions = {}): {
       ? `wrangler pages deploy public --project-name=fin-reports --branch=${options.branch}`
       : 'npm run deploy';
 
-    const result = execSync(command, {
+    execSync(command, {
       cwd: projectPath,
       stdio: 'inherit',
       encoding: 'utf-8',
     });
 
-    // Try to extract deployment ID from result
-    let deploymentId: string | undefined;
-    const idMatch = result.match(/([a-f0-9]{32}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/i);
-    if (idMatch) {
-      deploymentId = idMatch[1];
-    }
-
+    // Note: stdio:'inherit' means result is empty; deploymentId is not extractable
     console.log('✅ 部署成功');
     console.log('🌐 访问: https://fin.a11.world');
 
     return {
       success: true,
       url: 'https://fin.a11.world',
-      deploymentId,
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

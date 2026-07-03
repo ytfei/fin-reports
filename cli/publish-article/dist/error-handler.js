@@ -1,7 +1,6 @@
 /**
  * Error Handler - Centralized error handling with rollback support
  */
-import { rollbackCopy } from './copier.js';
 /**
  * Create a publish error object
  */
@@ -17,22 +16,10 @@ export function createPublishError(step, code, message, details) {
     };
 }
 /**
- * Handle error with automatic rollback
+ * Handle error — reports error but does NOT delete published files.
+ * The copied article file in fin-reports/articles/ is preserved.
  */
 export function handleError(error, step, context) {
-    // Perform rollback
-    let rollbackDetails = '无需回滚';
-    let rollbackPerformed = false;
-    if (step === 'copy' || step === 'build' || step === 'deploy') {
-        try {
-            rollbackCopy(context);
-            rollbackPerformed = true;
-            rollbackDetails = '已回滚文件操作';
-        }
-        catch (rollbackError) {
-            rollbackDetails = `回滚失败: ${rollbackError.message}`;
-        }
-    }
     // Extract error message
     const errorMessage = error instanceof Error ? error.message : String(error);
     return {
@@ -44,8 +31,8 @@ export function handleError(error, step, context) {
         },
         step,
         rollback: {
-            performed: rollbackPerformed,
-            details: rollbackDetails,
+            performed: false,
+            details: `文件保留 — ${context.targetPath || '目标路径未记录'}`,
         },
     };
 }
