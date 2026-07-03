@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股业绩预告周报 | 2026.06.26 - 2026.07.03</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6fa; color: #2c3e50; line-height: 1.6; }
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px; }
+.hero h1 { font-size: 22px; margin-bottom: 8px; }
+.hero .subtitle { font-size: 13px; opacity: 0.75; }
+.hero .stats { display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+.hero .stat { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px 14px; text-align: center; min-width: 80px; }
+.hero .stat .num { font-size: 24px; font-weight: 700; }
+.hero .stat .label { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+.section { background: white; border-radius: 10px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.section h2 { font-size: 16px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+.ind-card { border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.ind-card .ind-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.ind-card .ind-name { font-weight: 600; font-size: 14px; }
+.ind-card .ind-count { font-size: 12px; color: #888; }
+.ind-card .stock-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.stock-tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+.stock-tag .name { font-weight: 500; }
+.stock-tag .change { font-size: 11px; opacity: 0.85; }
+.growth-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.growth-table th { background: #f8f9fa; padding: 8px 6px; text-align: left; font-weight: 600; font-size: 12px; color: #666; border-bottom: 2px solid #dee2e6; }
+.growth-table td { padding: 7px 6px; border-bottom: 1px solid #f0f0f0; }
+.growth-table tr:hover { background: #f8f9ff; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+.badge-red { background: #fde8e8; color: #c0392b; }
+.badge-green { background: #e8f8e8; color: #27ae60; }
+.badge-orange { background: #fef3e2; color: #e67e22; }
+.badge-blue { background: #e8f0fe; color: #2980b9; }
+.profit { font-family: "SF Mono", "Menlo", monospace; font-size: 12px; }
+.note { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 14px; border-radius: 4px; font-size: 12px; color: #666; margin-top: 16px; }
+.footer { text-align: center; font-size: 11px; color: #aaa; padding: 20px 0; }
+.highlight-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.highlight-card { flex: 1; min-width: 140px; background: #fef3e2; border-radius: 8px; padding: 12px; border-left: 3px solid #e67e22; }
+.highlight-card.red { background: #fde8e8; border-left-color: #c0392b; }
+.highlight-card .hl-name { font-weight: 600; font-size: 13px; }
+.highlight-card .hl-ind { font-size: 11px; color: #888; }
+.highlight-card .hl-growth { font-size: 18px; font-weight: 700; margin: 4px 0; }
+.highlight-card .hl-profit { font-size: 11px; color: #666; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>📊 A股业绩预告周报</h1>
+  <div class="subtitle">数据区间：2026年6月26日 — 7月3日 ｜ 数据来源：Tushare</div>
+  <div class="stats">
+    <div class="stat"><div class="num" style="color:#e74c3c">32</div><div class="label">预告总数</div></div>
+    <div class="stat"><div class="num" style="color:#e74c3c">26</div><div class="label">预增</div></div>
+    <div class="stat"><div class="num" style="color:#e67e22">3</div><div class="label">扭亏</div></div>
+    <div class="stat"><div class="num" style="color:#27ae60">2</div><div class="label">预亏</div></div>
+    <div class="stat"><div class="num">24</div><div class="label">覆盖行业</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔥 本期亮点</h2>
+  <div class="highlight-row">
+    <div class="highlight-card red">
+      <div class="hl-name">益生股份</div>
+      <div class="hl-ind">农业综合 · 预增</div>
+      <div class="hl-growth" style="color:#c0392b">+4530%</div>
+      <div class="hl-profit">净利润 2.7亿~3.0亿</div>
+    </div>
+    <div class="highlight-card red">
+      <div class="hl-name">恒逸石化</div>
+      <div class="hl-ind">化纤 · 预增</div>
+      <div class="hl-growth" style="color:#c0392b">+2437%</div>
+      <div class="hl-profit">净利润 55.0亿~60.0亿</div>
+    </div>
+    <div class="highlight-card red">
+      <div class="hl-name">盛达资源</div>
+      <div class="hl-ind">铅锌 · 预增</div>
+      <div class="hl-growth" style="color:#c0392b">+435%</div>
+      <div class="hl-profit">净利润 3.5亿~4.0亿</div>
+    </div>
+    <div class="highlight-card" style="background:#e8f8e8;border-left-color:#27ae60;">
+      <div class="hl-name">重庆钢铁</div>
+      <div class="hl-ind">普钢 · 续亏</div>
+      <div class="hl-growth" style="color:#27ae60">-36.6412%</div>
+      <div class="hl-profit">净利润 -1.79亿</div>
+    </div>
+    <div class="highlight-card" style="background:#e8f8e8;border-left-color:#27ae60;">
+      <div class="hl-name">*ST天箭</div>
+      <div class="hl-ind">通信设备 · 续亏</div>
+      <div class="hl-growth" style="color:#27ae60">35.99%</div>
+      <div class="hl-profit">净利润 -0.04亿</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🏭 一、按行业板块分类</h2>
+  
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 化纤</span><span class="ind-count">3 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">恒逸石化</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+2437%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">优彩资源</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+97%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">华峰化学</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+91%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 化工原料</span><span class="ind-count">3 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">永太科技</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+406%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">广钢气体</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+113%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">永和股份</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+86%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 通信设备</span><span class="ind-count">3 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">锐捷网络</span><span class="badge badge-blue">预增</span><span class="change" style="color:#c0392b">+49%</span></span><span class="stock-tag" style="background:#e8f8e8"><span class="name">*ST天箭</span><span class="badge badge-green">续亏</span><span class="change" style="color:#27ae60">+45%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">星网锐捷</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+75%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 农药化肥</span><span class="ind-count">2 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">东方铁塔</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+94%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">盐湖股份</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+137%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 专用机械</span><span class="ind-count">2 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">雷赛智能</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+60%</span></span><span class="stock-tag" style="background:#fde8e8"><span class="name">雷赛智能</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+60%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 红黄酒</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">百润股份</span><span class="badge badge-blue">略增</span><span class="change" style="color:#c0392b">+23%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 环境保护</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">圣元环保</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+68%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 塑料</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">银禧科技</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+88%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 半导体</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">富满微</span><span class="badge badge-orange">扭亏</span><span class="change" style="color:#c0392b">+380%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 汽车配件</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">宁波华翔</span><span class="badge badge-orange">扭亏</span><span class="change" style="color:#c0392b">+274%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 铅锌</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">盛达资源</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+435%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 石油开采</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">广汇能源</span><span class="badge badge-blue">预增</span><span class="change" style="color:#c0392b">+46%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 水力发电</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">韶能股份</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+82%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 农业综合</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">益生股份</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+4530%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 仓储物流</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">圆通速递</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+78%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 食品</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">中炬高新</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+60%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 普钢</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#e8f8e8"><span class="name">重庆钢铁</span><span class="badge badge-green">续亏</span><span class="change" style="color:#27ae60">-36.6412%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 矿物制品</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">金力永磁</span><span class="badge badge-blue">预增</span><span class="change" style="color:#c0392b">+41%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 纺织</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">孚日股份</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+60%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 电气设备</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">三瑞智能</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+70%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 摩托车</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">涛涛车业</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+58%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 元器件</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">福蓉科技</span><span class="badge badge-orange">预增</span><span class="change" style="color:#c0392b">+69%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 互联网</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">北纬科技</span><span class="badge badge-orange">扭亏</span><span class="change" style="color:#c0392b">+244%</span></span></div>
+  </div>
+  <div class="ind-card">
+    <div class="ind-header"><span class="ind-name">📌 影视音像</span><span class="ind-count">1 只标的</span></div>
+    <div class="stock-list"><span class="stock-tag" style="background:#fde8e8"><span class="name">奥飞娱乐</span><span class="badge badge-red">预增</span><span class="change" style="color:#c0392b">+359%</span></span></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📈 二、按业绩增长区间分类</h2>
+  <table class="growth-table">
+    <thead>
+      <tr><th>增长区间</th><th>股票名称</th><th>行业</th><th>预告类型</th><th>利润变动幅度</th><th>预告净利润</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;">大幅预增(≥100%)</span></td>
+        <td><strong>益生股份</strong> <span style="font-size:11px;color:#999;">002458.SZ</span></td>
+        <td>农业综合</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">4286.61% ~ 4774.01%</td>
+        <td class="profit">2.70亿 ~ 3.00亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>恒逸石化</strong> <span style="font-size:11px;color:#999;">000703.SZ</span></td>
+        <td>化纤</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">2326.31% ~ 2546.88%</td>
+        <td class="profit">55.00亿 ~ 60.00亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>盛达资源</strong> <span style="font-size:11px;color:#999;">000603.SZ</span></td>
+        <td>铅锌</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">399.31% ~ 470.64%</td>
+        <td class="profit">3.50亿 ~ 4.00亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>永太科技</strong> <span style="font-size:11px;color:#999;">002326.SZ</span></td>
+        <td>化工原料</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">350.68% ~ 461.22%</td>
+        <td class="profit">2.65亿 ~ 3.30亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>奥飞娱乐</strong> <span style="font-size:11px;color:#999;">002292.SZ</span></td>
+        <td>影视音像</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">305.3% ~ 413.38%</td>
+        <td class="profit">1.50亿 ~ 1.90亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>盐湖股份</strong> <span style="font-size:11px;color:#999;">000792.SZ</span></td>
+        <td>农药化肥</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">131.38% ~ 142.95%</td>
+        <td class="profit">60.00亿 ~ 63.00亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>广钢气体</strong> <span style="font-size:11px;color:#999;">688548.SH</span></td>
+        <td>化工原料</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">87.19% ~ 138.24%</td>
+        <td class="profit">2.20亿 ~ 2.80亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;">高速增长(50-100%)</span></td>
+        <td><strong>优彩资源</strong> <span style="font-size:11px;color:#999;">002998.SZ</span></td>
+        <td>化纤</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">72.8% ~ 122.17%</td>
+        <td class="profit">0.70亿 ~ 0.90亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>华峰化学</strong> <span style="font-size:11px;color:#999;">002064.SZ</span></td>
+        <td>化纤</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">70.85% ~ 111.53%</td>
+        <td class="profit">16.80亿 ~ 20.80亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>东方铁塔</strong> <span style="font-size:11px;color:#999;">002545.SZ</span></td>
+        <td>农药化肥</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">81.87% ~ 106.19%</td>
+        <td class="profit">8.97亿 ~ 10.17亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>韶能股份</strong> <span style="font-size:11px;color:#999;">000601.SZ</span></td>
+        <td>水力发电</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">61.62% ~ 103.33%</td>
+        <td class="profit">1.55亿 ~ 1.95亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>星网锐捷</strong> <span style="font-size:11px;color:#999;">002396.SZ</span></td>
+        <td>通信设备</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">46.27% ~ 102.9%</td>
+        <td class="profit">3.10亿 ~ 4.30亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>永和股份</strong> <span style="font-size:11px;color:#999;">605020.SH</span></td>
+        <td>化工原料</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">69.51% ~ 102.68%</td>
+        <td class="profit">4.60亿 ~ 5.50亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>银禧科技</strong> <span style="font-size:11px;color:#999;">300221.SZ</span></td>
+        <td>塑料</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">82.0% ~ 95.0%</td>
+        <td class="profit">0.87亿 ~ 0.93亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>三瑞智能</strong> <span style="font-size:11px;color:#999;">301696.SZ</span></td>
+        <td>电气设备</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">51.63% ~ 89.07%</td>
+        <td class="profit">2.43亿 ~ 3.03亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>圆通速递</strong> <span style="font-size:11px;color:#999;">600233.SH</span></td>
+        <td>仓储物流</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">69.34% ~ 85.73%</td>
+        <td class="profit">31.00亿 ~ 34.00亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>圣元环保</strong> <span style="font-size:11px;color:#999;">300867.SZ</span></td>
+        <td>环境保护</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">55.0% ~ 80.0%</td>
+        <td class="profit">1.78亿 ~ 2.07亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>孚日股份</strong> <span style="font-size:11px;color:#999;">002083.SZ</span></td>
+        <td>纺织</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">50.02% ~ 70.27%</td>
+        <td class="profit">3.69亿 ~ 4.18亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>福蓉科技</strong> <span style="font-size:11px;color:#999;">603327.SH</span></td>
+        <td>元器件</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">68.94% ~ 68.94%</td>
+        <td class="profit">0.70亿 ~ 0.70亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>中炬高新</strong> <span style="font-size:11px;color:#999;">600872.SH</span></td>
+        <td>食品</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">51.84% ~ 67.41%</td>
+        <td class="profit">3.90亿 ~ 4.30亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>雷赛智能</strong> <span style="font-size:11px;color:#999;">002979.SZ</span></td>
+        <td>专用机械</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">55.0% ~ 65.0%</td>
+        <td class="profit">1.84亿 ~ 1.96亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>雷赛智能</strong> <span style="font-size:11px;color:#999;">002979.SZ</span></td>
+        <td>专用机械</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">55.0% ~ 65.0%</td>
+        <td class="profit">1.84亿 ~ 1.96亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>涛涛车业</strong> <span style="font-size:11px;color:#999;">301345.SZ</span></td>
+        <td>摩托车</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">51.95% ~ 63.64%</td>
+        <td class="profit">5.20亿 ~ 5.60亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;">稳健增长(20-50%)</span></td>
+        <td><strong>锐捷网络</strong> <span style="font-size:11px;color:#999;">301165.SZ</span></td>
+        <td>通信设备</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">32.71% ~ 65.88%</td>
+        <td class="profit">6.00亿 ~ 7.50亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>广汇能源</strong> <span style="font-size:11px;color:#999;">600256.SH</span></td>
+        <td>石油开采</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">37.1% ~ 54.68%</td>
+        <td class="profit">11.70亿 ~ 13.20亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>金力永磁</strong> <span style="font-size:11px;color:#999;">300748.SZ</span></td>
+        <td>矿物制品</td>
+        <td><span class="badge badge-red">预增</span></td>
+        <td style="color:#c0392b;font-weight:600;">31.17% ~ 50.84%</td>
+        <td class="profit">4.00亿 ~ 4.60亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>百润股份</strong> <span style="font-size:11px;color:#999;">002568.SZ</span></td>
+        <td>红黄酒</td>
+        <td><span class="badge badge-red">略增</span></td>
+        <td style="color:#c0392b;font-weight:600;">19.51% ~ 25.94%</td>
+        <td class="profit">4.65亿 ~ 4.90亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;">扭亏为盈</span></td>
+        <td><strong>富满微</strong> <span style="font-size:11px;color:#999;">300671.SZ</span></td>
+        <td>半导体</td>
+        <td><span class="badge badge-red">扭亏</span></td>
+        <td style="color:#c0392b;font-weight:600;">351.63% ~ 407.54%</td>
+        <td class="profit">0.90亿 ~ 1.10亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>宁波华翔</strong> <span style="font-size:11px;color:#999;">002048.SZ</span></td>
+        <td>汽车配件</td>
+        <td><span class="badge badge-red">扭亏</span></td>
+        <td style="color:#c0392b;font-weight:600;">263.27% ~ 284.69%</td>
+        <td class="profit">6.10亿 ~ 6.90亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#e74c3c20;color:#e74c3c;font-size:11px;"></span></td>
+        <td><strong>北纬科技</strong> <span style="font-size:11px;color:#999;">002148.SZ</span></td>
+        <td>互联网</td>
+        <td><span class="badge badge-red">扭亏</span></td>
+        <td style="color:#c0392b;font-weight:600;">227.78% ~ 259.72%</td>
+        <td class="profit">0.04亿 ~ 0.05亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#27ae6020;color:#27ae60;font-size:11px;">预亏</span></td>
+        <td><strong>*ST天箭</strong> <span style="font-size:11px;color:#999;">002977.SZ</span></td>
+        <td>通信设备</td>
+        <td><span class="badge badge-green">续亏</span></td>
+        <td style="color:#27ae60;font-weight:600;">35.99% ~ 54.75%</td>
+        <td class="profit">-0.04亿 ~ -0.03亿</td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#27ae6020;color:#27ae60;font-size:11px;"></span></td>
+        <td><strong>重庆钢铁</strong> <span style="font-size:11px;color:#999;">601005.SH</span></td>
+        <td>普钢</td>
+        <td><span class="badge badge-green">续亏</span></td>
+        <td style="color:#27ae60;font-weight:600;">-36.6412% ~ -36.6412%</td>
+        <td class="profit">-1.79亿 ~ -1.79亿</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>📋 统计汇总</h2>
+  <table class="growth-table">
+    <tr><td style="font-weight:600;">总预告数</td><td>32 条（31 只标的）</td></tr>
+    <tr><td style="font-weight:600;color:#c0392b;">预增</td><td style="color:#c0392b;">26 条</td></tr>
+    <tr><td style="font-weight:600;color:#e67e22;">扭亏为盈</td><td style="color:#e67e22;">3 条</td></tr>
+    <tr><td style="font-weight:600;color:#2980b9;">略增</td><td style="color:#2980b9;">1 条</td></tr>
+    <tr><td style="font-weight:600;color:#27ae60;">续亏</td><td style="color:#27ae60;">2 条</td></tr>
+    <tr><td style="font-weight:600;">预告日期分布</td><td>6/26: 5条 · 6/27: 1条 · 6/30: 2条 · 7/1: 7条 · 7/2: 7条 · 7/3: 10条</td></tr>
+  </table>
+</div>
+
+<div class="note">
+  <strong>⚠️ 说明：</strong><br>
+  ① 数据来自 Tushare <code>forecast</code> 接口，按公告日期(ann_date)筛选 2026-06-26 至 2026-07-03。<br>
+  ② 行业分类采用申万行业分类标准（来自 stock_basic 接口）。<br>
+  ③ 预告净利润为上市公司自行披露的预测区间，实际业绩可能存在偏差。<br>
+  ④ 增长区间按预告净利润变动幅度的中值（(下限+上限)/2）划分。<br>
+  ⑤ <strong>本报告仅供参考，不构成个人投资建议。</strong>
+</div>
+
+<div class="footer">
+  研股股 · Equity Research · 2026-07-03 18:03<br>
+  数据来源：Tushare Pro API
+</div>
+
+</div>
+</body>
+</html>
