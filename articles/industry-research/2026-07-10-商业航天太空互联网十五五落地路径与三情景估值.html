@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>商业航天·太空互联网：十五五落地路径与三情景估值</title>
+<meta name="date" content="2026-07-10">
+<meta name="description" content="商业航天·太空互联网十五五落地路径：星座组网进度、分阶段受益企业（基建三阶段模型）、悲观/中性/乐观三情景盈利-PE-价格模型（27家标的）。">
+<meta name="category" content="industry-research">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fa;color:#222;line-height:1.75}
+.container{max-width:920px;margin:0 auto;padding:18px}
+.hero{background:linear-gradient(135deg,#0a0a1a 0%,#16163a 45%,#1f2b4d 100%);color:#fff;padding:44px 30px;border-radius:16px;margin-bottom:22px}
+.hero h1{font-size:25px;font-weight:800;line-height:1.45;margin-bottom:10px}
+.hero .sub{font-size:14px;opacity:.82;margin-bottom:14px}
+.hero .tags span{display:inline-block;background:rgba(255,71,87,.18);color:#ff8a93;border:1px solid rgba(255,71,87,.4);padding:3px 11px;border-radius:20px;font-size:12px;margin:3px 4px 0 0}
+.card{background:#fff;border-radius:13px;padding:22px;margin-bottom:18px;box-shadow:0 1px 5px rgba(0,0,0,.05)}
+.card h2{font-size:19px;color:#16163a;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #f0f0f0}
+.card h3{font-size:15px;color:#444;margin:16px 0 8px}
+p{font-size:14px;margin:8px 0;color:#333}
+.num{font-family:"SF Mono",Menlo,monospace;font-weight:600;font-size:12.5px}
+.code{font-size:11px;color:#999}
+.seg{font-size:11px;color:#777}
+.pe{font-size:10.5px;color:#888}
+table{width:100%;border-collapse:collapse;font-size:11.5px;margin:10px 0}
+th{background:#f7f8fc;padding:8px 7px;text-align:center;font-weight:700;color:#555;font-size:11px}
+td{padding:7px 7px;border-bottom:1px solid #f0f0f0;vertical-align:top;text-align:center}
+td:first-child{text-align:left}
+tr:hover td{background:#fafbff}
+.callout{padding:14px 18px;border-radius:9px;margin:14px 0;font-size:13.5px}
+.co-red{background:#fff5f5;border-left:4px solid #ff4757}
+.co-blue{background:#f0f4ff;border-left:4px solid #3742fa}
+.co-yellow{background:#fffbf0;border-left:4px solid #ffa502}
+.co-green{background:#f0fff4;border-left:4px solid #2ed573}
+.three-stage{display:flex;gap:0;margin:16px 0;border-radius:12px;overflow:hidden}
+.stage{flex:1;padding:14px 12px;text-align:center;font-size:12px}
+.s1{background:#f0fff4;border-right:2px dashed #2ed573}
+.s2{background:#fffbf0;border-right:2px dashed #ffa502}
+.s3{background:#fff0f0}
+.stage .n{font-size:24px;font-weight:800;margin-bottom:3px}
+.stage .t{font-weight:700;font-size:12.5px;margin-bottom:5px}
+.stage .d{font-size:11px;color:#777;line-height:1.5}
+.chart-wrap{position:relative;height:340px;margin:14px 0}
+.chart-wrap.tall{height:420px}
+.tier-h{font-size:13px;font-weight:700;color:#16163a;background:#f7f8fc;padding:7px 10px;border-radius:6px;margin:16px 0 6px}
+ul{padding-left:20px;font-size:13.5px;line-height:1.9}
+li b{color:#16163a}
+.foot{text-align:center;font-size:11.5px;color:#999;padding:20px;border-top:1px solid #eee;margin-top:24px;line-height:1.7}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.kpi .box{flex:1;min-width:120px;background:#f7f8fc;border-radius:10px;padding:12px;text-align:center}
+.kpi .v{font-size:20px;font-weight:800;color:#ff4757}
+.kpi .l{font-size:11px;color:#777;margin-top:3px}
+@media(max-width:680px){.container{padding:10px}.hero{padding:26px 16px}.hero h1{font-size:20px}table{font-size:10px}th,td{padding:5px 4px}.three-stage{flex-direction:column}.stage{border-right:none!important;border-bottom:2px dashed #ddd}.chart-wrap{height:280px}.kpi .box{min-width:46%}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+<h1>商业航天·太空互联网：<br>十五五落地路径与分阶段受益全景</h1>
+<div class="sub">基于「十五五」规划、实际组网进度与三情景盈利-PE-价格模型的产业链研究 · 研股股 · 2026-07-10</div>
+<div class="tags">
+<span>卫星互联网=新型基建"三张网"之一</span>
+<span>千帆在轨238颗</span>
+<span>GW规划1.3万颗</span>
+<span>鸿鹄-3规划1万颗</span>
+<span>朱雀3/天龙3可回收2026-27</span>
+</div>
+</div>
+
+<!-- 执行摘要 -->
+<div class="card">
+<h2>一、执行摘要</h2>
+<div class="kpi">
+<div class="box"><div class="v">三张网</div><div class="l">十五五新型基建明确纳入卫星互联网</div></div>
+<div class="box"><div class="v">≈2.8万颗</div><div class="l">千帆+GW+鸿鹄远期规划(完成率&lt;1.5%)</div></div>
+<div class="box"><div class="v">238颗</div><div class="l">千帆在轨(2026/7)，发射间隔缩至3-5天</div></div>
+<div class="box"><div class="v">7年/10%</div><div class="l">ITU履约硬约束→倒逼组网节奏</div></div>
+</div>
+<p><b>核心判断：</b>太空互联网已从"概念"进入"任务目标硬约束"阶段——十五五把卫星互联网列为新型基础设施"三张网"之一，叠加 ITU 频轨履约的 7 年内完成 10% 部署红线，未来 3-5 年是最密集的组网基建期。受益顺序严格遵循<b>「基建三阶段模型」</b>：先卫星制造+火箭发射（阶段一），再地面设备/终端（阶段二），最后运营服务（阶段三）。</p>
+<div class="callout co-red"><b>最关键发现（基于27家标的估值模型）：</b>当前股价已普遍 price-in <b>2028年以后的部署预期</b>。以 2027E 盈利测算，仅 7 只标的在「中性情景」下仍具正上行空间（宝钛、中天火箭、国光电气、盟升电子、震有科技、上海瀚讯、雷电微力），其余多数中性情景已隐含下行——这意味着板块当前是<b>「透支2030、需验证2027」</b>的结构，安全边际集中在少数低估值锚与扭亏弹性标的。</div>
+</div>
+
+<!-- 十五五内容 -->
+<div class="card">
+<h2>二、十五五规划里"太空互联网"到底写了什么</h2>
+<p>2026年3月《十五五规划纲要草案》提出"适度超前建设新型基础设施"，对<b>全国一体化算力网、卫星互联网、信息通信网络"三张网"</b>作出明确安排（来源：中国政府网 2026-03-06）。2026年政府工作报告首次将"卫星互联网"单列提出，商业航天被纳入<b>国家战略性新兴支柱产业</b>。</p>
+<h3>落到"发射那么多卫星"的硬约束</h3>
+<table>
+<tr><th>主体</th><th>规划规模</th><th>节奏/硬约束</th><th>主导方</th></tr>
+<tr><td><b>中国星网(GW)</b></td><td>12,992颗</td><td>5年内完成约10%(~1,300颗)；ITU履约</td><td>国资委/央企</td></tr>
+<tr><td><b>千帆星座(G60)</b></td><td>15,000颗(三期)</td><td>一期~1,500颗；2030年一期组网</td><td>上海垣信卫星</td></tr>
+<tr><td><b>鸿鹄-3</b></td><td>10,000颗(160轨道面)</td><td>2024/5向ITU预发；民营主导首个万颗级</td><td>蓝箭鸿擎科技</td></tr>
+<tr><td><b>频轨总申请</b></td><td>超20.3万颗(2026/1披露)</td><td>抢占轨位资源，先占先得</td><td>国家统筹</td></tr>
+</table>
+<div class="callout co-yellow"><b>为什么"任务目标是摆在那里的"：</b>ITU 规则要求申报星座在 7 年内完成 10% 部署、9 年完成 50%，否则频段/轨位作废。这意味着 GW 的 ~1,300 颗不是"愿景"而是"到期必须交卷"的 KPI——这是驱动产业链订单的最硬约束，也是与以往主题炒作最根本的区别。</div>
+</div>
+
+<!-- 实际进度 -->
+<div class="card">
+<h2>三、实际项目落地进度（截至 2026-07）</h2>
+<div class="chart-wrap"><canvas id="constChart"></canvas></div>
+<ul>
+<li><b>千帆星座：</b>2026/7/1 长征六号一箭18星、7/4 长征六号改再送18星，在轨总数突破<b>238颗</b>；采用"一箭18星"标准化模式，发射间隔已缩短至 <b>3-5天</b>（来源：凤凰网/航天媒体 2026-07）。</li>
+<li><b>中国星网(GW)：</b>2026/2 在轨超150颗，2026年计划发射 300-500 颗，年内完成骨干星座初步覆盖（来源：雪球/券商整理 2026-02）。</li>
+<li><b>鸿鹄-3：</b>蓝箭鸿擎主导，1万颗规划，目前处于早期组网准备，依赖朱雀三号运力。</li>
+<li><b>火箭端（最关键瓶颈）：</b>朱雀三号（蓝箭，液氧甲烷可复用）2026年首飞+二级回收验证；天龙三号（天兵）一箭36星能力；力箭系列（中科宇航）逐步放量。民营火箭已占发射份额约25%，但"星多箭少"仍是核心矛盾。</li>
+</ul>
+<div class="callout co-blue"><b>进度温度计：</b>5个先行/同步指标中4个亮红灯（发射间隔缩短、民营IPO推进、海外签约30+国、回收验证完成、标准1.0发布），行业处于高景气加速期；唯一绿灯风险在<b>火箭运力供给</b>。</div>
+<table>
+<tr><th>星座/主体</th><th>主导方</th><th>在轨实际(颗)</th><th>远期规划(颗)</th><th>完成率(2026/7)</th><th>进度判断</th></tr>
+<tr><td><b>千帆(G60)</b></td><td>上海垣信卫星</td><td>238</td><td>15,000</td><td>1.6%</td><td>一期组网加速，"一箭18星"，发射间隔缩至3-5天</td></tr>
+<tr><td><b>中国星网(GW)</b></td><td>国资委/央企</td><td>150+</td><td>12,992</td><td>1.2%</td><td>2026计划发射300-500颗，年内骨干初步覆盖</td></tr>
+<tr><td><b>鸿鹄-3</b></td><td>蓝箭鸿擎科技</td><td>~0</td><td>10,000</td><td>&lt;0.1%</td><td>早期组网准备，依赖朱雀三号运力</td></tr>
+</table>
+</div>
+
+<!-- 三阶段模型 -->
+<div class="card">
+<h2>四、落地路径 → 三阶段受益模型</h2>
+<p>参照「基建三阶段模型」：基建的终极价值不在它自己，而在它消灭了什么成本、打破了什么瓶颈。太空互联网基建→消灭"全球无死角覆盖"成本→释放海洋/航空/偏远IoT需求。投资上，<b>阶段一是确定性高但看订单，阶段三空间最大但要等，最佳入场点在阶段二末期</b>。</p>
+<div class="three-stage">
+<div class="stage s1"><div class="n" style="color:#2ed573">①</div><div class="t">组网基建投入期</div><div class="d">2026-2028<br>卫星总装+星载载荷+火箭发射<br>订单最确定、收入最早兑现</div></div>
+<div class="stage s2"><div class="n" style="color:#ffa502">②</div><div class="t">瓶颈突破/地面放量</div><div class="d">2028-2030<br>信关站/用户终端/用户设备<br>滞后组网1-2年、弹性大</div></div>
+<div class="stage s3"><div class="n" style="color:#ff4757">③</div><div class="t">需求自发/运营服务</div><div class="d">2030+<br>运营商/行业应用/出海<br>空间最大、最滞后</div></div>
+</div>
+<table>
+<tr><th>阶段</th><th>受益环节</th><th>代表企业</th><th>受益确定性</th><th>收入兑现时点</th></tr>
+<tr><td><b style="color:#2ed573">阶段一</b></td><td>卫星总装 / 星载计算机 / 相控阵T/R / FPGA / 星敏感器 / 星间激光 / 火箭发射配套</td><td>中国卫星、航天电子、铖昌科技、臻镭科技、国博电子、复旦微电、天银机电、光迅科技、中天火箭、派克新材、铂力特</td><td>★★★★★</td><td>2026-2028</td></tr>
+<tr><td><b style="color:#ffa502">阶段二</b></td><td>地面信关站 / 卫星通信终端 / 核心网 / 手机直连天线</td><td>上海瀚讯、盟升电子、震有科技、信维通信、海格通信</td><td>★★★★</td><td>2028-2031</td></tr>
+<tr><td><b style="color:#ff4757">阶段三</b></td><td>卫星通信运营 / 行业应用 / 出海服务</td><td>中国卫通（+民营运营主体）</td><td>★★★</td><td>2030+</td></tr>
+<tr><td>贯穿</td><td>上游稀缺材料（钛/高温合金/铌/碳纤维/铬铜）</td><td>宝钛、钢研高纳、西部材料、中复神鹰、斯瑞新材</td><td>★★★★★</td><td>2026起持续</td></tr>
+</table>
+<div class="callout co-red"><b>PM七问之一——什么被错误定价？</b>市场把"阶段三运营"的远期空间提前贴现到了"阶段一制造"的市值里。真正的预期差在于：<b>阶段一哪些企业能真正拿到批量订单（市占壁垒）</b>，以及<b>阶段二扭亏弹性标的（当前亏损、2028后放量）</b>——后者是被"当前亏损"掩盖的预期差。</div>
+</div>
+
+<!-- 核心受益企业 -->
+<div class="card">
+<h2>五、核心受益企业分环节逻辑</h2>
+<div class="tier-h">阶段一 · 卫星总装与星载核心（最直接受益组网）</div>
+<ul>
+<li><b>中国卫星(600118)：</b>小卫星总装国家队，但2025净利仅2405万（转型年，传统订单退坡+批量订单未确认）。市值已price 2028E组网放量，属"期权型"标的。</li>
+<li><b>航天电子(600879)：</b>星载计算机市占90%+，确定性最高，PE(TTM)约310x反映远期定价。</li>
+<li><b>铖昌科技(001270)/臻镭科技(688270)/国博电子(688375)：</b>相控阵T/R芯片与射频前端，单星用量随阵列规模上升，是"量价齐升"环节。</li>
+<li><b>复旦微电(688385)/天银机电(300342)/光迅科技(002281)：</b>抗辐射FPGA、星敏感器、星间激光通信（市占50%+），技术壁垒极高。</li>
+</ul>
+<div class="tier-h">阶段一 · 上游稀缺材料（订单确定性高、贯穿全程）</div>
+<ul>
+<li><b>宝钛股份(600456)：</b>钛合金PE仅28-35x，是板块内少数"便宜且确定"的锚；订单排至2027年。</li>
+<li><b>钢研高纳(300034)/西部材料(002149)/中复神鹰(688295)/斯瑞新材(688102)：</b>高温合金、铌合金（全球仅3家）、T1000碳纤维、铬铜合金，均为"稀缺产能+高市占"逻辑。</li>
+</ul>
+<div class="tier-h">阶段一 · 火箭发射配套（瓶颈环节，弹性最大）</div>
+<ul>
+<li><b>中天火箭(002267)/派克新材(605123)/铂力特(688333)/超捷股份(301005)：</b>发射配套、航天锻件、金属3D打印、紧固件。中天火箭PE~12x为全板块最低（异常便宜，需核实年报口径）。</li>
+</ul>
+<div class="tier-h">阶段二 · 地面设备与终端（滞后1-2年、扭亏弹性）</div>
+<ul>
+<li><b>上海瀚讯(300762)/盟升电子(688311)/震有科技(688418)：</b>信关站、卫星通信终端、核心网；2025均亏损，但千帆组网完成后地面段放量将驱动扭亏，是估值模型的"乐观弹性"来源。</li>
+<li><b>信维通信(300136)/海格通信(002465)：</b>终端天线、通信导航，兼受益手机直连与SpaceX供应链。</li>
+</ul>
+<div class="tier-h">阶段三 · 运营（最滞后、空间最大）</div>
+<ul>
+<li><b>中国卫通(601698)：</b>卫星通信运营国家队，当前PE~327x，受益在组网完成后的服务变现与出海。</li>
+</ul>
+</div>
+
+<!-- 情景模型 -->
+<div class="card">
+<h2>六、三情景盈利-PE-价格对应模型（核心）</h2>
+<h3>方法论与透明假设</h3>
+<p>模型以 <b>2027E净利润</b> 为枢纽：<code>目标价 = 2027E EPS × 情景合理PE</code>。2027E净利润 = 基准净利润 × 部署节奏乘数；基准取2025实际（亏损企业取扭亏假设，已在备注标注）。部署节奏三情景对应的 2026-2028 累计发射量假设如下：</p>
+<div class="chart-wrap" style="height:280px"><canvas id="deployChart"></canvas></div>
+<table>
+<tr><th>情景</th><th>2026-2028累计发射</th><th>关键假设</th><th>对应PE取向</th></tr>
+<tr><td><b style="color:#2ed573">悲观</b></td><td>~1,800颗</td><td>火箭运力瓶颈未解、1-2次重大失利、财政预算约束、手机直连推迟至2030+</td><td>杀估值（压缩至下限）</td></tr>
+<tr><td><b style="color:#ffa502">中性</b></td><td>~3,500颗</td><td>千帆按一期节奏、GW五年10%、可回收火箭2027小批量</td><td>维持当前成长溢价</td></tr>
+<tr><td><b style="color:#ff4757">乐观</b></td><td>~7,000颗</td><td>双星座提速、朱雀3/天龙3 2027成熟、单星成本年降20%+、手机直连2028商用</td><td>重估至成长上限</td></tr>
+</table>
+<p style="font-size:12px;color:#888">注：各标的乘数与情景PE按所处环节（阶段一/二/三、稀缺材料/地面终端）差异化设定，完整假设见数据文件 space_scenarios.json。亏损企业基准为扭亏假设，非历史事实。</p>
+
+<h3>27家标的情景测算总表（价格单位：元；np27=2027E净利润/亿元）</h3>
+<div style="overflow-x:auto">
+<table>
+<tr><th>标的/环节</th><th>现价</th><th>市值(亿)</th><th>PE(TTM)</th><th>悲观<br>np27/PE</th><th>中性<br>np27/PE</th><th>乐观<br>np27/PE</th><th>悲观目标价<br>(上行)</th><th>中性目标价<br>(上行)</th><th>乐观目标价<br>(上行)</th></tr>
+<tr>
+<td><b>国光电气</b><br><span class="code">688776.SH</span><br><span class="seg">微波/组件</span></td>
+<td class="num">61.65</td>
+<td class="num">67</td>
+<td class="num">—</td>
+<td class="num">0.5<br><span class="pe">PE30</span></td>
+<td class="num">2.5<br><span class="pe">PE50</span></td>
+<td class="num">5.0<br><span class="pe">PE70</span></td>
+<td class="num" style="color:#2ed573">13.8<br>(-78%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">115.3<br>(+87%)</td>
+<td class="num" style="color:#ff4757">322.9<br>(+424%)</td>
+</tr><tr>
+<td><b>雷电微力</b><br><span class="code">301050.SZ</span><br><span class="seg">毫米波微系统</span></td>
+<td class="num">33.87</td>
+<td class="num">84</td>
+<td class="num">205x</td>
+<td class="num">2.1<br><span class="pe">PE30</span></td>
+<td class="num">3.3<br><span class="pe">PE45</span></td>
+<td class="num">4.9<br><span class="pe">PE60</span></td>
+<td class="num" style="color:#2ed573">25.8<br>(-24%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">59.6<br>(+76%)</td>
+<td class="num" style="color:#ff4757">119.2<br>(+252%)</td>
+</tr><tr>
+<td><b>中天火箭</b><br><span class="code">002267.SZ</span><br><span class="seg">发射配套/探空</span></td>
+<td class="num">6.59</td>
+<td class="num">73</td>
+<td class="num">15x</td>
+<td class="num">7.0<br><span class="pe">PE11</span></td>
+<td class="num">8.5<br><span class="pe">PE14</span></td>
+<td class="num">11.5<br><span class="pe">PE18</span></td>
+<td class="num" style="color:#ff4757">6.9<br>(+5%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">10.7<br>(+62%)</td>
+<td class="num" style="color:#ff4757">18.7<br>(+183%)</td>
+</tr><tr>
+<td><b>派克新材</b><br><span class="code">605123.SH</span><br><span class="seg">航天锻件</span></td>
+<td class="num">99.2</td>
+<td class="num">120</td>
+<td class="num">46x</td>
+<td class="num">3.0<br><span class="pe">PE20</span></td>
+<td class="num">4.5<br><span class="pe">PE30</span></td>
+<td class="num">6.5<br><span class="pe">PE40</span></td>
+<td class="num" style="color:#2ed573">49.9<br>(-50%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">112.3<br>(+13%)</td>
+<td class="num" style="color:#ff4757">216.3<br>(+118%)</td>
+</tr><tr>
+<td><b>臻镭科技</b><br><span class="code">688270.SH</span><br><span class="seg">射频收发/电源</span></td>
+<td class="num">82.96</td>
+<td class="num">248</td>
+<td class="num">166x</td>
+<td class="num">1.9<br><span class="pe">PE45</span></td>
+<td class="num">3.1<br><span class="pe">PE75</span></td>
+<td class="num">4.7<br><span class="pe">PE95</span></td>
+<td class="num" style="color:#2ed573">28.0<br>(-66%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">76.6<br>(-8%)</td>
+<td class="num" style="color:#ff4757">147.7<br>(+78%)</td>
+</tr><tr>
+<td><b>国博电子</b><br><span class="code">688375.SH</span><br><span class="seg">相控阵T/R</span></td>
+<td class="num">102.06</td>
+<td class="num">608</td>
+<td class="num">135x</td>
+<td class="num">6.6<br><span class="pe">PE35</span></td>
+<td class="num">10.2<br><span class="pe">PE50</span></td>
+<td class="num">15.2<br><span class="pe">PE65</span></td>
+<td class="num" style="color:#2ed573">38.8<br>(-62%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">85.2<br>(-16%)</td>
+<td class="num" style="color:#ff4757">166.2<br>(+63%)</td>
+</tr><tr>
+<td><b>铂力特</b><br><span class="code">688333.SH</span><br><span class="seg">金属3D打印</span></td>
+<td class="num">107.08</td>
+<td class="num">294</td>
+<td class="num">125x</td>
+<td class="num">2.6<br><span class="pe">PE40</span></td>
+<td class="num">4.1<br><span class="pe">PE60</span></td>
+<td class="num">6.1<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">38.7<br>(-64%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">89.2<br>(-17%)</td>
+<td class="num" style="color:#ff4757">178.5<br>(+67%)</td>
+</tr><tr>
+<td><b>铖昌科技</b><br><span class="code">001270.SZ</span><br><span class="seg">相控阵T/R芯片</span></td>
+<td class="num">159.0</td>
+<td class="num">328</td>
+<td class="num">248x</td>
+<td class="num">1.6<br><span class="pe">PE50</span></td>
+<td class="num">2.9<br><span class="pe">PE80</span></td>
+<td class="num">4.7<br><span class="pe">PE100</span></td>
+<td class="num" style="color:#2ed573">39.7<br>(-75%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">113.5<br>(-29%)</td>
+<td class="num" style="color:#ff4757">227.1<br>(+43%)</td>
+</tr><tr>
+<td><b>航天电器</b><br><span class="code">002025.SZ</span><br><span class="seg">连接器/继电器</span></td>
+<td class="num">80.2</td>
+<td class="num">364</td>
+<td class="num">193x</td>
+<td class="num">2.8<br><span class="pe">PE30</span></td>
+<td class="num">4.2<br><span class="pe">PE45</span></td>
+<td class="num">6.1<br><span class="pe">PE60</span></td>
+<td class="num" style="color:#2ed573">18.6<br>(-77%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">41.9<br>(-48%)</td>
+<td class="num" style="color:#ff4757">80.8<br>(+1%)</td>
+</tr><tr>
+<td><b>中国卫星</b><br><span class="code">600118.SH</span><br><span class="seg">卫星总装</span></td>
+<td class="num">85.65</td>
+<td class="num">1013</td>
+<td class="num">5966x</td>
+<td class="num">3.9<br><span class="pe">PE40</span></td>
+<td class="num">7.5<br><span class="pe">PE70</span></td>
+<td class="num">12.0<br><span class="pe">PE90</span></td>
+<td class="num" style="color:#2ed573">13.2<br>(-85%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">44.4<br>(-48%)</td>
+<td class="num" style="color:#ff4757">91.3<br>(+7%)</td>
+</tr><tr>
+<td><b>航天电子</b><br><span class="code">600879.SH</span><br><span class="seg">星载计算机</span></td>
+<td class="num">21.45</td>
+<td class="num">708</td>
+<td class="num">310x</td>
+<td class="num">3.3<br><span class="pe">PE35</span></td>
+<td class="num">5.5<br><span class="pe">PE55</span></td>
+<td class="num">8.8<br><span class="pe">PE70</span></td>
+<td class="num" style="color:#2ed573">3.5<br>(-84%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">9.2<br>(-57%)</td>
+<td class="num" style="color:#2ed573">18.6<br>(-13%)</td>
+</tr><tr>
+<td><b>复旦微电</b><br><span class="code">688385.SH</span><br><span class="seg">抗辐射FPGA</span></td>
+<td class="num">70.14</td>
+<td class="num">578</td>
+<td class="num">236x</td>
+<td class="num">2.6<br><span class="pe">PE40</span></td>
+<td class="num">4.0<br><span class="pe">PE60</span></td>
+<td class="num">6.1<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">12.8<br>(-82%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">29.4<br>(-58%)</td>
+<td class="num" style="color:#2ed573">58.9<br>(-16%)</td>
+</tr><tr>
+<td><b>光迅科技</b><br><span class="code">002281.SZ</span><br><span class="seg">星间激光通信</span></td>
+<td class="num">242.43</td>
+<td class="num">2006</td>
+<td class="num">194x</td>
+<td class="num">12.1<br><span class="pe">PE30</span></td>
+<td class="num">18.6<br><span class="pe">PE45</span></td>
+<td class="num">28.0<br><span class="pe">PE60</span></td>
+<td class="num" style="color:#2ed573">43.9<br>(-82%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">101.4<br>(-58%)</td>
+<td class="num" style="color:#2ed573">202.7<br>(-16%)</td>
+</tr><tr>
+<td><b>航天环宇</b><br><span class="code">688523.SH</span><br><span class="seg">卫星结构件</span></td>
+<td class="num">53.13</td>
+<td class="num">216</td>
+<td class="num">552x</td>
+<td class="num">0.7<br><span class="pe">PE50</span></td>
+<td class="num">1.2<br><span class="pe">PE75</span></td>
+<td class="num">1.9<br><span class="pe">PE100</span></td>
+<td class="num" style="color:#2ed573">8.8<br>(-83%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">22.1<br>(-58%)</td>
+<td class="num" style="color:#2ed573">47.2<br>(-11%)</td>
+</tr><tr>
+<td><b>天银机电</b><br><span class="code">300342.SZ</span><br><span class="seg">星敏感器</span></td>
+<td class="num">48.25</td>
+<td class="num">205</td>
+<td class="num">1432x</td>
+<td class="num">0.3<br><span class="pe">PE50</span></td>
+<td class="num">0.6<br><span class="pe">PE80</span></td>
+<td class="num">1.2<br><span class="pe">PE100</span></td>
+<td class="num" style="color:#2ed573">3.5<br>(-93%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">11.3<br>(-77%)</td>
+<td class="num" style="color:#2ed573">28.2<br>(-42%)</td>
+</tr><tr>
+<td><b>宝钛股份</b><br><span class="code">600456.SH</span><br><span class="seg">钛合金</span></td>
+<td class="num">27.8</td>
+<td class="num">133</td>
+<td class="num">35x</td>
+<td class="num">5.4<br><span class="pe">PE20</span></td>
+<td class="num">7.9<br><span class="pe">PE28</span></td>
+<td class="num">10.8<br><span class="pe">PE35</span></td>
+<td class="num" style="color:#2ed573">22.7<br>(-18%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">46.2<br>(+66%)</td>
+<td class="num" style="color:#ff4757">79.5<br>(+186%)</td>
+</tr><tr>
+<td><b>钢研高纳</b><br><span class="code">300034.SZ</span><br><span class="seg">高温合金</span></td>
+<td class="num">17.4</td>
+<td class="num">139</td>
+<td class="num">139x</td>
+<td class="num">2.4<br><span class="pe">PE25</span></td>
+<td class="num">3.4<br><span class="pe">PE35</span></td>
+<td class="num">4.8<br><span class="pe">PE45</span></td>
+<td class="num" style="color:#2ed573">7.6<br>(-56%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">15.0<br>(-14%)</td>
+<td class="num" style="color:#ff4757">27.2<br>(+56%)</td>
+</tr><tr>
+<td><b>斯瑞新材</b><br><span class="code">688102.SH</span><br><span class="seg">铬铜合金</span></td>
+<td class="num">47.87</td>
+<td class="num">374</td>
+<td class="num">236x</td>
+<td class="num">2.0<br><span class="pe">PE40</span></td>
+<td class="num">3.1<br><span class="pe">PE60</span></td>
+<td class="num">4.6<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">10.2<br>(-79%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">23.5<br>(-51%)</td>
+<td class="num" style="color:#2ed573">47.0<br>(-2%)</td>
+</tr><tr>
+<td><b>西部材料</b><br><span class="code">002149.SZ</span><br><span class="seg">铌合金</span></td>
+<td class="num">51.23</td>
+<td class="num">250</td>
+<td class="num">311x</td>
+<td class="num">1.3<br><span class="pe">PE40</span></td>
+<td class="num">2.0<br><span class="pe">PE60</span></td>
+<td class="num">2.9<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">10.8<br>(-79%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">24.3<br>(-52%)</td>
+<td class="num" style="color:#2ed573">46.9<br>(-8%)</td>
+</tr><tr>
+<td><b>中复神鹰</b><br><span class="code">688295.SH</span><br><span class="seg">碳纤维</span></td>
+<td class="num">55.68</td>
+<td class="num">501</td>
+<td class="num">292x</td>
+<td class="num">1.2<br><span class="pe">PE40</span></td>
+<td class="num">1.9<br><span class="pe">PE60</span></td>
+<td class="num">2.9<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">5.5<br>(-90%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">12.8<br>(-77%)</td>
+<td class="num" style="color:#2ed573">25.6<br>(-54%)</td>
+</tr><tr>
+<td><b>超捷股份</b><br><span class="code">301005.SZ</span><br><span class="seg">紧固件</span></td>
+<td class="num">110.8</td>
+<td class="num">208</td>
+<td class="num">1435x</td>
+<td class="num">0.2<br><span class="pe">PE50</span></td>
+<td class="num">0.4<br><span class="pe">PE80</span></td>
+<td class="num">0.8<br><span class="pe">PE100</span></td>
+<td class="num" style="color:#2ed573">5.6<br>(-95%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">17.9<br>(-84%)</td>
+<td class="num" style="color:#2ed573">44.7<br>(-60%)</td>
+</tr><tr>
+<td><b>盟升电子</b><br><span class="code">688311.SH</span><br><span class="seg">卫星通信终端</span></td>
+<td class="num">26.95</td>
+<td class="num">47</td>
+<td class="num">—</td>
+<td class="num">0.6<br><span class="pe">PE35</span></td>
+<td class="num">3.0<br><span class="pe">PE60</span></td>
+<td class="num">6.0<br><span class="pe">PE85</span></td>
+<td class="num" style="color:#2ed573">12.0<br>(-56%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">102.8<br>(+281%)</td>
+<td class="num" style="color:#ff4757">291.2<br>(+981%)</td>
+</tr><tr>
+<td><b>震有科技</b><br><span class="code">688418.SH</span><br><span class="seg">核心网</span></td>
+<td class="num">49.34</td>
+<td class="num">95</td>
+<td class="num">—</td>
+<td class="num">0.6<br><span class="pe">PE30</span></td>
+<td class="num">3.8<br><span class="pe">PE55</span></td>
+<td class="num">7.5<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">9.3<br>(-81%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">107.1<br>(+117%)</td>
+<td class="num" style="color:#ff4757">311.6<br>(+532%)</td>
+</tr><tr>
+<td><b>上海瀚讯</b><br><span class="code">300762.SZ</span><br><span class="seg">信关站/专网</span></td>
+<td class="num">45.72</td>
+<td class="num">287</td>
+<td class="num">—</td>
+<td class="num">1.5<br><span class="pe">PE40</span></td>
+<td class="num">7.5<br><span class="pe">PE70</span></td>
+<td class="num">15.0<br><span class="pe">PE100</span></td>
+<td class="num" style="color:#2ed573">9.6<br>(-79%)</td>
+<td class="num" style="color:#ff4757;font-weight:700">83.6<br>(+83%)</td>
+<td class="num" style="color:#ff4757">238.9<br>(+422%)</td>
+</tr><tr>
+<td><b>海格通信</b><br><span class="code">002465.SZ</span><br><span class="seg">通信导航</span></td>
+<td class="num">12.72</td>
+<td class="num">316</td>
+<td class="num">—</td>
+<td class="num">1.5<br><span class="pe">PE25</span></td>
+<td class="num">6.0<br><span class="pe">PE40</span></td>
+<td class="num">12.0<br><span class="pe">PE55</span></td>
+<td class="num" style="color:#2ed573">1.5<br>(-88%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">9.7<br>(-24%)</td>
+<td class="num" style="color:#ff4757">26.6<br>(+109%)</td>
+</tr><tr>
+<td><b>信维通信</b><br><span class="code">300136.SZ</span><br><span class="seg">终端天线</span></td>
+<td class="num">112.16</td>
+<td class="num">1085</td>
+<td class="num">147x</td>
+<td class="num">8.5<br><span class="pe">PE25</span></td>
+<td class="num">12.7<br><span class="pe">PE35</span></td>
+<td class="num">17.6<br><span class="pe">PE45</span></td>
+<td class="num" style="color:#2ed573">21.9<br>(-80%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">46.0<br>(-59%)</td>
+<td class="num" style="color:#2ed573">82.1<br>(-27%)</td>
+</tr><tr>
+<td><b>中国卫通</b><br><span class="code">601698.SH</span><br><span class="seg">卫星通信运营</span></td>
+<td class="num">30.8</td>
+<td class="num">1301</td>
+<td class="num">327x</td>
+<td class="num">5.8<br><span class="pe">PE40</span></td>
+<td class="num">8.0<br><span class="pe">PE60</span></td>
+<td class="num">11.7<br><span class="pe">PE80</span></td>
+<td class="num" style="color:#2ed573">5.5<br>(-82%)</td>
+<td class="num" style="color:#2ed573;font-weight:700">11.3<br>(-63%)</td>
+<td class="num" style="color:#2ed573">22.1<br>(-28%)</td>
+</tr>
+</table>
+</div>
+
+<div class="callout co-red"><b>模型核心结论：</b>以2027E计，<b>仅7只标的在中性情景下仍具正上行空间</b>（宝钛+66%、中天火箭+62%、国光电气+87%、盟升电子+281%、震有科技+117%、上海瀚讯+83%、雷电微力+76%），其余多数中性已隐含下行——即当前价格已透支2028E+部署。这正是"透支2030、需验证2027"的结构性特征。</div>
+
+<h3>估值-空间分布（气泡：X=当前PE_TTM，Y=中性2027E上行空间%，大小=市值）</h3>
+<div class="chart-wrap tall"><canvas id="bubbleChart"></canvas></div>
+<div class="callout co-blue"><b>怎么读这张图：</b>右下角（低PE、正空间）= 价值锚（宝钛、中天火箭）；左上方高PE且负空间=已被远期预期填满的成长旗（需underwrite 2028E才能下注）；左侧亏损/扭亏标的（无PE）落在最左，其空间完全由"扭亏+放量"假设驱动，弹性最大也最不确定。</div>
+</div>
+
+<!-- 多空 -->
+<div class="card">
+<h2>七、多空辩论</h2>
+<div class="callout co-red"><b>多头（为什么是现在）：</b>①十五五硬任务+ITU履约红线，订单是"交卷"不是"愿景"；②千帆发射间隔缩至3-5天，组网进入指数期；③朱雀3/天龙3可回收2026-27验证，单星/单次成本将阶跃下降；④SpaceX 1.77万亿IPO提供全球定价锚；⑤手机直连牌照已发，商业化临近。</div>
+<div class="callout co-green"><b>空头（为什么可能证伪）：</b>①"星多箭少"，火箭可靠性仍是最大瓶颈（天龙3首飞曾失利）；②2025多家标的亏损，2027能否扭亏存疑；③当前市值普遍price 2028E+，任何发射延期/预算削减都会杀估值；④部分公司仅为"主题性"沾边，无实际订单；⑤地缘政治/出口管制风险。</div>
+</div>
+
+<!-- 风险 -->
+<div class="card">
+<h2>八、风险提示</h2>
+<ul>
+<li><b>运力瓶颈：</b>大运力液体火箭型号有限，"星多箭少"短期难解，发射失利会直接冲击组网节奏。</li>
+<li><b>估值透支：</b>多数标的PE(TTM) 100-600x或亏损，已反映2028E+乐观预期，安全边际薄。</li>
+<li><b>预算与政策：</b>十五五具体资本开支尚未完全落地，星座建设节奏可能随财政调整。</li>
+<li><b>扭亏不确定性：</b>阶段二地面端标的2025亏损，2027-28能否如期放量扭亏需逐季验证。</li>
+<li><b>地缘政治：</b>供应链受出口管制/制裁潜在影响。</li>
+<li><b>数据口径：</b>中天火箭营收/利润显著偏离历史量级，其低PE属异常，需核实年报口径后再下注。</li>
+</ul>
+</div>
+
+<!-- 结论 -->
+<div class="card">
+<h2>九、投资结论与行动分类</h2>
+<table>
+<tr><th>策略类型</th><th>组合</th><th>行动</th><th>逻辑</th></tr>
+<tr><td><b>价值锚（现在可配）</b></td><td>宝钛股份、中天火箭（核实后）、钢研高纳</td><td>加码/持有</td><td>低PE+订单确定+稀缺产能，2027E中性已现正空间</td></tr>
+<tr><td><b>扭亏弹性（阶段二）</b></td><td>上海瀚讯、盟升电子、震有科技、国光电气</td><td>观察名单→分批</td><td>当前亏损掩盖2028后放量期权，乐观情景弹性300%+
+但需财报验证扭亏拐点</td></tr>
+<tr><td><b>成长旗（underwrite 2028E）</b></td><td>中国卫星、铖昌、臻镭、国博、复旦微电、光迅</td><td>持有/等待证据</td><td>壁垒高但价格已透支2030，等回调或2027订单兑现</td></tr>
+<tr><td><b>运营长线</b></td><td>中国卫通</td><td>观察名单</td><td>阶段三最滞后，空间最大但需组网完成</td></tr>
+</table>
+<div class="callout co-yellow"><b>一句话结论：</b>太空互联网是十五五极少数"任务目标硬约束+全球定价锚+技术拐点"三者共振的赛道。但当前价格是<b>2030年的价格</b>，2027年的答卷决定它是"黄金坑"还是"预期顶"。安全边际在两端——低估值材料锚与扭亏弹性标的，中间的高PE成长旗需等回调或订单验证。</div>
+</div>
+
+<div class="foot">
+<p>数据来源：Tushare（价格/财务截至2026-07-01收盘）、中国政府网、十五五规划纲要草案、券商研报（东吴/华西/银河等）、航天媒体公开报道。情景模型为分析师假设，非事实预测。</p>
+<p>本报告仅供参考，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+<p style="margin-top:8px">研股股 · 商业航天太空互联网十五五落地与情景估值 · 2026-07-10</p>
+</div>
+
+</div>
+<script>
+const RED='#ff4757',GREEN='#2ed573',BLUE='#3742fa',ORANGE='#ffa502',GRAY='#a4b0be',PURPLE='#7d5fff';
+if(typeof Chart==='undefined'){
+  document.querySelectorAll('.chart-wrap').forEach(w=>{w.innerHTML='<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#999;font-size:13px;text-align:center">图表组件未加载<br>（Chart.js CDN 被拦截，请联网后刷新）<br>数据详见各节表格</div>';});
+} else {
+// Chart 1: constellation progress
+const constData={labels:["千帆(G60)","中国星网(GW)","鸿鹄-3"],orbited:[238,150,null],plan:[15000,12992,10000]};
+new Chart(document.getElementById('constChart'),{type:'bar',data:{labels:constData.labels,datasets:[
+{label:'在轨实际(颗)',data:constData.orbited,backgroundColor:RED,borderRadius:4},
+{label:'远期规划(颗)',data:constData.plan,backgroundColor:GRAY,borderRadius:4}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},subtitle:{display:true,text:'完成率均<1.5%：未来3-5年是最密集组网期',font:{size:11},color:'#888'}},scales:{y:{type:'logarithmic',title:{display:true,text:'颗(对数轴)'},grid:{color:'#f0f0f0'}}}}});
+
+// Chart 2: deployment scenarios
+const dep={labels:["悲观","中性","乐观"],cum:[1800,3500,7000]};
+new Chart(document.getElementById('deployChart'),{type:'bar',data:{labels:dep.labels,datasets:[
+{label:'2026-2028累计发射(颗)',data:dep.cum,backgroundColor:[GREEN,ORANGE,RED],borderRadius:5}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},subtitle:{display:true,text:'部署节奏决定产业链盈利兑现速度',font:{size:11},color:'#888'}},scales:{y:{beginAtZero:true,title:{display:true,text:'颗'},grid:{color:'#f0f0f0'}}}}});
+
+// Chart 3: bubble PE vs upside
+const bub=[{"name": "国光电气", "pe": 0, "up": 87.1, "mv": 66.8, "tier": "中游制造"}, {"name": "雷电微力", "pe": 204.6371, "up": 76.0, "mv": 83.9, "tier": "中游制造"}, {"name": "中天火箭", "pe": 14.7676, "up": 62.3, "mv": 73.3, "tier": "中游制造"}, {"name": "派克新材", "pe": 45.9781, "up": 13.2, "mv": 120.2, "tier": "中游制造"}, {"name": "臻镭科技", "pe": 165.541, "up": -7.7, "mv": 248.5, "tier": "中游制造"}, {"name": "国博电子", "pe": 134.921, "up": -16.5, "mv": 608.3, "tier": "中游制造"}, {"name": "铂力特", "pe": 124.7209, "up": -16.7, "mv": 293.7, "tier": "中游制造"}, {"name": "铖昌科技", "pe": 248.2407, "up": -28.6, "mv": 327.7, "tier": "中游制造"}, {"name": "航天电器", "pe": 193.151, "up": -47.7, "mv": 364.1, "tier": "中游制造"}, {"name": "中国卫星", "pe": 5966.0928, "up": -48.2, "mv": 1012.8, "tier": "中游制造"}, {"name": "航天电子", "pe": 309.6659, "up": -57.1, "mv": 707.7, "tier": "中游制造"}, {"name": "复旦微电", "pe": 236.3316, "up": -58.0, "mv": 577.8, "tier": "中游制造"}, {"name": "光迅科技", "pe": 193.6427, "up": -58.2, "mv": 2006.3, "tier": "中游制造"}, {"name": "航天环宇", "pe": 551.7529, "up": -58.4, "mv": 216.2, "tier": "中游制造"}, {"name": "天银机电", "pe": 1432.3881, "up": -76.6, "mv": 205.1, "tier": "中游制造"}, {"name": "宝钛股份", "pe": 35.0768, "up": 66.3, "mv": 132.8, "tier": "上游材料"}, {"name": "钢研高纳", "pe": 138.9659, "up": -13.8, "mv": 138.7, "tier": "上游材料"}, {"name": "斯瑞新材", "pe": 236.1307, "up": -50.9, "mv": 373.9, "tier": "上游材料"}, {"name": "西部材料", "pe": 311.0571, "up": -52.5, "mv": 250.1, "tier": "上游材料"}, {"name": "中复神鹰", "pe": 291.5734, "up": -77.0, "mv": 501.1, "tier": "上游材料"}, {"name": "超捷股份", "pe": 1435.3599, "up": -83.9, "mv": 208.3, "tier": "上游材料"}, {"name": "盟升电子", "pe": 0, "up": 281.4, "mv": 47.2, "tier": "地面设备"}, {"name": "震有科技", "pe": 0, "up": 117.1, "mv": 95.0, "tier": "地面设备"}, {"name": "上海瀚讯", "pe": 0, "up": 82.9, "mv": 287.1, "tier": "地面设备"}, {"name": "海格通信", "pe": 0, "up": -24.0, "mv": 315.7, "tier": "地面设备"}, {"name": "信维通信", "pe": 147.4324, "up": -59.0, "mv": 1085.2, "tier": "地面设备"}, {"name": "中国卫通", "pe": 327.2134, "up": -63.3, "mv": 1301.1, "tier": "下游运营"}];
+const tiers={"上游材料":BLUE,"中游制造":RED,"地面设备":ORANGE,"下游运营":PURPLE};
+const datasets=Object.keys(tiers).map(t=>({
+  label:t,
+  data:bub.filter(b=>b.tier===t).map(b=>({x:b.pe>0?b.pe:5,y:b.up,r:Math.max(5,Math.sqrt(b.mv)*1.1)})),
+  backgroundColor:tiers[t]+'cc',borderColor:tiers[t]
+}));
+new Chart(document.getElementById('bubbleChart'),{
+  type:'bubble',
+  data:{datasets},
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom'},
+      subtitle:{display:true,text:'X=当前PE(TTM,亏损取5) Y=中性2027E上行% 大小=市值',font:{size:11},color:'#888'},
+      tooltip:{callbacks:{label:function(c){var d=c.raw;return c.dataset.label+': PE='+d.x+', 空间='+d.y+'%';}}}
+    },
+    scales:{
+      x:{type:'logarithmic',title:{display:true,text:'PE(TTM, 对数)'},grid:{color:'#f0f0f0'}},
+      y:{title:{display:true,text:'中性2027E上行空间%'},grid:{color:'#f0f0f0'},ticks:{callback:function(v){return (v>0?'+':'')+v+'%';}}}
+    }
+  }
+});
+}
+</script>
+</body>
+</html>
