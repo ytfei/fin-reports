@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国电南瑞（600406）系统性分析 · 2026-07-10</title>
+<meta name="date" content="2026-07-10">
+<meta name="category" content="company-reports">
+<meta name="description" content="国电南瑞系统性分析：不是电网运营商，而是二次设备+系统集成供应商。拆解它与一次设备/国网系同业的区别、四大业务挣钱模式、产业链位置与准定价权，给出持有评级与目标价。">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0f2440; --navy2:#16335c; --blue:#2f6fd0; --teal:#1f9e8f;
+    --orange:#e08a2b; --purple:#7a5cc0; --ink:#1c2533; --muted:#6b7686;
+    --line:#e6eaf0; --bg:#f6f8fb; --card:#ffffff; --red:#d9362b; --green:#1f9d55;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px 60px;}
+  .hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;
+    padding:34px 22px 28px;border-radius:0 0 18px 18px;margin:0 -16px 26px;}
+  .hero h1{margin:0 0 6px;font-size:25px;letter-spacing:.5px;}
+  .hero .sub{opacity:.82;font-size:13px;}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+    padding:3px 11px;border-radius:20px;font-size:12px;margin:10px 6px 0 0;}
+  h2{font-size:19px;margin:34px 0 14px;padding-left:11px;border-left:4px solid var(--blue);}
+  h3{font-size:16px;margin:22px 0 10px;color:var(--navy2);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px;margin:14px 0;
+    box-shadow:0 1px 3px rgba(20,40,80,.04);}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 4px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center;}
+  .kpi .v{font-size:18px;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:11px;color:var(--muted);margin-top:3px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0;}
+  th,td{border:1px solid var(--line);padding:8px 7px;text-align:center;}
+  th{background:#eef3fa;color:var(--navy2);font-weight:600;}
+  td.l,th.l{text-align:left;}
+  .up{color:var(--red);font-weight:600;}
+  .down{color:var(--green);font-weight:600;}
+  .chartbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;}
+  .chartbox h4{margin:0 0 10px;font-size:14px;color:var(--navy2);}
+  .cwrap{position:relative;width:100%;height:240px;}
+  .cwrap.sm{height:210px;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .note{background:#fff8ef;border:1px solid #f3e0c4;border-radius:10px;padding:12px 14px;font-size:13.5px;color:#7a5a2a;}
+  .chain{background:#0f2440;border-radius:12px;padding:18px;margin:14px 0;color:#cdd6e6;}
+  .chain svg{width:100%;height:auto;display:block;}
+  .pill{display:inline-block;padding:2px 9px;border-radius:14px;font-size:12px;margin:2px;}
+  .pill-blue{background:#1c3a66;color:#9cc4ff;}
+  .pill-orange{background:#5a3a12;color:#ffc880;}
+  .pill-teal{background:#13463f;color:#7fe3d2;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px;}
+  .mini .t{font-size:13px;font-weight:700;color:var(--navy2);}
+  .mini .d{font-size:12px;color:var(--muted);margin-top:4px;}
+  .rating{background:linear-gradient(135deg,#16335c,#0f2440);color:#fff;border-radius:12px;padding:20px;margin:18px 0;}
+  .rating .badge{display:inline-block;background:var(--teal);padding:4px 14px;border-radius:20px;font-weight:700;font-size:14px;}
+  .rating .price{font-size:22px;font-weight:800;margin:8px 0;}
+  .footer{font-size:11.5px;color:var(--muted);margin-top:26px;border-top:1px solid var(--line);padding-top:14px;}
+  @media(max-width:640px){.kpis{grid-template-columns:repeat(2,1fr);}.twocol,.grid3{grid-template-columns:1fr;}table{font-size:11px;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>国电南瑞（600406.SH）系统性分析</h1>
+  <div class="sub">电网的"大脑+神经"供应商 · 不是运营商，是运营商的"华为/中兴"</div>
+  <div>
+    <span class="tag">二次设备绝对龙头</span>
+    <span class="tag">国网嫡系（南瑞集团控股 56.9%）</span>
+    <span class="tag">十五五电网 5 万亿受益</span>
+    <span class="tag">数据截至 2026-07-10</span>
+  </div>
+</div>
+<div class="wrap">
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">22.04</div><div class="l">现价（元）</div></div>
+    <div class="kpi"><div class="v">1770亿</div><div class="l">总市值</div></div>
+    <div class="kpi"><div class="v">21.3x</div><div class="l">PE（TTM）</div></div>
+    <div class="kpi"><div class="v">2.81%</div><div class="l">股息率</div></div>
+  </div>
+
+  <div class="card">
+    <b>执行摘要：</b>国电南瑞给国家电网、南方电网卖设备/软件/系统/做总包，<b>不是运营商</b>。核心印钞机是"电网智能"（调度自动化、继电保护，占营收 50%、毛利率 30%）；与同业最本质的区别是<b>唯一留在国网体系内的二次设备全链条平台</b>；产业链位于中游，定价权是<b>"准定价权"</b>——高端二次设备与特高压控保靠技术+资质+嫡系三重护城河强议价，新能源红海则弱。
+  </div>
+
+  <h2>一、和同业的区别：一次 vs 二次设备</h2>
+  <div class="card">
+    <p>电力设备第一性原理分水岭：<b>一次设备</b>是电网的"血管/骨架"（变压器、开关、电缆，物理输电，重资产、偏大宗）；<b>二次设备</b>是电网的"大脑/神经"（调度、保护、控制、监测，软件算法驱动，壁垒高、客户粘性强）。<b>国电南瑞是二次设备绝对龙头</b>。</p>
+    <p style="margin-bottom:4px;">省调以上调度自动化市占 <b>75%+</b>｜特高压直流控制保护 <b>74.5%</b>｜柔直换流阀 <b>57.6%</b>｜继电保护 <b>70-90%</b>（行业研究/公开资料）。</p>
+  </div>
+
+  <div class="chartbox">
+    <h4>同业定位与估值对比（2026-07-10）</h4>
+    <table>
+      <tr><th class="l">公司</th><th>属性</th><th>核心定位</th><th>市值(亿)</th><th>PE</th><th>PB</th><th>股息率</th><th>YTD</th></tr>
+      <tr><td class="l"><b>国电南瑞</b></td><td>国网嫡系</td><td class="l">二次+系统集成全链条</td><td>1770</td><td>21.3</td><td>3.56</td><td>2.81%</td><td class="down">-13.3%</td></tr>
+      <tr><td class="l">许继电气</td><td>电气装备</td><td class="l">一次+二次混合/柔直</td><td>207</td><td>19.3</td><td>1.72</td><td>2.26%</td><td class="down">-20.4%</td></tr>
+      <tr><td class="l">平高电气</td><td>电气装备</td><td class="l">特高压 GIS 开关</td><td>224</td><td>19.0</td><td>1.95</td><td>2.01%</td><td class="down">-4.2%</td></tr>
+      <tr><td class="l">中国西电</td><td>电气装备</td><td class="l">特高压交流设备</td><td>688</td><td>52.1</td><td>2.98</td><td>0.75%</td><td class="up">+48.4%</td></tr>
+      <tr><td class="l">思源电气</td><td>民企</td><td class="l">一次设备民营全能</td><td>1187</td><td>36.5</td><td>7.63</td><td>0.46%</td><td class="down">-1.4%</td></tr>
+      <tr><td class="l">四方股份</td><td>民企</td><td class="l">二次/继电保护</td><td>454</td><td>53.0</td><td>9.94</td><td>1.32%</td><td class="up">+85.8%</td></tr>
+      <tr><td class="l">东方电子</td><td>地方国企</td><td class="l">二次/用电信息</td><td>162</td><td>15.8</td><td>2.66</td><td>0.72%</td><td class="up">+2.1%</td></tr>
+    </table>
+    <p class="note" style="margin-top:10px;">注：2021 年主辅分离改革，许继/平高/中国西电划出国网、归入中国电气装备集团，与国网由"父子"变"甲乙方"。<b>只有国电南瑞留任国网嫡系</b>——这是订单确定性与集采话语权的制度根基。</p>
+  </div>
+
+  <h2>二、靠什么挣钱：不是运营商，是供应商</h2>
+  <div class="card">
+    <p><b>澄清：</b>中国电网运营商只有两家——<b>国家电网、南方电网</b>（垄断公用事业，建网、管网、收电费）。国电南瑞是运营商的"华为+中兴"：研发设计→设备制造→系统集成→工程总包→运维，<b>不拥有网络、不收电费</b>。</p>
+  </div>
+
+  <div class="twocol">
+    <div class="chartbox" style="margin:0;">
+      <h4>2025 营收结构（按业务）</h4>
+      <div class="cwrap"><canvas id="segChart"></canvas></div>
+    </div>
+    <div class="chartbox" style="margin:0;">
+      <h4>分板块毛利率对比</h4>
+      <div class="cwrap"><canvas id="gmChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <table>
+      <tr><th class="l">业务板块</th><th>营收(亿)</th><th>占比</th><th>增速</th><th>毛利率</th><th class="l">挣钱逻辑</th></tr>
+      <tr><td class="l"><b>电网智能</b></td><td>334.2</td><td>50.5%</td><td>+15.7%</td><td><b>30.1%</b></td><td class="l">调度/保护/自动化，技术壁垒最高，现金牛</td></tr>
+      <tr><td class="l">能源低碳</td><td>167.3</td><td>25.3%</td><td>+37.3%</td><td>20.2%</td><td class="l">新能源/储能/柔直，增速快但价格战</td></tr>
+      <tr><td class="l">数能融合</td><td>123.0</td><td>18.6%</td><td>-0.5%</td><td>22.6%</td><td class="l">电力数字化/AI 调度，算电协同期权</td></tr>
+      <tr><td class="l">工业互联</td><td>30.1</td><td>4.6%</td><td>+5.1%</td><td>21.6%</td><td class="l">轨交/工业自动化，稳健补充</td></tr>
+      <tr><td class="l">集成及其他</td><td>6.9</td><td>1.0%</td><td>-52.2%</td><td>26.6%</td><td class="l">低毛利总包，战略收缩</td></tr>
+    </table>
+    <p class="note" style="margin-top:8px;">客户结构：<b>网内（国网+南网）约 420 亿，占 63%</b>（基本盘）；网外约 241 亿（+33%）；海外 60.4 亿（<b>+84.1%</b>，一带一路+中东储能）。</p>
+  </div>
+
+  <h2>三、产业链与定价权</h2>
+  <div class="chain">
+    <svg viewBox="0 0 860 250">
+      <!-- upstream -->
+      <text x="20" y="22" fill="#9cc4ff" font-size="13" font-weight="bold">上游（分散·议价一般）</text>
+      <rect x="14" y="34" width="190" height="46" rx="8" fill="#1c3a66"/>
+      <text x="109" y="55" fill="#cdd6e6" font-size="11" text-anchor="middle">芯片/IGBT/电力电子</text>
+      <text x="109" y="72" fill="#9cc4ff" font-size="10" text-anchor="middle">部分进口依赖·国产替代中</text>
+      <rect x="14" y="90" width="190" height="40" rx="8" fill="#1c3a66"/>
+      <text x="109" y="114" fill="#cdd6e6" font-size="11" text-anchor="middle">元器件/低压电器/软件</text>
+      <rect x="14" y="138" width="190" height="40" rx="8" fill="#1c3a66"/>
+      <text x="109" y="162" fill="#cdd6e6" font-size="11" text-anchor="middle">钢材/铜铝（一次用）</text>
+
+      <!-- midstream -->
+      <text x="330" y="22" fill="#7fe3d2" font-size="13" font-weight="bold">中游：国电南瑞（核心壁垒）</text>
+      <rect x="232" y="40" width="396" height="120" rx="10" fill="#13463f" stroke="#2fae9b" stroke-width="1.5"/>
+      <text x="430" y="64" fill="#bff3ea" font-size="12" text-anchor="middle" font-weight="bold">研发设计 + 系统集成 + 制造</text>
+      <text x="430" y="86" fill="#cdd6e6" font-size="10.5" text-anchor="middle">调度/保护/控制软件 · 二次设备 · 特高压控保 · 柔直</text>
+      <text x="430" y="104" fill="#cdd6e6" font-size="10.5" text-anchor="middle">工程总包 EPC + 运维服务</text>
+      <text x="430" y="128" fill="#ffc880" font-size="10" text-anchor="middle">壁垒：软件算法 + 系统 know-how + 电网准入资质（非堆硬件）</text>
+      <text x="430" y="148" fill="#9cc4ff" font-size="10" text-anchor="middle">护城河 = 技术 + 资质 + 国网嫡系（三重锁定）</text>
+
+      <!-- downstream -->
+      <text x="668" y="22" fill="#ffc880" font-size="13" font-weight="bold">下游（绝对集中）</text>
+      <rect x="652" y="34" width="196" height="46" rx="8" fill="#5a3a12"/>
+      <text x="750" y="55" fill="#ffc880" font-size="11" text-anchor="middle">电网运营商</text>
+      <text x="750" y="72" fill="#ffd9a8" font-size="10" text-anchor="middle">国网 / 南网（占其收入 63%）</text>
+      <rect x="652" y="90" width="196" height="40" rx="8" fill="#5a3a12"/>
+      <text x="750" y="114" fill="#ffc880" font-size="11" text-anchor="middle">发电集团（风光火）</text>
+      <rect x="652" y="138" width="196" height="40" rx="8" fill="#5a3a12"/>
+      <text x="750" y="162" fill="#ffc880" font-size="11" text-anchor="middle">工业/轨交 · 海外</text>
+
+      <!-- arrows -->
+      <path d="M204 70 L228 70" stroke="#5a7bb0" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M628 70 L650 70" stroke="#5a7bb0" stroke-width="2" marker-end="url(#a)"/>
+      <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5a7bb0"/></marker></defs>
+    </svg>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:4px;">定价权结论：准定价权（非市场化垄断型）</h3>
+    <div class="grid3">
+      <div class="mini"><div class="t" style="color:var(--red);">强 · 高端二次设备</div><div class="d">调度/控保/稳控市占 75%+，技术+资质双壁垒，替代成本极高</div></div>
+      <div class="mini"><div class="t" style="color:var(--red);">强 · 特高压控保/柔直</div><div class="d">控保 74.5% 份额，国网亲儿子优先配套</div></div>
+      <div class="mini"><div class="t" style="color:var(--green);">弱 · 新能源/储能</div><div class="d">参与者众、价格战，毛利率仅 20%</div></div>
+      <div class="mini"><div class="t" style="color:var(--blue);">中 · 网外/海外</div><div class="d">市场化竞争，靠性价比+品牌</div></div>
+      <div class="mini"><div class="t" style="color:var(--blue);">中 · 对上游器件</div><div class="d">标准化可压价，但核心芯片受制于人</div></div>
+      <div class="mini"><div class="t">机制约束</div><div class="d">国网集采年降持续压制，靠"以技术保毛利"对冲</div></div>
+    </div>
+  </div>
+
+  <h2>四、估值与结论</h2>
+  <div class="chartbox">
+    <h4>同业 PE / PB 对比（倍）</h4>
+    <div class="cwrap sm"><canvas id="valChart"></canvas></div>
+  </div>
+
+  <div class="rating">
+    <span class="badge">评级：持有（逢低加码）</span>
+    <div class="price">目标价 25-28 元 · 时间维度 2-3 年</div>
+    <div style="font-size:13.5px;opacity:.92;">基于 2026E 归母净利约 90 亿 × 22-25x PE。当前 PE 21x、处 52 周低位（区间 20.46-31.59）、股息率近 3%，是电网主题底层核心仓位的逢低布局窗口。若回落至 20-21 元（股息率 3%+），可加码。</div>
+  </div>
+
+  <div class="footer">
+    数据来源：westock-data 实时行情（2026-07-10）、2025 年报 / 2026Q1 财报、券商点评（长江/光大/中信建投）及行业研究公开资料。市占率/订单部分为行业研究估算，待公司公告核实。<br>
+    本报告仅供参考，不构成任何投资建议或个股买卖推荐。投资有风险，入市需谨慎。
+  </div>
+</div>
+
+<script>
+const C={navy:'#0f2440',blue:'#2f6fd0',teal:'#1f9e8f',orange:'#e08a2b',purple:'#7a5cc0',red:'#d9362b',green:'#1f9d55',grey:'#9aa6b5'};
+Chart.defaults.font.family='-apple-system,PingFang SC,Microsoft YaHei,sans-serif';
+Chart.defaults.font.size=12;
+
+// 营收结构 doughnut
+new Chart(document.getElementById('segChart'),{
+  type:'doughnut',
+  data:{labels:['电网智能','能源低碳','数能融合','工业互联','集成及其他'],
+    datasets:[{data:[334.2,167.3,123.0,30.1,6.9],
+      backgroundColor:[C.blue,C.teal,C.orange,C.purple,C.grey],borderWidth:2,borderColor:'#fff'}]},
+  options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:11}}},
+    tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}亿 (${(c.raw/661.6*100).toFixed(1)}%)`}}},
+    cutout:'58%',maintainAspectRatio:false}}
+);
+
+// 毛利率 bar
+new Chart(document.getElementById('gmChart'),{
+  type:'bar',
+  data:{labels:['电网智能','能源低碳','数能融合','工业互联','集成及其他'],
+    datasets:[{label:'毛利率%',data:[30.1,20.2,22.6,21.6,26.6],
+      backgroundColor:[C.blue,C.green,C.orange,C.purple,C.grey],borderRadius:4}]},
+  options:{plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,max:35,ticks:{callback:v=>v+'%'}}},maintainAspectRatio:false}}
+);
+
+// 估值对比
+new Chart(document.getElementById('valChart'),{
+  type:'bar',
+  data:{labels:['国电南瑞','许继电气','平高电气','中国西电','思源电气','四方股份','东方电子'],
+    datasets:[
+      {label:'PE',data:[21.3,19.3,19.0,52.1,36.5,53.0,15.8],backgroundColor:C.blue,borderRadius:4},
+      {label:'PB',data:[3.56,1.72,1.95,2.98,7.63,9.94,2.66],backgroundColor:C.orange,borderRadius:4}
+    ]},
+  options:{plugins:{legend:{position:'top'}},
+    scales:{y:{beginAtZero:true}},maintainAspectRatio:false}}
+);
+</script>
+</body>
+</html>
