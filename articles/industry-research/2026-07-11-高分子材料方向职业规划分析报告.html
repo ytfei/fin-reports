@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高分子材料方向职业规划分析报告</title>
+<style>
+  :root {
+    --primary: #1a56db;
+    --primary-light: #dbeafe;
+    --accent: #059669;
+    --accent-light: #d1fae5;
+    --warn: #dc2626;
+    --warn-light: #fee2e2;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-sec: #64748b;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+  
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #059669 100%);
+    color: white;
+    padding: 50px 40px;
+    border-radius: var(--radius);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header h1 { font-size: 28px; margin-bottom: 10px; position: relative; }
+  .header .subtitle { font-size: 15px; opacity: 0.9; position: relative; }
+  .header .tag-row { margin-top: 16px; position: relative; }
+  .header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+  }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 30px 35px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    background: var(--primary);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-desc {
+    color: var(--text-sec);
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-left: 42px;
+  }
+
+  /* Industry Cards */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .industry-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .industry-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+  }
+  .industry-card .ic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .industry-card .ic-name { font-size: 16px; font-weight: 700; }
+  .industry-card .ic-cycle {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .cycle-up { background: #fee2e2; color: #dc2626; }
+  .cycle-mid { background: #fef3c7; color: #b45309; }
+  .industry-card .ic-desc { font-size: 13px; color: var(--text-sec); line-height: 1.7; }
+  .industry-card .ic-data {
+    margin-top: 10px;
+    font-size: 12px;
+    background: var(--bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--text);
+  }
+  .industry-card .ic-data strong { color: var(--warn); }
+
+  .match-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-weight: 600;
+  }
+  .match-high { background: #fee2e2; color: #991b1b; }
+  .match-mid { background: #dbeafe; color: #1e40af; }
+  .match-low { background: #f1f5f9; color: #475569; }
+
+  /* Region Table */
+  .region-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  .region-table th {
+    background: #1e3a5f;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .region-table th:first-child { border-radius: 8px 0 0 0; }
+  .region-table th:last-child { border-radius: 0 8px 0 0; }
+  .region-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  .region-table tr:hover { background: #f8fafc; }
+  .region-name { font-weight: 700; font-size: 14px; }
+  .region-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 4px;
+  }
+  .tag-hub { background: var(--primary-light); color: var(--primary); }
+  .tag-emerging { background: var(--accent-light); color: var(--accent); }
+
+  /* Enterprise Table */
+  .enterprise-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  .enterprise-table th {
+    background: #1e3a5f;
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 12px;
+  }
+  .enterprise-table th:first-child { border-radius: 8px 0 0 0; }
+  .enterprise-table th:last-child { border-radius: 0 8px 0 0; }
+  .enterprise-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .enterprise-table tr:hover { background: #f8fafc; }
+  .ent-name { font-weight: 700; color: var(--text); }
+  .ent-salary { font-weight: 700; color: var(--warn); }
+  .ent-fit {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* Summary Box */
+  .summary-box {
+    background: linear-gradient(135deg, #ecfdf5 0%, #dbeafe 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius);
+    padding: 24px 30px;
+    margin-top: 24px;
+  }
+  .summary-box h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #064e3b;
+  }
+  .summary-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .summary-box li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 14px;
+  }
+  .summary-box li::before {
+    content: '▸';
+    position: absolute;
+    left: 8px;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 5%; right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b, #059669);
+    z-index: 0;
+  }
+  .tl-point {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    flex: 1;
+  }
+  .tl-dot {
+    width: 16px; height: 16px;
+    background: white;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 6px;
+  }
+  .tl-dot.now { background: var(--warn); border-color: var(--warn); }
+  .tl-dot.future { background: var(--accent); border-color: var(--accent); }
+  .tl-year { font-size: 13px; font-weight: 700; }
+  .tl-label { font-size: 11px; color: var(--text-sec); margin-top: 2px; }
+
+  /* Data highlight */
+  .data-highlight {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .dh-card {
+    text-align: center;
+    padding: 16px 12px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .dh-card .dh-num { font-size: 24px; font-weight: 800; color: var(--warn); }
+  .dh-card .dh-num.green { color: var(--accent); }
+  .dh-card .dh-num.blue { color: var(--primary); }
+  .dh-card .dh-label { font-size: 12px; color: var(--text-sec); margin-top: 4px; }
+
+  /* Note */
+  .note-box {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #78350f;
+  }
+
+  .footer {
+    text-align: center;
+    color: var(--text-sec);
+    font-size: 12px;
+    padding: 20px 0 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>高分子材料方向职业规划分析报告</h1>
+    <div class="subtitle">固态电解质 / 陶瓷颗粒-高分子复合 / 凝胶聚合物 / 半固态电解质</div>
+    <div class="tag-row">
+      <span class="tag">广东工业大学 · 研二</span>
+      <span class="tag">高分子化学与物理</span>
+      <span class="tag">2026届秋招</span>
+    </div>
+  </div>
+
+  <!-- 行业概览数据 -->
+  <div class="section">
+    <div class="section-title"><span class="num">0</span>行业大盘速览</div>
+    <div class="section-desc">固态电池赛道核心数据一览——你的研究方向正处于产业爆发前夜</div>
+
+    <div class="data-highlight">
+      <div class="dh-card">
+        <div class="dh-num">470亿</div>
+        <div class="dh-label">2026年全球市场规模<br>（同比+213%）</div>
+      </div>
+      <div class="dh-card">
+        <div class="dh-num green">183%</div>
+        <div class="dh-label">2025-2030年<br>出货量年复合增速</div>
+      </div>
+      <div class="dh-card">
+        <div class="dh-num blue">70%+</div>
+        <div class="dh-label">中国占全球<br>固态电池产能比例</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-point">
+        <div class="tl-dot now"></div>
+        <div class="tl-year">2025</div>
+        <div class="tl-label">半固态量产装车<br>渗透率0.1%</div>
+      </div>
+      <div class="tl-point">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2026-27</div>
+        <div class="tl-label">全固态上车路试<br>小批量产</div>
+      </div>
+      <div class="tl-point">
+        <div class="tl-dot future"></div>
+        <div class="tl-year">2030</div>
+        <div class="tl-label">全固态商业化<br>出货705GWh</div>
+      </div>
+      <div class="tl-point">
+        <div class="tl-dot future"></div>
+        <div class="tl-year">2035</div>
+        <div class="tl-label">渗透率逼近10%<br>3.8万亿市场</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>关键判断：</strong>你的研究方向（凝胶聚合物电解质 + 陶瓷颗粒/高分子复合电解质 + 半固态电解质）恰好覆盖了当前量产主流的聚合物路线和氧化物复合路线。半固态电池凝胶电解质路线占2025年量产的45%，聚合物复合路线占8%——你的技术栈正处于商业化最前沿。
+    </div>
+  </div>
+
+  <!-- 1. 行业筛选 -->
+  <div class="section">
+    <div class="section-title"><span class="num">1</span>行业筛选与发展周期</div>
+    <div class="section-desc">按"成长空间 × 周期位置 × 专业匹配度"三维排序</div>
+
+    <div class="industry-grid">
+      <!-- 第一梯队 -->
+      <div class="industry-card" style="border-color: var(--warn); border-width: 2px;">
+        <div class="ic-header">
+          <span class="ic-name">① 固态电池/锂电池</span>
+          <span class="ic-cycle cycle-up">↑ 上升爆发期</span>
+        </div>
+        <div class="ic-desc">
+          你专业的<strong>直接对口赛道</strong>。固态电解质研发是全产业链最核心的"卡脖子"环节，2026H1投资暴增4倍。凝胶电解质、聚合物复合体系正是量产主力路线。
+        </div>
+        <div class="ic-data">硕士起薪 <strong>15-25万/年</strong>；固态电解质岗 <strong>20-50万/年</strong></div>
+        <div class="match-badge match-high">★★★ 专业高度匹配</div>
+      </div>
+
+      <div class="industry-card" style="border-color: var(--warn); border-width: 2px;">
+        <div class="ic-header">
+          <span class="ic-name">② 电解质材料（上游）</span>
+          <span class="ic-cycle cycle-up">↑ 快速放量期</span>
+        </div>
+        <div class="ic-desc">
+          固态电解质材料是最缺人的环节。天赐材料、新宙邦等企业正从液态电解液向固态电解质转型，<strong>高分子背景极吃香</strong>。
+        </div>
+        <div class="ic-data">2026H1投资 <strong>80亿元</strong>（同比增4倍）；产能95%集中在华东</div>
+        <div class="match-badge match-high">★★★ 专业高度匹配</div>
+      </div>
+
+      <!-- 第二梯队 -->
+      <div class="industry-card">
+        <div class="ic-header">
+          <span class="ic-name">③ eVTOL/低空经济</span>
+          <span class="ic-cycle cycle-up">↑ 萌发期</span>
+        </div>
+        <div class="ic-desc">
+          聚合物复合电解质以轻量化优势适配无人机和eVTOL。亿航、小鹏汇天等企业电池团队需要高分子+固态电解质背景的人才。
+        </div>
+        <div class="ic-data">新兴市场，2026年进入商业化元年，人才稀缺度高</div>
+        <div class="match-badge match-high">★★★ 专业匹配</div>
+      </div>
+
+      <div class="industry-card">
+        <div class="ic-header">
+          <span class="ic-name">④ 人形机器人</span>
+          <span class="ic-cycle cycle-up">↑ 萌发期</span>
+        </div>
+        <div class="ic-desc">
+          孚能科技已向头部人形机器人客户送样半固态电池。轻量化、高安全的聚合物固态电池是机器人核心能源方案。
+        </div>
+        <div class="ic-data">2026年量产元年，特斯拉Optimus、优必选等带动需求</div>
+        <div class="match-badge match-mid">★★ 间接匹配</div>
+      </div>
+
+      <div class="industry-card">
+        <div class="ic-header">
+          <span class="ic-name">⑤ 储能系统</span>
+          <span class="ic-cycle cycle-up">↑ 高速增长</span>
+        </div>
+        <div class="ic-desc">
+          工商业储能爆发式增长，半固态电池在储能电站已有应用。宁德时代、比亚迪储能事业部大量招材料研发。
+        </div>
+        <div class="ic-data">储能电池需求2024-2030年CAGR <strong>27%</strong></div>
+        <div class="match-badge match-mid">★★ 间接匹配</div>
+      </div>
+
+      <div class="industry-card">
+        <div class="ic-header">
+          <span class="ic-name">⑥ 消费电子电池</span>
+          <span class="ic-cycle cycle-mid">→ 稳步渗透</span>
+        </div>
+        <div class="ic-desc">
+          vivo已量产搭载半固态电池手机。欣旺达、澳海能源等消费电池企业需要凝胶电解质/半固态研发。
+        </div>
+        <div class="ic-data">消费电子电池需求2024-2030年CAGR <strong>10%</strong></div>
+        <div class="match-badge match-mid">★★ 间接匹配</div>
+      </div>
+
+      <!-- 次优选择 -->
+      <div class="industry-card">
+        <div class="ic-header">
+          <span class="ic-name">⑦ 高分子改性材料</span>
+          <span class="ic-cycle cycle-mid">→ 成熟稳定</span>
+        </div>
+        <div class="ic-desc">
+          金发科技等珠三角龙头长期招高分子改性工程师。虽不如新能源火爆，但岗位多、门槛友好、珠三角就业方便。
+        </div>
+        <div class="ic-data">月薪1万+，稳定型选择，广工对口率极高</div>
+        <div class="match-badge match-mid">★★ 专业匹配</div>
+      </div>
+
+      <div class="industry-card" style="opacity: 0.75;">
+        <div class="ic-header">
+          <span class="ic-name">⑧ 半导体封装材料</span>
+          <span class="ic-cycle cycle-mid">→ 温和增长</span>
+        </div>
+        <div class="ic-desc">
+          先进封装需要高分子聚合物基板、封装胶。华为、长电科技等有需求，但更偏微电子方向，非你主攻。
+        </div>
+        <div class="ic-data">门槛偏高，需补充电子材料知识</div>
+        <div class="match-badge match-low">★ 需转型</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>结论：</strong>优先锁定<strong>固态电池/锂电池行业</strong>（第一梯队），你的凝胶聚合物电解质 + 陶瓷颗粒复合体系背景属于稀缺人才。eVTOL和机器人是中长期潜力赛道。高分子改性材料可作为保底选项。
+    </div>
+  </div>
+
+  <!-- 2. 区域分布 -->
+  <div class="section">
+    <div class="section-title"><span class="num">2</span>区域产业分布</div>
+    <div class="section-desc">四大核心区域 + 重点关注城市</div>
+
+    <table class="region-table">
+      <thead>
+        <tr>
+          <th style="width:18%">区域</th>
+          <th style="width:20%">核心城市</th>
+          <th style="width:30%">产业特点</th>
+          <th>代表企业</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="region-name">珠三角</span><br><span class="region-tag tag-hub">第一集群</span></td>
+          <td>深圳、惠州、广州、东莞</td>
+          <td>完整产业链：材料→电芯→PACK→整车<br>广东省将固态电池列为<strong>未来能源核心赛道</strong><br>对你最友好：广工在广东认可度极高</td>
+          <td>
+            <strong>深圳：</strong>比亚迪、贝特瑞、新宙邦、欣旺达<br>
+            <strong>惠州：</strong>亿纬锂能、德赛电池<br>
+            <strong>广州：</strong>天赐材料、鹏辉能源、孚能科技、广汽埃安<br>
+            <strong>珠海：</strong>光宇新能源
+          </td>
+        </tr>
+        <tr>
+          <td><span class="region-name">长三角</span><br><span class="region-tag tag-hub">第一集群</span></td>
+          <td>苏州、常州、南京、杭州</td>
+          <td>固态电解质产能占全国<strong>95%</strong><br>半固态新增产能占全国<strong>98%</strong><br>材料-电芯-测试完整闭环</td>
+          <td>
+            <strong>苏州/昆山：</strong>清陶能源、合源锂创、博众精工<br>
+            <strong>常州：</strong>中创新航、蜂巢能源、当升科技<br>
+            <strong>南京：</strong>卫蓝新能源（云石卫蓝15GWh）<br>
+            <strong>杭州：</strong>新安化工（氧化物电解质）
+          </td>
+        </tr>
+        <tr>
+          <td><span class="region-name">京津冀</span><br><span class="region-tag tag-emerging">研发高地</span></td>
+          <td>北京、天津</td>
+          <td>研发资源密集，国家级研究院汇聚<br>解决北京户口（部分企业）<br>适合偏研究型的同学</td>
+          <td>
+            <strong>北京：</strong>卫蓝新能源、国联研究院（有研+宁德合资）<br>
+            <strong>天津：</strong>力神电池、孚能科技（天津基地）
+          </td>
+        </tr>
+        <tr>
+          <td><span class="region-name">华中</span><br><span class="region-tag tag-emerging">成本洼地</span></td>
+          <td>长沙、赣州、宜春</td>
+          <td>低人力+土地成本，承接产业转移<br>锂矿资源丰富（宜春"亚洲锂都"）</td>
+          <td>
+            <strong>长沙：</strong>德赛电池、巴斯夫杉杉<br>
+            <strong>赣州：</strong>孚能科技总部
+          </td>
+        </tr>
+        <tr>
+          <td><span class="region-name">西南</span><br><span class="region-tag tag-emerging">配套基地</span></td>
+          <td>成都、宜宾、重庆</td>
+          <td>宁德时代、比亚迪大量建厂<br>半固态采购量同比增长<strong>27%</strong></td>
+          <td>
+            <strong>宜宾：</strong>宁德时代四川基地<br>
+            <strong>重庆：</strong>太蓝新能源
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>建议：</strong>你是广工的学生，珠三角是首选——<strong>本地优势 + 产业集群 + 校友网络</strong>三重加持。广东省固态电池产业链完整，从材料到整车都在家门口。长三角是第二选择，电解质材料岗位最密集。
+    </div>
+  </div>
+
+  <!-- 3. 企业筛选 -->
+  <div class="section">
+    <div class="section-title"><span class="num">3</span>企业筛选清单</div>
+    <div class="section-desc">聚焦珠三角 + 长三角，按"招聘广工硕士概率 × 岗位匹配度"排序</div>
+
+    <h3 style="font-size:15px; margin: 20px 0 8px; color: var(--warn);">▸ 第一梯队：高度匹配，明确招高分子/电解质方向</h3>
+    <table class="enterprise-table">
+      <thead>
+        <tr>
+          <th>企业</th>
+          <th>城市</th>
+          <th>匹配岗位</th>
+          <th>参考薪资</th>
+          <th>广工友好度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ent-name">比亚迪<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">全球新能源龙头</span></td>
+          <td>深圳/惠州</td>
+          <td>电池材料（聚合物/硫化物/固态）、<strong>电解液与凝胶电解质开发</strong>、高分子复合材料、高分子粘合剂与聚合物电解质</td>
+          <td class="ent-salary">15-35万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 年招20+</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">天赐材料<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">电解液全球龙头</span></td>
+          <td>广州</td>
+          <td><strong>聚合物电解质材料研发</strong>（岗位明确要求高分子化学与物理专业）、硫化物/氧化物固态电解质开发</td>
+          <td class="ent-salary">13-16万/年<br><span style="font-size:11px">硕士13薪</span></td>
+          <td><span class="ent-fit match-high">★★★ 广工合作单位</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">亿纬锂能<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">全场景锂电池平台</span></td>
+          <td>惠州</td>
+          <td><strong>电芯材料开发工程师</strong>（明确要求高分子化学/电解质研发经验优先）、固态电池研发、电池产品研发</td>
+          <td class="ent-salary">10-18万/年×14薪<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 招材化硕士</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">贝特瑞<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">负极材料全球第一</span></td>
+          <td>深圳</td>
+          <td><strong>氧化物/聚合物/硫化物固态电解质材料开发与改性</strong>、材料合成、表面改性</td>
+          <td class="ent-salary">15-25万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 来广工校招</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">新宙邦<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">电子化学品龙头</span></td>
+          <td>深圳/惠州</td>
+          <td>锂电池电解液研发、添加剂开发、高分子材料研发（明确招高分子专业）</td>
+          <td class="ent-salary">14-19万/年×13薪<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 明确招材化</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">鹏辉能源<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">储能电池主力</span></td>
+          <td>广州</td>
+          <td><strong>固态研发工程师</strong>（硫化物/氧化物/聚合物及复合体系）、研发工程师（高分子化学专业）</td>
+          <td class="ent-salary">面议<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 广工对口</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:15px; margin: 24px 0 8px; color: var(--primary);">▸ 第二梯队：匹配良好，珠三角可投</h3>
+    <table class="enterprise-table">
+      <thead>
+        <tr>
+          <th>企业</th>
+          <th>城市</th>
+          <th>匹配岗位</th>
+          <th>参考薪资</th>
+          <th>广工友好度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ent-name">欣旺达<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">消费电池龙头</span></td>
+          <td>深圳/惠州</td>
+          <td>电芯研发（化学类/材料类/高分子专业）、材料开发</td>
+          <td class="ent-salary">12-20万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 来广工宣讲</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">孚能科技<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">软包动力电池龙头</span></td>
+          <td>广州/赣州</td>
+          <td>电芯材料研发工程师（材料/化学专业）、已布局人形机器人电池送样</td>
+          <td class="ent-salary">12-18万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-high">★★★ 来广工宣讲</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">广汽埃安<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">全固态电池中试线已投产</span></td>
+          <td>广州</td>
+          <td>电池材料研发、固态电池工程师（番禺全固态产线已投产）</td>
+          <td class="ent-salary">15-20万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 广汽系偏好广工</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">豪鹏科技<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">半固态备用电源</span></td>
+          <td>深圳</td>
+          <td>半固态电池研发、材料开发</td>
+          <td class="ent-salary">12-18万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 中等</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:15px; margin: 24px 0 8px; color: var(--accent);">▸ 第三梯队：长三角优质选项（需异地求职）</h3>
+    <table class="enterprise-table">
+      <thead>
+        <tr>
+          <th>企业</th>
+          <th>城市</th>
+          <th>匹配岗位</th>
+          <th>参考薪资</th>
+          <th>广工友好度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ent-name">清陶能源<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">固态电池产业化领跑者</span></td>
+          <td>苏州/昆山</td>
+          <td>材料研发工程师（材料/化学/高分子）、电芯研发</td>
+          <td class="ent-salary">15-22万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 清华系背景</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">卫蓝新能源<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">聚合物固态路线标杆</span></td>
+          <td>北京/南京/广州</td>
+          <td>固态电解质研发（聚合物路线高度匹配你）、电芯开发</td>
+          <td class="ent-salary">18-30万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 中科院系</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">蜂巢能源<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">聚合物复合体系布局</span></td>
+          <td>常州</td>
+          <td>材料研发、聚合物复合电解质方向</td>
+          <td class="ent-salary">14-20万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 长城汽车系</span></td>
+        </tr>
+        <tr>
+          <td class="ent-name">宁德时代<br><span style="font-weight:400;font-size:11px;color:var(--text-sec)">全球电池第一</span></td>
+          <td>宁德/溧阳/宜宾</td>
+          <td>理化材料研发岗（正极/负极/电解质研发与合成）、凝聚态电池方向</td>
+          <td class="ent-salary">20-50万/年<br><span style="font-size:11px">硕士</span></td>
+          <td><span class="ent-fit match-mid">★★ 竞争激烈</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>企业筛选策略：</strong>第一梯队的6家企业是你秋招的<strong>核心目标</strong>——它们明确招高分子/电解质方向，且对广工认可度高。比亚迪和天赐材料每年固定来广工校招，命中率最高。如果愿意去长三角，清陶能源和卫蓝新能源的聚合物固态路线与你完美对口。
+    </div>
+  </div>
+
+  <!-- 行动建议 -->
+  <div class="summary-box">
+    <h3>行动建议清单</h3>
+    <ul>
+      <li><strong>2025年9-10月秋招：</strong>比亚迪、天赐材料、亿纬锂能、贝特瑞、鹏辉能源同步投递，这5家对广工硕士最友好</li>
+      <li><strong>简历包装：</strong>把"凝胶聚合物电解质""陶瓷颗粒/高分子复合"等关键词放到简历最显眼处——这正是企业最缺的技术方向</li>
+      <li><strong>补强电化学：</strong>你的高分子+固态电解质背景是优势，但如果能补充锂电池电化学基础知识，竞争力会大幅提升</li>
+      <li><strong>论文/专利：</strong>如果有固态电解质相关的SCI论文或专利，一定要在简历中突出，这是研发岗的硬通货</li>
+      <li><strong>备选方案：</strong>同时投递金发科技（高分子改性）、万华化学（高分子材料）等传统高分子龙头作为保底</li>
+      <li><strong>关注方向：</strong>eVTOL（亿航智能、小鹏汇天）和人形机器人（优必选）领域的电池团队值得长期关注，虽然目前岗位少，但3-5年后将成为热门</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    数据来源：中信证券研报、高工产业研究院(GGII)、SMM、各企业2026届校招简章<br>
+    报告生成时间：2026年7月 · 仅供职业规划参考
+  </div>
+
+</div>
+</body>
+</html>
