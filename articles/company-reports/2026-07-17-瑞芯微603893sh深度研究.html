@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>瑞芯微（603893.SH）深度研究</title>
+<meta name="date" content="2026-07-17">
+<meta name="description" content="瑞芯微（603893.SH）全面深度研究：业务结构、护城河、财务分析、DCF与可比估值、PM七问与评级（持有/中性，12个月目标价215元）。">
+<meta name="category" content="company-reports">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --red:#d11f1f; --green:#1f9d4f; --blue:#2a5db0; --ink:#1a1a1a;
+    --bg:#f5f6f8; --card:#ffffff; --band:#0e2a52; --muted:#6b7280;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;}
+  .hero{background:linear-gradient(135deg,#0e2a52,#1d4e8f);color:#fff;padding:40px 24px 32px;}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:12px;font-size:13px;margin-bottom:12px;}
+  .hero h1{margin:0 0 6px;font-size:30px;font-weight:700;}
+  .hero .sub{opacity:.85;font-size:15px;}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 18px 60px;}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-34px 0 26px;}
+  .card{background:var(--card);border-radius:12px;padding:14px 14px;box-shadow:0 4px 16px rgba(0,0,0,.06);}
+  .card .k{font-size:12px;color:var(--muted);}
+  .card .v{font-size:21px;font-weight:700;margin-top:4px;}
+  .card .v.red{color:var(--red);}
+  .card .v.green{color:var(--green);}
+  .card .v.blue{color:var(--blue);}
+  section{background:var(--card);border-radius:12px;padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  h2{font-size:19px;margin:0 0 12px;padding-left:10px;border-left:4px solid var(--red);}
+  h3{font-size:15px;margin:18px 0 8px;color:var(--blue);}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0;}
+  th,td{border:1px solid #e5e7eb;padding:7px 8px;text-align:center;}
+  th{background:#f0f3f8;font-weight:600;}
+  td.l,th.l{text-align:left;}
+  .red{color:var(--red);font-weight:600;}
+  .green{color:var(--green);font-weight:600;}
+  .chartbox{position:relative;height:300px;margin:14px 0;}
+  .chartbox.sm{height:240px;}
+  .note{font-size:12.5px;color:var(--muted);margin-top:6px;}
+  .pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;font-weight:600;}
+  .pill.hold{background:#fff3cd;color:#8a6d00;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  ul{margin:8px 0;padding-left:20px;} li{margin:5px 0;font-size:14px;}
+  .kv{font-size:14px;}
+  .kv b{color:var(--blue);}
+  @media(max-width:620px){.cards{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="tag">个股深度研究 · 半导体 / 边缘 AI SoC</span>
+  <h1>瑞芯微（603893.SH）</h1>
+  <div class="sub">评级：<b>持有 / 中性（HOLD）</b> ｜ 12个月目标价 <b>RMB 215</b>（当前 222.24，约 -3%）｜ 公允价值锚 180–200 ｜ 建议买点 180–190</div>
+</div>
+
+<div class="wrap">
+  <div class="cards">
+    <div class="card"><div class="k">收盘价（07-16）</div><div class="v blue">222.24</div></div>
+    <div class="card"><div class="k">总市值</div><div class="v blue">940 亿</div></div>
+    <div class="card"><div class="k">PE(TTM) / 远期</div><div class="v red">81.1 / 71.4x</div></div>
+    <div class="card"><div class="k">PB / PS(TTM)</div><div class="v red">19.9 / 19.9x</div></div>
+    <div class="card"><div class="k">2025 营收 / 净利</div><div class="v">44.0 / 10.4 亿</div></div>
+    <div class="card"><div class="k">2025 增速 YoY</div><div class="v red">+40% / +75%</div></div>
+    <div class="card"><div class="k">毛利率 / ROE</div><div class="v red">42.0% / 26.2%</div></div>
+    <div class="card"><div class="k">52周区间</div><div class="v">145–250</div></div>
+  </div>
+
+  <section>
+    <h2>一、投资要点</h2>
+    <ul>
+      <li><b>质量极佳、增长强劲</b>：2025 营收 44.0 亿（+40% YoY）、净利 10.4 亿（+75%）；2026Q1 营收 12.1 亿（+36%）、净利 3.29 亿（+57%），复苏未衰减。</li>
+      <li><b>盈利能力第一梯队</b>：毛利率由 2023 年 34.2% 升至 2025 年 42.0%，净利率 23.6%，ROE 26.2%（2023 仅 4.5%）；资产干净（负债率 21.5%、流动比率 4.19、净现金约 11 亿）。</li>
+      <li><b>但估值已透支</b>：PE/PB/PS 相对 SoC 同业中位 +44% / +237% / +100%；标准 WACC 9.5% 下 DCF 内在价值仅 80–130 元，与现价缺口巨大。</li>
+      <li><b>核心辩题</b>：市场以"纯边缘 AI 赢家"的 20x PS / 20x PB 定价，但 2025–26 收入中约 6–7 成仍是传统/周期复苏。现价 = "在仍是混合结构时，已按完美 AI 故事定价"。</li>
+      <li><b>风险收益平衡略偏负</b>：对新增资金不友好；更优买点在回调至 180–190（对应 2026E 约 55–60x 远期 PE）。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>二、财务趋势</h2>
+    <div class="chartbox"><canvas id="c1"></canvas></div>
+    <div class="note">2020–2025 为年报；2026E 为分析师估计（约 13.5 亿净利）。营收为柱、归母净利为线。</div>
+    <div class="chartbox sm"><canvas id="c2"></canvas></div>
+    <div class="note">毛利率、净利率、ROE 年度走势（%），反映产品结构上移与 NPU 高端占比提升。</div>
+  </section>
+
+  <section>
+    <h2>三、可比估值（同业中位 PE +44% / PB +237% / PS +100%）</h2>
+    <table>
+      <tr><th class="l">公司</th><th>市值(亿)</th><th>2025营收(亿)</th><th>2025净利(亿)</th><th>PE</th><th>PB</th><th>PS</th></tr>
+      <tr><td class="l red">瑞芯微</td><td>940</td><td>44.0</td><td>10.4</td><td class="red">81.1</td><td class="red">19.9</td><td class="red">19.9</td></tr>
+      <tr><td class="l">全志科技</td><td>383</td><td>21.6</td><td>2.78</td><td>102.4</td><td>11.5</td><td>12.2</td></tr>
+      <tr><td class="l">晶晨股份</td><td>415</td><td>50.7</td><td>6.98</td><td>48.3</td><td>5.5</td><td>5.8</td></tr>
+      <tr><td class="l">恒玄科技</td><td>297</td><td>29.3</td><td>5.02</td><td>60.3</td><td>4.2</td><td>9.3</td></tr>
+      <tr><td class="l">乐鑫科技</td><td>283</td><td>19.1</td><td>3.77</td><td>52.4</td><td>6.3</td><td>10.6</td></tr>
+      <tr><td class="l">北京君正</td><td>845</td><td>34.4</td><td>2.56</td><td>135.9</td><td>6.6</td><td>16.1</td></tr>
+    </table>
+    <div class="chartbox sm"><canvas id="c3"></canvas></div>
+    <div class="note">核心同业（全志/晶晨/恒玄/乐鑫）中位 PE≈56x。瑞芯微 PE 溢价部分由质量解释，但 PB/PS 极端溢价更多反映边缘 AI 期权前置定价。</div>
+  </section>
+
+  <section>
+    <h2>四、情景估值足球场（12 个月）</h2>
+    <div class="chartbox"><canvas id="c4"></canvas></div>
+    <table>
+      <tr><th class="l">情景</th><th>假设</th><th>目标价(元)</th><th>较现价</th></tr>
+      <tr><td class="l green">熊</td><td>需求转弱、毛利回落、估值压缩至同业中位 50x（2026E 12 亿）</td><td class="green">142</td><td class="green">-36%</td></tr>
+      <tr><td class="l">基准</td><td>增速 25–30% 维持，2027E 约 17 亿，55x</td><td>221</td><td>~0%</td></tr>
+      <tr><td class="l red">牛</td><td>边缘 AI 放量为真，2027E 约 20 亿，60x</td><td class="red">284</td><td class="red">+28%</td></tr>
+    </table>
+    <div class="note">当前价 222.24（虚线）。DCF 内在价值（WACC 9.5%/g 3.0%）约 80 元，乐观假设下约 130 元——标准 DCF 拒绝现价所隐含的极长高增长跑道，这是评级定为"持有"而非"买入"的根本原因。</div>
+  </section>
+
+  <section>
+    <h2>五、凯利公式仓位（个股分析强制展开）</h2>
+    <div class="kv">
+      <p><b>赔率 b</b>（以建议买点 185 为切入）：牛 30%→284（+53%）、基准 45%→215（+16%）、熊 25%→142（-23%）；期望收益 <b>+17.4%</b>；简化二元上行/下行≈+30%/-23%，<b>b≈1.30</b>。</p>
+      <p><b>胜率 p = 0.75</b>（判断，非事实）：依据 2023 trough 以来每季均超预期 + AIoT 动能延续；高估值压制故未给更高。</p>
+      <p><b>理论仓位 f* = (1.30×0.75 − 0.25)/1.30 ≈ 55.7%</b>；取半凯利≈28%，再受单一个股+板块集中度约束，<b>实操建议权益组合占比 8–12%</b>。</p>
+      <p><b>止损</b>：硬性置于 -15%（≈157）控制单笔回撤；<b>止盈</b>：基准 215 减 1/3，牛 284 附近再减。现价 222 介入则 b 与期望收益显著恶化，仓位应降至 5% 以内或观望。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>六、多空观点</h2>
+    <div class="grid2">
+      <div>
+        <h3 class="red">看多</h3>
+        <ul>
+          <li>大陆边缘 AI SoC 平台龙头；端侧 LLM/机器人/AI 眼镜/座舱多年度 TAM 扩张。</li>
+          <li>NPU+软件生态切换成本，持续侵蚀全志等国内对手份额。</li>
+          <li>资产最干净（净现金、零有息债、流动比率 4.2），毛利与 ROE 同业最佳。</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="green">看空</h3>
+        <ul>
+          <li>PB≈20x、PS≈20x 极端；AI 主题退潮即硬杀。</li>
+          <li>存货 13 亿≈2 季 COGS，需求波动或致减值。</li>
+          <li>边缘 AI 大规模商用仍待验证；相当收入仍是机顶盒/平板等周期业务。</li>
+          <li>高通/联发科/Amlogic/Allwinner/Espressif 正面竞争；地缘供应链风险。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>七、催化剂与风险</h2>
+    <h3>催化剂（未来 3–6 月）</h3>
+    <ul>
+      <li><span class="red">红</span> 2026 中报（8 月中，预期高增）、新 SoC 流片/量产、边缘 AI design-win、运营商招标国产替代。</li>
+      <li><span class="green">绿</span> 美联储/地缘引发 AI 多倍股整体压缩；解禁/激励稀释。</li>
+    </ul>
+    <h3>主要风险</h3>
+    <ul>
+      <li>估值压缩（首要）、存货减值、边缘 AI 放量慢、正面竞争、客户集中度、地缘供应链、晶圆成本/汇率、研发执行、稀释、周期重演。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>八、评级与目标价</h2>
+    <p><span class="pill hold">持有 / 中性 HOLD</span></p>
+    <div class="kv">
+      <p><b>12 个月目标价：RMB 215</b>（当前 222.24，约 -3%；区间 142–284）。</p>
+      <p><b>公允价值锚：RMB 180–200</b>（溢价可比 + 保守 DCF）。</p>
+      <p><b>行动映射：持有</b>；新增资金建议等待回调至 <b>180–190 元</b>（2026E 约 55–60x 远期 PE，质量溢价合理下限）。</p>
+      <p>上调至"加码/Buy"触发：连续 2–3 季净利 >30% 增长 + 边缘 AI 收入验证。下调至"减仓/Sell"触发：单季净利 miss / 存货减值 / 毛利回落 / AI 估值整体压缩。</p>
+    </div>
+    <p class="note">数据来源：行情与估值 westock-data（2026-07-16）；财务 Tushare income / fina_indicator（2025 年报、2026Q1，披露日 2026-04-22）；同业估值 Tushare daily_basic（2026-07-16）。业务分部占比为分析师判断，待公司披露验证。本报告仅供参考，不构成个人投资建议。DCF、情景与凯利测算基于明示假设，假设变动将显著改变结论。投资有风险，入市需谨慎。</p>
+  </section>
+</div>
+
+<script>
+const RED='#d11f1f',GREEN='#1f9d4f',BLUE='#2a5db0',GRAY='#9aa3b2';
+Chart.defaults.font.family='-apple-system,"PingFang SC",sans-serif';
+Chart.defaults.color='#374151';
+
+new Chart(document.getElementById('c1'),{
+  data:{labels:['2020','2021','2022','2023','2024','2025','2026E'],
+    datasets:[
+      {type:'bar',label:'营收(亿)',data:[18.63,27.19,20.30,21.35,31.36,44.02,55.0],backgroundColor:BLUE,yAxisID:'y',order:2},
+      {type:'line',label:'归母净利(亿)',data:[3.20,6.02,2.97,1.35,5.95,10.40,13.5],borderColor:RED,backgroundColor:RED,tension:.3,pointRadius:4,yAxisID:'y1',order:1}
+    ]},
+  options:{plugins:{legend:{position:'top'}},
+    scales:{y:{position:'left',title:{display:true,text:'营收(亿)'}},
+      y1:{position:'right',title:{display:true,text:'净利(亿)'},grid:{drawOnChartArea:false}}}}
+});
+
+new Chart(document.getElementById('c2'),{
+  type:'line',
+  data:{labels:['2020','2021','2022','2023','2024','2025'],
+    datasets:[
+      {label:'毛利率%',data:[40.8,40.0,37.7,34.2,37.6,42.0],borderColor:RED,tension:.3,pointRadius:3},
+      {label:'净利率%',data:[17.2,22.1,14.7,6.3,19.0,23.6],borderColor:BLUE,tension:.3,pointRadius:3},
+      {label:'ROE%',data:[16.1,23.5,10.3,4.5,18.0,26.2],borderColor:GREEN,tension:.3,pointRadius:3}
+    ]},
+  options:{plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'%'}}}}
+});
+
+new Chart(document.getElementById('c3'),{
+  type:'bar',
+  data:{labels:['瑞芯微','全志','晶晨','恒玄','乐鑫','君正'],
+    datasets:[{label:'PE(TTM)',data:[81.1,102.4,48.3,60.3,52.4,135.9],
+      backgroundColor:[RED,GRAY,GRAY,GRAY,GRAY,GRAY]}]},
+  options:{plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'PE(x)'}}}}
+});
+
+new Chart(document.getElementById('c4'),{
+  type:'bar',
+  data:{labels:['熊','基准','牛'],
+    datasets:[
+      {label:'目标价区间',data:[[142,142],[215,221],[284,284]],
+        backgroundColor:[GREEN,'#cbb47a',RED]}
+    ]},
+  options:{indexAxis:'y',plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>'目标价 '+c.raw[0]+' 元'}}},
+    scales:{x:{min:120,max:300,title:{display:true,text:'元'}}}}
+});
+</script>
+</body>
+</html>
