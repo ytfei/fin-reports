@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奥比中光(688322) 深度投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff; --card-bg: #f8f9fb; --text: #1a1a2e; --text-secondary: #555;
+  --red: #d93025; --green: #1a8c4a; --blue: #2563eb; --gold: #b8860b;
+  --border: #e5e7eb; --accent-light: #eff6ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f3460 100%); color: #fff; padding: 48px 20px; text-align: center; }
+.hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.hero .subtitle { font-size: 1.1rem; opacity: 0.85; margin-bottom: 20px; }
+.hero .meta { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: 0.9rem; opacity: 0.75; }
+.hero .price-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 6px 18px; border-radius: 20px; margin: 8px 6px; }
+.hero .price-badge .val { font-weight: 700; font-size: 1.2rem; color: #fbbf24; }
+
+/* Section Cards */
+section { margin: 32px 0; }
+.section-title { font-size: 1.4rem; font-weight: 700; color: var(--text); border-left: 4px solid var(--blue); padding-left: 14px; margin-bottom: 16px; }
+.card { background: var(--card-bg); border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
+.card h3 { font-size: 1.15rem; margin-bottom: 12px; color: var(--text); }
+.card h4 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 8px; }
+
+/* KPI Grid */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+.kpi-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+.kpi-card .label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
+.kpi-card .value { font-size: 1.5rem; font-weight: 700; }
+.kpi-card .sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+.red { color: var(--red); } .green { color: var(--green); } .blue { color: var(--blue); }
+
+/* Data Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 12px 0; }
+.data-table th { background: #f1f5f9; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+.data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.data-table tr:hover { background: #f8fafc; }
+
+/* Signal Light */
+.signal { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.signal-red { background: var(--red); }
+.signal-green { background: var(--green); }
+.signal-yellow { background: var(--gold); }
+
+/* Trading Plan Card */
+.trade-card { background: linear-gradient(135deg, #1e293b, #0f172a); color: #e2e8f0; border-radius: 14px; padding: 28px; margin: 20px 0; border: 1px solid #334155; }
+.trade-card h3 { color: #fbbf24; font-size: 1.25rem; margin-bottom: 16px; }
+.trade-card .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.trade-card .item { margin-bottom: 10px; }
+.trade-card .item .label { font-size: 0.78rem; color: #94a3b8; }
+.trade-card .item .val { font-size: 1rem; font-weight: 600; }
+.trade-card .divider { border-top: 1px solid #334155; margin: 16px 0; }
+
+/* Risk Matrix */
+.risk-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+.risk-row .risk-level { width: 64px; text-align: center; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.risk-high { background: #fde8e8; color: var(--red); }
+.risk-med { background: #fef3c7; color: #92400e; }
+.risk-low { background: #d1fae5; color: #065f46; }
+
+/* Chart Container */
+.chart-wrap { width: 100%; max-width: 100%; margin: 16px 0; }
+.chart-wrap canvas { width: 100% !important; }
+
+/* Warnings */
+.warning-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 16px; margin: 16px 0; font-size: 0.9rem; color: #9a3412; }
+.warning-box strong { color: #c2410c; }
+.info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin: 16px 0; font-size: 0.9rem; color: #1e40af; }
+.info-box strong { color: #1d4ed8; }
+
+/* Bear/Bull */
+.bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.bull { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 18px; }
+.bear { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; }
+.bull h4 { color: var(--red); } .bear h4 { color: var(--green); }
+
+/* Disclaimer */
+.disclaimer { background: #f8f9fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 32px 0; font-size: 0.82rem; color: var(--text-secondary); }
+.disclaimer strong { color: var(--text); }
+
+/* Mobile */
+@media (max-width: 680px) {
+  .hero h1 { font-size: 1.5rem; }
+  .trade-card .grid-2 { grid-template-columns: 1fr; }
+  .bull-bear { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <h1>奥比中光-W <span style="font-weight:400;opacity:0.7">sh688322</span></h1>
+  <div class="subtitle">3D视觉感知龙头 · AI机器人"眼睛" · 人形机器人核心供应商</div>
+  <div>
+    <span class="price-badge">收盘 <span class="val">100.23</span> 元</span>
+    <span class="price-badge">市值 <span class="val">413.8</span> 亿</span>
+    <span class="price-badge">PE(TTM) <span class="val">307.4</span>x</span>
+    <span class="price-badge">PB <span class="val">10.37</span>x</span>
+  </div>
+  <div class="meta">
+    <span>📅 2026-08-03</span>
+    <span>📊 分析师：弈投师</span>
+    <span>🏷️ 科创版 · 电子 · 光学光电子</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <div class="section-title">执行摘要</div>
+  <div class="card">
+    <p style="font-size:1.05rem;line-height:1.8;">
+      <strong>奥比中光是国内唯一一家专注于机器人RGB-D 3D视觉传感器的上市公司</strong>，其技术壁垒来自十余年自主研发积累，产品覆盖结构光、dToF、iToF、激光雷达全技术路线。
+      2025年公司实现V型业绩反转——营收9.41亿（+67%），扣非净利润扭亏。人形机器人产业链加速爆发，公司已覆盖智元、优必选、蚂蚁灵波等头部本体厂商，全球机器人客户超1000家。
+    </p>
+    <p style="margin-top:12px;font-size:0.95rem;color:var(--text-secondary);">
+      <strong>核心矛盾：</strong>当前股价已price-in极度乐观预期。PE(TTM) 307x，分析师2026E PE仍高达139x。<strong>DCF估值与市价差距巨大</strong>——市场正在为"人形机器人从0到1"的故事买单，而非当前盈利。这是高赔率、低确定性、高波动的投机型标的。
+    </p>
+    <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;background:#fef2f2;border-radius:8px;padding:14px;">
+        <div style="font-weight:700;color:var(--red);margin-bottom:4px;">🔴 多头核心逻辑</div>
+        <div style="font-size:0.88rem;color:#7f1d1d;">人形机器人2026年进入量产拐点，3D视觉是刚需"眼睛"，奥比是国内唯一供应商，营收/利润未来3年CAGR有望超50%</div>
+      </div>
+      <div style="flex:1;min-width:200px;background:#f0fdf4;border-radius:8px;padding:14px;">
+        <div style="font-weight:700;color:var(--green);margin-bottom:4px;">🟢 空头核心逻辑</div>
+        <div style="font-size:0.88rem;color:#14532d;">300xPE定价极度乐观，Q1 2026收入增速仅6%严重不及预期，Intel RealSense竞争加剧，机器人量产进度可能大幅低于预期</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 1: MACRO -->
+<section>
+  <div class="section-title">Layer 1 · 宏观定方向</div>
+  <div class="card">
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="label">制造业PMI (6月)</div><div class="value">50.3</div><div class="sub">连续2个月在荣枯线上方</div></div>
+      <div class="kpi-card"><div class="label">GDP增速 (Q2)</div><div class="value blue">4.3%</div><div class="sub">H1累计 4.7%，较Q1放缓</div></div>
+      <div class="kpi-card"><div class="label">LPR 1Y/5Y</div><div class="value">3.0%/3.5%</div><div class="sub">连续14个月不变</div></div>
+      <div class="kpi-card"><div class="label">高技术制造VAD</div><div class="value green">+13.1%</div><div class="sub">新质生产力加速发展</div></div>
+      <div class="kpi-card"><div class="label">工业利润 (累计)</div><div class="value green">+18.8%</div><div class="sub">持续恢复态势</div></div>
+      <div class="kpi-card"><div class="label">M2增速</div><div class="value">8.6%</div><div class="sub">流动性合理充裕</div></div>
+    </div>
+    <div style="margin-top:16px;padding:14px;background:#eff6ff;border-radius:8px;">
+      <strong>📊 宏观判断：</strong>经济处于"弱复苏+结构分化"格局。总量偏弱（GDP放缓、消费疲软）但新质生产力强劲（高技术制造+13%）。货币政策14个月按兵不动，但下半年降息预期升温。对奥比中光而言，<strong class="blue">宏观不是核心矛盾——行业景气度才是</strong>。
+    </div>
+    <div style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;">
+      <span style="background:#eff6ff;padding:4px 12px;border-radius:12px;font-size:0.85rem;">建议权益仓位：<strong>50-60%</strong></span>
+      <span style="background:#fef3c7;padding:4px 12px;border-radius:12px;font-size:0.85rem;">偏向：<strong>结构进攻（科技成长）</strong></span>
+      <span style="background:#fde8e8;padding:4px 12px;border-radius:12px;font-size:0.85rem;">最大风险：<strong>中美科技脱钩升级</strong></span>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+      数据来源：国家统计局 PMI(2026-06)、GDP(2026Q2)、央行LPR(2026-07-20)、westock-data macro indicator
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 2: INDUSTRY -->
+<section>
+  <div class="section-title">Layer 2 · 行业选赛道</div>
+  <div class="card">
+    <h3>🤖 机器人3D视觉赛道：早期爆发阶段</h3>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="label">全球机器人市场</div><div class="value blue">530亿$</div><div class="sub">2024年 → 2033年 1790亿$ (CAGR 14%)</div></div>
+      <div class="kpi-card"><div class="label">人形机器人</div><div class="value green">量产拐点</div><div class="sub">2026年起多家本体厂进入量产</div></div>
+      <div class="kpi-card"><div class="label">3D视觉传感器</div><div class="value green">最快增长</div><div class="sub">摩根士丹利：零部件中增速最高环节</div></div>
+      <div class="kpi-card"><div class="label">国内竞争格局</div><div class="value">奥比一家独大</div><div class="sub">唯一专注机器人RGB-D的上市公司</div></div>
+    </div>
+    <div style="margin-top:16px;">
+      <strong>行业定位：</strong>早期成长期。渗透率极低（人形机器人全球出货量仍在千台级别），但方向确定性高——3D视觉从"可选配置"走向"刚需标配"。
+    </div>
+    <table class="data-table" style="margin-top:14px;">
+      <tr><th>维度</th><th>判断</th><th>量化支撑</th></tr>
+      <tr><td>景气度</td><td><span class="signal signal-green"></span> 高景气</td><td>奥比人形机器人订单Q1环比翻倍，交付周期从40天缩至20天（来源：央视2026-05-20）</td></tr>
+      <tr><td>竞争格局</td><td><span class="signal signal-green"></span> 优</td><td>国内唯一，全球仅Intel RealSense构成正面竞争</td></tr>
+      <tr><td>估值水位</td><td><span class="signal signal-red"></span> 极高</td><td>PE 307x，行业排名59/68；板块整体亏损居多，无合理PE锚</td></tr>
+      <tr><td>资金流向</td><td><span class="signal signal-yellow"></span> 分歧</td><td>北向Q2持股从1.48%→1.99%增持；但近20日主力净流出13.2亿</td></tr>
+      <tr><td>政策催化</td><td><span class="signal signal-green"></span> 强</td><td>新质生产力、人形机器人产业政策密集出台</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- LAYER 3: SCREENING -->
+<section>
+  <div class="section-title">Layer 3 · 量化初筛（针对单标的）</div>
+  <div class="card">
+    <table class="data-table">
+      <tr><th>筛选条件</th><th>阈值</th><th>奥比中光实际</th><th>结果</th></tr>
+      <tr><td>近3年经营现金流≥2年为正</td><td>≥2/3</td><td>FY2025: +0.83亿 ✓<br>FY2024: 可能为负 [MISSING]<br>FY2023: 可能为负</td><td><span style="color:var(--gold)">⚠️ 边界</span></td></tr>
+      <tr><td>商誉/净资产</td><td>&lt;30%</td><td>322万 / 30.1亿 = 0.1%</td><td><span style="color:var(--green)">✓ 优秀</span></td></tr>
+      <tr><td>大股东质押率</td><td>&lt;50%</td><td>[MISSING - 需进一步核实]</td><td>-</td></tr>
+      <tr><td>财务造假/处罚记录</td><td>无</td><td>未发现</td><td><span style="color:var(--green)">✓ 通过</span></td></tr>
+      <tr><td>日均成交额</td><td>&gt;3000万</td><td>近20日均额~20亿（极度活跃）</td><td><span style="color:var(--green)">✓ 通过</span></td></tr>
+      <tr><td>ROE (TTM)</td><td>&gt;15%理想</td><td>FY2025: 4.3%，刚扭亏</td><td><span style="color:var(--red)">✗ 不满足</span></td></tr>
+      <tr><td>经营现金流/净利润</td><td>&gt;0.8</td><td>FY2025: 0.83/1.28 = 0.65</td><td><span style="color:var(--gold)">⚠️ 边界</span></td></tr>
+    </table>
+    <div class="warning-box" style="margin-top:14px;">
+      <strong>⚠️ 筛选结论：</strong>奥比中光在传统质量因子筛选中得分较低——ROE仅4.3%、经营现金流弱于净利润、Q1经营现金流大幅为负。公司正处于"从0到1"的转折期，<strong>不适合价值因子框架筛选，属于典型的成长股/主题股逻辑</strong>。投资它本质上是投"人形机器人产业爆发的期权"。
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 4: DEEP RESEARCH -->
+<section>
+  <div class="section-title">Layer 4 · 深度研究</div>
+
+  <!-- 4a: Business Model -->
+  <div class="card">
+    <h3>4a. 商业模式拆解</h3>
+    <h4>怎么赚钱？</h4>
+    <table class="data-table">
+      <tr><th>业务线</th><th>FY2025营收</th><th>占比</th><th>增长驱动</th></tr>
+      <tr><td>消费级应用设备</td><td>5.84亿</td><td>62.0%</td><td>服务机器人(扫地/割草)、人脸支付、智能门锁</td></tr>
+      <tr><td>3D视觉传感器</td><td>2.91亿</td><td>30.9%</td><td>人形机器人、工业机器人、AGV</td></tr>
+      <tr><td>工业级应用设备</td><td>0.26亿</td><td>2.7%</td><td>3D扫描仪、工业检测</td></tr>
+      <tr><td>其他</td><td>0.41亿</td><td>4.3%</td><td>—</td></tr>
+      <tr><td><strong>合计</strong></td><td><strong>9.41亿</strong></td><td><strong>100%</strong></td><td><strong>境内90.2% / 境外9.2%</strong></td></tr>
+    </table>
+
+    <h4 style="margin-top:16px;">护城河评估</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.9rem;">
+      <div style="padding:12px;background:#fff;border-radius:8px;border:1px solid var(--border);">
+        <strong>✅ 技术壁垒（强）</strong><br>10年+自主研发、全技术路线覆盖（结构光/dToF/iToF/激光雷达）、芯片自研能力。国内唯一与Intel RealSense正面竞争的厂商。
+      </div>
+      <div style="padding:12px;background:#fff;border-radius:8px;border:1px solid var(--border);">
+        <strong>✅ 生态绑定（中强）</strong><br>已融入NVIDIA Isaac/Jetson、Apple macOS、Microsoft、AMD等国际主流平台，客户迁移成本高。
+      </div>
+      <div style="padding:12px;background:#fff;border-radius:8px;border:1px solid var(--border);">
+        <strong>⚠️ 规模效应（弱）</strong><br>累计出货500万+台，相比消费电子芯片仍属小批量，规模效应尚未显现。毛利率48.6%尚可但非突出。
+      </div>
+      <div style="padding:12px;background:#fff;border-radius:8px;border:1px solid var(--border);">
+        <strong>⚠️ 品牌/网络效应（弱）</strong><br>To B业务，品牌溢价有限。客户集中度需关注。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4b: Financial Deep Dive -->
+  <div class="card">
+    <h3>4b. 财务深度分析</h3>
+
+    <!-- Revenue & Profit Chart -->
+    <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+
+    <h4 style="margin-top:20px;">杜邦分解 (FY2025)</h4>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;font-size:1.1rem;">
+      ROE <strong>4.30%</strong> = 净利率 <strong>13.60%</strong> × 周转率 <strong>0.28</strong> × 杠杆 <strong>1.14</strong>
+    </div>
+    <div style="font-size:0.88rem;color:var(--text-secondary);margin-top:6px;">
+      ROE极低，主因是资产周转率仅0.28（总资产34亿 vs 营收9.4亿，大量募集资金闲置）。净利率13.6%刚进入正值区间，杠杆率极低（负债率仅10.9%）。ROE改善空间大——如果营收翻倍、资产效率提升，ROE有望快速跃升。
+    </div>
+
+    <h4 style="margin-top:16px;">营收与利润季度趋势</h4>
+    <table class="data-table">
+      <tr><th>期间</th><th>营收（亿）</th><th>YoY</th><th>归母净利润（亿）</th><th>毛利率</th><th>净利率</th></tr>
+      <tr><td>FY2025 Q1</td><td>1.91</td><td>+106%</td><td>0.24</td><td>[MISSING]</td><td>12.7%</td></tr>
+      <tr><td>FY2025 Q2</td><td>2.44</td><td>—</td><td>0.36</td><td>[MISSING]</td><td>14.7%</td></tr>
+      <tr><td>FY2025 Q3</td><td>2.79</td><td>—</td><td>0.48</td><td>[MISSING]</td><td>17.2%</td></tr>
+      <tr><td>FY2025 Q4</td><td>2.27</td><td>—</td><td>0.20</td><td>[MISSING]</td><td>8.8%</td></tr>
+      <tr style="background:#fef2f2;"><td><strong>FY2026 Q1</strong></td><td><strong>2.03</strong></td><td><strong class="red">+6.2%</strong></td><td><strong>0.31</strong></td><td><strong>48.6%</strong></td><td><strong>15.3%</strong></td></tr>
+    </table>
+    <div class="warning-box">
+      <strong>⚠️ 关键警示：Q1 2026营收增速骤降至6.2%！</strong>从FY2025全年67%的增速断崖式下滑。虽然利润端增长27%好于收入端（毛利率改善），但营收失速是最危险的信号。如果Q2不能重回30%+增长，全年2.88亿的利润预期将面临大幅下修。
+    </div>
+
+    <!-- Cash Flow Chart -->
+    <div class="chart-wrap"><canvas id="chartCashflow"></canvas></div>
+
+    <h4 style="margin-top:16px;">资产负债健康度</h4>
+    <table class="data-table">
+      <tr><th>指标</th><th>数值</th><th>评价</th></tr>
+      <tr><td>现金及等价物</td><td>6.60亿</td><td><span class="green">充裕</span></td></tr>
+      <tr><td>有息负债率</td><td>3.4%（1.15亿/33.8亿）</td><td><span class="green">极低</span></td></tr>
+      <tr><td>资产负债率</td><td>10.9%</td><td><span class="green">极低</span></td></tr>
+      <tr><td>利息覆盖倍数</td><td>极高（几乎无利息支出）</td><td><span class="green">安全</span></td></tr>
+      <tr><td>资本公积</td><td>41.8亿</td><td>大量IPO/增发募集资金</td></tr>
+      <tr><td>未分配利润</td><td><span class="red">-14.9亿</span></td><td><span class="red">累计亏损巨大，尚未弥补</span></td></tr>
+      <tr><td>应收账款/营收</td><td>11.0%（1.10亿/9.41亿）</td><td><span class="green">健康</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 4c: Valuation -->
+  <div class="card">
+    <h3>4c. 估值——三重交叉验证</h3>
+
+    <h4>方法一：DCF估值（基准情景）</h4>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;">
+      <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">核心假设：WACC=10.5%, 永续增长=3%, 预测期5年</div>
+      <table class="data-table">
+        <tr><th>年份</th><th>营收（亿）</th><th>FCF利润率</th><th>FCF（亿）</th><th>折现因子</th><th>PV（亿）</th></tr>
+        <tr><td>2026E</td><td>13.2</td><td>12%</td><td>1.58</td><td>0.905</td><td>1.43</td></tr>
+        <tr><td>2027E</td><td>17.1</td><td>14%</td><td>2.40</td><td>0.819</td><td>1.97</td></tr>
+        <tr><td>2028E</td><td>21.4</td><td>15%</td><td>3.21</td><td>0.741</td><td>2.38</td></tr>
+        <tr><td>2029E</td><td>25.3</td><td>16%</td><td>4.04</td><td>0.671</td><td>2.71</td></tr>
+        <tr><td>2030E</td><td>28.3</td><td>17%</td><td>4.81</td><td>0.607</td><td>2.92</td></tr>
+        <tr style="background:#fef2f2;"><td><strong>终值</strong></td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>40.04</strong></td></tr>
+        <tr><td colspan="5" style="text-align:right;"><strong>企业价值</strong></td><td><strong>51.45</strong></td></tr>
+        <tr><td colspan="5" style="text-align:right;">+ 现金 6.60亿</td><td>6.60</td></tr>
+        <tr><td colspan="5" style="text-align:right;">- 有息负债 1.15亿</td><td>-1.15</td></tr>
+        <tr style="background:#eff6ff;"><td colspan="5" style="text-align:right;"><strong>股权价值</strong></td><td><strong>56.90亿</strong></td></tr>
+        <tr style="background:#eff6ff;"><td colspan="5" style="text-align:right;"><strong>每股价值（4.01亿股）</strong></td><td><strong>14.19元</strong></td></tr>
+      </table>
+    </div>
+    <div class="warning-box">
+      <strong>⚡ DCF结论：基准情景每股仅值14.19元，当前市价100.23元意味着市场溢价606%！</strong>
+      这不是计算错误——这是"人形机器人期权"的定价。DCF无法捕捉"万一机器人爆发"的非线性增长。但这意味着，<strong>任何低于"极度乐观"的产业进展都会导致估值崩塌</strong>。
+    </div>
+
+    <h4 style="margin-top:20px;">方法二：情景分析</h4>
+    <table class="data-table">
+      <tr><th>情景</th><th>核心假设</th><th>2030E营收</th><th>DCF每股价值</th><th>vs 现价</th></tr>
+      <tr style="background:#f0fdf4;"><td>🐻 悲观</td><td>机器人进展缓慢，营收CAGR 15%</td><td>19亿</td><td><strong class="green">8-12元</strong></td><td><span class="green">-88%~-92%</span></td></tr>
+      <tr style="background:#fef9e7;"><td>📊 基准</td><td>稳健增长，营收CAGR 25%</td><td>28亿</td><td><strong>14-20元</strong></td><td><span>-80%~-86%</span></td></tr>
+      <tr style="background:#fef2f2;"><td>🐂 乐观</td><td>机器人爆发，营收CAGR 40%</td><td>50亿</td><td><strong class="red">40-55元</strong></td><td><span class="red">-45%~-60%</span></td></tr>
+      <tr style="background:#fde8e8;"><td>🚀 极度乐观</td><td>成为全球机器人视觉标准，CAGR 55%+</td><td>85亿+</td><td><strong class="red">90-130元</strong></td><td><span class="red">-10%~+30%</span></td></tr>
+    </table>
+
+    <h4 style="margin-top:20px;">方法三：可比估值</h4>
+    <table class="data-table">
+      <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE(TTM)</th><th>PS(TTM)</th><th>业务</th></tr>
+      <tr><td>奥比中光</td><td>688322</td><td>413.8</td><td>307x</td><td>44x</td><td>3D视觉</td></tr>
+      <tr><td>海康威视</td><td>002415</td><td>3478</td><td>21x</td><td>3.8x</td><td>安防/AI视觉</td></tr>
+      <tr><td>炬光科技</td><td>688167</td><td>231</td><td>亏损</td><td>—</td><td>激光光学</td></tr>
+      <tr><td>云天励飞</td><td>688343</td><td>195</td><td>亏损</td><td>—</td><td>AI视觉</td></tr>
+      <tr><td>格灵深瞳</td><td>688207</td><td>43</td><td>亏损</td><td>—</td><td>AI视觉</td></tr>
+      <tr><td>云从科技</td><td>688327</td><td>113</td><td>亏损</td><td>—</td><td>AI平台</td></tr>
+    </table>
+    <div style="font-size:0.88rem;color:var(--text-secondary);margin-top:8px;">
+      <strong>可比估值意义有限：</strong>机器视觉板块绝大多数公司亏损，无法用PE比较。海康是成熟安防公司，业务/阶段完全不同。奥比的307x PE在同行中反而是"合理的"——因为它是板块内少数盈利的公司。分析师2026E PE约115-139x，2027E约83x。
+    </div>
+
+    <!-- Analyst Consensus -->
+    <div class="info-box" style="margin-top:16px;">
+      <strong>📊 分析师一致预期（来源：中泰证券、国金证券、国投证券、华创证券研报 2026Q2）：</strong><br>
+      2026E 归母净利润 2.88亿 → EPS 0.72 → 对应PE <strong>139x</strong><br>
+      2027E 归母净利润 3.98亿 → EPS 0.99 → 对应PE <strong>101x</strong><br>
+      2028E 归母净利润 4.83亿 → EPS 1.20 → 对应PE <strong>84x</strong><br>
+      中泰证券目标价：<strong>95.3元</strong>（基于2027E 96xPE），评级增持
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 5: TRADING PLAN -->
+<section>
+  <div class="section-title">Layer 5 · 交易计划</div>
+
+  <div class="trade-card">
+    <h3>📋 交易计划卡片 — 奥比中光(sh688322)</h3>
+
+    <div style="margin-bottom:16px;">
+      <div class="label" style="color:#94a3b8;font-size:0.8rem;">买入逻辑（一句话）</div>
+      <div class="val" style="font-size:1rem;">人形机器人2026年进入量产拐点，3D视觉是"机器人之眼"刚需——奥比是国内唯一供应商，弹性极大。<strong>变异认知：市场可能低估了机器人量产的斜率（非线性增长）而非线性外推。</strong></div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="item"><div class="label">目标价区间</div><div class="val">95 - 130 元</div></div>
+        <div class="item"><div class="label">建议买入区间</div><div class="val" style="color:#fbbf24;">75 - 88 元</div></div>
+        <div class="item"><div class="label">安全边际</div><div class="val">目标价下方 12-15%</div></div>
+      </div>
+      <div>
+        <div class="item"><div class="label">当前价格</div><div class="val" style="color:#f87171;">100.23 元</div></div>
+        <div class="item"><div class="label">⚠️ 当前位置</div><div class="val" style="color:#f87171;">高于建议买入区间，不建议追高</div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="color:#fbbf24;font-size:1rem;">💰 仓位管理（凯利公式）</h4>
+    <div style="font-size:0.9rem;line-height:1.8;">
+      <strong>胜率 p = 45%</strong>（依据：人形机器人产业方向确定性强，但时间节奏不确定；Q1营收失速增加了证伪概率）<br>
+      <strong>赔率 b = 0.8</strong>（止盈假设涨至120元(+20%)，止损85元(-15%)。如果买在88元：止盈120/88-1=36%，止损85/88-1=-3.4%，有效赔率更高，但取决于买入成本）<br>
+      <strong>凯利 f* = (0.8×0.45 - 0.55)/0.8 = -3.1%</strong> → 凯利公式给出<strong>负值</strong>，理论上不应下注<br>
+      <strong>实操调整：</strong>如果等回调至80元以下买入，则赔率显著改善（上行至120=+50%，下行至70=-12.5%，b=3.0），f*≈27%，实操取1/4凯利≈<strong>6.8%仓位</strong>
+    </div>
+    <div class="warning-box" style="background:#7f1d1d;color:#fca5a5;border-color:#991b1b;margin-top:10px;">
+      <strong>⚠️ 关键仓位约束：</strong>在当前100元以上，凯利公式给出负值——不适合新建仓位。这是一个"等回调"的标的。单只上限不超过总资产<strong>10%</strong>。
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="color:#fbbf24;font-size:1rem;">🛑 止损规则</h4>
+    <div style="font-size:0.9rem;line-height:1.8;">
+      <strong>逻辑止损：</strong>① Q2 2026营收增速继续&lt;15%，证伪高增长叙事；② 核心客户（智元/优必选）量产进度大幅推迟；③ Intel RealSense推出价格战，奥比市场份额明显下降<br>
+      <strong>技术止损：</strong>跌破 <strong>76元</strong>（2026年3-4月箱体底部支撑，也是周线MA60附近）<br>
+      <strong>时间止损：</strong>买入后<strong>4个月</strong>内机器人量产催化剂未兑现，减半仓<br>
+      <strong>绝对止损：</strong>亏损超过<strong>20%</strong>无条件平仓
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="color:#fbbf24;font-size:1rem;">🎯 止盈规则</h4>
+    <div style="font-size:0.9rem;line-height:1.8;">
+      <strong>第一目标：110-120元</strong>（接近前高147的80%反弹位，达到减仓30%）<br>
+      <strong>第二目标：130-145元</strong>（前高附近，估值极度乐观情景达成，减至观察仓或清仓）
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="color:#fbbf24;font-size:1rem;">📊 跟踪指标（每周检查）</h4>
+    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
+      <tr style="border-bottom:1px solid #334155;"><th style="text-align:left;padding:6px;">指标</th><th style="text-align:left;padding:6px;">当前值</th><th style="text-align:left;padding:6px;">预警阈值</th></tr>
+      <tr><td style="padding:4px 6px;">季度营收YoY</td><td style="padding:4px 6px;">+6.2% (Q1)</td><td style="padding:4px 6px;color:#f87171;">Q2 &lt; 20% → 警报</td></tr>
+      <tr><td style="padding:4px 6px;">毛利率</td><td style="padding:4px 6px;">48.6%</td><td style="padding:4px 6px;color:#f87171;">&lt; 45% → 竞争恶化</td></tr>
+      <tr><td style="padding:4px 6px;">经营现金流</td><td style="padding:4px 6px;">-1.17亿 (Q1)</td><td style="padding:4px 6px;color:#f87171;">H1仍为负 → 盈利质量差</td></tr>
+      <tr><td style="padding:4px 6px;">北向持股比例</td><td style="padding:4px 6px;">1.99%</td><td style="padding:4px 6px;color:#f87171;">降至1.5%以下</td></tr>
+      <tr><td style="padding:4px 6px;">月度换手率</td><td style="padding:4px 6px;">~167% (7月)</td><td style="padding:4px 6px;color:#f87171;">持续&gt;200%或&lt;30%</td></tr>
+    </table>
+
+    <div class="divider"></div>
+    <h4 style="color:#fbbf24;font-size:1rem;">📅 催化剂日历（未来3-6个月）</h4>
+    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
+      <tr style="border-bottom:1px solid #334155;"><th style="text-align:left;padding:6px;">时间</th><th style="text-align:left;padding:6px;">事件</th><th style="text-align:left;padding:6px;">预期影响</th></tr>
+      <tr><td style="padding:4px 6px;">2026-08中旬</td><td style="padding:4px 6px;">H1 2026业绩预告/快报</td><td style="padding:4px 6px;">关键：Q2营收能否重回30%+增长</td></tr>
+      <tr><td style="padding:4px 6px;">2026-08-21-23</td><td style="padding:4px 6px;">世界机器人大会(北京)</td><td style="padding:4px 6px;">新客户/新产品催化</td></tr>
+      <tr><td style="padding:4px 6px;">2026-09</td><td style="padding:4px 6px;">特斯拉AI Day / Optimus更新</td><td style="padding:4px 6px;">产业链情绪提振</td></tr>
+      <tr><td style="padding:4px 6px;">2026-10</td><td style="padding:4px 6px;">Q3 2026财报</td><td style="padding:4px 6px;">验证全年增长轨迹</td></tr>
+      <tr><td style="padding:4px 6px;">2026-11</td><td style="padding:4px 6px;">越南工厂投产进展</td><td style="padding:4px 6px;">海外扩张里程碑</td></tr>
+    </table>
+
+    <div class="divider"></div>
+    <h4 style="color:#f87171;font-size:1rem;">⚠️ 风险提示</h4>
+    <div style="font-size:0.85rem;line-height:1.7;">
+      <strong>最大下行风险：</strong>人形机器人量产进度严重低于预期（目前市场定价的是"2026量产、2027爆发"），如果推迟至2028+，估值可能下跌70-80%。<br>
+      <strong>相关性风险：</strong>与AI/机器人板块高度正相关（持仓其他AI标的需要注意集中度）；与市场整体情绪高度相关（beta显著大于1）。<br>
+      <strong>流动性风险：</strong>科创板20%涨跌幅限制，极端行情下可能连续跌停无法止损。
+    </div>
+  </div>
+</section>
+
+<!-- PRICE CHART -->
+<section>
+  <div class="section-title">走势图 · 近一年日K线</div>
+  <div class="card">
+    <div class="chart-wrap"><canvas id="chartPrice"></canvas></div>
+    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+      数据来源：westock-data kline sh688322 --period day --limit 260 (截至2026-08-03)。红柱=上涨，绿柱=下跌。蓝色线=20日均线(MA20)。
+    </div>
+  </div>
+</section>
+
+<!-- RISK MATRIX -->
+<section>
+  <div class="section-title">6. 风险矩阵</div>
+  <div class="card">
+    <div class="risk-row">
+      <span class="risk-level risk-high">🔴 极高</span>
+      <span style="flex:1;"><strong>估值崩塌风险</strong>——PE 307x，一旦机器人叙事破裂或量产推迟，股价可能跌70-80%</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-high">🔴 极高</span>
+      <span style="flex:1;"><strong>营收增速失速</strong>——Q1 2026仅+6.2% YoY，如果Q2不能恢复30%+增长，成长逻辑将严重受损</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-med">🟡 中高</span>
+      <span style="flex:1;"><strong>竞争加剧</strong>——Intel RealSense可能加大中国市场投入；国内可能出现第二家3D视觉公司</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-med">🟡 中</span>
+      <span style="flex:1;"><strong>客户集中度</strong>——前几大机器人客户占比可能较高，单客户流失影响大</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-med">🟡 中</span>
+      <span style="flex:1;"><strong>技术路线风险</strong>——纯视觉方案(vs 3D结构光)如果在机器人领域被证明足够，将削弱奥比价值</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-low">🟢 低</span>
+      <span style="flex:1;"><strong>财务风险</strong>——负债率10.9%、现金6.6亿，资产负债表极其健康</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-level risk-low">🟢 低</span>
+      <span style="flex:1;"><strong>商誉减值</strong>——商誉仅322万，几乎为零</span>
+    </div>
+  </div>
+</section>
+
+<!-- BEHAVIORAL FINANCE CHECK -->
+<section>
+  <div class="section-title">7. 行为金融护栏</div>
+  <div class="card">
+    <div style="font-size:0.9rem;line-height:1.8;">
+      <strong>1. 确认偏误检查——"如果我看错了"的信号：</strong><br>
+      ① Q2 2026营收增速继续&lt;15%，说明Q1不是季节性因素而是趋势性放缓<br>
+      ② 核心机器人客户（智元/优必选）量产计划公开推迟<br>
+      ③ Intel RealSense宣布大幅降价或在中国设厂<br>
+      ④ 公司管理层开始减持（目前未发现）<br><br>
+
+      <strong>2. 锚定效应检查：</strong><br>
+      前高153元和近期低点80元不应成为买卖依据。分析应基于估值区间（DCF 14-20元基准，极度乐观90-130元），而非价格记忆。100元刚好是"中间位置"，容易产生"不贵也不便宜"的错觉。<br><br>
+
+      <strong>3. 过度自信检查：</strong><br>
+      给出的胜率45%可能偏高。人形机器人产业仍在极早期，单个公司失败率很高。如果实际胜率只有30%（打7折），凯利仓位应进一步降低。实际上在当前价格，凯利已经给出负值——本身就说明不适合下注。<br><br>
+
+      <strong>4. 近期偏差检查：</strong><br>
+      过去2个月经历了一波翻倍行情（5月80→7月153）又腰斩（→7月底80），短期波动巨大。拉长到3年看，公司2022年IPO以来长期在亏损，累计未分配利润-14.9亿。当前"AI机器人龙头"叙事可能过度反映了近期产业热度。
+    </div>
+  </div>
+</section>
+
+<!-- MULTI-BULL/BEAR DEBATE -->
+<section>
+  <div class="section-title">多空辩论</div>
+  <div class="bull-bear">
+    <div class="bull">
+      <h4>🔴 多头论点</h4>
+      <ol style="padding-left:20px;font-size:0.9rem;line-height:1.9;">
+        <li><strong>产业确定性高：</strong>人形机器人2026年确认为量产元年，3D视觉是必配传感器。奥比是A股唯一纯正标的，稀缺性溢价合理。</li>
+        <li><strong>技术壁垒真实：</strong>10年+研发、全技术路线覆盖、自研芯片、NVIDIA等生态绑定——不是PPT公司，有真实产品和头部客户。</li>
+        <li><strong>业绩拐点已至：</strong>FY2025扭亏、Q1毛利率升至48.6%，利润增速(27%)远超收入增速(6%)，经营杠杆正在释放。</li>
+      </ol>
+    </div>
+    <div class="bear">
+      <h4>🟢 空头论点</h4>
+      <ol style="padding-left:20px;font-size:0.9rem;line-height:1.9;">
+        <li><strong>估值是最大敌人：</strong>300x PE意味着即使完美执行，也需要5年+才能消化估值。稍有差池就是灾难性回撤。</li>
+        <li><strong>Q1营收失速是危险信号：</strong>+6.2%的季度增速与67%的年度增速严重背离，可能是渗透率提升斜率放缓的先行指标。</li>
+        <li><strong>护城河不如想象中深：</strong>RealSense背靠Intel的资源/渠道优势，如果真要大举进入中国市场，奥比的先发优势未必能守住。</li>
+      </ol>
+    </div>
+  </div>
+  <div style="background:#f8f9fb;border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px;">
+    <strong>🔑 变异认知（弈投师判断）：</strong>市场共识是"机器人爆发→奥比受益"，但分歧在于<strong>弹性的非对称性</strong>。如果机器人真的爆发，奥比可能涨3-5倍（对应300-500亿营收、60-80亿利润、20-30xPE→1200-2400亿市值）；如果不及预期，可能跌回DCF价值（14-20元）。<strong>这是一个高度非对称的期权——但当前价格已大幅压缩了上行空间。</strong>
+  </div>
+</section>
+
+<!-- MONTHLY CHART -->
+<section>
+  <div class="section-title">月K线走势</div>
+  <div class="card">
+    <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
+    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;">
+      数据来源：westock-data kline sh688322 --period month (截至2026-08-03)。月度成交量（柱）+ 收盘价（线）。
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>⚠️ 免责声明</strong><br>
+  本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。报告中的估值模型依赖多项假设，实际结果可能显著偏离。作者不持有奥比中光仓位，与该公司无利益关系。投资有风险，入市需谨慎。<br><br>
+  <strong>数据来源：</strong>westock-data（腾讯自选股）、国家统计局、央行、华创证券/中泰证券/国金证券/国投证券研报、公司公告。数据日期截至2026-08-03。<br>
+  <strong>模型局限：</strong>DCF对永续增长率和WACC高度敏感，±1%可导致估值±30%。可比公司因板块多数亏损，参考意义有限。<br><br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。
+</div>
+
+</div><!-- container -->
+
+<script>
+// ===== BASE OPTIONS HELPER =====
+function baseOpts(cfg) {
+  return Object.assign({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { font: { size: 12 }, usePointStyle: true, padding: 16 } },
+      tooltip: {
+        backgroundColor: '#1a1a2e',
+        titleFont: { size: 13 },
+        bodyFont: { size: 12 },
+        padding: 12,
+        cornerRadius: 6
+      }
+    }
+  }, cfg || {});
+}
+
+// ===== PRICE DATA =====
+const PRICE_DATA = {"meta":{"code":"sh688322","name":"奥比中光-W","period":"day","from":"2025-08-04","to":"2026-08-03"},"dates":["2026-08-03","2026-07-31","2026-07-30","2026-07-29","2026-07-28","2026-07-27","2026-07-24","2026-07-23","2026-07-22","2026-07-21","2026-07-20","2026-07-17","2026-07-16","2026-07-15","2026-07-14","2026-07-13","2026-07-10","2026-07-09","2026-07-08","2026-07-07","2026-07-06","2026-07-03","2026-07-02","2026-07-01","2026-06-30","2026-06-29","2026-06-26","2026-06-25","2026-06-24","2026-06-23","2026-06-22","2026-06-18","2026-06-17","2026-06-16","2026-06-15","2026-06-12","2026-06-11","2026-06-10","2026-06-09","2026-06-08","2026-06-05","2026-06-04","2026-06-03","2026-06-02","2026-06-01","2026-05-29","2026-05-28","2026-05-27","2026-05-26","2026-05-25","2026-05-22","2026-05-21","2026-05-20","2026-05-19","2026-05-18","2026-05-15","2026-05-14","2026-05-13","2026-05-12","2026-05-11","2026-05-08","2026-05-07","2026-05-06","2026-04-30","2026-04-29","2026-04-28","2026-04-27","2026-04-24","2026-04-23","2026-04-22","2026-04-21","2026-04-20","2026-04-17","2026-04-16","2026-04-15","2026-04-14","2026-04-13","2026-04-10","2026-04-09","2026-04-08","2026-04-07","2026-04-03","2026-04-02","2026-04-01","2026-03-31","2026-03-30","2026-03-27","2026-03-26","2026-03-25","2026-03-24","2026-03-23","2026-03-20","2026-03-19","2026-03-18","2026-03-17","2026-03-16","2026-03-13","2026-03-12","2026-03-11","2026-03-10","2026-03-09","2026-03-06","2026-03-05","2026-03-04","2026-03-03","2026-03-02","2026-02-27","2026-02-26","2026-02-25","2026-02-24","2026-02-13","2026-02-12","2026-02-11","2026-02-10","2026-02-09","2026-02-06","2026-02-05","2026-02-04","2026-01-30","2026-01-24","2026-01-23","2026-01-22","2026-01-21","2026-01-20","2026-01-19","2026-01-16","2026-01-15","2026-01-14","2026-01-13","2026-01-12","2026-01-09","2026-01-08","2026-01-07","2026-01-06","2026-01-05","2026-01-02","2025-12-31","2025-12-30","2025-12-29","2025-12-26","2025-12-25","2025-12-24","2025-12-23","2025-12-22","2025-12-19","2025-12-18","2025-12-17","2025-12-16","2025-12-15","2025-12-12","2025-12-11","2025-12-10","2025-12-09","2025-12-08","2025-12-05","2025-12-04","2025-12-03","2025-12-02","2025-12-01","2025-11-28","2025-11-27","2025-11-26","2025-11-25","2025-11-24","2025-11-21","2025-11-20","2025-11-19","2025-11-18","2025-11-17","2025-11-14","2025-11-13","2025-11-12","2025-11-11","2025-11-10","2025-11-07","2025-11-06","2025-11-05","2025-11-04","2025-11-03","2025-10-31","2025-10-30","2025-10-29","2025-10-28","2025-10-27","2025-10-24","2025-10-23","2025-10-22","2025-10-21","2025-10-20","2025-10-17","2025-10-16","2025-10-15","2025-10-14","2025-10-13","2025-10-10","2025-09-30","2025-09-29","2025-09-26","2025-09-25","2025-09-24","2025-09-23","2025-09-22","2025-09-19","2025-09-18","2025-09-17","2025-09-16","2025-09-15","2025-09-12","2025-09-11","2025-09-10","2025-09-09","2025-09-08","2025-09-05","2025-09-04","2025-09-03","2025-09-02","2025-09-01","2025-08-29","2025-08-28","2025-08-27","2025-08-26","2025-08-25","2025-08-22","2025-08-21","2025-08-20","2025-08-19","2025-08-18","2025-08-15","2025-08-14","2025-08-13","2025-08-12","2025-08-11","2025-08-08"],"closes":[100.23,93.86,79.98,86.38,87.91,91.89,87.57,90.94,93.60,97.65,92.80,100.15,114.56,113.96,111.52,109.61,117.00,119.77,113.83,129.50,127.21,147.33,130.01,135.00,130.55,117.51,119.85,123.00,125.80,122.88,128.04,133.73,130.68,132.18,127.80,122.98,124.50,134.51,148.40,144.17,126.06,114.55,112.26,103.23,103.04,111.47,111.24,112.50,116.99,118.29,118.15,109.60,102.68,100.71,95.40,89.00,84.91,87.65,87.03,87.18,87.92,86.50,81.42,79.58,78.01,76.66,79.00,77.18,79.81,82.65,82.30,84.16,84.74,83.54,81.30,82.22,82.41,80.68,77.64,79.90,74.60,76.13,75.53,77.98,75.00,75.87,75.65,75.49,76.69,74.66,74.70,73.85,75.65,78.99,77.99,80.00,80.68,81.97,83.16,84.20,81.66,83.00,84.38,82.17,82.27,88.52,91.07,91.55,91.35,92.10,96.77,94.54,93.26,94.10,93.11,92.95,89.06,90.93,95.70,95.85,104.35,103.60,99.45,97.26,97.97,98.30,96.21,94.70,96.62,95.97,94.08,92.50,93.87,93.46,93.74,89.67,89.40,89.95,86.50,88.10,87.40,85.75,85.88,80.24,83.22,85.34,84.68,83.15,83.43,82.99,82.00,81.34,80.58,84.00,83.11,82.80,82.33,82.59,82.60,82.11,80.71,80.20,82.01,80.86,81.56,83.14,82.28,79.40,76.09,77.68,78.60,77.97,79.85,83.46,84.08,82.08,82.48,85.20,87.37,87.89,89.13,88.09,86.79,85.83,84.97,83.01,83.83,82.39,81.02,80.62,80.88,82.22,84.80,86.96,91.10,88.60,85.88,85.88,88.15,87.50,89.86,90.10,89.61,89.05,90.11,87.50,87.75,90.10,89.07,86.50,84.26,81.43,82.57,83.80,82.89,83.53,84.33,83.76,83.49,80.64,80.98,83.28,83.26,81.10,79.59,78.39,80.25,80.01,79.16,78.33,79.68,83.24]};
+
+// ===== WEEKLY PRICE DATA =====
+const WEEKLY_DATA = {"dates":["2026-08-03","2026-07-31","2026-07-24","2026-07-17","2026-07-10","2026-07-03","2026-06-26","2026-06-18","2026-06-12","2026-06-05","2026-05-29","2026-05-22","2026-05-15","2026-05-08","2026-04-30","2026-04-24","2026-04-17","2026-04-10","2026-04-03","2026-03-27","2026-03-20","2026-03-13","2026-03-06","2026-02-27","2026-02-13","2026-02-06","2026-01-30","2026-01-23","2026-01-16","2026-01-09","2025-12-31","2025-12-26","2025-12-19","2025-12-12","2025-12-05","2025-11-28","2025-11-21","2025-11-14","2025-11-07","2025-10-31","2025-10-24","2025-10-17","2025-10-10","2025-09-30","2025-09-26","2025-09-19","2025-09-12","2025-09-05","2025-08-29","2025-08-22","2025-08-15","2025-08-08"],"closes":[100.23,93.86,87.57,100.15,117.00,147.33,119.85,133.73,122.98,126.06,111.47,118.15,89.00,87.92,79.58,77.18,84.74,80.68,76.13,75.65,73.85,80.68,83.00,91.07,96.77,92.95,95.70,104.35,98.30,94.08,89.67,86.50,80.24,83.43,84.00,82.59,80.86,76.09,83.46,87.37,85.83,81.02,86.96,91.10,85.88,90.10,87.75,81.43,84.33,83.28,80.25,83.24]};
+
+// ===== MONTHLY DATA =====
+const MONTHLY_DATA = {"dates":["2026-08-03","2026-07-31","2026-06-30","2026-05-29","2026-04-30","2026-03-31","2026-02-27","2026-01-30","2025-12-31","2025-11-28","2025-10-31","2025-09-30"],"closes":[100.23,93.86,130.55,111.47,79.58,75.00,91.07,95.70,89.67,82.59,87.37,91.10],"volumes":[22045149,392209979,532754936,3503711,1283937,1175943,942591,1910792,1553817,1294992,1594954,3288078]};
+
+// ===== CHART 1: Daily Price with MA20 =====
+(function() {
+  if (typeof Chart === 'undefined') return;
+  var ctx = document.getElementById('chartPrice');
+  if (!ctx) return;
+  var closes = PRICE_DATA.closes, dates = PRICE_DATA.dates;
+  var len = closes.length;
+  // Compute MA20
+  var ma20 = new Array(len).fill(null);
+  for (var i = 19; i < len; i++) {
+    var sum = 0; for (var j = i-19; j <= i; j++) sum += closes[j];
+    ma20[i] = (sum / 20).toFixed(2);
+  }
+  var bgColors = [];
+  for (var i = 0; i < len; i++) {
+    bgColors.push(i===0 ? 'rgba(37,99,235,0.3)' : (closes[i] >= closes[i-1] ? 'rgba(217,48,37,0.5)' : 'rgba(26,140,74,0.5)'));
+  }
+  var borderColors = [];
+  for (var i = 0; i < len; i++) {
+    borderColors.push(i===0 ? '#2563eb' : (closes[i] >= closes[i-1] ? '#d93025' : '#1a8c4a'));
+  }
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: dates.slice(-120),
+      datasets: [
+        { label: '日K线', data: closes.slice(-120), backgroundColor: bgColors.slice(-120), borderColor: borderColors.slice(-120), borderWidth: 0.5, order: 2, yAxisID: 'y' },
+        { label: 'MA20', data: ma20.slice(-120), type: 'line', borderColor: '#2563eb', borderWidth: 1.5, pointRadius: 0, fill: false, order: 1, yAxisID: 'y' }
+      ]
+    },
+    options: baseOpts({
+      plugins: { tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + (c.raw === null ? 'N/A' : c.raw); } } } },
+      scales: {
+        x: { ticks: { maxTicksLimit: 15, font: { size: 10 } }, grid: { display: false } },
+        y: { position: 'left', title: { display: true, text: '价格（元）' }, ticks: { font: { size: 10 } } }
+      }
+    })
+  });
+})();
+
+// ===== CHART 2: Revenue & Profit =====
+(function() {
+  if (typeof Chart === 'undefined') return;
+  var ctx = document.getElementById('chartRevenue');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['FY2024', 'FY2025', 'FY2026E', 'FY2027E', 'FY2028E'],
+      datasets: [
+        { label: '营收（亿元）', data: [5.64, 9.41, 13.2, 17.1, 21.4], backgroundColor: '#2563eb', borderRadius: 4, yAxisID: 'y' },
+        { label: '归母净利润（亿元）', data: [-0.63, 1.28, 2.88, 3.98, 4.83], backgroundColor: '#d93025', borderRadius: 4, yAxisID: 'y' }
+      ]
+    },
+    options: baseOpts({
+      scales: {
+        x: { grid: { display: false } },
+        y: { position: 'left', title: { display: true, text: '亿元' }, ticks: { font: { size: 10 } } }
+      }
+    })
+  });
+})();
+
+// ===== CHART 3: Cash Flow =====
+(function() {
+  if (typeof Chart === 'undefined') return;
+  var ctx = document.getElementById('chartCashflow');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['FY2025 Q1', 'FY2025 H1', 'FY2025 9M', 'FY2025', 'FY2026 Q1'],
+      datasets: [
+        { label: '经营现金流（亿元）', data: [null, 0.84, 1.18, 0.83, -1.17], backgroundColor: '#d93025', borderRadius: 4 },
+        { label: '归母净利润（亿元）', data: [0.24, 0.60, 1.08, 1.28, 0.31], backgroundColor: '#2563eb', borderRadius: 4 }
+      ]
+    },
+    options: baseOpts({
+      scales: {
+        x: { grid: { display: false } },
+        y: { position: 'left', title: { display: true, text: '亿元' }, ticks: { font: { size: 10 } } }
+      }
+    })
+  });
+})();
+
+// ===== CHART 4: Monthly =====
+(function() {
+  if (typeof Chart === 'undefined') return;
+  var ctx = document.getElementById('chartMonthly');
+  if (!ctx) return;
+  var md = MONTHLY_DATA;
+  var bgCols = [];
+  for (var i = 0; i < md.dates.length; i++) {
+    if (i === 0 || md.closes[i] >= md.closes[i-1]) bgCols.push('rgba(217,48,37,0.55)');
+    else bgCols.push('rgba(26,140,74,0.55)');
+  }
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: md.dates,
+      datasets: [
+        { label: '月成交量（手）', data: md.volumes, backgroundColor: bgCols, borderRadius: 3, yAxisID: 'y1', order: 2 },
+        { label: '月收盘价（元）', data: md.closes, type: 'line', borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#2563eb', fill: true, yAxisID: 'y', order: 1 }
+      ]
+    },
+    options: baseOpts({
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { position: 'left', title: { display: true, text: '收盘价（元）' }, ticks: { font: { size: 10 } } },
+        y1: { position: 'right', title: { display: true, text: '成交量（手）' }, grid: { display: false }, ticks: { font: { size: 10 }, callback: function(v) { return (v/10000).toFixed(0) + '万'; } } }
+      }
+    })
+  });
+})();
+</script>
+
+</body>
+</html>
