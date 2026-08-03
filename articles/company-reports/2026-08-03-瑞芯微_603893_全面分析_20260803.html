@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>瑞芯微(603893) 全面投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --red: #e74c3c; --green: #27ae60; --blue: #2980b9; --dark: #2c3e50;
+  --bg: #f8f9fa; --card-bg: #fff; --border: #e0e0e0; --text: #333; --muted: #777;
+  --accent: #1a1a2e; --gold: #f39c12;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 50px 30px; text-align: center; border-radius: 12px; margin-bottom: 24px; }
+.hero h1 { font-size: 2.2em; margin-bottom: 8px; }
+.hero .sub { font-size: 1.1em; opacity: .85; margin-bottom: 16px; }
+.hero .badge { display:inline-block; background: var(--red); color:#fff; padding:4px 14px; border-radius:20px; font-size:.85em; margin:4px; }
+.hero .badge.green { background: var(--green); }
+.hero .badge.blue { background: var(--blue); }
+
+/* Cards */
+.card { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border-left: 4px solid var(--blue); }
+.card.red { border-left-color: var(--red); }
+.card.green { border-left-color: var(--green); }
+.card.gold { border-left-color: var(--gold); }
+.card h2 { font-size: 1.4em; color: var(--dark); margin-bottom: 16px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+.card h3 { font-size: 1.1em; color: var(--blue); margin: 16px 0 8px; }
+.card h3.red { color: var(--red); }
+.card h3.green { color: var(--green); }
+
+/* Executive Summary */
+.exec-summary { background: linear-gradient(135deg, #fff9e6, #fff3cd); border:1px solid #f0d060; border-radius:10px; padding:24px; margin-bottom:20px; }
+.exec-summary h2 { color: #b8860b; margin-bottom:12px; }
+.exec-summary .verdict { font-size:1.15em; font-weight:600; color:#333; margin-bottom:12px; }
+.exec-summary .verdict .tag { display:inline-block; padding:2px 10px; border-radius:4px; font-size:.8em; margin-right:6px; }
+.exec-summary .verdict .buy { background:var(--red); color:#fff; }
+.exec-summary .verdict .hold { background:var(--gold); color:#fff; }
+
+/* Data Grid */
+.data-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin:16px 0; }
+.data-item { background: #f0f4f8; border-radius:8px; padding:16px; text-align:center; }
+.data-item .label { font-size:.8em; color:var(--muted); margin-bottom:4px; }
+.data-item .value { font-size:1.4em; font-weight:700; }
+.data-item .value.red { color:var(--red); }
+.data-item .value.green { color:var(--green); }
+
+/* Tables */
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.92em; }
+th { background: var(--dark); color:#fff; padding:10px 12px; text-align:left; }
+td { padding:10px 12px; border-bottom:1px solid var(--border); }
+tr:hover td { background: #f8f9ff; }
+td.up { color:var(--red); font-weight:600; }
+td.down { color:var(--green); font-weight:600; }
+
+/* Trading Plan Card */
+.trade-card { background: linear-gradient(135deg, #f0f7ff, #e8f0fe); border:2px solid var(--blue); border-radius:12px; padding:24px; margin:20px 0; }
+.trade-card h2 { color: var(--blue); margin-bottom:16px; }
+.trade-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #ccc; }
+.trade-row .key { color:var(--muted); min-width:120px; }
+.trade-row .val { font-weight:600; text-align:right; }
+.trade-row .val.warn { color:var(--red); }
+
+/* Risk Matrix */
+.risk-grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin:16px 0; }
+.risk-item { padding:14px; border-radius:8px; font-size:.9em; }
+.risk-high { background:#ffeaea; border-left:3px solid var(--red); }
+.risk-med { background:#fff8e1; border-left:3px solid var(--gold); }
+.risk-low { background:#e8f5e9; border-left:3px solid var(--green); }
+.risk-item .risk-label { font-weight:700; margin-bottom:4px; }
+
+/* Section dividers */
+.section-num { display:inline-block; background:var(--blue); color:#fff; width:32px; height:32px; border-radius:50%; text-align:center; line-height:32px; font-weight:700; margin-right:10px; font-size:.9em; }
+
+/* Catalyst Calendar */
+.cal-item { display:flex; padding:8px 0; border-bottom:1px solid var(--border); }
+.cal-item .date { min-width:120px; color:var(--blue); font-weight:600; font-size:.9em; }
+.cal-item .event { flex:1; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .container { padding:12px; }
+  .hero { padding:30px 16px; }
+  .hero h1 { font-size:1.6em; }
+  .data-grid { grid-template-columns: 1fr 1fr; }
+  .risk-grid { grid-template-columns: 1fr; }
+}
+
+/* Bull/Bear */
+.arg-section { display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin:16px 0; }
+.arg-card { padding:16px; border-radius:8px; }
+.arg-bull { background: #fff5f5; border:1px solid #ffcccc; }
+.arg-bear { background: #f5fff5; border:1px solid #ccffcc; }
+.arg-card h4 { margin-bottom:8px; }
+.arg-bull h4 { color: var(--red); }
+.arg-bear h4 { color: var(--green); }
+.arg-card li { margin:6px 0; font-size:.92em; }
+
+/* chart wrapper */
+.chart-wrap { max-width:100%; margin:16px 0; }
+.chart-wrap canvas { max-height:350px; }
+
+/* Disclaimer */
+.disclaimer { margin-top:40px; padding:20px; background:#f0f0f0; border-radius:8px; font-size:.82em; color:var(--muted); text-align:center; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>瑞芯微 (603893.SH)</h1>
+  <div class="sub">端侧AI SoC 龙头 · 五层漏斗全面分析</div>
+  <div>
+    <span class="badge">📊 PE-TTM 67.3x</span>
+    <span class="badge green">📈 H1净利+65%</span>
+    <span class="badge blue">🤖 端侧AI</span>
+    <span class="badge">🏭 半导体/电子</span>
+  </div>
+  <div style="margin-top:12px; font-size:.85em; opacity:.7;">报告日期: 2026-08-03 | 分析师: 弈投师 | 数据截止: 当日收盘</div>
+</div>
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+  <h2>📋 执行摘要</h2>
+  <div class="verdict">
+    <span class="tag buy">建议评级: 逢低配置</span>
+    <span class="tag hold">仓位建议: 5-8%</span>
+  </div>
+  <p><strong>一句话投资逻辑：</strong>瑞芯微是国内端侧AI SoC赛道最纯正标的，2026H1业绩超预期（营收+40%、净利+65%），RK182X协处理器打开第二增长曲线。但当前半导体板块估值处于历史88%分位，叠加美联储鹰派+AI板块回调的宏观逆风，短期面临估值的"地心引力"。建议在160-175区间逢低建仓，等待8月下旬半年报落地催化。</p>
+  <p style="margin-top:10px; font-size:.9em; color:var(--muted);">
+    ⚠️ <strong>核心矛盾：</strong>基本面极强（H1利润增65%、产品高端化红利兑现） vs 估值不便宜（PE 67x、板块88%分位）+ 宏观逆风（美联储9月加息概率63%）。这是一场"好公司 vs 贵价格"的经典对决。
+  </p>
+</div>
+
+<!-- ===== LAYER 1: MACRO ===== -->
+<div class="card red">
+  <h2><span class="section-num">1</span> Layer 1 · 宏观定方向</h2>
+  <p style="font-size:1.05em; font-weight:600; color:var(--red); margin-bottom:12px;">
+    ⬇️ 宏观判断：偏防御 | 建议权益仓位：50-55% | 最大风险：美联储超预期加息
+  </p>
+
+  <div class="data-grid">
+    <div class="data-item">
+      <div class="label">中国制造业PMI (7月)</div>
+      <div class="value" style="color:var(--green);">49.2</div>
+      <div style="font-size:.75em; color:var(--muted);">环比-1.1 ↓ 重回收缩区间</div>
+    </div>
+    <div class="data-item">
+      <div class="label">沪深300 PE-TTM</div>
+      <div class="value">14.24x</div>
+      <div style="font-size:.75em; color:var(--muted);">历史 67% 分位</div>
+    </div>
+    <div class="data-item">
+      <div class="label">10年美债收益率</div>
+      <div class="value" style="color:var(--red);">4.74%</div>
+      <div style="font-size:.75em; color:var(--muted);">高位震荡</div>
+    </div>
+    <div class="data-item">
+      <div class="label">Fed 9月加息概率</div>
+      <div class="value" style="color:var(--red);">63%</div>
+      <div style="font-size:.75em; color:var(--muted);">FedWatch 隐含</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>信号</th><th>对瑞芯微的影响</th></tr>
+    <tr>
+      <td>经济周期</td>
+      <td>PMI 49.2（收缩）</td>
+      <td style="color:var(--gold);">⚠️ 中性偏弱</td>
+      <td>消费电子需求承压，但AIoT结构性增长对冲</td>
+    </tr>
+    <tr>
+      <td>货币政策</td>
+      <td>Fed鹰派、中国LPR稳定</td>
+      <td style="color:var(--red);">🔴 偏紧</td>
+      <td>高估值成长股承压，融资成本上升</td>
+    </tr>
+    <tr>
+      <td>市场估值</td>
+      <td>沪深300 PE 67%分位</td>
+      <td style="color:var(--gold);">⚠️ 中性偏高</td>
+      <td>整体不算极端，但半导体板块过热</td>
+    </tr>
+    <tr>
+      <td>风险偏好</td>
+      <td>AI/半导体回调、两融回落</td>
+      <td style="color:var(--red);">🔴 收缩</td>
+      <td>科创50周跌8%，资金从成长向价值轮动</td>
+    </tr>
+  </table>
+
+  <p style="margin-top:12px; font-size:.9em; color:var(--muted);">
+    来源: PMI — westock-data macro indicator (2026-07) | 沪深300 PE — 申万宏源策略周报 (2026-08-02) | FedWatch — CME/frenzycap (2026-08) | 资金流向 — 中国银河策略 (2026-08-03)
+  </p>
+</div>
+
+<!-- ===== LAYER 2: INDUSTRY ===== -->
+<div class="card gold">
+  <h2><span class="section-num">2</span> Layer 2 · 行业选赛道</h2>
+  <p style="font-size:1.05em; font-weight:600; color:var(--gold); margin-bottom:12px;">
+    🟡 半导体/AIoT赛道：高景气但高估值 | 周期位置：AIoT 2.0 爆发中期
+  </p>
+
+  <div class="data-grid">
+    <div class="data-item">
+      <div class="label">电子行业 PE-TTM</div>
+      <div class="value" style="color:var(--red);">91.54x</div>
+      <div style="font-size:.75em; color:var(--muted);">历史 88% 分位</div>
+    </div>
+    <div class="data-item">
+      <div class="label">电子行业 PB</div>
+      <div class="value" style="color:var(--red);">7.15x</div>
+      <div style="font-size:.75em; color:var(--muted);">历史 94% 分位</div>
+    </div>
+    <div class="data-item">
+      <div class="label">费城半导体 (周)</div>
+      <div class="value" style="color:var(--green);">-4.3%</div>
+      <div style="font-size:.75em; color:var(--muted);">全球半导体调整</div>
+    </div>
+    <div class="data-item">
+      <div class="label">端侧AI市场 CAGR</div>
+      <div class="value" style="color:var(--red);">>25%</div>
+      <div style="font-size:.75em; color:var(--muted);">未来2年预期</div>
+    </div>
+  </div>
+
+  <h3>端侧AI SoC 竞争格局</h3>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>PE-TTM</th><th>核心定位</th><th>制程</th></tr>
+    <tr>
+      <td><strong>瑞芯微</strong></td>
+      <td>603893</td>
+      <td class="up" style="font-weight:700;">67.3x</td>
+      <td>AIoT全场景平台，RK3588旗舰+RK182X协处理器</td>
+      <td>8nm/12nm</td>
+    </tr>
+    <tr>
+      <td>晶晨股份</td>
+      <td>688099</td>
+      <td>45.5x</td>
+      <td>智能机顶盒/电视SoC，谷歌生态绑定</td>
+      <td>6nm/12nm</td>
+    </tr>
+    <tr>
+      <td>全志科技</td>
+      <td>300458</td>
+      <td>85.7x</td>
+      <td>泛智能终端SoC，性价比路线</td>
+      <td>22nm/28nm</td>
+    </tr>
+  </table>
+
+  <p style="margin-top:12px; font-size:.9em;">
+    <strong>行业判断：</strong>半导体/AIoT赛道处于端侧AI 2.0的爆发期，RK182X全球首款3D堆叠架构协处理器突破端侧大模型部署瓶颈，赛道景气度高。但行业整体PE在88%分位，过去的7月经历了一轮剧烈去杠杆（科创50周跌8%），资金正从半导体向消费/周期轮动。瑞芯微在此赛道中的相对优势（制程领先、NPU自研、5000+客户生态）使其具备α，但行业β的估值压力不可忽视。
+  </p>
+  <p style="font-size:.9em; color:var(--muted);">
+    来源: 行业估值 — westock-data sector valuation pt01801080 (2026-08-03) | 费城半导体 — 申万宏源周报 | 竞争数据 — Tushare daily_basic / 公开研报
+  </p>
+</div>
+
+<!-- ===== LAYER 3: SCREENING ===== -->
+<div class="card">
+  <h2><span class="section-num">3</span> Layer 3 · 量化初筛（单票验证）</h2>
+  <p style="margin-bottom:12px;">针对瑞芯微执行硬性淘汰检查（非全市场筛选，用户指定单票分析）</p>
+
+  <table>
+    <tr><th>检查项</th><th>阈值</th><th>实际值</th><th>结果</th></tr>
+    <tr>
+      <td>近3年经营现金流</td><td>≥2年为正</td>
+      <td>FY2023-2025均正向（2024: 8.47亿, 2025: 10.69亿）</td>
+      <td style="color:var(--green);">✅ 通过</td>
+    </tr>
+    <tr>
+      <td>商誉/净资产</td><td>&lt;30%</td>
+      <td>极低（Fabless设计公司，M&A少）</td>
+      <td style="color:var(--green);">✅ 通过</td>
+    </tr>
+    <tr>
+      <td>大股东质押率</td><td>&lt;50%</td>
+      <td>[MISSING: 需进一步核实，但近期无异常质押公告]</td>
+      <td style="color:var(--gold);">⚠️ 待核实</td>
+    </tr>
+    <tr>
+      <td>近2年重大违规</td><td>无</td>
+      <td>无处罚记录</td>
+      <td style="color:var(--green);">✅ 通过</td>
+    </tr>
+    <tr>
+      <td>日均成交额</td><td>&gt;3000万</td>
+      <td>近期日均 30-70亿</td>
+      <td style="color:var(--green);">✅ 极强流动性</td>
+    </tr>
+  </table>
+
+  <h3>多因子速评</h3>
+  <table>
+    <tr><th>因子</th><th>指标</th><th>值</th><th>评价</th></tr>
+    <tr><td>价值</td><td>PE-TTM / PB</td><td>67.3x / 16.4x</td><td style="color:var(--green);">偏贵</td></tr>
+    <tr><td>质量</td><td>ROE / 经营CF/净利</td><td>24.6% / 1.16</td><td style="color:var(--red);">优秀</td></tr>
+    <tr><td>成长</td><td>营收3年CAGR / 净利增速</td><td>~35% / +74.8% (FY2025)</td><td style="color:var(--red);">强劲</td></tr>
+    <tr><td>动量</td><td>近3月相对行业超额</td><td>-15% (近期剧烈回调)</td><td style="color:var(--green);">负动量</td></tr>
+  </table>
+  <p style="font-size:.85em; color:var(--muted);">来源: 财务数据 — westock-data finance sh603893 (2026-08-03) | 经营现金流 — Tushare cashflow</p>
+</div>
+
+<!-- ===== LAYER 4: DEEP RESEARCH ===== -->
+<div class="card green">
+  <h2><span class="section-num">4</span> Layer 4 · 深度研究</h2>
+
+  <!-- 4a. Business Model -->
+  <h3>4a. 商业模式拆解</h3>
+  <p><strong>怎么赚钱？</strong>瑞芯微是Fabless IC设计公司，核心产品为AIoT领域的SoC系统级芯片和AI协处理器。收入结构中智能应用处理器SoC占比约89%，AI协处理器（RK182X系列）快速放量，电源管理/数模混合芯片约10%。下游覆盖四大赛道：</p>
+  <ul style="margin:8px 0 8px 20px;">
+    <li><strong>消费电子（基本盘）</strong>：智能音箱市占>40%、扫地机器人芯片市占31%</li>
+    <li><strong>汽车电子（增长极）</strong>：智能座舱打入比亚迪、蔚来等供应链</li>
+    <li><strong>机器人（爆发点）</strong>：宇树科技Go2等四足/人形机器人主控</li>
+    <li><strong>工业（护城河）</strong>：工控市占>30%，获2026 ICA金控奖</li>
+  </ul>
+
+  <p><strong>护城河在哪？</strong></p>
+  <ol style="margin:8px 0 8px 20px;">
+    <li><strong>自研NPU IP壁垒</strong>：覆盖1TOPS-16TOPS+全算力梯队，国际仅次于高通/联发科</li>
+    <li><strong>制程领先</strong>：主力8nm/12nm，推进5nm RK3688，领先全志(28nm)一代以上</li>
+    <li><strong>RK182X独家架构</strong>：全球首款3D堆叠AI协处理器，能效为竞品3倍、功耗1/6，支持7B大模型离线推理</li>
+    <li><strong>全栈生态</strong>：5000+客户、完善SDK、芯片+算法+行业方案，客户切换成本极高</li>
+  </ol>
+
+  <!-- 4b. Financial Deep Dive -->
+  <h3>4b. 财务深度分析</h3>
+  <div class="data-grid">
+    <div class="data-item">
+      <div class="label">FY2025 营收</div>
+      <div class="value red">44.02亿</div>
+      <div style="font-size:.75em;">+40.4% YoY</div>
+    </div>
+    <div class="data-item">
+      <div class="label">FY2025 归母净利</div>
+      <div class="value red">10.40亿</div>
+      <div style="font-size:.75em;">+74.8% YoY</div>
+    </div>
+    <div class="data-item">
+      <div class="label">2026Q1 营收</div>
+      <div class="value red">12.05亿</div>
+      <div style="font-size:.75em;">+36.2% YoY</div>
+    </div>
+    <div class="data-item">
+      <div class="label">2026H1E 净利</div>
+      <div class="value red">8.5-9.1亿</div>
+      <div style="font-size:.75em;">+60-71% YoY</div>
+    </div>
+    <div class="data-item">
+      <div class="label">毛利率 (Q1 2026)</div>
+      <div class="value red">43.04%</div>
+      <div style="font-size:.75em;">↑ 高端化改善</div>
+    </div>
+    <div class="data-item">
+      <div class="label">ROE (TTM)</div>
+      <div class="value red">24.6%</div>
+      <div style="font-size:.75em;">高质量盈利</div>
+    </div>
+    <div class="data-item">
+      <div class="label">资产负债率</div>
+      <div class="value green">17.9%</div>
+      <div style="font-size:.75em;">极低杠杆</div>
+    </div>
+    <div class="data-item">
+      <div class="label">经营CF / 净利</div>
+      <div class="value red">1.16x</div>
+      <div style="font-size:.75em;">盈利质量好</div>
+    </div>
+    <div class="data-item">
+      <div class="label">货币资金</div>
+      <div class="value">11.66亿</div>
+      <div style="font-size:.75em;">+20.2亿交易性金融资产</div>
+    </div>
+    <div class="data-item">
+      <div class="label">研发费用率</div>
+      <div class="value">13.2%</div>
+      <div style="font-size:.75em;">FY2025: 6.84亿</div>
+    </div>
+  </div>
+
+  <p style="margin-top:12px;"><strong>杜邦分解：</strong>ROE = 净利率(23.6%) × 周转率(0.82x) × 杠杆(1.28x) = 24.6%。高ROE主要来自高净利率，而非加杠杆，质量优秀。</p>
+  <p><strong>成长驱动力：</strong>量价双驱动——量：AIoT渗透率提升+新品放量(RK182X)，价：产品结构高端化（旗舰RK3588占比提升→毛利率从FY2024的34%升至43%）</p>
+  <p><strong>风险点：</strong>经营现金流TTM 11.40亿 vs 净利TTM 11.60亿，基本匹配。但投资现金流大幅流出（-17.43亿TTM），主要用于购买交易性金融资产和理财，非资本开支问题。存货从FY2024的8.06亿升至Q1 2026的13.04亿，存在存货减值风险需关注。</p>
+
+  <!-- 4c. Valuation -->
+  <h3>4c. 估值 — 三种方法交叉验证</h3>
+  
+  <p><strong>方法一：可比估值</strong></p>
+  <table>
+    <tr><th>公司</th><th>PE-TTM</th><th>2026E PE</th><th>营收增速(Q1)</th><th>净利增速(Q1)</th><th>毛利率</th></tr>
+    <tr>
+      <td><strong>瑞芯微</strong></td>
+      <td class="up">67.3x</td>
+      <td>~56x</td>
+      <td class="up">+36.2%</td>
+      <td class="up">+57.2%</td>
+      <td>43.0%</td>
+    </tr>
+    <tr>
+      <td>晶晨股份</td>
+      <td>45.5x</td>
+      <td>~29x</td>
+      <td>+10-20%</td>
+      <td>+6%</td>
+      <td>~35%</td>
+    </tr>
+    <tr>
+      <td>全志科技</td>
+      <td>85.7x</td>
+      <td>~87x</td>
+      <td>-</td>
+      <td class="up">+121%</td>
+      <td>40.2%</td>
+    </tr>
+  </table>
+  <p>瑞芯微PE处于三家公司中间位。但考虑到其营收/净利增速和毛利率远超晶晨，PEG（56/62≈0.9）反而在合理偏低区间。机构一致预期2026E EPS 3.98元、2027E 5.19元，对应前瞻PE 46.4x / 35.6x（基于当前184.37元）。</p>
+
+  <p><strong>方法二：DCF情景分析</strong> (来源: Model Est.)</p>
+  <table>
+    <tr><th>情景</th><th>关键假设</th><th>2026-2028 CAGR</th><th>WACC</th><th>永续增长</th><th>目标价</th></tr>
+    <tr>
+      <td style="color:var(--red);">🟢 乐观</td>
+      <td>RK182X大爆发，汽车+机器人超预期</td><td>35%</td><td>9.5%</td><td>3.5%</td>
+      <td class="up">240-260元</td>
+    </tr>
+    <tr>
+      <td style="color:var(--gold);">🟡 基准</td>
+      <td>AIoT稳健增长，毛利率维持43%</td><td>25%</td><td>10%</td><td>3%</td>
+      <td class="up">190-220元</td>
+    </tr>
+    <tr>
+      <td style="color:var(--green);">🔴 悲观</td>
+      <td>消费电子周期下行，竞争加剧</td><td>15%</td><td>11%</td><td>2%</td>
+      <td class="down">130-155元</td>
+    </tr>
+  </table>
+
+  <p><strong>方法三：历史估值分位</strong><br>
+  瑞芯微过去12个月PE波动区间：108x（2026年3月高点）→ 67x（当前）。当前PE处于近1年约30%分位（相对自身历史偏低位），但绝对估值仍不便宜。</p>
+
+  <!-- Bull/Bear -->
+  <h3>多空双方核心论点</h3>
+  <div class="arg-section">
+    <div class="arg-card arg-bull">
+      <h4>🔴 多头论点</h4>
+      <ol>
+        <li><strong>业绩超预期持续：</strong>H1 2026净利增65%，全年有望冲击13-14亿（vs 机构共识13亿），超预期概率大</li>
+        <li><strong>RK182X第二曲线：</strong>全球独家3D堆叠架构AI协处理器，解决端侧大模型部署痛点，2026年放量元年</li>
+        <li><strong>赛道不可替代性：</strong>国内唯一同时覆盖机器人+汽车电子+智能家居+工业四大AIoT场景的平台型芯片公司，5000+客户粘性极强</li>
+      </ol>
+    </div>
+    <div class="arg-card arg-bear">
+      <h4>🟢 空头论点</h4>
+      <ol>
+        <li><strong>估值不便宜：</strong>PE 67x，即使按2026E也还有56x。半导体板块88%分位，全球AI估值回调风险</li>
+        <li><strong>宏观逆风：</strong>Fed 9月加息概率63%，高利率环境压制成长股估值；中国PMI 49.2重回收缩</li>
+        <li><strong>存货攀升：</strong>存货13亿（较FY2024的8亿增60%+），需警惕下半年减值风险；制程依赖台积电，地缘风险</li>
+      </ol>
+    </div>
+  </div>
+
+  <p style="margin-top:12px;"><strong>变异认知：</strong>市场可能低估了RK182X协处理器的放量节奏。此前市场把它当"概念"，但H1业绩预告暗示Q2已经开始贡献实质收入（不然利润增速无法大幅超过营收）。如果8月半年报确认协处理器出货量，将触发业绩+估值的戴维斯双击。但反过来，如果半年报显示存货减值或毛利率回落，将是对多头逻辑的致命打击。</p>
+
+  <p style="font-size:.85em; color:var(--muted); margin-top:8px;">
+    来源: 财务 — westock-data finance / Tushare | 一致预期 — 多家券商研报汇总 (申万/中信建投/东吴/中银/国盛) | DCF — Model Est. | 竞争数据 — 公开研报+雪球
+  </p>
+</div>
+
+<!-- ===== LAYER 5: TRADING PLAN ===== -->
+<div class="card gold">
+  <h2><span class="section-num">5</span> Layer 5 · 交易计划</h2>
+
+  <div class="trade-card">
+    <h2>🎯 交易计划卡片 — 瑞芯微 (603893)</h2>
+    
+    <div class="trade-row">
+      <span class="key">买入逻辑</span>
+      <span class="val">端侧AI SoC龙头，H1业绩确定性高（+65%净利），RK182X协处理器打开第二增长曲线，近期回调-20%提供安全边际改善</span>
+    </div>
+    <div class="trade-row">
+      <span class="key">目标价区间</span>
+      <span class="val" style="color:var(--red);">190 - 220 元（基准情景 DCF + 2026E 55x PE）</span>
+    </div>
+    <div class="trade-row">
+      <span class="key">建议买入区间</span>
+      <span class="val" style="color:var(--red);">160 - 175 元（目标价留 12-15% 安全边际）</span>
+    </div>
+    <div class="trade-row">
+      <span class="key">当前价格</span>
+      <span class="val">184.37 元（2026-08-03 收盘）</span>
+    </div>
+
+    <h3 style="margin-top:20px;">📐 仓位计算（凯利公式）</h3>
+    <div class="trade-row">
+      <span class="key">胜率 p</span>
+      <span class="val">55%</span>
+    </div>
+    <div style="font-size:.85em; color:var(--muted); padding:4px 0 8px;">
+      依据：H1业绩预告已锁定高增（确定性高）+ 产业趋势向上（端侧AI爆发初期）+ 估值已从231回调-20%释放部分风险。但宏观（Fed加息风险）和板块（半导体88%分位）给予50%的折价。
+    </div>
+    <div class="trade-row">
+      <span class="key">赔率 b</span>
+      <span class="val">1.23</span>
+    </div>
+    <div style="font-size:.85em; color:var(--muted); padding:4px 0 8px;">
+      止盈 220元 / 止损 155元：b = (220-184) / (184-155) - 1 = 36/29 = 1.24<br>
+      若在165元建仓：b = (220-165)/(165-155) - 1 = 55/10 = 5.5（赔率大幅提升）
+    </div>
+    <div class="trade-row">
+      <span class="key">理论仓位 f*</span>
+      <span class="val" style="color:var(--red);">18.3%</span>
+    </div>
+    <div style="font-size:.85em; color:var(--muted); padding:4px 0;">
+      f* = (1.23×0.55 - 0.45)/1.23 = 18.3%
+    </div>
+    <div class="trade-row">
+      <span class="key">实操建议仓位</span>
+      <span class="val" style="color:var(--red); font-size:1.2em;">5-8%（1/3 凯利）</span>
+    </div>
+    <div style="font-size:.85em; color:var(--muted); padding:4px 0;">
+      实操降仓原因：① 半导体板块高估值+宏观偏防御 → 避免单票重仓；② 单票≤15%、单行业≤30%纪律约束；③ 当前位置尚未到理想买入区间（184 vs 160-175）
+    </div>
+
+    <h3 style="margin-top:20px;">🛑 止损规则</h3>
+    <div class="trade-row"><span class="key">逻辑止损</span><span class="val">H1正式年报净利<8亿（低于预告下限）、或毛利率跌破40%</span></div>
+    <div class="trade-row"><span class="key">技术止损</span><span class="val warn">跌破 155 元（前低支撑区域 147-155）</span></div>
+    <div class="trade-row"><span class="key">时间止损</span><span class="val">8月下旬半年报发布后1个月若无反弹，减半仓</span></div>
+    <div class="trade-row"><span class="key">绝对止损</span><span class="val warn">亏损超过 15% 无条件平仓</span></div>
+
+    <h3 style="margin-top:20px;">🏁 止盈规则</h3>
+    <div class="trade-row"><span class="key">第一目标</span><span class="val">200 元（目标价中枢，减仓 1/3）</span></div>
+    <div class="trade-row"><span class="key">第二目标</span><span class="val">220 元（估值上限，清仓）</span></div>
+
+    <h3 style="margin-top:20px;">📊 跟踪指标（每周检查）</h3>
+    <table>
+      <tr><th>指标</th><th>当前值</th><th>预警阈值</th><th>数据来源</th></tr>
+      <tr><td>瑞芯微 PE-TTM</td><td>67.3x</td><td>&gt;80x（减仓）/ &lt;50x（加仓）</td><td>westock-data / Tushare</td></tr>
+      <tr><td>半导体板块 PE 分位</td><td>88%</td><td>&gt;95%（系统性减仓）</td><td>westock-data sector valuation</td></tr>
+      <tr><td>北向持股比例</td><td>3.19%</td><td>&lt;2%（外资撤离信号）</td><td>westock-data fund north-holding</td></tr>
+      <tr><td>日均成交额</td><td>30-70亿</td><td>&lt;10亿（流动性恶化）</td><td>westock-data kline</td></tr>
+      <tr><td>中国PMI</td><td>49.2</td><td>&lt;48（宏观恶化）</td><td>westock-data macro indicator</td></tr>
+    </table>
+
+    <h3 style="margin-top:20px;">📅 催化剂日历（未来3-6个月）</h3>
+    <div class="cal-item"><span class="date">2026-08-中旬</span><span class="event"><strong>2026半年报正式发布</strong> — 关注：RK182X出货量数据、毛利率趋势、存货变动</span></div>
+    <div class="cal-item"><span class="date">2026-09-16</span><span class="event"><strong>FOMC 9月会议</strong> — Fed加息概率63%，若加息将压制成长股估值</span></div>
+    <div class="cal-item"><span class="date">2026-10月</span><span class="event"><strong>Q3业绩预告窗口</strong> — 验证下半年增长持续性和RK182X放量节奏</span></div>
+    <div class="cal-item"><span class="date">2026-Q4</span><span class="event"><strong>RK3688 (5nm) 流片进展</strong> — 若成功将打开2027-2028成长空间</span></div>
+
+    <p style="margin-top:16px; font-size:.9em; color:var(--muted);">
+      来源: 凯利计算 — Model Est. | 股价/技术面 — westock-data kline | 催化剂 — 公司公告+行业日历
+    </p>
+  </div>
+</div>
+
+<!-- ===== RISK MATRIX ===== -->
+<div class="card">
+  <h2><span class="section-num">6</span> 风险矩阵</h2>
+  <div class="risk-grid">
+    <div class="risk-item risk-high">
+      <div class="risk-label">🔴 估值回调风险 (高)</div>
+      <p>半导体板块PE 88%分位，全球AI板块回调。若Fed超预期加息或AI投资回报不及预期，高估值成长股首当其冲。最大下行：板块PE回归均值(65-70x) → 对应股价140-150元</p>
+    </div>
+    <div class="risk-item risk-high">
+      <div class="risk-label">🔴 存货减值风险 (高)</div>
+      <p>存货13亿（较FY2024增60%+）。若下游需求转弱或新品切换导致老品滞销，可能面临一次性减值冲击利润</p>
+    </div>
+    <div class="risk-item risk-med">
+      <div class="risk-label">🟡 地缘/供应链风险 (中)</div>
+      <p>制程依赖台积电（8nm/12nm），台海局势升级可能导致供应中断；美国对华芯片限制政策变化</p>
+    </div>
+    <div class="risk-item risk-med">
+      <div class="risk-label">🟡 竞争加剧风险 (中)</div>
+      <p>高通、联发科在端侧AI加码；国内晶晨6nm量产、全志性价比竞争。但瑞芯微NPU自研+生态壁垒提供缓冲</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BEHAVIORAL CHECKS ===== -->
+<div class="card">
+  <h2><span class="section-num">🧠</span> 行为金融护栏检查</h2>
+  <table>
+    <tr><th>偏误类型</th><th>检查结果</th></tr>
+    <tr>
+      <td><strong>确认偏误</strong></td>
+      <td>如果看错了的信号：① H1正式年报净利<8亿或毛利率<40% ② RK182X出货量不及预期（H1 <100万颗）③ 存货继续攀升至15亿+且周转天数恶化。这些都应触发立即重新评估。</td>
+    </tr>
+    <tr>
+      <td><strong>锚定效应</strong></td>
+      <td>是否存在受231元近期高点和145元近期低点锚定的影响？已通过DCF估值区间（190-220）而非价格记忆来设定目标价，避免了"一定回到231"的锚定。当前184元接近DCF基准估值的下沿，但尚未进入安全边际区间。</td>
+    </tr>
+    <tr>
+      <td><strong>过度自信</strong></td>
+      <td>胜率p=55%。如果实际胜率只有44%（低20%），凯利仓位变为 (1.23×0.44-0.56)/1.23 = 负值 → 不应持仓。这说明在当前价格（184元）下，安全边际不足。在165元建仓时：b=5.5, p=44% → f*=34% → 仍然可观。结论：入场价格至关重要。</td>
+    </tr>
+    <tr>
+      <td><strong>近期偏差</strong></td>
+      <td>7月半导体暴跌（科创50周跌8%）可能让人过度悲观；而6月之前的暴涨（从150到231，+54%）可能让人过度乐观。拉长到3年看：瑞芯微2024年初约60元→当前184元，累计涨幅200%+，基本面确实发生了质变（从消费电子→AI平台），当前估值虽有泡沫但并非纯炒作。</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== PRICE CHART ===== -->
+<div class="card">
+  <h2>📈 近1年股价走势</h2>
+  <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+  <p style="font-size:.82em; color:var(--muted); margin-top:8px;">数据来源: westock-data kline sh603893 (2025-08 ~ 2026-08, 每日)</p>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p><strong>⚠️ 免责声明</strong></p>
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。报告中的估值、目标价、仓位建议均为模型估算，不代表未来实际表现。投资有风险，入市需谨慎。数据来源包括 westock-data、Tushare、公开研报及网络搜索，数据可能存在延迟，以交易所官方为准。</p>
+  <p style="margin-top:8px;">本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Price data from westock-data kline (selected points for readability)
+  const priceData = {
+    dates: ['2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08-03'],
+    closes: [158.9, 172.5, 168.3, 175.8, 182.4, 176.1, 184.4, 152.2, 182.9, 175.7, 188.4, 188.0, 184.4],
+    volumes: [1.35, 1.42, 1.28, 1.51, 1.38, 0.85, 0.98, 1.19, 1.54, 3.84, 2.74, 5.99, 3.98]
+  };
+
+  const ctx = document.getElementById('priceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: priceData.dates,
+      datasets: [{
+        label: '收盘价 (元)',
+        data: priceData.closes,
+        borderColor: '#e74c3c',
+        backgroundColor: 'rgba(231,76,60,0.08)',
+        borderWidth: 2.5,
+        tension: 0.3,
+        fill: true,
+        pointRadius: 3,
+        pointBackgroundColor: '#e74c3c',
+        yAxisID: 'y'
+      }, {
+        label: '成交额 (亿元)',
+        data: priceData.volumes,
+        borderColor: '#2980b9',
+        backgroundColor: 'rgba(41,128,185,0.1)',
+        borderWidth: 1.5,
+        borderDash: [4,4],
+        tension: 0.3,
+        fill: false,
+        pointRadius: 0,
+        yAxisID: 'y1'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { position: 'top', labels: { usePointStyle: true, padding: 20 } },
+        tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.raw.toFixed(2); } } }
+      },
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: '收盘价 (元)', color: '#e74c3c' },
+          grid: { color: '#eee' },
+          min: 130,
+          max: 240
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: '成交额 (亿元)', color: '#2980b9' },
+          grid: { display: false },
+          min: 0,
+          max: 10
+        }
+      }
+    },
+    plugins: [{
+      id: 'annotationLine',
+      afterDraw: function(chart) {
+        const ctx2 = chart.ctx;
+        const meta = chart.getDatasetMeta(0);
+        if (!meta.data.length) return;
+        const yScale = chart.scales.y;
+        
+        // Target zone
+        const t1 = yScale.getPixelForValue(190);
+        const t2 = yScale.getPixelForValue(220);
+        ctx2.fillStyle = 'rgba(231,76,60,0.06)';
+        ctx2.fillRect(chart.chartArea.left, t2, chart.chartArea.right - chart.chartArea.left, t1 - t2);
+        ctx2.fillStyle = '#e74c3c';
+        ctx2.font = '10px sans-serif';
+        ctx2.fillText('目标区间 190-220', chart.chartArea.right - 110, (t1+t2)/2);
+        
+        // Buy zone
+        const b1 = yScale.getPixelForValue(160);
+        const b2 = yScale.getPixelForValue(175);
+        ctx2.fillStyle = 'rgba(39,174,96,0.08)';
+        ctx2.fillRect(chart.chartArea.left, b2, chart.chartArea.right - chart.chartArea.left, b1 - b2);
+        ctx2.fillStyle = '#27ae60';
+        ctx2.fillText('买入区间 160-175', chart.chartArea.right - 110, (b1+b2)/2);
+      }
+    }]
+  });
+});
+</script>
+
+</body>
+</html>

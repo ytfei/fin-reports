@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长电科技(600584) 投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --red: #d94040; --green: #2e7d32; --blue: #1a5276; --bg: #f8f9fa;
+  --card: #fff; --text: #2c3e50; --sub: #666; --border: #e0e0e0;
+  --tag-bg: #e8f5e9; --tag-text: #2e7d32;
+  --warn-bg: #fff3e0; --warn-text: #e65100;
+  --danger-bg: #ffebee; --danger-text: #c62828;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; background: #eef1f5; color: var(--text); line-height:1.7; }
+.container { max-width: 680px; margin:0 auto; padding: 0 16px; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0d253f 0%, #1a3a5c 50%, #1a5276 100%); color:#fff; padding:32px 16px 28px; text-align:center; }
+.hero .badge { display:inline-block; background:rgba(255,255,255,0.15); border-radius:20px; padding:4px 16px; font-size:13px; margin-bottom:12px; letter-spacing:1px; }
+.hero h1 { font-size:28px; font-weight:800; margin-bottom:6px; }
+.hero .code { font-size:15px; opacity:0.7; margin-bottom:14px; }
+.hero .price-row { display:flex; justify-content:center; gap:24px; flex-wrap:wrap; }
+.hero .price-item { text-align:center; }
+.hero .price-item .label { font-size:12px; opacity:0.65; }
+.hero .price-item .val { font-size:22px; font-weight:700; }
+.hero .val.red { color:#ff6b6b; } .hero .val.green { color:#51cf66; }
+
+/* Sections */
+.section { background:var(--card); border-radius:12px; margin:16px 0; padding:20px 18px; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+.section h2 { font-size:18px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--blue); display:flex; align-items:center; gap:8px; }
+.section h2 .icon { font-size:20px; }
+.section h3 { font-size:15px; margin:14px 0 8px; color:var(--blue); }
+
+/* Tags */
+.tag { display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; margin:2px 4px; }
+.tag-green { background:var(--tag-bg); color:var(--tag-text); }
+.tag-warn { background:var(--warn-bg); color:var(--warn-text); }
+.tag-danger { background:var(--danger-bg); color:var(--danger-text); }
+.tag-blue { background:#e3f2fd; color:#1565c0; }
+
+/* Tables */
+table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+th { background:#f1f3f5; padding:8px 10px; text-align:left; font-weight:600; font-size:12px; color:var(--sub); }
+td { padding:8px 10px; border-bottom:1px solid var(--border); }
+tr:hover td { background:#fafbfc; }
+.num-up { color:var(--red); font-weight:600; }
+.num-down { color:var(--green); font-weight:600; }
+
+/* Alert */
+.alert { padding:14px 16px; border-radius:8px; margin:12px 0; font-size:14px; }
+.alert-info { background:#e3f2fd; border-left:4px solid #1976d2; }
+.alert-warn { background:var(--warn-bg); border-left:4px solid #e65100; }
+.alert-danger { background:var(--danger-bg); border-left:4px solid #c62828; }
+
+/* Card */
+.card-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.stat-card { background:#f8f9fa; border-radius:8px; padding:14px; text-align:center; }
+.stat-card .num { font-size:22px; font-weight:700; color:var(--blue); }
+.stat-card .lbl { font-size:12px; color:var(--sub); margin-top:2px; }
+
+/* KPI row */
+.kpi-row { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+.kpi { flex:1; min-width:80px; background:#f8f9fa; border-radius:8px; padding:10px 8px; text-align:center; }
+.kpi .kpi-val { font-size:16px; font-weight:700; }
+.kpi .kpi-lbl { font-size:11px; color:var(--sub); }
+
+/* Trade Card */
+.trade-card { background:linear-gradient(135deg, #0d253f, #1a5276); color:#fff; border-radius:12px; padding:20px; margin:14px 0; }
+.trade-card h3 { color:#fff; font-size:18px; margin-bottom:12px; }
+.trade-card .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:14px; }
+.trade-card .row .key { opacity:0.7; }
+.trade-card .row .val { font-weight:600; }
+
+/* Chart area */
+.chart-wrap { position:relative; height:320px; margin:14px 0; }
+.chart-wrap canvas { width:100% !important; }
+
+/* Disclaimer */
+.disclaimer { font-size:11px; color:#999; text-align:center; padding:20px 10px; line-height:1.8; }
+
+/* Scenario boxes */
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0; }
+.scenario { padding:14px; border-radius:8px; text-align:center; }
+.scenario.bull { background:#e8f5e9; border:1px solid #a5d6a7; }
+.scenario.base { background:#fff8e1; border:1px solid #ffe082; }
+.scenario.bear { background:#ffebee; border:1px solid #ef9a9a; }
+.scenario .sc-title { font-weight:700; font-size:13px; margin-bottom:4px; }
+.scenario .sc-price { font-size:18px; font-weight:800; margin:4px 0; }
+.scenario .sc-desc { font-size:11px; color:var(--sub); }
+
+/* Mobile */
+@media (max-width:480px) {
+  .card-grid { grid-template-columns:1fr; }
+  .scenario-grid { grid-template-columns:1fr; }
+  .kpi-row { justify-content:center; }
+  .hero h1 { font-size:22px; }
+  .hero .price-row { gap:14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="badge">弈投师 · 全栈投研</div>
+  <h1>长电科技</h1>
+  <div class="code">600584.SH · 上海主板 · 半导体封测</div>
+  <div class="price-row">
+    <div class="price-item"><div class="label">最新价</div><div class="val" style="color:#fff">¥61.77</div></div>
+    <div class="price-item"><div class="label">今日涨跌</div><div class="val green">-6.00%</div></div>
+    <div class="price-item"><div class="label">总市值</div><div class="val" style="color:#fff">1105亿</div></div>
+    <div class="price-item"><div class="label">52周高→低</div><div class="val" style="color:#ff6b6b">113.87 → 34.22</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 执行摘要 -->
+<div class="section" style="margin-top:16px;">
+  <h2><span class="icon">📋</span> 执行摘要</h2>
+  <p style="font-size:15px; line-height:1.8;">
+    长电科技是全球第三、中国第一的半导体封测龙头。公司在AI驱动的先进封装浪潮中占据核心卡位——XDFOI平台对标台积电CoWoS，已获英伟达/AMD/华为昇腾等头部客户订单。<strong>但当前时点面临两个核心矛盾</strong>：①7月板块暴跌45%后，估值是否已回归合理？②基本面的"先进封装高景气"vs技术面的"趋势破位"，谁来决定方向？
+  </p>
+  <div style="margin-top:10px;">
+    <span class="tag tag-green">全球OSAT第3</span>
+    <span class="tag tag-blue">先进封装占比~70%</span>
+    <span class="tag tag-warn">PE(TTM) 66.9x</span>
+    <span class="tag tag-danger">月跌45%</span>
+  </div>
+</div>
+
+<!-- Layer 1: 宏观 -->
+<div class="section">
+  <h2><span class="icon">🌍</span> Layer 1 · 宏观定方向</h2>
+  
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val" style="color:var(--red)">49.2%</div><div class="kpi-lbl">7月制造业PMI</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--red)">53.3%</div><div class="kpi-lbl">高技术制造PMI</div></div>
+    <div class="kpi"><div class="kpi-val">3.5-3.75%</div><div class="kpi-lbl">美联储利率</div></div>
+    <div class="kpi"><div class="kpi-val">14.4x</div><div class="kpi-lbl">沪深300 PE</div></div>
+    <div class="kpi"><div class="kpi-val">4.75%</div><div class="kpi-lbl">美10Y国债</div></div>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>宏观判断：中性偏谨慎，结构性分化严重。</strong>制造业PMI跌破荣枯线（49.2%），但高技术制造业PMI仍高达53.3%（计算机通信电子设备产需两旺）。美联储7月维持3.5-3.75%但3票鹰派反对，9月加息概率~65%，全球成长股估值承压。沪深300 PE处于67%历史分位——整体不便宜。<br><br>
+    <strong>建议权益仓位：55-65%</strong> | <strong>偏向：结构性进攻（聚焦AI/半导体硬科技）</strong><br>
+    <strong>最大宏观风险：</strong>美联储9月加息引发全球科技股二次杀估值
+  </div>
+</div>
+
+<!-- Layer 2: 行业 -->
+<div class="section">
+  <h2><span class="icon">🏭</span> Layer 2 · 行业赛道</h2>
+
+  <div class="alert alert-warn">
+    <strong>半导体封测：产业景气向上，股价短期承压。</strong>全球CoWoS产能缺口>20%（台积电2026年约152万片/年，缺口40万片），先进封装市场规模预计2030年达794亿美元（CAGR 8.4%）。但7月板块遭遇资金面踩踏，先进封装指数单月跌超25%，主因获利了结+外围情绪传导+杠杆爆仓负反馈，<strong>并非基本面恶化</strong>。<br><br>
+    <strong>行业周期位置：中期（先进封装早期渗透阶段）</strong><br>
+    <strong>量化支撑：</strong>2026Q2三大封测龙头扣非净利润同比+83%~+205%（来源：公司公告/中信证券研报）
+  </div>
+
+  <table>
+    <tr><th>维度</th><th>判断</th><th>信号</th></tr>
+    <tr><td>景气度</td><td>🟢 高景气</td><td>CoWoS订单排至2027年，ASP涨10-20%</td></tr>
+    <tr><td>竞争格局</td><td>🟡 集中度提升</td><td>CR3(长电/通富/华天)份额持续扩大</td></tr>
+    <tr><td>估值水位</td><td>🔴 高位回落中</td><td>板块PE从100x+回落至50-60x</td></tr>
+    <tr><td>资金流向</td><td>🔴 短期流出</td><td>7月电子板块主力净流出超千亿</td></tr>
+  </table>
+</div>
+
+<!-- Layer 3-4: 深度研究 -->
+<div class="section">
+  <h2><span class="icon">🔬</span> Layer 3-4 · 深度研究与估值</h2>
+
+  <h3>4a. 商业模式拆解</h3>
+  <div class="card-grid">
+    <div class="stat-card">
+      <div class="num">全球#3</div>
+      <div class="lbl">OSAT排名<br>(仅次于日月光/安靠)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">~70%</div>
+      <div class="lbl">先进封装营收占比<br>(行业最高)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">~100亿</div>
+      <div class="lbl">2026年资本开支<br>(主攻先进封装)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4nm</div>
+      <div class="lbl">XDFOI量产节点<br>(对标CoWoS)</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; margin-top:12px;">
+    <strong>怎么赚钱：</strong>为芯片设计公司（英伟达/AMD/海力士/华为昇腾等）提供封装测试服务，按晶圆片数或芯片颗数收费。先进封装（2.5D/3D/HBM）毛利率25-35%，显著高于传统封装（10-15%）。<br><br>
+    <strong>护城河：</strong>① <strong>技术壁垒</strong>——XDFOI是国内唯一全技术栈（2.5D/3D/Chiplet/HBM/CPO）打通的企业，HBM3E 8层堆叠良率98.5%超越三星自有产线；② <strong>客户锁定</strong>——SK海力士HBM3E独家封测合同签至2027年，英伟达/AMD批量订单；③ <strong>规模效应</strong>——百亿级capex构筑产能壁垒，新进入者难以复制。<br><br>
+    <strong>管理层：</strong>CEO郑力（前恩智浦/中芯国际高管），2026年主题"创新提效、行深致远"，执行力在Q1业绩中初步验证。
+  </p>
+
+  <h3>4b. 财务深度分析</h3>
+  
+  <div class="chart-wrap"><canvas id="chartFinance"></canvas></div>
+
+  <table>
+    <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026Q1</th></tr>
+    <tr><td>营收(亿)</td><td>337.6</td><td>296.6</td><td>359.6</td><td>388.7</td><td>91.7</td></tr>
+    <tr><td>营收增速</td><td>-</td><td class="num-down">-12.2%</td><td class="num-up">+21.2%</td><td class="num-up">+8.1%</td><td class="num-down">-1.8%</td></tr>
+    <tr><td>归母净利(亿)</td><td>32.39</td><td class="num-down">14.70</td><td class="num-up">16.10</td><td class="num-down">15.65</td><td>2.90</td></tr>
+    <tr><td>毛利率</td><td>17.0%</td><td class="num-down">13.5%</td><td class="num-up">14.2%</td><td>14.2%</td><td>14.5%</td></tr>
+    <tr><td>净利率</td><td>9.6%</td><td class="num-down">4.1%</td><td>4.1%</td><td>4.0%</td><td>3.0%</td></tr>
+    <tr><td>ROE</td><td>14.2%</td><td class="num-down">5.6%</td><td class="num-up">6.0%</td><td>5.6%</td><td>1.0%</td></tr>
+    <tr><td>经营现金流(亿)</td><td>~30</td><td>~25</td><td>~28</td><td>~30</td><td>17.8</td></tr>
+    <tr><td>资产负债率</td><td>37.5%</td><td>38.6%</td><td>45.4%</td><td>43.6%</td><td>43.0%</td></tr>
+  </table>
+
+  <div class="alert alert-info">
+    <strong>杜邦拆解：</strong>ROE=净利率(4%)×资产周转率(0.71)×权益乘数(1.77)=5.6%。核心矛盾是<strong>净利率从2022年的9.6%腰斩至4%</strong>，主要原因：①行业下行期产能利用率不足；②大规模capex带来的折旧压力；③收购带来的整合成本。ROE的质量偏弱，但经营现金流/净利润>1.8x，现金流质量健康。<br><br>
+    <strong>关键风险：</strong>商誉38.7亿（占净资产13.5%，未超红线但需关注）；2025年自由现金流-4.97亿（capex远超经营现金流）。
+  </div>
+
+  <h3>4c. 估值——三重交叉验证</h3>
+
+  <div class="chart-wrap"><canvas id="chartPE"></canvas></div>
+
+  <div class="scenario-grid">
+    <div class="scenario bear">
+      <div class="sc-title">🐻 悲观情景</div>
+      <div class="sc-price" style="color:#c62828">38-45元</div>
+      <div class="sc-desc">2026E净利16亿<br>PE 40x → 市值640亿<br>（传统封测定价）</div>
+    </div>
+    <div class="scenario base">
+      <div class="sc-title">📊 基准情景</div>
+      <div class="sc-price" style="color:#e65100">55-72元</div>
+      <div class="sc-desc">2026E净利22亿<br>PE 45-55x → 市值990-1210亿<br>（先进封装合理估值）</div>
+    </div>
+    <div class="scenario bull">
+      <div class="sc-title">🐂 乐观情景</div>
+      <div class="sc-price" style="color:#2e7d32">80-100元</div>
+      <div class="sc-desc">2026E净利28亿<br>PE 50-60x → 市值1400-1680亿<br>（CoWoS产能释放）</div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <strong>估值关键假设：</strong><br>
+    • <strong>可比估值：</strong>通富微电PE 54.6x / 晶方科技PE 50x / 华天科技PE 45x。长电作为龙头应有溢价，合理PE区间45-55x（来源：2026-08-03行情）。<br>
+    • <strong>DCF（简化）：</strong>假设2026-2028 FCF逐步转正（2026E: -10亿 / 2027E: +20亿 / 2028E: +35亿），WACC 9%，永续增长3%，得到企业价值约1400亿，每股约78元。<br>
+    • <strong>历史分位：</strong>当前PE 66.9x处于5年高分位，但2022年周期底部时PE曾低至~15x。当前估值<strong>已从泡沫区域（130x+）回落至合理偏高区域</strong>。<br>
+    <strong>综合目标价区间：55-78元（基准情景）</strong>
+  </div>
+
+  <h3>多空论点</h3>
+  <div class="card-grid">
+    <div>
+      <strong style="color:var(--red)">🟢 多头核心论点</strong>
+      <ul style="font-size:13px; padding-left:18px; margin-top:6px;">
+        <li>CoWoS产能缺口>20%、订单外溢至OSAT，长电作为国内唯一全技术栈龙头直接受益</li>
+        <li>2026Q1净利+42.7%，Q2扣非+129%（行业数据），业绩拐点已确认</li>
+        <li>78亿上海临港纯AI封装工厂+百亿capex，2027-2028年产能释放将带来利润飞跃</li>
+      </ul>
+    </div>
+    <div>
+      <strong style="color:var(--green)">🔴 空头核心论点</strong>
+      <ul style="font-size:13px; padding-left:18px; margin-top:6px;">
+        <li>即使腰斩后PE仍达66.9x，远高于历史均值；2022年利润高峰期PE仅15x</li>
+        <li>百亿capex在加息环境下融资成本上升，FCF持续为负，ROE仅5.6%难以支撑高估值</li>
+        <li>7月暴跌本质是"预期打太满"的均值回归，AI叙事若阶段性证伪可能继续杀估值</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" style="margin-top:12px;">
+    <strong>🎯 变异认知：</strong>市场共识认为"先进封装=高成长=高PE合理"。但变异认知在于：<strong>长电本质仍是重资产制造业</strong>（capex/sales>25%），在加息周期+百亿capex背景下，FCF回报股东的能力极弱。真正的价值释放要等到2027-2028年产能爬坡完成后。短期45%暴跌后估值已从"极度泡沫"回落至"合理偏高"，但<strong>尚未到"便宜"区间</strong>。
+  </div>
+</div>
+
+<!-- Layer 5: 交易计划 -->
+<div class="section">
+  <h2><span class="icon">🎯</span> Layer 5 · 交易计划</h2>
+
+  <div class="trade-card">
+    <h3>📋 交易计划卡片 — 长电科技(600584)</h3>
+    
+    <div class="row"><span class="key">买入逻辑</span><span class="val">先进封装龙头超跌45%后估值修复，Q2业绩+129%确认拐点</span></div>
+    <div class="row"><span class="key">目标价区间</span><span class="val">55 - 78 元（基准情景）</span></div>
+    <div class="row"><span class="key">建议买入区间</span><span class="val">50 - 60 元（目标价留10-20%安全边际）</span></div>
+
+    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2);">
+      <strong>💰 仓位建议：总资产 5-8%</strong>
+      <div style="font-size:12px; opacity:0.8; margin-top:4px;">
+        凯利公式：胜率p=55%（业绩拐点+超跌反弹）| 赔率b=1.67（止盈78/止损55-1）<br>
+        f* = (1.67×0.55-0.45)/1.67 = 28% → 实操取1/5凯利 ≈ 5.6%<br>
+        ⚠️ 考虑单票上限15%、行业上限30%，建议初始仓位5-8%
+      </div>
+    </div>
+
+    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2);">
+      <strong>🛑 止损规则</strong>
+      <div style="font-size:13px; margin-top:4px;">
+        <span style="color:#ff6b6b;">■</span> <strong>逻辑止损：</strong>Q3业绩增速降至<20%（证明拐点不成立）<br>
+        <span style="color:#ff6b6b;">■</span> <strong>技术止损：</strong>跌破50元（前期5月平台支撑位）<br>
+        <span style="color:#ff6b6b;">■</span> <strong>时间止损：</strong>买入后3个月内未反弹至70元以上<br>
+        <span style="color:#ff6b6b;">■</span> <strong>绝对止损：</strong>亏损超过20%无条件平仓（即跌至~49元）
+      </div>
+    </div>
+
+    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2);">
+      <strong>✅ 止盈规则</strong>
+      <div style="font-size:13px; margin-top:4px;">
+        <span style="color:#51cf66;">■</span> <strong>第一目标：72元</strong>（达到目标价中枢，减仓50%）<br>
+        <span style="color:#51cf66;">■</span> <strong>第二目标：85元</strong>（接近估值上沿，清仓）
+      </div>
+    </div>
+
+    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2);">
+      <strong>📊 跟踪指标（每周检查）</strong>
+      <div style="font-size:13px; margin-top:4px;">
+        • CoWoS/先进封装订单新闻——当前：满产 | 预警：出现砍单新闻<br>
+        • 北向资金持仓变化——当前：[MISSING: 需定期查询] | 预警：连续5日净流出<br>
+        • 半导体板块融资余额——当前：高位回落中 | 预警：两融余额<-20%<br>
+        • 费城半导体指数(SOX)——当前：承压 | 预警：跌破关键支撑
+      </div>
+    </div>
+
+    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2);">
+      <strong>📅 催化剂日历（未来3-6个月）</strong>
+      <div style="font-size:13px; margin-top:4px;">
+        • 2026-08中旬：半年报正式披露（验证Q2+129%扣非增速）<br>
+        • 2026-08月下旬：Jackson Hole美联储年会<br>
+        • 2026-09-16：美联储9月FOMC利率决议<br>
+        • 2026-10月：Q3业绩预告窗口<br>
+        • 2026年底：上海临港工厂产能爬坡进展更新
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <strong>⚠️ 最大下行风险：</strong>①美联储9月加息25bp → 全球成长股杀估值 → 长电PE从67x压缩至40x → 股价跌至35-40元区间（-35~-42%）；②AI算力需求证伪（大厂capex削减）→ 先进封装订单砍单 → 业绩预期下修。<br><br>
+    <strong>⚠️ 相关性风险：</strong>与持仓中其他半导体/AI标的（如通富微电、中芯国际、寒武纪等）高度相关（>0.8），需注意行业集中度不超过30%。
+  </div>
+</div>
+
+<!-- 行为金融检查 -->
+<div class="section">
+  <h2><span class="icon">🧠</span> 行为金融护栏</h2>
+  <table>
+    <tr><td><strong>确认偏误</strong></td><td>"如果我看错了"的信号：①Q3业绩增速<20%；②英伟达/AMD砍单新闻；③CoWoS产能过剩报道。当前已列出了4条独立空头论点与多头平衡。</td></tr>
+    <tr><td><strong>锚定效应</strong></td><td>建议买入价50-60元基于估值区间（PE 40-50x），而非锚定113元高点的"腰斩价"或52周低点34元。当前61.77元已进入建议买入区间上沿。</td></tr>
+    <tr><td><strong>过度自信</strong></td><td>若实际胜率从55%降至35%（低于估计20pct），凯利仓位应为负值（不应参与）。实操取1/5凯利=5.6%，即使胜率降至40%，仓位仍在可控范围。</td></tr>
+    <tr><td><strong>近期偏差</strong></td><td>7月暴跌-45%可能造成"永远涨不回来"的错觉。但从3-5年维度看：2022年利润32亿时PE仅15x，当前股价已price-in了相当程度的悲观预期。</td></tr>
+  </table>
+</div>
+
+<p style="text-align:center; font-size:11px; color:#999; padding:10px;">
+  📊 数据来源：Tushare / WeStock / 国家统计局 / CME FedWatch / 券商研报<br>
+  报告日期：2026-08-03 | 分析师：弈投师
+</p>
+
+<div class="disclaimer">
+  ⚠️ <strong>免责声明</strong><br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。
+</div>
+
+</div><!-- container -->
+
+<script src="600584_price_data.js"></script>
+<script src="600584_financial_data.js"></script>
+<script src="600584_comps_data.js"></script>
+<script>
+function baseOpts(title) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: title, font: { size: 14 }, padding: 10 },
+      legend: { labels: { usePointStyle: true, boxWidth: 8, padding: 16, font: { size: 11 } } }
+    }
+  };
+}
+
+const red='#d94040', green='#2e7d32', blue='#1a5276', orange='#e65100';
+
+document.addEventListener('DOMContentLoaded', function() {
+  if(typeof Chart==='undefined') return;
+
+  // Financial chart
+  const finCtx = document.getElementById('chartFinance');
+  if(finCtx && typeof FIN_600584!=='undefined') {
+    const d = FIN_600584;
+    const years = ['2022','2023','2024','2025'];
+    new Chart(finCtx, {
+      type: 'bar',
+      data: {
+        labels: years,
+        datasets: [
+          { label: '营收(亿)', data: years.map(y=>d.revenue[y]), backgroundColor: blue+'99', yAxisID:'y', order:2 },
+          { label: '归母净利(亿)', data: years.map(y=>d.net_profit[y]), backgroundColor: red+'99', yAxisID:'y', order:2 },
+          { label: '毛利率(%)', data: years.map(y=>d.gross_margin[y]), borderColor: orange, backgroundColor: 'transparent', borderWidth:2, type:'line', yAxisID:'y1', order:1, pointRadius:4 },
+          { label: 'ROE(%)', data: years.map(y=>d.roe[y]), borderColor: green, backgroundColor: 'transparent', borderWidth:2, type:'line', yAxisID:'y1', order:1, pointRadius:4, borderDash:[4,2] }
+        ]
+      },
+      options: Object.assign(baseOpts('营收、利润与盈利能力趋势'), {
+        scales: {
+          y: { position:'left', title:{display:true,text:'亿元'}, grid:{display:false} },
+          y1: { position:'right', title:{display:true,text:'%'}, grid:{display:false}, min:0, max:25 }
+        }
+      })
+    });
+  }
+
+  // PE Band chart
+  const peCtx = document.getElementById('chartPE');
+  if(peCtx) {
+    new Chart(peCtx, {
+      type: 'bar',
+      data: {
+        labels: ['长电科技','通富微电','晶方科技','华天科技'],
+        datasets: [
+          { label: 'PE(TTM)', data: [66.9, 54.6, 50.0, 45.0], backgroundColor: [red+'cc', blue+'99', blue+'66', blue+'44'] },
+          { label: 'PB', data: [3.87, 5.08, 4.03, 3.2], backgroundColor: [red+'66', blue+'44', blue+'33', blue+'22'] }
+        ]
+      },
+      options: Object.assign(baseOpts('可比公司估值对比 (2026-08-03)'), {
+        scales: { y: { beginAtZero: true, title:{display:true,text:'倍数'} } }
+      })
+    });
+  }
+});
+</script>
+
+</body>
+</html>

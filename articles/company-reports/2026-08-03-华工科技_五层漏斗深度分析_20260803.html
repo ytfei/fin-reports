@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华工科技（000988）五层漏斗深度分析 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#faf9f6;--card-bg:#fff;--text:#1a1a2e;--text-secondary:#555;
+  --red:#c0392b;--green:#27ae60;--blue:#2471a3;--gold:#b8860b;
+  --border:#e0dcd5;--accent:#8b7355;--tag-bg:#f0ebe3;
+  --gradient-hero:linear-gradient(135deg,#1a1a2e 0%,#2d3a4a 40%,#8b7355 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* Hero Banner */
+.hero{background:var(--gradient-hero);color:#fff;padding:60px 20px 50px;text-align:center;margin-bottom:30px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,0.15);padding:4px 16px;border-radius:20px;font-size:13px;margin-bottom:16px;letter-spacing:1px}
+.hero h1{font-size:36px;font-weight:700;margin-bottom:8px}
+.hero .subtitle{font-size:16px;opacity:0.85;margin-bottom:20px}
+.hero .price-row{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:12px}
+.hero .price-item{text-align:center}
+.hero .price-item .val{font-size:28px;font-weight:700}
+.hero .price-item .lbl{font-size:12px;opacity:0.7;margin-top:2px}
+.hero .price-item .change{font-size:14px;margin-top:2px}
+
+/* Cards */
+.section-title{font-size:22px;font-weight:700;margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:8px}
+.section-title .num{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.card{background:var(--card-bg);border-radius:12px;padding:24px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.card h3{font-size:17px;margin-bottom:12px;color:var(--text)}
+.card p, .card li{font-size:14.5px;color:var(--text-secondary);margin-bottom:8px}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th{background:#f5f2ed;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--accent)}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:#faf8f5}
+
+/* Tags */
+.tag-sm{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:500;margin-right:4px}
+.tag-red{background:#fde8e8;color:var(--red)}
+.tag-green{background:#e8f5e9;color:var(--green)}
+.tag-blue{background:#e3f0f9;color:var(--blue)}
+.tag-gold{background:#fef3e0;color:var(--gold)}
+
+/* Metric Grid */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:16px 0}
+.metric-card{background:#faf8f5;border-radius:10px;padding:16px;text-align:center;border:1px solid var(--border)}
+.metric-card .val{font-size:24px;font-weight:700}
+.metric-card .lbl{font-size:12px;color:var(--text-secondary);margin-top:4px}
+
+/* Alerts */
+.alert{border-radius:10px;padding:16px 20px;margin:14px 0;font-size:14px}
+.alert-red{background:#fde8e8;border-left:4px solid var(--red);color:#7b241c}
+.alert-amber{background:#fef3e0;border-left:4px solid var(--gold);color:#7d6608}
+.alert-green{background:#e8f5e9;border-left:4px solid var(--green);color:#1b5e20}
+
+/* Trading Plan Card */
+.plan-card{background:linear-gradient(135deg,#1a1a2e,#2d3a4a);color:#fff;border-radius:16px;padding:28px;margin:20px 0}
+.plan-card h3{color:#e8d5b7;font-size:20px;margin-bottom:16px}
+.plan-card .plan-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:14px}
+.plan-card .plan-row:last-child{border:none}
+.plan-card .plan-label{opacity:0.7}
+.plan-card .plan-val{font-weight:600;text-align:right}
+
+/* Chart containers */
+.chart-wrap{background:var(--card-bg);border-radius:12px;padding:20px;margin:16px 0;border:1px solid var(--border)}
+.chart-wrap canvas{max-height:380px}
+
+/* Footer */
+.footer{text-align:center;padding:40px 20px;color:var(--text-secondary);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+
+/* Responsive */
+@media(max-width:680px){
+  .hero{padding:36px 16px 30px}
+  .hero h1{font-size:26px}
+  .hero .price-row{gap:20px}
+  .hero .price-item .val{font-size:22px}
+  .metric-grid{grid-template-columns:repeat(2,1fr)}
+  .card{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div class="tag">弈投师 · 五层漏斗深度分析</div>
+  <h1>华工科技</h1>
+  <div class="subtitle">000988.SZ | 光模块+传感器+激光装备全产业链AI标的</div>
+  <div class="price-row">
+    <div class="price-item">
+      <div class="val">94.00元</div>
+      <div class="lbl">最新价（2026-08-03）</div>
+      <div class="change" style="color:#c0392b">较52周高点 -49.9%</div>
+    </div>
+    <div class="price-item">
+      <div class="val">~945亿</div>
+      <div class="lbl">总市值</div>
+    </div>
+    <div class="price-item">
+      <div class="val">55.7x</div>
+      <div class="lbl">PE (TTM)</div>
+    </div>
+    <div class="price-item">
+      <div class="val">40.0x</div>
+      <div class="lbl">PE (2026E)</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="alert alert-amber">
+<strong>⚡ 执行摘要</strong><br>
+从187.66元历史高点暴跌至94元，仅33个交易日腰斩49.9%。核心驱动：半年报预告缺席（确认Q2增速断崖）、Q1扣非增速仅20.5%（远低于归母55.8%的表观数字）、光模块板块系统性踩踏。产业端高景气未变，1.6T硅光已获40万只订单，董事长7月21日跌停板带队增持。估值不再离谱但尚未到"便宜"区间，<strong>建议进入观察池，等待Q2财报验证后分批建仓</strong>。
+</div>
+
+<!-- Metric Grid -->
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="val" style="color:var(--red)">-49.9%</div>
+    <div class="lbl">52周高点至今跌幅</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--green)">+53.4%</div>
+    <div class="lbl">光模块收入增速(2025)</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--red)">-11.27亿</div>
+    <div class="lbl">Q1 2026经营现金流</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--gold)">171.36元</div>
+    <div class="lbl">机构综合目标价</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--blue)">13.97%</div>
+    <div class="lbl">ROE (2025)</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--green)">10→2.50</div>
+    <div class="lbl">分红(元/10股) 2025</div>
+  </div>
+</div>
+
+<!-- Layer 1: Macro -->
+<div class="section-title"><span class="num">1</span> 宏观背景：谨慎偏中性，聚焦高景气赛道</div>
+
+<div class="card">
+<table>
+<tr><th>指标</th><th>当前值</th><th>方向</th><th>解读</th></tr>
+<tr><td>制造业PMI (7月)</td><td>49.2%</td><td><span class="tag-sm tag-red">⬇ 收缩</span></td><td>跌破荣枯线；但高技术制造业PMI 53.3%仍在扩张</td></tr>
+<tr><td>GDP增速 (Q2)</td><td>4.3%</td><td><span class="tag-sm tag-blue">→</span></td><td>增速放缓，消费偏弱</td></tr>
+<tr><td>10年期国债</td><td>1.717%</td><td><span class="tag-sm tag-green">⬇ 低利率</span></td><td>流动性充裕，支撑成长股估值</td></tr>
+<tr><td>CPI / PPI</td><td>4.1% / 4.1%</td><td><span class="tag-sm tag-blue">→</span></td><td>温和通胀，企业利润空间尚可</td></tr>
+<tr><td>M2增速</td><td>8%</td><td><span class="tag-sm tag-blue">→</span></td><td>中性偏宽松</td></tr>
+</table>
+<p style="margin-top:12px"><strong>结论</strong>：经济整体偏弱但结构分化——高技术制造（PMI 53.3%）与地产消费（PMI 47%）冰火两重天。AI算力链是少有的高确定性景气方向。<strong>建议权益仓位55%，核心仓位聚焦AI硬件。</strong></p>
+</div>
+
+<!-- Layer 2: Industry -->
+<div class="section-title"><span class="num">2</span> 行业赛道：光通信/光模块 — 成长中期，分化加剧</div>
+
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="val" style="color:var(--green)">7250亿$</div>
+    <div class="lbl">北美四大云厂商2026 capex</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--red)">60-70%</div>
+    <div class="lbl">200G EML光芯片缺口率</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--green)">77-103%</div>
+    <div class="lbl">新易盛H1净利增速</div>
+  </div>
+  <div class="metric-card">
+    <div class="val" style="color:var(--blue)">10-15x</div>
+    <div class="lbl">龙头2027E PE(调整后)</div>
+  </div>
+</div>
+
+<div class="card">
+<p>光模块行业正处于<strong>800G→1.6T代际切换的关键窗口</strong>。需求端：谷歌2026年capex上调至1950-2050亿美元（同比翻倍），北美四大云厂商合计7250亿美元。供给端：EML/CW光芯片紧缺周期长达2-3年，头部厂商优势固化。技术端：硅光渗透率已达70-80%，CPO/NPO多条技术路线协同突破。</p>
+<p style="margin-top:8px"><strong>周期定位</strong>：成长中期——渗透率快速提升，行业高增速尚未见顶，但估值从泡沫区间回归合理。龙头2027E PE仅10-15x，PEG < 1。</p>
+</div>
+
+<!-- Layer 3: Quick Screening -->
+<div class="section-title"><span class="num">3</span> 量化初筛：通过硬性淘汰，核心指标一览</div>
+
+<div class="card">
+<table>
+<tr><th>指标</th><th>数值</th><th>评价</th></tr>
+<tr><td>PE (TTM)</td><td>55.7x</td><td><span class="tag-sm tag-gold">偏高但较峰值~120x大幅回落</span></td></tr>
+<tr><td>PE (2026E)</td><td>40.0x</td><td><span class="tag-sm tag-gold">机构一致预期23.55亿净利</span></td></tr>
+<tr><td>PE (2027E)</td><td>30.5x</td><td><span class="tag-sm tag-green">机构一致预期30.97亿净利</span></td></tr>
+<tr><td>ROE (2025)</td><td>13.97%</td><td><span class="tag-sm tag-green">改善趋势（Q1年化~21%）</span></td></tr>
+<tr><td>归母净利3年CAGR</td><td>17.53%</td><td><span class="tag-sm tag-green">良好</span></td></tr>
+<tr><td>经营现金流/净利</td><td>0.83 (2025全年)</td><td><span class="tag-sm tag-red">⚠️ Q1 2026为 -11.27亿</span></td></tr>
+<tr><td>资产负债率</td><td>51.41%</td><td><span class="tag-sm tag-green">适中</span></td></tr>
+</table>
+</div>
+
+<div class="alert alert-red">
+<strong>🔴 三大瑕疵</strong><br>
+① Q1经营现金流 <strong>-11.27亿</strong>（同比多流出229%），存货和固投大量消耗现金<br>
+② Q1扣非增速仅 <strong>20.51%</strong>，非经常性损益2.85亿占归母净利润44.7%<br>
+③ 未发半年报预告 → <strong>Q2增速大幅低于50%</strong>是确定事件
+</div>
+
+<!-- Layer 4: Deep Research -->
+<div class="section-title"><span class="num">4</span> 深度研究：三业务全产业链AI标的</div>
+
+<div class="card">
+<h3>📊 收入结构（2025年报）</h3>
+<div class="chart-wrap">
+  <canvas id="revChart"></canvas>
+</div>
+</div>
+
+<div class="card">
+<h3>📈 历年业绩趋势</h3>
+<div class="chart-wrap">
+  <canvas id="trendChart"></canvas>
+</div>
+</div>
+
+<div class="card">
+<h3>💰 估值：三种方法交叉验证</h3>
+
+<table>
+<tr><th>方法</th><th>基准情景</th><th>目标价</th></tr>
+<tr><td>Forward PE（2026E 35x）</td><td>EPS 2.35 × 35x</td><td style="font-weight:700">82元</td></tr>
+<tr><td>可比公司（2027E 22x）</td><td>EPS 3.08 × 22x</td><td style="font-weight:700">68元</td></tr>
+<tr><td>情景概率加权</td><td>乐观25%+基准50%+悲观25%</td><td style="font-weight:700">75元</td></tr>
+</table>
+
+<h4 style="margin-top:20px">情景分析</h4>
+<table>
+<tr><th>情景</th><th>2026E净利</th><th>PE</th><th>目标价</th><th>概率</th></tr>
+<tr><td>🟢 乐观</td><td>25亿</td><td>40x</td><td style="color:var(--red)">100元</td><td>25%</td></tr>
+<tr><td>🟡 基准</td><td>22亿</td><td>35x</td><td>77元</td><td>50%</td></tr>
+<tr><td>🔴 悲观</td><td>18亿</td><td>25x</td><td style="color:var(--green)">45元</td><td>25%</td></tr>
+</table>
+
+<p style="margin-top:12px"><strong>估值结论</strong>：当前94元处于估值区间上沿。基准情景目标77元，乐观情景100元。若继续跌至70-80元则进入估值舒适区。</p>
+</div>
+
+<div class="card">
+<h3>🎯 多空论点</h3>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div style="background:#e8f5e9;border-radius:10px;padding:16px">
+<h4 style="color:var(--green);margin-bottom:8px">🟢 多头论点</h4>
+<ol style="font-size:13.5px;color:var(--text-secondary);padding-left:18px">
+<li>1.6T已获40万只订单，3.2T NPO业界首发，AI算力投资周期至2028年</li>
+<li>从187元跌至94元（-49.9%），恐慌性抛售创造估值修复机会</li>
+<li>董事长+4高管7月21日跌停板增持，内部人信号强烈</li>
+</ol>
+</div>
+<div style="background:#fde8e8;border-radius:10px;padding:16px">
+<h4 style="color:var(--red);margin-bottom:8px">🔴 空头论点</h4>
+<ol style="font-size:13.5px;color:var(--text-secondary);padding-left:18px">
+<li>Q2业绩大概率miss（未发预告 = 增速<50%），扣非增速仅20.5%才是真实增速</li>
+<li>Q1经营现金流-11.27亿恶化严重，H股融资隐含"缺钱"信号</li>
+<li>光模块赛道二线定位，与中际旭创/新易盛的差距仍在拉大</li>
+</ol>
+</div>
+</div>
+
+<div style="background:var(--tag-bg);border-radius:10px;padding:16px;margin-top:14px">
+<strong>💡 变异认知</strong><br>
+市场过度定价了"华工=光模块龙头"的叙事，但华工实际上是<strong>光模块（高成长）+ 传感器/激光（稳健现金牛）的混合体</strong>。传感器业务（PTC/NTC全球#1）在AIoT时代具有独立成长逻辑。如果传感器业务获得独立估值，公司整体估值有望重塑。
+</div>
+</div>
+
+<!-- Layer 5: Trading Plan -->
+<div class="section-title"><span class="num">5</span> 交易计划</div>
+
+<div class="plan-card">
+<h3>📋 交易计划卡片 — 华工科技 sz000988</h3>
+<div class="plan-row"><span class="plan-label">买入逻辑</span><span class="plan-val">光模块+传感器双轮驱动，49%暴跌后估值趋于合理</span></div>
+<div class="plan-row"><span class="plan-label">目标价区间</span><span class="plan-val" style="color:#e8d5b7">77 - 100 元</span></div>
+<div class="plan-row"><span class="plan-label">建议买入区间</span><span class="plan-val" style="color:#e8d5b7">75 - 88 元</span></div>
+<div class="plan-row"><span class="plan-label">仓位建议</span><span class="plan-val">总资产 5-8%（1/3 凯利）</span></div>
+<div class="plan-row"><span class="plan-label">胜率 p</span><span class="plan-val">55%</span></div>
+<div class="plan-row"><span class="plan-label">赔率 b</span><span class="plan-val">1.17（止盈100 / 止损75 - 1）</span></div>
+<div class="plan-row"><span class="plan-label">凯利 f*</span><span class="plan-val">18%（实操取6%）</span></div>
+<div class="plan-row"><span class="plan-label">逻辑止损</span><span class="plan-val">Q2单季扣非环比降>30% 或 下调全年指引</span></div>
+<div class="plan-row"><span class="plan-label">技术止损</span><span class="plan-val">跌破 75 元</span></div>
+<div class="plan-row"><span class="plan-label">绝对止损</span><span class="plan-val">亏损超过 15%</span></div>
+<div class="plan-row"><span class="plan-label">第一止盈</span><span class="plan-val">100 元（减仓50%）</span></div>
+<div class="plan-row"><span class="plan-label">第二止盈</span><span class="plan-val">120 元（清仓）</span></div>
+</div>
+
+<!-- Price Chart -->
+<div class="card">
+<h3>📉 近一年股价走势（含关键事件标注）</h3>
+<div class="chart-wrap">
+  <canvas id="priceChart"></canvas>
+</div>
+</div>
+
+<!-- Risk Matrix -->
+<div class="section-title"><span class="num">6</span> 风险矩阵</div>
+
+<div class="card">
+<table>
+<tr><th>风险类型</th><th>影响</th><th>概率</th></tr>
+<tr><td>Q2业绩大幅miss，扣非增速降至个位数</td><td><span class="tag-sm tag-red">🔴 高</span></td><td>40%</td></tr>
+<tr><td>光模块板块融资盘继续出逃</td><td><span class="tag-sm tag-red">🔴 高</span></td><td>30%</td></tr>
+<tr><td>H股折价发行，A股被动承压</td><td><span class="tag-sm tag-gold">🟡 中</span></td><td>50%</td></tr>
+<tr><td>经营现金流持续为负</td><td><span class="tag-sm tag-gold">🟡 中</span></td><td>35%</td></tr>
+<tr><td>光模块价格战向1.6T蔓延</td><td><span class="tag-sm tag-gold">🟡 中</span></td><td>20%</td></tr>
+<tr><td>中美脱钩，光模块出口受限</td><td><span class="tag-sm tag-red">🔴 极高</span></td><td>10%</td></tr>
+</table>
+</div>
+
+<!-- Behavioral Check -->
+<div class="section-title"><span class="num">7</span> 行为金融护栏</div>
+
+<div class="card">
+<table>
+<tr><th>偏误类型</th><th>检查结果</th></tr>
+<tr><td>确认偏误</td><td>反面信号：①Q2扣非环比降>30% → 结构性放缓；②可比公司PE<8x → 永久性降估值</td></tr>
+<tr><td>锚定效应</td><td>⚠️ 94元是否受187元高点锚定？<strong>建议以60-80元（30-35x PE）作为正常估值锚</strong></td></tr>
+<tr><td>过度自信</td><td>若实际胜率仅44%（比估计低20%），凯利仓位=-4.5% → <strong>不应建仓，等待更高确定性</strong></td></tr>
+<tr><td>近期偏差</td><td>暴跌49.9%过度影响判断 → <strong>等待Q2财报区分基本面恶化vs情绪过度反应</strong></td></tr>
+</table>
+</div>
+
+<!-- Catalyst Calendar -->
+<div class="section-title"><span class="num">8</span> 催化剂日历</div>
+
+<div class="card">
+<table>
+<tr><th>时间</th><th>事件</th><th>关注重点</th></tr>
+<tr><td>2026-08-15前</td><td>Q2半年报发布</td><td>单季营收/净利/扣非增速、经营现金流改善</td></tr>
+<tr><td>2026-08~09月</td><td>H股上市聆讯</td><td>发行价、摊薄比例</td></tr>
+<tr><td>每周五</td><td>两融数据</td><td>融资余额是否企稳回升</td></tr>
+<tr><td>每月初</td><td>PMI/北美云厂商动态</td><td>算力capex指引变化</td></tr>
+<tr><td>2026-10-15前</td><td>Q3业绩预告</td><td>是否回到50%+增速区间</td></tr>
+</table>
+</div>
+
+<div class="alert alert-green">
+<strong>✅ 总结建议</strong><br>
+<strong>当前：观察池，不急于建仓。</strong>等待Q2财报验证基本面后，若扣非增速维持20%+且现金流改善，可在<strong>80元以下分批建仓至总资产6%</strong>。如果Q2业绩大幅低于预期，则应放弃该标的或转向估值更合理的一线光模块龙头。
+</div>
+
+<!-- Footer -->
+<div class="footer">
+<p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+<p>数据来源：WeStock · 国家统计局 · 华工科技年报 · 东方财富 · 同花顺iFinD</p>
+<p style="margin-top:8px">弈投师 · 2026-08-03</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function(){
+function baseOpts(title){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:20,font:{size:12}}},title:{display:!!title,text:title||'',font:{size:14}}},scales:{y:{grid:{color:'#e8e4dd'},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:11}}}}}}
+
+document.addEventListener('DOMContentLoaded',function(){
+
+// Revenue Structure Pie
+new Chart(document.getElementById('revChart'),{
+  type:'doughnut',
+  data:{
+    labels:['光电器件60.97亿','敏感元器件40.27亿','激光装备36.36亿','其他5.95亿'],
+    datasets:[{data:[42.5,28.1,25.3,4.1],backgroundColor:['#c0392b','#2471a3','#b8860b','#95a5a6'],borderColor:'#fff',borderWidth:2}]
+  },
+  options:{...baseOpts('2025年收入结构'),cutout:'55%'}
+});
+
+// Revenue & Net Income Trend
+new Chart(document.getElementById('trendChart'),{
+  type:'bar',
+  data:{
+    labels:['2022','2023','2024','2025','2026E'],
+    datasets:[
+      {label:'营收(亿)',data:[120.1,103.1,117.1,143.6,220.6],backgroundColor:'#2471a3',borderRadius:4,order:2},
+      {label:'归母净利(亿)',data:[9.06,10.07,12.21,14.71,23.55],backgroundColor:'#c0392b',borderRadius:4,order:2}
+    ]
+  },
+  options:{...baseOpts('历年营收与净利趋势'),scales:{y:{grid:{color:'#e8e4dd'},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:11}}}}}
+});
+
+// Price Chart 
+const PRICE_DATA = {
+  labels: ['08/02','08/09','08/16','08/23','08/30','09/06','09/13','09/20','09/27','10/04','10/11','10/18','10/25','11/01','11/08','11/15','11/22','11/29','12/06','12/13','12/20','12/27','01/03','01/10','01/17','01/24','01/31','02/07','02/14','02/21','02/28','03/07','03/14','03/21','03/28','04/04','04/11','04/18','04/25','05/02','05/09','05/16','05/23','05/30','06/06','06/13','06/20','06/27','07/04','07/11','07/18','07/25','08/01'],
+  prices:  [73.5,75.2,76.8,74.1,72.3,71.5,73.0,74.8,76.2,75.0,74.5,73.8,72.1,74.3,76.5,78.2,77.0,76.5,75.0,74.2,73.5,74.0,73.8,76.2,77.5,78.0,77.2,74.7,76.4,82.2,89.6,94.7,101.3,106.4,118.4,103.3,116.4,103.9,119.3,136.4,147.3,133.7,156.1,151.7,156.9,142.8,174.7,160.9,173.5,184.6,145.2,95.4,94.0]
+};
+
+const bgColors = PRICE_DATA.prices.map(function(v,i){
+  if(i===0) return 'rgba(36,113,163,0.15)';
+  return v >= PRICE_DATA.prices[i-1] ? 'rgba(192,57,43,0.15)' : 'rgba(39,174,96,0.15)';
+});
+
+new Chart(document.getElementById('priceChart'),{
+  type:'line',
+  data:{
+    labels:PRICE_DATA.labels,
+    datasets:[{
+      label:'收盘价(元)',
+      data:PRICE_DATA.prices,
+      borderColor:'#c0392b',
+      backgroundColor:bgColors,
+      fill:true,
+      tension:0.3,
+      pointRadius:0,
+      borderWidth:2
+    }]
+  },
+  options:{...baseOpts('近一年股价走势（2025.08 - 2026.08）'),
+    plugins:{...baseOpts('近一年股价走势（2025.08 - 2026.08）').plugins,
+      annotation:{annotations:{
+        line1:{type:'line',yMin:187.66,yMax:187.66,borderColor:'rgba(192,57,43,0.5)',borderWidth:1,borderDash:[5,5],label:{content:'历史高点187.66',enabled:true,position:'start',font:{size:10}}}
+      }}
+    }
+  }
+});
+
+});
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长江电力(600900) 深度投资分析 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root {
+  --red: #d0303e; --green: #1a9c4a; --blue: #2563eb;
+  --bg: #f8f9fb; --card: #fff; --text: #2d3436; --sub: #636e72;
+  --border: #e0e6ed; --gold: #b8860b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7;
+  max-width: 860px; margin: 0 auto; padding: 0 16px 60px;
+}
+
+/* Hero Banner */
+.hero {
+  background: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
+  color: #fff; border-radius: 12px; padding: 32px 28px; margin: 20px 0 24px;
+  position: relative; overflow: hidden;
+}
+.hero::after { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; background: rgba(255,255,255,0.05); border-radius:50%; }
+.hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.hero .sub { font-size: 14px; opacity: 0.8; margin-bottom: 18px; }
+.hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+.hero-card { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px; text-align: center; }
+.hero-card .val { font-size: 20px; font-weight: 700; }
+.hero-card .lbl { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+.hero-card .up { color: #ff6b6b; }
+.hero-card .dn { color: #51cf66; }
+
+/* Section */
+.section { background: var(--card); border-radius: 10px; padding: 24px 22px; margin-bottom: 18px; border: 1px solid var(--border); }
+.section h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: #1a365d; }
+.section .badge { display: inline-block; font-size: 11px; padding: 2px 10px; border-radius: 12px; margin-left: 8px; vertical-align: middle; }
+.badge-macro { background: #dbeafe; color: #1e40af; }
+.badge-industry { background: #fef3c7; color: #92400e; }
+.badge-valuation { background: #fce7f3; color: #9d174d; }
+.badge-trade { background: #dcfce7; color: #166534; }
+
+/* Info rows */
+.info-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 10px 0; }
+.info-item { font-size: 14px; }
+.info-item .lbl { color: var(--sub); font-size: 12px; }
+.info-item .val { font-weight: 600; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+th { background: #f1f5f9; padding: 8px 10px; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: #f8fafc; }
+.up { color: var(--red); font-weight: 600; }
+.dn { color: var(--green); font-weight: 600; }
+
+/* Card grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 12px 0; }
+.card-sm { background: #f8fafc; border-radius: 8px; padding: 14px; border: 1px solid var(--border); }
+.card-sm h4 { font-size: 13px; color: var(--sub); margin-bottom: 6px; font-weight: 500; }
+.card-sm .big { font-size: 22px; font-weight: 700; }
+
+/* Callout */
+.callout { padding: 12px 16px; border-radius: 8px; margin: 14px 0; font-size: 14px; border-left: 4px solid; }
+.callout-bull { background: #fef2f2; border-color: var(--red); }
+.callout-bear { background: #f0fdf4; border-color: var(--green); }
+.callout-info { background: #eff6ff; border-color: var(--blue); }
+.callout-warn { background: #fffbeb; border-color: #f59e0b; }
+
+/* Trading Plan Card */
+.trade-card { background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 2px solid #c4b5fd; border-radius: 12px; padding: 20px 22px; margin: 16px 0; }
+.trade-card h3 { color: #6d28d9; font-size: 18px; margin-bottom: 14px; }
+.trade-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; font-size: 13px; }
+.trade-row .k { color: #7c3aed; font-weight: 600; }
+.trade-row .v { font-weight: 600; }
+
+/* Charts */
+.chart-box { width: 100%; height: 340px; margin: 12px 0; }
+
+/* Kelly box */
+.kelly-box { background: #fefce8; border: 1px solid #fde047; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+
+/* Risk matrix */
+.risk-table td:first-child { font-weight: 600; white-space: nowrap; }
+.risk-high { background: #fef2f2; }
+.risk-mid { background: #fffbeb; }
+.risk-low { background: #f0fdf4; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .hero-grid { grid-template-columns: 1fr 1fr; }
+  .grid2, .grid3 { grid-template-columns: 1fr; }
+  .trade-row { grid-template-columns: 1fr; }
+  .hero { padding: 20px 16px; }
+  .hero h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ HERO BANNER ════════════ -->
+<div class="hero">
+  <h1>长江电力 600900</h1>
+  <div class="sub">全球最大水电上市公司 · 弈投师五层漏斗深度分析 | 2026-08-03</div>
+  <div class="hero-grid">
+    <div class="hero-card"><div class="val">28.83</div><div class="lbl">最新价 (元)</div></div>
+    <div class="hero-card"><div class="val up">+10.08%</div><div class="lbl">年初至今</div></div>
+    <div class="hero-card"><div class="val">7054亿</div><div class="lbl">总市值</div></div>
+    <div class="hero-card"><div class="val">3.47%</div><div class="lbl">股息率 TTM</div></div>
+    <div class="hero-card"><div class="val up">19.55</div><div class="lbl">PE (TTM)</div></div>
+    <div class="hero-card"><div class="val">3.38</div><div class="lbl">PB</div></div>
+    <div class="hero-card"><div class="val">15.90%</div><div class="lbl">ROE (2025)</div></div>
+    <div class="hero-card"><div class="val">33.53</div><div class="lbl">机构综合目标价</div></div>
+  </div>
+</div>
+
+<!-- ════════════ LAYER 1: MACRO ════════════ -->
+<div class="section">
+  <h2>Layer 1 · 宏观定方向 <span class="badge badge-macro">仓位判断</span></h2>
+  <div class="info-row">
+    <div class="info-item"><span class="lbl">7月PMI</span><br><span class="val dn">49.2 (荣枯线下方)</span></div>
+    <div class="info-item"><span class="lbl">货币基调</span><br><span class="val">适度宽松 · 降准降息预期升温</span></div>
+    <div class="info-item"><span class="lbl">美联储</span><br><span class="val">利率维持 3.50-3.75%</span></div>
+    <div class="info-item"><span class="lbl">A股状态</span><br><span class="val">震荡 · 防御风格占优</span></div>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>一句话宏观判断：</strong>经济动能走弱（PMI跌落荣枯线）+ 货币政策宽松预期升温 = 利率下行利好高股息资产。<br>
+    <strong>建议权益仓位：</strong>60-70% | <strong>风格：</strong>偏防御 | <strong>当前最大宏观风险：</strong>美国通胀韧性导致降息延后，引发全球流动性收紧
+  </div>
+  <p style="font-size:13px;color:var(--sub);margin-top:8px;">
+  来源：国家统计局 2026-07-31 PMI数据；央行2026下半年工作会议通稿；美联储 2026-07-30 FOMC声明
+  </p>
+</div>
+
+<!-- ════════════ LAYER 2: INDUSTRY ════════════ -->
+<div class="section">
+  <h2>Layer 2 · 行业选赛道 <span class="badge badge-industry">水电板块</span></h2>
+
+  <div class="grid2">
+    <div class="card-sm">
+      <h4>行业景气度</h4>
+      <div class="big up">成熟稳健</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">2025行业营收增长~5%，龙头利润创新高</p>
+    </div>
+    <div class="card-sm">
+      <h4>竞争格局</h4>
+      <div class="big" style="color:#1a365d;">极高壁垒</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">流域梯级调度+巨型装机，新进入者几乎为零</p>
+    </div>
+  </div>
+
+  <div class="grid3" style="margin-top:12px;">
+    <div class="card-sm">
+      <h4>估值水位</h4>
+      <div class="big" style="color:#b8860b;">PE近3年1%分位</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">历史极低水平，罕见到</p>
+    </div>
+    <div class="card-sm">
+      <h4>资金流向</h4>
+      <div class="big up">防御首选</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">7/17 市场大跌-3%，水电逆势+3.28%</p>
+    </div>
+    <div class="card-sm">
+      <h4>政策催化</h4>
+      <div class="big" style="color:#2563eb;">厄尔尼诺</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">80%概率发生，利好来水偏丰</p>
+    </div>
+  </div>
+
+  <div class="callout callout-bull">
+    <strong>水电板块结论：</strong>在利率下行 + 经济走弱 + 市场波动加剧的环境下，水电是当前A股稀缺的"确定性"资产。周期定位：<strong>成熟期中段</strong>，受益于成本压降的利润释放阶段。推荐理由：红利防御 + 内生增长（折旧到期 + 财务费用压降）。
+  </div>
+  <p style="font-size:13px;color:var(--sub);margin-top:8px;">
+  来源：国家气候中心 2026-04-01 汛期预测；同花顺板块数据 2026-08-03
+  </p>
+</div>
+
+<!-- ════════════ LAYER 3: SCREENING ════════════ -->
+<div class="section">
+  <h2>Layer 3 · 量化初筛 <span class="badge badge-valuation">质量验核</span></h2>
+  <p style="font-size:13px;color:var(--sub);margin-bottom:10px;">本层跳过全市场筛选（用户已指定标的），改为质量验核——检查长江电力是否通过硬性淘汰门槛：</p>
+  <table>
+    <tr><th>淘汰条件</th><th>长江电力实际值</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流有2年以上为负</td><td>2023/24/25年经营现金流均为正(647/605亿)</td><td class="up">✅ 通过</td></tr>
+    <tr><td>商誉/净资产 > 30%</td><td>商誉11.0亿 / 净资产2398亿 = 0.46%</td><td class="up">✅ 通过</td></tr>
+    <tr><td>大股东质押率 > 50%</td><td>整体质押率 1.71%</td><td class="up">✅ 通过</td></tr>
+    <tr><td>近2年有财务造假/重大违规</td><td>无</td><td class="up">✅ 通过</td></tr>
+    <tr><td>日均成交额 < 3000万</td><td>日均约30-50亿（2026年）</td><td class="up">✅ 通过</td></tr>
+  </table>
+
+  <div class="grid3" style="margin-top:12px;">
+    <div class="card-sm"><h4>PE (TTM)</h4><div class="big">19.55</div></div>
+    <div class="card-sm"><h4>ROE (2025)</h4><div class="big up">15.90%</div></div>
+    <div class="card-sm"><h4>经营现金流/净利</h4><div class="big up">1.73x</div></div>
+  </div>
+</div>
+
+<!-- ════════════ LAYER 4: DEEP RESEARCH ════════════ -->
+<div class="section">
+  <h2>Layer 4 · 深度研究</h2>
+
+  <!-- 4a. Business Model -->
+  <h3 style="font-size:16px; color:#1a365d; margin:16px 0 10px;">4a. 商业模式拆解</h3>
+  <div class="callout callout-info">
+    <strong>一句话本质：</strong>买长江电力，本质上是在买"永不退位的低成本发电资产 + 利率下行周期中的确定性股息"。
+  </div>
+
+  <table>
+    <tr><th style="width:25%">维度</th><th>分析</th></tr>
+    <tr><td><strong>怎么赚钱</strong></td><td>87.73%收入来自境内水电（六座梯级电站发电售电），度电收入约0.248-0.253元，综合电价稳定</td></tr>
+    <tr><td><strong>客户集中度</strong></td><td>电网公司（国家电网/南方电网），单一买方但信用无风险</td></tr>
+    <tr><td><strong>定价权</strong></td><td>水电上网电价受政府指导，但大水电因清洁能源属性享受优先消纳，实际折价风险可控</td></tr>
+    <tr><td><strong>护城河</strong></td><td><strong>监管牌照（核心）</strong>：长江流域优质坝址不可复制；<strong>规模效应</strong>：7179.5万千瓦装机，占全国水电约16%；<strong>梯级调度</strong>：六库联调将枯期来水转化为稳定出力</td></tr>
+    <tr><td><strong>管理层</strong></td><td>三峡集团控股(43.47%)，央企背景，管理稳健，分红承诺明晰</td></tr>
+  </table>
+
+  <!-- 4b. Financial Deep Dive -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">4b. 财务深度分析</h3>
+
+  <div class="grid2">
+    <div class="card-sm">
+      <h4>营收趋势 (亿元)</h4>
+      <div class="big" style="font-size:15px;">2022: 688.6 → 2023: 781.4 → 2024: 844.9 → 2025: 862.4</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">3年CAGR: 7.79%，2025 +2.07%</p>
+    </div>
+    <div class="card-sm">
+      <h4>归母净利润 (亿元)</h4>
+      <div class="big" style="font-size:15px;">2022: 237.3 → 2023: 272.5 → 2024: 325.0 → 2025: 345.0</div>
+      <p style="font-size:12px;color:var(--sub);margin-top:4px;">3年CAGR: 13.29%，2025 +6.17%</p>
+    </div>
+  </div>
+
+  <div class="chart-box" id="chart_revenue"></div>
+
+  <div class="grid3" style="margin-top:12px;">
+    <div class="card-sm">
+      <h4>毛利率</h4>
+      <div class="big up">61.67%</div>
+      <p style="font-size:12px;color:var(--sub);">2025年报，Q1: 55.65%</p>
+    </div>
+    <div class="card-sm">
+      <h4>净利率</h4>
+      <div class="big up">40.52%</div>
+      <p style="font-size:12px;color:var(--sub);">2025年报，行业顶级</p>
+    </div>
+    <div class="card-sm">
+      <h4>ROE (加权)</h4>
+      <div class="big up">15.90%</div>
+      <p style="font-size:12px;color:var(--sub);">连续3年 > 15%</p>
+    </div>
+  </div>
+
+  <div class="callout callout-info" style="margin-top:14px;">
+    <strong>杜邦拆解 ROE = 净利率40.5% × 周转率0.15 × 杠杆2.34</strong><br>
+    判断：ROE主要由极高净利率驱动（水电资产天然高毛利），周转率低是重资产行业正常特征，杠杆率适中（资产负债率58.27%逐年下降）。<strong>ROE质量高，可持续性强。</strong>
+  </div>
+
+  <!-- 关键财务亮点 -->
+  <h4 style="margin-top:16px; color:#475569;">自由现金流与分红支撑力</h4>
+  <table>
+    <tr><th>指标</th><th>2025年报</th><th>2026Q1</th><th>健康阈值</th></tr>
+    <tr><td>经营现金流 (亿)</td><td class="up">605.63</td><td class="up">117.11</td><td>> 分红额</td></tr>
+    <tr><td>自由现金流 (亿)</td><td class="up">356.52</td><td class="dn">-12.19 (季节性)</td><td>——</td></tr>
+    <tr><td>经营现金流/净利润</td><td class="up">1.73x</td><td class="up">1.70x</td><td>> 0.8</td></tr>
+    <tr><td>FCF/分红</td><td class="up">1.46x</td><td>——</td><td>> 1.5 (略低于，但年度OK)</td></tr>
+    <tr><td>财务费用 (亿)</td><td>93.71 (同比-15.8%)</td><td>21.06 (同比-15.1%)</td><td>持续下降中</td></tr>
+    <tr><td>折旧费用 (亿)</td><td>~191 (同比-3.3亿)</td><td>——</td><td>右岸机组折旧25-26年到期</td></tr>
+  </table>
+
+  <h4 style="margin-top:16px; color:#475569;">资产负债健康度</h4>
+  <div class="grid3">
+    <div class="card-sm"><h4>资产负债率</h4><div class="big" style="font-size:20px;">57.33%</div><p style="font-size:12px;color:var(--sub);">2026Q1，逐年下降</p></div>
+    <div class="card-sm"><h4>有息负债率</h4><div class="big" style="font-size:20px;">89.90%</div><p style="font-size:12px;color:var(--sub);">高但属水电行业常态</p></div>
+    <div class="card-sm"><h4>利息覆盖倍数</h4><div class="big" style="font-size:20px;color:#1a365d;">~4.9x</div><p style="font-size:12px;color:var(--sub);">EBIT/财务费用，安全</p></div>
+  </div>
+
+  <!-- 成长驱动力 -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">4c. 成长驱动力</h3>
+  <div class="grid2">
+    <div class="card-sm">
+      <h4>🚀 财务费用压降</h4>
+      <p style="font-size:13px;">2025年财务费用93.71亿 (同比-15.8%)，Q1继续-15.1%。公司每年还本付息减少，预计2026年财务费用再降~12亿 → 直接增厚利润</p>
+    </div>
+    <div class="card-sm">
+      <h4>🚀 折旧到期释放</h4>
+      <p style="font-size:13px;">三峡右岸机组(2007-08投产，18年折旧)于2025-26年陆续到期；地下电站(2011-12投产)于2029-30年到期。折旧到期 → 利润自然释放</p>
+    </div>
+    <div class="card-sm">
+      <h4>🚀 来水改善弹性</h4>
+      <p style="font-size:13px;">2026H1发电量1327.44亿千瓦时(+4.81%)，其中三峡偏丰28.74%。厄尔尼诺预期强化，全年发电量目标3060亿千瓦时</p>
+    </div>
+    <div class="card-sm">
+      <h4>🚀 新业务布局</h4>
+      <p style="font-size:13px;">抽水蓄能项目建设推进 + 金沙江下游"水风光储"基地 + 秘鲁风电（已为秘鲁第一大风电运营商）</p>
+    </div>
+  </div>
+
+  <!-- 4d. Dividend Analysis -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">4d. 分红分析</h3>
+  <div class="callout callout-bull">
+    <strong>核心亮点：</strong>公司明确承诺 2026-2030年归母净利润<strong>70%现金分红</strong>比例。2025年度每股派1.00元（含税），对应当前股价股息率3.47%。在10年期国债收益率约2.x%的环境下，息差约1.5个百分点——这是极其稀缺的确定性收益。
+  </div>
+  <div class="grid3" style="margin-top:12px;">
+    <div class="card-sm"><h4>2025每股分红</h4><div class="big up">1.00元</div></div>
+    <div class="card-sm"><h4>分红总额</h4><div class="big">244.68亿</div></div>
+    <div class="card-sm"><h4>派息率</h4><div class="big">70.92%</div></div>
+  </div>
+
+  <!-- 4e. Valuation -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">4e. 估值分析</h3>
+
+  <div class="callout callout-info">
+    <strong>公司类型判断：</strong>价值型 + 稳健成长型。核心估值框架选择：<strong>PE估值 + 股息率估值</strong>，辅以DCF交叉验证。水电资产现金流可预测性强，PE是最有效的相对估值工具。
+  </div>
+
+  <div style="margin:12px 0;">
+    <strong>当前估值位置：</strong>
+    <span style="background:#fef2f2; padding:2px 8px; border-radius:4px; color:var(--red); font-weight:700;">PE-TTM 19.55x 处于近3年约1%极低分位</span>
+    <span style="font-size:12px;color:var(--sub); margin-left:10px;">—— 这在长江电力的历史上极为罕见。</span>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>方法</th><th>估值区间</th><th>依据</th></tr>
+        <tr><td>PE (2026E 22x)</td><td class="up">31.68-32.34</td><td>国泰海通/中信给予22x PE</td></tr>
+        <tr><td>PE (2026E 21x)</td><td>30.45-31.08</td><td>中金公司目标价31.50</td></tr>
+        <tr><td>股息率锚定</td><td>28.57-33.33</td><td>3.0-3.5%股息率对应</td></tr>
+        <tr><td>机构综合目标价</td><td class="up">33.53</td><td>多家机构均值</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="chart-box" id="chart_peers" style="height:300px;"></div>
+    </div>
+  </div>
+
+  <div style="margin:12px 0;">
+    <strong>情景分析：</strong>
+    <table>
+      <tr><th>情景</th><th>假设</th><th>2026E EPS</th><th>目标PE</th><th>目标价</th><th>vs当前</th></tr>
+      <tr style="background:#fef2f2;"><td>乐观</td><td>来水超预期+折旧到期节奏提前</td><td>1.55</td><td>23x</td><td class="up">35.65</td><td class="up">+23.7%</td></tr>
+      <tr style="background:#f8fafc;"><td>基准</td><td>发电量3060亿度+财务费降12亿</td><td>1.48</td><td>22x</td><td>32.56</td><td class="up">+12.9%</td></tr>
+      <tr style="background:#f0fdf4;"><td>悲观</td><td>来水偏枯+电价小幅下行</td><td>1.35</td><td>19x</td><td class="dn">25.65</td><td class="dn">-11.0%</td></tr>
+    </table>
+  </div>
+
+  <!-- 多空论点 -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">4f. 多空论点与预期差</h3>
+  <div class="grid2">
+    <div class="callout callout-bull">
+      <strong>🟢 多头核心论点</strong><br><br>
+      1. <strong>内生增长不受宏观影响：</strong>财务费用压降+折旧到期=无论经济好坏，利润都自然增长。2026Q1利润+30.5%已验证。<br><br>
+      2. <strong>利率下行周期红利：</strong>3.47%股息率 vs 2.x%国债收益率，息差处于历史高位，机构低配后有回补动力。<br><br>
+      3. <strong>厄尔尼诺催化：</strong>三峡来水偏丰28.74%，全年发电量目标3060亿千瓦时有望超额完成。
+    </div>
+    <div class="callout callout-bear">
+      <strong>🔴 空头核心论点</strong><br><br>
+      1. <strong>来水分布不均：</strong>乌东德偏枯16.94%，白鹤滩-5.05%，不是所有电站都受益。Q2总发电量仅+2.82%，增速放缓。<br><br>
+      2. <strong>估值修复已部分完成：</strong>年初至今+10.08%，从24.38低点涨到29.57高点，PE已从16x修复到19.5x。<br><br>
+      3. <strong>市场化电价风险：</strong>电力市场化改革推进，如果现货电价下行，度电收入和利润均受冲击。
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <strong>💡 变异认知（市场可能错在哪里）：</strong><br>
+    市场共识关注"来水+电价"两个变量，但可能<strong>低估了折旧到期的累积效应</strong>。三峡右岸/地下电站机组折旧在2025-2030年间陆续到期，每年释放约数亿至十亿级利润，这是"不依赖来水"的确定性增长。叠加财务费用每年降~12亿，两项合计年化增利约15-20亿——相当于在发电量零增长的情况下利润自然增长4-6%。<strong>这部分增长尚未被充分定价。</strong>
+  </div>
+</div>
+
+<!-- ════════════ LAYER 5: TRADING PLAN ════════════ -->
+<div class="section">
+  <h2>Layer 5 · 交易计划 <span class="badge badge-trade">落执行</span></h2>
+
+  <div class="trade-card">
+    <h3>📋 交易计划卡片 — 长江电力 (600900)</h3>
+    <div class="trade-row">
+      <div><span class="k">买入逻辑</span></div>
+      <div><span class="v">利率下行 + 内生利润释放(折旧到期+财务费压降) + 70%分红承诺 = 戴维斯双击潜力</span></div>
+
+      <div><span class="k">目标价区间</span></div>
+      <div><span class="v">31.50 - 33.50 元</span></div>
+
+      <div><span class="k">建议买入区间</span></div>
+      <div><span class="v">27.00 - 28.50 元 (留安全边际 10-15%)</span></div>
+
+      <div><span class="k">仓位建议</span></div>
+      <div><span class="v">总资产 7-10% (1/4 Kelly)</span></div>
+
+      <div><span class="k">胜率 p</span></div>
+      <div><span class="v">60-65%（基于：历年汛期后估值修复概率+内生增长确定性）</span></div>
+
+      <div><span class="k">赔率 b</span></div>
+      <div><span class="v">1.0 (止盈31.50/止损27.00 → b = (31.5/28.83)/(28.83/27.0) - 1 ≈ 1.02)</span></div>
+
+      <div><span class="k">理论Kelly</span></div>
+      <div><span class="v">f* = (1.02×0.63 - 0.37)/1.02 = 26.7% → 实操取 1/4 Kelly ≈ 7%</span></div>
+    </div>
+  </div>
+
+  <div class="kelly-box">
+    <strong>凯利公式展开：</strong><br>
+    胜率(p) = 63%：基于 (1) 公司明确70%分红承诺 → 机构配置需求刚性 → 下行有底；(2) 折旧到期+财务费用压降是高度确定的利润来源；(3) 厄尔尼诺提供向上期权。但考虑到Q2发电量增速放缓至2.82%，实际胜率可能略低于直观感受——因此取63%而非更高。<br><br>
+    赔率(b) = 1.02：止盈31.50（中金目标价，+9.3%），止损27.00（前期密集成交区支撑，-6.3%）→ b = 9.3/6.3 ≈ 1.48 的保守调整后取1.02。<br><br>
+    理论f* = 26.7%，实操1/4 → 7%。考虑到长江电力是防御型资产，单票上限不超过总资产10%，此处取7-10%。
+  </div>
+
+  <h4 style="margin-top:16px; color:#475569;">止损规则</h4>
+  <table>
+    <tr><th>止损类型</th><th>触发条件</th><th>说明</th></tr>
+    <tr><td>逻辑止损</td><td>公司取消/大幅降低70%分红承诺</td><td>买入逻辑核心被证伪</td></tr>
+    <tr><td>逻辑止损</td><td>全年发电量低于2800亿千瓦时（偏离目标-9%）</td><td>来水严重不及预期</td></tr>
+    <tr><td>技术止损</td><td>跌破 26.00 元（前期平台支撑/60日均线）</td><td>趋势转弱信号</td></tr>
+    <tr><td>时间止损</td><td>买入后6个月无明显催化兑现</td><td>时间成本过高</td></tr>
+    <tr><td>绝对止损</td><td>亏损超过 10% 无条件平仓</td><td>纪律底线</td></tr>
+  </table>
+
+  <h4 style="margin-top:16px; color:#475569;">止盈规则</h4>
+  <table>
+    <tr><th>阶段</th><th>触发价</th><th>动作</th></tr>
+    <tr><td>第一目标</td><td>31.50元（+9.3%）</td><td>减仓 30%（落袋部分利润）</td></tr>
+    <tr><td>第二目标</td><td>33.50元（+16.2%）</td><td>减至观察仓（5%以下）</td></tr>
+    <tr><td>估值过热</td><td>PE(TTM) > 25x 或 股息率 < 2.8%</td><td>清仓</td></tr>
+  </table>
+
+  <h4 style="margin-top:16px; color:#475569;">跟踪指标（每周检查）</h4>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>预警阈值</th><th>数据来源</th></tr>
+    <tr><td>三峡入库流量</td><td>偏丰28.74% (H1)</td><td>连续2周低于同期均值</td><td>长江水文网</td></tr>
+    <tr><td>乌东德来水</td><td>偏枯16.94% (H1)</td><td>偏枯幅度扩大到>30%</td><td>公司月度发电量公告</td></tr>
+    <tr><td>10年期国债收益率</td><td>~2.x%</td><td>快速上行至3.0%以上</td><td>中国债券信息网</td></tr>
+    <tr><td>北向资金持股</td><td>4.24%</td><td>连续2周净卖出>1%</td><td>沪深港通披露</td></tr>
+    <tr><td>市场电价(水电)</td><td>0.248-0.253元/度</td><td>跌破0.23元/度</td><td>电力交易中心</td></tr>
+  </table>
+
+  <h4 style="margin-top:16px; color:#475569;">催化剂日历（未来 3-6 个月）</h4>
+  <table>
+    <tr><th>时间</th><th>事件</th><th>预期影响</th></tr>
+    <tr><td>2026-08 中旬</td><td>7月发电量数据发布</td><td>主汛期核心月份，若超预期则催化上行</td></tr>
+    <tr><td>2026-09-01前后</td><td>长江流域汛期总结</td><td>全年发电量可预见性大幅提高</td></tr>
+    <tr><td>2026-10 月底</td><td>2026年三季报</td><td>Q3为全年利润旺季，市场重点验证全年预期</td></tr>
+    <tr><td>2026-11</td><td>年末蓄水情况</td><td>影响2027年枯期发电能力</td></tr>
+    <tr><td>2026-12</td><td>2026年度发电量公告</td><td>年度最终成绩单，决定分红基数</td></tr>
+  </table>
+</div>
+
+<!-- ════════════ RISK MATRIX ════════════ -->
+<div class="section">
+  <h2>风险矩阵</h2>
+  <table class="risk-table">
+    <tr><th>风险</th><th>发生概率</th><th>影响程度</th><th>应对</th></tr>
+    <tr class="risk-high"><td>来水严重偏枯（全年发电<2800亿度）</td><td>低 (15%)</td><td>高</td><td>逻辑止损</td></tr>
+    <tr class="risk-mid"><td>市场电价下行超预期</td><td>中 (30%)</td><td>中</td><td>降仓至5%</td></tr>
+    <tr class="risk-mid"><td>利率上行压低股息吸引力</td><td>中 (25%)</td><td>中</td><td>10年期国债>3%时重新评估</td></tr>
+    <tr class="risk-low"><td>抽蓄/风电投资回报不及预期</td><td>低 (20%)</td><td>低</td><td>非核心业务，影响有限</td></tr>
+    <tr class="risk-mid"><td>厄尔尼诺不兑现/转为拉尼娜</td><td>中 (20%)</td><td>中</td><td>跟踪国家气候中心月度预测</td></tr>
+    <tr class="risk-low"><td>大股东减持/质押风险</td><td>极低 (<5%)</td><td>低</td><td>央企控股，减持可能性极小</td></tr>
+  </table>
+
+  <div class="callout callout-info" style="margin-top:16px;">
+    <strong>相关性风险：</strong>长江电力与A股大盘相关性约0.3-0.5（低β属性），在市场系统性下跌时通常表现出防御性（如2026-07-17，大盘-3%，水电+3.28%）。与其他持仓标的的相关性取决于持仓结构——如果组合中已持有大量银行、石油石化等高股息标的，则需注意红利板块整体回调的同向风险。
+  </div>
+
+  <!-- ════════════ BEHAVIORAL CHECK ════════════ -->
+  <h3 style="font-size:16px; color:#1a365d; margin:20px 0 10px;">行为金融护栏自检</h3>
+  <table>
+    <tr><th style="width:22%">偏误类型</th><th>自检结果</th></tr>
+    <tr><td><strong>确认偏误</strong></td><td>已列出空头论点：来水分布不均、Q2增速放缓、估值部分修复、电价风险。如果看错，信号是：Q3发电量同比转负 + 财务费用降幅收窄。</td></tr>
+    <tr><td><strong>锚定效应</strong></td><td>建议买入区间27-28.5元基于估值模型（PE 18-19x 2026E EPS 1.48），而非价格记忆。当前28.83元在建议区间上沿附近，需要等待回调或确认突破后追入。</td></tr>
+    <tr><td><strong>过度自信</strong></td><td>若实际胜率比估计的63%低20%（即降至50%），Kelly理论仓位从26.7%降至0%，1/4 Kelly仓位仅7%仍然是安全的试探仓位。</td></tr>
+    <tr><td><strong>近期偏差</strong></td><td>近一月股价+10%（7月上涨显著），可能强化乐观情绪。拉长到3年维度：PE从2023年的17-18x升至当前的19.5x，估值修复已进行了一半以上，后续主要赚业绩增长的钱而非估值修复的钱。</td></tr>
+  </table>
+</div>
+
+<!-- ════════════ FOOTER ════════════ -->
+<div style="text-align:center; padding:24px 0; color:var(--sub); font-size:12px; border-top:1px solid var(--border); margin-top:16px;">
+  <p><strong>⚠️ 免责声明</strong></p>
+  <p style="max-width:600px;margin:8px auto;">本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:8px;">数据来源：腾讯自选股(westock-data) · Tushare · 国家统计局 · 央行 · 国家气候中心 | 报告日期：2026-08-03 | 分析师：弈投师</p>
+</div>
+
+<!-- ════════════ CHARTS JS ════════════ -->
+<script>
+(function(){
+function safeInit(id, fn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var c = echarts.init(el);
+  fn(c);
+  window.addEventListener('resize', function(){ c.resize(); });
+}
+
+// Chart 1: Revenue & Net Profit Trend (Dual Axis)
+safeInit('chart_revenue', function(c){
+  c.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['营业收入', '归母净利润', '毛利率'], bottom: 0 },
+    grid: { left: 60, right: 60, top: 30, bottom: 40 },
+    xAxis: { type: 'category', data: ['2021','2022','2023','2024','2025','2026E'] },
+    yAxis: [
+      { type: 'value', name: '亿元', axisLabel: { formatter: '{value}' } },
+      { type: 'value', name: '%', axisLabel: { formatter: '{value}%' } }
+    ],
+    series: [
+      { name: '营业收入', type: 'bar', data: [556, 688.6, 781.4, 844.9, 862.4, 876], itemStyle: { color: '#3b82f6' }, barWidth: '40%' },
+      { name: '归母净利润', type: 'line', yAxisIndex: 0, data: [263, 237.3, 272.5, 325.0, 345.0, 362], itemStyle: { color: '#d0303e' }, symbolSize: 8 },
+      { name: '毛利率', type: 'line', yAxisIndex: 1, data: [62.5, 60.1, 58.8, 60.5, 61.7, null], itemStyle: { color: '#b8860b' }, lineStyle: { type: 'dashed' }, symbolSize: 6 }
+    ]
+  });
+});
+
+// Chart 2: Peer Comparison
+safeInit('chart_peers', function(c){
+  c.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['PE(TTM)', 'PB', '股息率%'], bottom: 0 },
+    grid: { left: 50, right: 50, top: 20, bottom: 40 },
+    xAxis: { type: 'category', data: ['长江电力', '华能水电', '国投电力', '桂冠电力', '川投能源'] },
+    yAxis: [
+      { type: 'value', name: '倍' },
+      { type: 'value', name: '%', axisLabel: { formatter: '{value}%' } }
+    ],
+    series: [
+      { name: 'PE(TTM)', type: 'bar', data: [19.55, 22.06, 16.34, 22.78, 18.37], itemStyle: { color: '#3b82f6' }, barWidth: '30%' },
+      { name: 'PB', type: 'bar', data: [3.38, 2.81, 1.76, 4.85, 1.78], itemStyle: { color: '#93c5fd' }, barWidth: '30%' },
+      { name: '股息率%', type: 'line', yAxisIndex: 1, data: [3.47, 2.03, 3.01, 2.63, 3.60], itemStyle: { color: '#d0303e' }, symbolSize: 8, lineStyle: { width: 3 } }
+    ]
+  });
+});
+})();
+</script>
+</body>
+</html>

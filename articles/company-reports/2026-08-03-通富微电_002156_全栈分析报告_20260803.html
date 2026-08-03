@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>通富微电(002156) 投资分析报告 — 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>window.CHARTJS_CDN_LOADED = typeof Chart !== 'undefined';</script>
+<style>
+:root{
+  --red:#d93025; --red-light:#fce8e6; --green:#1a8a3f; --green-light:#e6f4ea;
+  --blue:#1a56db; --blue-dark:#0d2b6e; --bg:#f8fafc; --card:#fff; --text:#1e293b;
+  --text-secondary:#64748b; --border:#e2e8f0; --accent:#f59e0b; --accent-light:#fef3c7;
+  --max-w:680px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.hero{background:linear-gradient(135deg,var(--blue-dark) 0%,#1a3c8f 40%,#2563eb 100%);color:#fff;padding:48px 24px;text-align:center}
+.hero h1{font-size:2rem;margin-bottom:8px;font-weight:800}
+.hero .sub{font-size:1rem;opacity:0.85;margin-bottom:4px}
+.hero .meta{font-size:0.85rem;opacity:0.7;margin-top:16px}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
+.section{padding:32px 16px;max-width:var(--max-w);margin:0 auto}
+.section-title{font-size:1.35rem;font-weight:700;margin-bottom:20px;padding-bottom:8px;border-bottom:3px solid var(--blue)}
+.card{background:var(--card);border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.card h3{font-size:1.1rem;margin-bottom:12px;color:var(--blue-dark)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi-card{background:var(--card);border-radius:12px;padding:16px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.kpi-value{font-size:1.5rem;font-weight:800}
+.kpi-label{font-size:0.8rem;color:var(--text-secondary);margin-top:4px}
+.kpi-up{color:var(--red)} .kpi-down{color:var(--green)} .kpi-neutral{color:var(--blue)}
+.score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.score-row:last-child{border-bottom:none}
+.score-label{min-width:90px;font-weight:600;font-size:0.95rem}
+.score-stars{color:var(--accent);font-size:1.1rem;letter-spacing:2px}
+.score-desc{font-size:0.85rem;color:var(--text-secondary);flex:1}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.78rem;font-weight:600;margin:2px}
+.tag-red{background:var(--red-light);color:var(--red)}
+.tag-green{background:var(--green-light);color:var(--green)}
+.tag-blue{background:#e8f0fe;color:var(--blue)}
+.tag-amber{background:var(--accent-light);color:#b45309}
+table{width:100%;border-collapse:collapse;font-size:0.88rem;margin:12px 0}
+th{background:#f1f5f9;padding:10px 8px;text-align:left;font-weight:600;border-bottom:2px solid var(--border);font-size:0.82rem}
+td{padding:8px;border-bottom:1px solid var(--border)}
+tr:hover{background:#f8fafc}
+.verdict-box{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:4px solid var(--blue);padding:20px 24px;border-radius:0 12px 12px 0;margin:20px 0}
+.verdict-box h3{margin-bottom:8px;color:var(--blue-dark)}
+.risk-box{background:linear-gradient(135deg,#fef2f2,#fee2e2);border-left:4px solid var(--red);padding:20px 24px;border-radius:0 12px 12px 0;margin:20px 0}
+.chart-wrap{background:var(--card);border-radius:12px;padding:16px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.chart-wrap h4{font-size:1rem;margin-bottom:12px;color:var(--text)}
+.chart-wrap{position:relative;height:320px}.chart-wrap canvas{width:100%!important}
+.five-funnel{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.funnel-row{display:flex;align-items:center;gap:12px}
+.funnel-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:#fff;flex-shrink:0}
+.funnel-num.l1{background:var(--blue-dark)} .funnel-num.l2{background:var(--blue)}
+.funnel-num.l3{background:#3b82f6} .funnel-num.l4{background:#60a5fa} .funnel-num.l5{background:#93c5fd}
+.funnel-content{flex:1}
+.funnel-content .fw{font-weight:700;font-size:0.95rem}
+.funnel-content .fd{font-size:0.8rem;color:var(--text-secondary)}
+.bull-bear{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.bull-card{background:linear-gradient(135deg,#fef2f2,#fee2e2);padding:20px;border-radius:12px;border:1px solid #fca5a5}
+.bear-card{background:linear-gradient(135deg,#ecfdf5,#d1fae5);padding:20px;border-radius:12px;border:1px solid #6ee7b7}
+.bull-card h4{color:var(--red);margin-bottom:8px}
+.bear-card h4{color:var(--green);margin-bottom:8px}
+.bull-card li,.bear-card li{margin-bottom:6px;font-size:0.9rem}
+.catalyst-timeline{position:relative;padding-left:24px}
+.catalyst-timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--blue)}
+.catalyst-item{position:relative;margin-bottom:16px;padding-left:24px}
+.catalyst-item::before{content:'';position:absolute;left:-20px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 2px var(--blue)}
+.catalyst-date{font-size:0.78rem;color:var(--text-secondary);font-weight:600}
+.catalyst-event{font-size:0.9rem}
+.footer{text-align:center;padding:32px 16px;color:var(--text-secondary);font-size:0.78rem;border-top:1px solid var(--border);margin-top:32px}
+@media(max-width:600px){
+  .grid-2,.grid-4,.bull-bear{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .section{padding:24px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO BANNER ===== -->
+<div class="hero">
+  <div style="font-size:0.85rem;opacity:0.7;margin-bottom:8px">弈投师 · 五层漏斗全栈分析</div>
+  <h1>通富微电 <span style="font-weight:400">002156.SZ</span></h1>
+  <div class="sub">中国先进封装龙头 · AMD核心战略伙伴</div>
+  <div class="meta">报告日期：2026-08-03 ｜ 数据截止：2026Q1财报 / 2026-08-01行情 ｜ 市场：深市主板 · 半导体</div>
+</div>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<div class="section">
+  <div class="verdict-box">
+    <h3>🎯 核心结论</h3>
+    <p style="line-height:1.8">
+      通富微电是中国唯一具备<span style="color:var(--red);font-weight:700">类CoWoS量产能力</span>的OSAT封测企业，深度绑定AMD（独占80%+封测订单）。
+      Q1 2026净利润同比<span style="color:var(--red);font-weight:700">暴增224.6%</span>，验证AI先进封装超级周期。
+      但PE(TTM) <span style="font-weight:700">59.5倍</span>、负债率<span style="font-weight:700">64.9%</span>，高估值+高杠杆的组合需要精准择时。
+      <br><br>
+      <strong>一句话：好赛道 + 好公司，但需要等一个好价格。</strong>建议<span style="color:var(--blue);font-weight:700">45-48元</span>区间入场，目标仓位<span style="color:var(--blue);font-weight:700">10%</span>。
+    </p>
+  </div>
+
+  <!-- Key Data Grid -->
+  <div class="grid-4" style="margin-top:16px">
+    <div class="kpi-card"><div class="kpi-value kpi-down">52.15</div><div class="kpi-label">最新收盘价（元）</div></div>
+    <div class="kpi-card"><div class="kpi-value kpi-up">+224.6%</div><div class="kpi-label">Q1 2026 利润增速</div></div>
+    <div class="kpi-card"><div class="kpi-value kpi-neutral">59.5x</div><div class="kpi-label">PE(TTM)</div></div>
+    <div class="kpi-card"><div class="kpi-value kpi-neutral">48-58</div><div class="kpi-label">基准目标价（元）</div></div>
+  </div>
+</div>
+
+<!-- ===== FIVE LAYER FUNNEL ===== -->
+<div class="section">
+  <div class="section-title">📐 弈投师 · 五层漏斗框架</div>
+  <div class="five-funnel">
+    <div class="funnel-row">
+      <div class="funnel-num l1">L1</div>
+      <div class="funnel-content">
+        <div class="fw">宏观定方向</div>
+        <div class="fd">PMI 49.2 收缩但半导体景气逆势（IC产量+23.1%）· 10Y利率1.72%极度宽松 · 权益仓位60-70%偏进攻</div>
+      </div>
+      <span class="tag tag-red">偏进攻</span>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-num l2">L2</div>
+      <div class="funnel-content">
+        <div class="fw">行业选赛道</div>
+        <div class="fd">先进封装需求100万片CoWoS(+49%YoY) · AMD MI400超级周期 · 通富在AMD生态中不可替代</div>
+      </div>
+      <span class="tag tag-red">⭐⭐⭐⭐</span>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-num l3">L3</div>
+      <div class="funnel-content">
+        <div class="fw">量化初筛</div>
+        <div class="fd">硬指标全通过 · PE 59.5x/PB 5.5x 极贵 · 但PEG≈0.75 · 核心矛盾：高估值 vs 高增速</div>
+      </div>
+      <span class="tag tag-amber">成长溢价</span>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-num l4">L4</div>
+      <div class="funnel-content">
+        <div class="fw">深度研究 & 估值</div>
+        <div class="fd">DCF目标54元 · PE基准目标48-58元 · 乐观68-80元 · 当前52.15元处于估值中枢</div>
+      </div>
+      <span class="tag tag-blue">合理偏贵</span>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-num l5">L5</div>
+      <div class="funnel-content">
+        <div class="fw">交易计划</div>
+        <div class="fd">买入区间45-52元 · 仓位10%(1/3凯利) · 止损42元 · 止盈62→70元 · 等回调入场</div>
+      </div>
+      <span class="tag tag-green">等待时机</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ===== -->
+<div class="section">
+  <div class="section-title">📊 核心图表</div>
+
+  <!-- Chart 1: Revenue & Profit -->
+  <div class="chart-wrap">
+    <h4>营收与归母净利润趋势（2023-2026Q1）</h4>
+    <canvas id="chartFinance" height="300"></canvas>
+    <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:8px">数据来源：Tushare · 公司年报/季报 | Q1 2026为单季度数据</div>
+  </div>
+
+  <!-- Chart 2: Price History -->
+  <div class="chart-wrap">
+    <h4>股价走势 & 交易区间（2025.08 — 2026.08）</h4>
+    <canvas id="chartPrice" height="300"></canvas>
+    <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:8px">虚线标注：42止损线 | 52现价 | 62第一目标 | 70第二目标 | 数据来源：Tushare</div>
+  </div>
+
+  <!-- Chart 3: Valuation Scenarios -->
+  <div class="chart-wrap">
+    <h4>估值情景分析（三情景目标价区间）</h4>
+    <canvas id="chartValuation" height="260"></canvas>
+    <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:8px">基准概率55% · 乐观25% · 悲观20% | 当前价52.15元 | 数据来源：弈投师模型估算</div>
+  </div>
+</div>
+
+<!-- ===== DETAILED CONTENT ===== -->
+<div class="section">
+
+  <!-- Financial Deep Dive -->
+  <div class="section-title">🔬 财务深度拆解</div>
+  <div class="card">
+    <h3>杜邦分解（FY2025）</h3>
+    <div style="text-align:center;font-size:1.1rem;font-weight:700;padding:16px;background:#f8fafc;border-radius:8px;margin:12px 0">
+      ROE 8.08% = 净利率 4.93% × 周转率 0.59 × 杠杆 2.90x
+    </div>
+    <div class="grid-2">
+      <div>
+        <div style="font-weight:600;color:var(--red)">🟡 净利率偏低</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary)">封测行业天然低毛利(14.6%)，但趋势向上（2023年仅0.76%）</div>
+      </div>
+      <div>
+        <div style="font-weight:600;color:var(--red)">🔴 杠杆偏高</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary)">负债率64.9%，有息负债200亿，是最大的财务风险点</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Financials Table -->
+  <div class="card">
+    <h3>核心财务指标</h3>
+    <table>
+      <tr><th>指标</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>Q1 2026</th></tr>
+      <tr><td>营收（亿）</td><td>222.69</td><td>238.82</td><td style="color:var(--red);font-weight:700">279.21</td><td>74.82</td></tr>
+      <tr><td>归母净利润（亿）</td><td>1.69</td><td>6.78</td><td style="color:var(--red);font-weight:700">12.19</td><td style="color:var(--red);font-weight:700">3.29</td></tr>
+      <tr><td>毛利率</td><td>12.1%</td><td>14.8%</td><td style="color:var(--red)">14.6%</td><td>13.3%</td></tr>
+      <tr><td>净利率</td><td>0.76%</td><td>2.84%</td><td style="color:var(--red)">4.93%</td><td style="color:var(--red)">4.68%</td></tr>
+      <tr><td>ROE</td><td>1.2%</td><td>4.7%</td><td style="color:var(--red)">8.1%</td><td>2.1%(Q)</td></tr>
+      <tr><td>经营现金流（亿）</td><td>42.8</td><td>44.3</td><td style="color:var(--red)">55.1</td><td>9.4(Q)</td></tr>
+      <tr><td>负债率</td><td>57.9%</td><td>60.0%</td><td style="color:var(--green)">63.7%</td><td style="color:var(--green)">64.9%</td></tr>
+    </table>
+  </div>
+
+  <!-- Bull vs Bear -->
+  <div class="section-title">⚔️ 多空对弈</div>
+  <div class="bull-bear">
+    <div class="bull-card">
+      <h4>🔴 多头论点</h4>
+      <ol>
+        <li><strong>AMD MI400超级周期</strong>：2026H2量产，通富独占80%+封测订单，Q1利润+224%已验证</li>
+        <li><strong>利润率结构性改善</strong>：先进封装占比超70%，毛利率有望从14.6%→18-20%</li>
+        <li><strong>国产替代第二曲线</strong>：华为/海光订单爬坡，存储+汽车电子封测新产能打开增量空间</li>
+      </ol>
+    </div>
+    <div class="bear-card">
+      <h4>🟢 空头论点</h4>
+      <ol>
+        <li><strong>估值透支预期</strong>：PE 59.5x是行业均值2-3倍，PB 5.5x对应ROE仅8%</li>
+        <li><strong>高杠杆脆弱性</strong>：负债率64.9%，流动比率0.74，周期下行时财务压力巨大</li>
+        <li><strong>台积电天花板</strong>：CoWoS占85%+高端份额，OSAT在AI封装中份额可能被压缩</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Variant Perception -->
+  <div class="card" style="border:2px solid var(--accent);background:var(--accent-light)">
+    <h3 style="color:#b45309">💡 变异认知（市场错在哪里？）</h3>
+    <p>市场将通富微电简单看作<strong>"AMD概念股"</strong>，低估了其作为<strong>中国唯一具备类CoWoS量产能力的OSAT</strong>的战略稀缺性。在国内先进封装自主可控的大背景下，通富微电不仅是AMD的供应商，更是<strong>中国AI芯片产业链中不可替代的封装基础设施</strong>。华为、海光等国产芯片的先进封装需求，只能找通富微电或长电科技——这个赛道正在以每年50%+的速度扩容。</p>
+  </div>
+
+  <!-- Moat -->
+  <div class="card">
+    <h3>🏰 四大护城河</h3>
+    <table>
+      <tr><th>类型</th><th>具体内容</th><th>强度</th></tr>
+      <tr><td>客户绑定</td><td>与AMD"合资+合作"模式（2016年收购苏州/槟城工厂85%股权），独占80%+封测订单</td><td>🟢 极强</td></tr>
+      <tr><td>技术壁垒</td><td>VisionS类CoWoS架构，5nm GPU+HBM共封装量产，3nm完成客户验证</td><td>🟢 强</td></tr>
+      <tr><td>规模效应</td><td>全球第四大OSAT，国内仅次于长电科技</td><td>🟡 中等</td></tr>
+      <tr><td>政策护城河</td><td>国家大基金一期+二期同时持股（合计7.42%），半导体国产替代政策受益</td><td>🟢 强</td></tr>
+    </table>
+  </div>
+
+  <!-- Trading Plan Card -->
+  <div class="section-title">🎯 交易计划卡片</div>
+  <div class="card" style="border:2px solid var(--blue)">
+    <table>
+      <tr><td style="font-weight:700;width:100px">买入逻辑</td><td>市场在38%回调中过度聚焦短期资金流出，但通富微电的战略稀缺性和Q1 224%利润爆发力意味着中期风险收益比已具吸引力</td></tr>
+      <tr><td style="font-weight:700">目标价</td><td><span style="color:var(--red)">48-58元</span>（基准）· <span style="color:var(--red)">68-80元</span>（乐观）</td></tr>
+      <tr><td style="font-weight:700">买入区间</td><td style="color:var(--blue);font-weight:700">45-52元</td></tr>
+      <tr><td style="font-weight:700">当前价</td><td>52.15元（2026-08-03）</td></tr>
+      <tr><td style="font-weight:700">建议仓位</td><td style="font-weight:700">10%</td></tr>
+      <tr><td style="font-weight:700">止损价</td><td style="color:var(--green);font-weight:700">42元（-19.5%）</td></tr>
+      <tr><td style="font-weight:700">止盈价</td><td style="color:var(--red)">62元（减30%）→ 70元（减40%）</td></tr>
+    </table>
+  </div>
+
+  <!-- Kelly -->
+  <div class="card">
+    <h3>凯利公式仓位推导</h3>
+    <table>
+      <tr><th>参数</th><th>数值</th><th>依据</th></tr>
+      <tr><td>胜率 p</td><td>55%</td><td>AMD MI400确定性+Q1利润验证+38%回调修复</td></tr>
+      <tr><td>赔率 b</td><td>1.77</td><td>止盈70元 vs 止损42元 = 17.85/10.15</td></tr>
+      <tr><td>f*（理论）</td><td>29.5%</td><td>= (1.77×0.55−0.45)/1.77</td></tr>
+      <tr><td style="font-weight:700">实操仓位</td><td style="font-weight:700;color:var(--blue)">~10%</td><td>1/3凯利，考虑123%振幅+高杠杆风险</td></tr>
+    </table>
+    <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px">⚠️ 过度自信检查：若实际胜率仅45%（低10%），f*=13.9%，1/3凯利仅4.6%。建议初始建仓≤5%，确认趋势后加至10%。</div>
+  </div>
+
+  <!-- Catalyst Timeline -->
+  <div class="card">
+    <h3>📅 催化剂日历（未来6个月）</h3>
+    <div class="catalyst-timeline">
+      <div class="catalyst-item"><div class="catalyst-date">2026-08 中旬</div><div class="catalyst-event">通富微电半年报 —— 确认Q2环比趋势，关注毛利率变化</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2026-08 下旬</div><div class="catalyst-event">AMD Q2 2026财报 —— MI400出货指引是核心变量</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2026-09</div><div class="catalyst-event">AMD Advancing AI大会 —— 可能披露MI400量产时间表</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2026-10</div><div class="catalyst-event">苏州二期工厂投产 —— 产能释放节奏验证</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2026-11</div><div class="catalyst-event">通富微电三季报 —— Q3旺季+MI400 ramp起点</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2026 Q4</div><div class="catalyst-event" style="color:var(--red);font-weight:600">🔥 AMD MI400正式量产出货 —— 核心催化剂</div></div>
+      <div class="catalyst-item"><div class="catalyst-date">2027-01</div><div class="catalyst-event">通富微电2026年度业绩预告 —— 全年利润是否超预期</div></div>
+    </div>
+  </div>
+
+  <!-- Risk Matrix -->
+  <div class="risk-box">
+    <h3 style="color:var(--red)">⚠️ 风险矩阵</h3>
+    <table>
+      <tr><th>风险</th><th>最大下行</th><th>概率</th><th>应对</th></tr>
+      <tr><td>MI400放量不及预期</td><td style="color:var(--green)">-40%</td><td>15%</td><td>逻辑止损 · 清仓</td></tr>
+      <tr><td>估值压缩（PE回归均值）</td><td style="color:var(--green)">-35%</td><td>25%</td><td>技术止损 · 跌破42元</td></tr>
+      <tr><td>AMD订单份额流失</td><td style="color:var(--green)">-50%</td><td>5%</td><td>逻辑止损 · 立即清仓</td></tr>
+      <tr><td>中美科技摩擦升级</td><td style="color:var(--green)">-30%</td><td>10%</td><td>视管制范围决定</td></tr>
+      <tr><td>公司流动性风险</td><td style="color:var(--green)">-25%</td><td>8%</td><td>跟踪流动比率变化</td></tr>
+    </table>
+  </div>
+
+  <!-- Final Verdict -->
+  <div class="verdict-box">
+    <h3>📋 最终评级汇总</h3>
+    <div class="score-row"><span class="score-label">赛道质量</span><span class="score-stars">⭐⭐⭐⭐⭐</span><span class="score-desc">AI先进封装是半导体最确定的结构性增长方向</span></div>
+    <div class="score-row"><span class="score-label">公司竞争力</span><span class="score-stars">⭐⭐⭐⭐</span><span class="score-desc">AMD独家绑定+国内稀缺类CoWoS能力，护城河深厚</span></div>
+    <div class="score-row"><span class="score-label">财务健康</span><span class="score-stars">⭐⭐⭐</span><span class="score-desc">高负债+低流动性是硬伤，但经营现金流充裕缓解短期压力</span></div>
+    <div class="score-row"><span class="score-label">估值吸引力</span><span class="score-stars">⭐⭐⭐</span><span class="score-desc">回调后处于合理区间中枢，无显著低估</span></div>
+    <div class="score-row"><span class="score-label">催化剂密度</span><span class="score-stars">⭐⭐⭐⭐⭐</span><span class="score-desc">未来6个月MI400量产+半年报+三季报密集催化</span></div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <p><strong>弈投师</strong> · 全栈股票投研策略师</p>
+  <p style="margin-top:8px">数据来源：Tushare（行情/财务/估值）、WeStock Data（宏观/研报）、WebSearch（产业新闻）</p>
+  <p style="margin-top:16px;font-weight:600">⚠️ 免责声明</p>
+  <p>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+</div>
+
+<!-- ===== CHARTS JS ===== -->
+<script>
+(function(){
+if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+var BOPTS = {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{usePointStyle:true,padding:20,font:{size:12}}}}};
+
+// ── Chart 1: Revenue & Net Profit (dual-axis bar) ──
+(function(){
+var ctx = document.getElementById('chartFinance'); if(!ctx) return;
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['FY2023','FY2024','FY2025','Q1 2026'],
+    datasets: [{
+      label: '营收（亿元）', data: [222.69,238.82,279.21,74.82],
+      backgroundColor: '#3b82f6', borderRadius: 6, yAxisID: 'y'
+    },{
+      label: '归母净利润（亿元）', data: [1.69,6.78,12.19,3.29],
+      backgroundColor: '#d93025', borderRadius: 6, yAxisID: 'y1'
+    }]
+  },
+  options: Object.assign({}, BOPTS, {
+    plugins: Object.assign({}, BOPTS.plugins, {
+      tooltip: {callbacks:{label:function(c){return c.dataset.label+': '+c.raw.toFixed(2)+'亿';}}}
+    }),
+    scales: {
+      y: {type:'linear',position:'left',title:{display:true,text:'营收（亿元）'},grid:{color:'#e2e8f0'}},
+      y1: {type:'linear',position:'right',title:{display:true,text:'净利润（亿元）'},grid:{display:false}}
+    }
+  })
+});
+})();
+
+// ── Chart 2: Price History with trading zones ──
+(function(){
+var ctx = document.getElementById('chartPrice'); if(!ctx) return;
+var rawDates = ["20250801","20250808","20250815","20250822","20250829","20250905","20250912","20250919","20250926","20251013","20251020","20251027","20251103","20251110","20251117","20251124","20251201","20251208","20251215","20251222","20251229","20260107","20260114","20260121","20260128","20260204","20260211","20260226","20260305","20260312","20260319","20260326","20260402","20260410","20260417","20260424","20260506","20260513","20260520","20260527","20260603","20260610","20260617","20260625","20260702","20260709","20260716","20260723","20260730","20260731"];
+var rawCloses = [27.13,26.8,28.66,30.23,33.09,32.21,33.11,34.38,37.71,46.97,39.27,43.94,41.74,40.14,37.55,35.31,37.49,37.63,36.44,37.19,37.4,40.08,40.92,56.11,54.11,49.05,47.77,52.27,48.84,46.33,45.95,42.76,40.77,45.23,48.18,48.42,56.95,60.86,62.28,71.52,70.22,61.44,67.22,77.81,67.37,72.17,75.95,69.82,55.89,56.73];
+var lbls = rawDates.map(function(d){return d.slice(4,6)+'/'+d.slice(6,8);});
+var N = lbls.length;
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: lbls,
+    datasets: [{
+      label: '收盘价', data: rawCloses,
+      borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.06)',
+      fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2
+    },{
+      label: '止损线 42元', data: new Array(N).fill(42),
+      borderColor: '#1a8a3f', borderDash: [6,3], borderWidth: 1.5, pointRadius: 0, fill: false
+    },{
+      label: '目标一 62元', data: new Array(N).fill(62),
+      borderColor: '#f59e0b', borderDash: [6,3], borderWidth: 1.5, pointRadius: 0, fill: false
+    },{
+      label: '目标二 70元', data: new Array(N).fill(70),
+      borderColor: '#d93025', borderDash: [6,3], borderWidth: 1.5, pointRadius: 0, fill: false
+    }]
+  },
+  options: Object.assign({}, BOPTS, {
+    scales: {
+      y: {title:{display:true,text:'股价（元）'},grid:{color:'#e2e8f0'}},
+      x: {grid:{display:false},ticks:{maxTicksLimit:12}}
+    }
+  })
+});
+})();
+
+// ── Chart 3: Valuation Scenarios ──
+var ctx3 = document.getElementById('chartValuation');
+if(ctx3) new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: ['悲观\n34-40元\n(20%)','基准\n48-58元\n(55%)','乐观\n68-80元\n(25%)'],
+    datasets: [{
+      data: [37, 53, 74],
+      backgroundColor: ['#94a3b8','#2563eb','#d93025'],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: {display:false},
+      tooltip: {callbacks:{label:function(c){var r=['34 – 40 元','48 – 58 元（当前52.15）','68 – 80 元'];return r[c.dataIndex];}}}
+    },
+    scales: {
+      y: {title:{display:true,text:'目标价（元）'},grid:{color:'#e2e8f0'},max:90,
+        ticks:{callback:function(v){return v+'元';}}},
+      x: {grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+})();
+</script>
+
+</body>
+</html>
