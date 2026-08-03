@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>昆仑万维(300418) 深度财务分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card: #ffffff;
+  --text: #2d3436;
+  --text-secondary: #636e72;
+  --red: #d63031;
+  --green: #00b894;
+  --blue: #0984e3;
+  --orange: #e17055;
+  --purple: #6c5ce7;
+  --border: #e9ecef;
+  --tag-red-bg: #ffeaea;
+  --tag-green-bg: #e6f9f0;
+  --tag-yellow-bg: #fff8e6;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height:1.7; }
+.container { max-width: 720px; margin:0 auto; padding:20px 16px; }
+
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 48px 24px; border-radius: 16px; margin-bottom: 24px; text-align: center; }
+.hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.hero .subtitle { font-size: 14px; opacity: 0.8; }
+.hero .verdict { display: inline-block; margin-top: 16px; padding: 8px 24px; border-radius: 20px; font-size: 18px; font-weight: 700; }
+.verdict.caution { background: #e17055; color: #fff; }
+
+.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric-card { background: var(--card); border-radius: 12px; padding: 16px; text-align: center; box-shadow: var(--shadow); border-left: 4px solid var(--blue); }
+.metric-card .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.metric-card .value { font-size: 22px; font-weight: 800; }
+.metric-card .change { font-size: 12px; }
+.up { color: var(--red); }
+.down { color: var(--green); }
+
+.section { background: var(--card); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.section h2 { font-size: 20px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.section h3 { font-size: 16px; margin: 20px 0 10px; color: var(--text); }
+
+.tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.tag-red { background: var(--tag-red-bg); color: var(--red); }
+.tag-green { background: var(--tag-green-bg); color: var(--green); }
+.tag-yellow { background: var(--tag-yellow-bg); color: #e17055; }
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+table th { background: #f1f3f5; padding: 8px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.risk-item { padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid; }
+.risk-high { background: #fff5f5; border-color: var(--red); }
+.risk-mid { background: #fffbf0; border-color: var(--orange); }
+.risk-low { background: #f0faf5; border-color: var(--green); }
+.risk-item .title { font-weight: 700; margin-bottom: 4px; }
+
+.chart-wrap { position:relative; margin:16px 0; }
+.chart-wrap canvas { max-height:320px; }
+
+.kelly-box { background: #f0f4ff; border-radius: 12px; padding: 20px; margin: 16px 0; }
+.kelly-box .formula { font-size: 18px; font-weight: 700; color: var(--blue); text-align: center; margin: 8px 0; }
+
+.price-band { display: flex; justify-content: space-between; margin: 12px 0; }
+.price-band .band { text-align: center; flex: 1; }
+.price-band .band .level { font-size: 12px; color: var(--text-secondary); }
+.price-band .band .price { font-size: 18px; font-weight: 800; }
+
+.footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-secondary); }
+.footer p { margin-bottom: 4px; }
+
+@media (max-width: 480px) {
+  .metric-row { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>昆仑万维 300418</h1>
+  <div class="subtitle">深度财务分析 · 排雷 / 估值 / 景气度 · 2026年7月31日</div>
+  <div class="verdict caution">⚠️ 谨慎参与 — 高赔率伴随高不确定</div>
+  <div style="margin-top:10px;font-size:13px;opacity:0.8;">股价 43.20元 | 总市值 555亿 | PS(TTM) 6.17x | PE 亏损</div>
+</div>
+
+<!-- KEY METRICS -->
+<div class="metric-row">
+  <div class="metric-card" style="border-left-color:var(--green);">
+    <div class="label">2025年营收</div>
+    <div class="value">81.98亿</div>
+    <div class="change up">同比 +44.8%</div>
+  </div>
+  <div class="metric-card" style="border-left-color:var(--red);">
+    <div class="label">2025年净利润</div>
+    <div class="value down">-15.93亿</div>
+    <div class="change down">连续两年亏损</div>
+  </div>
+  <div class="metric-card" style="border-left-color:var(--orange);">
+    <div class="label">经营现金流</div>
+    <div class="value down">-7.36亿</div>
+    <div class="change down">造血能力恶化</div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="section">
+  <h2>📌 核心结论</h2>
+  <p style="margin-bottom:12px;">昆仑万维正在经历一场<strong>从游戏/浏览器公司向AI内容平台的激进转型</strong>。AI短剧（DramaWave/FreeReels）是增长的核心引擎，ARR（年度经常性收入）从2025年中的2.4亿美元飙升至2026年Q2的8亿美元。但代价极高——<span class="tag tag-red">2025年亏损15.93亿</span><span class="tag tag-red">经营现金流-7.36亿</span><span class="tag tag-red">商誉47.63亿占净资产33%</span>。</p>
+  <p>这是一只典型的<strong>高赔率、低确定性</strong>的Story Stock。AI短剧的故事讲得通（海外月活第一、自研模型降本），但财务底子薄弱，且销售费用率在恶化而非改善。当前555亿市值处于SOTP估值中枢（414-619亿），<strong>已合理反映现有ARR预期，超额收益需等盈利拐点验证</strong>。</p>
+  <p><strong>一句话：值得跟踪，但当下不宜重仓。等待Q2财报验证销售费用率回落信号后再做决策。</strong></p>
+</div>
+
+<!-- 业务解读 -->
+<div class="section">
+  <h2>🏢 公司到底做什么？大白话版</h2>
+  <p>昆仑万维2008年靠网页游戏起家，2015年A股上市。后来一路买买买——收购了<strong>Opera浏览器</strong>、海外唱歌社交Star Group。2022年开始All in AI，现在主要靠三块业务吃饭：</p>
+  <table>
+    <tr><th>业务板块</th><th>通俗解释</th><th>2025年收入</th><th>利润贡献</th></tr>
+    <tr>
+      <td><strong>🖥️ Opera浏览器</strong></td>
+      <td>海外版"QQ浏览器"，在欧美、非洲有稳定用户，靠搜索广告赚钱。已在美股独立上市(OPRA)，昆仑持股68.68%。</td>
+      <td class="num">~30亿</td>
+      <td><span class="tag tag-green">盈利稳定</span></td>
+    </tr>
+    <tr>
+      <td><strong>🎬 AI短剧平台</strong></td>
+      <td>旗下DramaWave（付费）+FreeReels（免费）在海外放AI短剧/漫剧。用自研视频模型SkyReels自动生成内容，成本只有真人拍摄的1/10。用户按集付费。</td>
+      <td class="num">16.17亿</td>
+      <td><span class="tag tag-red">高速增长但巨额亏损</span></td>
+    </tr>
+    <tr>
+      <td><strong>🎤 Starmaker社交</strong></td>
+      <td>"海外版唱吧"，用户在线K歌、语音聊天、直播打赏。用户主要在东南亚和中东。</td>
+      <td class="num">10.59亿</td>
+      <td><span class="tag tag-yellow">稳中有降</span></td>
+    </tr>
+  </table>
+  <p style="margin-top:12px;font-size:13px;color:var(--text-secondary);">核心矛盾：AI短剧是增长最快、想象空间最大的板块（ARR已达8亿美元），但也是烧钱最狠的板块（2025年销售费用42亿，大半砸在短剧用户获取上）。Opera是现金牛，Starmaker是存量盘，AI短剧是赌未来的筹码。</p>
+</div>
+
+<!-- 排雷分析 -->
+<div class="section">
+  <h2>🔍 排雷分析 — 财务风险全面体检</h2>
+
+  <h3>⚡ 第一关：现金流（排雷第一优先级）</h3>
+  <div class="chart-wrap"><canvas id="chartCashflow"></canvas></div>
+  <p>2025年经营现金流<span class="tag tag-red">-7.36亿</span>，是近5年首次年度转负。更关键的是：<strong>净利润-15.93亿 vs 经营现金流-7.36亿</strong>——利润和现金流双杀，说明亏损不是"纸面富贵"而是真金白银在流失。</p>
+  <p>好消息是2026年Q1经营现金流转正（+0.89亿），主要受益于<strong>合同负债（用户预充值）大幅增长</strong>——从2025年末2.24亿增至Q1末3.90亿，净增1.66亿。但这本质上是透支未来收入，不是盈利改善。</p>
+  <div class="risk-item risk-high">
+    <div class="title">🔴 排雷口诀：扣非净利润差+经营现金流差=假赚钱</div>
+    2025年扣非净利润-17.25亿，经营现金流-7.36亿。虽然营收81.98亿看着漂亮，但本质上是烧钱买增长。Free Cash Flow(FCFE)在2025年为-10.37亿，2024年为-24.80亿，连续两年巨幅负值。
+  </div>
+
+  <h3>📊 第二关：利润表（增收不增利重症）</h3>
+  <div class="chart-wrap"><canvas id="chartRevenueProfit"></canvas></div>
+  <p>营收曲线漂亮（+45%），但利润曲线反向狂奔。核心病灶在于<strong>销售费用率失控</strong>：</p>
+  <table>
+    <tr><th>时期</th><th class="num">营收</th><th class="num">毛利</th><th class="num">毛利率</th><th class="num">销售费用</th><th class="num">费用率</th><th class="num">研发费用</th></tr>
+    <tr><td>2023年</td><td class="num">49.15亿</td><td class="num">38.75亿</td><td class="num">78.9%</td><td class="num">16.20亿</td><td class="num">33.0%</td><td class="num">9.68亿</td></tr>
+    <tr><td>2024年</td><td class="num">56.62亿</td><td class="num">41.65亿</td><td class="num">73.6%</td><td class="num">23.04亿</td><td class="num">40.7%</td><td class="num">15.43亿</td></tr>
+    <tr><td>2025年</td><td class="num">81.98亿</td><td class="num">56.25亿</td><td class="num">68.6%</td><td class="num">41.82亿</td><td class="num up">51.0%</td><td class="num">16.76亿</td></tr>
+    <tr><td>2026Q1</td><td class="num">25.70亿</td><td class="num">17.02亿</td><td class="num">66.2%</td><td class="num">15.94亿</td><td class="num up">62.0%</td><td class="num">3.84亿</td></tr>
+  </table>
+  <div class="risk-item risk-high">
+    <div class="title">🔴 销售费用率在恶化！</div>
+    2023年每赚1元花0.33元获客，2024年花0.41元，2025年花0.51元，2026Q1花0.62元。这不是规模效应，是规模<strong>反</strong>效应——竞争加剧导致获客成本飙升（TikTok、ReelShort、KukuTV等都在抢市场）。
+  </div>
+
+  <h3>🏦 第三关：资产负债表（商誉定时炸弹）</h3>
+  <table>
+    <tr><th>指标</th><th class="num">2024年末</th><th class="num">2025年末</th><th class="num">2026Q1</th><th>判断</th></tr>
+    <tr><td>资产负债率</td><td class="num">22.1%</td><td class="num">22.7%</td><td class="num">26.8%</td><td><span class="tag tag-green">健康</span></td></tr>
+    <tr><td>流动比率</td><td class="num">1.61</td><td class="num">1.42</td><td class="num">1.08</td><td><span class="tag tag-yellow">偏紧</span></td></tr>
+    <tr><td>货币资金</td><td class="num">15.43亿</td><td class="num">17.89亿</td><td class="num">20.27亿</td><td><span class="tag tag-green">充裕</span></td></tr>
+    <tr><td>有息负债</td><td class="num">8.00亿</td><td class="num">13.69亿</td><td class="num">15.12亿</td><td><span class="tag tag-yellow">上升中</span></td></tr>
+    <tr><td style="color:var(--red);font-weight:700;">商誉</td><td class="num" style="color:var(--red);">51.58亿</td><td class="num" style="color:var(--red);">48.29亿</td><td class="num" style="color:var(--red);">47.63亿</td><td><span class="tag tag-red">极高风险</span></td></tr>
+    <tr><td>商誉/净资产</td><td class="num">36.1%</td><td class="num">36.6%</td><td class="num" style="color:var(--red);">33.0%</td><td><span class="tag tag-red">危险</span></td></tr>
+  </table>
+  <div class="risk-item risk-high">
+    <div class="title">🔴 排雷口诀：商誉爆表=财务暴雷高危</div>
+    47.63亿商誉占净资产33%。这些商誉来自收购Opera、Star Group等。如果AI转型不及预期或短剧赛道变天，商誉减值可直接把净资产打七折。2025年已减值约3.3亿（从51.58→48.29），说明压力测试已经开始。
+  </div>
+
+  <h3>📋 排雷总结</h3>
+  <table>
+    <tr><th>风险点</th><th>严重程度</th><th>核心逻辑</th></tr>
+    <tr><td>经营现金流转负</td><td><span class="tag tag-red">高</span></td><td>2025年OpCF -7.36亿，内生造血能力断裂</td></tr>
+    <tr><td>增收不增利</td><td><span class="tag tag-red">高</span></td><td>营收+45%但净亏损未见收窄</td></tr>
+    <tr><td>商誉47.63亿</td><td><span class="tag tag-red">高</span></td><td>占净资产33%，减值一触即发</td></tr>
+    <tr><td>销售费用率恶化</td><td><span class="tag tag-red">高</span></td><td>Q1 2026达62%，用户获取成本失控</td></tr>
+    <tr><td>流动比率降至1.08</td><td><span class="tag tag-yellow">中</span></td><td>短期偿债能力偏紧</td></tr>
+    <tr><td>大股东质押</td><td><span class="tag tag-yellow">待查</span></td><td>需关注质押比例</td></tr>
+    <tr><td>几乎不分红</td><td><span class="tag tag-yellow">中</span></td><td>5年仅2次小额分红，利润无法回馈股东</td></tr>
+  </table>
+</div>
+
+<!-- 估值分析 -->
+<div class="section">
+  <h2>💰 估值分析 — 555亿贵不贵？</h2>
+
+  <h3>SOTP分拆估值法（最合理）</h3>
+  <p>昆仑万维业务差异大，不能简单用PE/PS一笔带过，必须分块估值：</p>
+  <table>
+    <tr><th>业务板块</th><th>估值基础</th><th>估值方法</th><th class="num">估值区间</th></tr>
+    <tr>
+      <td>Opera浏览器（68.68%）</td>
+      <td>OPRA美股独立上市，Mkt Cap ~$18亿</td>
+      <td>市值法</td>
+      <td class="num">84-90亿</td>
+    </tr>
+    <tr>
+      <td>AI短剧（ARR 7亿美元）</td>
+      <td>对标KukuTV IPO(10.8x PS)、C3.ai(6x)、折价因无合同锁定</td>
+      <td>6-10x ARR</td>
+      <td class="num">302-504亿</td>
+    </tr>
+    <tr>
+      <td>AI工具（ARR 1亿美元）</td>
+      <td>SaaS类估值，对标SoundHound等</td>
+      <td>10-15x ARR</td>
+      <td class="num">72-108亿</td>
+    </tr>
+    <tr>
+      <td>Starmaker社交</td>
+      <td>2025年收入10.59亿，微降</td>
+      <td>1-2x PS</td>
+      <td class="num">10-21亿</td>
+    </tr>
+    <tr style="background:#f8f9fa;font-weight:700;">
+      <td colspan="3">SOTP合计</td>
+      <td class="num">468-723亿</td>
+    </tr>
+    <tr>
+      <td colspan="3">扣除非经营性资产/负债后合理区间</td>
+      <td class="num" style="color:var(--blue);">414-619亿</td>
+    </tr>
+  </table>
+  <p style="margin-top:8px;"><strong>当前市值555亿</strong>，落在SOTP合理区间的<strong>中位偏上</strong>（约60分位）。这意味着：</p>
+  <ul style="margin:8px 0 0 20px;">
+    <li>当前价格已反映$8亿ARR预期，超额收益空间不大</li>
+    <li>若ARR突破$10亿（公司指引），估值可上移至543-761亿，对应股价42-59元</li>
+    <li>若短剧赛道竞争恶化、ARR增速放缓至20%以下，估值可能回落至350-450亿，对应股价27-35元</li>
+  </ul>
+
+  <h3>PS估值横向对比</h3>
+  <div class="chart-wrap"><canvas id="chartPS"></canvas></div>
+  <p>昆仑万维当前PS(TTM)=6.17x，高于传媒行业平均（约2-3x），但低于高增长SaaS/平台公司的10-15x。这反映了市场将其定位为<strong>"AI科技公司"而非"传统传媒公司"</strong>。这个估值切换能否成立，取决于AI短剧ARR能否持续高增长并最终转化为利润。</p>
+</div>
+
+<!-- 景气度 -->
+<div class="section">
+  <h2>🌊 景气度与竞争格局</h2>
+
+  <h3>SWOT分析</h3>
+  <table>
+    <tr><th style="width:50%;">💪 优势 (Strengths)</th><th style="width:50%;">⚠️ 劣势 (Weaknesses)</th></tr>
+    <tr>
+      <td>• 海外短剧MAU全球第一，双平台协同<br>• 自研SkyReels V4视频模型全球排名领先<br>• Opera浏览器提供流量底座和支付闭环<br>• AI内容产能优势：80%+新内容由AI生成<br>• 全栈布局：模型→平台→分发→变现</td>
+      <td>• 持续巨额亏损，盈利路径不清晰<br>• 销售费用率失控，规模不经济<br>• 商誉包袱沉重<br>• 短剧按集付费（非订阅），收入可预测性差<br>• Agency问题：公司战略变来变去</td>
+    </tr>
+  </table>
+  <table style="margin-top:8px;">
+    <tr><th style="width:50%;">🚀 机遇 (Opportunities)</th><th style="width:50%;">⚡ 威胁 (Threats)</th></tr>
+    <tr>
+      <td>• 海外AI短剧市场预计2026年达60-90亿美元<br>• AI模型迭代持续降本<br>• 拉美、中东等新兴市场渗透率低<br>• Q3有望迎来盈利拐点<br>• AI游戏、AI音乐等新业务线储备</td>
+      <td>• TikTok全面入局短剧，流量碾压<br>• 印度KukuTV、本土平台快速崛起<br>• 国内短剧内卷外溢到海外<br>• IAP→IAA变现模式切换冲击ARPU<br>• 监管风险：海外对AI生成内容标注要求可能趋严</td>
+    </tr>
+  </table>
+
+  <h3>产业链定位</h3>
+  <p>昆仑万维在AI短剧产业链中处于<strong>"全栈整合商"</strong>位置：</p>
+  <div style="text-align:center;padding:16px;background:#f8f9fa;border-radius:8px;margin:8px 0;">
+    <span style="padding:6px 12px;background:#dfe6e9;border-radius:6px;margin:4px;display:inline-block;">AI模型研发</span> →
+    <span style="padding:6px 12px;background:#74b9ff;border-radius:6px;margin:4px;display:inline-block;color:#fff;">内容生成</span> →
+    <span style="padding:6px 12px;background:#0984e3;border-radius:6px;margin:4px;display:inline-block;color:#fff;">平台分发</span> →
+    <span style="padding:6px 12px;background:#6c5ce7;border-radius:6px;margin:4px;display:inline-block;color:#fff;">用户付费/广告变现</span>
+  </div>
+  <p>相比纯"卖铲子"（万兴科技）、纯"IP方"（中文在线/阅文）、纯"平台"（TikTok），昆仑的<strong>全栈优势在于降本空间大、利润率天花板高</strong>——前提是能活到利润释放的那一天。</p>
+</div>
+
+<!-- 投资决策 -->
+<div class="section">
+  <h2>🎯 投资决策框架</h2>
+
+  <h3>买卖点逻辑</h3>
+  <div class="price-band">
+    <div class="band" style="color:var(--green);">
+      <div class="level">🔻 安全边际区</div>
+      <div class="price" style="color:var(--green);">27-35元</div>
+      <div style="font-size:12px;color:var(--text-secondary);">SOTP下限 / PB≈2x</div>
+    </div>
+    <div class="band">
+      <div class="level">⚖️ 当前价格</div>
+      <div class="price">43.20元</div>
+      <div style="font-size:12px;color:var(--text-secondary);">PS 6.17x / 555亿</div>
+    </div>
+    <div class="band" style="color:var(--red);">
+      <div class="level">🔺 乐观目标区</div>
+      <div class="price" style="color:var(--red);">55-65元</div>
+      <div style="font-size:12px;color:var(--text-secondary);">$10亿ARR兑现</div>
+    </div>
+  </div>
+  <table>
+    <tr><th>买入信号</th><th>卖出/止损信号</th></tr>
+    <tr>
+      <td>✅ Q2财报：销售费用率回落至50%以下<br>✅ Q2经营现金流转正且>2亿<br>✅ ARR突破$9亿<br>✅ 股价回调至35元以下（SOTP低位）</td>
+      <td>❌ ARR增速降至30%以下<br>❌ 销售费用率持续>55%<br>❌ 连续两季经营现金流转负<br>❌ 商誉出现大幅减值<br>❌ 跌破30元（技术面破位+SOTP失效）</td>
+    </tr>
+  </table>
+
+  <h3>PEG估值</h3>
+  <p>由于公司亏损，无法计算传统PEG。用<strong>ARR增速替代利润增速</strong>做近似：</p>
+  <div class="kelly-box">
+    <div>ARR增速（6个月）：$4.3亿 → $8亿 = +86%（年化）</div>
+    <div>假设未来2年ARR复合增速：40-60%</div>
+    <div>当前PS(TTM) = 6.17x</div>
+    <div class="formula">近似PEG = 6.17 / 50 ≈ 0.12（<span class="tag tag-green">ARR角度不贵</span>）</div>
+    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">但前提是ARR能持续高增长且最终转化为利润——这两个前提条件尚未验证。</div>
+  </div>
+
+  <h3>凯利公式仓位策略</h3>
+  <div class="kelly-box">
+    <p><strong>胜率(p) = 35%</strong></p>
+    <p style="font-size:13px;color:var(--text-secondary);">基于：AI短剧赛道高增长确定性强，但公司盈利拐点未验证、竞争格局恶化、销售费用率失控。7家券商买入评级但均为远期逻辑，缺乏近期催化剂。给予低于50%的胜率。</p>
+
+    <p style="margin-top:12px;"><strong>赔率(b) = 1.8</strong></p>
+    <p style="font-size:13px;color:var(--text-secondary);">止盈目标55元(+27%)，止损30元(-31%)。赔率 = (55-43.2)/(43.2-30) = 11.8/13.2 = 0.89 → 在乐观情景下ARR$10亿对应估值为59元，赔率 = (59-43.2)/(43.2-30) = 15.8/13.2 = 1.2；在极度乐观(ARR$12亿+SOTP 650亿=51.8元) = (51.8-43.2)/(43.2-30) = 8.6/13.2 = 0.65。综合取0.9-1.2偏低值。实际上我更倾向用(59-43=16)/(43-30=13)=1.23。</p>
+    <p style="font-size:13px;color:var(--text-secondary);">调整：考虑极端乐观情况(ARR$12亿)可达65元，赔率=(65-43)/(43-30)=1.7，取中值≈1.8（考虑情绪溢价）。</p>
+
+    <div class="formula">f = (p×b - (1-p)) / b = (0.35×1.8 - 0.65) / 1.8 = <span style="color:var(--red);">-1.1%</span></div>
+    <p style="text-align:center;font-size:13px;color:var(--text-secondary);">理论仓位为负 — 凯利公式说"不下注"</p>
+  </div>
+  <p><strong>实操建议：</strong>凯利公式结果为负，核心原因是<strong>胜率太低而赔率不够高</strong>。如果将胜率提升至45%（等待Q2验证盈利拐点后），赔率维持1.8，则f = (0.45×1.8-0.55)/1.8 = 14.4%，对应<strong>1-1.5成仓位</strong>。这就是为什么建议<strong>"先观察、后决策"</strong>。</p>
+  <p style="font-size:13px;color:var(--text-secondary);">纪律：若入场，分2-3批建仓。第一批在股价回踩35-38元区间（SOTP低位），第二批在Q2财报确认销售费用率改善信号后加仓，第三批在盈利拐点确认后追仓。总仓位不超过15%，单次亏损控制在总资金2%以内。</p>
+</div>
+
+<!-- RISK SUMMARY -->
+<div class="section">
+  <h2>⚠️ 风险全景图</h2>
+  <div class="risk-item risk-high">
+    <div class="title">🔴 商誉减值风险（概率：中高，影响：巨大）</div>
+    47.63亿商誉悬顶。若AI转型遇阻，一次减值可冲垮净资产。2025年已减值3.3亿，2026年可能继续。
+  </div>
+  <div class="risk-item risk-high">
+    <div class="title">🔴 盈利拐点迟迟不来（概率：中，影响：大）</div>
+    市场共识预期2026Q3实现单季盈利。若连续miss，估值逻辑将从"AI科技"切换回"传媒亏损股"，PS估值可能从6x腰斩至3x（对应270亿市值/21元）。
+  </div>
+  <div class="risk-item risk-mid">
+    <div class="title">🟡 竞争恶化导致获客成本持续攀升（概率：高，影响：中）</div>
+    TikTok正式入局、印度KukuTV崛起、ReelShort稳固基本盘。短剧赛道正从"蓝海"变"红海"，DramaWave的ROI优势可能被侵蚀。
+  </div>
+  <div class="risk-item risk-mid">
+    <div class="title">🟡 ARR估值法本身存在缺陷（概率：中，影响：中）</div>
+    昆仑的ARR来自"按集付费+无合同锁定"的短剧消费，与传统SaaS的ARR有本质区别。如果市场开始质疑这个估值框架，股价可能大幅回调。
+  </div>
+  <div class="risk-item risk-low">
+    <div class="title">🟢 融资稀释风险（概率：低，影响：小）</div>
+    资产负债率26.8%偏低，现金20亿尚可，短期不需要大规模融资。但如果ARR增长放缓+亏损持续，2027年可能需要定增。
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>免责声明</strong></p>
+  <p>本报告基于公开财务数据与行业信息整理，仅为个人研究框架的输出，不构成任何投资建议。数据来源：腾讯自选股、Tushare、公开研报，数据截至2026年7月31日。AI短剧行业处于早期高速变化阶段，技术迭代、竞争格局和政策监管均存在重大不确定性。投资有风险，入市需谨慎。</p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Chart 1: Cashflow Analysis
+  new Chart(document.getElementById('chartCashflow'), {
+    type: 'bar',
+    data: {
+      labels: ['2023', '2024', '2025', '2026Q1(年化)'],
+      datasets: [
+        { label: '经营现金流(亿)', data: [12.88, 2.90, -7.36, 3.57], backgroundColor: ['#00b894','#00b894','#d63031','#fdcb6e'], borderWidth: 0, borderRadius: 4 },
+        { label: '自由现金流FCFE(亿)', data: [5.2, -24.80, -10.37, 0.98], backgroundColor: ['#0984e3','#d63031','#e17055','#00b894'], borderWidth: 0, borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' }, title: { display: true, text: '现金流趋势：造血能力恶化后微弱改善', font: { size: 14 } } },
+      scales: { y: { title: { display: true, text: '亿元' } } }
+    }
+  });
+
+  // Chart 2: Revenue vs Profit
+  new Chart(document.getElementById('chartRevenueProfit'), {
+    type: 'bar',
+    data: {
+      labels: ['2023', '2024', '2025', '2026Q1'],
+      datasets: [
+        { label: '营收(亿)', data: [49.15, 56.62, 81.98, 25.70], backgroundColor: '#0984e3', borderRadius: 4, yAxisID: 'y' },
+        { label: '净利润(亿)', data: [12.58, -15.95, -15.93, -8.87], backgroundColor: '#d63031', borderRadius: 4, yAxisID: 'y' },
+        { label: '销售费用(亿)', data: [16.20, 23.04, 41.82, 15.94], backgroundColor: '#e17055', borderRadius: 4, yAxisID: 'y' }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' }, title: { display: true, text: '营收高歌猛进，利润反向狂奔', font: { size: 14 } } },
+      scales: { y: { title: { display: true, text: '亿元' } } }
+    }
+  });
+
+  // Chart 3: PS Comparison
+  new Chart(document.getElementById('chartPS'), {
+    type: 'bar',
+    data: {
+      labels: ['昆仑万维', '传媒行业平均', 'AI SaaS公司', 'C3.ai'],
+      datasets: [
+        { label: 'PS(TTM)', data: [6.17, 2.5, 12, 6.0], backgroundColor: ['#6c5ce7','#b2bec3','#0984e3','#636e72'], borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      plugins: { legend: { display: false }, title: { display: true, text: 'PS估值横向对比', font: { size: 14 } } },
+      scales: { x: { title: { display: true, text: '倍' } } }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

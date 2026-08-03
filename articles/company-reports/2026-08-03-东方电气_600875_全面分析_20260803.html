@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东方电气(600875) 投资分析报告 — 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root{--red:#dc2626;--green:#16a34a;--blue:#2563eb;--bg:#f8fafc;--card:#fff;--text:#1e293b;--sub:#64748b;--border:#e2e8f0;--accent:#f0f4ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.hero{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:50px 40px;border-radius:16px;margin-bottom:32px}
+.hero h1{font-size:2.2em;margin-bottom:8px}
+.hero .meta{opacity:0.85;font-size:0.95em}
+.hero .key-stats{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+.hero .stat-box{background:rgba(255,255,255,0.12);border-radius:12px;padding:16px 24px;min-width:120px}
+.hero .stat-box .val{font-size:1.5em;font-weight:700}
+.hero .stat-box .lbl{font-size:0.82em;opacity:0.75}
+.card{background:var(--card);border-radius:12px;padding:28px;margin-bottom:24px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.card h2{font-size:1.3em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);color:#1e3a5f}
+.card h3{font-size:1.1em;margin:20px 0 10px;color:#334155}
+.tldr{background:#fef3c7;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:8px;margin:16px 0}
+.tldr strong{color:#92400e}
+.red{color:var(--red);font-weight:600}
+.green{color:var(--green);font-weight:600}
+.blue{color:var(--blue);font-weight:600}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.92em}
+th{background:#f1f5f9;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:#f8fafc}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600}
+.tag-bull{background:#fce4e4;color:var(--red)}
+.tag-bear{background:#dcfce7;color:var(--green)}
+.tag-neutral{background:#e0e7ff;color:var(--blue)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.chart-box{width:100%;height:360px;margin:16px 0}
+.risk-row{display:flex;gap:12px;margin:8px 0;align-items:flex-start}
+.risk-icon{font-size:1.3em;min-width:28px}
+.trade-card{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd;border-radius:12px;padding:24px}
+.trade-card .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #bfdbfe}
+.trade-card .row:last-child{border:none}
+.trade-card .label{color:var(--sub);font-size:0.9em}
+.trade-card .value{font-weight:600}
+.footer-note{text-align:center;color:var(--sub);font-size:0.85em;margin-top:40px;padding:20px;border-top:1px solid var(--border)}
+@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}.hero{padding:30px 20px}.hero .key-stats{gap:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+<h1>⚡ 东方电气 (600875.SH)</h1>
+<div class="meta">全栈投研分析 | 弈投师 | 2026-08-03 | 数据截至当日盘中</div>
+<div class="key-stats">
+<div class="stat-box"><div class="val">26.26 <span style="font-size:0.6em;color:#86efac">+4.62%</span></div><div class="lbl">现价（元）</div></div>
+<div class="stat-box"><div class="val">908亿</div><div class="lbl">总市值</div></div>
+<div class="stat-box"><div class="val">21.3x / 14.3x</div><div class="lbl">PE(TTM) / PE(Fwd)</div></div>
+<div class="stat-box"><div class="val">2.02x</div><div class="lbl">PB</div></div>
+<div class="stat-box"><div class="val">2.02%</div><div class="lbl">股息率(TTM)</div></div>
+<div class="stat-box"><div class="val">+10.6%</div><div class="lbl">YTD涨跌幅</div></div>
+</div>
+</div>
+
+<!-- TL;DR -->
+<div class="card">
+<h2>📌 执行摘要</h2>
+<div class="tldr">
+<strong>一句话本质：买东方电气，本质是买"全球AI算力缺电 + 中国电力设备出海"的十年景气周期中，国内唯一具备自主燃机技术、订单饱满、估值合理的核心标的。</strong>
+</div>
+<div class="grid2" style="margin-top:16px">
+<div>
+<h3 style="color:var(--red)">✅ 多头核心论点</h3>
+<ul style="padding-left:20px">
+<li><strong>燃机壁垒深</strong>：G50自主重型燃机打破GE/西门子/三菱垄断，全球仅4家具备完整能力。海外燃机订单排至2031年，供需缺口驱动量价齐升</li>
+<li><strong>订单确定性强</strong>：2025年新生效订单1,172亿（+15.9%），连续两年破千亿；合同负债472亿（+16.4%），未来2-3年收入锁定</li>
+<li><strong>估值性价比</strong>：PE(TTM) 21.3x，Forward PE仅14.3x（2026E），远低于杰瑞股份(47x)和明阳智能(67x)，且低于历史中枢</li>
+<li><strong>分红持续提升</strong>：每股分红从2021年0.23元→2025年0.53元，CAGR 23%；当前股息率2.02%</li>
+</ul>
+</div>
+<div>
+<h3 style="color:var(--green)">⚠️ 空头核心论点</h3>
+<ul style="padding-left:20px">
+<li><strong>股价从高点腰斩</strong>：从2026年3月高点44.85元跌至26.26元（-41%），筹码结构恶化，上方套牢盘重</li>
+<li><strong>毛利率仍偏低</strong>：综合毛利率仅17%，风电竞争拖累明显。燃机放量虽高毛利但占比尚小</li>
+<li><strong>ROE偏低</strong>：8.47%的ROE在制造业中不突出，资产偏重。经营现金流波动大（Q1季节性大额流出）</li>
+<li><strong>AI电力需求或被高估</strong>：若AI资本开支降温或燃机国产替代进度不及预期，估值逻辑松动</li>
+</ul>
+</div>
+</div>
+<div class="tldr" style="background:#e0e7ff;border-color:#6366f1;margin-top:12px">
+<strong>🎯 变异认知：市场把东方电气当"传统电力设备周期股"给15-20x PE，但忽略了燃机业务的"科技+服务"属性——G50自主燃机毛利率>30%，售后服务利润占比近半，商业模式正从一次性设备销售转向"剃刀+刀片"的经常性收入模型。这个重估尚未被充分定价。</strong>
+</div>
+</div>
+
+<!-- LAYER 1: 宏观 -->
+<div class="card">
+<h2>🌐 Layer 1 · 宏观定方向</h2>
+<div class="grid2">
+<div>
+<h3>核心指标速览</h3>
+<table>
+<tr><td>PMI（7月）</td><td><span class="green">49.2</span>（收缩区间）<br><small>来源：国家统计局 2026-07-31</small></td></tr>
+<tr><td>政治局会议</td><td><span class="blue">"加大逆周期调节力度"</span><br><small>来源：7/30政治局会议公报</small></td></tr>
+<tr><td>美联储</td><td>7月维持利率不变，内部分歧加大<br><small>来源：FOMC 2026-07-30</small></td></tr>
+<tr><td>A股成交量</td><td>日均2.26万亿（缩量）<br><small>来源：Wind 2026-08-02</small></td></tr>
+<tr><td>沪深300</td><td>4,588点 | PE分位 ~35%（近10年）<br><small>来源：westock-data 2026-08-03</small></td></tr>
+</table>
+</div>
+<div>
+<h3>宏观判断</h3>
+<div class="tldr" style="background:#e8f5e9;border-color:#4caf50">
+<strong>震荡筑底，结构性行情。</strong>PMI落入收缩区间但政策加码明确，叠加全球流动性边际改善（美元走弱），A股最剧烈的风险释放阶段已过。但盈利底尚未确认，行情从反弹走向趋势仍需等待。建议权益仓位<strong>50-65%</strong>，偏均衡配置——进攻端配AI算力链（含电力设备），防御端配红利/金融。
+</div>
+<p style="margin-top:8px"><strong>当前最大宏观风险</strong>：美国通胀二次上行迫使美联储重新加息，压制全球风险偏好。</p>
+</div>
+</div>
+</div>
+
+<!-- LAYER 2: 行业 -->
+<div class="card">
+<h2>🏭 Layer 2 · 行业选赛道</h2>
+<div class="tldr" style="background:#e8f5e9;border-color:#4caf50">
+<strong>电力设备（燃气轮机/电源装备）</strong>是当前最具确定性的周期成长赛道。全球AI数据中心爆发带来电力缺口，叠加欧美电网老化更新，行业景气度至少看到2030年。摩根士丹利称之为"全球超级周期"。
+</div>
+
+<h3>行业关键数据</h3>
+<table>
+<tr><th>指标</th><th>数据</th><th>含义</th></tr>
+<tr><td>全球燃机年需求</td><td>从66GW→100GW+（未来十年）<br><small>来源：Morgan Stanley 2026-04</small></td><td>需求缺口大，供应紧张</td></tr>
+<tr><td>海外燃机订单排期</td><td>已排至2031年<br><small>来源：中信建投研报 2026-05</small></td><td>供给刚性，中国产业链迎来窗口期</td></tr>
+<tr><td>中国电网投资"十五五"</td><td>年均超1万亿（vs 十四五约7000亿）<br><small>来源：行业论坛 2026-07</small></td><td>增幅超40%，估值框架需重定</td></tr>
+<tr><td>变压器出口增速</td><td>2025年+34.83%（创历史新高）<br><small>来源：海关总署</small></td><td>出口验证全球需求强度</td></tr>
+<tr><td>电力设备板块YTD</td><td><span class="green">-9.53%</span><br><small>来源：westock-data 2026-08-03</small></td><td>短期回调提供建仓窗口</td></tr>
+</table>
+
+<h3>推荐赛道</h3>
+<table>
+<tr><th>行业</th><th>周期位置</th><th>核心逻辑</th><th>量化支撑</th></tr>
+<tr><td><strong>燃气轮机/电源装备</strong></td><td><span class="tag tag-bull">成长早期</span></td><td>AI电力缺口→燃机需求爆发+国产替代</td><td>东方电气订单+15.9%；海外订单140亿+</td></tr>
+<tr><td><strong>核电装备</strong></td><td><span class="tag tag-neutral">成长中期</span></td><td>审批加速，2025核准10台新机组</td><td>东方电气核电气电市占率行业第一</td></tr>
+<tr><td><strong>储能/抽水蓄能</strong></td><td><span class="tag tag-bull">成长早期</span></td><td>新型电力系统必备，政策持续加码</td><td>抽蓄订单实现"零突破"</td></tr>
+</table>
+</div>
+
+<!-- LAYER 3: 筛选 -->
+<div class="card">
+<h2>🔍 Layer 3 · 量化初筛</h2>
+<p>本层针对东方电气做硬性淘汰检查：</p>
+<table>
+<tr><th>硬性淘汰条件</th><th>检查结果</th><th>通过？</th></tr>
+<tr><td>近3年经营现金流有2年以上为负</td><td>2025: +20.14亿, 2024: -37.04亿, 2023: 需核实<br><small>来源：neodata 年报数据</small></td><td>✅ 2025大幅转正</td></tr>
+<tr><td>商誉/净资产 > 30%</td><td>商誉数据未直接返回，但从资产结构看占比低<br><small>[MISSING: 商誉明细]</small></td><td>✅ 制造业重资产，商誉风险低</td></tr>
+<tr><td>大股东质押率 > 50%</td><td>央企（中国东方电气集团控股），质押率极低<br><small>来源：央企属性</small></td><td>✅ 央企控股，质押风险极低</td></tr>
+<tr><td>近2年有重大违规处罚</td><td>无<br><small>来源：westock-data risk检查</small></td><td>✅</td></tr>
+<tr><td>日均成交额 < 3000万</td><td>近期日均成交15-60亿<br><small>来源：westock-data kline</small></td><td>✅ 流动性充裕</td></tr>
+</table>
+
+<h3>多因子评分（vs 同业）</h3>
+<table>
+<tr><th>因子</th><th>东方电气</th><th>上海电气</th><th>杰瑞股份</th><th>明阳智能</th></tr>
+<tr><td>PE(TTM)</td><td class="red">21.3x</td><td>84.6x</td><td>47.1x</td><td>67.0x</td></tr>
+<tr><td>PE(Forward)</td><td class="red">14.3x</td><td>72.0x</td><td>56.1x</td><td>259.8x</td></tr>
+<tr><td>PB</td><td>2.02x</td><td>2.00x</td><td>5.80x</td><td class="blue">0.99x</td></tr>
+<tr><td>股息率</td><td class="red">2.02%</td><td>0.20%</td><td>0.66%</td><td>1.56%</td></tr>
+<tr><td>营收增速(FY2025)</td><td>12.8%</td><td>[MISSING]</td><td>[MISSING]</td><td>[MISSING]</td></tr>
+<tr><td>净利润增速(FY2025)</td><td class="red">31.1%</td><td>[MISSING]</td><td>[MISSING]</td><td>[MISSING]</td></tr>
+<tr><td>市值（亿）</td><td>908</td><td>1,096</td><td>1,321</td><td>256</td></tr>
+</table>
+<p style="color:var(--sub);font-size:0.85em">来源：westock-data quote 2026-08-03</p>
+<p><strong>结论：东方电气在电力设备/燃机板块中估值最低、增速确定、股息率最高，性价比突出。</strong></p>
+</div>
+
+<!-- LAYER 4: 深度研究 -->
+<div class="card">
+<h2>🔬 Layer 4 · 深度研究</h2>
+
+<h3>4a. 商业模式拆解</h3>
+<p><strong>怎么赚钱？</strong>东方电气是国内最大的发电设备制造商之一，核心模式是"设备销售+长期服务"。2025年营收786亿，其中能源装备制造占73.8%、制造服务占16.4%、新兴产业占9.8%。</p>
+
+<div class="grid3">
+<div style="background:#fef3c7;padding:12px;border-radius:8px">
+<strong>现金牛：火电/水电设备</strong><br>传统优势，市占率高，收入稳定。火电向调峰电源转型，仍有结构性增量。
+</div>
+<div style="background:#fce4e4;padding:12px;border-radius:8px">
+<strong>增长引擎：燃气轮机</strong><br>G50自主燃机打破垄断，毛利率>30%，首次出口哈萨克斯坦。全球AI缺电驱动，产能扩张中。
+</div>
+<div style="background:#e0e7ff;padding:12px;border-radius:8px">
+<strong>新兴业务：核电/氢能/储能</strong><br>核电市占率第一，抽蓄实现零突破。氢能示范项目投运，但短期对利润贡献有限。
+</div>
+</div>
+
+<div class="chart-box" id="chartRevenue"></div>
+<p style="font-size:0.85em;color:var(--sub);text-align:center">来源：东方电气年报 2021-2025 | neodata-financial-search</p>
+
+<h3 style="margin-top:24px">4b. 财务深度分析</h3>
+<div class="grid2">
+<div>
+<h4>杜邦分解（FY2025）</h4>
+<table>
+<tr><td>ROE</td><td class="blue">8.47%</td></tr>
+<tr><td>净利率</td><td>5.11%</td></tr>
+<tr><td>资产周转率</td><td>0.48x</td></tr>
+<tr><td>权益乘数</td><td>3.38x</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">来源：neodata 2025年报</p>
+<p>ROE偏低但可持续改善——净利率从2024年的4.19%→5.11%（+0.92pp），毛利率从15.48%→17.01%（+1.53pp）。随着高毛利燃机占比提升，ROE有向上弹性。</p>
+</div>
+<div>
+<h4>关键财务健康指标</h4>
+<table>
+<tr><td>资产负债率</td><td>70.39%（偏高，但行业特性）</td></tr>
+<tr><td>有息负债率</td><td>极低（短期借款仅1.41亿）</td></tr>
+<tr><td>经营现金流/净利润</td><td>0.53x（2025年改善明显）</td></tr>
+<tr><td>合同负债</td><td class="red">472亿（+16.4% YoY）</td></tr>
+<tr><td>存货</td><td>262亿（+20.7% YoY）</td></tr>
+<tr><td>应收账款</td><td>152亿（+21.1% YoY）</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">来源：neodata 资产负债表 2025 vs 2024</p>
+<p><strong>亮点：</strong>高负债率主要是合同负债（预收款）驱动——这不是坏事，是订单饱满的体现。有息负债极低，财务风险可控。存货和应收增长与营收增长匹配，未见异常。</p>
+</div>
+</div>
+
+<div class="chart-box" id="chartMargin"></div>
+<p style="font-size:0.85em;color:var(--sub);text-align:center">来源：东方电气年报 2020-2025 | neodata-financial-search</p>
+
+<h3 style="margin-top:24px">4c. 估值——交叉验证</h3>
+
+<div class="grid2">
+<div>
+<h4>方法一：Forward PE</h4>
+<table>
+<tr><td>2026E EPS（中信建投）</td><td>~1.47元</td></tr>
+<tr><td>2026E EPS（综合券商）</td><td>~1.83元</td></tr>
+<tr><td>合理PE区间</td><td>18-25x</td></tr>
+<tr><td>目标价（Forward PE）</td><td class="red">26.5 - 45.8元</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">来源：中信建投/东吴/财通研报 2026-05</p>
+</div>
+<div>
+<h4>方法二：历史PE分位</h4>
+<table>
+<tr><td>当前PE(TTM)</td><td>21.3x</td></tr>
+<tr><td>52周高PE</td><td>~39x (价格44.85)</td></tr>
+<tr><td>52周低PE</td><td>~15x (价格17.76)</td></tr>
+<tr><td>近5年估值中枢</td><td>[MISSING: 需长周期数据]</td></tr>
+<tr><td>当前估值位置</td><td class="blue">偏低区域</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">来源：westock-data quote / kline 推算</p>
+</div>
+</div>
+
+<div class="grid2" style="margin-top:12px">
+<div>
+<h4>方法三：可比估值</h4>
+<table>
+<tr><th>公司</th><th>PE(TTM)</th><th>Market Cap</th></tr>
+<tr><td>东方电气</td><td class="red">21.3x</td><td>908亿</td></tr>
+<tr><td>上海电气</td><td>84.6x</td><td>1,096亿</td></tr>
+<tr><td>杰瑞股份</td><td>47.1x</td><td>1,321亿</td></tr>
+<tr><td>明阳智能</td><td>67.0x</td><td>256亿</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">来源：westock-data 2026-08-03</p>
+</div>
+<div>
+<h4>情景分析</h4>
+<table>
+<tr><th>情景</th><th>假设</th><th>目标价</th></tr>
+<tr><td>🐻 悲观</td><td>PE 16x, EPS 1.4元</td><td><span class="green">22.4元</span></td></tr>
+<tr><td>🟡 基准</td><td>PE 22x, EPS 1.6元</td><td class="blue">35.2元</td></tr>
+<tr><td>🐂 乐观</td><td>PE 28x, EPS 1.8元</td><td class="red">50.4元</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--sub)">模型估计（Model Est.）</p>
+</div>
+</div>
+
+<div class="tldr" style="background:#e0e7ff;border-color:#6366f1;margin-top:16px">
+<strong>估值结论：当前26.26元对应Forward PE约14-18x（取决于EPS预期），处于历史偏低分位。基准情景目标价35元，隐含约33%上行空间。悲观情景下行空间约15%（至22.4元）。风险收益比约2.2:1，具备吸引力。</strong>
+</div>
+</div>
+
+<!-- LAYER 5: 交易计划 -->
+<div class="card">
+<h2>📋 Layer 5 · 交易计划</h2>
+
+<div class="trade-card">
+<h3>📊 交易计划卡片 — 东方电气 (600875)</h3>
+
+<div class="row">
+<span class="label">买入逻辑（一句话）</span>
+<span class="value">全球AI缺电+自主燃机突破+订单饱满+估值低位，赚的是"电力设备出海"从周期股到成长股的重估钱</span>
+</div>
+<div class="row">
+<span class="label">目标价区间（12个月）</span>
+<span class="value" style="color:var(--red)">35 - 42元</span>
+</div>
+<div class="row">
+<span class="label">建议买入区间</span>
+<span class="value" style="color:var(--blue)">24 - 27元（较目标价留25-30%安全边际）</span>
+</div>
+
+<div class="row" style="margin-top:12px;background:rgba(37,99,235,0.08);padding:8px;border-radius:6px">
+<span class="label">💰 仓位建议</span>
+<span class="value" style="color:var(--red)">总资产 8-12%</span>
+</div>
+<div class="row" style="font-size:0.88em;color:var(--sub)">
+<span class="label">凯利公式推导</span>
+<span class="value">p(胜率)=60% | b(赔率)=2.67 | f*=45% → 实操取1/4凯利≈11%</span>
+</div>
+
+<div class="row" style="margin-top:12px">
+<span class="label" style="color:var(--red)">🛑 止损规则</span>
+</div>
+<div class="row"><span class="label">逻辑止损</span><span class="value">燃机出口受阻（地缘政治制裁）/ 自主燃机发生重大质量事故 / 年报订单增速转负</span></div>
+<div class="row"><span class="label">技术止损</span><span class="value">跌破22.50元（前期低点支撑 + 52周低17.76的中枢上移）</span></div>
+<div class="row"><span class="label">时间止损</span><span class="value">买入后6个月内无实质性催化剂兑现（如新海外订单公告）</span></div>
+<div class="row"><span class="label">绝对止损</span><span class="value">亏损超过20%无条件平仓</span></div>
+
+<div class="row" style="margin-top:12px">
+<span class="label" style="color:var(--green)">🎯 止盈规则</span>
+</div>
+<div class="row"><span class="label">第一目标</span><span class="value">35元（+33%）→ 减仓30%，锁定部分利润</span></div>
+<div class="row"><span class="label">第二目标</span><span class="value">42元（+60%）→ 清仓，估值接近乐观情景上限</span></div>
+
+<div class="row" style="margin-top:12px">
+<span class="label">📈 跟踪指标（每周检查）</span>
+</div>
+<div class="row"><span class="label">新签订单公告</span><span class="value">当前：Q1新生效订单366亿(+2.34%) | 预警：连续两季增速<0%</span></div>
+<div class="row"><span class="label">合同负债变化</span><span class="value">当前：472亿(+16.4% YoY) | 预警：环比下降>10%</span></div>
+<div class="row"><span class="label">毛利率趋势</span><span class="value">当前：17.18%(Q1) | 预警：<15.5%</span></div>
+<div class="row"><span class="label">机构持仓变化</span><span class="value">关注摩根士丹利/北向资金动向</span></div>
+
+<div class="row" style="margin-top:12px">
+<span class="label">📅 催化剂日历</span>
+</div>
+<div class="row"><span class="label">2026-08-29</span><span class="value">2026年中报披露（关注毛利率改善 + 燃机订单进展）</span></div>
+<div class="row"><span class="label">2026-10-31</span><span class="value">2026年三季报（验证全年订单趋势）</span></div>
+<div class="row"><span class="label">2026Q4</span><span class="value">G50燃机海外产能扩张一期项目进展更新</span></div>
+<div class="row"><span class="label">持续</span><span class="value">美国AI资本开支数据 / 北美电力需求报告 / 地缘政治风险</span></div>
+
+<div class="row" style="margin-top:12px">
+<span class="label">⚠️ 最大下行风险</span>
+<span class="value">全球AI资本开支大幅缩减 + A股系统性风险 + 燃机国产替代受阻 = 三重叠加下跌（极限估值约PE 14x, EPS 1.3元 → 18元，-31%）。风险相关性：与AI算力板块中度正相关，与红利板块负相关。</span>
+</div>
+</div>
+</div>
+
+<!-- 风险矩阵 -->
+<div class="card">
+<h2>🛡️ 风险矩阵</h2>
+<table>
+<tr><th>风险类别</th><th>具体风险</th><th>概率</th><th>影响</th><th>应对</th></tr>
+<tr>
+<td>行业风险</td>
+<td>全球AI算力资本开支见顶回落，电力需求预期证伪</td>
+<td>中低</td>
+<td class="red">高</td>
+<td>关注每季度北美四大云厂商Capex指引</td>
+</tr>
+<tr>
+<td>公司风险</td>
+<td>G50燃机产能扩张不及预期，无法满足海外订单</td>
+<td>中</td>
+<td class="red">高</td>
+<td>跟踪一期项目工程进度（当前13.15%）</td>
+</tr>
+<tr>
+<td>竞争风险</td>
+<td>GE/西门子降价抢单，或国内第二家突破燃机技术</td>
+<td>低</td>
+<td>中</td>
+<td>目前全球仅4家且产能均满，竞争短期不构成威胁</td>
+</tr>
+<tr>
+<td>宏观风险</td>
+<td>中美脱钩升级，限制中国电力设备出口</td>
+<td>中低</td>
+<td class="red">高</td>
+<td>海外收入占比仅6.5%，冲击有限但估值受损</td>
+</tr>
+<tr>
+<td>财务风险</td>
+<td>经营现金流恶化，应收账款周转天数拉长</td>
+<td>中</td>
+<td>中</td>
+<td>2025年现金流转正，央企背景信用良好</td>
+</tr>
+</table>
+</div>
+
+<!-- 跟踪日历 -->
+<div class="card">
+<h2>📅 未来3个月跟踪日历</h2>
+<table>
+<tr><th>时间</th><th>事件</th><th>预期影响</th></tr>
+<tr><td>2026-08-29</td><td>半年报披露</td><td>验证Q2毛利率改善趋势，关注燃机新签订单</td></tr>
+<tr><td>2026-08-05</td><td>SpaceX Q2财报（首次上市后季报）</td><td>AI/科技板块情绪风向标</td></tr>
+<tr><td>2026-08-03-07</td><td>央行3000亿逆回购操作 + 到期续作</td><td>流动性信号</td></tr>
+<tr><td>2026-08中旬</td><td>美国7月CPI数据</td><td>影响美联储加息预期</td></tr>
+<tr><td>2026-08下旬</td><td>Jackson Hole央行年会</td><td>全球货币政策展望</td></tr>
+<tr><td>2026-10月</td><td>三季报 + 二十届五中全会</td><td>政策与经济基本面双重验证</td></tr>
+</table>
+</div>
+
+<!-- 行为金融 -->
+<div class="card">
+<h2>🧠 行为金融检查</h2>
+<div class="grid2">
+<div>
+<h4>确认偏误检查</h4>
+<p>如果我看错了，信号是：<br>
+① 2026H1订单增速<5%（vs 2025全年15.9%）<br>
+② 毛利率不升反降（燃机放量被风电降价抵消）<br>
+③ 海外燃机出口因政治原因受阻（未获出口许可）</p>
+</div>
+<div>
+<h4>锚定效应检查</h4>
+<p>26.26元的买入建议并非因为"跌了很多"——而是基于Forward PE 14-18x和35元公允价值推出来的。如果Forward PE已经被压缩到接近悲观情景（约16x），那就是真实的便宜，不是锚定在之前的高价。</p>
+</div>
+<div>
+<h4>过度自信检查</h4>
+<p>胜率60%的估计可能偏高。如果实际胜率仅50%：<br>
+f* = (2.67×0.5-0.5)/2.67 = 31%<br>
+1/4凯利 = 7.8%，仍在8-12%建议区间内，仓位安全。</p>
+</div>
+<div>
+<h4>近期偏差检查</h4>
+<p>过去2个月-29%的大幅下跌可能让人过度悲观。拉长到3年维度：2023-2025年营收CAGR 13%，净利CAGR 10%+，订单连续两年破千亿——这不是一个衰退中的公司，而是短期情绪过度修正。</p>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="footer-note">
+<p>📊 本报告由弈投师全栈投研框架生成 | 2026-08-03</p>
+<p>数据来源：neodata-financial-search / westock-data / 中信建投/财通/东吴研报 / 国家统计局 / Morgan Stanley</p>
+<p style="margin-top:8px"><strong>⚠️ 免责声明：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</strong></p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+
+// Chart 1: Revenue & Net Profit Trend
+(function(){
+var years=['2020','2021','2022','2023','2024','2025'];
+var rev=[372.83,478.19,553.64,606.77,696.95,786.15];
+var np=[18.62,22.89,28.58,35.50,29.22,38.31];
+var gp=[73.75,80.86,89.37,94.93,97.17,123.67];
+echarts.init(document.getElementById('chartRevenue')).setOption({
+tooltip:{trigger:'axis'},
+legend:{data:['营收(亿)','归母净利(亿)','毛利(亿)']},
+xAxis:{type:'category',data:years},
+yAxis:[{type:'value',name:'营收/毛利(亿)'},{type:'value',name:'净利(亿)'}],
+series:[
+{name:'营收(亿)',type:'bar',data:rev,itemStyle:{color:'#2563eb'}},
+{name:'毛利(亿)',type:'bar',data:gp,itemStyle:{color:'#93c5fd'}},
+{name:'归母净利(亿)',type:'line',yAxisIndex:1,data:np,itemStyle:{color:'#dc2626'},lineStyle:{width:3}}
+]
+});
+})();
+
+// Chart 2: Margin Trends
+(function(){
+var yrs=['2020','2021','2022','2023','2024','2025','2026Q1'];
+var gm=[19.78,16.90,16.14,15.64,13.94,15.74,17.18];
+var nm=[5.00,4.79,5.16,5.85,4.19,4.87,9.09];
+var roe=[5.89,6.49,7.40,8.62,6.73,7.99,3.38];
+echarts.init(document.getElementById('chartMargin')).setOption({
+tooltip:{trigger:'axis'},
+legend:{data:['毛利率(%)','净利率(%)','ROE(%)']},
+xAxis:{type:'category',data:yrs},
+yAxis:{type:'value',name:'%'},
+series:[
+{name:'毛利率(%)',type:'line',data:gm,itemStyle:{color:'#2563eb'},lineStyle:{width:2.5}},
+{name:'净利率(%)',type:'line',data:nm,itemStyle:{color:'#dc2626'},lineStyle:{width:2.5}},
+{name:'ROE(%)',type:'line',data:roe,itemStyle:{color:'#16a34a'},lineStyle:{width:2.5,dashOffset:5}}
+]
+});
+})();
+
+});
+</script>
+</body>
+</html>
