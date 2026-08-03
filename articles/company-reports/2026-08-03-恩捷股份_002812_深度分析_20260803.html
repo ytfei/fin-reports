@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恩捷股份(002812) 深度分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root {
+  --red: #d93025; --green: #1a8c3f; --bg: #fafbfc; --card: #fff; --text: #2c3e50;
+  --sub: #64748b; --border: #e5e7eb; --accent: #2563eb; --warn: #f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.8em;margin:0 0 4px}
+h2{font-size:1.3em;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+h3{font-size:1.1em;margin:20px 0 8px}
+.hero{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:#fff;border-radius:12px;padding:28px 24px;margin-bottom:20px}
+.hero h1{color:#fff;font-size:1.6em}
+.hero .meta{opacity:.85;font-size:.9em;margin-bottom:12px}
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:16px}
+.hero-card{background:rgba(255,255,255,.12);border-radius:8px;padding:12px;text-align:center}
+.hero-card .val{font-size:1.4em;font-weight:700}
+.hero-card .lbl{font-size:.75em;opacity:.7;margin-top:2px}
+.up{color:#ff6b6b}.down{color:#51cf66}
+.exec-summary{background:var(--card);border-radius:10px;padding:20px 24px;margin:20px 0;border-left:4px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.exec-summary h2{margin:0 0 10px;border:0;font-size:1.15em}
+.exec-summary p{margin:4px 0;font-size:.95em}
+.card{background:var(--card);border-radius:10px;padding:20px 24px;margin:16px 0;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card h3{margin-top:0}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.75em;margin-right:4px}
+.tag-green{background:#d1fae5;color:#065f46}
+.tag-red{background:#fee2e2;color:#991b1b}
+.tag-blue{background:#dbeafe;color:#1e40af}
+.tag-yellow{background:#fef3c7;color:#92400e}
+table{width:100%;border-collapse:collapse;font-size:.88em;margin:12px 0}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:#f8fafc;font-weight:600;color:var(--sub);font-size:.8em;text-transform:uppercase}
+td .pos{color:var(--red)}td .neg{color:var(--green)}
+.signal-box{display:flex;align-items:center;gap:8px;margin:6px 0}
+.signal{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.signal-red{background:var(--red)}.signal-green{background:var(--green)}.signal-yellow{background:var(--warn)}.signal-blue{background:var(--accent)}
+.chart-wrap{width:100%;height:360px;margin:16px 0}
+.chart-wrap.short{height:300px}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:.88em}
+.kv-grid .k{color:var(--sub)}.kv-grid .v{font-weight:600}
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:12px 0}
+.risk-card{border-radius:8px;padding:14px;border:1px solid var(--border)}
+.risk-card.high{border-left:4px solid var(--red)}
+.risk-card.mid{border-left:4px solid var(--warn)}
+.risk-card.low{border-left:4px solid var(--green)}
+.trade-card{background:linear-gradient(135deg,#0f172a,#1e293b);color:#e2e8f0;border-radius:12px;padding:24px;margin:16px 0}
+.trade-card h3{color:#38bdf8;margin-top:0}
+.trade-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:.85em}
+.trade-grid .item{margin:4px 0}
+.trade-grid .label{color:#94a3b8;font-size:.78em}
+.trade-grid .value{font-weight:600}
+hr{opacity:.15;margin:20px 0}
+.footnote{font-size:.78em;color:var(--sub);margin-top:40px;padding:16px 0;border-top:1px solid var(--border)}
+@media(max-width:600px){body{padding:12px}.hero-grid{grid-template-columns:1fr 1fr}.trade-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <h1>恩捷股份 (002812.SZ)</h1>
+  <div class="meta">弈投师 · 2026-08-03 · 五层漏斗深度分析</div>
+  <div class="hero-grid">
+    <div class="hero-card"><div class="val up">54.05</div><div class="lbl">最新价 (¥)</div></div>
+    <div class="hero-card"><div class="val up">+2.78%</div><div class="lbl">今日涨跌</div></div>
+    <div class="hero-card"><div class="val">530.4亿</div><div class="lbl">总市值</div></div>
+    <div class="hero-card"><div class="val">2.07x</div><div class="lbl">市净率 PB</div></div>
+    <div class="hero-card"><div class="val">140.74x</div><div class="lbl">PE TTM (失真)</div></div>
+    <div class="hero-card"><div class="val" style="color:#ff6b6b">~29x</div><div class="lbl">2026E PE (前瞻)</div></div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+<h2>📌 一句话结论</h2>
+<p><strong>买恩捷股份，本质是在买"锂电隔膜周期反转的利润弹性"。</strong>公司经历了2024年历史性亏损后，2026年正以逐季加速的盈利修复确认周期拐点——H1预盈7.4-9亿、Q2环比增82-145%。当前PB 2.07x处于历史39%分位，前瞻PE ~25-30x对于周期反转第一年的龙头来说并不离谱。但实控人治理瑕疵（高质押/关联交易）和行业竞争格局长期恶化是必须正视的折价因素。</p>
+<p style="margin-top:8px;color:var(--sub);font-size:.85em">评级：<span class="tag tag-yellow">谨慎看多 · 周期反转早期</span>  |  建议仓位：总资产 5-8%  |  核心跟踪指标：隔膜单价、季度出货量、毛利率</p>
+</div>
+
+<!-- Layer 1: Macro -->
+<h2>Layer 1 · 宏观环境与仓位判断</h2>
+<div class="card">
+<h3>宏观温度计：中性偏谨慎</h3>
+<div class="kv-grid">
+<div><span class="k">制造业PMI (7月)</span><br><span class="v">49.2 <span style="color:var(--green);font-size:.85em">▼ 收缩区间</span></span></div>
+<div><span class="k">制造业PMI (6月)</span><br><span class="v">50.3</span></div>
+<div><span class="k">LPR 1年期</span><br><span class="v">3.00% (稳定)</span></div>
+<div><span class="k">LPR 5年期</span><br><span class="v">3.50% (稳定)</span></div>
+<div><span class="k">沪深300 PE TTM</span><br><span class="v">14.43x</span></div>
+<div><span class="k">沪深300 风险溢价</span><br><span class="v">5.22%</span></div>
+</div>
+<div style="margin-top:16px">
+  <div class="signal-box"><span class="signal signal-yellow"></span><strong>经济周期：</strong>PMI 7月再度跌破荣枯线(49.2)，高技术制造业PMI 53.3独撑，消费行业PMI 47.8疲软。经济复苏不均衡，总量承压但有结构性亮点。</div>
+  <div class="signal-box"><span class="signal signal-blue"></span><strong>货币政策：</strong>LPR连续多个月不变，央行维持"稳健偏松"基调，流动性环境对成长股/周期股相对友好。</div>
+  <div class="signal-box"><span class="signal signal-blue"></span><strong>市场估值：</strong>沪深300 PE 14.43x处于历史中位数附近，ERP 5.22%显示股票相对债券仍有吸引力但非极度低估。</div>
+  <div class="signal-box"><span class="signal signal-yellow"></span><strong>最大风险：</strong>PMI持续走弱可能拖累周期板块情绪；中美贸易政策不确定性。</div>
+</div>
+<p style="margin-top:12px"><strong>仓位建议：50-65%</strong> · 偏防御中的结构性进攻 · 锂电/新能源车产业链是少数景气向上的方向</p>
+<p style="color:var(--sub);font-size:.75em">数据来源：国家统计局 2026-07-31, 中国人民银行 2026-07-20, neodata-financial-search</p>
+</div>
+
+<!-- Layer 2: Industry -->
+<h2>Layer 2 · 行业选赛道</h2>
+<div class="card">
+<h3>锂电隔膜：周期底部确认反转</h3>
+<table>
+<tr><th>指标</th><th>数据</th><th>方向</th></tr>
+<tr><td>行业CR4</td><td>73% (恩捷~30%+, 星源/中材/金力)</td><td><span class="tag tag-blue">高集中度</span></td></tr>
+<tr><td>湿法隔膜价格</td><td>0.74元/㎡ (2025底) → 0.86元/㎡ (2026Q2)</td><td class="up">▲ 累计涨10-20%</td></tr>
+<tr><td>7月8月执行价</td><td>头部电池厂涨价7-8%</td><td class="up">▲ 加速上涨</td></tr>
+<tr><td>产能利用率</td><td>头部企业90%+</td><td><span class="tag tag-yellow">偏紧</span></td></tr>
+<tr><td>行业扩产</td><td>2025年8月13家企业达成"暂停扩产"共识</td><td><span class="tag tag-green">供给约束</span></td></tr>
+<tr><td>需求增速</td><td>动力+储能双轮驱动, 出货量YoY +40%+</td><td class="up">▲ 旺盛</td></tr>
+<tr><td>恩捷2026E出货量</td><td>160亿㎡+ (vs 2025 128亿㎡)</td><td class="up">▲ +40%+</td></tr>
+</table>
+<div style="margin-top:12px">
+  <div class="signal-box"><span class="signal signal-green"></span><strong>周期位置：</strong>早期反转。价格底部确认于2025Q4，2026年量价齐升格局确立。隔膜扩产周期长(建设+验证+爬坡需18-24个月)，供给约束至少延续到2027年。</div>
+  <div class="signal-box"><span class="signal signal-yellow"></span><strong>竞争格局：</strong>恩捷全球湿法隔膜出货量连续7年第一，但二线企业(星源材质/河北金力)也在扩产追赶。价格战在行业底部最激烈，当前已转向协同提价。</div>
+  <div class="signal-box"><span class="signal signal-blue"></span><strong>核心催化：</strong>①隔膜价格持续上调 ②Q2/Q3财报逐季验证盈利修复 ③产能利用率高位运行强化议价权 ④固态电池等新技术短期不构成替代威胁。</div>
+</div>
+<p style="margin-top:8px"><strong>行业推荐：超配锂电隔膜</strong> · 周期反转早期 · 确定性最强的涨价品种之一</p>
+<p style="color:var(--sub);font-size:.75em">数据来源：东吴证券研报(2026Q2), GGII, 公司公告(2026-07-20投资者交流), 新浪财经</p>
+</div>
+
+<!-- Layer 3: Screening Summary -->
+<h2>Layer 3 · 量化筛选</h2>
+<div class="card">
+<h3>硬性淘汰检查</h3>
+<table>
+<tr><th>筛选条件</th><th>恩捷股份</th><th>结果</th></tr>
+<tr><td>近3年经营现金流2年以上为负</td><td>2023: +26.7亿 / 2024: +11.6亿 / 2025: +11.4亿</td><td><span class="tag tag-green">✓ 通过</span></td></tr>
+<tr><td>商誉/净资产 > 30%</td><td>商誉5.2亿 / 净资产269.3亿 = 1.9%</td><td><span class="tag tag-green">✓ 通过</span></td></tr>
+<tr><td>大股东质押率 > 50%</td><td>实控人家族质押占持股约40%+</td><td><span class="tag tag-yellow">⚠ 接近警戒线</span></td></tr>
+<tr><td>近2年财务造假/重大违规</td><td>2024年因历史违规减持被警示函，非财务造假</td><td><span class="tag tag-green">✓ 通过</span></td></tr>
+<tr><td>日均成交额 < 3000万</td><td>今日成交额9.04亿</td><td><span class="tag tag-green">✓ 通过</span></td></tr>
+</table>
+<p style="margin-top:8px;color:var(--sub);font-size:.8em">核心风险提示：实控人质押比例偏高，在股价大幅下跌时存在被动减持/平仓风险，这是需要持续监控的治理隐患。</p>
+</div>
+
+<!-- Layer 4: Deep Research -->
+<h2>Layer 4 · 深度研究</h2>
+
+<!-- 4a: Business Model -->
+<div class="card">
+<h3>4a. 商业模式拆解</h3>
+<p><strong>怎么赚钱？</strong>恩捷的核心是一台"高分子材料精密加工机器"——通过湿法双向拉伸工艺将PP/PE原料加工成纳米级多孔隔膜，卖给宁德时代、比亚迪、LG、松下等电池厂。隔膜占电池成本约7-10%，但直接决定电池的安全性和能量密度。</p>
+
+<h3 style="margin-top:16px">收入结构 (2025年报)</h3>
+<table>
+<tr><th>产品线</th><th>营收(亿)</th><th>占比</th><th>毛利率</th><th>角色</th></tr>
+<tr><td><strong>锂电池隔膜</strong></td><td>116.3</td><td>85.3%</td><td>~19% (2025) → 28% (1Q26)</td><td><span class="tag tag-red">核心增长引擎</span></td></tr>
+<tr><td>无菌包装</td><td>9.69</td><td>7.1%</td><td>稳定</td><td><span class="tag tag-blue">现金牛</span></td></tr>
+<tr><td>BOPP膜</td><td>5.68</td><td>4.2%</td><td>较低</td><td><span class="tag tag-green">边缘</span></td></tr>
+<tr><td>烟标/特种纸/其他</td><td>4.65</td><td>3.4%</td><td>—</td><td><span class="tag tag-green">衰退中</span></td></tr>
+</table>
+
+<h3 style="margin-top:16px">护城河评估</h3>
+<div class="signal-box"><span class="signal signal-green"></span><strong>规模壁垒：</strong>全球产能最大，2025年出货128亿㎡(市占率~30%+)，规模效应带来单位成本优势。产能遍布中国+匈牙利。</div>
+<div class="signal-box"><span class="signal signal-green"></span><strong>技术壁垒：</strong>910件专利，最新5μm/HSV5/XHS5产品领先行业。隔膜行业客户验证周期长(6-18个月)，转换成本高。</div>
+<div class="signal-box"><span class="signal signal-yellow"></span><strong>客户粘性：</strong>深度绑定宁德时代、比亚迪等头部客户，但客户集中度高是双刃剑——大客户议价能力强。</div>
+<div class="signal-box"><span class="signal signal-yellow"></span><strong>治理折价：</strong>实控人李晓明家族持股42.22%但质押40%+，历史上违规减持、关联交易(捷胜科技4.09亿)、补税事件频发。<strong>这是恩捷最大的非基本面折价来源。</strong></div>
+</div>
+
+<!-- 4b: Financial Deep Dive -->
+<div class="card">
+<h3>4b. 财务深度分析</h3>
+
+<div class="chart-wrap" id="chartRevenue"></div>
+
+<div class="chart-wrap short" id="chartMargin"></div>
+
+<h3 style="margin-top:16px">杜邦分解 (ROE 质量)</h3>
+<table>
+<tr><th>年份</th><th>ROE</th><th>净利率</th><th>周转率</th><th>杠杆倍数</th><th>判断</th></tr>
+<tr><td>2022 (峰值)</td><td class="up">22.6%</td><td>31.8%</td><td>0.33x</td><td>2.05x</td><td>高利润率驱动，高质量</td></tr>
+<tr><td>2023</td><td>9.4%</td><td>21.0%</td><td>0.26x</td><td>1.75x</td><td>利润率腰斩</td></tr>
+<tr><td>2024 (亏损)</td><td class="neg">-2.1%</td><td class="neg">-5.5%</td><td>0.21x</td><td>1.72x</td><td>全维度恶化，资产减值46亿</td></tr>
+<tr><td>2025 (微利)</td><td>0.5%</td><td>1.0%</td><td>0.28x</td><td>1.77x</td><td>谷底企稳</td></tr>
+<tr><td>2026Q1 (年化)</td><td class="up">~3.9%</td><td>6.7%</td><td>0.32x</td><td>1.77x</td><td>快速修复中</td></tr>
+</table>
+
+<h3 style="margin-top:16px">盈利质量检查</h3>
+<div class="kv-grid">
+<div><span class="k">经营现金流/净利润 (2025)</span><br><span class="v up">8.0x</span><span style="font-size:.75em;color:var(--sub)"> 净利润低基数放大</span></div>
+<div><span class="k">经营现金流/净利润 (2023)</span><br><span class="v">1.01x</span></div>
+<div><span class="k">应收账款/营收 (2023)</span><br><span class="v">55.8% <span style="color:var(--warn);font-size:.85em">偏高</span></span></div>
+<div><span class="k">存货周转天数 (估)</span><br><span class="v">~90天</span></div>
+<div><span class="k">资产负债率 (2026Q1)</span><br><span class="v">43.65%</span></div>
+<div><span class="k">有息负债/净资产 (估)</span><br><span class="v">~35-40% <span style="color:var(--warn);font-size:.85em">偏高</span></span></div>
+</div>
+
+<div style="margin-top:12px">
+  <div class="signal-box"><span class="signal signal-yellow"></span><strong>现金流质量：</strong>经营现金流持续为正（2023-2025年均10亿+），但大规模资本开支（2023-2024年累计100亿+）导致自由现金流长期为负。2025年资本开支放缓至17.3亿（vs 2023年78.2亿），自由现金流转正拐点已现。</div>
+  <div class="signal-box"><span class="signal signal-green"></span><strong>增长驱动力：</strong>量驱动为主（出货量+40%），价格驱动为辅（+10-20%）。2026年量价双击特征明显。</div>
+</div>
+<p style="color:var(--sub);font-size:.75em">数据来源：公司年报(2022-2025), 2026一季报, neodata-financial-search</p>
+</div>
+
+<!-- 4c: Valuation -->
+<div class="card">
+<h3>4c. 估值分析</h3>
+
+<div class="signal-box"><span class="signal signal-yellow"></span><strong>公司类型：</strong>周期成长股——隔膜行业仍处成长期，但盈利周期性极强。不能用PE简单线性外推，需要情景分析。</div>
+
+<h3 style="margin-top:16px">估值方法一：前瞻PE (2026E)</h3>
+<table>
+<tr><th>情景</th><th>2026E 归母净利润</th><th>对应PE (市值530亿)</th><th>假设</th></tr>
+<tr><td style="color:var(--green)">悲观</td><td>14亿 (H1 7.4亿, H2 6.6亿)</td><td style="color:var(--green)">37.9x</td><td>下半年价格回落/出货不及预期</td></tr>
+<tr><td style="color:var(--text)">基准</td><td>18亿 (H1 8.2亿, H2 9.8亿)</td><td>29.4x</td><td>下半年量价温和改善</td></tr>
+<tr><td style="color:var(--red)">乐观</td><td>22亿 (H1 9亿, H2 13亿)</td><td style="color:var(--red)">24.1x</td><td>价格持续上涨+出货超预期</td></tr>
+</table>
+
+<h3 style="margin-top:16px">估值方法二：PB与历史分位</h3>
+<div class="kv-grid">
+<div><span class="k">当前 PB</span><br><span class="v">2.07x</span></div>
+<div><span class="k">PB 历史分位</span><br><span class="v">39.2%</span></div>
+<div><span class="k">PB 历史中位数 (5年)</span><br><span class="v">~2.49x</span></div>
+<div><span class="k">PB 2022年高点</span><br><span class="v">~8x+</span></div>
+</div>
+<p style="margin-top:8px;font-size:.88em">PB处于历史偏低位置(39%分位)，但考虑到ROE远低于历史峰值(当前年化~4% vs 峰值22.6%)，低PB有一定合理性。若ROE恢复到10%+，PB有重估至2.5-3.0x的空间。</p>
+
+<h3 style="margin-top:16px">估值方法三：可比公司</h3>
+<table>
+<tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>PE TTM</th><th>PB</th><th>2025营收(亿)</th><th>隔膜收入</th><th>备注</th></tr>
+<tr><td><strong>恩捷股份</strong></td><td>002812</td><td>530</td><td>140.7x</td><td>2.07x</td><td>136.3</td><td>116.3亿(85%)</td><td>纯隔膜龙头</td></tr>
+<tr><td>星源材质</td><td>300568</td><td>~120</td><td>—</td><td>—</td><td>41.3</td><td>40.8亿(99%)</td><td>二线隔膜</td></tr>
+<tr><td>中材科技</td><td>002080</td><td>~590</td><td>36.9x</td><td>3.67x</td><td>302.0</td><td>24.0亿(8%)</td><td>多元化(风电叶片/玻纤为主)</td></tr>
+</table>
+<p style="font-size:.85em;margin-top:6px;color:var(--sub)">可比性有限：中材科技隔膜占比仅8%，主业风电叶片利润丰厚，PE不具直接可比性。星源材质2025年几乎盈亏平衡。</p>
+
+<h3 style="margin-top:16px">市场定价了什么？</h3>
+<div class="signal-box"><span class="signal signal-blue"></span><strong>已定价：</strong>行业周期底部确认、2026年盈利大幅反转。股价从2024年低点已反弹约100%，市场已部分price-in反转预期。</div>
+<div class="signal-box"><span class="signal signal-red"></span><strong>可能未充分定价：</strong>① 盈利修复的持续性——2027年供需格局可能比市场想的更紧 ② 如果2027年归母净利润恢复到30亿+，当前市值对应PE仅~17x。</div>
+<div class="signal-box"><span class="signal signal-yellow"></span><strong>可能过度定价：</strong>① 隔膜行业长期技术壁垒的削弱——二线厂商追赶+固态电池远期替代 ② 实控人治理风险折价不足。</div>
+</div>
+
+<!-- Bull/Bear -->
+<div class="card">
+<h3>多空双方核心论点</h3>
+<div class="risk-grid">
+<div class="risk-card high">
+<h4 style="color:var(--red);margin-top:0">🔴 空头论点</h4>
+<ol style="padding-left:16px;font-size:.88em">
+<li><strong>周期股不可线性外推：</strong>2026年盈利恢复是价格反弹的结果，而非结构性改善。一旦隔膜价格再次走弱，盈利将快速回落。</li>
+<li><strong>治理风险真实存在：</strong>实控人40%+高质押+关联交易历史+违规减持+补税，任何一项爆雷都可能引发信任危机。</li>
+<li><strong>长期格局恶化：</strong>隔膜从"卡脖子"走向"大宗化"，技术扩散+二线扩产将长期压缩头部企业利润率。</li>
+<li><strong>估值不便宜：</strong>前瞻PE 25-30x对于一个重资产、强周期的制造企业来说并不低。</li>
+</ol>
+</div>
+<div class="risk-card low">
+<h4 style="color:var(--green);margin-top:0">🟢 多头论点</h4>
+<ol style="padding-left:16px;font-size:.88em">
+<li><strong>周期拐点确认+赔率可观：</strong>2026H1利润7.4-9亿 vs 2025全年1.4亿——反转力度远超市场年初预期。若2027年利润恢复到30亿+，当前市值PE仅17x。</li>
+<li><strong>供给约束得天独厚：</strong>隔膜扩产2年周期+行业自律暂停扩产+需求40%增长=供需偏紧格局至少延续到2027。</li>
+<li><strong>技术+规模护城河：</strong>910项专利、7年全球第一、5μm新产品——至少在湿法隔膜领域，龙头的技术代差仍有2-3年。</li>
+<li><strong>自由现金流转正拐点：</strong>2025年资本开支大幅压缩至17亿(vs 2023年78亿)，经营现金流11.4亿覆盖后仍有缺口，2026年有望真正转正。</li>
+</ol>
+</div>
+</div>
+<h4 style="margin-top:16px">变异认知</h4>
+<p style="font-size:.9em">市场把恩捷当"每隔膜周期股"定价，但可能低估了：<strong>本轮周期的供给约束比以往任何一轮都强</strong>——过去价格战结束后产能立刻再扩张，但这次有行业自律协议+头部企业资产负债表约束(2024年亏损后都更谨慎)。如果供给约束超预期，2027年隔膜可能出现短缺，恩捷的利润弹性将远超市场当前线性外推。</p>
+</div>
+
+<!-- Layer 5: Trading Plan -->
+<h2>Layer 5 · 交易计划</h2>
+<div class="trade-card">
+<h3>📋 交易计划卡片 — 恩捷股份 (002812)</h3>
+<div class="trade-grid">
+<div class="item"><div class="label">买入逻辑</div><div class="value">锂电隔膜周期反转的利润弹性 + 供给约束超预期</div></div>
+<div class="item"><div class="label">目标价区间</div><div class="value">65 - 80 元 (对应2026E PE 32-39x / 2027E PE 19-23x)</div></div>
+<div class="item"><div class="label">建议买入区间</div><div class="value">45 - 52 元 (目标价基础上留15-20%安全边际)</div></div>
+<div class="item"><div class="label">当前价格</div><div class="value" style="color:#ff6b6b">54.05元 (略高于买入区间上限)</div></div>
+
+<div class="item"><div class="label">建议仓位</div><div class="value">总资产 5-8%</div></div>
+<div class="item"><div class="label">凯利公式参考</div><div class="value">f* = 0.22 (p=55%, b=2.2), 实操取 1/3 凯利 = 7.3%</div></div>
+
+<div class="item"><div class="label">逻辑止损</div><div class="value">① H2隔膜价格再次跌破0.80元/㎡ ② Q3毛利率回落至20%以下</div></div>
+<div class="item"><div class="label">技术止损</div><div class="value">跌破 45元 (前期平台支撑 / 200日均线附近)</div></div>
+<div class="item"><div class="label">时间止损</div><div class="value">买入后3个月(到2026年11月) Q3财报未达预期</div></div>
+<div class="item"><div class="label">绝对止损</div><div class="value">亏损超过 -15% 无条件平仓</div></div>
+
+<div class="item"><div class="label">第一止盈目标</div><div class="value">65元 (达到2026E PE 32x, 减仓1/3)</div></div>
+<div class="item"><div class="label">第二止盈目标</div><div class="value">80元 (估值上限, 清仓)</div></div>
+
+<div class="item"><div class="label">每周跟踪指标</div><div class="value">隔膜报价(7μm/9μm) · 行业产能利用率 · 锂电排产数据</div></div>
+<div class="item"><div class="label">催化剂日历</div><div class="value">2026-08下旬 Q2正式财报 | 2026-10 Q3业绩预告 | 2027-01 年度业绩预告</div></div>
+
+<div class="item"><div class="label">最大下行风险</div><div class="value">隔膜价格二次探底 + 大股东质押爆仓连锁</div></div>
+<div class="item"><div class="label">相关性风险</div><div class="value">与宁德时代/比亚迪等锂电持仓高度相关，需注意行业集中度</div></div>
+</div>
+</div>
+
+<!-- Risk Matrix -->
+<h2>风险矩阵</h2>
+<div class="card">
+<table>
+<tr><th>风险因素</th><th>严重程度</th><th>概率</th><th>预警信号</th></tr>
+<tr><td>隔膜价格二次探底</td><td><span class="tag tag-red">高</span></td><td>中 (30%)</td><td>二线厂商宣布新扩产计划</td></tr>
+<tr><td>实控人质押爆仓/被动减持</td><td><span class="tag tag-red">高</span></td><td>中低 (20%)</td><td>股价跌破40元 + 大股东补充质押公告</td></tr>
+<tr><td>固态电池技术突破(远期替代)</td><td><span class="tag tag-red">高</span></td><td>低 (10-15%，3年内)</td><td>头部电池厂宣布固态电池量产时间表</td></tr>
+<tr><td>下游需求不及预期</td><td><span class="tag tag-yellow">中</span></td><td>中 (25%)</td><td>新能源车销量增速降至个位数</td></tr>
+<tr><td>汇率/海外工厂风险</td><td><span class="tag tag-yellow">中</span></td><td>低 (15%)</td><td>匈牙利工厂投产延迟/地缘政治</td></tr>
+<tr><td>应收账款坏账风险</td><td><span class="tag tag-yellow">中</span></td><td>中低 (15%)</td><td>下游小客户出现经营困难</td></tr>
+</table>
+</div>
+
+<!-- Charts Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof echarts === 'undefined') return;
+
+  // Revenue & Profit Chart
+  (function(){
+    var c = echarts.init(document.getElementById('chartRevenue'));
+    c.setOption({
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['营收(亿)', '归母净利(亿)'], top: 0 },
+      grid: { left: '8%', right: '8%', top: '15%', bottom: '8%' },
+      xAxis: { type: 'category', data: ['2018','2019','2020','2021','2022','2023','2024','2025','2026E'] },
+      yAxis: [
+        { type: 'value', name: '营收(亿)', axisLabel: { formatter: '{value}' } },
+        { type: 'value', name: '净利(亿)', axisLabel: { formatter: '{value}' } }
+      ],
+      series: [
+        { name: '营收(亿)', type: 'bar', data: [24.6,31.6,42.8,79.8,125.9,120.4,101.6,136.3,170],
+          itemStyle: { color: '#2563eb' } },
+        { name: '归母净利(亿)', type: 'line', yAxisIndex: 1, data: [5.18,8.50,11.16,27.18,40.00,25.27,-5.56,1.43,18],
+          itemStyle: { color: '#d93025' }, lineStyle: { width: 2.5 }, symbol: 'circle', symbolSize: 8,
+          markLine: { silent: true, data: [{ yAxis: 40, label: { formatter: '2022峰值 40亿' }, lineStyle: { color: '#999', type: 'dashed' } }] } }
+      ]
+    });
+  })();
+
+  // Gross Margin Chart
+  (function(){
+    var c = echarts.init(document.getElementById('chartMargin'));
+    c.setOption({
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['毛利率(%)', '净利率(%)'], top: 0 },
+      grid: { left: '8%', right: '8%', top: '15%', bottom: '8%' },
+      xAxis: { type: 'category', data: ['2018','2019','2020','2021','2022','2023','2024','2025','1Q26'] },
+      yAxis: { type: 'value', name: '%', max: 55 },
+      series: [
+        { name: '毛利率(%)', type: 'line', data: [42.1,45.2,42.6,49.9,47.8,37.4,11.1,18.8,28.1],
+          itemStyle: { color: '#d93025' }, lineStyle: { width: 2.5 }, areaStyle: { color: 'rgba(217,48,37,0.06)' } },
+        { name: '净利率(%)', type: 'line', data: [21.1,26.9,26.0,34.1,31.8,21.0,-5.5,1.0,6.7],
+          itemStyle: { color: '#2563eb' }, lineStyle: { width: 2.5 } }
+      ]
+    });
+  })();
+});
+</script>
+
+<div class="footnote">
+<p><strong>⚠️ 免责声明：</strong>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+<p>数据来源：neodata-financial-search / 国家统计局 / 中国人民银行 / 公司公告 / 东吴证券研报 / 新浪财经 / GGII | 数据截止：2026-08-03 15:58</p>
+<p>分析师：弈投师 · 五层漏斗框架 | 本报告所有估值模型假设均已显式标注，情景分析不代表预测。</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东方电缆 (603606) 投资分析报告 — 2026-08-03</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #fff;
+  --text: #2c3e50;
+  --text-secondary: #6c757d;
+  --red: #dc3545;
+  --green: #28a745;
+  --blue: #0d6efd;
+  --border: #e9ecef;
+  --accent: #1a237e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  color: var(--text);
+  line-height: 1.7;
+}
+.hero {
+  background: linear-gradient(135deg, var(--accent) 0%, #283593 100%);
+  color: #fff;
+  padding: 40px 30px;
+  text-align: center;
+}
+.hero h1 { font-size: 2em; margin-bottom: 6px; }
+.hero .subtitle { font-size: 1.05em; opacity: 0.85; }
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.summary-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  text-align: center;
+}
+.summary-card .label { font-size: 0.82em; color: var(--text-secondary); margin-bottom: 4px; }
+.summary-card .value { font-size: 1.4em; font-weight: 700; }
+.summary-card .value.red { color: var(--red); }
+.summary-card .value.green { color: var(--green); }
+.summary-card .value.blue { color: var(--blue); }
+
+.section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 18px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.section h2 {
+  font-size: 1.35em;
+  color: var(--accent);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.section h3 { font-size: 1.1em; margin: 16px 0 8px; color: #333; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 0.92em;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th { background: #f1f3f5; font-weight: 600; color: var(--accent); }
+tr:hover { background: #f8f9fa; }
+
+.chart-container {
+  position: relative;
+  height: 320px;
+  margin: 16px 0;
+}
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78em; font-weight: 600; }
+.tag-bull { background: #d4edda; color: #155724; }
+.tag-bear { background: #f8d7da; color: #721c24; }
+.tag-neutral { background: #e2e3e5; color: #383d41; }
+.tag-warn { background: #fff3cd; color: #856404; }
+
+.trade-card {
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+}
+.trade-card h3 { color: var(--accent); margin-bottom: 12px; }
+.trade-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 0.92em;
+}
+.trade-item { padding: 8px; }
+.trade-item .t-label { font-size: 0.82em; color: var(--text-secondary); }
+.trade-item .t-value { font-weight: 600; }
+
+.catalyst-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.catalyst-item .date { color: var(--blue); font-weight: 600; font-size: 0.9em; }
+
+.behavior-check { background: #fff8e1; border-left: 4px solid #ffc107; padding: 12px 16px; margin: 10px 0; border-radius: 4px; font-size: 0.9em; }
+
+.rating-bar {
+  display: flex;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.rating-bar .bar-bull { background: var(--red); }
+.rating-bar .bar-neutral { background: #adb5bd; }
+.rating-bar .bar-bear { background: var(--green); }
+
+.risk-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+}
+.risk-level { font-weight: 700; }
+.risk-high { color: var(--red); }
+.risk-mid { color: #ffc107; }
+.risk-low { color: var(--green); }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 0.82em;
+}
+@media (max-width: 680px) {
+  .hero { padding: 28px 16px; }
+  .hero h1 { font-size: 1.4em; }
+  .container { padding: 10px; }
+  .section { padding: 16px; }
+  .trade-grid { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>东方电缆 (603606.SH)</h1>
+  <div class="subtitle">投资分析报告 | 2026年8月3日 | 弈投师</div>
+  <div style="margin-top:14px; font-size:1.3em; font-weight:700;">¥42.36 <span style="color:#ff6b6b; font-size:0.75em;">+2.94%</span></div>
+  <div style="font-size:0.85em; opacity:0.8;">总市值 349.39亿 | PE(TTM) 25.65 | PB 4.30</div>
+</div>
+
+<div class="container">
+
+<!-- 执行摘要 -->
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">投资评级</div>
+    <div class="value blue">买入 (BUY)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">目标价区间</div>
+    <div class="value red">55 - 66 元</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">上行空间</div>
+    <div class="value red">+30% ~ +56%</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">建议仓位</div>
+    <div class="value blue">10-12%</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">2026E PE</div>
+    <div class="value">19.2x</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">机构综合目标价</div>
+    <div class="value red">65.00 元</div>
+  </div>
+</div>
+
+<!-- 宏观判断 -->
+<div class="section">
+  <h2>🌐 宏观背景与仓位判断</h2>
+  <p><strong style="color: var(--accent);">"弱现实+宽货币"格局，结构重于仓位。</strong></p>
+  <p>PMI 49.2（收缩区间，但有韧性）| GDP Q2 +4.3% | M2 +8.0%（流动性充裕）| 7天回购 1.39%（低利率环境）。</p>
+  <p>建议权益仓位 <strong>60-70%</strong>，偏成长/质量风格，最大宏观风险：中美贸易摩擦+PPI持续上行。</p>
+</div>
+
+<!-- 行业分析 -->
+<div class="section">
+  <h2>🏭 海上风电/海缆赛道</h2>
+  <p><strong style="color: var(--red);">行业周期：成长期前段——量价齐升。</strong></p>
+
+  <table>
+    <tr><th>关键指标</th><th>数据</th><th>来源</th></tr>
+    <tr><td>"十五五"海风目标</td><td style="color:var(--red);">2030年1亿千瓦（现4700万）</td><td>国家能源局</td></tr>
+    <tr><td>2026年新增装机预测</td><td>11-15GW（+30-40% YoY）</td><td>券商一致预期</td></tr>
+    <tr><td>欧洲海风规划</td><td>2025-2034年均12.6GW（4x）</td><td>GWEC</td></tr>
+    <tr><td>海缆CR3市占率</td><td style="color:var(--red);">~87%（寡头格局）</td><td>行业数据</td></tr>
+  </table>
+
+  <div class="chart-container">
+    <canvas id="industryChart"></canvas>
+  </div>
+
+  <p style="margin-top:10px;"><span class="tag tag-bull">护城河深厚</span> 码头+立塔+技术验证3-5年，新进入者威胁极低。深远海趋势下海缆价值量倍增，量价双击逻辑清晰。</p>
+</div>
+
+<!-- 财务概览 -->
+<div class="section">
+  <h2>📊 核心财务数据</h2>
+  <div class="chart-container">
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026Q1</th></tr>
+    <tr><td>营收（亿元）</td><td>70.09</td><td>73.10</td><td>90.93</td><td style="color:var(--red);">108.43</td><td>28.83</td></tr>
+    <tr><td>归母净利（亿元）</td><td>8.42</td><td>10.00</td><td>10.08</td><td style="color:var(--red);">12.71</td><td>3.72</td></tr>
+    <tr><td>扣非净利增速</td><td>-</td><td>+19.0%</td><td>+0.8%</td><td style="color:var(--red);">+38.0%</td><td>+34.6%</td></tr>
+    <tr><td>毛利率</td><td>22.4%</td><td>22.4%</td><td>18.8%</td><td style="color:var(--red);">22.1%</td><td>23.6%</td></tr>
+    <tr><td>ROE（加权）</td><td>13.5%</td><td>15.2%</td><td>13.9%</td><td style="color:var(--red);">16.8%</td><td>4.4%</td></tr>
+    <tr><td>经营现金流（亿）</td><td>+6.51</td><td>+11.87</td><td>+11.12</td><td style="color:var(--red);">+19.65</td><td>-9.73*</td></tr>
+  </table>
+  <p style="font-size:0.82em; color:var(--text-secondary);">* Q1经营现金流为负系行业季节性特征（集中采购原材料），2025Q1亦为-4.32亿，全年转正+19.65亿。</p>
+</div>
+
+<!-- 业务拆解 -->
+<div class="section">
+  <h2>🔬 业务结构拆解（2025年报）</h2>
+
+  <div class="chart-container">
+    <canvas id="segmentChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>业务板块</th><th>营收（亿）</th><th>占比</th><th>毛利率</th><th>YoY</th></tr>
+    <tr><td style="color:var(--red);">🔴 海底电缆与高压电缆</td><td>53.63</td><td>49.5%</td><td style="color:var(--red);">33.36%</td><td style="color:var(--red);">+65.6%</td></tr>
+    <tr><td>⚪ 电力工程与装备线缆</td><td>47.29</td><td>43.6%</td><td>8.65%</td><td>+7.3%</td></tr>
+    <tr><td>🔵 海洋装备与工程运维</td><td>7.42</td><td>6.8%</td><td>25.98%</td><td style="color:var(--green);">-48.3%</td></tr>
+  </table>
+  <p style="margin-top:8px;">🌍 <strong>海外业务</strong>：收入12.53亿（+70.8%），毛利率<strong style="color:var(--red);">38.50%</strong>（+22.9pct），英国Inchcape项目确收9.1亿，出海从0到1突破。</p>
+</div>
+
+<!-- 订单分析 -->
+<div class="section">
+  <h2>📋 在手订单——业绩压舱石</h2>
+  <div class="chart-container">
+    <canvas id="orderChart"></canvas>
+  </div>
+  <p style="font-size:0.92em;">截至2026年4月21日，在手订单 <strong style="color:var(--red);">184.12亿</strong>（含税），是2025年营收的 <strong style="color:var(--red);">1.7倍</strong>。6月再获52.31亿新单，订单总规模约<strong style="color:var(--red);">236亿</strong>。</p>
+</div>
+
+<!-- 估值 -->
+<div class="section">
+  <h2>💰 估值——交叉验证</h2>
+  <table>
+    <tr><th>方法</th><th>目标价</th><th>关键假设</th></tr>
+    <tr><td>DCF估值</td><td style="color:var(--red);">62-68元</td><td>WACC 9%, 永续增长3%, 5年FCF CAGR 18%</td></tr>
+    <tr><td>可比估值(2026E 25x PE)</td><td style="color:var(--red);">55元</td><td>2026E净利18.2亿，25x PE（历史中位偏低）</td></tr>
+    <tr><td>机构一致预期</td><td style="color:var(--red);">65元</td><td>53家机构综合目标价</td></tr>
+  </table>
+  <p>当前PE(TTM) 25.65x 处于过去5年约<strong>30%分位</strong>。考虑到2026E PE仅19.2x，估值在成长股中具有吸引力。</p>
+</div>
+
+<!-- 交易计划 -->
+<div class="section">
+  <h2>🎯 交易计划卡片</h2>
+  <div class="trade-card">
+    <div class="trade-grid">
+      <div class="trade-item">
+        <div class="t-label">买入逻辑</div>
+        <div class="t-value">184亿订单锁定2年业绩 + 海外高毛利扩张 + 市场错杀季度波动</div>
+      </div>
+      <div class="trade-item">
+        <div class="t-label">建议买入区间</div>
+        <div class="t-value" style="color:var(--red);">38 - 44 元</div>
+      </div>
+      <div class="trade-item">
+        <div class="t-label">目标价区间</div>
+        <div class="t-value" style="color:var(--red);">55 - 66 元</div>
+      </div>
+      <div class="trade-item">
+        <div class="t-label">建议仓位</div>
+        <div class="t-value" style="color:var(--blue);">总资产 10-12%</div>
+      </div>
+      <div class="trade-item">
+        <div class="t-label">凯利公式</div>
+        <div class="t-value">f* = 47.8% → 1/4凯利 = 12%</div>
+      </div>
+      <div class="trade-item">
+        <div class="t-label">止损价</div>
+        <div class="t-value" style="color:var(--green);">37元（跌破52周低点）</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>止损规则</h3>
+  <ul style="padding-left:20px; font-size:0.92em;">
+    <li><strong>逻辑止损</strong>：在手海缆订单降至100亿以下</li>
+    <li><strong>技术止损</strong>：跌破37元（52周低点支撑）</li>
+    <li><strong>时间止损</strong>：6个月内无正收益 + 装机数据持续低于预期</li>
+    <li><strong>绝对止损</strong>：亏损超过15%无条件平仓</li>
+  </ul>
+
+  <h3>止盈规则</h3>
+  <ul style="padding-left:20px; font-size:0.92em;">
+    <li><strong>第一目标</strong>：55元 → 减仓1/3</li>
+    <li><strong>第二目标</strong>：66元 → 清仓</li>
+  </ul>
+
+  <h3>催化剂日历</h3>
+  <div class="catalyst-item"><span class="date">2026年8月中旬</span> — 2026H1中报（关注海缆交付量和毛利率）</div>
+  <div class="catalyst-item"><span class="date">2026年9-10月</span> — 海风项目招标旺季（新订单催化）</div>
+  <div class="catalyst-item"><span class="date">2026年Q3-Q4</span> — 阳江三山岛柔直项目交付（高压业绩验证）</div>
+  <div class="catalyst-item"><span class="date">2026年Q4</span> — 海外新项目中标预期（出海逻辑强化）</div>
+</div>
+
+<!-- 多空论点 -->
+<div class="section">
+  <h2>⚔️ 多空双方核心论点</h2>
+
+  <h3><span class="tag tag-bull">多头</span> 看涨理由</h3>
+  <ol style="padding-left:20px; font-size:0.92em;">
+    <li><strong>订单确定性极强</strong>：在手184-236亿订单，是2025年营收的1.7-2.2倍</li>
+    <li><strong>高端化+出海双轮驱动</strong>：±535kV柔直唯一 + 海外毛利率38.5%</li>
+    <li><strong>量价双击</strong>：装机增长(β) + 高端市占率52%(α)</li>
+  </ol>
+
+  <h3><span class="tag tag-bear">空头</span> 主要风险</h3>
+  <ol style="padding-left:20px; font-size:0.92em;">
+    <li><strong>项目制波动</strong>：季度间业绩波动极大（H1可能miss）</li>
+    <li><strong>机构减仓</strong>：基金持股比例从5.32%降至0.92%</li>
+    <li><strong>β风险</strong>：海风装机低于预期可能阶段性证伪逻辑</li>
+  </ol>
+
+  <h3><span class="tag tag-warn">💡 变异认知</span></h3>
+  <p style="font-size:0.92em;">市场用PE框架给周期成长股定价，但忽略了184亿订单隐含的35-40亿利润（相当于当前市值的10-11%）。当前42元对应2026E PE仅19x，对一个未来3年净利CAGR>25%的护城河龙头，这是被"项目制季度波动恐惧"错杀的价格。</p>
+</div>
+
+<!-- 风险矩阵 -->
+<div class="section">
+  <h2>⚠️ 风险矩阵</h2>
+  <div class="risk-card">
+    <span class="risk-level risk-high">★★★★★ 政策风险</span>：海风补贴退坡/规划调整
+  </div>
+  <div class="risk-card">
+    <span class="risk-level risk-mid">★★★★ 竞争风险</span>：中天/亨通高端产品追赶
+  </div>
+  <div class="risk-card">
+    <span class="risk-level risk-mid">★★★★ 出海风险</span>：地缘政治/欧盟反补贴
+  </div>
+  <div class="risk-card">
+    <span class="risk-level risk-mid">★★★ 原材料风险</span>：铜价大幅上涨
+  </div>
+  <div class="risk-card">
+    <span class="risk-level risk-mid">★★★ 交付风险</span>：项目延期确收
+  </div>
+</div>
+
+<!-- 行为金融自检 -->
+<div class="section">
+  <h2>🧠 行为金融护栏自检</h2>
+  <div class="behavior-check">
+    <strong>确认偏误检查</strong>：如果海缆毛利率连续2季<28%、在手订单降至100亿以下、海外遭遇贸易壁垒 → "我看错了"
+  </div>
+  <div class="behavior-check">
+    <strong>锚定效应检查</strong>：买入区间38-44元基于估值模型（目标价折价20-30%），非"52周低点记忆"
+  </div>
+  <div class="behavior-check">
+    <strong>过度自信检查</strong>：若实际胜率降至40%，仓位应降至5.5%（观察仓）
+  </div>
+  <div class="behavior-check">
+    <strong>近期偏差检查</strong>：近3月-16.9%可能让人"不敢买"，但3-5年维度PE处于合理偏低区域
+  </div>
+</div>
+
+<footer>
+  <p style="color:var(--red);">⚠️ 免责声明</p>
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。<br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。<br>
+  文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function baseOpts(title) {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, font: { size: 12 } } },
+        title: { display: true, text: title, font: { size: 14, weight: '600' }, padding: { bottom: 12 } }
+      }
+    };
+  }
+
+  // Revenue & Net Profit Chart
+  new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2022', '2023', '2024', '2025', '2026Q1'],
+      datasets: [
+        {
+          label: '营业收入（亿元）',
+          data: [70.09, 73.10, 90.93, 108.43, 28.83],
+          backgroundColor: '#1a237e',
+          borderRadius: 6,
+          yAxisID: 'y'
+        },
+        {
+          label: '归母净利（亿元）',
+          data: [8.42, 10.00, 10.08, 12.71, 3.72],
+          backgroundColor: '#dc3545',
+          borderRadius: 6,
+          yAxisID: 'y'
+        },
+        {
+          label: '毛利率 %',
+          data: [22.4, 22.4, 18.8, 22.1, 23.6],
+          borderColor: '#28a745',
+          backgroundColor: 'transparent',
+          borderWidth: 2.5,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#28a745',
+          type: 'line',
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: Object.assign(baseOpts('营收、净利与毛利率趋势'), {
+      scales: {
+        y: { position: 'left', title: { display: true, text: '亿元' }, beginAtZero: false },
+        y1: { position: 'right', title: { display: true, text: '%' }, grid: { display: false }, min: 0, max: 40 }
+      }
+    })
+  });
+
+  // Segment Chart
+  new Chart(document.getElementById('segmentChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['海底电缆与高压电缆', '电力工程与装备线缆', '海洋装备与工程运维'],
+      datasets: [{
+        data: [53.63, 47.29, 7.42],
+        backgroundColor: ['#dc3545', '#6c757d', '#0d6efd'],
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    },
+    options: Object.assign(baseOpts('2025年收入结构（亿元）'), {
+      plugins: {
+        tooltip: { callbacks: { label: function(ctx) { return ctx.label + ': ' + ctx.raw + '亿 (' + ctx.parsed + '%)'; } } }
+      }
+    })
+  });
+
+  // Order Chart
+  new Chart(document.getElementById('orderChart'), {
+    type: 'bar',
+    data: {
+      labels: ['海缆+高压', '电力工程线缆', '海工运维'],
+      datasets: [{
+        label: '在手订单（亿元）',
+        data: [103.89, 43.67, 36.56],
+        backgroundColor: ['#dc3545', '#6c757d', '#0d6efd'],
+        borderRadius: 8
+      }]
+    },
+    options: Object.assign(baseOpts('在手订单结构（截至2026/4/21，总计184.12亿）'), {
+      indexAxis: 'y',
+      scales: { x: { beginAtZero: true, title: { display: true, text: '亿元' } } },
+      plugins: {
+        legend: { display: false }
+      }
+    })
+  });
+
+  // Industry Chart
+  new Chart(document.getElementById('industryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['东方电缆', '中天科技', '亨通光电', '其他'],
+      datasets: [{
+        label: '海缆市占率（%）',
+        data: [33, 36, 18, 13],
+        backgroundColor: ['#dc3545', '#0d6efd', '#28a745', '#adb5bd'],
+        borderRadius: 6
+      }]
+    },
+    options: Object.assign(baseOpts('中国海缆市场格局（CR3 ≈ 87%）'), {
+      scales: { y: { beginAtZero: true, max: 50, title: { display: true, text: '%' } } },
+      plugins: { legend: { display: false } }
+    })
+  });
+
+});
+</script>
+
+</body>
+</html>

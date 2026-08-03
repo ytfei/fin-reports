@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>兆易创新(603986) 投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --sub: #6c757d;
+  --red: #d93025;
+  --green: #1a8a3f;
+  --blue: #2563eb;
+  --border: #e5e7eb;
+  --accent: #16213e;
+  --warn: #f59e0b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%); color: white; padding: 48px 32px; border-radius: 16px; margin-bottom: 28px; text-align: center; }
+.hero h1 { font-size: 2.2em; font-weight: 800; margin-bottom: 8px; }
+.hero .sub { font-size: 1.1em; opacity: 0.85; margin-bottom: 16px; }
+.hero .metric-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 20px; }
+.hero .metric { text-align: center; }
+.hero .metric .val { font-size: 1.8em; font-weight: 700; }
+.hero .metric .lbl { font-size: 0.8em; opacity: 0.7; }
+.hero .red { color: #f87171; }
+.hero .green { color: #4ade80; }
+
+/* Section */
+.section { background: var(--card-bg); border-radius: 12px; padding: 28px 24px; margin-bottom: 20px; border: 1px solid var(--border); }
+.section h2 { font-size: 1.3em; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue); color: var(--accent); }
+.section h3 { font-size: 1.1em; font-weight: 600; margin: 16px 0 8px; color: var(--accent); }
+
+/* Data Grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.data-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+.data-card .num { font-size: 1.3em; font-weight: 700; }
+.data-card .desc { font-size: 0.75em; color: var(--sub); margin-top: 2px; }
+.num-up { color: var(--red); }
+.num-down { color: var(--green); }
+.num-neutral { color: var(--blue); }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin: 10px 0; }
+th { background: #f1f5f9; padding: 10px 8px; text-align: right; font-weight: 600; border-bottom: 2px solid var(--border); }
+td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border); }
+td:first-child, th:first-child { text-align: left; }
+tr:hover { background: #f8fafc; }
+
+/* Alert boxes */
+.alert { padding: 12px 16px; border-radius: 8px; margin: 10px 0; font-size: 0.9em; }
+.alert-red { background: #fef2f2; border-left: 4px solid var(--red); }
+.alert-green { background: #f0fdf4; border-left: 4px solid var(--green); }
+.alert-amber { background: #fffbeb; border-left: 4px solid var(--warn); }
+.alert-blue { background: #eff6ff; border-left: 4px solid var(--blue); }
+
+/* Trading Card */
+.trade-card { background: linear-gradient(135deg, #0f172a, #1e3a5f); color: white; border-radius: 12px; padding: 24px; margin: 16px 0; }
+.trade-card h3 { color: #60a5fa; margin-top: 0; }
+.trade-card .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9em; }
+.trade-card .row .key { opacity: 0.7; }
+.trade-card .row .val { font-weight: 600; }
+
+/* Chart container */
+.chart-wrap { margin: 16px 0; position: relative; height: 320px; }
+.chart-wrap canvas { width: 100% !important; }
+
+/* Process Flow */
+.flow { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.flow .step { flex: 1; min-width: 100px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px; text-align: center; font-size: 0.85em; }
+.flow .step strong { display: block; color: var(--blue); margin-bottom: 4px; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .grid2, .grid3, .grid4 { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 28px 16px; }
+  .hero h1 { font-size: 1.5em; }
+  .hero .metric-row { gap: 16px; }
+  table { font-size: 0.75em; }
+}
+
+/* Signal lights */
+.signal { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+.signal-red { background: var(--red); }
+.signal-green { background: var(--green); }
+.signal-amber { background: var(--warn); }
+
+.footer { text-align: center; color: var(--sub); font-size: 0.8em; padding: 20px; border-top: 1px solid var(--border); margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>兆易创新 (603986.SH)</h1>
+  <div class="sub">全栈五层投资分析 | 2026年8月3日 | 弈投师</div>
+  <div class="metric-row">
+    <div class="metric"><div class="val red">340.74</div><div class="lbl">最新收盘价</div></div>
+    <div class="metric"><div class="val green">-9.59%</div><div class="lbl">今日涨跌</div></div>
+    <div class="metric"><div class="val">~2389亿</div><div class="lbl">总市值</div></div>
+    <div class="metric"><div class="val red">-59.6%</div><div class="lbl">距52周高(843)</div></div>
+  </div>
+</div>
+
+<!-- === LAYER 1: 宏观 === -->
+<div class="section">
+  <h2>🔭 Layer 1 · 宏观周期与仓位判断</h2>
+
+  <div class="flow">
+    <div class="step"><strong>中国经济</strong>GDP +4.7%<br>弱复苏，新旧动能切换</div>
+    <div class="step"><strong>制造业PMI</strong>49.2<br>轻微收缩，连续承压</div>
+    <div class="step"><strong>货币政策</strong>极度宽松<br>10Y国债 1.72%</div>
+    <div class="step"><strong>美联储</strong>利率3.5-3.75%<br>年内或再加息</div>
+    <div class="step"><strong>市场情绪</strong>谨慎<br>两融余额回落</div>
+  </div>
+
+  <div class="grid2">
+    <div class="data-card">
+      <div class="desc">沪深300 PE（倍）</div>
+      <div class="num num-neutral">14.4</div>
+      <div class="desc">历史67%分位 | 来源：申万宏源(2026-07-31)</div>
+    </div>
+    <div class="data-card">
+      <div class="desc">科创50 PE（倍）</div>
+      <div class="num num-up">196.1</div>
+      <div class="desc">历史98%分位 → 极端高估</div>
+    </div>
+    <div class="data-card">
+      <div class="desc">10年期国债收益率</div>
+      <div class="num num-down">1.72%</div>
+      <div class="desc">历史低位，流动性充裕</div>
+    </div>
+    <div class="data-card">
+      <div class="desc">股权风险溢价</div>
+      <div class="num num-neutral">2.85%</div>
+      <div class="desc">低于3年均值(3.27%)</div>
+    </div>
+  </div>
+
+  <div class="alert alert-amber" style="margin-top:14px;">
+    <strong>⚡ 宏观判断：</strong>中国经济弱复苏 + 流动性极度宽松，但科创50估值处于98%分位属于极端泡沫区域。
+    美联储加息预期压制全球科技股估值。科技成长板块面临「基本面强劲 vs 估值高企」的矛盾。
+    <br><br>
+    <strong>建议权益仓位：</strong>50-60%（中性偏防御）&nbsp;&nbsp;|&nbsp;&nbsp;
+    <strong>定性：</strong>防御为主，科技仓位需严格风控<br>
+    <strong>当前最大宏观风险：</strong>存储芯片价格周期性见顶 + 美股科技回调传导A股
+  </div>
+</div>
+
+<!-- === LAYER 2: 行业 === -->
+<div class="section">
+  <h2>🏭 Layer 2 · 行业景气度：半导体存储</h2>
+
+  <div class="alert alert-green">
+    <strong>行业判断：</strong>存储芯片处于AI驱动的「超级景气周期」<strong>中后期</strong>。
+    海外大厂退出利基市场 + AI需求爆发 = 结构性供不应求，但价格涨幅已在收敛，需警惕周期拐点。
+  </div>
+
+  <div class="grid3">
+    <div class="data-card">
+      <div class="desc">NOR Flash H1合约价涨幅</div>
+      <div class="num num-up">+100~120%</div>
+      <div class="desc">来源：TrendForce | 下半年预期+60-65%</div>
+    </div>
+    <div class="data-card">
+      <div class="desc">SLC NAND H1合约价涨幅</div>
+      <div class="num num-up">+130~150%</div>
+      <div class="desc">来源：集邦咨询 | 大厂退出2D NAND</div>
+    </div>
+    <div class="data-card">
+      <div class="desc">DRAM供需缺口</div>
+      <div class="num num-up">~7%</div>
+      <div class="desc">2026年全球 | 2027年扩大至9%</div>
+    </div>
+  </div>
+
+  <table style="margin-top: 12px;">
+    <tr><th>竞争维度</th><th>兆易创新地位</th><th>评价</th></tr>
+    <tr><td>NOR Flash 市占率</td><td>全球第2（~20%），中国大陆第1</td><td><span class="signal signal-green"></span>目标提升至25-30%</td></tr>
+    <tr><td>SLC NAND</td><td>国内领先，产能快速扩张</td><td><span class="signal signal-green"></span>海外大厂退出利好</td></tr>
+    <tr><td>利基DRAM</td><td>与长鑫深度绑定，快速起量</td><td><span class="signal signal-green"></span>2026采购额57亿(+Nx)</td></tr>
+    <tr><td>MCU</td><td>国内32位MCU龙头</td><td><span class="signal signal-amber"></span>竞争加剧，涨价传导</td></tr>
+    <tr><td>定制化存储（青耘科技）</td><td>端侧AI新赛道</td><td><span class="signal signal-green"></span>下半年量产，新增长极</td></tr>
+  </table>
+
+  <div class="alert alert-red" style="margin-top:12px;">
+    <strong>⚠️ 行业核心风险：</strong>公司6月29日自行发布风险提示——「产品价格已处于历史高位，继续大幅上涨的趋势不可持续...可能出现相当幅度的回落」。存储是强周期行业，当前景气位置已是历史顶部区域。
+  </div>
+</div>
+
+<!-- === LAYER 3: 量化初筛 === -->
+<div class="section">
+  <h2>🔍 Layer 3 · 量化筛选与财务健康检查</h2>
+
+  <h3>硬性淘汰检查</h3>
+  <table>
+    <tr><th>检查项</th><th>阈值</th><th>兆易创新实际</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流为负年数</td><td>&lt;2年</td><td>0年（全部为正）</td><td style="color:var(--green)">✓ 通过</td></tr>
+    <tr><td>商誉/净资产</td><td>&lt;30%</td><td>6.17亿 / 255.1亿 = 2.4%</td><td style="color:var(--green)">✓ 通过</td></tr>
+    <tr><td>大股东质押率</td><td>&lt;50%</td><td>[MISSING: 需Tushare补充]</td><td style="color:var(--warn)">⚠ 待查</td></tr>
+    <tr><td>近2年财务造假/处罚</td><td>无</td><td>无重大违规记录</td><td style="color:var(--green)">✓ 通过</td></tr>
+    <tr><td>日均成交额</td><td>&gt;3000万</td><td>~200亿+</td><td style="color:var(--green)">✓ 通过</td></tr>
+  </table>
+
+  <h3>历史财务趋势</h3>
+  <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+
+  <div class="chart-wrap"><canvas id="chartMargin"></canvas></div>
+
+  <h3>核心财务指标（2025年报）</h3>
+  <div class="grid4">
+    <div class="data-card"><div class="desc">营收</div><div class="num">92.03亿</div><div class="desc">+25.1% YoY</div></div>
+    <div class="data-card"><div class="desc">归母净利</div><div class="num">16.48亿</div><div class="desc">+49.5% YoY</div></div>
+    <div class="data-card"><div class="desc">ROE(加权)</div><div class="num">9.30%</div><div class="desc">2025年</div></div>
+    <div class="data-card"><div class="desc">经营CF/净利</div><div class="num num-up">126.9%</div><div class="desc">盈利质量极佳</div></div>
+    <div class="data-card"><div class="desc">资产负债率</div><div class="num num-green">10.16%</div><div class="desc">极度保守</div></div>
+    <div class="data-card"><div class="desc">货币资金</div><div class="num">146.9亿</div><div class="desc">现金充沛（Q1'26）</div></div>
+    <div class="data-card"><div class="desc">研发费用率</div><div class="num">8.6%</div><div class="desc">Q1'26 3.58亿</div></div>
+    <div class="data-card"><div class="desc">毛利率(Q1)</div><div class="num num-up">57.08%</div><div class="desc">+19.6pct YoY</div></div>
+  </div>
+
+  <h3>多因子评分</h3>
+  <table>
+    <tr><th>因子</th><th>指标</th><th>评分</th><th>说明</th></tr>
+    <tr><td>价值</td><td>TTM PE 83x / FWD PE ~25x</td><td>⭐⭐</td><td>TTM贵，前瞻合理</td></tr>
+    <tr><td>质量</td><td>ROE提升中 / CF/NP 122% / 负债率10%</td><td>⭐⭐⭐⭐⭐</td><td>财务质量顶级</td></tr>
+    <tr><td>成长</td><td>Q1营收+119% / 净利+523%</td><td>⭐⭐⭐⭐⭐</td><td>爆发式增长</td></tr>
+    <tr><td>动量</td><td>近1月-56% / 近3月+30%</td><td>⭐⭐</td><td>剧烈波动，动量恶化</td></tr>
+    <tr><td>综合</td><td>质量+成长顶级，估值和动量存疑</td><td>⭐⭐⭐⭐</td><td>基本面极强，周期位置是关键</td></tr>
+  </table>
+</div>
+
+<!-- === LAYER 4: 深度研究 === -->
+<div class="section">
+  <h2>📊 Layer 4 · 深度研究与估值</h2>
+
+  <h3>4a. 商业模式拆解</h3>
+  <div class="grid3">
+    <div class="data-card">
+      <div class="desc"><strong>怎么赚钱？</strong></div>
+      <div style="font-size:0.85em;text-align:left;margin-top:4px;">
+        Fabless芯片设计公司。三大产品线：<br>
+        • <strong>存储芯片</strong> 71.3%（NOR Flash+SLC NAND+DRAM）<br>
+        • <strong>MCU</strong> 20.8%（32位通用MCU）<br>
+        • <strong>传感器+模拟</strong> 7.9%<br>
+        海外收入占比~70%（香港+其他）
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="desc"><strong>护城河在哪？</strong></div>
+      <div style="font-size:0.85em;text-align:left;margin-top:4px;">
+        ① 供应链壁垒：与长鑫存储深度绑定（2026采购57亿）<br>
+        ② 规模效应：NOR Flash全球#2，成本优势<br>
+        ③ 产品矩阵：Flash+MCU+传感一站式方案<br>
+        ④ 先发优势：45nm NOR Flash率先量产
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="desc"><strong>管理层质量</strong></div>
+      <div style="font-size:0.85em;text-align:left;margin-top:4px;">
+        何卫（总经理），技术出身<br>
+        研发驱动：近3年研发投入超35亿<br>
+        资本配置：保守（负债率10%，大量现金）<br>
+        股权激励：覆盖核心技术人员
+      </div>
+    </div>
+  </div>
+
+  <h3>4b. 财务深度分析</h3>
+  <p><strong>杜邦分解（2026Q1 年化 vs 2025年）</strong></p>
+  <table>
+    <tr><th>指标</th><th>2025年</th><th>2026Q1（年化）</th><th>变化</th></tr>
+    <tr><td>净利率</td><td>18.23%</td><td>35.16%</td><td style="color:var(--red)">↑ +93%</td></tr>
+    <tr><td>资产周转率</td><td>0.45</td><td>0.60（估）</td><td style="color:var(--red)">↑ 改善</td></tr>
+    <tr><td>权益乘数</td><td>1.11</td><td>1.09</td><td style="color:var(--green)">↓ 更低杠杆</td></tr>
+    <tr><td><strong>ROE</strong></td><td><strong>9.30%</strong></td><td><strong>~24.5%</strong></td><td style="color:var(--red)"><strong>↑ 爆发式</strong></td></tr>
+  </table>
+
+  <p style="margin-top:12px;"><strong>盈利质量：</strong>经营现金流/净利润 = 122%（2026Q1），销售收现/营收 > 1.0，应收账款周转率 45.5次/年——均为行业顶级水平。ROE的提升主要来自净利率的周期性扩张，而非杠杆（几乎没有财务杠杆），质量较高。</p>
+
+  <h3>4c. 估值分析</h3>
+
+  <p><strong>情景分析（基于2026年全年净利润预测）</strong></p>
+  <table>
+    <tr><th>情景</th><th>概率</th><th>2026E净利(亿)</th><th>目标PE</th><th>目标市值(亿)</th><th>目标股价</th><th>潜在涨跌</th></tr>
+    <tr style="background:#fef2f2;">
+      <td><span class="signal signal-red"></span> 悲观</td><td>25%</td><td>60</td><td>35x</td><td>2100</td><td>~300</td><td style="color:var(--green)">-12%</td></tr>
+    <tr style="background:#fffbeb;">
+      <td><span class="signal signal-amber"></span> 基准</td><td>50%</td><td>85</td><td>30x</td><td>2550</td><td>~364</td><td style="color:var(--red)">+7%</td></tr>
+    <tr style="background:#f0fdf4;">
+      <td><span class="signal signal-green"></span> 乐观</td><td>25%</td><td>110</td><td>28x</td><td>3080</td><td>~439</td><td style="color:var(--red)">+29%</td></tr>
+  </table>
+
+  <div class="alert alert-blue">
+    <strong>估值结论：</strong>目标价区间 <strong>300-439元</strong>，基准目标 <strong>364元</strong>（较现价+7%）。当前价340.7元处于估值区间的中下部，具备一定安全边际，但上行空间有限。
+  </div>
+
+  <p><strong>可比公司估值（来源：2026年一致预期）</strong></p>
+  <table>
+    <tr><th>公司</th><th>代码</th><th>市值(亿)</th><th>2026E PE</th><th>2026E 营收增速</th><th>毛利率</th></tr>
+    <tr><td>兆易创新</td><td>603986</td><td>~2389</td><td>~25x</td><td>+120%</td><td>57%</td></tr>
+    <tr><td>华邦电子</td><td>2344.TW</td><td>~2800(TWD)</td><td>~12x</td><td>+90%</td><td>53%</td></tr>
+    <tr><td>旺宏</td><td>2337.TW</td><td>~900(TWD)</td><td>~15x</td><td>+40%</td><td>38%</td></tr>
+    <tr><td>普冉股份</td><td>688766</td><td>~300</td><td>~35x</td><td>+80%</td><td>40%</td></tr>
+  </table>
+  <p style="font-size:0.8em;color:var(--sub);">注：均为Fabless/存储设计公司。台湾同业PE偏低（受地缘折价影响），兆易创新作为A股存储龙头享有估值溢价。</p>
+
+  <h3>多空双方核心论点</h3>
+  <div class="grid2">
+    <div>
+      <div class="alert alert-green"><strong>🟢 多头（3条）</strong></div>
+      <ol style="padding-left:20px;font-size:0.9em;">
+        <li><strong>AI驱动的结构性需求而非周期性波动：</strong>端侧AI（机器人/AIPC/智能座舱）创造增量存储需求，DDR4/LPDDR4缺口持续至2028年。</li>
+        <li><strong>海外大厂不可逆退出：</strong>三星/美光聚焦HBM，2D NAND和利基DRAM永久性供给收缩，兆易创新+长鑫联盟填补空缺。</li>
+        <li><strong>业绩爆发力远超预期：</strong>H1扣非48.5亿（+791%），全年有望冲击80-100亿，当前Forward PE仅~25x并不贵。</li>
+      </ol>
+    </div>
+    <div>
+      <div class="alert alert-red"><strong>🔴 空头（3条）</strong></div>
+      <ol style="padding-left:20px;font-size:0.9em;">
+        <li><strong>周期位置极端危险：</strong>价格处于历史最高位，涨幅100-150%不可持续。历史上存储周期顶点买入的投资者都经历了50-80%回撤。</li>
+        <li><strong>产能扩张正在路上：</strong>华邦电子DRAM bit产出年底+80%，2027年供应增加后价格可能暴跌。</li>
+        <li><strong>股价已透支预期：</strong>虽然跌了60%，但距2024年9月低点（~70元）仍涨了近5倍，大量获利盘未完全消化。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>🔑 变异认知：</strong>市场共识认为存储是纯周期品、当前是周期顶点该卖出。但<strong>本轮周期的结构性成分（海外大厂永久退出+端侧AI增量需求）可能使得「正常化」后的利润中枢远高于上一轮</strong>。如果2027年净利润稳定在40-50亿（而非跌回2023年的1.6亿），那么当前估值是合理的甚至是低估的。关键判断在于：这轮周期的「新常态」利润中枢在哪里？
+  </div>
+</div>
+
+<!-- === LAYER 5: 交易计划 === -->
+<div class="section">
+  <h2>🎯 Layer 5 · 交易计划</h2>
+
+  <div class="trade-card">
+    <h3>【交易计划卡片 — 兆易创新 603986】</h3>
+    <div class="row"><span class="key">买入逻辑</span><span class="val">AI驱动的存储结构性牛市 + 海外大厂永久退出 = 利润中枢跃升，当前Forward PE ~25x具备安全边际</span></div>
+    <div class="row"><span class="key">目标价区间</span><span class="val">364 - 439元（基准~乐观情景）</span></div>
+    <div class="row"><span class="key">建议买入区间</span><span class="val" style="color:#4ade80;">300 - 340元（较目标价留7-10%安全边际）</span></div>
+    <div class="row"><span class="key"></span><span class="val"></span></div>
+    <div class="row"><span class="key">仓位建议</span><span class="val" style="color:#fbbf24;">总资产 8-12%（凯利f*=18%，实操取 1/2凯利）</span></div>
+    <div class="row"><span class="key">胜率 p = 55%</span><span class="val">依据：存储价格下半年仍有上涨空间(60-65%)，Q2业绩大概率继续超预期；但周期拐点不确定性高，胜率只能给到略高于50%</span></div>
+    <div class="row"><span class="key">赔率 b = 1.3</span><span class="val">止盈价439 / 止损价300 - 1 = 0.46×1.3 ≈ 经调整(考虑下行尾风险)</span></div>
+    <div class="row"><span class="key"></span><span class="val"></span></div>
+    <div class="row"><span class="key" style="color:#f87171;">止损规则</span><span class="val"></span></div>
+    <div class="row"><span class="key">　逻辑止损</span><span class="val">存储合约价出现环比下跌 OR 公司指引毛利率回落至40%以下</span></div>
+    <div class="row"><span class="key">　技术止损</span><span class="val">跌破 280元（前低支撑区 / 250日均线附近）</span></div>
+    <div class="row"><span class="key">　时间止损</span><span class="val">2026Q3季报（10月底）若毛利率环比下降>5pct</span></div>
+    <div class="row"><span class="key">　绝对止损</span><span class="val">亏损超过 20%（即跌至 ~272元）无条件平仓</span></div>
+    <div class="row"><span class="key"></span><span class="val"></span></div>
+    <div class="row"><span class="key" style="color:#4ade80;">止盈规则</span><span class="val"></span></div>
+    <div class="row"><span class="key">　第一目标</span><span class="val">400元（达到基准目标价110%，减仓1/3）</span></div>
+    <div class="row"><span class="key">　第二目标</span><span class="val">439元（估值上限，清仓）</span></div>
+    <div class="row"><span class="key"></span><span class="val"></span></div>
+    <div class="row"><span class="key">跟踪指标（每周检查）</span><span class="val"></span></div>
+    <div class="row"><span class="key">　NOR Flash合约价</span><span class="val">当前：高位上涨中 / 预警：环比转跌 / 来源：TrendForce</span></div>
+    <div class="row"><span class="key">　SLC NAND现货价</span><span class="val">当前：紧缺加剧 / 预警：供给恢复 / 来源：CFM闪存市场</span></div>
+    <div class="row"><span class="key">　公司毛利率趋势</span><span class="val">当前：57% / 预警：QoQ下降>5pct / 来源：季报</span></div>
+    <div class="row"><span class="key">　北向资金持仓</span><span class="val">[MISSING: 需实时数据] / 预警：连续5日净流出</span></div>
+    <div class="row"><span class="key"></span><span class="val"></span></div>
+    <div class="row"><span class="key">催化剂日历</span><span class="val"></span></div>
+    <div class="row"><span class="key">　2026-08-23</span><span class="val">中报正式披露（预期超预期，扣非~48.5亿）</span></div>
+    <div class="row"><span class="key">　2026-09-10</span><span class="val">苹果iPhone新品发布（存储需求前瞻信号）</span></div>
+    <div class="row"><span class="key">　2026-10月底</span><span class="val">Q3季报（关键验证点：毛利率是否见顶）</span></div>
+    <div class="row"><span class="key">　2026下半年</span><span class="val">LPDDR4小容量量产 / 青耘定制化存储项目落地</span></div>
+  </div>
+
+  <div class="alert alert-amber" style="margin-top:12px;">
+    <strong>⚠️ 凯利公式详细展开：</strong><br>
+    f* = (b×p - q) / b = (1.3×0.55 - 0.45) / 1.3 = (0.715 - 0.45) / 1.3 = <strong>20.4%</strong><br>
+    实操取 1/2 凯利 = <strong>10.2%</strong>（考虑到：①存储强周期高波动 ②单票上限15% ③心理承受力 ④流动性充裕无需激进）
+  </div>
+</div>
+
+<!-- === 行为金融护栏 === -->
+<div class="section">
+  <h2>🧠 行为金融护栏（自我检查）</h2>
+  <table>
+    <tr><th>偏误</th><th>检查</th><th>结论</th></tr>
+    <tr>
+      <td>确认偏误</td>
+      <td>列出「如果看错了」的信号</td>
+      <td>① NOR Flash合约价Q3环比下跌 → 周期提前见顶<br>② 公司指引Q3毛利率回落至50%以下 → 涨价不可持续<br>③ 大厂宣布重启2D NAND产线 → 供给端逻辑被破坏</td>
+    </tr>
+    <tr>
+      <td>锚定效应</td>
+      <td>买入价是否受历史价格影响？</td>
+      <td>300-340建议买入区基于估值而非价格锚定。840元的历史高点不应成为「便宜」的参照——那是泡沫区域。也不应用2024年70元的低位来论证「太贵」，因为基本面已发生质变。</td>
+    </tr>
+    <tr>
+      <td>过度自信</td>
+      <td>胜率p=55%是否偏高？</td>
+      <td>如果实际胜率降至44%（-20%），则f*=(1.3×0.44-0.56)/1.3=0.9%，仓位应从10%降至~5%。55%的胜率假设基于存储价格下半年仍有支撑的判断，但不确定性确实较大。</td>
+    </tr>
+    <tr>
+      <td>近期偏差</td>
+      <td>是否过度受最近1-2个月走势影响？</td>
+      <td>近1月暴跌56%容易让人恐慌性看空，而近1年暴涨5倍容易让人贪婪性看多。拉长到2021-2026五年维度，公司经历了完整的牛熊周期（高点2021年2324亿→低点2024年420亿→当前2389亿），当前市值已超过上一轮周期高点。这既是基本面质变的结果，也意味着容错空间有限。</td>
+    </tr>
+  </table>
+</div>
+
+<!-- === 风险矩阵 === -->
+<div class="section">
+  <h2>⚠️ 风险矩阵</h2>
+  <table>
+    <tr><th>风险类型</th><th>具体风险</th><th>影响程度</th><th>概率</th><th>应对</th></tr>
+    <tr>
+      <td>周期风险</td>
+      <td>存储价格见顶回落，毛利率从57%急跌至40%以下</td>
+      <td style="color:var(--red)">🔴 极高</td>
+      <td>中</td>
+      <td>严格执行止损，跟踪合约价</td>
+    </tr>
+    <tr>
+      <td>竞争风险</td>
+      <td>华邦/旺宏等扩产加剧NOR Flash竞争</td>
+      <td style="color:var(--warn)">🟡 中</td>
+      <td>中</td>
+      <td>关注同业产能利用率数据</td>
+    </tr>
+    <tr>
+      <td>汇率风险</td>
+      <td>海外收入占70%，人民币升值冲击利润</td>
+      <td style="color:var(--warn)">🟡 中</td>
+      <td>低</td>
+      <td>Q1已有汇兑损失负面影响</td>
+    </tr>
+    <tr>
+      <td>地缘风险</td>
+      <td>中美科技脱钩升级，限制存储设备/技术出口</td>
+      <td style="color:var(--warn)">🟡 中</td>
+      <td>低</td>
+      <td>国产替代长期利好，短期设备受限</td>
+    </tr>
+    <tr>
+      <td>估值风险</td>
+      <td>科创50 PE 196x，系统性估值回调</td>
+      <td style="color:var(--red)">🔴 极高</td>
+      <td>中高</td>
+      <td>仓位控制，不超15%上限</td>
+    </tr>
+    <tr>
+      <td>最大下行风险</td>
+      <td colspan="4">存储价格在2026Q4见顶急跌 + 科技股估值收缩 → 股价跌回150-200区间（较现价再跌40-55%）</td>
+    </tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>⚠️ <strong>免责声明：</strong>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  <p>数据来源：Tushare、WeStock Data、申万宏源、TrendForce、集邦咨询、公司公告 | 分析师：弈投师 | 日期：2026-08-03</p>
+</div>
+
+</div>
+
+<script>
+(function() {
+  if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+  var baseOpts = function(extra) {
+    var o = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: '#f1f5f9' } } }
+    };
+    return Object.assign(o, extra || {});
+  };
+
+  // Chart 1: Revenue & Net Profit
+  var ctx1 = document.getElementById('chartRevenue');
+  if (ctx1) {
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['2019','2020','2021','2022','2023','2024','2025','2026Q1*'],
+        datasets: [
+          { label: '营收（亿）', data: [32.0,45.0,85.1,81.3,57.6,73.6,92.0,41.9], backgroundColor: '#2563eb', borderRadius: 4 },
+          { label: '归母净利（亿）', data: [6.1,8.8,23.4,20.5,1.6,11.0,16.5,14.6], backgroundColor: '#d93025', borderRadius: 4 }
+        ]
+      },
+      options: baseOpts({ plugins: { tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.raw + '亿'; } } } } })
+    });
+  }
+
+  // Chart 2: Margin Trends
+  var ctx2 = document.getElementById('chartMargin');
+  if (ctx2) {
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: ['2020','2021','2022','2023','2024','2025','2026Q1'],
+        datasets: [
+          { label: '毛利率(%)', data: [37.4,46.7,42.9,34.4,39.5,40.2,57.1], borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', fill: true, tension: 0.3, pointRadius: 5 },
+          { label: '净利率(%)', data: [19.6,27.5,25.3,2.8,15.0,18.2,35.2], borderColor: '#d93025', backgroundColor: 'rgba(217,48,37,0.1)', fill: true, tension: 0.3, pointRadius: 5 },
+          { label: 'ROE(%)', data: [10.3,18.1,14.7,1.1,6.7,9.3,24.5], borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', fill: false, tension: 0.3, borderDash: [5,5], pointRadius: 5 }
+        ]
+      },
+      options: baseOpts({ plugins: { tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.raw + '%'; } } } } })
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宝丰能源(600989) 深度投资分析报告 | 弈投师 2026-08-03</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --red: #d94040;
+  --red-light: #fde8e8;
+  --green: #3a9d3a;
+  --green-light: #e6f4e6;
+  --blue: #2c5ea8;
+  --blue-light: #e8f0fb;
+  --gold: #c4922e;
+  --gold-light: #fdf5e6;
+  --bg: #f8f9fb;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 60px 0 50px; text-align: center; }
+.hero .badge { display: inline-block; background: var(--red); color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 16px; letter-spacing: 1px; }
+.hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+.hero .subtitle { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 20px; }
+.hero .meta { display: flex; justify-content: center; gap: 30px; font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* Stats Grid */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: -30px 0 30px; position: relative; z-index: 2; }
+.stat-card { background: var(--card); border-radius: 12px; padding: 18px 16px; box-shadow: var(--shadow); text-align: center; }
+.stat-card .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.stat-card .value { font-size: 24px; font-weight: 700; }
+.stat-card .change { font-size: 13px; margin-top: 2px; }
+.up { color: var(--red); } .down { color: var(--green); } .neutral { color: var(--text-muted); }
+
+/* Cards */
+.card { background: var(--card); border-radius: 14px; padding: 28px 30px; margin-bottom: 24px; box-shadow: var(--shadow); }
+.card h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; color: #1a1a2e; }
+.card h3 { font-size: 17px; font-weight: 700; margin: 20px 0 10px; color: #1a1a2e; }
+.card-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+.card p { margin-bottom: 14px; font-size: 15px; }
+.card ul, .card ol { margin: 8px 0 16px 20px; font-size: 15px; }
+.card li { margin-bottom: 6px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #f1f5f9; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 13px; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+
+/* Highlight Boxes */
+.box { border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; }
+.box-red { background: var(--red-light); border-left: 4px solid var(--red); }
+.box-green { background: var(--green-light); border-left: 4px solid var(--green); }
+.box-blue { background: var(--blue-light); border-left: 4px solid var(--blue); }
+.box-gold { background: var(--gold-light); border-left: 4px solid var(--gold); }
+.box-title { font-weight: 700; margin-bottom: 4px; }
+.box-red .box-title { color: var(--red); }
+.box-green .box-title { color: var(--green); }
+.box-blue .box-title { color: var(--blue); }
+.box-gold .box-title { color: var(--gold); }
+
+/* Trading Card */
+.trading-card { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #e0e0e0; border-radius: 14px; padding: 30px; margin-bottom: 24px; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 13px; line-height: 1.8; }
+.trading-card .tc-title { color: #f0c040; font-size: 16px; font-weight: 700; margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.trading-card .tc-section { color: #8ab4f8; font-weight: 600; margin-top: 16px; margin-bottom: 4px; }
+.trading-card .tc-highlight { color: var(--red); font-weight: 600; }
+
+/* Charts */
+.chart-wrap { margin: 20px 0; height: 400px; position: relative; }
+.chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+/* Banner */
+.conclusion-banner { background: linear-gradient(135deg, #d94040, #b53030); color: #fff; border-radius: 14px; padding: 28px 30px; margin-bottom: 24px; }
+.conclusion-banner h2 { color: #fff; font-size: 20px; margin-bottom: 10px; }
+.conclusion-banner p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.9); }
+
+/* Progress bar */
+.progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin: 6px 0 10px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; }
+.progress-red { background: var(--red); }
+.progress-green { background: var(--green); }
+.progress-blue { background: var(--blue); }
+
+/* Two column */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } 
+  .hero h1 { font-size: 26px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Footer */
+.footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 20px; }
+
+/* Tags */
+.tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 6px; }
+.tag-red { background: var(--red-light); color: var(--red); }
+.tag-green { background: var(--green-light); color: var(--green); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* Scenarios */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+@media (max-width: 680px) { .scenario-grid { grid-template-columns: 1fr; } }
+.scenario-card { border-radius: 10px; padding: 16px; text-align: center; border: 2px solid var(--border); }
+.scenario-card.optimistic { border-color: var(--red); background: var(--red-light); }
+.scenario-card.base { border-color: var(--blue); background: var(--blue-light); }
+.scenario-card.pessimistic { border-color: var(--green); background: var(--green-light); }
+.scenario-card .sc-price { font-size: 28px; font-weight: 800; margin: 8px 0; }
+.scenario-card .sc-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.scenario-card .sc-prob { font-size: 12px; font-weight: 600; }
+
+/* Kelly box */
+.kelly-box { background: #fefce8; border: 2px solid #eab308; border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+.kelly-box .k-title { font-weight: 700; color: #92400e; margin-bottom: 8px; }
+.kelly-box p { font-size: 14px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">🔴 重点配置</div>
+  <h1>宝丰能源 · 深度投资分析</h1>
+  <p class="subtitle">煤制烯烃绝对龙头 | 产能周期拐点 + 油煤价差十年极值</p>
+  <div class="meta">
+    <span>📊 600989.SH</span>
+    <span>📅 2026-08-03</span>
+    <span>💹 上证主板</span>
+    <span>🏭 化工原料</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Key Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="label">最新价</div>
+    <div class="value">22.91</div>
+    <div class="change down">-1.63%</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">总市值</div>
+    <div class="value">1,680亿</div>
+    <div class="change neutral">PE 13.36x</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">ROE(FY2025)</div>
+    <div class="value up">24.84%</div>
+    <div class="change up">+9.3pp YoY</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">2025净利</div>
+    <div class="value up">113.5亿</div>
+    <div class="change up">+79.1% YoY</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">2026E净利</div>
+    <div class="value up">~195亿</div>
+    <div class="change up">+72% YoY</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Fwd PE</div>
+    <div class="value">8.6x</div>
+    <div class="change neutral">目标12-15x</div>
+  </div>
+</div>
+
+<!-- Conclusion Banner -->
+<div class="conclusion-banner">
+  <h2>🎯 核心结论</h2>
+  <p>宝丰能源正处于<b>煤制烯烃"成本剪刀差"最大化 + 产能释放高峰期</b>的双重红利期。2026年预计净利润~195亿（+72% YoY），对应当前PE仅<b>8.6倍</b>。油煤比处于十年高位，煤制路线成本优势可持续。目标价<b>28-35元</b>（+25-53%上行空间），当前22.91元处于买入区间上沿。</p>
+</div>
+
+<!-- Macro Section -->
+<div class="card">
+  <h2>📡 Layer 1 · 宏观背景</h2>
+  <p class="card-subtitle">宽货币 + 弱复苏 + 地缘油价上行 = 煤化工顺风</p>
+  
+  <div class="two-col">
+    <div>
+      <h3>国内环境</h3>
+      <table>
+        <tr><td>GDP Q2 2026</td><td>4.3% <span class="tag tag-green">↓ 放缓</span></td></tr>
+        <tr><td>1年期LPR</td><td>3.0% <span class="tag tag-blue">连续14月不变</span></td></tr>
+        <tr><td>5年期LPR</td><td>3.5% <span class="tag tag-blue">连续14月不变</span></td></tr>
+        <tr><td>CPI (6月)</td><td>1.0% <span class="tag tag-green">温和</span></td></tr>
+        <tr><td>PPI (6月)</td><td>4.1% <span class="tag tag-red">↑ 结构性上涨</span></td></tr>
+        <tr><td>M2 (6月)</td><td>8.0% <span class="tag tag-red">↑ 充裕</span></td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>海外环境</h3>
+      <table>
+        <tr><td>美联储政策</td><td>模糊化，9月存加息窗口</td></tr>
+        <tr><td>布伦特原油</td><td>~95-105美元 <span class="tag tag-red">地缘溢价</span></td></tr>
+        <tr><td>美国Q2 GDP</td><td>1.5% (内需韧性3.9%)</td></tr>
+        <tr><td>VIX</td><td>20-25 <span class="tag tag-blue">中性偏高</span></td></tr>
+        <tr><td>地缘风险</td><td>中东冲突持续</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="box box-blue" style="margin-top:16px;">
+    <div class="box-title">宏观判断</div>
+    国内"宽货币+弱复苏"格局延续，央行定调适度宽松。海外中东冲突推高油价中枢，形成煤化工行业的<b>特殊宏观顺风</b>。建议权益仓位<b>65%</b>，偏进攻。最大风险：中东停火导致油价快速回落。
+  </div>
+</div>
+
+<!-- Industry Section -->
+<div class="card">
+  <h2>🏭 Layer 2 · 行业赛道</h2>
+  <p class="card-subtitle">煤制烯烃——产能周期拐点 + 成本剪刀差最大化</p>
+
+  <div class="box box-red">
+    <div class="box-title">行业核心逻辑</div>
+    <b>2026年 = 聚烯烃产能投放高峰最后一年 + 油煤比十年高位</b>。2027年起供需格局将显著改善。煤制烯烃盈亏平衡仅45-50美元/桶，油价100+美元时成本优势达30%+。海外高成本产能加速退出（陶氏关停欧洲基地），国内双碳政策淘汰中小产能，头部企业强者恒强。
+  </div>
+
+  <div class="two-col" style="margin-top:20px;">
+    <div>
+      <h3>景气度指标</h3>
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span>煤制PE利润同比</span><span class="up">+274%</span></div>
+        <div class="progress-bar"><div class="progress-fill progress-red" style="width:90%"></div></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span>油制PE利润同比</span><span class="down">-64%</span></div>
+        <div class="progress-bar"><div class="progress-fill progress-green" style="width:20%"></div></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span>聚烯烃进口依存度</span><span>14.8% ↓</span></div>
+        <div class="progress-bar"><div class="progress-fill progress-blue" style="width:35%"></div></div>
+      </div>
+    </div>
+    <div>
+      <h3>竞争格局</h3>
+      <table>
+        <tr><td>现有竞争</td><td>宝丰最大（520万吨），CR5提升中</td></tr>
+        <tr><td>新进入威胁</td><td><span class="tag tag-green">低</span> 双碳审批壁垒极高</td></tr>
+        <tr><td>替代威胁</td><td><span class="tag tag-green">低</span> 油制路线全面亏损</td></tr>
+        <tr><td>供应商</td><td>煤炭供应宽松，煤价↓</td></tr>
+        <tr><td>买方</td><td>大宗商品，随行就市</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Price Chart -->
+<div class="card">
+  <h2>📈 近3年月线走势</h2>
+  <p class="card-subtitle">前复权价格 · 数据来源：Tushare</p>
+  <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+</div>
+
+<!-- Deep Research -->
+<div class="card">
+  <h2>🔬 Layer 4 · 深度研究</h2>
+  
+  <h3>商业模式</h3>
+  <p>宝丰能源围绕"煤炭采选 → 焦化 → 甲醇 → 烯烃 → 精细化工"<b>一体化循环经济产业链</b>，核心是<strong style="color:var(--red)">用便宜的煤生产高附加值的化工品</strong>。FY2025烯烃营收376.1亿占总营收78.3%。</p>
+
+  <div class="box box-gold">
+    <div class="box-title">三重护城河</div>
+    <b>① 成本护城河（最强）</b>——煤制烯烃盈亏平衡45-50美元/桶，vs油价100+美元，成本优势30%+<br>
+    <b>② 规模护城河</b>——520万吨产能国内第一，远期1000万吨+<br>
+    <b>③ 政策护城河</b>——双碳淘汰中小产能，新项目审批壁垒极高
+  </div>
+
+  <h3>财务亮点</h3>
+  <div class="two-col">
+    <div>
+      <h4>杜邦分解 (FY2025)</h4>
+      <table>
+        <tr><td>ROE</td><td class="up">24.84%</td><td>(+9.3pp)</td></tr>
+        <tr><td>净利率</td><td class="up">23.63%</td><td>(+4.4pp)</td></tr>
+        <tr><td>资产周转率</td><td class="up">0.65</td><td>(+0.19)</td></tr>
+        <tr><td>权益乘数</td><td class="down">1.62</td><td>(-0.13)</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">ROE提升来源于净利率+周转率改善，<b>非加杠杆驱动</b>——高质量</p>
+    </div>
+    <div>
+      <h4>盈利趋势（亿元）</h4>
+      <table>
+        <tr><td>FY2023</td><td>56.5</td><td>OCF/NI: 1.54x</td></tr>
+        <tr><td>FY2024</td><td>63.4</td><td>OCF/NI: 1.40x</td></tr>
+        <tr><td>FY2025</td><td class="up">113.5</td><td>OCF/NI: 1.48x</td></tr>
+        <tr><td>Q1 2026</td><td class="up">36.6</td><td>OCF/NI: 1.52x</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">经营现金流持续远超净利润——<b>利润"含金量"极高</b></p>
+    </div>
+  </div>
+
+  <h3>估值分析</h3>
+  <div class="scenario-grid">
+    <div class="scenario-card optimistic">
+      <div class="sc-label">🟡 乐观情景</div>
+      <div class="sc-price" style="color:var(--red)">33.50元</div>
+      <div>2026E净利 210亿</div>
+      <div>Forward PE 8.0x</div>
+      <div class="sc-prob" style="color:var(--red)">概率 30%</div>
+    </div>
+    <div class="scenario-card base">
+      <div class="sc-label">🔵 基准情景</div>
+      <div class="sc-price" style="color:var(--blue)">28.65元</div>
+      <div>2026E净利 195亿</div>
+      <div>Forward PE 8.6x</div>
+      <div class="sc-prob" style="color:var(--blue)">概率 50%</div>
+    </div>
+    <div class="scenario-card pessimistic">
+      <div class="sc-label">🟢 悲观情景</div>
+      <div class="sc-price" style="color:var(--green)">23.50元</div>
+      <div>2026E净利 160亿</div>
+      <div>Forward PE 10.5x</div>
+      <div class="sc-prob" style="color:var(--green)">概率 20%</div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--text-muted);text-align:center;">概率加权目标价 = 33.5×0.3 + 28.65×0.5 + 23.5×0.2 = <b style="color:var(--red);font-size:16px;">29.1元</b>（+27%上行空间）</p>
+
+  <div style="margin-top: 20px;">
+    <h4>估值方法交叉验证</h4>
+    <table>
+      <tr><th>方法</th><th>目标价</th><th>权重</th><th>关键假设</th></tr>
+      <tr><td>Forward PE（基准）</td><td class="up">28-32元</td><td>50%</td><td>2026E净利195亿，PE 12-15x</td></tr>
+      <tr><td>DCF简化</td><td>28元</td><td>25%</td><td>WACC 9%, g=3%</td></tr>
+      <tr><td>历史PE分位回归</td><td>26-30元</td><td>25%</td><td>PE回归至15-18x（中位数）</td></tr>
+      <tr style="font-weight:700;background:#fef2f2;"><td>加权目标价</td><td class="up" style="font-size:18px;">28-35元</td><td>100%</td><td>当前22.91元，上行25-53%</td></tr>
+    </table>
+  </div>
+
+  <h3>变异认知</h3>
+  <div class="box box-red">
+    <div class="box-title">市场错在哪里？</div>
+    市场共识将宝丰能源视为<b>"周期股"</b>，给予10-12x"周期折价"。但实际：① 过去5年行业低谷期ROE仍维持15%+，从无亏损 ② 煤制路线是中国资源禀赋决定的<b>结构性优势</b> ③ 当前8.6x PE对应80%利润增速——如果市场从"周期股"（10-12x）重新定价为"成长型周期股"（14-16x），<b>估值修复空间50%+</b>。
+  </div>
+</div>
+
+<!-- Kelly & Trading Plan -->
+<div class="card">
+  <h2>🎯 Layer 5 · 交易计划</h2>
+
+  <div class="trading-card">
+    <div class="tc-title">╔══════════════════════════════════════╗</div>
+    <div class="tc-title">║  交易计划卡片 — 宝丰能源 600989       ║</div>
+    <div class="tc-title">╚══════════════════════════════════════╝</div>
+    <br>
+    <span class="tc-section">▶ 买入逻辑</span><br>
+    市场用"周期折价"（8.6x PE）定价ROE 25%+增速80%的煤化工龙头<br>
+    油煤比十年高位+产能周期拐点远未被price in<br>
+    <br>
+    <span class="tc-section">▶ 目标价区间</span>：<span class="tc-highlight">28 - 35 元</span>（+25% ~ +53%）<br>
+    <br>
+    <span class="tc-section">▶ 建议买入区间</span>：<span class="tc-highlight">20 - 23.5 元</span>（安全边际20%）<br>
+    &nbsp;&nbsp;当前22.91元处于买入区间上沿<br>
+    <br>
+    <span class="tc-section">▶ 仓位建议</span>：总资产 <span class="tc-highlight">10-12%</span><br>
+    &nbsp;&nbsp;凯利 f* = 45.6% → 实操 1/4 = 11.4%<br>
+    &nbsp;&nbsp;胜率 p=65% | 赔率 b=1.81<br>
+    <br>
+    <span class="tc-section">▶ 止损规则</span><br>
+    &nbsp;&nbsp;逻辑止损：中东停火+油价&lt;75 或 H2净利&lt;70亿<br>
+    &nbsp;&nbsp;技术止损：跌破 <span class="tc-highlight">18.5元</span>（前低支撑）<br>
+    &nbsp;&nbsp;绝对止损：亏损超 <span class="tc-highlight">20%</span>（跌破18.3元）<br>
+    <br>
+    <span class="tc-section">▶ 止盈规则</span><br>
+    &nbsp;&nbsp;第一目标：<span class="tc-highlight">30元</span>（+31%）→ 减仓30%<br>
+    &nbsp;&nbsp;第二目标：<span class="tc-highlight">35元</span>（+53%）→ 清仓<br>
+    <br>
+    <span class="tc-section">▶ 跟踪指标（每周检查）</span><br>
+    &nbsp;&nbsp;[聚烯烃价格] 现货价 / 回落>10%预警 / 百川盈孚<br>
+    &nbsp;&nbsp;[布伦特原油] ~100美元 / 跌破85预警 / ICE<br>
+    &nbsp;&nbsp;[动力煤价] 秦皇岛5500 / 涨>15%预警 / CCTD<br>
+    &nbsp;&nbsp;[北向资金] 持股2.38% / 连续5日流出预警<br>
+    <br>
+    <span class="tc-section">▶ 催化剂日历</span><br>
+    &nbsp;&nbsp;2026-08-22前后：半年报正式披露<br>
+    &nbsp;&nbsp;2026-09月初：H1中期分红除权（0.28元/股）<br>
+    &nbsp;&nbsp;2026-10月：Q3业绩（关注H2趋势拐点）<br>
+    &nbsp;&nbsp;2026-12月：宁东四期50万吨项目计划投产<br>
+  </div>
+
+  <div class="kelly-box">
+    <div class="k-title">📐 凯利公式逐项展开</div>
+    <p><b>胜率 p = 65%</b></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-left:16px;">
+    依据：H1业绩预增已锁定93-102亿下限 / 油价短期难以大幅回落 / 管理层判断+产能拐点数据印证 / 阿布达比投资局+社保持续重仓
+    </p>
+    <p style="margin-top:8px;"><b>赔率 b = 1.81</b></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-left:16px;">
+    止盈30元（+30.9%）/ 止损19元（-17.1%）→ b = 0.309/0.171 = 1.81
+    </p>
+    <p style="margin-top:8px;"><b>理论仓位 f* = 45.6%</b></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-left:16px;">
+    f* = (b×p - q)/b = (1.81×0.65 - 0.35)/1.81 = 45.6%
+    </p>
+    <p style="margin-top:8px;"><b>实操仓位 = 11.4%（1/4凯利）</b></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-left:16px;">
+    打折原因：单票上限15%约束 / 煤化工行业集中度限制 / 过度自信检查（若实际p=50%，f*=22.4%，1/4仅5.6%仍可控）
+    </p>
+  </div>
+</div>
+
+<!-- Risk Matrix -->
+<div class="card">
+  <h2>⚠️ 风险矩阵与多空论点</h2>
+  <div class="two-col">
+    <div>
+      <h3>🟢 多头论点</h3>
+      <ol>
+        <li><b>成本剪刀差处于历史极值</b>：油煤比十年高位，煤制vs油制成本优势30%+，地缘冲突下至少维持6-12个月</li>
+        <li><b>量价齐升+产能周期拐点</b>：2026年内蒙古项目全年贡献，2027年起供需改善</li>
+        <li><b>估值极端便宜</b>：8.6x Fwd PE买80%增速+25% ROE，A股罕见</li>
+      </ol>
+    </div>
+    <div>
+      <h3>🔴 空头论点</h3>
+      <ol>
+        <li><b>油价是双刃剑</b>：中东停火→油价&lt;70美元→成本优势大幅收窄</li>
+        <li><b>产能过剩风险未尽</b>：2026年仍有数百万吨PE/PP新产能</li>
+        <li><b>流动比率偏低（0.52）</b>：200亿capex消耗现金，短期流动性压力</li>
+      </ol>
+    </div>
+  </div>
+
+  <table style="margin-top:20px;">
+    <tr><th>风险类型</th><th>具体风险</th><th>概率</th><th>影响</th><th>应对</th></tr>
+    <tr><td>地缘政治</td><td>中东停火→油价暴跌</td><td>中(30%)</td><td class="down">-30%</td><td>止损线19元</td></tr>
+    <tr><td>行业周期</td><td>新产能冲击超预期</td><td>中(25%)</td><td class="down">-15%</td><td>跟踪现货价格</td></tr>
+    <tr><td>政策风险</td><td>碳税成本大幅上升</td><td>低(15%)</td><td class="down">-10%</td><td>头部受益于竞争减少</td></tr>
+    <tr><td>公司层面</td><td>短期偿债压力</td><td>低(10%)</td><td class="down">-5%</td><td>现金流充裕</td></tr>
+  </table>
+
+  <div class="box box-gold" style="margin-top:16px;">
+    <div class="box-title">行为金融护栏</div>
+    <b>确认偏误检查</b>：如果看错→中东停火油价&lt;80 + H2单季净利&lt;60亿 + 毛利率&lt;30%<br>
+    <b>锚定效应检查</b>：目标价28-35纯基于Forward PE+DCF，与历史价格记忆无关<br>
+    <b>过度自信检查</b>：即使胜率仅50%，凯利仓位5.6%仍合理可控<br>
+    <b>近期偏差检查</b>：60日-17%回调后的估值（8.6x PE）已提供安全边际
+  </div>
+</div>
+
+</div><!-- /.container -->
+
+<div class="footer">
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  <p>数据来源：Tushare Pro · 上海证券报/中国证券网 · 百川盈孚 · 光大期货/兴业研究 | 弈投师 · 2026-08-03</p>
+</div>
+
+<script>
+// Price Chart
+(function() {
+  if (typeof Chart === 'undefined') return;
+  const ctx = document.getElementById('priceChart');
+  if (!ctx) return;
+  
+  const dates = ["2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07"];
+  const closes = [13.71,14.30,14.42,14.67,14.77,13.34,15.27,16.35,16.59,16.42,17.33,15.03,15.23,17.35,15.91,16.15,16.84,17.53,16.55,14.53,16.03,16.00,16.14,15.54,17.35,17.80,18.44,18.00,19.63,23.76,23.93,29.06,30.70,24.00,20.33,23.29];
+  
+  // Color the bars based on close vs previous
+  const bgColors = closes.map((v, i) => i === 0 ? 'rgba(44,94,168,0.6)' : (v >= closes[i-1] ? 'rgba(217,64,64,0.55)' : 'rgba(58,157,58,0.55)'));
+  const borderColors = closes.map((v, i) => i === 0 ? '#2c5ea8' : (v >= closes[i-1] ? '#d94040' : '#3a9d3a'));
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: '月线收盘价（前复权）',
+        data: closes,
+        backgroundColor: bgColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+        borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => '收盘价: ¥' + ctx.parsed.y.toFixed(2)
+          }
+        }
+      },
+      scales: {
+        x: { 
+          ticks: { maxTicksLimit: 18, font: { size: 10 } },
+          grid: { display: false }
+        },
+        y: {
+          min: 10,
+          max: 35,
+          ticks: { 
+            callback: v => '¥' + v,
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+})();
+
+// Financial indicators chart
+(function() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'chart-wrap';
+  wrapper.style.marginTop = '20px';
+  wrapper.innerHTML = '<canvas id="finChart"></canvas>';
+  const priceChartWrap = document.querySelector('.chart-wrap');
+  if (priceChartWrap) priceChartWrap.parentNode.insertBefore(wrapper, priceChartWrap.nextSibling);
+  
+  const ctx2 = document.getElementById('finChart');
+  if (!ctx2) return;
+  
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: ['FY2022','FY2023','FY2024','FY2025','2026E'],
+      datasets: [
+        {
+          label: 'ROE (%)',
+          data: [19.5, 15.6, 15.5, 24.8, 28],
+          borderColor: '#d94040',
+          backgroundColor: 'rgba(217,64,64,0.1)',
+          borderWidth: 3,
+          tension: 0.3,
+          yAxisID: 'y'
+        },
+        {
+          label: '净利润（亿元）',
+          data: [63.0, 56.5, 63.4, 113.5, 195],
+          borderColor: '#2c5ea8',
+          backgroundColor: 'rgba(44,94,168,0.1)',
+          borderWidth: 3,
+          tension: 0.3,
+          borderDash: [6,3],
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: 'ROE 与 净利润趋势', font: { size: 15, weight: 'bold' }, padding: 10 }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'ROE (%)' },
+          min: 0,
+          max: 35,
+          ticks: { callback: v => v + '%' }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: '净利润（亿元）' },
+          min: 0,
+          max: 220,
+          grid: { display: false }
+        }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

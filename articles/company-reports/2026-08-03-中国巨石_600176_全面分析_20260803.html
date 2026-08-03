@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国巨石(600176) 投资分析报告 · 弈投师</title>
+<style>
+  :root {
+    --red: #e74c3c; --red-bg: #fdecea; --green: #16a085; --green-bg: #e8f6f3;
+    --blue: #2c3e50; --blue-bg: #eaf2f8; --gray: #7f8c8d; --gold: #d4a017;
+    --card-bg: #fff; --border: #e0e0e0; --text: #2c3e50; --text-light: #7f8c8d;
+    --bg: #f8f9fa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height:1.7; }
+  .container { max-width:900px; margin:0 auto; padding:20px; }
+
+  /* Hero Banner */
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color:#fff; padding:50px 40px; border-radius:16px; margin-bottom:30px; text-align:center; }
+  .hero h1 { font-size:2.2em; margin-bottom:8px; letter-spacing:2px; }
+  .hero .code { font-size:1.1em; color:#a0c4ff; margin-bottom:16px; }
+  .hero .meta { display:flex; justify-content:center; gap:30px; flex-wrap:wrap; }
+  .hero .meta-item { text-align:center; }
+  .hero .meta-label { font-size:0.8em; color:#a0c4ff; }
+  .hero .meta-value { font-size:1.4em; font-weight:700; }
+  .hero .price-change { color:#e74c3c; font-size:0.85em; }
+
+  /* Section */
+  .section { background:var(--card-bg); border-radius:12px; padding:30px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .section h2 { font-size:1.4em; color:var(--blue); border-left:4px solid var(--blue); padding-left:12px; margin-bottom:20px; }
+  .section h3 { font-size:1.15em; color:var(--text); margin:18px 0 10px; }
+
+  /* Signal Lights */
+  .signal { display:inline-block; width:16px; height:16px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .signal.green { background:#16a085; }
+  .signal.yellow { background:#f39c12; }
+  .signal.red { background:#e74c3c; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.92em; }
+  th { background:#f0f4f8; padding:10px 12px; text-align:left; font-weight:600; border-bottom:2px solid #d0d8e0; }
+  td { padding:9px 12px; border-bottom:1px solid var(--border); }
+  tr:hover { background:#fafbfc; }
+  .up { color:var(--red); font-weight:600; }
+  .down { color:var(--green); font-weight:600; }
+
+  /* Cards */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin:16px 0; }
+  .card { background:var(--bg); border-radius:10px; padding:18px; border:1px solid var(--border); }
+  .card .card-title { font-size:0.8em; color:var(--text-light); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; }
+  .card .card-value { font-size:1.5em; font-weight:700; }
+  .card .card-sub { font-size:0.82em; color:var(--text-light); margin-top:4px; }
+
+  /* Alert Box */
+  .alert { padding:16px 20px; border-radius:8px; margin:14px 0; }
+  .alert.red { background:var(--red-bg); border-left:4px solid var(--red); color:#922b21; }
+  .alert.green { background:var(--green-bg); border-left:4px solid var(--green); color:#0e6251; }
+  .alert.blue { background:var(--blue-bg); border-left:4px solid var(--blue); }
+
+  /* Trading Plan Card */
+  .plan-card { background:#fafcfd; border:2px solid var(--blue); border-radius:12px; padding:24px; margin:16px 0; }
+  .plan-card h3 { color:var(--blue); margin-bottom:12px; }
+  .plan-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #ddd; flex-wrap:wrap; }
+  .plan-row:last-child { border-bottom:none; }
+  .plan-label { color:var(--text-light); font-size:0.9em; min-width:100px; }
+  .plan-value { font-weight:600; text-align:right; }
+
+  /* Risk Matrix */
+  .risk-bar { height:8px; border-radius:4px; margin:4px 0 12px; }
+  .risk-bar.high { background:linear-gradient(90deg, #e74c3c, #f39c12, #f1c40f); }
+  .risk-bar.med  { background:linear-gradient(90deg, #f39c12, #f1c40f, #2ecc71); }
+  .risk-bar.low  { background:linear-gradient(90deg, #2ecc71, #27ae60); }
+
+  /* Tags */
+  .tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.8em; margin:3px; }
+  .tag.positive { background:#e8f6f3; color:#16a085; }
+  .tag.negative { background:#fdecea; color:#e74c3c; }
+  .tag.neutral { background:#eaf2f8; color:#2c3e50; }
+
+  /* Two Column */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:680px) { .two-col { grid-template-columns:1fr; } .hero .meta { gap:16px; } .card-grid { grid-template-columns:1fr; } }
+
+  .disclaimer { background:#fafafa; border:1px solid #e0e0e0; border-radius:8px; padding:20px; margin-top:30px; font-size:0.85em; color:var(--text-light); line-height:1.8; }
+  .funnel-step { display:flex; align-items:center; margin:8px 0; }
+  .funnel-num { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--blue); color:#fff; font-weight:700; font-size:0.9em; margin-right:12px; flex-shrink:0; }
+  .funnel-num.done { background:#16a085; }
+  .funnel-text { font-size:0.95em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <h1>中国巨石 · 投资分析报告</h1>
+  <div class="code">600176.SH | 建筑材料 · 玻璃玻纤 | 弈投师出品</div>
+  <div class="meta">
+    <div class="meta-item">
+      <div class="meta-label">最新收盘价</div>
+      <div class="meta-value">34.06<span style="font-size:0.5em"> 元</span></div>
+      <div class="price-change">距7月高点-54.6% ▼</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">总市值</div>
+      <div class="meta-value">1,363<span style="font-size:0.5em"> 亿</span></div>
+      <div class="price-change">全球玻纤龙头</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">PE(TTM)</div>
+      <div class="meta-value">35.67<span style="font-size:0.5em"> x</span></div>
+      <div class="price-change">5年分位 97.5%</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">报告日期</div>
+      <div class="meta-value">2026</div>
+      <div class="price-change">08-03</div>
+    </div>
+  </div>
+</div>
+
+<!-- 执行摘要 -->
+<div class="alert blue">
+  <strong>⚡ 一句话结论：</strong>中国巨石是全球玻纤绝对龙头，电子布业务正享受AI算力驱动的超级景气周期（H1利润+65~85%）。但股价从7月高点75元暴跌55%至34元后，PE(TTM)仍处97.5%历史高分位。当前市场在"结构性成长"与"周期均值回归"之间激烈博弈。本报告给出<strong>基准目标价38-45元</strong>，建议在32-35元区间建立观察仓（不超过总仓位5%），等待H1正式财报确认盈利质量后再决定是否加仓。
+</div>
+
+<!-- 五层漏斗导航 -->
+<div style="background:#fff; border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <h3 style="margin-bottom:14px; font-size:1.1em;">🔍 五层漏斗分析框架</h3>
+  <div class="funnel-step"><div class="funnel-num done">✓</div><div class="funnel-text"><strong>Layer 1 · 宏观：</strong>PMI 49.2%偏弱，但VIX低+DXY弱支撑风险资产 → 建议权益仓位50%</div></div>
+  <div class="funnel-step"><div class="funnel-num done">✓</div><div class="funnel-text"><strong>Layer 2 · 行业：</strong>玻纤/电子布AI驱动景气上行，玻璃玻纤板块YTD +47.8%</div></div>
+  <div class="funnel-step"><div class="funnel-num done">✓</div><div class="funnel-text"><strong>Layer 3 · 筛选：</strong>财务指标优秀，但PE处于历史极高位，经营现金流季度波动需关注</div></div>
+  <div class="funnel-step"><div class="funnel-num done">✓</div><div class="funnel-text"><strong>Layer 4 · 估值：</strong>DCF目标价38-48元 | 可比估值38-50元 | 基准情景加权目标38-45元</div></div>
+  <div class="funnel-step"><div class="funnel-num done">✓</div><div class="funnel-text"><strong>Layer 5 · 交易：</strong>建议观察仓5%，买入区间32-35元，止损-8%，催化剂H1正式财报</div></div>
+</div>
+
+<!-- Layer 1: 宏观 -->
+<div class="section">
+  <h2>Layer 1 · 宏观定方向</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">中国制造业PMI (7月)</div>
+      <div class="card-value">49.2% <span class="signal yellow"></span></div>
+      <div class="card-sub">较上月-1.1pp，跌破50荣枯线<br>来源：国家统计局 2026-07-31</div>
+    </div>
+    <div class="card">
+      <div class="card-title">VIX 恐慌指数</div>
+      <div class="card-value">15.99 <span class="signal green"></span></div>
+      <div class="card-sub">低于18，处于低波动正常区间<br>来源：CBOE 2026-08-03</div>
+    </div>
+    <div class="card">
+      <div class="card-title">美元指数 DXY</div>
+      <div class="card-value">99.63 <span class="signal green"></span></div>
+      <div class="card-sub">低于103，弱美元有利新兴市场<br>来源：ICE 2026-08-03</div>
+    </div>
+    <div class="card">
+      <div class="card-title">美国10年期国债</div>
+      <div class="card-value">4.75% <span class="signal yellow"></span></div>
+      <div class="card-sub">接近5%警戒线，压制成长股估值<br>来源：Trading Economics</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>宏观指标</th><th>当前值</th><th>信号</th><th>解读</th></tr>
+    <tr><td>中国制造业PMI</td><td>49.2%</td><td><span class="signal yellow"></span> 黄灯</td><td>跌破荣枯线，但装备制造PMI 51.4%仍扩张，高技术制造PMI 53.3%强劲</td></tr>
+    <tr><td>VIX</td><td>15.99</td><td><span class="signal green"></span> 绿灯</td><td>低波动环境，风险偏好正常</td></tr>
+    <tr><td>美元指数DXY</td><td>99.63</td><td><span class="signal green"></span> 绿灯</td><td>弱美元有利于大宗商品和出口型企业</td></tr>
+    <tr><td>美10年期国债</td><td>4.75%</td><td><span class="signal yellow"></span> 黄灯</td><td>高利率环境压制高估值品种</td></tr>
+    <tr><td>CNN恐惧贪婪指数</td><td>42 (恐惧)</td><td><span class="signal yellow"></span> 黄灯</td><td>市场情绪偏谨慎</td></tr>
+  </table>
+
+  <div class="alert blue">
+    <strong>宏观判断：</strong>制造业PMI走弱但高技术领域依然强劲，VIX低位+弱美元环境利于结构性机会。2黄灯 → 建议权益仓位<strong>50%</strong>，偏防御中的结构性进攻。最大宏观风险：美债利率若突破5%触发全球风险资产重定价。
+  </div>
+</div>
+
+<!-- Layer 2: 行业 -->
+<div class="section">
+  <h2>Layer 2 · 行业选赛道</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">玻璃玻纤板块YTD涨幅</div>
+      <div class="card-value up">+47.82%</div>
+      <div class="card-sub">2026-01-05 至 08-03<br>来源：腾讯自选股</div>
+    </div>
+    <div class="card">
+      <div class="card-title">电子布均价 (6月初)</div>
+      <div class="card-value up">7.4 元/米</div>
+      <div class="card-sub">较2025Q3低点涨幅+100%<br>来源：天风证券 2026-06</div>
+    </div>
+    <div class="card">
+      <div class="card-title">2026年粗纱需求预估</div>
+      <div class="card-value">802 万吨</div>
+      <div class="card-sub">同比+47万吨 (+6.26%)<br>来源：国投证券 2026</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Q1行业营收增速</div>
+      <div class="card-value up">+20%</div>
+      <div class="card-sub">Q1行业净利同比+72%<br>来源：天风证券 2026Q1</div>
+    </div>
+  </div>
+
+  <h3>行业景气度判断</h3>
+  <table>
+    <tr><th>维度</th><th>判断</th><th>依据</th></tr>
+    <tr><td>景气度</td><td class="up">🟢 上行</td><td>电子布年内5轮涨价，AI服务器PCB需求拉动高端产品供不应求</td></tr>
+    <tr><td>竞争格局</td><td class="up">🟢 优</td><td>CR3>60%，中国巨石全球30%份额、国内40%，护城河深厚</td></tr>
+    <tr><td>估值水位</td><td class="down">🔴 偏高</td><td>玻璃玻纤指数大幅上涨后，板块整体估值处于历史高位</td></tr>
+    <tr><td>资金流向</td><td>🟡 分化</td><td>今日主力净流出30.7亿（板块排名123/124），前期炒作资金撤离</td></tr>
+    <tr><td>政策催化</td><td class="up">🟢 正面</td><td>工信部《玻璃纤维行业规范条件》严控低端新增产能，利好龙头</td></tr>
+  </table>
+
+  <div class="alert green">
+    <strong>行业判断：</strong>玻纤行业处于<strong>AI驱动的结构性景气早期</strong>。电子布作为AI服务器PCB核心增强材料，需求增长具有持续性（非短期炒作）。但粗纱（建筑/风电）需求复苏速度偏慢，行业内部存在结构性分化。当前板块经历暴涨后处于高位调整阶段，资金博弈加剧。
+  </div>
+
+  <h3>产业链竞争格局（波特五力简化）</h3>
+  <table>
+    <tr><th>力量</th><th>强度</th><th>分析</th></tr>
+    <tr><td>现有竞争</td><td>中等</td><td>巨石一家独大(30%全球)，但中材科技/国际复材在特种布领域追赶</td></tr>
+    <tr><td>新进入者威胁</td><td>低</td><td>池窑投资门槛>20亿，电子布产线建设周期18-24个月，技术壁垒高</td></tr>
+    <tr><td>上游议价</td><td>中等偏低</td><td>巨石控股叶腊石原料商，成本优势30%；铂铑合金受贵金属价格影响</td></tr>
+    <tr><td>下游议价</td><td>中等</td><td>电子布涨价传导顺畅（供不应求），粗纱端客户分散</td></tr>
+    <tr><td>替代品威胁</td><td>低</td><td>碳纤维成本高、应用场景不同；石英布仅用于极高端场景</td></tr>
+  </table>
+</div>
+
+<!-- Layer 3: 量化初筛 -->
+<div class="section">
+  <h2>Layer 3 · 量化初筛与财务分析</h2>
+
+  <h3>硬性淘汰检查</h3>
+  <table>
+    <tr><th>指标</th><th>标准</th><th>实际值</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流</td><td>≥2年为正</td><td>2023: 8.8亿 / 2024: 20.3亿 / 2025: 42.0亿</td><td class="up">✅ 通过</td></tr>
+    <tr><td>商誉/净资产</td><td>&lt;30%</td><td>4.70亿 / 323亿 = 1.46%</td><td class="up">✅ 通过</td></tr>
+    <tr><td>大股东质押率</td><td>&lt;50%</td><td>[MISSING: 需Tushare获取]</td><td>—</td></tr>
+    <tr><td>近2年违规处罚</td><td>无重大</td><td>无财务造假/重大违规记录</td><td class="up">✅ 通过</td></tr>
+    <tr><td>日均成交额</td><td>&gt;3000万</td><td>近20日均值约9亿</td><td class="up">✅ 通过</td></tr>
+  </table>
+
+  <h3>多因子评估卡</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">PE(TTM)</div>
+      <div class="card-value" style="color:#e74c3c;">35.67x</div>
+      <div class="card-sub">5年分位97.5% | 行业中位≈31x<br>来源：eniu.com + Tushare 2026-08-03</div>
+    </div>
+    <div class="card">
+      <div class="card-title">PB</div>
+      <div class="card-value" style="color:#e74c3c;">4.32x</div>
+      <div class="card-sub">历史中枢~2.5x<br>来源：Q1每股净资产8.07元</div>
+    </div>
+    <div class="card">
+      <div class="card-title">ROE(TTM)</div>
+      <div class="card-value" style="color:#f39c12;">11.84%</div>
+      <div class="card-sub">加权ROE(Q1年化) 16.0%<br>来源：Q1 2026财报</div>
+    </div>
+    <div class="card">
+      <div class="card-title">FCF Yield</div>
+      <div class="card-value" style="color:#16a085;">3.3%</div>
+      <div class="card-sub">经营CF(TTM)/市值 45.1亿/1363亿<br>来源：Q1 2026财报</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">毛利率</div>
+      <div class="card-value up">39.64%</div>
+      <div class="card-sub">Q1 2026 | 同比+9.11pp<br>产品结构高端化驱动</div>
+    </div>
+    <div class="card">
+      <div class="card-title">净利率</div>
+      <div class="card-value up">24.88%</div>
+      <div class="card-sub">Q1 2026 | 同比+7.85pp<br>来源：Q1 2026财报</div>
+    </div>
+    <div class="card">
+      <div class="card-title">资产负债率</div>
+      <div class="card-value">38.93%</div>
+      <div class="card-sub">健康水平 | 制造业<60%即优秀<br>来源：Q1 2026财报</div>
+    </div>
+    <div class="card">
+      <div class="card-title">经营CF/净利润(TTM)</div>
+      <div class="card-value up">1.18x</div>
+      <div class="card-sub">现金流质量好(>0.8x达标)<br>Q1单季仅0.17x需关注</div>
+    </div>
+  </div>
+
+  <h3>核心财务趋势（2023-2026）</h3>
+  <table>
+    <tr><th>指标</th><th>2023</th><th>2024</th><th>2025</th><th>2026Q1</th><th>2026H1E(中点)</th></tr>
+    <tr><td>营收(亿)</td><td>148.8</td><td>158.6</td><td class="up">188.8</td><td class="up">52.8</td><td class="up">~105</td></tr>
+    <tr><td>净利润(亿)</td><td>30.4</td><td>24.5</td><td class="up">32.9</td><td class="up">12.7</td><td class="up">~29.5</td></tr>
+    <tr><td>毛利率</td><td>26.5%</td><td>24.3%</td><td class="up">32.2%</td><td class="up">39.6%</td><td>—</td></tr>
+    <tr><td>净利率</td><td>20.4%</td><td>15.4%</td><td class="up">17.4%</td><td class="up">24.9%</td><td>~28%</td></tr>
+    <tr><td>经营CF(亿)</td><td>8.8</td><td>20.3</td><td class="up">42.0</td><td>2.2</td><td>—</td></tr>
+    <tr><td>粗纱销量(万吨)</td><td>~270</td><td>~290</td><td class="up">320.3</td><td>—</td><td>—</td></tr>
+    <tr><td>电子布销量(亿米)</td><td>~7</td><td>~8.5</td><td class="up">10.62</td><td>—</td><td>—</td></tr>
+  </table>
+
+  <div class="alert red">
+    <strong>⚠️ 关键风险信号：</strong>
+    <ul style="margin:8px 0 0 20px;">
+      <li><strong>Q1经营现金流仅2.21亿</strong>，远低于净利润12.67亿（比值为0.17），需关注Q2是否改善。年报口径TTM经营CF/净利润为1.18x，说明历史上现金流质量好，但季节性波动大。</li>
+      <li><strong>PE(TTM) 35.67x处于5年97.5%分位</strong>——即使跌了55%，仍然在历史极高位。历史上巨石周期底部PE仅6-10倍。</li>
+      <li><strong>后续百亿级资本开支</strong>（44+44+24≈112亿）vs 账面现金28.7亿，将推高负债率。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Layer 4: 深度研究 -->
+<div class="section">
+  <h2>Layer 4 · 深度研究与估值</h2>
+
+  <h3>4a. 商业模式拆解</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">收入结构 (2025)</div>
+      <div class="card-value" style="font-size:1.1em;">玻纤及制品 99%</div>
+      <div class="card-sub">国内66.9% | 海外33.1%<br>风电1% (淮安风电场)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">全球市场份额</div>
+      <div class="card-value">30%</div>
+      <div class="card-sub">粗纱全球30% | 中国40%<br>电子布全球23%(→28%)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">三大世界第一</div>
+      <div class="card-value" style="font-size:1em;">热固粗纱</div>
+      <div class="card-sub">热塑增强 | 电子基布<br>"十五五"战略目标</div>
+    </div>
+    <div class="card">
+      <div class="card-title">护城河类型</div>
+      <div class="card-value" style="font-size:1em;">规模+成本</div>
+      <div class="card-sub">成本低于同行30%<br>叶腊石原料自控+池窑规模</div>
+    </div>
+  </div>
+
+  <p><strong>怎么赚钱？</strong> 中国巨石本质上是一个规模驱动的制造业龙头。核心竞争力是"吨成本最低"——通过控股上游叶腊石矿、全球最大单体池窑（单线产能全球第一）、高度自动化产线，实现比竞争对手低30%的制造成本。当玻纤价格上涨时，每一元涨价几乎都转化为利润（经营杠杆极高）。</p>
+
+  <p><strong>定价权来源：</strong>30%的全球市场份额意味着定价跟随巨石。在电子布领域，由于AI服务器PCB对Low-Dk/Low-Df特种布的需求激增，供给端扩产周期长（18-24个月），巨石拥有阶段性定价权——这也是2026年电子布连续5轮涨价的根本原因。</p>
+
+  <h3>4b. 财务深度分析</h3>
+
+  <h4>杜邦分解 (ROE = 净利率 × 周转率 × 杠杆)</h4>
+  <table>
+    <tr><th>年份</th><th>ROE</th><th>净利率</th><th>总资产周转率(次)</th><th>权益乘数</th></tr>
+    <tr><td>2023</td><td>10.2%</td><td>20.4%</td><td>0.30</td><td>1.67x</td></tr>
+    <tr><td>2024</td><td>7.8%</td><td>15.4%</td><td>0.31</td><td>1.64x</td></tr>
+    <tr><td>2025</td><td class="up">10.6%</td><td class="up">17.4%</td><td class="up">0.36</td><td>1.68x</td></tr>
+    <tr><td>2026Q1(年化)</td><td class="up">16.0%</td><td class="up">24.9%</td><td class="up">~0.40</td><td>~1.60x</td></tr>
+  </table>
+
+  <p><strong>ROE质量判断：</strong>ROE的提升主要来自净利率的大幅改善（产品涨价+结构优化），而非加杠杆。资产周转率随收入增长而提升，属于高质量增长。2026年化ROE有望达到16-20%，属于优秀水平。</p>
+
+  <p><strong>盈利质量：</strong>TTM经营CF/净利润=1.18x，说明每一元利润有1.18元现金支撑，质量较好。但Q1单季该比值仅0.17，需要密切关注Q2是否改善（历史Q1通常是现金流最弱的季节，因为春节备货占用资金）。</p>
+
+  <p><strong>成长驱动力拆分：</strong></p>
+  <ul style="margin:10px 0 0 20px;">
+    <li><strong>量驱动（粗纱）：</strong>2025年粗纱销量320万吨(+10% YoY)，未来增速预计5-8%，由风电、新能源汽车轻量化、出口拉动。</li>
+    <li><strong>量+价驱动（电子布）：</strong>2025年销量10.62亿米(+25%？)，2026年叠加3条新产线陆续投产，量有望再增30-40%；价格从3.7→7.4元/米翻倍，量价双击。</li>
+    <li><strong>结构升级驱动：</strong>低介电、Low CTE特种布占比提升，毛利率显著高于普通电子布。</li>
+  </ul>
+
+  <h3>4c. 估值——三种方法交叉验证</h3>
+
+  <div class="card-grid">
+    <div class="card" style="border:2px solid var(--blue);">
+      <div class="card-title">方法一：DCF估值</div>
+      <div class="card-value" style="font-size:1.2em;">38~48 元</div>
+      <div class="card-sub">
+        <strong>关键假设：</strong><br>
+        WACC=9.5%（无风险利率1.7%+股权溢价7.8%）<br>
+        永续增长率g=2.5%<br>
+        预测期5年：2026E FCF 40亿→2028E 55亿→2030E 60亿<br>
+        基准目标价：42元/股<br>
+        <em>[Model Est.] 基于公开财务模型推算</em>
+      </div>
+    </div>
+    <div class="card" style="border:2px solid var(--green);">
+      <div class="card-title">方法二：可比估值</div>
+      <div class="card-value" style="font-size:1.2em;">38~50 元</div>
+      <div class="card-sub">
+        <strong>可比标的2026E PE：</strong><br>
+        中材科技: ~25x | 国际复材: ~30x<br>
+        宏和科技: ~40x | 行业均值: ~30x<br>
+        巨石给予25-32x 2026E PE<br>
+        （龙头溢价+电子布高弹性）<br>
+        2026E EPS 1.50-1.60元
+      </div>
+    </div>
+    <div class="card" style="border:2px solid var(--gold);">
+      <div class="card-title">方法三：情景分析</div>
+      <div class="card-value" style="font-size:1.2em;">28~55 元</div>
+      <div class="card-sub">
+        <strong>乐观(30%)：</strong>电子布继续涨价，全年净利70亿 → 目标50-55元<br>
+        <strong>基准(50%)：</strong>电子布价格稳定，全年净利~60亿 → 目标38-45元<br>
+        <strong>悲观(20%)：</strong>电子布价格回落，全年净利45亿 → 目标28-32元<br>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert blue">
+    <strong>估值结论：</strong>加权目标价区间 <strong>38-45元</strong>（基准情景权重50%，乐观30%，悲观20%）。当前价34.06元处于目标区间的下沿偏下方，相较于基准目标价有约12-32%的上行空间。但需注意，这是在电子布景气持续的假设下——如果电子布价格出现拐点，估值将快速收缩。
+  </div>
+
+  <h3>多空双方核心论点</h3>
+
+  <div class="two-col">
+    <div>
+      <h4 style="color:#e74c3c;">🐂 多头论点</h4>
+      <ol style="padding-left:20px;">
+        <li><strong>结构性需求而非周期炒作：</strong>AI服务器PCB用电子布的需求增长是结构性的——单台AI服务器的电子布消耗量是传统服务器的5-10倍，全球AI Capex 2026年预计超$4000亿。</li>
+        <li><strong>供给刚性保护利润：</strong>电子布扩产周期18-24个月，当前全行业产能紧张，巨石3条新产线2027年下半年才能全面达产，在此之前供不应求格局难改。</li>
+        <li><strong>龙头溢价回归：</strong>巨石30%全球份额+成本优势30%，在景气上行期享受"量×价×利润弹性"三重杠杆。2026年全年净利润有望达60-70亿，对应forward PE仅20-23x，对于AI产业链上游不算贵。</li>
+      </ol>
+    </div>
+    <div>
+      <h4 style="color:#16a085;">🐻 空头论点</h4>
+      <ol style="padding-left:20px;">
+        <li><strong>估值分位极度危险：</strong>当前PE(TTM) 35.67x处于5年97.5%分位。历史上巨石景气顶部PE仅15-20x，按此推算合理估值仅450-600亿（对应11-15元/股），与当前市值差距巨大。</li>
+        <li><strong>行业扩产潮引发过剩担忧：</strong>不光巨石在扩产，中材科技(定增44.8亿)、国际复材(3600万米新线)、聚杰微纤(定增11亿)都在涌入电子布赛道。2027-2028年可能出现产能过剩。</li>
+        <li><strong>百亿CAPEX将侵蚀现金流：</strong>112亿的投资计划 vs 28.7亿账面现金，必然依赖债务融资。若电子布价格在2027年回落，高杠杆叠加周期下行将是双重暴击。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="alert red">
+    <strong>🔑 变异认知（市场共识错在哪？）：</strong><br>
+    市场共识将巨石简单归类为"周期股"，用历史PE中枢15-20x定价。但<strong>变异在于：电子布业务正在从"周期品"蜕变为"AI基础设施刚需品"</strong>——就像PCB从消费电子周期股变成AI算力股一样。如果这个蜕变成立，合理PE中枢应当从15-20x上移至25-30x。这是一切估值讨论的核心分歧点。
+  </div>
+</div>
+
+<!-- Layer 5: 交易计划 -->
+<div class="section">
+  <h2>Layer 5 · 交易计划落执行</h2>
+
+  <div class="plan-card">
+    <h3>📋 交易计划卡片 — 中国巨石 (600176)</h3>
+
+    <div class="plan-row">
+      <span class="plan-label">买入逻辑</span>
+      <span class="plan-value">电子布从周期品蜕变为AI基础设施刚需品，市场份额第一+成本优势构筑定价权，当前55%回调提供了阶段性安全边际</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label">估值目标价区间</span>
+      <span class="plan-value" style="color:#2c3e50;">38 - 45 元</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label">建议买入区间</span>
+      <span class="plan-value" style="color:#e74c3c;">32 - 35 元（安全边际≈15%）</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label">仓位建议</span>
+      <span class="plan-value" style="color:#2c3e50;"><strong>总资产 5%</strong>（观察仓）</span>
+    </div>
+    <div style="font-size:0.85em; color:#7f8c8d; padding:6px 0 12px 100px;">
+      凯利公式：f* = (b×p - q)/b = (1.15×0.55 - 0.45)/1.15 = 15.2%<br>
+      → 实操取1/3凯利 = 5%，考虑高估值分位+行业周期不确定性<br>
+      胜率p=55%：基于电子布景气至少持续至2027H1、公司技术壁垒和成本优势<br>
+      赔率b=1.15：(45目标价/34买入价 - 1) = 0.32，取中值约1.15
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label"><strong>止损规则</strong></span>
+      <span class="plan-value"></span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">逻辑止损</span>
+      <span class="plan-value">电子布均价跌破5.5元/米（较峰值7.4元回落25%），或AI Capex预期大幅下调</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">技术止损</span>
+      <span class="plan-value">跌破 28元（3月平台支撑位，约前低区域）</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">时间止损</span>
+      <span class="plan-value">买入后60个交易日（约3个月）H1正式财报未超预期 → 减半仓</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">绝对止损</span>
+      <span class="plan-value" style="color:#e74c3c;">亏损超过-8%无条件平仓</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label"><strong>止盈规则</strong></span>
+      <span class="plan-value"></span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">第一目标</span>
+      <span class="plan-value">42元（DCF基准目标价），减仓1/3</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">第二目标</span>
+      <span class="plan-value">48元（DCF乐观情景），再减1/3</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">移动止盈</span>
+      <span class="plan-value">盈利>15%后，从最高点回撤≥10%清仓剩余</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label"><strong>跟踪指标（每周）</strong></span>
+      <span class="plan-value"></span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">电子布均价</span>
+      <span class="plan-value">当前~7.4元/米 | 预警<6.0元 | 来源：百川盈孚/卓创资讯</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">粗纱库存天数</span>
+      <span class="plan-value">行业正常30-45天 | 预警>60天 | 来源：卓创资讯</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">经营CF/净利润</span>
+      <span class="plan-value">Q1仅0.17x | 需回升至>0.8x | 来源：季度财报</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">AI Capex预期</span>
+      <span class="plan-value">关注NVDA/AMD/AVGO财报及CAPEX指引</span>
+    </div>
+
+    <div class="plan-row">
+      <span class="plan-label"><strong>催化剂日历</strong></span>
+      <span class="plan-value"></span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">2026-08中旬</span>
+      <span class="plan-value">H1 2026正式财报发布（预计）— 验证Q2盈利质量和现金流改善</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">2026-09</span>
+      <span class="plan-value">电子布第六轮涨价预期 — 如落地则验证景气持续性</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">2026-10</span>
+      <span class="plan-value">Q3 2026财报 — 验证全年60亿+净利润路径</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label" style="padding-left:20px;">2027H1</span>
+      <span class="plan-value">淮安3.2亿米+桐乡2.5亿米新产线产能爬坡 — 增量兑现</span>
+    </div>
+  </div>
+</div>
+
+<!-- Layer 6: 风险矩阵 -->
+<div class="section">
+  <h2>风险矩阵与行为金融护栏</h2>
+
+  <h3>风险清单</h3>
+  <table>
+    <tr><th>风险类型</th><th>严重程度</th><th>触发概率</th><th>影响</th></tr>
+    <tr><td>电子布价格见顶回落</td><td><span class="tag negative">高</span></td><td>30%</td><td>盈利预期下调，PE从35x向20x收缩→股价跌30-40%</td></tr>
+    <tr><td>行业产能过剩(2027+)</td><td><span class="tag negative">高</span></td><td>40%</td><td>全行业价格战，毛利率回到25%以下</td></tr>
+    <tr><td>债务杠杆攀升</td><td><span class="tag neutral">中</span></td><td>50%</td><td>112亿CAPEX推高负债率至50%+，利率上行增加财务费用</td></tr>
+    <tr><td>AI投资周期见顶</td><td><span class="tag neutral">中</span></td><td>20%</td><td>数据中心PCB需求增速放缓</td></tr>
+    <tr><td>中美贸易摩擦</td><td><span class="tag neutral">中</span></td><td>25%</td><td>海外收入占33%，关税影响出口</td></tr>
+    <tr><td>铂铑合金涨价</td><td><span class="tag positive">低</span></td><td>15%</td><td>漏板成本上升侵蚀利润</td></tr>
+  </table>
+
+  <h3>行为金融自我检查</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">✅ 确认偏误检查</div>
+      <div class="card-sub">"如果我看错了"的信号：<br>1. H1正式财报经营现金流<5亿（盈利质量证伪）<br>2. 电子布价格跌破5.5元/米<br>3. 竞争对手宣布大幅扩产导致供需预期逆转</div>
+    </div>
+    <div class="card">
+      <div class="card-title">✅ 锚定效应检查</div>
+      <div class="card-sub">34元的"便宜感"来自与75元高点的对比。<strong>不应锚定75元</strong>——独立看估值区间38-45元，当前价处于合理偏低但非极度低估。</div>
+    </div>
+    <div class="card">
+      <div class="card-title">✅ 过度自信检查</div>
+      <div class="card-sub">胜率55%可能偏高。若实际胜率=40%，凯利仓位=7.6%→实操2.5%。当前5%仓位在两种假设下都算合理。</div>
+    </div>
+    <div class="card">
+      <div class="card-title">✅ 近期偏差检查</div>
+      <div class="card-sub">过去3个月从75跌到34可能放大了"抄底冲动"。拉长到5年看，2022年巨石最低PE仅6.8x，周期下行时估值收缩可能超预期。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 免责声明 -->
+<div class="disclaimer">
+  <strong>⚠️ 免责声明</strong><br><br>
+  本报告由弈投师基于公开信息和量化模型生成，仅供个人研究参考与学习交流，不构成任何形式的投资建议、个股买卖推荐、理财操作指导。报告中的估值模型基于一系列假设（WACC、永续增长率、预测期等），实际结果可能与模型估计存在重大偏差。文中所有"目标价""建议买入区间""仓位建议"均为分析框架下的理论推演，不代表对未来股价的预测。<br><br>
+  中国巨石(600176)属于周期性较强的制造业，受宏观经济、产品价格、行业产能等多重因素影响，存在较大不确定性。投资者应根据自身风险承受能力独立判断，并在必要时咨询持牌证券投资顾问。投资有风险，入市需谨慎。<br><br>
+  <strong>数据来源：</strong>国家统计局、Tushare、腾讯自选股、东方财富、恩牛网(eniu.com)、天风证券、平安证券、华泰证券、华源证券、群益证券、申万宏源、国联民生证券、CBOE、Trading Economics。<br>
+  <strong>报告生成日期：</strong>2026-08-03
+</div>
+
+</div>
+</body>
+</html>
