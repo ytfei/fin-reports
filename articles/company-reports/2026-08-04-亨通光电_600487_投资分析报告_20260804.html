@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亨通光电(600487) 投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fb;
+  --card-bg: #fff;
+  --text: #2c3e50;
+  --text-secondary: #64748b;
+  --red: #dc2626;
+  --green: #16a34a;
+  --blue: #2563eb;
+  --orange: #ea580c;
+  --border: #e2e8f0;
+  --accent: #f0f4ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+.container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color: #fff; padding: 28px 20px; border-radius: 12px; margin-bottom: 20px; }
+.hero .code { font-size: 13px; opacity: 0.7; letter-spacing: 2px; }
+.hero h1 { font-size: 24px; margin: 6px 0 2px; }
+.hero .price-block { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; }
+.hero .price { font-size: 36px; font-weight: 800; }
+.hero .change { font-size: 16px; color: #16a34a; }
+.hero .change.down { color: #fca5a5; }
+
+/* Stats Row */
+.stats-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.stat-card { flex: 1; min-width: 100px; background: var(--card-bg); border-radius: 10px; padding: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.stat-card .val { font-size: 18px; font-weight: 700; }
+.stat-card .lbl { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Sections */
+.section { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.section h2 { font-size: 17px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--blue); }
+.section h3 { font-size: 15px; margin: 16px 0 8px; color: var(--blue); }
+.section p, .section li { font-size: 14px; color: var(--text-secondary); }
+
+/* Signal lights */
+.signal { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.signal.red { background: var(--red); }
+.signal.green { background: var(--green); }
+.signal.orange { background: var(--orange); }
+.signal.blue { background: var(--blue); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+th { background: #f1f5f9; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 12px; }
+td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.up { color: var(--red); font-weight: 600; }
+.down { color: var(--green); font-weight: 600; }
+
+/* Cards */
+.info-card { background: var(--accent); border-radius: 8px; padding: 14px; margin: 10px 0; }
+.info-card.warn { background: #fef3c7; }
+.info-card.danger { background: #fee2e2; }
+.info-card.success { background: #dcfce7; }
+
+/* Trading Plan */
+.trade-plan { border: 2px solid var(--blue); border-radius: 12px; padding: 16px; margin: 14px 0; background: var(--accent); }
+.trade-plan h4 { font-size: 16px; color: var(--blue); margin-bottom: 10px; }
+.trade-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px dashed var(--border); }
+.trade-row:last-child { border-bottom: none; }
+.trade-row .k { color: var(--text-secondary); }
+.trade-row .v { font-weight: 600; text-align: right; }
+
+/* Chart container */
+.chart-wrap { width: 100%; height: 280px; margin: 10px 0; }
+
+/* Footer */
+.footer { text-align: center; font-size: 11px; color: #94a3b8; padding: 20px; line-height: 1.8; }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 20px; }
+  .hero .price { font-size: 28px; }
+  .stats-row { gap: 6px; }
+  .stat-card { min-width: 70px; padding: 10px 8px; }
+  .stat-card .val { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="code">SH.600487 · 通信设备 · 申万二级</div>
+  <h1>亨通光电</h1>
+  <div class="price-block">
+    <span class="price">47.37</span>
+    <span class="change down">-0.50%</span>
+  </div>
+  <div style="font-size:12px;opacity:0.8;margin-top:4px;">
+    总市值 1168亿 | PE(TTM) 36.18 | PB 3.68 | 2026-08-03
+  </div>
+</div>
+
+<!-- Key Stats -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="val" style="color:#dc2626">124.89</div>
+    <div class="lbl">52周最高</div>
+  </div>
+  <div class="stat-card">
+    <div class="val" style="color:#16a34a">15.32</div>
+    <div class="lbl">52周最低</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">-62.1%</div>
+    <div class="lbl">距高点回撤</div>
+  </div>
+  <div class="stat-card">
+    <div class="val" style="color:#dc2626">+209%</div>
+    <div class="lbl">年内涨幅</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">26.42</div>
+    <div class="lbl">前瞻PE</div>
+  </div>
+</div>
+
+<!-- ===== LAYER 1: Macro ===== -->
+<div class="section">
+  <h2><span class="signal orange"></span>Layer 1 · 宏观背景与仓位判断</h2>
+  
+  <div class="info-card">
+    <strong>📊 宏观判断：</strong>经济弱复苏+制造业收缩，但AI算力投资结构性景气独立于宏观。建议权益仓位 50-60%，偏结构性进攻。
+  </div>
+
+  <h3>核心指标速览</h3>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>信号</th><th>解读</th></tr>
+    <tr><td>制造业PMI (7月)</td><td><strong>49.2</strong></td><td><span class="signal orange"></span>收缩</td><td>连续位于荣枯线下方，工业需求偏弱</td></tr>
+    <tr><td>GDP Q2 YoY</td><td><strong>4.7%</strong></td><td><span class="signal blue"></span>中性</td><td>低于全年5%目标线，政策托底预期增强</td></tr>
+    <tr><td>规上工业利润 (H1)</td><td class="up">+18.7%</td><td><span class="signal red"></span>偏强</td><td>上游资源品利润暴增（煤炭+41%、化工+68%）</td></tr>
+    <tr><td>CPI (6月)</td><td><strong>4.1%</strong></td><td><span class="signal orange"></span>偏高</td><td>PPI上行传导，但核心CPI仅0.1%，非全面通胀</td></tr>
+    <tr><td>M2 YoY</td><td><strong>+8.0%</strong></td><td><span class="signal blue"></span>中性</td><td>流动性充裕，但M1-M2剪刀差-4%</td></tr>
+    <tr><td>社融增量 (6月)</td><td><strong>20.8万亿</strong></td><td><span class="signal orange"></span>偏弱</td><td>同比-8.8%，政府债是主要支撑</td></tr>
+  </table>
+  
+  <p style="margin-top:8px;font-size:13px;"><strong>当前最大宏观风险：</strong>全球AI资本开支预期修正。美股科技股估值收缩已传导至A股硬件板块，亨通从高点回撤62%主要受此影响，而非基本面恶化。</p>
+  <p style="font-size:12px;color:var(--text-secondary);">数据来源：国家统计局、央行、Tushare (2026-08-01)</p>
+</div>
+
+<!-- ===== LAYER 2: Industry ===== -->
+<div class="section">
+  <h2><span class="signal green"></span>Layer 2 · 行业赛道：光纤光缆（AI景气早期）</h2>
+  
+  <div class="info-card success">
+    <strong>🏭 行业判断：</strong>AI算力驱动光纤需求从"周期品"升级为"成长品"，景气周期未来2-3年延续。光纤制造利润H1同比+410%，光缆+40%。
+  </div>
+
+  <h3>景气度量化</h3>
+  <table>
+    <tr><th>维度</th><th>数据</th><th>信号</th></tr>
+    <tr><td>光纤制造利润 H1 YoY</td><td class="up">+410.4%</td><td><span class="signal red"></span>爆发</td></tr>
+    <tr><td>光缆制造利润 H1 YoY</td><td class="up">+39.8%</td><td><span class="signal red"></span>强劲</td></tr>
+    <tr><td>H1业绩预喜率(光通信38家)</td><td><strong>75%</strong>(18/24)</td><td><span class="signal red"></span>高景气</td></tr>
+    <tr><td>亨通H1预告利润增速</td><td class="up">+87%~121%</td><td><span class="signal red"></span>超预期</td></tr>
+    <tr><td>中国移动电缆集采</td><td><strong>26亿</strong>（亨通最高份额）</td><td><span class="signal red"></span>量价齐升</td></tr>
+    <tr><td>预制棒扩产周期</td><td><strong>12-18个月</strong></td><td><span class="signal blue"></span>供给刚性</td></tr>
+  </table>
+  
+  <h3>需求逻辑切换：光纤到户 → 光纤到GPU</h3>
+  <p>传统光纤需求依赖电信运营商FTTH建设节奏，市场长期供过于求。AI数据中心内部高密度布线、GPU集群互联成为最快增长领域。AWS已部署空芯光纤连接10个核心数据中心，谷歌/微软跟进预期强烈。</p>
+  
+  <div class="info-card">
+    <strong>🔑 竞争格局：</strong>CR3（长飞+亨通+中天）占据预制棒产能70%+。预制棒扩产周期12-18个月形成天然供给壁垒，行业龙头在景气上行期享受量价双击。
+  </div>
+  <p style="font-size:12px;color:var(--text-secondary);">来源：经济参考报、国家统计局、中国移动采购公告 (2026-07)</p>
+</div>
+
+<!-- ===== LAYER 3: Screening ===== -->
+<div class="section">
+  <h2><span class="signal green"></span>Layer 3 · 硬性指标筛查</h2>
+  <table>
+    <tr><th>检查项</th><th>阈值</th><th>实际值</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流</td><td>≤1年负值</td><td>TTM +25.4亿 (Q1季节性为负)</td><td style="color:#16a34a">✓ 通过</td></tr>
+    <tr><td>商誉/净资产</td><td>&lt;30%</td><td>6.19亿/356.95亿 = 1.73%</td><td style="color:#16a34a">✓ 通过</td></tr>
+    <tr><td>大股东质押率</td><td>&lt;50%</td><td>13.89%</td><td style="color:#16a34a">✓ 通过</td></tr>
+    <tr><td>重大违规处罚</td><td>无</td><td>近2年无记录</td><td style="color:#16a34a">✓ 通过</td></tr>
+    <tr><td>日均成交额</td><td>&gt;3000万</td><td>~72.7亿 (8/3)</td><td style="color:#16a34a">✓ 通过</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text-secondary);margin-top:8px;">结论：五项硬性指标全部通过，无财务质量红线。</p>
+</div>
+
+<!-- ===== LAYER 4: Deep Dive ===== -->
+<div class="section">
+  <h2><span class="signal blue"></span>Layer 4 · 深度研究</h2>
+
+  <h3>4a. 商业模式拆解</h3>
+  <p><strong>怎么赚钱？</strong>四大业务板块：</p>
+  <ul style="margin-left:16px;font-size:13px;color:var(--text-secondary);">
+    <li><strong>光通信（核心）：</strong>光纤预制棒→光纤→光缆，占营收约50%，AI数据中心驱动高端光纤需求爆发</li>
+    <li><strong>海洋能源/通信：</strong>海底光缆、海上风电海缆，亚洲最大海缆基地，100+项国际认证</li>
+    <li><strong>电力传输：</strong>特高压/智能电网线缆，刚中标中国移动26亿电缆大单</li>
+    <li><strong>新业务：</strong>空芯光纤(HCF)、量子通信、硅光模块等前沿布局</li>
+  </ul>
+  
+  <p style="margin-top:8px;"><strong>护城河：</strong></p>
+  <ul style="margin-left:16px;font-size:13px;color:var(--text-secondary);">
+    <li><strong>规模壁垒：</strong>预制棒产能国内前三，扩产周期12-18个月天然限制新进入者</li>
+    <li><strong>技术壁垒：</strong>空芯光纤、深海海缆（5000米级海试验证）、100+UJ/UQJ国际认证</li>
+    <li><strong>客户粘性：</strong>运营商集采头部份额稳固，中国移动26亿大单亨通获最高份额</li>
+  </ul>
+
+  <h3>4b. 财务深度拆解</h3>
+  
+  <div class="chart-wrap">
+    <canvas id="financialChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>指标</th><th>2024</th><th>2025</th><th>2026Q1</th><th>趋势</th></tr>
+    <tr><td>营收(亿)</td><td>560</td><td>669</td><td>178 (TTM 714)</td><td class="up">↑ 34% QoQ</td></tr>
+    <tr><td>归母净利(亿)</td><td>~12</td><td>~27</td><td>11.05 (H1预告~33亿)</td><td class="up">↑ 99% QoQ</td></tr>
+    <tr><td>毛利率</td><td>~12%</td><td>~13%</td><td>15.98%</td><td class="up">↑ 扩张</td></tr>
+    <tr><td>净利率</td><td>~2.1%</td><td>~4.0%</td><td>6.64%</td><td class="up">↑ 大幅改善</td></tr>
+    <tr><td>ROE(TTM)</td><td>-</td><td>-</td><td>9.96%</td><td class="up">↑ 修复中</td></tr>
+    <tr><td>经营现金流(TTM)</td><td>-</td><td>-</td><td>25.4亿</td><td class="up">↑ 健康</td></tr>
+    <tr><td>资产负债率</td><td>-</td><td>-</td><td>51.88%</td><td>合理</td></tr>
+    <tr><td>有息负债</td><td>-</td><td>-</td><td>181.4亿</td><td>偏高但可控</td></tr>
+  </table>
+
+  <div class="info-card">
+    <strong>📐 杜邦分解 ROE 9.96%：</strong><br>
+    净利率 4.82%(TTM) × 周转率 0.96 × 杠杆 2.08<br>
+    ROE质量判断：净利率处于快速提升通道（Q1已达6.64%），杠杆合理，周转率有改善空间。
+  </div>
+
+  <p style="margin-top:10px;"><strong>盈利质量：</strong>经营现金流/净利润(TTM) ≈ 25.4/32.3 = 0.79。接近0.8阈值，考虑到行业重资产属性+景气上行期应收账款扩张，属于可接受水平。Q1经营现金流为负（-1.94亿）是典型的季节性回款特征。</p>
+
+  <h3>4c. 估值 — 三种方法交叉验证</h3>
+
+  <div class="chart-wrap">
+    <canvas id="valuationChart"></canvas>
+  </div>
+
+  <table>
+    <tr><th>方法</th><th>悲观</th><th>基准</th><th>乐观</th></tr>
+    <tr><td>一致预期PE (2026E)</td><td>38.8元 (12x)</td><td><strong>48.5元 (15x)</strong></td><td>58.1元 (18x)</td></tr>
+    <tr><td>一致预期PE (2027E)</td><td>46.2元 (12x)</td><td><strong>57.8元 (15x)</strong></td><td>69.3元 (18x)</td></tr>
+    <tr><td>PEG (2026E)</td><td>-</td><td><strong>PEG=0.07</strong></td><td>极低</td></tr>
+  </table>
+
+  <p style="margin-top:8px;"><strong>综合目标价区间：39 - 58元</strong>（基准48.5元，相对当前价+2.4%）</p>
+  <p style="font-size:12px;color:var(--text-secondary);">注：DCF估值因公司处于重资本投入期自由现金流极低，参考价值有限，以PE/PEG为主要锚定。</p>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+    <div class="info-card success" style="flex:1;min-width:200px;">
+      <strong>🐂 多头论点</strong>
+      <ol style="font-size:13px;margin:6px 0 0 16px;">
+        <li>AI光纤需求从周期升级为成长，景气2-3年</li>
+        <li>H1利润+87-121%，一致预期2026E PE仅14.7x → PEG=0.07，明显低估</li>
+        <li>预制棒供给刚性+中国移动26亿大单=量价双击</li>
+        <li>空芯光纤(AWS已商用)、海底光缆是期权价值</li>
+      </ol>
+    </div>
+    <div class="info-card danger" style="flex:1;min-width:200px;">
+      <strong>🐻 空头论点</strong>
+      <ol style="font-size:13px;margin:6px 0 0 16px;">
+        <li>62%从高点回撤 → 筹码结构恶化，套牢盘巨大</li>
+        <li>有息负债181亿，资本开支高企，FCF持续为负</li>
+        <li>全球AI资本开支预期若下调 → 估值逻辑崩塌</li>
+        <li>周期股的"成长故事"在A股历史上反复证伪</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="info-card" style="margin-top:8px;">
+    <strong>🔍 变异认知（Variant Perception）：</strong>市场当前按"周期股崩盘"定价亨通（62%回撤），但忽略了需求结构已从"光纤到户(周期)"切换为"光纤到GPU(成长)"。如果H1/H2业绩持续兑现一致预期，2026E 14.7x PE在A股AI硬件标的中属于显著低估。
+  </div>
+</div>
+
+<!-- ===== LAYER 5: Trading Plan ===== -->
+<div class="section">
+  <h2><span class="signal red"></span>Layer 5 · 交易计划</h2>
+
+  <div class="trade-plan">
+    <h4>📋 交易计划卡片 — 亨通光电 (600487)</h4>
+    
+    <div class="trade-row"><span class="k">买入逻辑</span><span class="v">AI光纤量价双击，2026E PEG=0.07，PE远低于AI硬件可比公司</span></div>
+    <div class="trade-row"><span class="k">目标价区间</span><span class="v" style="color:#2563eb;">39 - 58元（基准48.5元）</span></div>
+    <div class="trade-row"><span class="k">建议买入区间</span><span class="v" style="color:#dc2626;">40 - 48元（安全边际15-25%）</span></div>
+    
+    <div style="margin-top:12px;padding:10px;background:#f1f5f9;border-radius:8px;">
+      <strong>💰 仓位建议：总资产 5-8%（凯利公式展开）</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td>胜率 p</td><td style="font-weight:700;">55%</td><td>依据：H1预告大概率兑现；行业景气度数据（光纤利润+410%）；6家券商一致买入</td></tr>
+        <tr><td>赔率 b</td><td style="font-weight:700;">1.25</td><td>止盈目标58元 / 止损40元 - 1 = 1.25 (以建议买入中间价44元计)</td></tr>
+        <tr><td>凯利 f*</td><td style="font-weight:700;">19%</td><td>f* = (1.25 × 0.55 - 0.45) / 1.25 = 19%</td></tr>
+        <tr><td>实操仓位</td><td style="font-weight:700;color:#dc2626;">5-8%</td><td>取1/3~1/2凯利（高波动+大盘系统性风险+行业集中度约束）</td></tr>
+      </table>
+    </div>
+
+    <div style="margin-top:12px;">
+      <strong>🛑 止损规则</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td style="white-space:nowrap;">逻辑止损</td><td>H1实际利润低于预告下限30.16亿 → AI景气逻辑证伪</td></tr>
+        <tr><td style="white-space:nowrap;">技术止损</td><td>跌破38元（前低2026-02-13的38.11元区域，约20%下行）</td></tr>
+        <tr><td style="white-space:nowrap;">时间止损</td><td>买入后3个月（2026-11月初）若股价仍低于42元且无催化剂</td></tr>
+        <tr><td style="white-space:nowrap;">绝对止损</td><td style="color:#dc2626;font-weight:700;">亏损超过25%无条件平仓</td></tr>
+      </table>
+    </div>
+
+    <div style="margin-top:12px;">
+      <strong>🎯 止盈规则</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td style="white-space:nowrap;">第一目标</td><td>54元（达目标价中值，减仓1/3）</td></tr>
+        <tr><td style="white-space:nowrap;">第二目标</td><td>58元（估值上限，清仓）</td></tr>
+      </table>
+    </div>
+
+    <div style="margin-top:12px;">
+      <strong>📊 跟踪指标（每周检查）</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td>光纤价格指数</td><td>当前：上涨通道 / 预警：连续2周下跌 / 来源：APC协会</td></tr>
+        <tr><td>北向资金持股</td><td>当前：- / 预警：连续5日净流出 / 来源：沪深港通</td></tr>
+        <tr><td>AI资本开支(CAPEX)</td><td>当前：AWS/谷歌Q2指引正面 / 预警：任一家下调 / 来源：财报</td></tr>
+        <tr><td>股东户数变化</td><td>当期报披露后检查 / 预警：单季增30%+ / 来源：季报</td></tr>
+      </table>
+    </div>
+
+    <div style="margin-top:12px;">
+      <strong>📅 催化剂日历（未来3-6个月）</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td>2026-08下旬</td><td>中报正式披露（验证预告数据，关注毛利率、现金流、细分业务增速）</td></tr>
+        <tr><td>2026-09-10月</td><td>Q3运营商集采结果（移动/电信/联通光纤光缆招标）</td></tr>
+        <tr><td>2026-10月</td><td>Q3财报（全年业绩指引上修信号）</td></tr>
+        <tr><td>2026-11-12月</td><td>2027年运营商CAPEX预算披露</td></tr>
+        <tr><td>持续</td><td>海外云厂商(AWS/Azure/GCP) AI CAPEX指引</td></tr>
+      </table>
+    </div>
+
+    <div class="info-card warn" style="margin-top:12px;">
+      <strong>⚠️ 最大下行风险：</strong>全球AI算力投资周期提前结束 → 光纤需求预期崩塌 → PE从15x压缩到8-10x → 股价可能跌至25-32元区间（下行30-47%）。考虑到62%已回撤+基本面强劲，此情景概率较低但不可忽视。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Risk Matrix ===== -->
+<div class="section">
+  <h2>风险矩阵</h2>
+  <table>
+    <tr><th>风险类别</th><th>概率</th><th>影响</th><th>应对</th></tr>
+    <tr><td>AI资本开支下调</td><td><span class="signal orange"></span>中</td><td>高</td><td>仓位控制+逻辑止损</td></tr>
+    <tr><td>光纤产能过剩</td><td><span class="signal green"></span>低</td><td>中</td><td>预制棒扩产周期12-18月保护</td></tr>
+    <tr><td>大盘系统性风险</td><td><span class="signal orange"></span>中</td><td>中</td><td>绝对止损25%</td></tr>
+    <tr><td>汇率风险(海外业务)</td><td><span class="signal green"></span>低</td><td>低</td><td>自然对冲</td></tr>
+    <tr><td>大股东减持</td><td><span class="signal green"></span>低</td><td>高</td><td>质押率13.89%较低，短期减持压力小</td></tr>
+  </table>
+</div>
+
+<!-- ===== Behavioral Finance Check ===== -->
+<div class="section">
+  <h2>行为金融护栏</h2>
+  
+  <div class="info-card">
+    <strong>1. 确认偏误检查：</strong>如果我看错了——
+    <ul style="font-size:13px;margin:4px 0 0 16px;">
+      <li>信号A：H1实际归母净利低于25亿（显著低于预告下限30亿）</li>
+      <li>信号B：2026Q3毛利率回落至13%以下（景气伪证）</li>
+      <li>信号C：AWS/谷歌Q3 CAPEX指引大幅下调</li>
+    </ul>
+  </div>
+  
+  <div class="info-card" style="margin-top:8px;">
+    <strong>2. 锚定效应检查：</strong>建议买入区间40-48元不是基于"跌了62%所以便宜"，而是基于2026E PE 12-15x的估值区间。与历史最高价124.89元无关。
+  </div>
+  
+  <div class="info-card" style="margin-top:8px;">
+    <strong>3. 过度自信检查：</strong>如果实际胜率从55%降到35%（低20个百分点），凯利仓位f* = (1.25 × 0.35 - 0.65) / 1.25 = -17%（负值），说明不应持仓。5-8%实操仓位在此情景下仍有保护。
+  </div>
+  
+  <div class="info-card" style="margin-top:8px;">
+    <strong>4. 近期偏差检查：</strong>过去2个月从125跌到47的极端走势是否影响了"便宜"的判断？从3-5年维度看：2025年底25元→现在47元仍有近翻倍涨幅。当前估值处于过去3年中枢偏下位置。
+  </div>
+</div>
+
+<!-- Price Chart -->
+<div class="section">
+  <h2>股价走势（近1年·前复权）</h2>
+  <div class="chart-wrap">
+    <canvas id="priceChart"></canvas>
+  </div>
+  <p style="font-size:11px;color:var(--text-secondary);text-align:center;">红色竖虚线标注52周最高点(124.89)和当前价位(47.37)</p>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p><strong>弈投师 · 全栈股票投研策略师</strong></p>
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。</p>
+  <p>数据来源：腾讯自选股、Tushare、国家统计局、经济参考报 | 日期：2026-08-04</p>
+  <p>投资有风险，入市需谨慎。</p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  // ===== Price Chart =====
+  (function() {
+    const dates = [
+      '2025-08','2025-09','2025-10','2025-11','2025-12',
+      '2026-01','2026-02','2026-03','2026-04','2026-05',
+      '2026-06','2026-07','2026-08'
+    ];
+    const prices = [
+      20.15, 19.73, 21.09, 19.80, 24.46,
+      24.32, 38.23, 52.39, 65.43, 76.85,
+      109.34, 47.61, 47.37
+    ];
+
+    const ctx = document.getElementById('priceChart');
+    if (!ctx) return;
+    
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: '收盘价(元)',
+          data: prices,
+          borderColor: '#dc2626',
+          backgroundColor: 'rgba(220,38,38,0.08)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 2,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+          y: { ticks: { font: { size: 11 }, callback: v => v + '元' } }
+        }
+      }
+    });
+  })();
+
+  // ===== Financial Chart =====
+  (function() {
+    const ctx = document.getElementById('financialChart');
+    if (!ctx) return;
+    
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2025', '2026Q1(年化)'],
+        datasets: [
+          { label: '营收(十亿)', data: [56.0, 66.9, 71.2], backgroundColor: '#93c5fd', yAxisID: 'y' },
+          { label: '净利(亿)', data: [1.2, 2.7, 4.42], backgroundColor: '#2563eb', yAxisID: 'y' },
+          { label: '毛利率(%)', data: [12, 13, 16], borderColor: '#dc2626', backgroundColor: 'transparent', type: 'line', tension: 0.3, borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#dc2626', yAxisID: 'y1' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+        scales: {
+          y: { position: 'left', title: { display: true, text: '亿元', font: { size: 11 } }, ticks: { font: { size: 11 } } },
+          y1: { position: 'right', title: { display: true, text: '%', font: { size: 11 } }, ticks: { font: { size: 11 }, callback: v => v + '%' }, grid: { display: false }, min: 0, max: 25 }
+        }
+      }
+    });
+  })();
+
+  // ===== Valuation Chart =====
+  (function() {
+    const ctx = document.getElementById('valuationChart');
+    if (!ctx) return;
+    
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['悲观\n12x 2026E', '基准\n15x 2026E', '乐观\n18x 2026E'],
+        datasets: [
+          { label: '目标价(元)', data: [38.8, 48.5, 58.1], backgroundColor: ['#fca5a5', '#93c5fd', '#86efac'], borderWidth: 0 },
+          { label: '当前价 47.37', data: [47.37, 47.37, 47.37], borderColor: '#dc2626', backgroundColor: 'transparent', type: 'line', borderWidth: 2.5, borderDash: [6,3], pointRadius: 0 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+        scales: {
+          y: { ticks: { font: { size: 11 }, callback: v => v + '元' }, min: 30, max: 65 }
+        }
+      }
+    });
+  })();
+});
+</script>
+</body>
+</html>

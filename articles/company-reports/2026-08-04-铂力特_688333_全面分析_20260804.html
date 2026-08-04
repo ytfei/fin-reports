@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>铂力特(688333) · 投资分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="blt_price_data.js"></script>
+<style>
+:root {--red: #cf2a2a; --green: #1a8a1a; --blue: #2563eb; --bg: #f8fafc; --card: #fff; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; --accent: #f0f4ff;}
+* {box-sizing: border-box; margin: 0; padding: 0;}
+body {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px;}
+.container {max-width: 960px; margin: 0 auto; padding: 0 16px;}
+
+/* Hero */
+.hero {background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%); color: #fff; padding: 48px 16px 36px; text-align: center;}
+.hero h1 {font-size: 2rem; font-weight: 700; margin-bottom: 6px;}
+.hero .sub {font-size: 1rem; opacity: .85; margin-bottom: 16px;}
+.hero .meta {display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: .85rem; opacity: .75;}
+.hero .price-badge {display: inline-block; background: rgba(255,255,255,.15); border-radius: 12px; padding: 8px 20px; margin: 12px 0;}
+.hero .price-badge .big {font-size: 2.2rem; font-weight: 800;}
+.hero .price-badge .chg {color: #ff6b6b; font-weight: 600; margin-left: 8px;}
+
+/* Cards */
+.card {background: var(--card); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); margin: 20px 0; overflow: hidden;}
+.card-header {padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;}
+.card-header .icon {font-size: 1.3rem;}
+.card-body {padding: 20px;}
+.card-body p {margin-bottom: 10px;}
+
+/* Grids */
+.grid2 {display: grid; grid-template-columns: 1fr 1fr; gap: 16px;}
+.grid3 {display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;}
+.grid4 {display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;}
+@media (max-width: 640px) {.grid2,.grid3,.grid4 {grid-template-columns: 1fr;}}
+
+/* Metric pills */
+.metric {text-align: center; padding: 12px 8px; background: var(--accent); border-radius: 8px;}
+.metric .val {font-size: 1.4rem; font-weight: 700;}
+.metric .lbl {font-size: .75rem; color: var(--muted); margin-top: 2px;}
+.metric.good .val {color: var(--red);}
+.metric.bad .val {color: var(--green);}
+.metric.warn .val {color: #d97706;}
+
+/* Signals */
+.signal {display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: .8rem; font-weight: 600;}
+.signal.green {background: #dcfce7; color: #166534;}
+.signal.red {background: #fee2e2; color: #991b1b;}
+.signal.yellow {background: #fef3c7; color: #92400e;}
+
+/* Tables */
+table {width: 100%; border-collapse: collapse; font-size: .88rem;}
+th {text-align: left; padding: 8px 12px; background: #f1f5f9; font-weight: 600; color: var(--muted); font-size: .78rem; text-transform: uppercase;}
+td {padding: 10px 12px; border-bottom: 1px solid var(--border);}
+tr:last-child td {border-bottom: none;}
+.num {text-align: right; font-variant-numeric: tabular-nums;}
+
+/* Chart */
+.chart-wrap {width: 100%; height: 360px; position: relative;}
+@media (max-width: 640px) {.chart-wrap {height: 260px;}}
+
+/* Scenario */
+.scenario-card {padding: 14px; border-radius: 10px; margin-bottom: 8px;}
+.scenario-card.bull {background: #fef2f2; border-left: 4px solid #ef4444;}
+.scenario-card.base {background: #f0f4ff; border-left: 4px solid #3b82f6;}
+.scenario-card.bear {background: #f0fdf4; border-left: 4px solid #22c55e;}
+.scenario-card .sc-label {font-weight: 700; font-size: .9rem; margin-bottom: 4px;}
+.scenario-card .sc-price {font-size: 1.3rem; font-weight: 800;}
+
+/* Trade Plan */
+.trade-card {background: #1e293b; color: #f1f5f9; border-radius: 12px; padding: 24px; margin: 20px 0; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: .85rem; line-height: 1.9;}
+.trade-card h3 {color: #60a5fa; font-size: 1rem; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 12px;}
+.trade-card .tag {display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .75rem; margin-right: 4px;}
+.trade-card .tag.buy {background: #166534; color: #4ade80;}
+.trade-card .tag.sell {background: #991b1b; color: #fca5a5;}
+.trade-card .tag.warn {background: #92400e; color: #fcd34d;}
+
+/* Verdict */
+.verdict {background: linear-gradient(135deg, #fef3c7, #fef9c3); border: 2px solid #f59e0b; border-radius: 12px; padding: 24px; text-align: center; margin: 20px 0;}
+.verdict h2 {font-size: 1.5rem; color: #92400e;}
+.verdict .action {font-size: 1.1rem; font-weight: 600; color: #78350f; margin-top: 8px;}
+
+/* Risk */
+.risk-high {color: var(--red); font-weight: 700;}
+.risk-mid {color: #d97706; font-weight: 600;}
+.risk-low {color: var(--muted);}
+
+.footer {text-align: center; padding: 24px; color: var(--muted); font-size: .78rem; border-top: 1px solid var(--border); margin-top: 32px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>铂力特 · 深度投资分析</h1>
+  <div class="sub">金属3D打印龙头 · 商业航天核心供应商</div>
+  <div class="price-badge">
+    <span class="big">87.79</span>
+    <span class="chg">+5.98%</span>
+  </div>
+  <div class="meta">
+    <span>688333.SH</span><span>·</span><span>科创板</span><span>·</span>
+    <span>市值 240.8亿</span><span>·</span><span>PE(TTM) 102×</span><span>·</span>
+    <span>2026-08-04</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 宏观速览 -->
+<div class="card">
+  <div class="card-header"><span class="icon">🌐</span> Layer 1 · 宏观背景</div>
+  <div class="card-body">
+    <p><strong>一句话判断：</strong>整体经济走弱（PMI 49.2%跌破荣枯线），但高技术制造/航天赛道逆势扩张（高技术PMI 53.3%），政策宽松加力在即。</p>
+    <div class="grid3">
+      <div class="metric"><div class="val" style="color:#d97706;">49.2%</div><div class="lbl">7月制造业PMI</div></div>
+      <div class="metric good"><div class="val">53.3%</div><div class="lbl">高技术制造业PMI</div></div>
+      <div class="metric good"><div class="val">>60%</div><div class="lbl">航空航天预期指数</div></div>
+    </div>
+    <p style="margin-top:12px;font-size:.85rem;color:var(--muted);">
+      建议权益仓位 <strong>55-65%</strong> | 偏防御中的结构性进攻 | 核心风险：出口下行
+    </p>
+  </div>
+</div>
+
+<!-- 行业速览 -->
+<div class="card">
+  <div class="card-header"><span class="icon">🏭</span> Layer 2 · 行业景气</div>
+  <div class="card-body">
+    <p><strong>3D打印行业处于早期→中期过渡，商业航天3D打印子赛道CAGR 35%+。</strong></p>
+    <div class="grid3">
+      <div class="metric good"><div class="val">830亿</div><div class="lbl">2026E行业规模(+18.6%)</div></div>
+      <div class="metric good"><div class="val">+48.5%</div><div class="lbl">H1设备产量增速</div></div>
+      <div class="metric good"><div class="val">+106.8%</div><div class="lbl">出口货值增速(1-5月)</div></div>
+    </div>
+    <p style="margin-top:12px;font-size:.85rem;">
+      铂力特覆盖国内几乎所有头部民营航天企业（蓝箭、星际荣耀、天兵科技等），定位商业航天3D打印绝对龙头。
+    </p>
+  </div>
+</div>
+
+<!-- 关键指标 -->
+<div class="card">
+  <div class="card-header"><span class="icon">📊</span> Layer 4 · 核心财务指标</div>
+  <div class="card-body">
+    <div class="grid3">
+      <div class="metric"><div class="val" style="color:#d97706;">4.2%</div><div class="lbl">ROE (2025FY)</div></div>
+      <div class="metric warn"><div class="val">37.7%</div><div class="lbl">毛利率 (↓自54.5%)</div></div>
+      <div class="metric good"><div class="val">+46.7%</div><div class="lbl">营收增速 (2025FY)</div></div>
+    </div>
+    <div class="grid3" style="margin-top:12px;">
+      <div class="metric"><div class="val" style="color:#d97706;">102×</div><div class="lbl">PE(TTM) · 73%分位</div></div>
+      <div class="metric"><div class="val" style="color:#d97706;">4.84×</div><div class="lbl">PB · 60%分位</div></div>
+      <div class="metric"><div class="val" style="color:#991b1b;">-12.7亿</div><div class="lbl">自由现金流 (2024)</div></div>
+    </div>
+    <div style="margin-top:12px;">
+      <span class="signal yellow">⚠ ROE远低于资本成本</span>
+      <span class="signal red">⚠ 毛利率3年降17ppt</span>
+      <span class="signal yellow">⚠ 应收+存货占净资产55%</span>
+      <span class="signal red">⚠ 证监会立案调查中</span>
+    </div>
+  </div>
+</div>
+
+<!-- 股价走势 -->
+<div class="card">
+  <div class="card-header"><span class="icon">📈</span> 近一年股价走势</div>
+  <div class="card-body">
+    <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+    <p style="margin-top:8px;font-size:.78rem;color:var(--muted);">
+      52周范围：63.42 - 140.19 | YTD：-21.2% | 近5日：+5.1%
+    </p>
+  </div>
+</div>
+
+<!-- 情景分析 -->
+<div class="card">
+  <div class="card-header"><span class="icon">🎯</span> 估值情景分析 · 12个月目标价</div>
+  <div class="card-body">
+    <div class="scenario-card bull">
+      <div class="sc-label">🔴 乐观情景</div>
+      <div>2026FY营收30亿(+54%) · 净利率14% · PE 80×</div>
+      <div class="sc-price" style="color:#ef4444;">目标价 122元 (+39%)</div>
+    </div>
+    <div class="scenario-card base">
+      <div class="sc-label">🔵 基准情景</div>
+      <div>2026FY营收26亿(+33%) · 净利率11% · PE 70×</div>
+      <div class="sc-price" style="color:#3b82f6;">目标价 73元 (-17%)</div>
+    </div>
+    <div class="scenario-card bear">
+      <div class="sc-label">🟢 悲观情景</div>
+      <div>2026FY营收22亿(+13%) · 净利率8% · PE 50×</div>
+      <div class="sc-price" style="color:#22c55e;">目标价 32元 (-64%)</div>
+    </div>
+    <p style="font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px;">
+      ⚠️ 基准情景下当前价格(87.79元)偏高估约17%
+    </p>
+  </div>
+</div>
+
+<!-- ROE/毛利率趋势 -->
+<div class="card">
+  <div class="card-header"><span class="icon">📉</span> 盈利能力趋势</div>
+  <div class="card-body">
+    <div class="chart-wrap"><canvas id="marginChart"></canvas></div>
+    <table style="margin-top:12px;">
+      <tr><th>年度</th><th>ROE</th><th>ROIC</th><th>毛利率</th><th>净利率</th><th>经营CF</th><th>自由CF</th></tr>
+      <tr><td>2022</td><td class="num">5.6%</td><td class="num">3.8%</td><td class="num" style="color:var(--red);">54.5%</td><td class="num">8.7%</td><td class="num" style="color:var(--green);">-1.08亿</td><td class="num" style="color:var(--green);">-2.13亿</td></tr>
+      <tr><td>2023</td><td class="num">3.5%</td><td class="num">3.3%</td><td class="num" style="color:var(--red);">47.2%</td><td class="num">9.6%</td><td class="num" style="color:var(--green);">-1.31亿</td><td class="num" style="color:var(--green);">-3.23亿</td></tr>
+      <tr><td>2024</td><td class="num">2.2%</td><td class="num">1.7%</td><td class="num" style="color:var(--red);">37.4%</td><td class="num">7.9%</td><td class="num" style="color:var(--red);">+3.46亿</td><td class="num" style="color:var(--green);">-12.71亿</td></tr>
+      <tr><td>2025</td><td class="num">4.2%</td><td class="num">3.6%</td><td class="num" style="color:var(--red);">37.7%</td><td class="num">11.0%</td><td class="num" style="color:var(--green);">-2.07亿</td><td class="num" style="color:var(--green);">-10.25亿</td></tr>
+    </table>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:6px;">来源：Tushare (2025年为前三季度累计)</p>
+  </div>
+</div>
+
+<!-- 交易计划 -->
+<div class="trade-card">
+  <h3>⚡ Layer 5 · 交易计划卡片</h3>
+  <p><strong>买入逻辑：</strong>商业航天3D打印订单爆发期 + Q4集中确认收入 + 政策加力催化，从高点140腰斩至63后反弹至87的位置，存在"订单/政策催化→估值修复"的交易窗口。</p>
+  <p>
+    <span class="tag buy">建议买入区间 65-78元</span>
+    <span class="tag buy">目标价 73-122元</span>
+    <span class="tag warn">仓位 3-5%</span>
+  </p>
+  <p><strong>凯利仓位推演：</strong>p=45%, b=1.5 → f*=8.3% → 实操取 1/4~1/2 = <strong>2-4%</strong>，成长风格可放宽到5%</p>
+  <p><strong>止损：</strong></p>
+  <p>
+    <span class="tag sell">逻辑：证监会调查出利空/毛利率<35%</span>
+    <span class="tag sell">技术：跌破63元(前低)</span>
+    <span class="tag sell">时间：4个月无大单 → 减50%</span>
+    <span class="tag sell">绝对：亏损>20%无条件平仓</span>
+  </p>
+  <p><strong>止盈：</strong>
+    <span class="tag buy">100元减40%</span>
+    <span class="tag buy">120-125元清仓</span>
+  </p>
+  <p><strong>催化剂日历：</strong>8/17临时股东会 → Q2财报(8月) → 9-10月航天发射旺季 → Q3财报(10月) → 珠海航展(11月) → 证监会调查结果(Q4?)</p>
+</div>
+
+<!-- 最终结论 -->
+<div class="verdict">
+  <h2>最终结论：谨慎参与 · 小仓位博弈催化</h2>
+  <div class="action">适合：能承受20%+回撤的成长型投资者 · 作为<5%卫星仓位</div>
+  <div style="margin-top:12px;font-size:.85rem;">
+    赛道天花板高（商业航天3D打印 CAGR 35%+）但财务质量堪忧（ROE 4.2%、毛利率持续下降）。
+    3-6个月内"订单驱动"的情绪逻辑可能强于"盈利质量"的基本面逻辑，
+    但证监会调查是不确定性的最大来源。<br>
+    <strong style="color:#991b1b;">若调查结果不利 → 无条件清仓。</strong>
+  </div>
+</div>
+
+<!-- 风险矩阵 -->
+<div class="card">
+  <div class="card-header"><span class="icon">⚠️</span> 风险矩阵</div>
+  <div class="card-body">
+    <table>
+      <tr><th>风险</th><th>影响</th><th>概率</th><th>应对</th></tr>
+      <tr><td class="risk-high">证监会立案调查</td><td>极高</td><td>中</td><td>仓位≤5%</td></tr>
+      <tr><td class="risk-high">毛利率持续下行</td><td>高</td><td>中高</td><td><35%清仓</td></tr>
+      <tr><td class="risk-mid">产能利用率不足</td><td>中高</td><td>中</td><td>跟踪资产周转率</td></tr>
+      <tr><td class="risk-mid">应收/存货高企</td><td>中</td><td>中高</td><td>跟踪经营CF转正</td></tr>
+      <tr><td class="risk-mid">宏观PMI走弱拖累成长股</td><td>中</td><td>中</td><td>配合宏观仓位管理</td></tr>
+      <tr><td class="risk-low">董事会换届过渡</td><td>低</td><td>低</td><td>关注8/17股东会</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。<br>
+  数据来源：腾讯自选股、Tushare、国家统计局、中商产业研究院 | 生成时间：2026-08-04 13:38 CST
+</div>
+
+</div>
+
+<script>
+(function() {
+  if (typeof Chart === 'undefined' || typeof BLT_PRICE === 'undefined') return;
+
+  function baseOpts() {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { labels: { usePointStyle: true, padding: 20, font: { size: 12 } } } },
+      interaction: { intersect: false, mode: 'index' }
+    };
+  }
+
+  // Price chart
+  (function() {
+    var ctx = document.getElementById('priceChart');
+    if (!ctx) return;
+    var d = BLT_PRICE.dates, c = BLT_PRICE.closes;
+    var o = baseOpts();
+    o.plugins.tooltip = {
+      callbacks: {
+        label: function(ctx) { return '收盘价: ' + ctx.parsed.y.toFixed(2) + ' 元'; }
+      }
+    };
+    o.scales = {
+      x: { ticks: { maxTicksLimit: 10, font: { size: 10 } }, grid: { display: false } },
+      y: { ticks: { callback: function(v) { return v + '元'; }, font: { size: 10 } } }
+    };
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: d.map(function(x) { return x.slice(5); }),
+        datasets: [{
+          label: '铂力特 收盘价',
+          data: c,
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,0.08)',
+          fill: true,
+          pointRadius: 0,
+          borderWidth: 1.5,
+          tension: 0.2
+        }]
+      },
+      options: o
+    });
+  })();
+
+  // Margin trend chart
+  (function() {
+    var ctx = document.getElementById('marginChart');
+    if (!ctx) return;
+    var o = baseOpts();
+    o.scales = {
+      x: { grid: { display: false } },
+      y: { ticks: { callback: function(v) { return v + '%'; } }, max: 60 }
+    };
+    o.plugins.tooltip = { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; } } };
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['2022', '2023', '2024', '2025'],
+        datasets: [
+          { label: 'ROE', data: [5.6, 3.5, 2.2, 4.2], backgroundColor: '#3b82f6', borderRadius: 4 },
+          { label: 'ROIC', data: [3.8, 3.3, 1.7, 3.6], backgroundColor: '#60a5fa', borderRadius: 4 },
+          { label: '毛利率', data: [54.5, 47.2, 37.4, 37.7], backgroundColor: '#ef4444', borderRadius: 4 },
+          { label: '净利率', data: [8.7, 9.6, 7.9, 11.0], backgroundColor: '#22c55e', borderRadius: 4 }
+        ]
+      },
+      options: o
+    });
+  })();
+
+})();
+</script>
+
+</body>
+</html>

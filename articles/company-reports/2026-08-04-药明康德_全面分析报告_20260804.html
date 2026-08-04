@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>药明康德(603259) 全面分析 | 五层漏斗 | 2026-08-04</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red: #e74c3c; --red-light: #fde8e8; --red-dark: #c0392b;
+    --green: #27ae60; --green-light: #e8f8ef; --green-dark: #1e8449;
+    --blue: #1a3a5c; --blue-light: #e8edf8; --blue-mid: #2c5282;
+    --gray: #6b7280; --gray-light: #f3f4f6; --gray-dark: #374151;
+    --bg: #f8f9fa; --card-bg: #ffffff; --text: #1a1a2e;
+    --orange: #e67e22; --orange-light: #fef3e8;
+    --yellow: #f59e0b; --yellow-light: #fffbeb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 20px 16px; }
+
+  /* ── Hero Banner ── */
+  .hero {
+    background: linear-gradient(135deg, #0a1628 0%, #122647 40%, #1a3a5c 100%);
+    color: #fff; padding: 48px 36px; border-radius: 16px; margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -30%; right: -15%;
+    width: 380px; height: 380px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(39,174,96,0.12) 0%, transparent 70%);
+  }
+  .hero h1 { font-size: 30px; font-weight: 800; margin-bottom: 6px; position: relative; z-index: 1; }
+  .hero .subtitle { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 22px; position: relative; z-index: 1; }
+  .hero .price-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .hero .price { font-size: 52px; font-weight: 800; color: #e74c3c; }
+  .hero .change { font-size: 18px; font-weight: 700; color: #e74c3c; }
+  .hero .meta { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 14px; display: flex; gap: 20px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .hero .meta span { white-space: nowrap; }
+
+  /* ── Section ── */
+  .section { background: var(--card-bg); border-radius: 12px; padding: 26px 24px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .section h2 { font-size: 19px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--blue-light); color: var(--blue); }
+  .section h3 { font-size: 15px; font-weight: 600; margin: 18px 0 10px; color: #333; }
+  .section h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); margin: 16px 0 8px; }
+
+  /* ── KPI Grid ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .kpi-card { padding: 15px 14px; border-radius: 10px; background: var(--gray-light); text-align: center; }
+  .kpi-card .label { font-size: 11px; color: var(--gray); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .kpi-card .value { font-size: 21px; font-weight: 700; }
+  .kpi-card .sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .kpi-card.red { background: var(--red-light); } .kpi-card.red .value { color: var(--red); }
+  .kpi-card.green { background: var(--green-light); } .kpi-card.green .value { color: var(--green); }
+  .kpi-card.blue { background: var(--blue-light); } .kpi-card.blue .value { color: var(--blue); }
+  .kpi-card.orange { background: var(--orange-light); } .kpi-card.orange .value { color: var(--orange); }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+  th { background: var(--blue); color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+  th.num { text-align: right; }
+  td { padding: 9px 10px; border-bottom: 1px solid #eee; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:hover { background: var(--gray-light); }
+  .up { color: var(--red); font-weight: 600; }
+  .down { color: var(--green); font-weight: 600; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .tag-red { background: var(--red-light); color: var(--red-dark); }
+  .tag-green { background: var(--green-light); color: var(--green-dark); }
+  .tag-blue { background: var(--blue-light); color: var(--blue-mid); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+
+  /* ── Macro Alert ── */
+  .macro-alert { background: var(--yellow-light); border-left: 4px solid var(--yellow); padding: 14px 18px; border-radius: 6px; margin: 12px 0; font-size: 14px; }
+  .macro-alert strong { color: #b45309; }
+
+  /* ── Bull / Bear Cards ── */
+  .thesis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .thesis-card { padding: 20px; border-radius: 10px; }
+  .thesis-card.bull { background: var(--red-light); border-left: 4px solid var(--red); }
+  .thesis-card.bear { background: var(--green-light); border-left: 4px solid var(--green); }
+  .thesis-card h3 { margin-top: 0; font-size: 15px; }
+  .thesis-card ul { margin: 8px 0 0 18px; font-size: 13px; line-height: 1.9; }
+
+  /* ── Variant Perception ── */
+  .variant-box { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd; border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+  .variant-box .vp-title { font-weight: 700; color: var(--blue-mid); font-size: 14px; margin-bottom: 6px; }
+  .variant-box p { font-size: 14px; line-height: 1.8; }
+
+  /* ── Trading Plan Card ── */
+  .trade-card { background: linear-gradient(135deg, #fafafa 0%, #f0f4f8 100%); border: 1px solid #d1d5db; border-radius: 12px; padding: 24px; margin: 16px 0; }
+  .trade-card h3 { font-size: 17px; font-weight: 700; color: var(--blue); margin-bottom: 16px; }
+  .trade-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 13px; line-height: 1.9; }
+  .trade-item { padding: 10px 14px; background: #fff; border-radius: 8px; border: 1px solid #eee; }
+  .trade-item .ti-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); margin-bottom: 3px; }
+  .trade-item .ti-value { font-size: 15px; font-weight: 700; }
+
+  /* ── Risk Matrix ── */
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 12px 0; }
+  .risk-item { padding: 14px 16px; border-radius: 8px; border-left: 4px solid; font-size: 13px; }
+  .risk-item.high { background: #fef2f2; border-color: var(--red); }
+  .risk-item.med { background: #fffbeb; border-color: var(--yellow); }
+  .risk-item.low { background: #f0fdf4; border-color: var(--green); }
+  .risk-item .ri-title { font-weight: 700; margin-bottom: 4px; }
+  .risk-item .ri-desc { color: var(--gray-dark); font-size: 12px; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; margin: 16px 0; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #d1d5db; }
+  .tl-item { position: relative; margin-bottom: 14px; padding-left: 28px; }
+  .tl-item::before { content: ''; position: absolute; left: -18px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--blue-mid); background: #fff; }
+  .tl-item.critical::before { background: var(--red); border-color: var(--red); }
+  .tl-item .tl-date { font-size: 11px; color: var(--gray); font-weight: 600; }
+  .tl-item .tl-title { font-size: 14px; font-weight: 600; margin: 2px 0; }
+  .tl-item .tl-desc { font-size: 12px; color: var(--gray-dark); }
+
+  /* ── Chart Container ── */
+  .chart-box { margin: 16px 0; padding: 10px; background: #fafafa; border-radius: 8px; }
+  .chart-box canvas { max-height: 280px; }
+
+  /* ── Rating Box ── */
+  .rating-box { border: 2px solid var(--orange); border-radius: 12px; padding: 22px; background: var(--orange-light); margin: 20px 0; text-align: center; }
+  .rating-big { font-size: 48px; font-weight: 800; color: var(--orange); line-height: 1; }
+  .rating-label { font-size: 14px; color: #92400e; margin-top: 6px; }
+
+  /* ── Disclaimer ── */
+  .disclaimer { font-size: 11px; color: var(--gray); border-top: 1px solid #ddd; padding-top: 16px; margin-top: 32px; line-height: 1.9; }
+
+  /* ── Mobile ── */
+  @media (max-width: 680px) {
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 24px; }
+    .hero .price { font-size: 38px; }
+    .thesis-row { grid-template-columns: 1fr; }
+    .trade-row { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .risk-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ══════════ HERO BANNER ══════════ -->
+<div class="hero">
+  <h1>药明康德 WuXi AppTec</h1>
+  <div class="subtitle">603259.SH · 上海主板 | 02359.HK · 港股 | 全球CRDMO龙头 | 覆盖日期 2026-08-04</div>
+  <div class="price-row">
+    <span class="price">128.50</span>
+    <span class="change">+0.07 (+0.05%)</span>
+  </div>
+  <div class="meta">
+    <span>总市值 <b>3,834亿</b></span><span>|</span>
+    <span>PE(TTM) <b>19.05</b></span><span>|</span>
+    <span>PB <b>4.82</b></span><span>|</span>
+    <span>YTD <span style="color:#e74c3c;font-weight:700">+44.28%</span></span><span>|</span>
+    <span>52周 85.51–135.17</span><span>|</span>
+    <span>股息率 1.50%</span>
+  </div>
+</div>
+
+<!-- ══════════ 执行摘要 ══════════ -->
+<div class="section">
+  <h2>📋 执行摘要</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="label">综合评分</div>
+      <div class="value">7.95<small style="font-size:13px">/10</small></div>
+      <div class="sub">推荐关注·分批建仓</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="label">财务健康度</div>
+      <div class="value">A+</div>
+      <div class="sub">净现金275亿 | 商誉<1%</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="label">2025年 ROE</div>
+      <div class="value">27.7%</div>
+      <div class="sub">连续3年>15%，含一次性收益</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="label">概率加权目标价</div>
+      <div class="value">~138元</div>
+      <div class="sub">相对现价 +7.6%</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; line-height:1.9;">
+    <strong>药明康德</strong>是全球最大的CRDMO（合同研究、开发与生产）一体化平台，覆盖药物发现→研发→生产→商业化全生命周期。
+    2025年营收454.6亿元（+15.8%），2026H1营收208亿元（+20.6%），持续经营业务增长稳健。
+    CXO行业已确认走出低谷进入<strong style="color:#e74c3c">复苏上行周期</strong>——全球生物医药投融资2025年+57%、2026Q1 CDMO板块收入+20%。
+    当前PE仅<strong>19倍</strong>，为可比CXO公司中最低，但ROE 27.7%为最高——存在显著的<strong style="color:#e74c3c">质量折价</strong>，主因BIOSECURE Act地缘风险压制。
+  </p>
+  <p style="font-size:14px; line-height:1.9; margin-top:8px;">
+    核心博弈点：<strong>市场将1260H清单列入等同于业务终结，但实际情况是——2年+缓冲期、可申诉撤出、非美客户增长强劲。</strong>
+    市场情绪与经营现实的裂口，就是此次交易的核心α来源。
+  </p>
+
+  <!-- Macro Alert -->
+  <div class="macro-alert">
+    <strong>⚡ 宏观提醒：</strong>中国7月PMI降至49.2（收缩区），美联储7月FOMC 9-3偏鹰（3票支持加息）。建议权益仓位控制在<b>50-60%</b>，偏防御配置。药明康德80%+收入来自海外，高利率环境对biotech融资构成压制但高技术制造业PMI 53.3仍在扩张——行业β与宏观β存在结构性背离。
+  </div>
+</div>
+
+<!-- ══════════ Layer 1+2: 宏观与行业 ══════════ -->
+<div class="section">
+  <h2>🔭 Layer 1+2 · 宏观定仓 + 行业选赛道</h2>
+
+  <h4>核心宏观指标</h4>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>信号</th><th>来源</th></tr>
+    <tr><td>制造业PMI (7月)</td><td>49.2</td><td><span class="tag tag-orange">收缩</span></td><td>国家统计局 07-31</td></tr>
+    <tr><td>高技术制造业PMI</td><td>53.3</td><td><span class="tag tag-green">扩张</span></td><td>同上</td></tr>
+    <tr><td>沪深300 PE</td><td>14.4x (84.7%分位)</td><td><span class="tag tag-orange">偏高估</span></td><td>申万宏源 08-02</td></tr>
+    <tr><td>美联储利率</td><td>3.50-3.75%</td><td><span class="tag tag-orange">偏鹰</span></td><td>FOMC 07-29</td></tr>
+    <tr><td>VIX</td><td>~16</td><td><span class="tag tag-green">低位</span></td><td>CBOE 08-03</td></tr>
+    <tr><td>美30Y国债</td><td>5.27-5.28%</td><td><span class="tag tag-red">19年新高</span></td><td>CNBC 07-31</td></tr>
+  </table>
+
+  <h4>CXO行业：复苏早期 → 中期</h4>
+  <table>
+    <tr><th>驱动因素</th><th>量化数据</th><th>方向</th></tr>
+    <tr><td>全球biotech投融资</td><td>2025年1,981亿美元 (+57% YoY)</td><td><span class="up">↑ 强劲复苏</span></td></tr>
+    <tr><td>CDMO板块收入增速</td><td>2026Q1 +20% (vs 2025 +17%)</td><td><span class="up">↑ 加速</span></td></tr>
+    <tr><td>CRO板块收入增速</td><td>2026Q1 +14% (vs 2025 -3%)</td><td><span class="up">↑ 扭正</span></td></tr>
+    <tr><td>医药研发外包率</td><td>52%(2024) → 66%(2034E)</td><td><span class="up">↑ 长期趋势</span></td></tr>
+    <tr><td>中国BD出海交易</td><td>2025年总额1,357亿美元 (历史新高)</td><td><span class="up">↑ 爆发</span></td></tr>
+    <tr><td>新分子需求 (TIDES/ADC/GLP-1)</td><td>多肽CDMO增速>30%</td><td><span class="up">↑ 结构性驱动</span></td></tr>
+  </table>
+
+  <div style="background:#fff5f5; border:1px solid #fecaca; border-radius:8px; padding:14px 18px; margin-top:14px; font-size:13px;">
+    <strong>⚠️ BIOSECURE Act 时间线（关键风险）：</strong><br>
+    2025.12 — 法案作为NDAA第851条立法，不再点名具体公司<br>
+    2026.06.08 — 药明康德列入1260H清单（"中国军工企业"）→ 当日仅跌~5%<br>
+    2026.12 — OMB需发布首批BCOC正式名单<br>
+    2027+ — FAR修订 → 禁令生效 （<b>总缓冲期 1-3年</b>）<br>
+    <span style="color:#6b7280;">药明康德已声明将通过法律途径挑战认定（小米/中微公司有成功撤出先例）</span>
+  </div>
+</div>
+
+<!-- ══════════ Layer 4: 财务深度分析 ══════════ -->
+<div class="section">
+  <h2>📊 Layer 4 · 财务深度分析</h2>
+
+  <!-- Revenue & Profit Chart -->
+  <div class="chart-box">
+    <canvas id="chartRevProfit"></canvas>
+  </div>
+
+  <h4>年度业绩趋势</h4>
+  <table>
+    <tr><th>年份</th><th class="num">营收(亿)</th><th class="num">YoY</th><th class="num">归母净利(亿)</th><th class="num">YoY</th><th class="num">毛利率</th><th class="num">净利率</th><th class="num">ROE</th></tr>
+    <tr><td>2020</td><td class="num">165.4</td><td class="num">—</td><td class="num">29.6</td><td class="num">—</td><td class="num">38.0%</td><td class="num">18.1%</td><td class="num">11.9%</td></tr>
+    <tr><td>2021</td><td class="num">229.0</td><td class="num"><span class="up">+38.5%</span></td><td class="num">51.0</td><td class="num"><span class="up">+72.2%</span></td><td class="num">36.3%</td><td class="num">22.4%</td><td class="num">14.1%</td></tr>
+    <tr><td>2022</td><td class="num">393.5</td><td class="num"><span class="up">+71.8%</span></td><td class="num">88.1</td><td class="num"><span class="up">+72.9%</span></td><td class="num">37.3%</td><td class="num">22.6%</td><td class="num">18.8%</td></tr>
+    <tr><td>2023</td><td class="num">403.4</td><td class="num"><span class="up">+2.5%</span></td><td class="num">96.1</td><td class="num"><span class="up">+9.0%</span></td><td class="num">41.2%</td><td class="num">24.1%</td><td class="num">18.9%</td></tr>
+    <tr><td>2024</td><td class="num">392.4</td><td class="num"><span class="down">-2.7%</span></td><td class="num">94.5</td><td class="num"><span class="down">-1.6%</span></td><td class="num">41.5%</td><td class="num">24.4%</td><td class="num">16.6%</td></tr>
+    <tr style="background:#fef3e8;"><td><strong>2025</strong></td><td class="num"><strong>454.6</strong></td><td class="num"><span class="up"><strong>+15.8%</strong></span></td><td class="num"><strong>191.5</strong></td><td class="num"><span class="up"><strong>+102.6%</strong></span></td><td class="num">47.6%</td><td class="num">42.5%</td><td class="num">27.7%</td></tr>
+    <tr><td>2026H1</td><td class="num">208.0</td><td class="num"><span class="up">+20.6%</span></td><td class="num">85.6</td><td class="num"><span class="up">+101.9%</span></td><td class="num">—</td><td class="num">41.6%</td><td class="num">13.6%*</td></tr>
+  </table>
+  <div style="font-size:11px; color:var(--gray); margin-top:4px;">
+    来源：Tushare income + fina_indicator。*H1 ROE 13.6%已年化。2025年净利含出售ATU业务一次性收益，持续经营净利润率约32-33%。
+  </div>
+
+  <!-- ROE & Margin Chart -->
+  <div class="chart-box">
+    <canvas id="chartROE"></canvas>
+  </div>
+
+  <h4>杜邦分解 (2025FY vs 2024FY)</h4>
+  <table>
+    <tr><th>指标</th><th class="num">2024FY</th><th class="num">2025FY</th><th class="num">变化</th><th>解读</th></tr>
+    <tr><td>ROE</td><td class="num">16.62%</td><td class="num">27.69%</td><td class="num"><span class="up">+11.07pp</span></td><td>大幅提升（含一次性收益）</td></tr>
+    <tr><td>净利率</td><td class="num">24.38%</td><td class="num">42.53%</td><td class="num"><span class="up">+18.15pp</span></td><td>含资产出售收益</td></tr>
+    <tr><td>总资产周转率</td><td class="num">0.52x</td><td class="num">0.60x</td><td class="num"><span class="up">+0.08pp</span></td><td>运营效率持续改善</td></tr>
+    <tr><td>权益乘数</td><td class="num">1.31x</td><td class="num">1.09x</td><td class="num"><span class="down">-0.22pp</span></td><td>主动降杠杆，财务更稳健</td></tr>
+  </table>
+
+  <h4>资产负债表健康度</h4>
+  <table>
+    <tr><th>指标</th><th class="num">2024FY</th><th class="num">2025FY</th><th class="num">2026Q1</th><th>评价</th></tr>
+    <tr><td>有息负债率</td><td class="num">~8%</td><td class="num">~7%</td><td class="num">~7%</td><td><span class="tag tag-green">极低</span></td></tr>
+    <tr><td>有息负债/现金</td><td class="num">29.8%</td><td class="num">26.3%</td><td class="num">23.3%</td><td><span class="tag tag-green">净现金状态</span></td></tr>
+    <tr><td>现金及等价物</td><td class="num">279亿</td><td class="num">324亿</td><td class="num">359亿</td><td><span class="tag tag-green">现金充裕</span></td></tr>
+    <tr><td>商誉/净资产</td><td class="num">1.2%</td><td class="num">1.1%</td><td class="num">1.0%</td><td><span class="tag tag-green">极低风险</span></td></tr>
+    <tr><td>流动比率</td><td class="num">2.38</td><td class="num">3.21</td><td class="num">3.42</td><td><span class="tag tag-green">充裕</span></td></tr>
+  </table>
+  <p style="font-size:13px; margin-top:8px; padding:10px 14px; background:var(--green-light); border-radius:6px;">
+    <strong>✅ 财务健康度评级：A+</strong> —— 现金(359亿) > 有息负债(84亿)，净现金~275亿；商誉仅8.6亿（占净资产1%）；经营现金流持续强劲。
+    这是CXO行业最优质的资产负债表之一。
+  </p>
+</div>
+
+<!-- ══════════ 估值 ══════════ -->
+<div class="section">
+  <h2>💰 Layer 4 · 估值三法交叉验证</h2>
+
+  <h4>DCF情景分析</h4>
+  <table>
+    <tr><th>情景</th><th class="num">目标市值</th><th class="num">目标价/股</th><th class="num">相对现价</th></tr>
+    <tr><td>乐观 (WACC 9%, g=3.5%)</td><td class="num">~5,200亿</td><td class="num">~174元</td><td class="num"><span class="up">+35.7%</span></td></tr>
+    <tr><td>基准 (WACC 9.5%, g=3.0%)</td><td class="num">~4,300亿</td><td class="num">~144元</td><td class="num"><span class="up">+12.3%</span></td></tr>
+    <tr><td>悲观 (WACC 10.5%, g=2.5%)</td><td class="num">~3,400亿</td><td class="num">~114元</td><td class="num"><span class="down">-11.1%</span></td></tr>
+  </table>
+  <div style="font-size:11px; color:var(--gray); margin-top:4px;">[Model Est.] WACC=9.5% (Rf=3.5%+ERP 6%×β1.0)，FCF增速1-5Y:15%，6-10Y:8%</div>
+
+  <h4>可比估值（全球CXO同业）</h4>
+  <div class="chart-box">
+    <canvas id="chartComps"></canvas>
+  </div>
+
+  <table>
+    <tr><th>公司</th><th class="num">PE(TTM)</th><th class="num">ROE</th><th class="num">营收增速</th><th class="num">隐含PEG</th></tr>
+    <tr style="background:#fef3e8;"><td><strong>药明康德</strong></td><td class="num"><strong>19.05</strong></td><td class="num"><strong>27.7%</strong></td><td class="num"><strong>+15.8%</strong></td><td class="num"><strong>~1.2</strong></td></tr>
+    <tr><td>药明生物</td><td class="num">~27</td><td class="num">~14%</td><td class="num">+16.7%</td><td class="num">~1.7</td></tr>
+    <tr><td>药明合联</td><td class="num">~50</td><td class="num">~25%</td><td class="num">+46.7%</td><td class="num">~1.0</td></tr>
+    <tr><td>康龙化成</td><td class="num">~30</td><td class="num">~13%</td><td class="num">~12%</td><td class="num">~2.5</td></tr>
+    <tr><td>凯莱英</td><td class="num">~24</td><td class="num">~11%</td><td class="num">~10%</td><td class="num">~2.3</td></tr>
+    <tr><td>IQVIA (美股)</td><td class="num">~27</td><td class="num">~20%</td><td class="num">~6%</td><td class="num">~4.5</td></tr>
+  </table>
+  <p style="font-size:13px; margin-top:8px; padding:10px 14px; background:var(--blue-light); border-radius:6px;">
+    <strong>🔍 关键发现：</strong>药明康德PE最低(19x)、ROE最高(27.7%)、PEG最低(~1.2)——存在显著的<strong>质量折价</strong>。若BIOSECURE风险充分化解，合理PE应在22-28x，对应目标价<b>148-189元</b>。
+  </p>
+
+  <h4>综合估值结论</h4>
+  <table>
+    <tr><th>情景</th><th class="num">目标价(元)</th><th class="num">空间</th><th class="num">概率权重</th></tr>
+    <tr><td>乐观 (BIOSECURE化解+超预期)</td><td class="num">160-190</td><td class="num"><span class="up">+25%~48%</span></td><td class="num">25%</td></tr>
+    <tr><td>基准 (BIOSECURE悬而未决)</td><td class="num">135-155</td><td class="num"><span class="up">+5%~21%</span></td><td class="num">50%</td></tr>
+    <tr><td>悲观 (BIOSECURE恶化)</td><td class="num">90-115</td><td class="num"><span class="down">-10%~-30%</span></td><td class="num">25%</td></tr>
+    <tr style="background:#fef3e8;"><td><strong>概率加权目标价</strong></td><td class="num"><strong>~138元</strong></td><td class="num"><strong><span class="up">+7.6%</span></strong></td><td class="num">—</td></tr>
+  </table>
+</div>
+
+<!-- ══════════ 多空论点 ══════════ -->
+<div class="section">
+  <h2>⚔️ 多空博弈</h2>
+
+  <div class="thesis-row">
+    <div class="thesis-card bull">
+      <h3>🟢 多头核心论点</h3>
+      <ul>
+        <li><strong>行业β复苏+公司α领先：</strong>CDMO板块Q1收入+20%，药明康德持续经营收入+21.4%领跑；TIDES订单+20.2%</li>
+        <li><strong>CRDMO一体化护城河：</strong>R→D→M全链条，"follow the molecule"管线自然转化，客户粘性极高</li>
+        <li><strong>估值存在质量折价：</strong>19x PE买27.7% ROE，PE/ROE比率仅0.69——市场过度定价了BIOSECURE风险</li>
+      </ul>
+    </div>
+    <div class="thesis-card bear">
+      <h3>🔴 空头核心论点</h3>
+      <ul>
+        <li><strong>BIOSECURE是真实风险：</strong>1260H已列入，法律挑战结果不确定；跨国药企已开始分散供应链</li>
+        <li><strong>2025利润含非经常性收益：</strong>出售ATU一次性收益不可持续，正常化后净利率约32-33%</li>
+        <li><strong>CAPEX大增压缩FCF：</strong>2026年CAPEX指引65-75亿，产能竞赛可能压低行业利润率</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="variant-box">
+    <div class="vp-title">💡 变异认知 — 市场错在哪？</div>
+    <p>
+      <strong>市场过度定价BIOSECURE尾部风险，低估了药明康德在非美市场的增长弹性。</strong><br>
+      市场将1260H等同于"业务死刑"，但：(a) 2年+缓冲期；(b) 小米/中微成功撤出先例；(c) 非美客户收入占比持续提升。
+      2026H1收入+20.6%说明基本面未因BIOSECURE恶化——<strong>市场情绪与经营现实的裂口就是α来源。</strong>
+    </p>
+  </div>
+
+  <h4>确认偏误检查：以下信号将证伪多头论点</h4>
+  <table>
+    <tr><td style="width:24px;">1</td><td>药明康德Q3/Q4新增海外订单显著下滑（美国客户订单增速转负）</td></tr>
+    <tr><td>2</td><td>OMB在2026年12月正式列入BCOC且未给申诉窗口</td></tr>
+    <tr><td>3</td><td>跨国药企公开宣布终止与药明康德的商业化供应合同</td></tr>
+  </table>
+</div>
+
+<!-- ══════════ Layer 5: 交易计划 ══════════ -->
+<div class="section">
+  <h2>🎯 Layer 5 · 交易执行计划</h2>
+
+  <div class="trade-card">
+    <h3>📋 交易计划卡片 — 药明康德 603259.SH</h3>
+
+    <div class="trade-row">
+      <div class="trade-item">
+        <div class="ti-label">买入逻辑</div>
+        <div class="ti-value" style="font-size:13px; font-weight:400;">全球CRDMO龙头β复苏+α领先，19x PE买27.7% ROE存在质量折价修复空间</div>
+      </div>
+      <div class="trade-item">
+        <div class="ti-label">目标价区间</div>
+        <div class="ti-value" style="color:var(--red);">135 – 155 元</div>
+      </div>
+      <div class="trade-item">
+        <div class="ti-label">建议买入区间</div>
+        <div class="ti-value">115 – 128 元</div>
+      </div>
+      <div class="trade-item">
+        <div class="ti-label">建议仓位</div>
+        <div class="ti-value" style="color:var(--orange);">8 – 10%</div>
+      </div>
+    </div>
+
+    <div style="font-size:12px; color:var(--gray); margin-top:12px; line-height:1.8;">
+      <strong>凯利公式展开：</strong>f* = (b×p − q) / b<br>
+      p = 55%（行业复苏+业绩超预期+估值低位） | b = 2.34（止盈155÷止损105）<br>
+      理论 f* = 35.8%，实操取 1/4 凯利 = <b>8.95% → 建议 8-10%</b><br>
+      ⚠️ 若实际胜率仅45%（低10pp），1/4凯利=5.4%——仍可接受；若<40%则降为观察仓
+    </div>
+
+    <table style="margin-top:14px;">
+      <tr><th style="width:90px;">规则类型</th><th>触发条件</th><th>动作</th></tr>
+      <tr>
+        <td><span class="tag tag-red">逻辑止损</span></td>
+        <td>Q3季报美国客户收入占比下降>10pp 且 新增订单增速转负</td>
+        <td>无条件清仓</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-orange">技术止损</span></td>
+        <td>跌破 <b>105元</b>（120日均线/2026年3月低点支撑）</td>
+        <td>无条件清仓</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-orange">时间止损</span></td>
+        <td>买入后<b>6个月内</b>BIOSECURE无任何积极进展</td>
+        <td>减仓50%</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">绝对止损</span></td>
+        <td>亏损超过 <b>15%</b></td>
+        <td>无条件平仓</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">止盈T1</span></td>
+        <td>达到 <b>145元</b>（目标价区间中位）</td>
+        <td>减仓30%</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">止盈T2</span></td>
+        <td>达到 <b>160元</b>（估值上限）</td>
+        <td>再减仓40%</td>
+      </tr>
+    </table>
+
+    <h4 style="margin-top:16px;">📊 每周跟踪指标</h4>
+    <table>
+      <tr><th>指标</th><th>频率</th><th>预警阈值</th><th>数据来源</th></tr>
+      <tr><td>新签订单/在手订单</td><td>季度</td><td>环比增速转负</td><td>公司季报</td></tr>
+      <tr><td>全球biotech月度投融资</td><td>月度</td><td>&lt;40亿美元/月</td><td>PitchBook/Crunchbase</td></tr>
+      <tr><td>1260H/BIOSECURE进展</td><td>事件驱动</td><td>OMB正式名单+无申诉窗口</td><td>财联社/FiercePharma</td></tr>
+      <tr><td>北向资金持仓占比</td><td>每日</td><td>占比&lt;3%</td><td>沪深港通</td></tr>
+      <tr><td>PE vs 行业PE溢价率</td><td>每周</td><td>溢价率持续收窄</td><td>westock-data</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════ 风险矩阵 + 催化剂 ══════════ -->
+<div class="section">
+  <h2>⚠️ 风险矩阵 + 📅 催化剂日历</h2>
+
+  <div class="risk-grid">
+    <div class="risk-item high">
+      <div class="ri-title">🔴 BIOSECURE法案执行</div>
+      <div class="ri-desc">影响：估值折价30-50% | 概率：30%<br>应对：仓位控制+逻辑止损<br>1260H已列入，2026.12 OMB名单是关键节点</div>
+    </div>
+    <div class="risk-item med">
+      <div class="ri-title">🟡 全球biotech融资转冷</div>
+      <div class="ri-desc">影响：订单增速放缓 | 概率：25%<br>应对：跟踪月度投融资数据<br>高利率环境是主要压制因素</div>
+    </div>
+    <div class="risk-item med">
+      <div class="ri-title">🟡 人民币大幅升值</div>
+      <div class="ri-desc">影响：利润汇率损失5-10% | 概率：20%<br>应对：公司有对冲机制<br>80%+收入为美元/欧元计价</div>
+    </div>
+    <div class="risk-item low">
+      <div class="ri-title">🟢 CDMO产能过剩</div>
+      <div class="ri-desc">影响：价格战压缩利润率 | 概率：15%<br>应对：新分子业务壁垒高<br>TIDES/ADC等高端产能仍紧缺</div>
+    </div>
+  </div>
+
+  <h4>📅 未来6个月关键催化剂</h4>
+  <div class="timeline">
+    <div class="tl-item critical">
+      <div class="tl-date">2026-08-15 前后</div>
+      <div class="tl-title">药明康德 H1 正式半年报 + 业绩会</div>
+      <div class="tl-desc">关注：新增订单金额、2026年收入指引调整、TIDES/新分子业务进展、美国客户收入占比变化</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-09-16</div>
+      <div class="tl-title">美联储 9月 FOMC 会议</div>
+      <div class="tl-desc">利率路径影响全球biotech估值和融资环境。若释放降息信号，利好CXO板块整体估值修复</div>
+    </div>
+    <div class="tl-item critical">
+      <div class="tl-date">2026-10 月底</div>
+      <div class="tl-title">药明康德 Q3 季报</div>
+      <div class="tl-desc">最关键观察窗口：美国客户收入是否出现实质下滑、季度新增订单趋势</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026-11 月</div>
+      <div class="tl-title">美国总统中期选举</div>
+      <div class="tl-desc">对华政策基调是否转向，影响BIOSECURE执行力度</div>
+    </div>
+    <div class="tl-item critical">
+      <div class="tl-date">2026-12-18 前后</div>
+      <div class="tl-title">OMB 发布首批 BCOC 正式名单</div>
+      <div class="tl-desc">⚡ BIOSECURE最关键节点。若药明康德被列入且无申诉窗口→逻辑止损触发。若未被列入或列入但给申诉窗口→重大利好</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2027 年初</div>
+      <div class="tl-title">1260H 年度名单更新</div>
+      <div class="tl-desc">若能撤出清单→估值修复核心催化剂</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 综合评分 ══════════ -->
+<div class="section">
+  <h2>🏆 综合评分</h2>
+  <div class="rating-box">
+    <div class="rating-big">7.95 <small style="font-size:24px;">/ 10</small></div>
+    <div class="rating-label">推荐关注 · 分批建仓</div>
+  </div>
+  <table>
+    <tr><th>维度</th><th class="num">评分</th><th class="num">权重</th><th class="num">加权</th></tr>
+    <tr><td>商业模式 / 护城河</td><td class="num">9/10</td><td class="num">25%</td><td class="num">2.25</td></tr>
+    <tr><td>财务健康度</td><td class="num">9/10</td><td class="num">20%</td><td class="num">1.80</td></tr>
+    <tr><td>成长性</td><td class="num">8/10</td><td class="num">20%</td><td class="num">1.60</td></tr>
+    <tr><td>估值吸引力</td><td class="num">7/10</td><td class="num">20%</td><td class="num">1.40</td></tr>
+    <tr><td>宏观 / 行业环境</td><td class="num">6/10</td><td class="num">15%</td><td class="num">0.90</td></tr>
+  </table>
+  <p style="font-size:13px; margin-top:10px; color:var(--gray);">
+    核心优势：全球CRDMO龙头的一体化平台+财务质量A++增长确定性强+估值处于历史低位。<br>
+    核心压制：BIOSECURE Act地缘风险——但时间在药明康德这边（2年+缓冲期、多路径申诉）。
+  </p>
+</div>
+
+<!-- ══════════ 免责声明 ══════════ -->
+<div class="disclaimer">
+  <strong>⚠️ 免责声明</strong><br>
+  本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。<br><br>
+  数据来源：Tushare、国家统计局、westock-data（腾讯自选股）、各券商研报（华源/华创/华鑫/国金/中信建投/开源/万联）、财联社、CBOE、CME FedWatch、centralbank-watch.com、Saxo Options Brief。部分估值参数为模型估计(Model Est.)，实际结果可能存在重大偏差。DCF假设（WACC 9.5%、永续增长率3.0%）为模型输入，对结论有决定性影响。
+</div>
+
+</div><!-- /container -->
+
+<!-- ══════════ Chart.js ══════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  function baseOpts(yLabel, y2Label) {
+    var o = {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 16 } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y:  { title: { display: true, text: yLabel }, grid: { color: '#eee' }, ticks: { font: { size: 11 }, callback: function(v) { return v >= 1e8 ? (v/1e8).toFixed(0)+'亿' : v+'%'; } } }
+      }
+    };
+    if (y2Label) {
+      o.scales.y1 = { position: 'right', title: { display: true, text: y2Label }, grid: { display: false }, ticks: { font: { size: 11 }, callback: function(v) { return v+'%'; } } };
+    }
+    return o;
+  }
+
+  // ── Revenue & Profit Chart ──
+  new Chart(document.getElementById('chartRevProfit'), {
+    type: 'bar',
+    data: {
+      labels: ['2020','2021','2022','2023','2024','2025','2026H1'],
+      datasets: [
+        { label: '营收 (亿元)', data: [165.4, 229.0, 393.5, 403.4, 392.4, 454.6, 208.0], backgroundColor: '#2c5282', borderRadius: 4, order: 2 },
+        { label: '归母净利 (亿元)', data: [29.6, 51.0, 88.1, 96.1, 94.5, 191.5, 85.6], backgroundColor: '#e74c3c', borderRadius: 4, order: 2 },
+        { label: '营收增速 (%)', data: [null, 38.5, 71.8, 2.5, -2.7, 15.8, 20.6], type: 'line', borderColor: '#f59e0b', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 4, tension: 0.3, yAxisID: 'y1', order: 1 },
+      ]
+    },
+    options: (function() {
+      var o = baseOpts('金额 (亿元)', '增速 (%)'); return o; })()
+  });
+
+  // ── ROE & Margin Chart ──
+  new Chart(document.getElementById('chartROE'), {
+    type: 'line',
+    data: {
+      labels: ['2020','2021','2022','2023','2024','2025'],
+      datasets: [
+        { label: 'ROE', data: [11.9, 14.1, 18.8, 18.9, 16.6, 27.7], borderColor: '#e74c3c', backgroundColor: 'rgba(231,76,60,0.08)', borderWidth: 3, pointRadius: 5, tension: 0.3, fill: true },
+        { label: '毛利率', data: [38.0, 36.3, 37.3, 41.2, 41.5, 47.6], borderColor: '#2c5282', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 4, tension: 0.3, borderDash: [6,3] },
+        { label: '净利率', data: [18.1, 22.4, 22.6, 24.1, 24.4, 42.5], borderColor: '#27ae60', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 4, tension: 0.3, borderDash: [2,2] },
+      ]
+    },
+    options: baseOpts('%')
+  });
+
+  // ── Comparable Valuation Chart ──
+  new Chart(document.getElementById('chartComps'), {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: '药明康德', data: [{x:15.8, y:19.05}], backgroundColor: '#e74c3c', borderColor: '#e74c3c', pointRadius: 8, pointStyle: 'rectRounded' },
+        { label: '药明生物', data: [{x:16.7, y:27}], backgroundColor: '#f59e0b', pointRadius: 6 },
+        { label: '药明合联', data: [{x:46.7, y:50}], backgroundColor: '#8b5cf6', pointRadius: 6 },
+        { label: '康龙化成', data: [{x:12, y:30}], backgroundColor: '#3b82f6', pointRadius: 6 },
+        { label: '凯莱英', data: [{x:10, y:24}], backgroundColor: '#10b981', pointRadius: 6 },
+        { label: 'IQVIA', data: [{x:6, y:27}], backgroundColor: '#6b7280', pointRadius: 6 },
+      ]
+    },
+    options: (function() {
+      return {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': PE=' + ctx.parsed.y + 'x, 增速=' + ctx.parsed.x + '%'; } } }
+        },
+        scales: {
+          x: { title: { display: true, text: '营收增速 (%)' }, grid: { color: '#eee' }, ticks: { font: { size: 11 } } },
+          y: { title: { display: true, text: 'PE (TTM)' }, grid: { color: '#eee' }, ticks: { font: { size: 11 } } }
+        }
+      };
+    })()
+  });
+
+});
+</script>
+
+</body>
+</html>

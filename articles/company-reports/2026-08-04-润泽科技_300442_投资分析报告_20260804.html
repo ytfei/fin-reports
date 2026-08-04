@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>润泽科技(300442) 投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --sub: #555;
+  --red: #d63031;
+  --green: #00b894;
+  --blue: #0984e3;
+  --orange: #e17055;
+  --purple: #6c5ce7;
+  --border: #e0e0e0;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 880px; margin: 0 auto; padding: 24px 16px; }
+
+/* Banner */
+.banner { background: linear-gradient(135deg, #0c1a32 0%, #1a3a5c 50%, #0d2137 100%); color: #fff; border-radius: 16px; padding: 40px 32px; margin-bottom: 24px; position: relative; overflow: hidden; }
+.banner::after { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.03); }
+.banner h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.banner .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
+.banner .meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; opacity: 0.7; }
+.banner .price-badge { display: inline-block; background: rgba(255,255,255,0.12); padding: 8px 16px; border-radius: 20px; margin-top: 12px; font-size: 18px; font-weight: 700; }
+
+/* Cards */
+.card { background: var(--card-bg); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.card h2 { font-size: 20px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--blue); display: flex; align-items: center; gap: 10px; }
+.card h3 { font-size: 16px; margin: 16px 0 10px; color: var(--text); }
+.card h4 { font-size: 14px; margin: 12px 0 8px; color: var(--sub); }
+
+/* Tag */
+.tag { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-right: 6px; }
+.tag-red { background: #ffeaea; color: var(--red); }
+.tag-green { background: #e6fff5; color: var(--green); }
+.tag-blue { background: #e8f0fe; color: var(--blue); }
+.tag-orange { background: #fff3e0; color: var(--orange); }
+.tag-purple { background: #f3efff; color: var(--purple); }
+
+/* Grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+/* KPI */
+.kpi { text-align: center; padding: 12px; border-radius: 10px; background: #f8f9fa; }
+.kpi .val { font-size: 22px; font-weight: 700; }
+.kpi .lbl { font-size: 12px; color: var(--sub); margin-top: 4px; }
+.val-up { color: var(--red); }
+.val-down { color: var(--green); }
+.val-neutral { color: var(--text); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+th { background: #f0f4f8; padding: 10px 12px; text-align: left; font-weight: 600; color: var(--sub); border-bottom: 2px solid var(--border); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: #fafbfc; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Signal lights */
+.signal { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.signal-red { background: var(--red); }
+.signal-yellow { background: var(--orange); }
+.signal-green { background: var(--green); }
+
+/* Trading Plan Card */
+.plan-card { background: linear-gradient(135deg, #fffef5, #fff8e7); border: 1px solid #f0d78c; border-radius: 14px; padding: 24px; margin: 20px 0; }
+.plan-card h2 { border-bottom-color: var(--orange); }
+.plan-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #e8dcc8; font-size: 14px; }
+.plan-row:last-child { border-bottom: none; }
+.plan-label { color: var(--sub); }
+.plan-value { font-weight: 600; }
+
+/* Charts */
+.chart-wrap { position: relative; height: 320px; margin: 16px 0; }
+.chart-wrap-sm { position: relative; height: 260px; margin: 16px 0; }
+
+/* Risk Matrix */
+.risk-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.risk-lvl { width: 50px; height: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+.risk-h { background: var(--red); }
+.risk-m { background: var(--orange); }
+.risk-l { background: var(--green); }
+.risk-name { flex: 1; font-weight: 600; font-size: 14px; }
+.risk-desc { font-size: 13px; color: var(--sub); max-width: 400px; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .grid2,.grid3,.grid4 { grid-template-columns: 1fr 1fr; }
+  .banner { padding: 24px 20px; }
+  .banner h1 { font-size: 22px; }
+  .plan-row { flex-direction: column; gap: 4px; }
+}
+
+/* Layer indicator */
+.layer-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--sub); margin-bottom: 8px; }
+.layer-num { background: var(--blue); color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+
+/* Disclaimer */
+.disclaimer { font-size: 12px; color: #999; text-align: center; padding: 20px 0; border-top: 1px solid var(--border); margin-top: 32px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="meta">
+    <span>📅 2026-08-04</span>
+    <span>👤 弈投师 · 全栈投研策略</span>
+    <span>🏷️ AIDC · 算力基础设施</span>
+  </div>
+  <h1>润泽科技 (300442.SZ)</h1>
+  <div class="subtitle">润泽智算科技集团股份有限公司 · 中国领先的人工智能基础设施服务商</div>
+  <div class="price-badge">¥62.97 <span style="font-size:13px;opacity:0.7">| PE(TTM) 19.86 | PB 7.39 | 总市值 1033亿</span></div>
+  <div style="margin-top:10px;font-size:13px;opacity:0.6">52周区间: ¥44.61 – ¥110.74 | 近60日: <span style="color:#00b894">-35.64%</span> | 年初至今: <span style="color:#d63031">+19.82%</span></div>
+</div>
+
+<!-- ==================== LAYER 1: 宏观 ==================== -->
+<div class="card">
+  <div class="layer-badge"><span class="layer-num">L1</span> 宏观定方向 · 仓位判断</div>
+  <h2>📊 宏观背景与仓位判断</h2>
+
+  <div class="grid3">
+    <div class="kpi">
+      <div class="val" style="color:var(--orange)">49.2</div>
+      <div class="lbl">7月 PMI（荣枯线 50）</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:var(--red)">84.4%</div>
+      <div class="lbl">沪深300 PE十年分位</div>
+    </div>
+    <div class="kpi">
+      <div class="val">~5.3%</div>
+      <div class="lbl">股权风险溢价 (ERP)</div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px;">
+    <tr><th style="width:30%">指标</th><th>当前值</th><th>信号</th><th>解读</th></tr>
+    <tr>
+      <td>经济周期</td>
+      <td>PMI 49.2%（7月）</td>
+      <td><span class="signal signal-yellow"></span>偏弱</td>
+      <td>供需双弱，新订单指数48.5%跌破荣枯线；政治局会议强调"及时谋划出台务实管用的增量政策"</td>
+    </tr>
+    <tr>
+      <td>货币政策</td>
+      <td>LPR 1Y 3.0% / 5Y 3.50%</td>
+      <td><span class="signal signal-green"></span>宽松</td>
+      <td>适度宽松基调不变，降准降息预期升温；10Y国债收益率1.709%处历史低位</td>
+    </tr>
+    <tr>
+      <td>市场估值</td>
+      <td>沪深300 PE 14.30</td>
+      <td><span class="signal signal-yellow"></span>偏贵</td>
+      <td>处于84.4%十年分位，非深度价值区间；但成长股结构性机会仍存</td>
+    </tr>
+    <tr>
+      <td>风险偏好</td>
+      <td>USD/CNY 6.7542</td>
+      <td><span class="signal signal-green"></span>中性</td>
+      <td>人民币偏强，北向资金整体稳定；美伊冲突扰动油价但影响可控</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;background:#f0f4f8;border-radius:10px;">
+    <strong>🎯 宏观结论：</strong>经济基本面偏弱、估值不便宜，但流动性宽松支撑结构性行情。建议权益仓位 <strong>50-60%</strong>，偏<strong>进攻</strong>（聚焦高景气赛道如AIDC），但需控制单票风险。
+    <br><span style="color:var(--orange);font-size:13px;">⚠️ 最大宏观风险：经济超预期下行 + 美伊冲突升级推高能源成本 → 影响数据中心运营成本。</span>
+  </div>
+</div>
+
+<!-- ==================== LAYER 2: 行业 ==================== -->
+<div class="card">
+  <div class="layer-badge"><span class="layer-num">L2</span> 行业选赛道</div>
+  <h2>🏭 数据中心/AIDC 行业分析</h2>
+
+  <div class="grid4">
+    <div class="kpi">
+      <div class="val val-up">+73%</div>
+      <div class="lbl">润泽AIDC收入增速(2025)</div>
+    </div>
+    <div class="kpi">
+      <div class="val val-up">+20%</div>
+      <div class="lbl">零售AIDC租金涨幅</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:var(--blue)">6GW</div>
+      <div class="lbl">润泽全球规划算力</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:var(--orange)">~30%</div>
+      <div class="lbl">2026液冷渗透率(E)</div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px;">
+    <tr><th style="width:25%">维度</th><th>判断</th><th>量化支撑</th></tr>
+    <tr>
+      <td><strong>景气度</strong></td>
+      <td><span class="tag tag-red">高景气 · 中期</span></td>
+      <td>字节系AIDC全面涨价5-10%；零售高密机柜月租涨20-30元/kW；北美云厂商资本开支2025前三季同比+65%</td>
+    </tr>
+    <tr>
+      <td><strong>竞争格局</strong></td>
+      <td><span class="tag tag-blue">集中度提升</span></td>
+      <td>CR5 预计突破60%；能耗指标审批收紧构筑壁垒；先发卡位的一线城市周边资源稀缺</td>
+    </tr>
+    <tr>
+      <td><strong>估值水位</strong></td>
+      <td><span class="tag tag-orange">分化明显</span></td>
+      <td>数据港PE 157x / 奥飞 PE 91x / 润泽扣非PE ~50x / 光环新网亏损 —— 龙头溢价合理但非便宜</td>
+    </tr>
+    <tr>
+      <td><strong>资金流向</strong></td>
+      <td><span class="tag tag-green">机构重配</span></td>
+      <td>REITs打通退出通道（南方润泽REIT募45亿）；北向+机构持续增配AIDC龙头</td>
+    </tr>
+    <tr>
+      <td><strong>供给约束</strong></td>
+      <td><span class="tag tag-red">硬瓶颈</span></td>
+      <td>PUE要求东≤1.25/西≤1.20、绿电≥80%；柴发/燃气轮机全球交付排至2028年后</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;background:#f0f4f8;border-radius:10px;">
+    <strong>🎯 行业结论：</strong>AIDC正处于"从概念叙事转向业绩验证"的关键阶段。需求端（AI大模型训练+推理）确定性高，供给端（电力+能耗+设备）形成硬约束，<strong>量价齐升逻辑正在兑现</strong>。润泽科技作为龙头享有卡位优势。
+    <br><span style="color:var(--orange);font-size:13px;">⚠️ 行业风险：GPU断供、大客户资本开支周期性回调、技术路线切换（液冷方案竞争）。</span>
+  </div>
+</div>
+
+<!-- ==================== LAYER 3: 筛选 ==================== -->
+<div class="card">
+  <div class="layer-badge"><span class="layer-num">L3</span> 量化初筛</div>
+  <h2>🔍 多因子筛选与可比对标</h2>
+
+  <h3>硬性淘汰检查（润泽科技）</h3>
+  <table>
+    <tr><th>检查项</th><th>阈值</th><th>实际值</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流</td><td>≤1年负</td><td>2023-2025全部为正（32.92亿/2025）</td><td>✅ 通过</td></tr>
+    <tr><td>商誉/净资产</td><td>&lt;30%</td><td>3.85亿 / 142.86亿 = 2.7%</td><td>✅ 通过</td></tr>
+    <tr><td>大股东质押率</td><td>&lt;50%</td><td>[MISSING: 需确认最新质押数据]</td><td>⚠️ 待查</td></tr>
+    <tr><td>财务违规记录</td><td>近2年无重大处罚</td><td>未发现重大违规</td><td>✅ 通过</td></tr>
+    <tr><td>日均成交额</td><td>&gt;3000万</td><td>近期日均~20-40亿</td><td>✅ 通过</td></tr>
+  </table>
+
+  <h3>可比公司估值对比</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>市值(亿)</th><th>PE(TTM)</th><th>PB</th><th>营收增速</th><th>毛利率</th><th>YTD</th><th>核心定位</th></tr>
+    <tr style="background:#fffef5">
+      <td><strong>300442</strong></td><td><strong>润泽科技</strong></td><td class="num"><strong>1033</strong></td><td class="num">19.86*</td><td class="num">7.39</td><td class="num" style="color:var(--red)">+53.5%</td><td class="num">46.0%</td><td class="num" style="color:var(--red)">+19.8%</td><td>AIDC龙头·全国布局</td>
+    </tr>
+    <tr>
+      <td>300738</td><td>奥飞数据</td><td class="num">219</td><td class="num">90.79</td><td class="num">5.97</td><td class="num" style="color:var(--red)">+79.2%</td><td class="num">44-48%</td><td class="num" style="color:var(--red)">+20.2%</td><td>华南区域龙头</td>
+    </tr>
+    <tr>
+      <td>603881</td><td>数据港</td><td class="num">219</td><td class="num">157.0</td><td class="num">6.55</td><td class="num">[MISSING]</td><td class="num">38-42%</td><td class="num" style="color:var(--red)">+0.3%</td><td>阿里深度绑定</td>
+    </tr>
+    <tr>
+      <td>300383</td><td>光环新网</td><td class="num">240</td><td class="num">亏损</td><td class="num">2.03</td><td class="num">[MISSING]</td><td class="num">36-41%</td><td class="num" style="color:var(--red)">+6.8%</td><td>传统IDC转型中</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:var(--sub);margin-top:6px;">*润泽PE(TTM)=19.86含REIT处置一次性收益37.51亿；<strong>基于扣非净利润的实质PE约50倍</strong>。数据来源：腾讯自选股/westock-data(2026-08-03收盘)</p>
+
+  <div style="margin-top:12px;padding:14px;background:#fff8e7;border-radius:8px;font-size:14px;">
+    <strong>筛选结论：</strong>润泽科技在AIDC赛道中规模最大、盈利能力最强（毛利率46% vs 同行38-48%）、估值相对合理（扣非PE 50x vs 奥飞91x/数据港157x）。<strong>入选深度研究</strong>——同时建议关注奥飞数据（华南弹性标的）。
+  </div>
+</div>
+
+<!-- ==================== LAYER 4: 深度研究 ==================== -->
+<div class="card">
+  <div class="layer-badge"><span class="layer-num">L4</span> 深度研究 · 出估值</div>
+  <h2>🔬 润泽科技深度拆解</h2>
+
+  <!-- 4a. 商业模式 -->
+  <h3>4a. 商业模式与护城河</h3>
+  <div class="grid2">
+    <div style="padding:14px;background:#f8f9fa;border-radius:10px;">
+      <strong>🏗️ 怎么赚钱？</strong>
+      <p style="font-size:14px;margin-top:6px;"><strong>IDC业务（55.8%）</strong>：批发模式，向互联网/云厂商提供高端机柜托管，收入=机柜租金。<br>
+      <strong>AIDC业务（44.2%）</strong>：自投自建智算中心+高性能服务器集群，为AI客户提供GPU算力服务，收入=算力租赁费。<br>
+      2025年AIDC增速+73%，已成核心增长引擎。</p>
+    </div>
+    <div style="padding:14px;background:#f8f9fa;border-radius:10px;">
+      <strong>🛡️ 护城河在哪？</strong>
+      <p style="font-size:14px;margin-top:6px;">
+      ① <strong>区位卡位</strong>：全国6大区域7个集群，一线周边稀缺电力+能耗指标<br>
+      ② <strong>规模壁垒</strong>：6GW总规划、750MW运营，单体100MW超大规模交付能力<br>
+      ③ <strong>客户粘性</strong>：覆盖头部互联网+AI企业，前五大客户占比95.5%但单一依赖下降中<br>
+      ④ <strong>REITs闭环</strong>：深交所首单数据中心公募REIT，打通"投建营退"循环</p>
+    </div>
+  </div>
+
+  <!-- 4b. 财务深度 -->
+  <h3>4b. 财务深度分析</h3>
+  <div class="grid3">
+    <div class="kpi">
+      <div class="val val-up">46.0%</div>
+      <div class="lbl">2025整体毛利率（AIDC 48.5%）</div>
+    </div>
+    <div class="kpi">
+      <div class="val val-up">32.92亿</div>
+      <div class="lbl">2025经营现金流（+57%）</div>
+    </div>
+    <div class="kpi">
+      <div class="val" style="color:var(--orange)">62.8%</div>
+      <div class="lbl">资产负债率</div>
+    </div>
+  </div>
+
+  <table style="margin-top:12px;">
+    <tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026Q1</th></tr>
+    <tr>
+      <td>营收（亿）</td><td class="num">27.15</td><td class="num">43.51</td><td class="num">43.65</td><td class="num">56.74</td><td class="num">18.40</td>
+    </tr>
+    <tr>
+      <td>营收增速</td><td class="num">-</td><td class="num" style="color:var(--red)">+60.3%</td><td class="num" style="color:var(--red)">+0.3%</td><td class="num" style="color:var(--red)">+30.0%</td><td class="num" style="color:var(--red)">+53.5%</td>
+    </tr>
+    <tr>
+      <td>扣非净利润（亿）</td><td class="num">11.98</td><td class="num">17.62</td><td class="num">17.78</td><td class="num">19.01</td><td class="num">5.82</td>
+    </tr>
+    <tr>
+      <td>扣非净利率</td><td class="num">44.1%</td><td class="num">40.5%</td><td class="num">40.7%</td><td class="num">33.5%</td><td class="num">31.6%</td>
+    </tr>
+    <tr>
+      <td>经营现金流（亿）</td><td class="num">[MISSING]</td><td class="num">[MISSING]</td><td class="num">20.95</td><td class="num">32.92</td><td class="num">13.16</td>
+    </tr>
+    <tr>
+      <td>经营CF/扣非净利</td><td class="num">-</td><td class="num">-</td><td class="num">1.18x</td><td class="num">1.73x</td><td class="num">2.26x</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:12px;padding:14px;background:#fff3e0;border-radius:8px;font-size:14px;">
+    <strong>⚠️ 核心矛盾——"利润剪刀差"：</strong>2025年营收+30%，扣非净利仅+6.9%。原因：下半年新数据中心集中转固，折旧占AIDC成本从51%跳升至74%。这是重资产扩张的典型前置成本——收入弹性领先利润弹性1-2个季度。<br>
+    <strong>边际改善信号：</strong>2026Q1扣非净利+35.9%，经营CF达13.16亿（远超净利5.82亿），说明折旧拖累正在被收入增长消化。
+  </div>
+
+  <!-- Revenue Chart -->
+  <div class="chart-wrap">
+    <canvas id="revChart"></canvas>
+  </div>
+
+  <h3>4c. 估值——三种方法交叉验证</h3>
+
+  <div class="grid2">
+    <div style="padding:14px;background:#e8f0fe;border-radius:10px;">
+      <strong>📐 DCF估值（简化模型）</strong>
+      <table style="font-size:12px;margin-top:8px;">
+        <tr><td>WACC</td><td class="num">6.5%</td><td>（权益成本9.7%×37.2% + 债务成本4%×62.8%×[1-15%]）</td></tr>
+        <tr><td>永续增长率</td><td class="num">3.0%</td><td></td></tr>
+        <tr><td>预测期</td><td class="num">5年</td><td></td></tr>
+        <tr><td>2026E FCF</td><td class="num">~18亿</td><td>（经营CF 40亿 - 维持性Capex 22亿）</td></tr>
+        <tr><td>2027E FCF</td><td class="num">~24亿</td><td></td></tr>
+        <tr><td>2028E FCF</td><td class="num">~30亿</td><td></td></tr>
+        <tr style="border-top:2px solid #0984e3;"><td><strong>企业价值</strong></td><td class="num"><strong>~620亿</strong></td><td></td></tr>
+        <tr><td>净债务</td><td class="num">~122亿</td><td></td></tr>
+        <tr style="border-top:2px solid #0984e3;"><td><strong>股权价值</strong></td><td class="num"><strong>~498亿</strong></td><td></td></tr>
+        <tr><td><strong>每股价值</strong></td><td class="num"><strong>~30.3元</strong></td><td>（16.41亿总股本）</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--sub);margin-top:6px;">[Model Est.] 假设2026-2028营收增速40%/25%/20%，FCF利润率逐步修复至35%+。DCF结果偏低，反映重资产高Capex特征——市场给予的成长溢价远超静态DCF。</p>
+    </div>
+    <div style="padding:14px;background:#f3efff;border-radius:10px;">
+      <strong>📊 可比估值法</strong>
+      <table style="font-size:12px;margin-top:8px;">
+        <tr><td>2026E 扣非净利</td><td class="num">~25亿</td><td>（营收~80亿 × 扣非净利率~31%）</td></tr>
+        <tr><td>悲观情景 PE 25x</td><td class="num" style="color:var(--green)">625亿 / 38.1元</td><td>-39%下行</td></tr>
+        <tr><td>基准情景 PE 35x</td><td class="num">875亿 / 53.3元</td><td>-15%下行</td></tr>
+        <tr><td>乐观情景 PE 45x</td><td class="num" style="color:var(--red)">1125亿 / 68.5元</td><td>+9%上行</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--sub);margin-top:6px;">行业可比：数据港PE 157x（增长慢）、奥飞PE 91x（弹性大），润泽35-45x在龙头中合理。</p>
+
+      <strong style="display:block;margin-top:14px;">📈 历史估值分位</strong>
+      <table style="font-size:12px;margin-top:6px;">
+        <tr><td>当前 PE(TTM)</td><td class="num">19.86</td><td>（含一次性收益，不可比）</td></tr>
+        <tr><td>当前 扣非PE</td><td class="num">~50x</td><td>（基于TTM扣非~20.5亿）</td></tr>
+        <tr><td>当前 PB</td><td class="num">7.39</td><td>（重资产模式，参考价值有限）</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 多空双方 -->
+  <h3>4d. 多空核心论点</h3>
+  <div class="grid2" style="margin-top:12px;">
+    <div style="padding:16px;background:#ffeaea;border-radius:10px;border-left:4px solid var(--red);">
+      <strong>🐂 多头论点</strong>
+      <ol style="font-size:14px;margin:8px 0 0 18px;">
+        <li><strong>AIDC量价齐升</strong>：字节系提价5-10%，零售涨20%；2026Q1营收+53.5%验证需求爆发</li>
+        <li><strong>"剪刀差"收窄</strong>：新数据中心折旧前置已被Q1业绩改善信号验证，利润释放加速</li>
+        <li><strong>全球化+REITs</strong>：香港/印尼600MW增量 + REITs打通资本循环，打开长期空间</li>
+      </ol>
+    </div>
+    <div style="padding:16px;background:#e6fff5;border-radius:10px;border-left:4px solid var(--green);">
+      <strong>🐻 空头论点</strong>
+      <ol style="font-size:14px;margin:8px 0 0 18px;">
+        <li><strong>估值不便宜</strong>：扣非PE ~50x，从110高点回撤43%后仍高于DCF隐含价值</li>
+        <li><strong>重资产风险</strong>：资产负债率62.8%，有息负债182亿，利率上行将直接侵蚀利润</li>
+        <li><strong>客户集中+芯片依赖</strong>：前五大客户占95.5%，GPU断供可能影响AIDC交付</li>
+      </ol>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;padding:14px;background:#f0f4f8;border-radius:10px;font-size:14px;">
+    <strong>🎯 变异认知：</strong>市场过度聚焦2025年"扣非增速仅6.9%"的表面数字，低估了折旧前置造成的"假性利润压制"。2026Q1扣非+36%的经营CF/净利比2.26x，说明真实盈利能力远强于账面利润。另外，<strong>REIT平台的价值远未被充分定价</strong>——它不仅是一次性融资工具，更是重资产模式的"永续退出通道"，本质上降低了公司的加权平均资本成本。
+  </div>
+
+  <div style="margin-top:14px;">
+    <strong>🎯 估值结论：</strong>综合DCF（~30元）、可比估值（38-68元）和历史区间，<strong>目标价区间 50-70元</strong>。当前价62.97元处于区间中上位置，下行保护有限。从110跌到63已释放相当部分高估值风险，但尚未到"极度低估"的程度。
+  </div>
+</div>
+
+<!-- ==================== LAYER 5: 交易计划 ==================== -->
+<div class="card">
+  <div class="layer-badge"><span class="layer-num">L5</span> 交易计划 · 落执行</div>
+  <h2>🎯 交易计划卡片 — 润泽科技 (300442)</h2>
+
+  <div class="plan-card">
+    <div class="plan-row">
+      <span class="plan-label">📌 买入逻辑</span>
+      <span class="plan-value">AIDC行业量价齐升 + 折旧前置带来的利润压制正在释放（"剪刀差"收窄）+ REITs模式重塑估值框架；从110跌至63已消化部分高估值风险</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label">🎯 目标价区间</span>
+      <span class="plan-value">50 – 70元（基于2026E扣非PE 35-45x）</span>
+    </div>
+    <div class="plan-row">
+      <span class="plan-label">💰 建议买入区间</span>
+      <span class="plan-value">52 – 62元（在目标价中枢留10-15%安全边际）</span>
+    </div>
+  </div>
+
+  <div class="plan-card" style="margin-top:16px;background:linear-gradient(135deg,#f0f4ff,#e8f0fe);border-color:#b8d4f0;">
+    <h3 style="margin:0 0 12px;">📐 仓位计算（凯利公式）</h3>
+    <table style="font-size:13px;">
+      <tr><td style="width:35%">胜率 p</td><td><strong>55%</strong> — 依据：AIDC行业景气确定性高（6个月内被证伪概率低），但估值不便宜降低置信度</td></tr>
+      <tr><td>赔率 b</td><td><strong>1.17</strong> — 止盈70元 / 止损52元：(70-63)/(63-52) ≈ 7/11 ≈ 0.64... 等等，赔率应 = (止盈-买入)/(买入-止损) = (70-60)/(60-52) = 10/8 = 1.25。<br>以中位买入价60元计：b = (70-60)/(60-52) = 1.25</td></tr>
+      <tr><td>凯利 f*（理论）</td><td><strong>19%</strong> — (1.25×0.55 - 0.45)/1.25 = 19.0%</td></tr>
+      <tr><td>实操仓位（1/3凯利）</td><td style="font-size:16px;font-weight:700;color:var(--blue);"><strong>总资产 6-8%</strong></td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--sub);margin-top:8px;">
+      ⚠️ 过度自信检查：若实际胜率仅45%（低于估计10个百分点），凯利仓位降至 (1.25×0.45-0.55)/1.25 = 1.0%，实操仓位会更低。建议分2-3批建仓。
+    </p>
+  </div>
+
+  <div class="plan-card" style="margin-top:16px;">
+    <h3 style="margin:0 0 12px;">🛑 止损规则</h3>
+    <div class="plan-row"><span class="plan-label">逻辑止损</span><span class="plan-value">AIDC行业出现大客户资本开支大幅削减（如字节/阿里砍单），或GPU全面断供</span></div>
+    <div class="plan-row"><span class="plan-label">技术止损</span><span class="plan-value">跌破 <strong>52元</strong>（前低支撑区 + 2025年12月平台）；跌破44.61元（52周低点）无条件清仓</span></div>
+    <div class="plan-row"><span class="plan-label">时间止损</span><span class="plan-value">买入后 <strong>6个月</strong> 若Q3-Q4业绩连续两季低于预期（扣非增速<20%），减半仓</span></div>
+    <div class="plan-row"><span class="plan-label">绝对止损</span><span class="plan-value">亏损超过 <strong>20%</strong> 无条件平仓</span></div>
+  </div>
+
+  <div class="plan-card" style="margin-top:16px;">
+    <h3 style="margin:0 0 12px;">🏁 止盈规则</h3>
+    <div class="plan-row"><span class="plan-label">第一目标</span><span class="plan-value"><strong>70元</strong>（2026E PE 45x），达到减仓 <strong>1/3</strong></span></div>
+    <div class="plan-row"><span class="plan-label">第二目标</span><span class="plan-value"><strong>85元</strong>（2027E前瞻估值），达减仓至 <strong>1/2</strong> 观察仓</span></div>
+    <div class="plan-row"><span class="plan-label">清仓信号</span><span class="plan-value">AIDC租金出现环比下降 或 海外项目重大失败</span></div>
+  </div>
+
+  <div class="plan-card" style="margin-top:16px;background:#f8f9fa;border-color:#ddd;">
+    <h3 style="margin:0 0 12px;">📋 跟踪指标（每周检查）</h3>
+    <table style="font-size:13px;">
+      <tr><th>指标</th><th>当前值</th><th>预警阈值</th><th>数据来源</th></tr>
+      <tr><td>AIDC季度营收增速</td><td>+73%（2025全年）</td><td>&lt;30%</td><td>公司季报</td></tr>
+      <tr><td>扣非净利率</td><td>31.6%（2026Q1）</td><td>&lt;25%</td><td>公司季报</td></tr>
+      <tr><td>经营CF/净利润比</td><td>2.26x（2026Q1）</td><td>&lt;1.0x</td><td>现金流量表</td></tr>
+      <tr><td>资产负债率</td><td>62.8%</td><td>&gt;70%</td><td>资产负债表</td></tr>
+      <tr><td>北向资金持股变化</td><td>[MISSING: 需实时查询]</td><td>连续4周净流出</td><td>沪深港通</td></tr>
+      <tr><td>AIDC行业租金指数</td><td>月涨5-10%趋势中</td><td>环比转跌</td><td>产业调研/研报</td></tr>
+    </table>
+  </div>
+
+  <div class="plan-card" style="margin-top:16px;background:#f0f4f8;border-color:#ccc;">
+    <h3 style="margin:0 0 12px;">📅 催化剂日历（2026年8月-2027年1月）</h3>
+    <table style="font-size:13px;">
+      <tr><th>时间</th><th>事件</th><th>预期影响</th></tr>
+      <tr><td>2026-08下旬</td><td>2026中报发布</td><td style="color:var(--red)">验证Q2扣非增速是否持续>30%，关键催化剂</td></tr>
+      <tr><td>2026-09-10月</td><td>香港沙岭/印尼巴淡岛项目进展</td><td style="color:var(--red)">海外订单落地将打开增量估值空间</td></tr>
+      <tr><td>2026-10月</td><td>2026三季报</td><td>旺季交付数据，验证全年增长预期</td></tr>
+      <tr><td>2026-Q4</td><td>REIT扩募/新发计划</td><td style="color:var(--red)">第二单REIT将加速资产周转，显著利好</td></tr>
+      <tr><td>2027-01月</td><td>2026业绩预告</td><td>全年扣非能否达25亿+</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 风险矩阵 ==================== -->
+<div class="card">
+  <h2>⚠️ 风险矩阵</h2>
+
+  <div class="risk-row">
+    <span class="risk-lvl risk-h">高</span>
+    <span class="risk-name">GPU芯片断供</span>
+    <span class="risk-desc">高端算力芯片受出口管制，影响AIDC交付及新订单获取</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-lvl risk-h">高</span>
+    <span class="risk-name">估值回撤风险</span>
+    <span class="risk-desc">从110跌至63虽已回调43%，扣非PE~50x仍不便宜；市场情绪转弱可能继续杀估值</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-lvl risk-m">中</span>
+    <span class="risk-name">大客户依赖</span>
+    <span class="risk-desc">前五大客户占比95.5%，虽在优化但集中度仍极高；任一客户砍单影响巨大</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-lvl risk-m">中</span>
+    <span class="risk-name">利率上行</span>
+    <span class="risk-desc">有息负债182.3亿，若LPR上调100bp，年化利息增约1.8亿</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-lvl risk-m">中</span>
+    <span class="risk-name">海外项目风险</span>
+    <span class="risk-desc">印尼政治经济环境、汇兑风险；香港项目竞争激烈</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-lvl risk-l">低</span>
+    <span class="risk-name">技术路线切换</span>
+    <span class="risk-desc">液冷技术方案竞争（冷板vs浸没），润泽已自研冷板液冷，风险可控</span>
+  </div>
+</div>
+
+<!-- CHARTS -->
+</div> <!-- end container -->
+
+<!-- Charts JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  // Revenue & Profit Chart
+  const ctx = document.getElementById('revChart');
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2022', '2023', '2024', '2025', '2026E'],
+      datasets: [
+        {
+          label: 'IDC收入（亿）',
+          data: [27.15, 31.52, 29.13, 31.64, 34.0],
+          backgroundColor: '#74b9ff',
+          borderRadius: 4
+        },
+        {
+          label: 'AIDC收入（亿）',
+          data: [0, 11.99, 14.52, 25.10, 46.0],
+          backgroundColor: '#0984e3',
+          borderRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: '业务结构演变：AIDC占比快速提升', font: { size: 14 } },
+        legend: { position: 'bottom' }
+      },
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, title: { display: true, text: '亿元' } }
+      }
+    }
+  });
+});
+</script>
+
+<!-- Disclaimer -->
+<div class="container">
+<div class="disclaimer">
+  <p><strong>⚠️ 免责声明</strong></p>
+  <p>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:8px;">数据截至：2026-08-03收盘 | 数据来源：腾讯自选股(westock-data)、Tushare、公司年报、公开研报 | 分析师：弈投师</p>
+</div>
+</div>
+
+</body>
+</html>

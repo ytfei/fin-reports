@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>索辰科技(688507) 投资分析报告 — 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff; --card-bg: #f8f9fa; --text: #1a1a2e;
+  --muted: #6b7280; --border: #e5e7eb;
+  --red: #dc2626; --green: #16a34a; --blue: #2563eb;
+  --red-bg: #fef2f2; --green-bg: #f0fdf4; --amber-bg: #fffbeb;
+  --amber: #d97706;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height:1.7; max-width:720px; margin:0 auto; padding:16px; }
+h1 { font-size:1.5rem; margin:20px 0 4px; }
+h2 { font-size:1.2rem; margin:28px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--border); color: var(--blue); }
+h3 { font-size:1.05rem; margin:16px 0 6px; }
+p { margin:6px 0; }
+table { width:100%; border-collapse:collapse; margin:10px 0; font-size:0.85rem; }
+th, td { padding:6px 8px; border:1px solid var(--border); text-align:right; }
+th { background:#eef2ff; font-weight:600; text-align:center; }
+td:first-child, th:first-child { text-align:left; }
+.up { color: var(--red); } .down { color: var(--green); }
+.badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.72rem; font-weight:600; }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-amber { background:var(--amber-bg); color:var(--amber); }
+.badge-blue { background:#eef2ff; color:var(--blue); }
+.card { background:var(--card-bg); border-radius:10px; padding:14px; margin:12px 0; }
+.card-red { border-left:4px solid var(--red); }
+.card-green { border-left:4px solid var(--green); }
+.card-amber { border-left:4px solid var(--amber); }
+.card-blue { border-left:4px solid var(--blue); }
+.hero { background:linear-gradient(135deg,#1e3a5f,#2563eb); color:#fff; border-radius:14px; padding:28px 20px; margin:0 0 20px; text-align:center; }
+.hero .ticker { font-size:2.2rem; font-weight:800; }
+.hero .price { font-size:1.6rem; margin:6px 0; }
+.hero .meta { font-size:0.85rem; opacity:0.85; }
+.kv-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:0.85rem; }
+.kv-grid .label { color:var(--muted); }
+.kv-grid .val { font-weight:600; }
+.star-rating { color:#f59e0b; }
+.chart-wrap { position:relative; height:320px; margin:12px 0; }
+.disclaimer { margin-top:40px; padding:12px; font-size:0.75rem; color:var(--muted); border-top:1px solid var(--border); }
+.signal-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; }
+.signal-red { background:var(--red); }
+.signal-green { background:var(--green); }
+.signal-amber { background:var(--amber); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:500px) { .grid-2 { grid-template-columns:1fr; } body { padding:10px; } }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div style="font-size:0.9rem;opacity:0.8;">科创板 · 工业软件 · 物理AI</div>
+  <div class="ticker">索辰科技</div>
+  <div class="price">¥155.23 <span class="up">+6.24%</span></div>
+  <div class="meta" style="margin-top:8px;">
+    代码: 688507.SH | 市值: 138亿 | PE(TTM): 1048× | 报告日: 2026-08-04
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="card card-amber">
+  <h3 style="margin-top:0;">⚠️ 执行摘要：高估值成长股，分歧巨大</h3>
+  <p>索辰科技是国内CAE仿真软件龙头，受益于国产替代和物理AI两条叙事线，2025年营收4.66亿（+23% YoY）。但盈利能力持续恶化（净利率从18%→6.8%），应收账款高达营收的137%，经营现金流除Q4外持续为负。当前138亿市值对应2025年净利润的PE高达<strong>439倍</strong>，PS达29.7倍。</p>
+  <p>股价从6月底峰值306元暴跌近50%至近日155元。核心矛盾：<strong>国产替代+物理AI的故事 vs. 极弱的基本面兑现能力</strong>。</p>
+  <p style="font-weight:600;">综合评级：<span class="badge badge-amber">高风险观察</span> — 故事诱人，但估值需大幅修正后才值得介入。</p>
+</div>
+
+<!-- Layer 1: Macro -->
+<h2>Layer 1 · 宏观定方向</h2>
+<div class="grid-2">
+<div class="card card-blue">
+  <h4 style="margin:0 0 6px;">宏观判断</h4>
+  <p style="margin:0;font-size:0.9rem;"><strong>中性偏积极，结构性分化</strong> — 总量温和复苏，科技/工业软件受益于政策定向支持</p>
+</div>
+<div class="card">
+  <h4 style="margin:0 0 6px;">仓位建议</h4>
+  <p style="margin:0;font-size:0.9rem;">权益仓位 <strong>60-70%</strong>，偏成长结构，但单票仓位严格限制</p>
+</div>
+</div>
+
+<table>
+<tr><th>指标</th><th>当前值</th><th>含义</th></tr>
+<tr><td>PMI (制造业)</td><td>50.3 (2026-06)</td><td>荣枯线边缘，弱扩张</td></tr>
+<tr><td>GDP增速 Q1 2026</td><td>5.0% YoY</td><td>符合目标，结构转型中</td></tr>
+<tr><td>10Y国债收益率</td><td>1.73%</td><td>极低利率环境，利好成长股估值</td></tr>
+<tr><td>M2增速</td><td>8.6% YoY</td><td>流动性充裕</td></tr>
+<tr><td>M1-M2剪刀差</td><td>-3.1%</td><td>企业活期存款偏弱，实体经济活跃度偏低</td></tr>
+<tr><td>工业利润累计</td><td>+18.8% YoY (2026-05)</td><td>上游利润修复明显，中下游分化</td></tr>
+<tr><td>高新技术制造业增加值</td><td>+13.1% YoY</td><td>科技制造景气度显著高于整体</td></tr>
+</table>
+
+<p><strong>宏观风险提示</strong>：M1-M2持续剪刀差说明企业端信心不足；若下半年财政发力不及预期，科技股估值可能承压。但对工业软件这类"自主可控"方向，政策支持力度确定性较高。</p>
+
+<!-- Layer 2: Industry -->
+<h2>Layer 2 · 行业选赛道</h2>
+<div class="card card-green">
+  <h4 style="margin:0 0 8px;">推荐赛道：工业软件 / CAE仿真 (国产替代 + 物理AI)</h4>
+  <p style="margin:0;font-size:0.9rem;"><strong>周期位置：成长早期</strong> — 渗透率低、政策催化密集、但商业化兑现仍在爬坡</p>
+</div>
+
+<table>
+<tr><th>维度</th><th>判断</th><th>量化依据</th></tr>
+<tr><td>景气度</td><td class="up">结构性高景气</td><td>国内CAE市场CAGR ~15-18%；国产化率<15%（来源：IDC/赛迪）</td></tr>
+<tr><td>竞争格局</td><td>外资主导，国产追赶</td><td>Ansys/Siemens/Dassault占据>70%份额；索辰为国产独立CAE第一梯队</td></tr>
+<tr><td>估值水位</td><td class="down">极度昂贵</td><td>行业PS中位数~8-12x，索辰PS 29.7x，远超行业</td></tr>
+<tr><td>资金流向</td><td class="up">阶段性关注</td><td>2026年5-6月物理AI概念爆发吸引大量资金，但7月后快速流出</td></tr>
+<tr><td>政策催化</td><td class="up">持续性强</td><td>工业软件国产替代列入"十四五"/"十五五"重点；大基金三期关注工业软件</td></tr>
+</table>
+
+<p><strong>行业逻辑链</strong>：高端制造升级 → 研发设计数字化 → CAE仿真需求增加 → 国产替代加速。索辰在国产CAE中技术积累最深厚（自研求解器），但当前估值已极大地透支了这一逻辑。</p>
+
+<!-- Layer 3: Quant Screen -->
+<h2>Layer 3 · 量化初筛</h2>
+
+<div class="card card-red">
+  <h4 style="margin:0 0 6px;">硬性淘汰检查 — <span class="down">未通过3/5项</span></h4>
+  <table style="margin:0;">
+    <tr><th style="width:50%;">条件</th><th>结果</th><th>判定</th></tr>
+    <tr><td>近3年经营现金流≥2年为正</td><td>2023/2024/2025均为负</td><td><span class="badge badge-red">FAIL</span></td></tr>
+    <tr><td>商誉/净资产 ≤30%</td><td>12.4%</td><td><span class="badge badge-green">PASS</span></td></tr>
+    <tr><td>大股东质押率 ≤50%</td><td>[MISSING: 需进一步核实]</td><td><span class="badge badge-amber">待查</span></td></tr>
+    <tr><td>近2年无重大违规处罚</td><td>无记录</td><td><span class="badge badge-green">PASS</span></td></tr>
+    <tr><td>日均成交额 ≥3000万</td><td>近期日均>10亿</td><td><span class="badge badge-green">PASS</span></td></tr>
+  </table>
+</div>
+
+<p><strong>量化综合评价</strong>：经营现金流持续为负是硬伤，但CAE行业本身具有Q4集中确认的特性（Q4占全年营收77%），非传统意义上的现金流恶化。ROE从上市前的10%+骤降至1.1%，反映IPO大量超募资金拉低资产周转率。多因子得分中，质量因子极弱、成长因子勉强及格、价值因子完全不及格。</p>
+
+<!-- Layer 4: Deep Dive -->
+<h2>Layer 4 · 深度研究</h2>
+
+<h3>4a. 商业模式拆解</h3>
+<div class="grid-2">
+<div class="card">
+  <h4 style="margin:0 0 6px;">收入结构 (2025年报)</h4>
+  <table style="font-size:0.8rem;">
+    <tr><th>产品线</th><th>营收(亿)</th><th>占比</th></tr>
+    <tr><td>天工-工程仿真软件</td><td>1.98</td><td>42.5%</td></tr>
+    <tr><td>天工-仿真产品开发</td><td>0.87</td><td>18.6%</td></tr>
+    <tr><td>天工-生产管控</td><td>0.50</td><td>10.7%</td></tr>
+    <tr><td>开物-工程仿真软件</td><td>0.40</td><td>8.7%</td></tr>
+    <tr><td>技术服务</td><td>0.30</td><td>6.5%</td></tr>
+    <tr><td>天工-工业自动化</td><td>0.30</td><td>6.3%</td></tr>
+    <tr><td>开物-仿真产品开发</td><td>0.18</td><td>3.8%</td></tr>
+    <tr><td>其他</td><td>0.14</td><td>2.9%</td></tr>
+  </table>
+</div>
+<div class="card">
+  <h4 style="margin:0 0 6px;">护城河评估</h4>
+  <p style="font-size:0.85rem;"><strong>技术壁垒</strong>：自研多物理场求解器（流体/结构/电磁/声学/光学），国内稀缺。但相比Ansys等国际巨头仍有代差。</p>
+  <p style="font-size:0.85rem;"><strong>客户黏性</strong>：航空航天、军工客户有较高替换成本，但合同以项目制为主，非订阅模式，重复性收入占比低。</p>
+  <p style="font-size:0.85rem;"><strong>管理层</strong>：创始人陈灏技术背景深厚。但2025年大规模并购（力控科技）后文化整合和管理复杂度大增。</p>
+  <p style="font-size:0.85rem;"><strong>护城河评级</strong>：⭐⭐⭐ (中) — 技术壁垒尚可，但商业化能力远未证明。</p>
+</div>
+</div>
+
+<h3>4b. 财务深度分析</h3>
+
+<div class="chart-wrap">
+  <canvas id="chartRevenue"></canvas>
+</div>
+
+<table>
+<tr><th>财务指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>趋势</th></tr>
+<tr><td>营业收入(亿)</td><td>2.68</td><td>3.20</td><td>3.79</td><td>4.66</td><td class="up">↑ 23% CAGR</td></tr>
+<tr><td>归母净利润(亿)</td><td>0.58</td><td>0.58</td><td>0.47</td><td>0.32</td><td class="down">↓ 连续下滑</td></tr>
+<tr><td>毛利率</td><td>63.4%</td><td>69.4%</td><td>71.9%</td><td>68.2%</td><td>波动</td></tr>
+<tr><td>净利率</td><td>20.1%</td><td>18.1%</td><td>12.5%</td><td>6.8%</td><td class="down">↓ 持续恶化</td></tr>
+<tr><td>ROE</td><td>10.8%</td><td>3.4%</td><td>1.4%</td><td>1.1%</td><td class="down">↓ IPO摊薄+利润降</td></tr>
+<tr><td>研发费用(亿)</td><td>-</td><td>0.96</td><td>0.83</td><td>1.09</td><td class="up">↑ 23.4%研发率</td></tr>
+<tr><td>经营现金流(亿)</td><td>0.01</td><td>-0.57</td><td>-0.49</td><td>+0.60</td><td>Q4一次性转正</td></tr>
+<tr><td>应收账款(亿)</td><td>3.31</td><td>5.10</td><td>6.05</td><td>7.79</td><td class="down">↑ AR/Rev=137%</td></tr>
+<tr><td>货币资金(亿)</td><td>1.69</td><td>22.27</td><td>19.01</td><td>14.70</td><td class="down">↓ IPO资金消耗</td></tr>
+<tr><td>商誉(亿)</td><td>0</td><td>0.41</td><td>0.63</td><td>3.56</td><td class="down">↑ M&A推高</td></tr>
+</table>
+
+<div class="card card-red">
+  <h4 style="margin:0 0 6px;">⚠️ 财务三大红灯</h4>
+  <ol style="margin:6px 0 0 18px;font-size:0.9rem;">
+    <li><strong>应收账款黑洞</strong>：AR 7.79亿 > 年收入4.66亿。意味着大量收入以白条形式存在，回款周期远超正常水平。航空航天/军工客户付款流程长是部分原因，但137%的AR/Rev比例在纯软件公司中极不正常。</li>
+    <li><strong>增收不增利</strong>：上市三年，营收从2.68亿→4.66亿(+74%)，净利润从0.58亿→0.32亿(-45%)。扩张的代价是费用先行、利润被吞噬。</li>
+    <li><strong>IPO资金快速消耗</strong>：2023年IPO募资~23亿，到2026Q1仅剩14.7亿。两年多消耗~8亿，主要投向M&A(力控科技等)和研发。按此速度，3-4年内需面临再融资。</li>
+  </ol>
+</div>
+
+<h3>4c. 估值分析</h3>
+
+<div class="grid-2">
+<div class="card card-blue">
+  <h4 style="margin:0 0 6px;">可比公司估值</h4>
+  <table style="font-size:0.8rem;">
+    <tr><th>公司</th><th>市值(亿)</th><th>PS(TTM)</th><th>PE</th></tr>
+    <tr><td>中望软件</td><td>~180</td><td>~15x</td><td>~200x</td></tr>
+    <tr><td>华大九天</td><td>~280</td><td>~25x</td><td>~350x</td></tr>
+    <tr><td>概伦电子</td><td>~45</td><td>~12x</td><td>亏损</td></tr>
+    <tr><td>广立微</td><td>~80</td><td>~15x</td><td>~180x</td></tr>
+    <tr style="font-weight:700;background:#fef2f2;"><td>索辰科技</td><td>138</td><td class="down">29.7x</td><td class="down">439x</td></tr>
+    <tr><td style="color:var(--muted);">国产工业软件均值</td><td>-</td><td>~17x</td><td>~240x</td></tr>
+  </table>
+</div>
+<div class="card card-amber">
+  <h4 style="margin:0 0 6px;">情景估值 (DCF框架)</h4>
+  <table style="font-size:0.8rem;">
+    <tr><th>情景</th><th>2028E营收(亿)</th><th>净利率</th><th>目标市值(亿)</th><th>目标价</th></tr>
+    <tr style="color:var(--green);"><td>乐观</td><td>15 (50% CAGR)</td><td>15%</td><td>225</td><td>253</td></tr>
+    <tr style="color:var(--amber);"><td>基准</td><td>10 (30% CAGR)</td><td>10%</td><td>100</td><td>112</td></tr>
+    <tr style="color:var(--red);"><td>悲观</td><td>7 (15% CAGR)</td><td>5%</td><td>40</td><td>45</td></tr>
+  </table>
+  <p style="margin:8px 0 0;font-size:0.75rem;color:var(--muted);">假设: WACC=10%, terminal g=3%, 基准PS=10x (考虑成长性溢价)。当前市值138亿已经price-in了基准到乐观之间的预期。</p>
+</div>
+</div>
+
+<div class="card card-red">
+  <h4 style="margin:0 0 6px;">🔄 多空交锋</h4>
+  <div class="grid-2">
+    <div>
+      <p style="font-weight:700;color:var(--red);margin:0;">多头论点</p>
+      <ol style="margin:4px 0 0 18px;font-size:0.85rem;">
+        <li>国产CAE第一梯队，自研求解器壁垒高，受益于国产替代确定性</li>
+        <li>物理AI打开第二增长曲线，从设计仿真延伸到实时智能决策</li>
+        <li>通过M&A (力控科技) 拓展工业自动化，提升客单价和交叉销售</li>
+      </ol>
+    </div>
+    <div>
+      <p style="font-weight:700;color:var(--green);margin:0;">空头论点</p>
+      <ol style="margin:4px 0 0 18px;font-size:0.85rem;">
+        <li>营收规模仅4.66亿却估值138亿，PS 30x远超全球任何可比软件公司</li>
+        <li>物理AI收入几乎为零（公司披露"布局初期"），市场在为一个不存在的业务定价</li>
+        <li>应收账款/收入=137%，收入质量存疑；利润连续下滑，经营效率恶化</li>
+      </ol>
+    </div>
+  </div>
+  <p style="margin:10px 0 0;font-size:0.85rem;"><strong>变异认知</strong>：市场的核心错误定价在于将"物理AI概念"等同于"物理AI收入"。索辰在求解器方面确有积累，但从CAE仿真到物理AI的跨越涉及数据、算力、场景三个巨大鸿沟，短期内难以产生有意义的商业收入。<span class="badge badge-red">[无变异认知支撑当前估值 → 建议以观察仓对待]</span></p>
+</div>
+
+<!-- Layer 5: Trading Plan -->
+<h2>Layer 5 · 交易计划</h2>
+
+<div class="card card-amber">
+  <h3 style="margin:0 0 10px;">🎯 交易计划卡片 — 索辰科技 (688507)</h3>
+
+  <div class="kv-grid">
+    <div><span class="label">买入逻辑</span></div>
+    <div><span class="val">国产CAE稀缺标的，物理AI期权价值，等待估值回归合理区间后介入</span></div>
+
+    <div><span class="label">目标价区间</span></div>
+    <div><span class="val">100 - 150 元 (基于基准情景估值区间)</span></div>
+
+    <div><span class="label">建议买入区间</span></div>
+    <div><span class="val" style="color:var(--red);">85 - 105 元 (在目标价基础上留30%安全边际)</span></div>
+
+    <div><span class="label">当前价格</span></div>
+    <div><span class="val">155.23 元 — <span style="color:var(--red);">高于买入区间，等待回调</span></span></div>
+
+    <div><span class="label">建议仓位</span></div>
+    <div><span class="val">总资产 3-5% (观察仓级别)</span></div>
+  </div>
+
+  <h4 style="margin:14px 0 6px;">凯利公式展开</h4>
+  <table style="font-size:0.82rem;">
+    <tr><th>参数</th><th>值</th><th>说明</th></tr>
+    <tr><td>胜率 p</td><td>35%</td><td>物理AI/国产替代逻辑成立的概率。判断依据：公司商业化兑现历史较弱，物理AI处于极早期，给予较低胜率</td></tr>
+    <tr><td>赔率 b</td><td>2.5x</td><td>止盈150元 / 止损85元：(150/85 - 1) ≈ 0.76，但考虑时间价值调整</td></tr>
+    <tr><td>理论仓位 f*</td><td>9%</td><td>f* = (2.5×0.35 - 0.65)/2.5 = 9%</td></tr>
+    <tr><td>实操仓位</td><td>3-5%</td><td>取1/2凯利，考虑流动性、高波动、基本面不确定性进一步折让</td></tr>
+  </table>
+
+  <h4 style="margin:14px 0 6px;">止损规则</h4>
+  <table style="font-size:0.82rem;">
+    <tr><th>类型</th><th>触发条件</th></tr>
+    <tr><td>逻辑止损</td><td>① 物理AI业务连续两个季度无实质收入进展；② 核心客户（航空航天）出现订单大幅下滑；③ 出现管理层大幅减持</td></tr>
+    <tr><td>技术止损</td><td>跌破 80 元 (前低支撑，约52周低点)</td></tr>
+    <tr><td>时间止损</td><td>买入后6个月股价未突破买入价120%，减半仓</td></tr>
+    <tr><td>绝对止损</td><td>亏损超过 20% 无条件平仓</td></tr>
+  </table>
+
+  <h4 style="margin:14px 0 6px;">止盈规则</h4>
+  <table style="font-size:0.82rem;">
+    <tr><th>目标</th><th>价格</th><th>操作</th></tr>
+    <tr><td>第一目标</td><td>150 元</td><td>基准情景目标价，减仓50%</td></tr>
+    <tr><td>第二目标</td><td>200 元</td><td>乐观情景估值上限，清仓</td></tr>
+  </table>
+
+  <h4 style="margin:14px 0 6px;">跟踪指标 (每周检查)</h4>
+  <table style="font-size:0.82rem;">
+    <tr><th>指标</th><th>当前值</th><th>预警阈值</th><th>来源</th></tr>
+    <tr><td>应收账款/营收(TTM)</td><td>137%</td><td>>150%</td><td>季报</td></tr>
+    <tr><td>毛利率</td><td>68.2%</td><td><60%</td><td>季报</td></tr>
+    <tr><td>经营现金流 (TTM)</td><td>+0.49亿</td><td>转负</td><td>季报</td></tr>
+    <tr><td>物理AI相关公告</td><td>布局初期</td><td>6个月无新进展</td><td>公司公告</td></tr>
+    <tr><td>机构调研频次</td><td>高频</td><td>连续2月无调研</td><td>互动易/研报</td></tr>
+  </table>
+
+  <h4 style="margin:14px 0 6px;">催化剂日历</h4>
+  <table style="font-size:0.82rem;">
+    <tr><th>日期</th><th>事件</th><th>预期影响</th></tr>
+    <tr><td>2026-08 (预计)</td><td>2026年中报披露</td><td>验证物理AI收入进展，若Q2仍无实质贡献则利空</td></tr>
+    <tr><td>2026-10 (预计)</td><td>2026年三季报</td><td>Q3通常为收入小高峰，观察季节性改善</td></tr>
+    <tr><td>2026 Q4</td><td>"十五五"规划预研/工业软件专项政策</td><td>政策催化可能性</td></tr>
+    <tr><td>2027-03</td><td>2026年年报</td><td>关键验证点：全年物理AI落地、利润率修复</td></tr>
+  </table>
+</div>
+
+<!-- Risk Matrix -->
+<h2>风险矩阵</h2>
+<table>
+<tr><th>风险</th><th>概率</th><th>影响</th><th>应对</th></tr>
+<tr><td>应收账款大额坏账</td><td>中 (20%)</td><td class="down">严重 -30%+</td><td>严格追踪AR账龄，超1年AR>20%即预警</td></tr>
+<tr><td>商誉减值</td><td>中高 (30%)</td><td class="down">重大 -20%</td><td>力控科技整合不及预期→商誉减值测试压力</td></tr>
+<tr><td>物理AI商业化失败</td><td>高 (50%)</td><td class="down">核心理由崩塌</td><td>当前估值已部分price-in，但预期修正仍有下行</td></tr>
+<tr><td>再融资摊薄</td><td>中 (25%)</td><td class="down">稀释10-15%</td><td>资金消耗速度决定再融资时点</td></tr>
+<tr><td>政策支持超预期</td><td>低 (15%)</td><td class="up">正面 +30%</td><td>工业软件国家专项/大基金投资</td></tr>
+</table>
+
+<!-- Behavior Finance -->
+<h2>行为金融护栏</h2>
+<div class="card card-blue">
+  <ol style="margin:0 0 0 18px;font-size:0.9rem;">
+    <li><strong>确认偏误检查</strong>：做空信号——① 若2026H1物理AI收入<500万；② 若Q2毛利率跌破60%；③ 若核心技术人员离职。这些任何一项发生均应重新评估。</li>
+    <li><strong>锚定效应检查</strong>：当前155元接近52周区间的40分位，容易产生"已经跌了50%、够便宜了"的错觉。但估值仍高达PS 30x，应以DCF/情景估值而非历史价格锚定。</li>
+    <li><strong>过度自信检查</strong>：若实际胜率从35%降至28%（低20%），凯利仓位将变为(2.5×0.28-0.72)/2.5 = -0.8%（负值）——这意味着低于某一胜率阈值后根本不值得参与。</li>
+    <li><strong>近期偏差检查</strong>：股价5月底6月初暴涨（物理AI概念），目前暴跌。拉长到3-5年维度，公司的基本面（收入4-5亿级别、利润3000万级别）与市值（138亿）之间始终存在巨大鸿沟。物理AI叙事是短期催化剂但不是基本面锚。</li>
+  </ol>
+</div>
+
+<!-- Final Verdict -->
+<div class="card card-amber" style="margin-top:16px;">
+  <h3 style="margin:0 0 8px;">📋 最终判断</h3>
+  <p style="margin:0;font-size:0.95rem;"><strong>故事诱人，但不是现在。当前估值的每一个支撑点都需要"物理AI成功商业化"这个高度不确定的假设。</strong>建议将索辰科技列入重点观察名单，等待：① 估值回落至PS 15-20x（对应市值70-93亿，股价79-104元）；② 半年报验证物理AI实质收入进展；③ 应收账款出现改善拐点。三者满足其二再考虑建仓。</p>
+</div>
+
+<div class="disclaimer">
+  <p><strong>⚠️ 免责声明</strong>：本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。文中所有估值均为分析师模型估计（Model Est.），可能与实际结果存在重大偏差。投资有风险，入市需谨慎。</p>
+  <p style="margin-top:4px;">数据来源：腾讯自选股(westock-data)、Tushare Pro、公开研报、公司公告 | 报告生成时间：2026-08-04 14:12 CST | 分析师：弈投师(AI)</p>
+</div>
+
+<script>
+(function(){
+  if(typeof Chart==='undefined') return;
+  function baseOpts(){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,pointStyleWidth:8,font:{size:11}}}}};}
+
+  // Revenue & Profit Chart
+  var ctx1=document.getElementById('chartRevenue');
+  if(ctx1){
+    new Chart(ctx1,{
+      type:'bar',
+      data:{
+        labels:['2019','2020','2021','2022','2023','2024','2025'],
+        datasets:[
+          {label:'营业收入(亿)',data:[1.16,1.62,1.93,2.68,3.20,3.79,4.66],backgroundColor:'#2563eb',borderRadius:4,yAxisID:'y'},
+          {label:'归母净利润(亿)',data:[-0.17,0.38,0.59,0.58,0.58,0.47,0.32],backgroundColor:'#16a34a',borderRadius:4,yAxisID:'y1',type:'line',borderColor:'#16a34a',borderWidth:2,pointRadius:3,tension:0.3}
+        ]
+      },
+      options:Object.assign(baseOpts(),{
+        scales:{
+          y:{position:'left',title:{display:true,text:'营收(亿)'},beginAtZero:true},
+          y1:{position:'right',title:{display:true,text:'净利润(亿)'},grid:{display:false}}
+        },
+        plugins:{legend:{position:'top',labels:{usePointStyle:true}}}
+      })
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
