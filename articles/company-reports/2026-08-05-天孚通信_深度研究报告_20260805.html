@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天孚通信（300394）深度投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root { --red: #e74c3c; --green: #27ae60; --blue: #2c3e50; --gold: #f39c12; --bg: #f8f9fa; --card: #fff; --text: #333; --muted: #7f8c8d; --border: #e0e0e0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
+
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 20px 30px; text-align: center; }
+.hero h1 { font-size: 28px; margin-bottom: 6px; letter-spacing: 1px; }
+.hero .code { font-size: 14px; opacity: 0.7; margin-bottom: 16px; }
+.hero .price-row { display: flex; justify-content: center; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.hero .price { font-size: 42px; font-weight: 700; }
+.hero .change { font-size: 16px; padding: 3px 10px; border-radius: 4px; }
+.hero .change.down { color: #fff; background: var(--green); }
+.hero .date { font-size: 13px; opacity: 0.6; margin-top: 6px; }
+
+.exec-summary { background: var(--card); margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--blue); }
+.exec-summary h2 { font-size: 20px; color: var(--blue); margin-bottom: 12px; }
+.exec-summary .verdict { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+.exec-summary .verdict .tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 13px; margin-left: 8px; }
+.exec-summary .verdict .tag.hold { background: #ffeaa7; color: #d68910; }
+.exec-summary p { font-size: 15px; color: #555; margin: 4px 0; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+.metric-card { background: var(--card); padding: 14px 12px; border-radius: 8px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.metric-card .label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.metric-card .value { font-size: 20px; font-weight: 700; }
+.metric-card .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.metric-card .value.up { color: var(--red); }
+.metric-card .value.down { color: var(--green); }
+.metric-card .value.warn { color: var(--gold); }
+
+.section { background: var(--card); margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.section h2 { font-size: 20px; color: var(--blue); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+.section h3 { font-size: 17px; color: #444; margin: 16px 0 8px; }
+
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: #f0f3f7; font-weight: 600; color: #555; font-size: 12px; }
+td { color: #444; }
+tr:last-child td { border-bottom: none; }
+
+.chart-container { margin: 16px 0; position: relative; height: 300px; }
+.chart-container canvas { width: 100% !important; }
+
+.scenario-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+.scenario-card { padding: 14px 12px; border-radius: 8px; text-align: center; }
+.scenario-card.bull { background: #fef3f2; border: 1px solid #f5c6cb; }
+.scenario-card.base { background: #fef9e7; border: 1px solid #f9e79f; }
+.scenario-card.bear { background: #eafaf1; border: 1px solid #a9dfbf; }
+.scenario-card .s-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.scenario-card .s-price { font-size: 22px; font-weight: 700; }
+.scenario-card .s-pe { font-size: 12px; color: var(--muted); }
+.scenario-card.bull .s-price { color: var(--red); }
+.scenario-card.base .s-price { color: var(--gold); }
+.scenario-card.bear .s-price { color: var(--green); }
+
+.insight-box { background: #eaf2f8; border-left: 3px solid #2980b9; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+.warn-box { background: #fdf2f2; border-left: 3px solid #e74c3c; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+
+.trade-card { background: linear-gradient(135deg, #f0f4f8, #e8edf3); border-radius: 10px; padding: 20px; margin: 16px 0; border: 1px solid #d5dbdb; }
+.trade-card h3 { color: var(--blue); margin-bottom: 14px; font-size: 18px; text-align: center; }
+.trade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; }
+.trade-item { padding: 8px; }
+.trade-item .t-label { color: var(--muted); font-size: 11px; }
+.trade-item .t-value { font-weight: 600; font-size: 15px; margin-top: 2px; }
+.trade-item.full { grid-column: 1 / -1; }
+
+.bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+.bull-col { background: #fef5f5; padding: 14px; border-radius: 8px; }
+.bear-col { background: #f0faf0; padding: 14px; border-radius: 8px; }
+.bull-col h4 { color: var(--red); margin-bottom: 8px; }
+.bear-col h4 { color: var(--green); margin-bottom: 8px; }
+.bull-col li, .bear-col li { font-size: 13px; margin: 4px 0; line-height: 1.6; }
+
+.footer { text-align: center; padding: 30px 16px; color: var(--muted); font-size: 12px; }
+.footer p { margin: 4px 0; }
+
+@media (max-width: 500px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .scenario-cards { grid-template-columns: 1fr; }
+  .bull-bear { grid-template-columns: 1fr; }
+  .trade-grid { grid-template-columns: 1fr; }
+  .hero .price { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="code">深圳创业板 · 300394</div>
+  <h1>天孚通信</h1>
+  <div class="price-row">
+    <span class="price">206.86</span>
+    <span class="change down">-5.14 (-2.42%)</span>
+  </div>
+  <div class="date">2026-08-05 盘中 | 市值 2,256亿</div>
+</div>
+
+<div class="container">
+
+<div class="exec-summary">
+  <h2>📋 弈投师执行摘要</h2>
+  <div class="verdict">
+    综合评级：谨慎看多，等待更好买点
+    <span class="tag hold">观察仓 5% / 回调加仓至10%</span>
+  </div>
+  <p>天孚通信是全球光器件龙头，AI算力军备竞赛+CPO商业化双重受益。基本面质量极优（ROE 42.5%、净利率39%、零商誉风险），但估值处于历史高位（PE TTM 104x）。当前股价从高点回调44%，风险收益比改善。核心催化剂：Q3芯片供给改善→产能利用率提升→业绩加速兑现。</p>
+  <p style="margin-top:8px;"><strong>建议买入区间：170-195元 | 基准目标价：224元 | 乐观目标价：304元 | 止损：150元</strong></p>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card"><div class="label">PE (TTM)</div><div class="value warn">103.9x</div><div class="sub">2026E: ~55-69x</div></div>
+  <div class="metric-card"><div class="label">ROE (2025)</div><div class="value up">42.5%</div><div class="sub">连续3年>25%</div></div>
+  <div class="metric-card"><div class="label">毛利率</div><div class="value up">54.0%</div><div class="sub">2025FY</div></div>
+  <div class="metric-card"><div class="label">营收增速</div><div class="value up">+59%</div><div class="sub">2025 vs 2024</div></div>
+  <div class="metric-card"><div class="label">52周最高</div><div class="value up">374.50</div><div class="sub">从高点回调 -44%</div></div>
+  <div class="metric-card"><div class="label">52周最低</div><div class="value down">69.32</div><div class="sub">YTD +43.1%</div></div>
+  <div class="metric-card"><div class="label">2026H1 净利</div><div class="value up">~12.1亿</div><div class="sub">+25%~45% YoY</div></div>
+  <div class="metric-card"><div class="label">负债率</div><div class="value up">14.3%</div><div class="sub">极低杠杆</div></div>
+  <div class="metric-card"><div class="label">股息率</div><div class="value">0.41%</div><div class="sub">成长股特征</div></div>
+</div>
+
+<div class="section">
+  <h2>📈 近一年股价走势</h2>
+  <div class="chart-container"><canvas id="priceChart"></canvas></div>
+  <p style="font-size:12px; color:var(--muted); text-align:center;">数据来源：Tushare 前复权日线（2025.08.01 - 2026.08.04）</p>
+</div>
+
+<div class="section">
+  <h2>📊 核心财务趋势</h2>
+  <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+  <table>
+    <tr><th>年度</th><th>营收(亿)</th><th>YoY</th><th>归母净利(亿)</th><th>YoY</th><th>毛利率</th><th>净利率</th><th>ROE</th><th>经营CF(亿)</th></tr>
+    <tr><td>2022</td><td>11.96</td><td style="color:var(--red)">+16%</td><td>4.03</td><td style="color:var(--red)">+31%</td><td>51.6%</td><td>33.8%</td><td>16.3%</td><td>4.64</td></tr>
+    <tr><td>2023</td><td>19.39</td><td style="color:var(--red)">+62%</td><td>7.30</td><td style="color:var(--red)">+81%</td><td>54.3%</td><td>37.6%</td><td>25.1%</td><td>9.02</td></tr>
+    <tr><td>2024</td><td>32.52</td><td style="color:var(--red)">+68%</td><td>13.44</td><td style="color:var(--red)">+84%</td><td>57.2%</td><td>41.3%</td><td>37.5%</td><td>12.63</td></tr>
+    <tr><td>2025</td><td>51.63</td><td style="color:var(--red)">+59%</td><td>20.17</td><td style="color:var(--red)">+50%</td><td>54.0%</td><td>39.1%</td><td>42.5%</td><td>18.68</td></tr>
+    <tr style="background:#fff9e6;"><td>2026Q1</td><td>13.30</td><td style="color:var(--red)">+41%</td><td>4.92</td><td style="color:var(--red)">+46%</td><td>56.6%</td><td>37.0%</td><td>8.6%*</td><td>1.82</td></tr>
+  </table>
+  <p style="font-size:11px; color:var(--muted);">* 2026Q1 ROE为单季年化。来源：Tushare income + fina_indicator接口。</p>
+</div>
+
+<div class="section">
+  <h2>💎 商业模式与护城河</h2>
+  <p style="margin-bottom:10px;">天孚通信是全球光器件整体解决方案提供商，14大产品线覆盖光有源/无源器件，核心能力在于<strong>高复用通用技术平台+产品高度垂直整合</strong>。</p>
+  <div class="insight-box">
+    <strong>当前增长引擎：</strong>1.6T光引擎批量交付 + CPO配套FAU/ELS组件。英伟达Spectrum-X CPO交换机2026H2量产，天孚是核心认证供应商。
+  </div>
+  <div class="insight-box">
+    <strong>产能布局：</strong>苏州18万㎡总部超级工厂（4月开工）、江西5万㎡基地（即将开工）、泰国双线（A栋无源已投产、B栋有源已通过客户验证）。
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎯 估值分析</h2>
+
+  <h3>情景分析目标价</h3>
+  <div class="scenario-cards">
+    <div class="scenario-card bull">
+      <div class="s-label">🟢 乐观情景</div>
+      <div class="s-price">304元</div>
+      <div class="s-pe">2026E EPS 3.80 × 80x PE</div>
+      <div style="font-size:12px;margin-top:4px;color:var(--red);">CPO大放量+产能饱满</div>
+    </div>
+    <div class="scenario-card base">
+      <div class="s-label">🟡 基准情景</div>
+      <div class="s-price">224元</div>
+      <div class="s-pe">2026E EPS 3.20 × 70x PE</div>
+      <div style="font-size:12px;margin-top:4px;color:var(--gold);">稳步增长+物料缓解</div>
+    </div>
+    <div class="scenario-card bear">
+      <div class="s-label">🔴 悲观情景</div>
+      <div class="s-price">130元</div>
+      <div class="s-pe">2026E EPS 2.60 × 50x PE</div>
+      <div style="font-size:12px;margin-top:4px;color:var(--green);">增速放缓+估值收缩</div>
+    </div>
+  </div>
+
+  <h3>可比公司估值</h3>
+  <table>
+    <tr><th>公司</th><th>市值(亿)</th><th>PE(TTM)</th><th>PE(2026E)</th><th>ROE</th><th>营收增速</th></tr>
+    <tr style="font-weight:600;background:#fef9e7;"><td>天孚通信</td><td>2,256</td><td>103.9x</td><td>~55-69x</td><td>42.5%</td><td style="color:var(--red)">+59%</td></tr>
+    <tr><td>中际旭创</td><td>~3,000</td><td>~55x</td><td>~35x</td><td>~30%</td><td style="color:var(--red)">~+50%</td></tr>
+    <tr><td>新易盛</td><td>~3,500</td><td>~45x</td><td>~30x</td><td>~35%</td><td style="color:var(--red)">~+70%</td></tr>
+    <tr><td>Coherent(美)</td><td>~$250亿</td><td>~60x</td><td>~25x</td><td>~10%</td><td style="color:var(--red)">~+30%</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>⚔️ 多空对决</h2>
+  <div class="bull-bear">
+    <div class="bull-col">
+      <h4>🔴 多头论点</h4>
+      <ul>
+        <li><strong>CPO核心供应商：</strong>英伟达CPO交换机量产，天孚FAU/ELS直接受益</li>
+        <li><strong>AI算力远未见顶：</strong>云厂商Capex上调+订单能见度至2028年</li>
+        <li><strong>供给瓶颈缓解：</strong>Q3起EML芯片供应改善→产能释放→业绩加速</li>
+      </ul>
+    </div>
+    <div class="bear-col">
+      <h4>🟢 空头论点</h4>
+      <ul>
+        <li><strong>估值极贵：</strong>PE 104x，任何增速放缓都将触发估值收缩</li>
+        <li><strong>筹码分散化：</strong>股东户数3.4万→8.3万，机构向散户转移</li>
+        <li><strong>竞争+替代风险：</strong>CPO价值分配不确定，玻璃桥等技术路线威胁</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight-box" style="margin-top:10px;">
+    <strong>🧠 变异认知：</strong>市场共识"CPO=天孚大利好"方向正确但幅度可能被高估。FAU/ELS组件制造壁垒并非不可逾越，竞争格局演变和估值均值回归是市场可能低估的风险。
+  </div>
+</div>
+
+<div class="section">
+  <h2>📐 交易计划卡片</h2>
+  <div class="trade-card">
+    <h3>天孚通信（300394）交易计划</h3>
+    <div class="trade-grid">
+      <div class="trade-item full"><span class="t-label">买入逻辑</span><div class="t-value" style="font-size:14px;">光器件龙头，CPO转型核心受益。H2供给改善→产能释放→业绩加速。回调-44%提供安全边际。</div></div>
+      <div class="trade-item"><span class="t-label">目标价区间</span><div class="t-value" style="color:var(--red);">224 - 304 元</div></div>
+      <div class="trade-item"><span class="t-label">建议买入区间</span><div class="t-value" style="color:var(--blue);">170 - 195 元</div></div>
+      <div class="trade-item"><span class="t-label">建议仓位</span><div class="t-value">总资产 10%</div></div>
+      <div class="trade-item"><span class="t-label">凯利理论仓位</span><div class="t-value" style="font-size:13px;">38.6% → 实操1/3 ≈ 13%</div></div>
+      <div class="trade-item full"><span class="t-label">止盈规则</span><div class="t-value" style="font-size:13px;">第一目标 250元（减40%） → 第二目标 304元（清仓）</div></div>
+      <div class="trade-item full"><span class="t-label">止损规则</span><div class="t-value" style="font-size:13px;color:var(--green);">逻辑止损：云厂商Capex连续2季下调 | 技术止损：150元 | 时间止损：买入后6个月无催化 | 硬止损：-25%</div></div>
+      <div class="trade-item full"><span class="t-label">核心催化剂</span><div class="t-value" style="font-size:13px;">8月中旬中报 → 9月云厂商Capex → 10月Q3季报 → Q4 CPO大规模交付</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📊 机构评级汇总</h2>
+  <table>
+    <tr><th>机构</th><th>评级</th><th>目标价</th><th>2026E EPS</th><th>日期</th></tr>
+    <tr><td>长城证券</td><td style="color:var(--red)">买入</td><td>—</td><td>3.00</td><td>2026-07-27</td></tr>
+    <tr><td>国泰君安</td><td style="color:var(--red)">增持</td><td style="color:var(--red)">304.38</td><td>3.77</td><td>2026-07</td></tr>
+    <tr><td>野村证券</td><td style="color:var(--red)">买入</td><td style="color:var(--red)">282</td><td>3.56</td><td>2026-07-13</td></tr>
+    <tr style="font-weight:600;background:#fef9e7;"><td>弈投师基准</td><td>谨慎看多</td><td>224</td><td>3.20</td><td>2026-08-05</td></tr>
+  </table>
+  <p style="font-size:11px; color:var(--muted); margin-top:8px;">弈投师基准估值低于卖方一致预期，主因对估值收缩风险给予更高权重。</p>
+</div>
+
+<div class="section">
+  <h2>⚠️ 风险矩阵</h2>
+  <table>
+    <tr><th>风险</th><th>概率</th><th>影响</th><th>应对</th></tr>
+    <tr><td>PE 100x+ 估值收缩</td><td style="color:var(--red)">高</td><td style="color:var(--red)">极大</td><td>严格止损+仓位控制</td></tr>
+    <tr><td>股东户数暴增（散户化）</td><td style="color:var(--gold)">中高</td><td style="color:var(--gold)">中</td><td>持续监控，筹码恶化减仓</td></tr>
+    <tr><td>技术替代（玻璃桥等）</td><td style="color:var(--green)">中低</td><td style="color:var(--red)">大</td><td>跟踪技术路线，逻辑止损</td></tr>
+    <tr><td>中美科技脱钩</td><td style="color:var(--gold)">中</td><td style="color:var(--red)">大</td><td>泰国产能部分对冲</td></tr>
+    <tr><td>光芯片供给持续紧缺</td><td style="color:var(--gold)">中</td><td style="color:var(--gold)">中</td><td>Q3改善观察窗口</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。</p>
+  <p>数据来源：Tushare / 腾讯自选股 / 券商公开研报 | 分析师：弈投师</p>
+  <p>投资有风险，入市需谨慎。</p>
+  <p style="margin-top:10px;font-size:11px;">本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。</p>
+</div>
+
+</div>
+
+<script src="天孚通信_data.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  function baseOpts() {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    };
+  }
+
+  // Price chart
+  var pCtx = document.getElementById('priceChart');
+  if (pCtx && typeof PRICE_DATA !== 'undefined') {
+    var step = Math.max(1, Math.floor(PRICE_DATA.dates.length / 30));
+    var labels = PRICE_DATA.dates.map(function(d, i) { return i % step === 0 ? d : ''; });
+    var closes = PRICE_DATA.closes;
+    var maxP = Math.max.apply(null, closes);
+    var minP = Math.min.apply(null, closes);
+
+    var pOpts = baseOpts();
+    pOpts.plugins.legend = { display: true, labels: { usePointStyle: true, boxWidth: 8 } };
+    pOpts.scales = {
+      x: { ticks: { maxTicksLimit: 15, autoSkip: false } },
+      y: { ticks: { callback: function(v) { return v; } } }
+    };
+
+    new Chart(pCtx, {
+      type: 'line',
+      data: {
+        labels: PRICE_DATA.dates,
+        datasets: [{
+          label: '收盘价',
+          data: closes,
+          borderColor: '#e74c3c',
+          backgroundColor: 'rgba(231,76,60,0.05)',
+          fill: true,
+          tension: 0.2,
+          pointRadius: 0,
+          borderWidth: 1.5
+        }]
+      },
+      options: pOpts
+    });
+  }
+
+  // Revenue & NP chart
+  var rCtx = document.getElementById('revenueChart');
+  if (rCtx) {
+    new Chart(rCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2022', '2023', '2024', '2025', '2026E'],
+        datasets: [
+          { label: '营收(亿)', data: [11.96, 19.39, 32.52, 51.63, 66], backgroundColor: 'rgba(52,152,219,0.7)', borderRadius: 4, order: 2 },
+          { label: '归母净利(亿)', data: [4.03, 7.30, 13.44, 20.17, 28], backgroundColor: 'rgba(231,76,60,0.7)', borderRadius: 4, order: 2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } },
+        scales: {
+          y: { ticks: { callback: function(v) { return v + '亿'; } } }
+        }
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>
