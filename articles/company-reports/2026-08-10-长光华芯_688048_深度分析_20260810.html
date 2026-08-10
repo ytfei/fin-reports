@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长光华芯（688048）投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fb;
+  --card: #fff;
+  --text: #1a1a2e;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --red: #dc2626;
+  --green: #16a34a;
+  --blue: #2563eb;
+  --purple: #7c3aed;
+  --amber: #d97706;
+  --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; max-width: 680px; margin: 0 auto; padding: 20px 16px 60px; }
+h1 { font-size: 1.5rem; margin-bottom: 4px; }
+h2 { font-size: 1.15rem; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--blue); }
+h3 { font-size: 1rem; margin: 18px 0 8px; color: var(--text-secondary); }
+.meta { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 20px; }
+.card { background: var(--card); border-radius: var(--radius); padding: 16px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+.chart-wrap { position:relative; height:300px; margin:16px 0; }
+.badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.8rem; font-weight:600; margin-right:4px; }
+.badge-red { background:#fef2f2; color:var(--red); }
+.badge-green { background:#f0fdf4; color:var(--green); }
+.badge-amber { background:#fffbeb; color:var(--amber); }
+.badge-blue { background:#eff6ff; color:var(--blue); }
+table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:12px 0; }
+th { background:#f1f5f9; padding:8px 10px; text-align:left; font-weight:600; border-bottom:2px solid var(--border); }
+td { padding:8px 10px; border-bottom:1px solid var(--border); }
+tr:hover td { background:#f8fafc; }
+.num { text-align:right; font-variant-numeric:tabular-nums; }
+.red { color:var(--red); font-weight:600; }
+.green { color:var(--green); font-weight:600; }
+.amber { color:var(--amber); }
+.blue { color:var(--blue); }
+.warning { background:#fef2f2; border-left:3px solid var(--red); padding:12px 16px; margin:12px 0; border-radius:0 var(--radius) var(--radius) 0; }
+.info { background:#eff6ff; border-left:3px solid var(--blue); padding:12px 16px; margin:12px 0; border-radius:0 var(--radius) var(--radius) 0; }
+blockquote { border-left:3px solid var(--purple); padding:8px 16px; margin:12px 0; background:#faf5ff; border-radius:0 var(--radius) var(--radius) 0; font-style:italic; }
+.hero { background:linear-gradient(135deg, #1e293b, #334155); color:#fff; padding:24px; border-radius:var(--radius); margin-bottom:20px; }
+.hero h1 { font-size:1.4rem; }
+.hero .price-tag { font-size:2.2rem; font-weight:800; }
+.hero .change { font-size:1rem; }
+.tag-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.dl-row { display:flex; gap:20px; flex-wrap:wrap; }
+.dl-item { flex:1; min-width:100px; }
+.dl-label { font-size:0.75rem; color:var(--text-secondary); }
+.dl-value { font-size:1.05rem; font-weight:700; }
+.footer { text-align:center; color:var(--text-secondary); font-size:0.75rem; margin-top:40px; padding-top:20px; border-top:1px solid var(--border); }
+@media(max-width:480px) { body { padding:12px 10px 40px; } .card { padding:12px; } .hero { padding:16px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div style="font-size:0.85rem; opacity:0.8;">长光华芯 · 688048 · 科创板</div>
+  <div class="price-tag">285.52 <span style="font-size:0.9rem;">元</span></div>
+  <div class="change green">+17.72 (+6.62%) · 2026-08-07 收盘</div>
+  <div class="tag-row">
+    <span class="badge badge-red" style="background:rgba(255,255,255,0.15);color:#fff;">PE(TTM) 1492x</span>
+    <span class="badge badge-amber" style="background:rgba(255,255,255,0.15);color:#fff;">PB 16.7x</span>
+    <span class="badge badge-green" style="background:rgba(255,255,255,0.15);color:#fff;">市值 503亿</span>
+    <span class="badge badge-blue" style="background:rgba(255,255,255,0.15);color:#fff;">52周 +127.8%</span>
+  </div>
+</div>
+
+<div class="meta">📅 报告日期：2026-08-10 | 🧑‍💼 分析师：弈投师 | 📊 数据来源：腾讯自选股/westock-data/Tushare</div>
+
+<div class="warning">
+  <strong>⚠️ 核心判断：不建议在285元建立多头仓位。</strong><br>
+  503亿市值price in了2028年才能兑现的利润预期。管理层持续大规模减持。建议等待回调至150-180元以观察仓（≤3%）参与。AI光芯片赛道优先关注源杰科技（688498）。
+</div>
+
+<h2>一、宏观背景</h2>
+<div class="card">
+  <div class="dl-row">
+    <div class="dl-item"><div class="dl-label">制造业PMI</div><div class="dl-value red">49.2</div></div>
+    <div class="dl-item"><div class="dl-label">非制造业PMI</div><div class="dl-value red">49.0</div></div>
+    <div class="dl-item"><div class="dl-label">Q2 GDP</div><div class="dl-value amber">+4.3%</div></div>
+    <div class="dl-item"><div class="dl-label">M2同比</div><div class="dl-value green">+8.0%</div></div>
+    <div class="dl-item"><div class="dl-label">1Y LPR</div><div class="dl-value">3.0%</div></div>
+  </div>
+  <p style="margin-top:10px;color:var(--text-secondary);font-size:0.85rem;">
+    🟡 宏观判断：弱复苏+货币宽+信用滞。PMI三指标同步收缩，但AI/半导体结构性景气独立于宏观。建议权益仓位<strong>60-65%</strong>，偏防御但AI赛道可进攻性配置。
+  </p>
+</div>
+
+<h2>二、行业景气：光芯片——AI算力周期早期偏中期</h2>
+<div class="card">
+  <div class="chart-wrap"><canvas id="industryChart"></canvas></div>
+  <table>
+    <tr><th>维度</th><th>信号</th><th>支撑数据</th></tr>
+    <tr><td>市场需求</td><td><span class="green">🔥极强</span></td><td>全球光芯片2026E达$42亿；EML交付排至2027年后</td></tr>
+    <tr><td>国产化率</td><td><span class="green">替代空间大</span></td><td>25G+仅~4%；工信部目标2028年45%</td></tr>
+    <tr><td>供给缺口</td><td><span class="green">紧缺利好</span></td><td>产能缺口>20%；InP衬底涨3倍</td></tr>
+    <tr><td>竞争格局</td><td><span class="amber">中高烈度</span></td><td>海外三巨头垄断高端；国内源杰/长光/仕佳/光迅竞逐</td></tr>
+  </table>
+</div>
+
+<h2>三、营收与利润趋势</h2>
+<div class="card">
+  <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+  <div class="chart-wrap"><canvas id="profitChart"></canvas></div>
+</div>
+
+<h2>四、股价走势（近一年）</h2>
+<div class="card">
+  <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+  <div class="dl-row" style="margin-top:8px;">
+    <div class="dl-item"><div class="dl-label">52周最高</div><div class="dl-value red">509.11</div></div>
+    <div class="dl-item"><div class="dl-label">52周最低</div><div class="dl-value green">63.57</div></div>
+    <div class="dl-item"><div class="dl-label">从高点回撤</div><div class="dl-value red">-43.9%</div></div>
+    <div class="dl-item"><div class="dl-label">YTD涨幅</div><div class="dl-value green">+127.8%</div></div>
+  </div>
+</div>
+
+<h2>五、估值对比</h2>
+<div class="card">
+  <div class="chart-wrap"><canvas id="valuationChart"></canvas></div>
+  <table>
+    <tr><th>公司</th><th>代码</th><th class="num">市值（亿）</th><th class="num">PE(TTM)</th><th class="num">PB</th><th class="num">2025营收（亿）</th><th class="num">PS(TTM)</th></tr>
+    <tr><td>长光华芯</td><td>688048</td><td class="num">503</td><td class="num">1,492</td><td class="num">16.7</td><td class="num">4.77</td><td class="num">105</td></tr>
+    <tr><td>源杰科技</td><td>688498</td><td class="num">1,688</td><td class="num">474</td><td class="num">68.5</td><td class="num">6.01</td><td class="num">281</td></tr>
+    <tr><td>仕佳光子</td><td>688313</td><td class="num">577</td><td class="num">123</td><td class="num">33.6</td><td class="num">~20</td><td class="num">29</td></tr>
+  </table>
+</div>
+
+<h2>六、情景估值矩阵</h2>
+<div class="card">
+  <table>
+    <tr><th>情景</th><th>概率</th><th>2027E营收</th><th>2027E净利润</th><th>目标PE</th><th class="num">目标价</th></tr>
+    <tr><td>🔵 基准</td><td>50%</td><td>11亿</td><td>2.2亿</td><td>80x</td><td class="num green">100元</td></tr>
+    <tr><td>🔵 基准+溢价</td><td>-</td><td>11亿</td><td>2.2亿</td><td>150x</td><td class="num green">187元</td></tr>
+    <tr><td>🟢 乐观</td><td>30%</td><td>18亿</td><td>4.5亿</td><td>120x</td><td class="num green">306元</td></tr>
+    <tr><td>🟢 乐观+情绪</td><td>-</td><td>18亿</td><td>4.5亿</td><td>180x</td><td class="num green">460元</td></tr>
+    <tr><td>🔴 悲观</td><td>20%</td><td>7亿</td><td>0.7亿</td><td>60x</td><td class="num red">24元</td></tr>
+  </table>
+</div>
+
+<h2>七、核心风险信号</h2>
+<div class="card">
+  <table>
+    <tr><th>风险</th><th>严重度</th><th>概率</th></tr>
+    <tr><td>管理层密集减持（含董事长）</td><td><span class="badge badge-red">高</span></td><td>已发生</td></tr>
+    <tr><td>Q1经营现金流净流出1.31亿</td><td><span class="badge badge-red">高</span></td><td>已发生</td></tr>
+    <tr><td>扣非净利润仍亏损（-1157万）</td><td><span class="badge badge-amber">中</span></td><td>已发生</td></tr>
+    <tr><td>AI算力资本开支周期见顶</td><td><span class="badge badge-red">高</span></td><td>15%</td></tr>
+    <tr><td>EML良率爬坡不及预期（Q1仅40%）</td><td><span class="badge badge-amber">中</span></td><td>30%</td></tr>
+    <tr><td>竞争加剧/价格战</td><td><span class="badge badge-amber">中</span></td><td>35%</td></tr>
+  </table>
+</div>
+
+<h2>八、凯利仓位计算</h2>
+<div class="card">
+  <table>
+    <tr><th>参数</th><th>值</th><th>说明</th></tr>
+    <tr><td>胜率 p</td><td class="num">35%</td><td>EML行业β强但公司α弱于源杰</td></tr>
+    <tr><td>赔率 b</td><td class="num">0.65</td><td>（306/185 - 1），基于情景估值区间</td></tr>
+    <tr><td>凯利 f*</td><td class="num red">-65%</td><td>负凯利！理论上不应下注</td></tr>
+    <tr><td>实操仓位</td><td class="num amber">0-3%</td><td>观察仓（若必须参与）</td></tr>
+  </table>
+</div>
+
+<div class="info">
+  <strong>💡 替代方案：</strong>如果看好AI光芯片赛道，源杰科技（688498）是更优选择——营收规模更大（6.01亿 vs 4.77亿）、EML良率更高（85% vs 40%）、盈利质量更优（净利1.91亿 vs 0.22亿）。长光华芯更适合作为"光芯片赛道二线弹性标的"在深度回调后的交易性机会。
+</div>
+
+<div class="footer">
+  ⚠️ 免责声明：本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。<br>
+  Generated by 弈投师 · WorkBuddy Financial Analyst · 2026-08-10
+</div>
+
+<script>
+function baseOpts(title) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+      title: { display: true, text: title, font: { size: 13 }, padding: { bottom: 10 } }
+    }
+  };
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  // Industry market size
+  new Chart(document.getElementById('industryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2022', '2023', '2024', '2025E', '2026E', '2027E'],
+      datasets: [{
+        label: '中国光芯片市场规模（亿元）',
+        data: [35, 46, 66, 89, 116, 155],
+        backgroundColor: '#2563eb',
+        borderRadius: 6
+      }, {
+        label: '全球光芯片市场（亿美元）',
+        data: [22, 26, 35, 37.6, 42, 52],
+        backgroundColor: '#7c3aed',
+        borderRadius: 6
+      }]
+    },
+    options: baseOpts('光芯片市场规模趋势')
+  });
+
+  // Revenue trend
+  new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2022', '2023', '2024', '2025', '2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1'],
+      datasets: [{
+        label: '单季营收（亿元）',
+        data: [null, null, null, null, 0.94, 1.20, 1.25, 1.38, 1.30],
+        backgroundColor: '#2563eb',
+        borderRadius: 6,
+        order: 2
+      }, {
+        label: '全年营收（亿元）',
+        data: [3.85, 2.87, 2.73, 4.77, null, null, null, null, null],
+        backgroundColor: '#7c3aed',
+        borderRadius: 6,
+        order: 1
+      }]
+    },
+    options: baseOpts('营收趋势')
+  });
+
+  // Profit trend
+  new Chart(document.getElementById('profitChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2022', '2023', '2024', '2025', '2026Q1'],
+      datasets: [{
+        label: '归母净利润（万元）',
+        data: [11880, -8721, -9974, 2176, 448],
+        backgroundColor: function(ctx) {
+          var v = ctx.raw;
+          return v >= 0 ? '#16a34a' : '#dc2626';
+        },
+        borderRadius: 6
+      }]
+    },
+    options: baseOpts('归母净利润趋势')
+  });
+
+  // Price chart - key data points
+  new Chart(document.getElementById('priceChart'), {
+    type: 'line',
+    data: {
+      labels: ['2025-08','2025-09','2025-10','2025-11','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08-07'],
+      datasets: [{
+        label: '收盘价（元）',
+        data: [74.5, 75.75, 72.16, 85.5, 130.2, 134.05, 206, 352.03, 394.74, 502, 227.38, 285.52],
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,0.08)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        borderWidth: 2
+      }]
+    },
+    options: Object.assign({}, baseOpts('股价走势（月度）'), {
+      scales: { y: { title: { display: true, text: '元' } } }
+    })
+  });
+
+  // Valuation comparison
+  new Chart(document.getElementById('valuationChart'), {
+    type: 'bar',
+    data: {
+      labels: ['长光华芯', '源杰科技', '仕佳光子'],
+      datasets: [{
+        label: 'PE(TTM)',
+        data: [1492, 474, 123],
+        backgroundColor: '#dc2626',
+        borderRadius: 4,
+        yAxisID: 'y'
+      }, {
+        label: 'PS(TTM)',
+        data: [105, 281, 29],
+        backgroundColor: '#7c3aed',
+        borderRadius: 4,
+        yAxisID: 'y1'
+      }]
+    },
+    options: Object.assign({}, baseOpts('估值倍数对比'), {
+      scales: {
+        y: { type: 'linear', position: 'left', title: { display: true, text: 'PE(TTM)' } },
+        y1: { type: 'linear', position: 'right', title: { display: true, text: 'PS(TTM)' }, grid: { display: false } }
+      }
+    })
+  });
+});
+</script>
+</body>
+</html>

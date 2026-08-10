@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浙江鼎力（603338）投资分析报告 — 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --red: #d4302b;
+  --green: #1aab5b;
+  --blue: #1a5276;
+  --bg: #f8f9fb;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --text-light: #6b7d8e;
+  --border: #e8ecf1;
+  --accent: #2563eb;
+  --gold: #d4a017;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background:#eef1f5; color:var(--text); line-height:1.7; }
+.container { max-width:680px; margin:0 auto; padding:0 12px 40px; }
+
+/* Hero Banner */
+.hero { background:linear-gradient(135deg, #1a3a5c 0%, #1a5276 40%, #1a6e8e 100%); color:#fff; padding:36px 20px 30px; text-align:center; margin-bottom:16px; border-radius:0 0 20px 20px; }
+.hero .code { font-size:13px; opacity:0.7; letter-spacing:2px; margin-bottom:4px; }
+.hero h1 { font-size:28px; font-weight:700; margin-bottom:6px; }
+.hero .subtitle { font-size:14px; opacity:0.85; margin-bottom:16px; }
+.hero .price-row { display:flex; justify-content:center; align-items:baseline; gap:12px; }
+.hero .price { font-size:42px; font-weight:800; }
+.hero .change { font-size:16px; padding:4px 10px; border-radius:6px; font-weight:600; }
+.hero .change.down { background:rgba(26,171,91,0.2); color:var(--green); }
+.hero .change.up { background:rgba(212,48,43,0.2); color:var(--red); }
+.hero .meta-row { display:flex; justify-content:center; gap:28px; margin-top:14px; font-size:13px; opacity:0.8; flex-wrap:wrap; }
+.hero .meta-row span { white-space:nowrap; }
+
+/* Cards */
+.card { background:var(--card-bg); border-radius:var(--radius); padding:20px; margin-bottom:14px; box-shadow:var(--shadow); }
+.card h2 { font-size:18px; color:var(--blue); border-left:4px solid var(--accent); padding-left:10px; margin-bottom:14px; }
+.card h3 { font-size:15px; color:var(--text); margin:16px 0 8px; }
+
+/* Executive Summary */
+.exec-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+.exec-item { background:var(--card-bg); border-radius:var(--radius); padding:14px 10px; text-align:center; box-shadow:var(--shadow); }
+.exec-item .val { font-size:22px; font-weight:700; margin-bottom:2px; }
+.exec-item .lbl { font-size:11px; color:var(--text-light); }
+.exec-item .up { color:var(--red); }
+.exec-item .down { color:var(--green); }
+
+/* Rating Badge */
+.rating-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; padding:16px; background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); }
+.rating-badge { font-size:36px; }
+.rating-text { flex:1; }
+.rating-text .rt { font-size:18px; font-weight:700; color:var(--blue); }
+.rating-text .rd { font-size:13px; color:var(--text-light); margin-top:2px; }
+
+/* Target Price Bar */
+.target-bar { display:flex; align-items:center; gap:8px; margin:10px 0; font-size:13px; }
+.target-track { flex:1; height:28px; background:linear-gradient(to right, #f0f4f0 0%, #f0f4f0 40%, #fff8e1 40%, #fff8e1 65%, #fce8e6 65%, #fce8e6 100%); border-radius:14px; position:relative; overflow:visible; }
+.target-track .marker { position:absolute; top:-4px; width:2px; height:36px; background:var(--text); }
+.target-track .marker-label { position:absolute; top:-20px; font-size:10px; white-space:nowrap; transform:translateX(-50%); font-weight:600; }
+.target-track .marker.current { background:var(--accent); width:3px; }
+.target-track .marker.current::after { content:""; position:absolute; top:-6px; left:-5px; width:12px; height:12px; background:var(--accent); border-radius:50%; border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+
+/* Five Layer Flow */
+.layers { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.layer-chip { flex:1; min-width:100px; background:linear-gradient(135deg, #1a5276, #1a6e8e); color:#fff; padding:10px 8px; border-radius:8px; text-align:center; font-size:11px; }
+.layer-chip .ln { font-weight:700; font-size:13px; }
+.layer-chip .ls { font-size:10px; opacity:0.8; }
+
+/* Data table */
+.tbl { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+.tbl th { background:#f0f4f8; padding:8px 10px; text-align:left; font-weight:600; color:var(--text-light); font-size:12px; border-bottom:2px solid var(--border); }
+.tbl td { padding:8px 10px; border-bottom:1px solid var(--border); }
+.tbl .up { color:var(--red); font-weight:600; }
+.tbl .down { color:var(--green); font-weight:600; }
+.tbl .hl { background:#fef9e7; }
+
+/* Scenario Cards */
+.scenario-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:12px 0; }
+.sc-card { padding:14px; border-radius:var(--radius); text-align:center; }
+.sc-card.bull { background:#fef3f2; border:1px solid #f5c6cb; }
+.sc-card.base { background:#f0f7ff; border:1px solid #b8d4f0; }
+.sc-card.bear { background:#f0faf0; border:1px solid #b8e0c8; }
+.sc-card .sc-price { font-size:24px; font-weight:800; margin:4px 0; }
+.sc-card .sc-label { font-size:12px; color:var(--text-light); }
+.sc-card .sc-pct { font-size:13px; font-weight:600; }
+
+/* Trading Plan Card */
+.trade-card { border:2px solid var(--accent); border-radius:var(--radius); padding:20px; background:linear-gradient(135deg, #fff 0%, #f0f7ff 100%); }
+.trade-card .tc-header { font-size:16px; font-weight:700; color:var(--blue); margin-bottom:12px; text-align:center; }
+.trade-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; }
+.trade-grid .tg-label { color:var(--text-light); font-size:11px; }
+.trade-grid .tg-val { font-weight:600; }
+.trade-divider { grid-column:1/-1; border-top:1px dashed var(--border); margin:4px 0; }
+.trade-grid .tg-full { grid-column:1/-1; }
+
+/* KPI boxes */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:12px 0; }
+.kpi-box { background:var(--card-bg); border-radius:8px; padding:12px 8px; text-align:center; box-shadow:0 1px 6px rgba(0,0,0,0.04); }
+.kpi-box .kv { font-size:20px; font-weight:700; }
+.kpi-box .kl { font-size:10px; color:var(--text-light); margin-top:2px; }
+
+/* Risk badges */
+.risk-tag { display:inline-block; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:600; margin:2px; }
+.risk-high { background:#fce8e6; color:#c0392b; }
+.risk-mid { background:#fff8e1; color:#b8860b; }
+.risk-low { background:#e8f5e9; color:#2e7d32; }
+
+/* Checklist */
+.checklist { list-style:none; padding:0; }
+.checklist li { padding:6px 0; font-size:13px; }
+.checklist li::before { content:"✅ "; }
+
+/* Footer */
+.footer { text-align:center; padding:20px 10px; font-size:11px; color:var(--text-light); border-top:1px solid var(--border); margin-top:20px; }
+
+/* Responsive */
+@media(max-width:480px) {
+  .exec-grid { grid-template-columns:repeat(2,1fr); }
+  .kpi-row { grid-template-columns:repeat(2,1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .trade-grid { grid-template-columns:1fr; }
+  .hero h1 { font-size:22px; }
+  .hero .price { font-size:32px; }
+}
+
+/* Chart wrapper */
+.chart-wrap { position:relative; width:100%; height:340px; margin:12px 0; }
+.chart-wrap canvas { width:100% !important; }
+
+/* Funnel visual */
+.funnel { display:flex; align-items:center; gap:4px; margin:16px 0; overflow-x:auto; }
+.funnel-step { flex:1; min-width:80px; padding:12px 8px; text-align:center; border-radius:8px; font-size:11px; font-weight:600; }
+.funnel-step.fs1 { background:#1a5276; color:#fff; }
+.funnel-step.fs2 { background:#2471a3; color:#fff; }
+.funnel-step.fs3 { background:#2e86c1; color:#fff; }
+.funnel-step.fs4 { background:#5dade2; color:#fff; }
+.funnel-step.fs5 { background:#85c1e9; color:#1a3a5c; }
+.funnel-arrow { font-size:18px; color:var(--text-light); flex-shrink:0; }
+
+/* Dividend table */
+.div-row { display:flex; justify-content:space-between; padding:5px 0; font-size:12px; border-bottom:1px solid var(--border); }
+.div-row:last-child { border:none; }
+.div-year { font-weight:600; color:var(--blue); }
+
+/* DuPont */
+.dupont { font-size:12px; text-align:center; padding:10px; background:#f8f9fb; border-radius:8px; margin:8px 0; }
+.dupont .big { font-size:24px; font-weight:800; color:var(--blue); }
+.dupont .eq { color:var(--text-light); font-size:11px; }
+
+/* Comps table highlight */
+.highlight-row { background:#fef9e7 !important; font-weight:600; }
+</style>
+</head>
+<body>
+
+<!-- ====== HERO BANNER ====== -->
+<div class="hero">
+  <div class="code">SHA: 603338 · 上海主板 · 工程机械</div>
+  <h1>浙江鼎力</h1>
+  <div class="subtitle">全球高空作业平台龙头 · 五层漏斗深度分析</div>
+  <div class="price-row">
+    <span class="price">56.02</span>
+    <span class="change down">-1.13%</span>
+  </div>
+  <div class="meta-row">
+    <span>📅 2026-08-07</span>
+    <span>💰 市值 283.66亿</span>
+    <span>📊 PE(TTM) 14.75</span>
+    <span>📈 52周 41.44-63.45</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ====== RATING ====== -->
+<div class="rating-row">
+  <div class="rating-badge">⭐⭐⭐⭐</div>
+  <div class="rating-text">
+    <div class="rt">买入 — 质量成长股被错误定价</div>
+    <div class="rd">市场把鼎力当周期股给 14x PE，但它海外占比 75%、ROE 16%+、增速 20%+，合理估值应在 16-18x PE</div>
+  </div>
+</div>
+
+<!-- ====== EXECUTIVE SUMMARY ====== -->
+<div class="exec-grid">
+  <div class="exec-item"><div class="val up">61-67</div><div class="lbl">目标价区间（元）</div></div>
+  <div class="exec-item"><div class="val">52-57</div><div class="lbl">建议买入区间（元）</div></div>
+  <div class="exec-item"><div class="val">10%</div><div class="lbl">建议仓位（1/2凯利）</div></div>
+  <div class="exec-item"><div class="val down">48</div><div class="lbl">止损价（元）</div></div>
+</div>
+
+<!-- ====== TARGET PRICE BAR ====== -->
+<div class="card">
+  <h2>🎯 目标价区间</h2>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-light);margin-bottom:4px;">
+    <span>止损 48</span><span>当前 56.02</span><span>DCF 64</span><span>乐观 75</span>
+  </div>
+  <div class="target-track">
+    <div class="marker" style="left:18%;"><div class="marker-label" style="color:var(--green);">止损48</div></div>
+    <div class="marker current" style="left:46%;"><div class="marker-label" style="color:var(--accent);">当前56</div></div>
+    <div class="marker" style="left:62%;"><div class="marker-label" style="color:var(--blue);">目标64</div></div>
+    <div class="marker" style="left:82%;"><div class="marker-label" style="color:var(--red);">乐观75</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-light);margin-top:6px;">
+    <span style="color:var(--green);">🟢 安全区</span><span style="color:#b8860b;">🟡 买入区</span><span style="color:var(--red);">🔴 追高区</span>
+  </div>
+</div>
+
+<!-- ====== FIVE-LAYER FUNNEL ====== -->
+<div class="card">
+  <h2>🔬 分析框架：五层漏斗</h2>
+  <div class="funnel">
+    <div class="funnel-step fs1">Layer 1<br>宏观定方向<br><small>50-60%权益</small></div>
+    <div class="funnel-arrow">→</div>
+    <div class="funnel-step fs2">Layer 2<br>行业选赛道<br><small>高机·超配</small></div>
+    <div class="funnel-arrow">→</div>
+    <div class="funnel-step fs3">Layer 3<br>量化初筛<br><small>全部通过✅</small></div>
+    <div class="funnel-arrow">→</div>
+    <div class="funnel-step fs4">Layer 4<br>深度估值<br><small>目标61-67</small></div>
+    <div class="funnel-arrow">→</div>
+    <div class="funnel-step fs5">Layer 5<br>交易计划<br><small>仓位10%</small></div>
+  </div>
+</div>
+
+<!-- ====== LAYER 1: MACRO ====== -->
+<div class="card">
+  <h2>🌍 Layer 1 · 宏观背景</h2>
+  <div style="font-size:14px;color:var(--blue);font-weight:600;margin-bottom:12px;">
+    制造业整体收缩但设备制造韧性凸显 → 中等权益仓位、偏防御、行业精选
+  </div>
+  <table class="tbl">
+    <tr><th>指标</th><th>当前值</th><th>方向</th><th>来源</th></tr>
+    <tr><td>制造业PMI（7月）</td><td class="down">49.2%</td><td>↓ 收缩</td><td>国家统计局 07-31</td></tr>
+    <tr class="hl"><td>装备制造业PMI</td><td class="up">51.4%</td><td>↑ 扩张</td><td>同上</td></tr>
+    <tr class="hl"><td>高技术制造业PMI</td><td class="up">53.3%</td><td>↑ 强劲</td><td>同上</td></tr>
+    <tr><td>通用设备生产/新订单</td><td class="up">&gt;53%</td><td>↑ 高景气</td><td>同上</td></tr>
+    <tr><td>沪深300 PE-TTM</td><td>14.37</td><td>分位 ~86%</td><td>westock-data</td></tr>
+    <tr><td>10年国债收益率</td><td>1.70%</td><td>↓ 低位</td><td>中国货币网</td></tr>
+    <tr><td>股权风险溢价(ERP)</td><td class="up">~5.3%</td><td>有吸引力</td><td>模型计算</td></tr>
+    <tr><td>美元/人民币</td><td>6.75</td><td>⚠️ RMB升值</td><td>中国外汇交易中心</td></tr>
+    <tr><td>1年期LPR</td><td>3.00%</td><td>维稳</td><td>央行 07-20</td></tr>
+  </table>
+  <div style="font-size:13px;margin-top:8px;">
+    <strong>🟡 建议权益仓位：50-60%</strong> | 偏防御 | 
+    <strong style="color:var(--red);">最大风险：人民币升值</strong>
+  </div>
+</div>
+
+<!-- ====== LAYER 2: INDUSTRY ====== -->
+<div class="card">
+  <h2>🏗️ Layer 2 · 行业赛道：高空作业平台</h2>
+  <div style="font-size:14px;color:var(--blue);font-weight:600;margin-bottom:12px;">
+    海外景气加速（出口+35%）+ 国内底部企稳 → 行业处于补库早期，超配
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-box"><div class="kv up">+20.6%</div><div class="kl">2026H1 行业销量</div></div>
+    <div class="kpi-box"><div class="kv up">+35.1%</div><div class="kl">出口增速 H1</div></div>
+    <div class="kpi-box"><div class="kv down">-1.35%</div><div class="kl">内销增速（筑底）</div></div>
+    <div class="kpi-box"><div class="kv up">+27.6%</div><div class="kl">URI资本开支 H1</div></div>
+  </div>
+  <h3>竞争格局</h3>
+  <table class="tbl">
+    <tr><th>梯队</th><th>代表企业</th><th>定位</th></tr>
+    <tr><td>第一梯队</td><td>JLG（美）、Genie（美）</td><td>高端臂式、欧美租赁商深度绑定</td></tr>
+    <tr class="highlight-row"><td>第二梯队</td><td><strong>浙江鼎力</strong>、中联、徐工</td><td>中国军团崛起，鼎力为纯正龙头</td></tr>
+    <tr><td>第三梯队</td><td>Haulotte（法）、Skyjack（加）</td><td>区域/细分市场深耕</td></tr>
+  </table>
+  <div style="font-size:12px;color:var(--text-light);margin-top:8px;">
+    行业周期位置：<strong>早中期偏中</strong> · 臂式 CAGR 6.8-7.4% > 剪叉 6.1-6.6%
+  </div>
+</div>
+
+<!-- ====== LAYER 3: SCREENING ====== -->
+<div class="card">
+  <h2>🔍 Layer 3 · 量化初筛</h2>
+  <ul class="checklist">
+    <li>商誉/净资产 = 1.14%（<30%阈值）</li>
+    <li>经营现金流 TTM 15.98亿（正）</li>
+    <li>日均成交额 ~2.8亿（>3000万）</li>
+    <li>无重大违规处罚记录</li>
+    <li>大股东质押率低（无异常）</li>
+  </ul>
+  <div class="kpi-row" style="margin-top:12px;">
+    <div class="kpi-box"><div class="kv">14.75</div><div class="kl">PE(TTM)</div></div>
+    <div class="kpi-box"><div class="kv">16.2%</div><div class="kl">ROE(TTM)</div></div>
+    <div class="kpi-box"><div class="kv">33.81%</div><div class="kl">毛利率 Q1</div></div>
+    <div class="kpi-box"><div class="kv up">+29.5%</div><div class="kl">营收增速 Q1</div></div>
+  </div>
+</div>
+
+<!-- ====== LAYER 4: DEEP RESEARCH ====== -->
+<div class="card">
+  <h2>📊 Layer 4 · 深度研究</h2>
+
+  <h3>商业模式</h3>
+  <table class="tbl">
+    <tr><th>维度</th><th>数据</th></tr>
+    <tr><td>核心产品</td><td>高空作业平台（剪叉式+臂式+车载式）91.5%</td></tr>
+    <tr><td>海外收入占比</td><td class="up">75%</td></tr>
+    <tr><td>护城河</td><td>模块化设计降本 + 海外先发渠道 + 双反税率优势 + 规模效应</td></tr>
+    <tr><td>净现金</td><td class="up">36.67亿（占市值12.9%）</td></tr>
+    <tr><td>有息负债率</td><td class="down">6.1%（极低）</td></tr>
+    <tr><td>新品布局</td><td>高空机器人系列 + 太空舱文旅产品</td></tr>
+  </table>
+
+  <h3>杜邦分解（TTM年化）</h3>
+  <div class="dupont">
+    <div class="big">ROE 16.2%</div>
+    <div class="eq">= 净利率 21.06% × 周转率 0.52 × 杠杆 1.47</div>
+    <div style="margin-top:6px;font-size:11px;color:var(--text-light);">高净利率驱动（非杠杆）→ ROE质量优于中联(5.9%)/徐工(10.9%)</div>
+  </div>
+
+  <h3>历史业绩</h3>
+  <table class="tbl">
+    <tr><th>年份</th><th>营收（亿）</th><th>净利润（亿）</th><th>EPS</th><th>分红/股</th></tr>
+    <tr><td>2022</td><td>54.45</td><td>12.57</td><td>2.48</td><td>0.50</td></tr>
+    <tr><td>2023</td><td>63.12</td><td>18.67</td><td>3.69</td><td>1.00</td></tr>
+    <tr><td>2024</td><td>77.99</td><td>16.29</td><td>3.22</td><td>1.00</td></tr>
+    <tr><td>2025</td><td>85.75</td><td>18.99</td><td>3.75</td><td>1.15</td></tr>
+    <tr class="highlight-row"><td>2026E</td><td>~105</td><td>~20.8</td><td>~4.10</td><td>—</td></tr>
+  </table>
+
+  <h3>估值：三种方法交叉验证</h3>
+  <div class="scenario-grid">
+    <div class="sc-card bull">
+      <div class="sc-label">🟢 乐观情景</div>
+      <div class="sc-price" style="color:var(--red);">75 元</div>
+      <div class="sc-pct up">+34%</div>
+      <div class="sc-label">WACC 7.0% · 高增速 · 20%概率</div>
+    </div>
+    <div class="sc-card base">
+      <div class="sc-label">🟡 基准情景</div>
+      <div class="sc-price" style="color:var(--blue);">64 元</div>
+      <div class="sc-pct up">+14%</div>
+      <div class="sc-label">DCF · WACC 7.5% · 55%概率</div>
+    </div>
+    <div class="sc-card bear">
+      <div class="sc-label">🔴 悲观情景</div>
+      <div class="sc-price" style="color:var(--green);">48 元</div>
+      <div class="sc-pct down">-14%</div>
+      <div class="sc-label">WACC 8.5% · 低增速 · 25%概率</div>
+    </div>
+  </div>
+
+  <h3>可比估值</h3>
+  <table class="tbl">
+    <tr><th>公司</th><th>PE(TTM)</th><th>PB</th><th>ROE</th><th>股息率</th></tr>
+    <tr class="highlight-row"><td><strong>浙江鼎力</strong></td><td><strong>14.75</strong></td><td><strong>2.52</strong></td><td><strong>16.2%</strong></td><td><strong>2.05%</strong></td></tr>
+    <tr><td>中联重科</td><td>14.35</td><td>1.07</td><td>5.9%</td><td>~3.5%</td></tr>
+    <tr><td>徐工机械</td><td>14.77</td><td>1.55</td><td>10.9%</td><td>~2.5%</td></tr>
+    <tr><td>三一重工</td><td>22.44</td><td>2.09</td><td>11.2%</td><td>~1.8%</td></tr>
+    <tr><td>杭叉集团</td><td>15.35</td><td>2.84</td><td>19.4%</td><td>~2.0%</td></tr>
+    <tr><td>行业中位数</td><td>27.70</td><td>2.27</td><td>—</td><td>—</td></tr>
+  </table>
+  <div style="font-size:12px;color:var(--text-light);margin-top:4px;">
+    鼎力PE低于行业中位数 50%+ · PE分位 6.76%（历史极端低位）· PB分位 1.37%
+  </div>
+</div>
+
+<!-- ====== K-LINE CHART ====== -->
+<div class="card">
+  <h2>📈 股价走势（近1年）</h2>
+  <div class="chart-wrap">
+    <canvas id="priceChart"></canvas>
+  </div>
+</div>
+
+<!-- ====== MULTI-BULL vs BEAR ====== -->
+<div class="card">
+  <h2>⚔️ 多空对弈</h2>
+  <table class="tbl">
+    <tr><th style="color:var(--red);">🐂 多头核心论点</th><th style="color:var(--green);">🐻 空头核心论点</th></tr>
+    <tr>
+      <td>出口景气加速、确定性高（URI连续上调资本开支+20.55%）</td>
+      <td>人民币升值直接侵蚀利润（Q1毛利率↓6.75pp）</td>
+    </tr>
+    <tr>
+      <td>估值处于历史极端低位（PE分位6.76%，PB分位1.37%）</td>
+      <td>国内市场需求持续疲软（建筑业PMI仅47%）</td>
+    </tr>
+    <tr>
+      <td>新产品打开第二曲线（机器人+太空舱）</td>
+      <td>贸易摩擦升级风险（欧盟双反+美国政策不确定）</td>
+    </tr>
+  </table>
+  <div style="background:#fef9e7;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;">
+    <strong>💡 变异认知：</strong>市场把鼎力当普通工程机械周期股，但它海外占比75%、ROE 16%+、增速20%+，是典型的<strong>全球竞争力成长股</strong>。合理估值应在 16-18x PE，当前 14x 隐含 15-25% 上行空间。
+  </div>
+</div>
+
+<!-- ====== LAYER 5: TRADING PLAN ====== -->
+<div class="card">
+  <h2>🎯 Layer 5 · 交易计划</h2>
+  <div class="trade-card">
+    <div class="tc-header">📋 浙江鼎力（603338）交易计划卡片</div>
+    <div class="trade-grid">
+      <div>
+        <div class="tg-label">当前价格</div>
+        <div class="tg-val">56.02 元</div>
+      </div>
+      <div>
+        <div class="tg-label">目标价区间</div>
+        <div class="tg-val" style="color:var(--red);">61 - 67 元</div>
+      </div>
+      <div>
+        <div class="tg-label">买入区间</div>
+        <div class="tg-val">52 - 57 元</div>
+      </div>
+      <div>
+        <div class="tg-label">安全边际</div>
+        <div class="tg-val">10-15%</div>
+      </div>
+
+      <div class="trade-divider"></div>
+      <div class="tg-full"><strong>📐 凯利公式仓位计算</strong></div>
+      <div>
+        <div class="tg-label">胜率 p</div>
+        <div class="tg-val">60%</div>
+      </div>
+      <div>
+        <div class="tg-label">赔率 b</div>
+        <div class="tg-val">1.0</div>
+      </div>
+      <div>
+        <div class="tg-label">理论仓位 f*</div>
+        <div class="tg-val">20%</div>
+      </div>
+      <div>
+        <div class="tg-label">实操仓位（1/2凯利）</div>
+        <div class="tg-val" style="color:var(--red);">10%</div>
+      </div>
+
+      <div class="trade-divider"></div>
+      <div class="tg-full"><strong>🛑 止损规则</strong></div>
+      <div class="tg-full"><span class="tg-label">逻辑止损：</span>海外出口连续2月转负 / 毛利率<30% / URI下调资本开支</div>
+      <div class="tg-full"><span class="tg-label">技术止损：</span>跌破 <strong style="color:var(--green);">48 元</strong>（DCF悲观+前低支撑）</div>
+      <div class="tg-full"><span class="tg-label">时间止损：</span>买入后 6 个月无正向催化剂</div>
+      <div class="tg-full"><span class="tg-label">绝对止损：</span>亏损超过 <strong style="color:var(--green);">15%</strong> 无条件平仓</div>
+
+      <div class="trade-divider"></div>
+      <div class="tg-full"><strong>🏁 止盈规则</strong></div>
+      <div class="tg-full"><span class="tg-label">第一目标：</span><strong style="color:var(--red);">64 元</strong>（DCF基准）→ 减仓 50%</div>
+      <div class="tg-full"><span class="tg-label">第二目标：</span><strong style="color:var(--red);">70 元</strong>（乐观情景）→ 清仓</div>
+
+      <div class="trade-divider"></div>
+      <div class="tg-full"><strong>📡 跟踪指标（每周检查）</strong></div>
+      <div class="tg-full" style="font-size:12px;">
+        [1] 海关出口增速：<span class="up">当前+35%</span> / 预警<15%<br>
+        [2] 人民币汇率：<span>当前6.75</span> / 预警>6.90<br>
+        [3] URI资本开支：<span class="up">当前+27.6%</span> / 预警转负<br>
+        [4] 鼎力毛利率：<span>当前33.81%</span> / 预警<30%<br>
+        [5] 协会月度销量：<span class="up">当前+20.6%</span> / 预警<10%
+      </div>
+
+      <div class="trade-divider"></div>
+      <div class="tg-full"><strong>📅 催化剂日历</strong></div>
+      <div class="tg-full" style="font-size:12px;">
+        <span style="color:var(--red);">● 08/28</span> 鼎力半年报披露 → 观察毛利率和汇率影响<br>
+        <span style="color:var(--blue);">● 09月</span> 协会8月销量数据 → 关注出口是否维持30%+<br>
+        <span style="color:var(--blue);">● 10月</span> URI Q3财报 → 资本开支是否再次上调<br>
+        <span style="color:var(--red);">● Q4</span> 六期工厂试生产 → 产能瓶颈打开<br>
+        <span style="color:var(--red);">● 11月</span> 美国中期选举 → 贸易政策不确定性落地
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== RISK MATRIX ====== -->
+<div class="card">
+  <h2>⚠️ 风险矩阵</h2>
+  <table class="tbl">
+    <tr><th>风险</th><th>概率</th><th>影响</th><th>应对</th></tr>
+    <tr>
+      <td>RMB持续升值</td>
+      <td><span class="risk-tag risk-mid">中高</span></td>
+      <td>中等</td>
+      <td>毛利率<30%触发止损</td>
+    </tr>
+    <tr>
+      <td>美国加征关税</td>
+      <td><span class="risk-tag risk-mid">中</span></td>
+      <td>高</td>
+      <td>公司现金充足可海外建厂</td>
+    </tr>
+    <tr>
+      <td>海外需求骤降</td>
+      <td><span class="risk-tag risk-low">低</span></td>
+      <td>极高</td>
+      <td>URI季报为领先指标</td>
+    </tr>
+    <tr>
+      <td>中联/徐工价格战</td>
+      <td><span class="risk-tag risk-mid">中</span></td>
+      <td>中等</td>
+      <td>模块化设计+双反税率优势</td>
+    </tr>
+    <tr>
+      <td>新品商业化失败</td>
+      <td><span class="risk-tag risk-mid">中</span></td>
+      <td>低</td>
+      <td>核心估值不依赖新品</td>
+    </tr>
+  </table>
+  <div style="font-size:12px;color:var(--text-light);margin-top:6px;">
+    极端下行情景（三重打击概率10-15%）：股价可能跌至 40-45 元 → 建仓56元最大回撤 ~20-28%
+  </div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<div class="footer">
+  <p>分析师：弈投师 · 日期：2026-08-07 · 数据来源：腾讯自选股、国家统计局、中国海关总署、东方财富、华泰研究等公开渠道</p>
+  <p style="margin-top:6px;"><strong>⚠️ 免责声明：</strong>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。所有估值模型包含主观假设，实际情况可能偏差较大。投资有风险，入市需谨慎。</p>
+</div>
+
+</div><!-- /container -->
+
+<!-- ====== CHART.JS SCRIPTS ====== -->
+<script src="浙江鼎力_data.js"></script>
+<script>
+function baseOpts() {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        backgroundColor: 'rgba(26,53,76,0.95)',
+        titleFont: { size: 13 },
+        bodyFont: { size: 12 },
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.dataset.label === '成交量') {
+              return '成交量: ' + (ctx.raw/10000).toFixed(1) + '万手';
+            }
+            return ctx.dataset.label + ': ' + ctx.raw.toFixed(2);
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          maxTicksLimit: 8,
+          maxRotation: 0,
+          font: { size: 10 },
+          callback: function(val, idx) {
+            var d = DL_PRICE.dates[idx];
+            if (!d) return '';
+            return d.slice(5); // MM-DD
+          }
+        },
+        grid: { display: false }
+      },
+      y: {
+        position: 'right',
+        ticks: {
+          font: { size: 10 },
+          callback: function(v) { return v.toFixed(0); }
+        },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      }
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false
+    }
+  };
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+  if (typeof DL_PRICE === 'undefined') { console.warn('DL_PRICE data not loaded'); return; }
+
+  var dates = DL_PRICE.dates;
+  var closes = DL_PRICE.closes;
+  var volumes = DL_PRICE.volumes;
+
+  // Prepare volume data in 万手
+  var volData = volumes.map(function(v) { return v / 10000; });
+
+  // Determine bar colors based on close vs open (A股: 红涨绿跌)
+  var barColors = [];
+  var barBorders = [];
+  for (var i = 0; i < dates.length; i++) {
+    var isUp = closes[i] >= DL_PRICE.opens[i];
+    barColors.push(isUp ? 'rgba(212,48,43,0.7)' : 'rgba(26,171,91,0.7)');
+    barBorders.push(isUp ? 'rgba(212,48,43,1)' : 'rgba(26,171,91,1)');
+  }
+
+  // Price chart (line + volume bars)
+  var ctx = document.getElementById('priceChart').getContext('2d');
+  var opts = baseOpts();
+  // Add volume y-axis
+  opts.scales.y1 = {
+    position: 'left',
+    ticks: {
+      font: { size: 10 },
+      callback: function(v) { return v.toFixed(0) + '万'; }
+    },
+    grid: { display: false }
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          type: 'bar',
+          label: '成交量',
+          data: volData,
+          backgroundColor: barColors.map(function(c) { return c.replace('0.7', '0.25'); }),
+          borderColor: barColors.map(function(c) { return c.replace('0.7', '0.3'); }),
+          borderWidth: 0.5,
+          yAxisID: 'y1',
+          order: 2
+        },
+        {
+          type: 'line',
+          label: '收盘价',
+          data: closes,
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,0.1)',
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          pointHoverBackgroundColor: '#2563eb',
+          tension: 0.1,
+          fill: true,
+          yAxisID: 'y',
+          order: 1
+        }
+      ]
+    },
+    options: opts
+  });
+});
+</script>
+
+</body>
+</html>

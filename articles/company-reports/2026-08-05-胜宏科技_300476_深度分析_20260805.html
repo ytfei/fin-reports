@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>胜宏科技(300476) 深度投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="sx_price_data.js"></script>
+<style>
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --sub: #64748b;
+  --red: #dc2626;
+  --green: #16a34a;
+  --blue: #2563eb;
+  --amber: #d97706;
+  --border: #e2e8f0;
+  --accent: #f0f9ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+/* Hero Banner */
+.hero { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: #fff; padding: 48px 32px; border-radius: 16px; margin-bottom: 28px; }
+.hero .tag { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 16px; }
+.hero h1 { font-size: 32px; margin-bottom: 8px; }
+.hero .sub { color: #94a3b8; font-size: 15px; margin-bottom: 20px; }
+.hero .key-metrics { display: flex; gap: 32px; flex-wrap: wrap; }
+.hero .metric .label { font-size: 12px; color: #94a3b8; }
+.hero .metric .value { font-size: 24px; font-weight: 700; }
+
+/* Cards */
+.card { background: var(--card); border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
+.card h2 { font-size: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.card h3 { font-size: 17px; margin: 16px 0 10px; color: #334155; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.badge-red { background: #fef2f2; color: #dc2626; }
+.badge-green { background: #f0fdf4; color: #16a34a; }
+.badge-blue { background: #eff6ff; color: #2563eb; }
+.badge-amber { background: #fffbeb; color: #d97706; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+th { background: #f1f5f9; padding: 10px 12px; text-align: left; font-weight: 600; color: #475569; font-size: 13px; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: #f8fafc; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.up { color: #dc2626; }
+.down { color: #16a34a; }
+
+/* Chart container */
+.chart-wrap { position: relative; height: 360px; margin: 16px 0; }
+.chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.stat-box { background: #f8fafc; padding: 16px; border-radius: 10px; text-align: center; }
+.stat-box .num { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.stat-box .lbl { font-size: 12px; color: #64748b; }
+
+/* Trade Plan Card */
+.trade-card { background: linear-gradient(135deg, #fffbeb, #fff7ed); border: 2px solid #fbbf24; border-radius: 14px; padding: 24px; margin: 20px 0; }
+.trade-card h2 { color: #92400e; }
+.trade-card .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #fde68a; }
+.trade-card .row .k { color: #78716c; font-size: 13px; }
+.trade-card .row .v { font-weight: 600; }
+
+/* Risk matrix */
+.risk-high { background: #fef2f2; border-left: 4px solid #dc2626; }
+.risk-mid { background: #fffbeb; border-left: 4px solid #d97706; }
+.risk-low { background: #f0fdf4; border-left: 4px solid #16a34a; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .container { padding: 12px; }
+  .hero { padding: 28px 20px; }
+  .hero h1 { font-size: 24px; }
+  .hero .key-metrics { gap: 16px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .chart-wrap { height: 260px; }
+}
+
+/* Disclaimer */
+.disclaimer { font-size: 12px; color: #94a3b8; text-align: center; padding: 20px; border-top: 1px solid var(--border); margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div class="tag">A股 · 创业板 · 电子元件</div>
+  <h1>胜宏科技 <span style="font-size:18px;font-weight:400">300476.SZ</span></h1>
+  <div class="sub">AI PCB 全球龙头 | 深度五层漏斗分析 | 2026-08-05</div>
+  <div class="key-metrics">
+    <div class="metric"><div class="label">最新价</div><div class="value" style="color:#ef4444">236.35</div></div>
+    <div class="metric"><div class="label">今日涨幅</div><div class="value" style="color:#ef4444">+17.12%</div></div>
+    <div class="metric"><div class="label">总市值</div><div class="value">2,323 亿</div></div>
+    <div class="metric"><div class="label">PE(TTM)</div><div class="value">49.64x</div></div>
+    <div class="metric"><div class="label">PB</div><div class="value">14.83x</div></div>
+  </div>
+</div>
+
+<!-- ====== Layer 1: Macro ====== -->
+<div class="card">
+  <h2>🔭 Layer 1 · 宏观定方向</h2>
+
+  <div class="grid-3">
+    <div class="stat-box">
+      <div class="num" style="color:#dc2626">49.2</div>
+      <div class="lbl">制造业 PMI (7月)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">4.3%</div>
+      <div class="lbl">Q2 GDP 实际增速</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">1.72%</div>
+      <div class="lbl">10Y 国债收益率</div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px">
+    <tr><th style="width:30%">指标</th><th>当前值</th><th>信号</th><th>来源</th></tr>
+    <tr><td>制造业 PMI</td><td>49.2（7月）<br><span style="font-size:12px;color:#94a3b8">前值 50.3</span></td><td><span class="badge badge-amber">⚠ 收缩</span></td><td>统计局 / 2026-07-31</td></tr>
+    <tr><td>GDP 增速</td><td>4.3% YoY (Q2 2026)</td><td><span class="badge badge-amber">稳中偏弱</span></td><td>统计局 / 2026-07-15</td></tr>
+    <tr><td>M2 / M1</td><td>+8.0% / +4.0% YoY</td><td><span class="badge badge-blue">流动性充裕</span></td><td>央行 / 2026-06</td></tr>
+    <tr><td>10Y 国债</td><td>1.717%</td><td><span class="badge badge-blue">极度宽松</span></td><td>CFETS / 2026-07-31</td></tr>
+    <tr><td>工业利润</td><td>+18.7% YoY 累计</td><td><span class="badge badge-green">盈利修复</span></td><td>统计局 / 2026-06</td></tr>
+    <tr><td>规模以上高技术制造</td><td>+13.3% YoY</td><td><span class="badge badge-green">结构亮点</span></td><td>统计局 / 2026-06</td></tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;background:#f0f9ff;border-radius:10px">
+    <strong>🔑 宏观判断：</strong>经济总量承压（PMI 破 50），但流动性极宽（10Y 1.72%），且结构上高技术制造业一枝独秀（+13.3%）。<br>
+    <strong>建议权益仓位：55-65%</strong> | <strong>风格：偏成长/科技</strong> | <strong>最大宏观风险：</strong>中美关税升级冲击出口链
+  </div>
+</div>
+
+<!-- ====== Layer 2: Industry ====== -->
+<div class="card">
+  <h2>🎯 Layer 2 · 行业选赛道 — PCB / AI 算力硬件</h2>
+
+  <div class="grid-2">
+    <div class="stat-box">
+      <div class="num" style="color:#dc2626">+6.57%</div>
+      <div class="lbl">元件板块今日涨幅</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#dc2626">+10.33%</div>
+      <div class="lbl">元件板块 5 日涨幅</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>分析维度</th><th>判断</th><th>量化支撑</th></tr>
+    <tr>
+      <td><strong>景气度</strong></td>
+      <td><span class="badge badge-green">高景气</span> AI 资本开支持续扩张</td>
+      <td>北美四大云厂商 2026 CAPEX 指引合计 +35% YoY；英伟达 Rubin 平台备货启动</td>
+    </tr>
+    <tr>
+      <td><strong>竞争格局</strong></td>
+      <td><span class="badge badge-blue">寡头集中</span> 高端 AI PCB 仅 3-5 家能做</td>
+      <td>AI 服务器 PCB（20 层+ HDI/ HLC）全球有效产能：胜宏、沪电、深南、Unimicron、Ibiden</td>
+    </tr>
+    <tr>
+      <td><strong>估值水位</strong></td>
+      <td><span class="badge badge-amber">中位偏高</span> 元件板块 20 日 -14.56%</td>
+      <td>胜宏 PE 49.6x vs 可比均值 60.8x — 在板块内偏便宜</td>
+    </tr>
+    <tr>
+      <td><strong>资金流向</strong></td>
+      <td><span class="badge badge-green">资金回流</span> 半导体+消费电子今日大额净流入</td>
+      <td>半导体板块今日主力净流入 136.7 亿，元件 6.57% 领涨行业</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;background:#f0fdf4;border-radius:10px">
+    <strong>🔑 行业结论：</strong>AI PCB 正处于"渗透率提升 + 单价跃升 + 供给受限"三重红利期。胜宏科技是 A 股 AI PCB 赛道中 ROE 最高、边际改善最大的标的。PCB 板块本月回调 14.6% 后今日大幅反弹，资金重新关注半导体/AI 硬件方向。<br>
+    <strong>行业周期位置：AI 驱动的结构性成长中期</strong>（非传统 PCB 周期逻辑）
+  </div>
+</div>
+
+<!-- ====== Layer 3: Screening ====== -->
+<div class="card">
+  <h2>🔍 Layer 3 · 量化初筛</h2>
+
+  <h3>硬性淘汰检查</h3>
+  <table>
+    <tr><th>淘汰条件</th><th>胜宏科技</th><th>结果</th></tr>
+    <tr><td>近3年经营现金流 2 年以上为负</td><td>2023: 13.58亿 / 2024: 13.58亿 / 2025: 46.03亿 均为正</td><td><span class="badge badge-green">✓ 通过</span></td></tr>
+    <tr><td>商誉/净资产 > 30%</td><td>11.62亿 / 174.04亿 = 6.7%</td><td><span class="badge badge-green">✓ 通过</span></td></tr>
+    <tr><td>大股东质押率 > 50%</td><td>总质押比例 0.16%，3 笔合计 136 万股</td><td><span class="badge badge-green">✓ 通过</span></td></tr>
+    <tr><td>近2年财务造假/处罚</td><td>无违规记录</td><td><span class="badge badge-green">✓ 通过</span></td></tr>
+    <tr><td>日均成交额 < 3000 万</td><td>今日成交额 163.9 亿</td><td><span class="badge badge-green">✓ 通过</span></td></tr>
+  </table>
+
+  <h3>PCB 赛道核心标的多因子对比</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>PE(TTM)</th><th>PB</th><th>ROE</th><th>毛利率</th><th>净利率</th><th>资产负债率</th></tr>
+    <tr style="background:#fffbeb">
+      <td><strong>300476</strong></td>
+      <td><strong>胜宏科技</strong></td>
+      <td class="num"><strong>49.64</strong></td>
+      <td class="num">14.83</td>
+      <td class="num" style="color:#dc2626"><strong>33.76%</strong></td>
+      <td class="num" style="color:#dc2626"><strong>35.22%</strong></td>
+      <td class="num" style="color:#dc2626"><strong>22.35%</strong></td>
+      <td class="num">52.85%</td>
+    </tr>
+    <tr><td>002463</td><td>沪电股份</td><td class="num">51.71</td><td class="num">14.05</td><td class="num">32.28%</td><td class="num">35.48%</td><td class="num">20.16%</td><td class="num">46.46%</td></tr>
+    <tr><td>002916</td><td>深南电路</td><td class="num">65.44</td><td class="num">14.45</td><td class="num">20.62%</td><td class="num">28.32%</td><td class="num">13.86%</td><td class="num">43.82%</td></tr>
+    <tr><td>002938</td><td>鹏鼎控股</td><td class="num">56.89</td><td class="num">6.53</td><td class="num">11.28%</td><td class="num">21.50%</td><td class="num">9.49%</td><td class="num">28.86%</td></tr>
+    <tr><td>603228</td><td>景旺电子</td><td class="num">68.99</td><td class="num">5.90</td><td class="num">10.10%</td><td class="num">21.59%</td><td class="num">8.13%</td><td class="num">44.07%</td></tr>
+  </table>
+
+  <div style="margin-top:12px;padding:12px;background:#fffbeb;border-radius:8px;font-size:14px">
+    <strong>筛选结论：</strong>胜宏科技在 PCB 板块中 <strong>ROE 最高（33.8%）</strong>、净利率最高（22.4%）、PE 最低（49.6x）</strong>——出现明显的"质优价廉"背离。沪电股份是唯一在质量上接近的对手，但 PE 略高且净利率低了 2 个百分点。
+  </div>
+</div>
+
+<!-- ====== Layer 4: Deep Dive ====== -->
+<div class="card">
+  <h2>📊 Layer 4 · 深度研究</h2>
+
+  <h3>4a. 商业模式拆解</h3>
+  <table>
+    <tr><th style="width:25%">维度</th><th>分析</th></tr>
+    <tr><td><strong>怎么赚钱</strong></td><td>高端 PCB 制造，核心产品为 AI 服务器用 HDI/高多层板（20-40 层）、交换机背板、GPU 模组板。2025 年 AI 相关收入占比估计超 60%。下游客户包括 NVIDIA（通过 ODM）、北美云厂商自研芯片项目。</td></tr>
+    <tr><td><strong>护城河</strong></td><td><strong>技术壁垒：</strong>高端 AI PCB 层数/线宽/对准精度要求极高，全球仅 5-6 家能稳定量产；<strong>客户认证壁垒：</strong>进入 NVIDIA/云厂商供应链需 1-2 年认证周期；<strong>规模优势：</strong>大产能 + 高良率带来成本优势</td></tr>
+    <tr><td><strong>管理层</strong></td><td>创始人陈涛（董事长），深耕 PCB 行业 20+ 年。2025 年 8 月有三位高管小幅减持（合计约 14 万股，金额约 2700 万）——金额较小，不构成重大信号。</td></tr>
+  </table>
+
+  <h3>4b. 财务深度分析</h3>
+
+  <div class="grid-3">
+    <div class="stat-box">
+      <div class="num" style="color:#dc2626">79.8%</div>
+      <div class="lbl">2025 营收增速 YoY</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="color:#dc2626">273.5%</div>
+      <div class="lbl">2025 净利润增速 YoY</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">33.76%</div>
+      <div class="lbl">2025 ROE</div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px">
+    <tr><th>指标</th><th>2023</th><th>2024</th><th>2025</th><th>2026Q1</th><th>趋势</th></tr>
+    <tr><td>营收（亿）</td><td class="num">79.31</td><td class="num">107.31</td><td class="num">192.92</td><td class="num">55.19</td><td style="color:#dc2626">↑ 加速增长</td></tr>
+    <tr><td>归母净利润（亿）</td><td class="num">6.71</td><td class="num">11.54</td><td class="num">43.12</td><td class="num">12.88</td><td style="color:#dc2626">↑ 爆发式增长</td></tr>
+    <tr><td>毛利率</td><td class="num">20.70%</td><td class="num">22.72%</td><td class="num">35.22%</td><td class="num">34.46%</td><td style="color:#dc2626">↑ 结构性跃升</td></tr>
+    <tr><td>净利率</td><td class="num">8.46%</td><td class="num">10.76%</td><td class="num">22.35%</td><td class="num">23.34%</td><td style="color:#dc2626">↑ 跃升</td></tr>
+    <tr><td>经营现金流（亿）</td><td class="num">13.58</td><td class="num">13.58</td><td class="num">46.03</td><td class="num">21.17</td><td style="color:#dc2626">↑ 强劲</td></tr>
+    <tr><td>经营现金流/净利润</td><td class="num">2.02</td><td class="num">1.18</td><td class="num">1.07</td><td class="num">1.64</td><td style="color:#16a34a">良好</td></tr>
+    <tr><td>ROE</td><td class="num">9.22%</td><td class="num">14.74%</td><td class="num">33.76%</td><td class="num">7.57%(Q)</td><td style="color:#dc2626">↑ 优质</td></tr>
+  </table>
+
+  <h3>杜邦分解（2025 年报）</h3>
+  <div style="background:#f8fafc;padding:16px;border-radius:10px;margin:12px 0">
+    <strong>ROE 33.76% = 净利率 22.35% × 资产周转率 0.71 × 权益乘数 2.12</strong><br>
+    <span style="font-size:13px;color:#64748b">ROE 主要由净利率驱动（高质量），而非杠杆（权益乘数 2.12，中等）。资产周转率 0.71 受重资产模式影响，但随产能利用率提升有望改善。</span>
+  </div>
+
+  <h3>成长驱动力</h3>
+  <div class="grid-2">
+    <div style="background:#f0f9ff;padding:14px;border-radius:8px">
+      <strong>量驱动：</strong>产能扩张。泰国/国内新工厂投产，总产能预计 2026 年提升 40-50%
+    </div>
+    <div style="background:#f0f9ff;padding:14px;border-radius:8px">
+      <strong>价驱动：</strong>产品结构升级。AI PCB 单价是传统 PCB 的 5-10x，高多层板占比持续提升
+    </div>
+    <div style="background:#f0f9ff;padding:14px;border-radius:8px">
+      <strong>渗透率提升：</strong>Rubin 平台对 PCB 层数和精度要求更大，单机价值量翻倍
+    </div>
+    <div style="background:#f0f9ff;padding:14px;border-radius:8px">
+      <strong>市占率提升：</strong>全球高端 AI PCB 市场中，胜宏份额从个位数快速提升至 15-20%
+    </div>
+  </div>
+
+  <h3>4c. 估值 — 三种方法交叉验证</h3>
+
+  <div style="background:#fffbeb;padding:16px;border-radius:10px;margin:12px 0">
+    <strong>可比估值法：</strong>PCB/AI 硬件可比公司平均 PE 60.8x（沪电 51.7x、深南 65.4x、鹏鼎 56.9x、景旺 69.0x）<br>
+    胜宏 PE 49.6x，较可比均值折价 <strong>18.4%</strong><br>
+    <span style="font-size:13px;color:#64748b">若给予 55x 2026E PE（保守，仍低于可比均值）× 2026E 净利润 55-60 亿 → 目标市值 3,025-3,300 亿，对应股价 <strong>307-336 元</strong></span>
+  </div>
+
+  <div style="background:#f0f9ff;padding:16px;border-radius:10px;margin:12px 0">
+    <strong>历史估值分位法（2026 年至今）：</strong><br>
+    PE 区间：37.9x（低点，2026-07-30）~ 60.0x（2026 年 3 月附近高点附近）<br>
+    当前 PE 49.6x，处于年内 <strong>中位偏低（约 35% 分位）</strong><br>
+    52 周 PB 区间：10.2x ~ 最高 25x+（2025 年高位），当前 14.8x
+  </div>
+
+  <div style="background:#f0fdf4;padding:16px;border-radius:10px;margin:12px 0">
+    <strong>情景分析：</strong><br>
+    <table>
+      <tr><th>情景</th><th>2026E 净利（亿）</th><th>目标 PE</th><th>目标市值（亿）</th><th>目标股价（元）</th></tr>
+      <tr style="background:#fef2f2"><td><strong>悲观</strong> — AI CAPEX 放缓 + 价格战</td><td class="num">45</td><td class="num">40x</td><td class="num">1,800</td><td class="num">183</td></tr>
+      <tr style="background:#fffbeb"><td><strong>基准</strong> — AI 需求稳定增长</td><td class="num">55</td><td class="num">50x</td><td class="num">2,750</td><td class="num">280</td></tr>
+      <tr style="background:#f0fdf4"><td><strong>乐观</strong> — Rubin 超预期 + 份额提升</td><td class="num">65</td><td class="num">55x</td><td class="num">3,575</td><td class="num">364</td></tr>
+    </table>
+  </div>
+
+  <h3>多空双方论点</h3>
+  <div class="grid-2">
+    <div style="padding:14px;border:2px solid #16a34a;border-radius:10px;background:#f0fdf4">
+      <strong style="color:#16a34a">🟢 多头核心论点</strong>
+      <ol style="margin:8px 0 0 16px;font-size:14px">
+        <li><strong>AI PCB 最强盈利质量：</strong>ROE 33.8%、净利率 22.4%在 A 股 PCB 板块断层领先。毛利率从 20.7% 到 35.2% 的跃升是结构性的（产品组合升级），不是周期性的。</li>
+        <li><strong>估值折价不合理：</strong>PE 49.6x 是 PCB 可比公司中最低的，但 ROE 是最高的——标准的"质优价廉"错配。</li>
+        <li><strong>Rubin 平台催化剂：</strong>2026H2 英伟达 Rubin 平台量产，PCB 规格/单价再度跃升，胜宏作为主供将显著受益。</li>
+      </ol>
+    </div>
+    <div style="padding:14px;border:2px solid #dc2626;border-radius:10px;background:#fef2f2">
+      <strong style="color:#dc2626">🔴 空头核心论点</strong>
+      <ol style="margin:8px 0 0 16px;font-size:14px">
+        <li><strong>客户集中度风险：</strong>AI PCB 收入高度依赖 NVIDIA 生态链，若 AI 资本开支周期逆转，冲击巨大。</li>
+        <li><strong>重资产扩张风险：</strong>2026Q1 总资产 389 亿、负债率 55%，大规模产能扩张伴随高资本开支（2026Q1 FCF -22.2 亿），若产能利用率不及预期将拖累 ROE。</li>
+        <li><strong>高估值脆弱性：</strong>PE 49.6x 意味着市场已计入高增长预期，任何增速放缓都会被双杀（盈利下调 + 估值收缩）。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:10px;border:1px dashed #cbd5e1">
+    <strong>🎯 变异认知（Market Mispricing）：</strong><br>
+    市场对胜宏的定价仍然将其视为"周期性的 PCB 制造商"，给的是传统 PCB 周期股的"均值回归"逻辑。<br>
+    但胜宏的利润结构已经从 <strong>消费电子 PCB（低毛利、周期性）彻底切换为 AI 数据中心 PCB（高毛利、结构性成长）</strong>。这个切换不是暂时的——Rubin 平台之后还有 Vera、还有更下一代。毛利率从 20% 到 35% 的跃升不是周期顶点，而是新稳态的起点。
+  </div>
+</div>
+
+<!-- Price Chart -->
+<div class="card">
+  <h2>📈 股价走势（2026年至今）</h2>
+  <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+  <div style="display:flex;gap:24px;margin-top:12px;font-size:13px">
+    <div>年初至今: <span style="color:#16a34a">-17.24%</span></div>
+    <div>60日: <span style="color:#16a34a">-37.05%</span></div>
+    <div>20日: <span style="color:#16a34a">-15.49%</span></div>
+    <div>52周高: <span>402.60</span></div>
+    <div>52周低: <span>177.88</span></div>
+  </div>
+</div>
+
+<!-- ====== Layer 5: Trading Plan ====== -->
+<div class="trade-card">
+  <h2>⚔️ Layer 5 · 交易计划卡片</h2>
+
+  <div class="row"><span class="k">买入逻辑</span><span class="v">AI PCB 龙头利润结构从"消费电子周期"切换至"AI 数据中心成长"，毛利率跃升是结构性的而非周期性的，市场 PE 折价不合理</span></div>
+  <div class="row"><span class="k">估值目标价区间</span><span class="v" style="color:#dc2626">280 — 364 元</span></div>
+  <div class="row"><span class="k">建议买入区间</span><span class="v" style="color:#dc2626">195 — 220 元</span> <span style="font-size:13px;color:#78716c">（目标价留 20-25% 安全边际）</span></div>
+
+  <h3 style="margin-top:16px;color:#92400e">凯利仓位计算</h3>
+  <div class="row"><span class="k">胜率 p</span><span class="v">55%</span> <span style="font-size:13px;color:#78716c">依据：AI PCB 需求持续性大概率确认 + 历史至少 60% 卖方覆盖给出买入评级</span></div>
+  <div class="row"><span class="k">赔率 b</span><span class="v">2.43</span> <span style="font-size:13px;color:#78716c">=(280-200)/(200-167)，目标 280 / 止损 167</span></div>
+  <div class="row"><span class="k">理论仓位 f*</span><span class="v">36.5%</span> <span style="font-size:13px;color:#78716c">=(2.43×0.55−0.45)/2.43</span></div>
+  <div class="row"><span class="k"><strong>实操仓位（1/3 凯利）</strong></span><span class="v" style="color:#dc2626;font-size:18px"><strong>12%</strong></span> <span style="font-size:13px;color:#78716c">总资产占比</span></div>
+
+  <h3 style="margin-top:16px;color:#92400e">止损规则</h3>
+  <div class="row"><span class="k">逻辑止损</span><span class="v">AI PCB 毛利率连续 2 个季度回落至 30% 以下，或 NVIDIA 大幅削减订单</span></div>
+  <div class="row"><span class="k">技术止损</span><span class="v">跌破 <strong>167 元</strong>（前低 177.88 下方留 6% 缓冲）</span></div>
+  <div class="row"><span class="k">时间止损</span><span class="v">买入后 6 个月若股价未回到成本价 +5% 以上，重新评估逻辑</span></div>
+  <div class="row"><span class="k">绝对止损</span><span class="v">亏损超过 <strong>20%</strong> 无条件平仓</span></div>
+
+  <h3 style="margin-top:16px;color:#92400e">止盈规则</h3>
+  <div class="row"><span class="k">第一目标</span><span class="v" style="color:#dc2626">280 元</span> <span style="font-size:13px;color:#78716c">（达到估值基准下限，减仓 50%）</span></div>
+  <div class="row"><span class="k">第二目标</span><span class="v" style="color:#dc2626">340 元</span> <span style="font-size:13px;color:#78716c">（估值上限附近，清仓）</span></div>
+
+  <h3 style="margin-top:16px;color:#92400e">跟踪指标（每周检查）</h3>
+  <div class="row"><span class="k">毛利率趋势</span><span class="v">当前 34.5% / 预警 < 30% / 来源：季报</span></div>
+  <div class="row"><span class="k">AI PCB 订单饱和度</span><span class="v">跟踪 NVIDIA DC 收入增速 / 来源：英伟达季报</span></div>
+  <div class="row"><span class="k">北向资金持股</span><span class="v">跟踪 northbound flow / 来源：沪深港通数据</span></div>
+  <div class="row"><span class="k">产能利用率</span><span class="v">跟踪在建工程转固节奏 / 来源：资产负债表附注</span></div>
+
+  <h3 style="margin-top:16px;color:#92400e">催化剂日历</h3>
+  <div class="row"><span class="k">2026-08 下旬</span><span class="v">英伟达 Q2 FY2027 财报（关注 DC 收入指引）</span></div>
+  <div class="row"><span class="k">2026-10</span><span class="v">胜宏科技 Q3 2026 季报（关注毛利率是否维持 34%+）</span></div>
+  <div class="row"><span class="k">2026H2</span><span class="v">NVIDIA Rubin 平台正式量产（PCB 规格/单价跃升）</span></div>
+  <div class="row"><span class="k">2027-03</span><span class="v">胜宏科技 2026 年报（全年业绩确认）</span></div>
+</div>
+
+<!-- Risk Matrix -->
+<div class="card">
+  <h2>⚠️ 风险矩阵</h2>
+  <table>
+    <tr><th>风险项</th><th>严重程度</th><th>概率</th><th>影响</th><th>应对</th></tr>
+    <tr class="risk-high">
+      <td><strong>AI CAPEX 周期逆转</strong></td>
+      <td><span class="badge badge-red">高</span></td>
+      <td>15-20%</td>
+      <td>营收/利润断崖，PE 压缩至 25-30x</td>
+      <td>若 NVIDIA DC 连续两季增速放缓即减仓</td>
+    </tr>
+    <tr class="risk-mid">
+      <td><strong>PCB 竞争加剧</strong></td>
+      <td><span class="badge badge-amber">中</span></td>
+      <td>20-25%</td>
+      <td>毛利率从 35% 回落至 28-30%</td>
+      <td>关注沪电/深南产能扩张计划</td>
+    </tr>
+    <tr class="risk-mid">
+      <td><strong>中美科技脱钩升级</strong></td>
+      <td><span class="badge badge-amber">中</span></td>
+      <td>15-20%</td>
+      <td>出口受限，海外产能被迫转移</td>
+      <td>泰国工厂是缓冲；关注关税政策</td>
+    </tr>
+    <tr class="risk-low">
+      <td><strong>大客户过度集中</strong></td>
+      <td><span class="badge badge-green">低</span></td>
+      <td>10%</td>
+      <td>单一客户议价权削弱</td>
+      <td>跟踪前 5 大客户收入占比变化</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Behavioral Checks -->
+<div class="card">
+  <h2>🧠 行为金融护栏检查</h2>
+  <table>
+    <tr><th>偏误类型</th><th>自检</th></tr>
+    <tr>
+      <td><strong>确认偏误</strong></td>
+      <td>如果看错了：① AI PCB 需求增速在 Q3-Q4 放缓至 20% 以下；② 胜宏 Q2 毛利率跌破 32%——任一信号出现都需要立即重新评估</td>
+    </tr>
+    <tr>
+      <td><strong>锚定效应</strong></td>
+      <td>建议买入价 195-220 是基于估值区间倒推，并非受当前价格 236 或 52 周高 402 的锚定影响。实际入场应等回调至建议区间</td>
+    </tr>
+    <tr>
+      <td><strong>过度自信</strong></td>
+      <td>若实际胜率从 55% 降至 35%，凯利仓位将从 12% → 3.7%。12% 仓位即使在低胜率下风险可控</td>
+    </tr>
+    <tr>
+      <td><strong>近期偏差</strong></td>
+      <td>今日 +17% 暴涨可能放大了短期乐观情绪。拉长到 3 年维度，PCB 行业确实经历过周期波动——但与上一轮不同，本轮由 AI 算力驱动而非消费电子</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Tracking Calendar -->
+<div class="card">
+  <h2>📅 跟踪日历（未来 6 个月）</h2>
+  <table>
+    <tr><th>时间</th><th>事件</th><th>关注点</th></tr>
+    <tr><td>2026-08-20 前后</td><td>英伟达 FY2027 Q2 财报</td><td>数据中心收入增速、Rubin 量产时间表</td></tr>
+    <tr><td>2026-09 中旬</td><td>胜宏科技 2026 中报</td><td>H1 毛利率是否维持 34%+、Q2 单季利润</td></tr>
+    <tr><td>2026-10 月底</td><td>胜宏科技 2026 三季报</td><td>Q3 营收/利润环比增速、产能利用率</td></tr>
+    <tr><td>2026-11</td><td>英伟达 FY2027 Q3 财报</td><td>Rubin 量产爬坡进度</td></tr>
+    <tr><td>2026-12</td><td>北美云厂商 2027 CAPEX 指引</td><td>AI 资本开支是否持续扩张</td></tr>
+    <tr><td>2027-03</td><td>胜宏科技 2026 年报</td><td>全年业绩兑现、分红政策、2027 展望</td></tr>
+  </table>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。投资有风险，入市需谨慎。</p>
+  <p>分析师：弈投师 | 数据来源：Tushare、腾讯自选股、国家统计局 | 生成时间：2026-08-05 15:09</p>
+  <p>本文内容仅为宏观财经知识、行业信息科普，仅代表作者个人观点，不具备证券投资咨询资质，不构成任何投资建议、个股买卖推荐、理财操作指导。文中信息来源于公开渠道，不保证信息完全准确、完整、及时，仅供学习交流使用，请勿直接作为交易依据。投资有风险，入市需谨慎。</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined' || typeof SX_PRICE === 'undefined') return;
+
+  var dates = SX_PRICE.dates;
+  var closes = SX_PRICE.closes;
+
+  // Format dates for display
+  var labels = dates.map(function(d) {
+    return d.substring(4,6) + '/' + d.substring(6,8);
+  });
+
+  var ctx = document.getElementById('priceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '收盘价 (元)',
+        data: closes,
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,0.05)',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) { return ctx.parsed.y.toFixed(2) + ' 元'; },
+            title: function(ctx) {
+              var idx = ctx[0].dataIndex;
+              return dates[idx] ? dates[idx].substring(0,4) + '-' + dates[idx].substring(4,6) + '-' + dates[idx].substring(6,8) : '';
+            }
+          }
+        }
+      },
+      scales: {
+        x: { 
+          ticks: { maxTicksLimit: 20, font: { size: 10 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: { font: { size: 11 }, callback: function(v) { return v; } },
+          grid: { color: '#f1f5f9' }
+        }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

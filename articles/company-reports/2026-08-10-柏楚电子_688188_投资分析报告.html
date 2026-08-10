@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>柏楚电子(688188) · 投资分析报告 | 弈投师</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="_data.js"></script>
+<style>
+:root {
+  --red: #E53E3E;
+  --green: #38A169;
+  --blue: #2B6CB0;
+  --bg: #FAFBFC;
+  --card: #FFFFFF;
+  --text: #2D3748;
+  --text-secondary: #718096;
+  --border: #E2E8F0;
+  --accent: #2B6CB0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); line-height:1.6; max-width:680px; margin:0 auto; padding:0 16px 40px;
+}
+/* Hero Banner */
+.hero {
+  background: linear-gradient(135deg, #1A365D 0%, #2B6CB0 50%, #3182CE 100%);
+  color: #fff; border-radius:0 0 24px 24px; padding:32px 24px 28px;
+  margin:0 -16px 24px; position:relative; overflow:hidden;
+}
+.hero::after {
+  content:''; position:absolute; top:-50px; right:-50px; width:180px; height:180px;
+  border-radius:50%; background:rgba(255,255,255,0.05);
+}
+.hero .tag { display:inline-block; background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:20px; font-size:12px; margin-bottom:12px; }
+.hero h1 { font-size:28px; font-weight:700; margin-bottom:4px; }
+.hero .sub { font-size:14px; opacity:0.85; }
+.hero .price-row { display:flex; align-items:baseline; gap:12px; margin-top:16px; flex-wrap:wrap; }
+.hero .price { font-size:42px; font-weight:800; }
+.hero .change { font-size:16px; padding:4px 10px; border-radius:6px; }
+.hero .change.down { background:rgba(56,161,105,0.3); color:#9AE6B4; }
+.hero .meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin-top:18px; font-size:13px; opacity:0.9; }
+
+/* Cards */
+.card { background:var(--card); border-radius:14px; padding:20px; margin-bottom:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+.card h2 { font-size:18px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.card h2 .icon { font-size:20px; }
+.card h3 { font-size:15px; margin:16px 0 10px; color:var(--accent); }
+
+/* Stats grid */
+.stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.stat-item { padding:12px; background:var(--bg); border-radius:10px; }
+.stat-item .label { font-size:12px; color:var(--text-secondary); margin-bottom:2px; }
+.stat-item .value { font-size:20px; font-weight:700; }
+.stat-item .sub-v { font-size:11px; color:var(--text-secondary); margin-top:1px; }
+.stat-item .value.up { color:var(--red); }
+.stat-item .value.down { color:var(--green); }
+
+/* Signal lights */
+.signal { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
+.signal.green { background:var(--green); }
+.signal.yellow { background:#ECC94B; }
+.signal.red { background:var(--red); }
+
+/* Tables */
+.mini-table { width:100%; border-collapse:collapse; font-size:13px; margin:8px 0; }
+.mini-table th { text-align:left; padding:6px 8px; background:var(--bg); color:var(--text-secondary); font-weight:500; font-size:11px; border-radius:6px 6px 0 0; }
+.mini-table td { padding:8px; border-bottom:1px solid var(--border); }
+.mini-table tr:last-child td { border-bottom:none; }
+
+/* Bar segments */
+.segment-bar { display:flex; height:8px; border-radius:4px; overflow:hidden; margin:4px 0; }
+.segment-bar .s1 { background:#2B6CB0; }
+.segment-bar .s2 { background:#48BB78; }
+.segment-bar .s3 { background:#ED8936; }
+.segment-bar .s4 { background:#9F7AEA; }
+
+/* Trading plan card */
+.trade-card { background:linear-gradient(135deg,#1A365D,#2B6CB0); color:#fff; border-radius:16px; padding:24px; margin:16px 0; }
+.trade-card h3 { color:#fff; margin-top:0; }
+.trade-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.trade-item { background:rgba(255,255,255,0.1); border-radius:10px; padding:12px; }
+.trade-item .tl { font-size:11px; opacity:0.7; margin-bottom:4px; }
+.trade-item .tv { font-size:18px; font-weight:700; }
+
+/* Risk matrix */
+.risk-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.risk-tag.high { background:#FED7D7; color:#C53030; }
+.risk-tag.medium { background:#FEFCBF; color:#975A16; }
+.risk-tag.low { background:#C6F6D5; color:#276749; }
+
+/* Chart containers */
+.chart-wrap { position:relative; height:300px; margin:16px 0; }
+.chart-wrap.tall { height:380px; }
+
+/* Footer */
+.footer { text-align:center; color:var(--text-secondary); font-size:12px; margin-top:32px; padding:20px 0; border-top:1px solid var(--border); }
+
+/* Responsive */
+@media(max-width:480px) {
+  .hero h1 { font-size:22px; }
+  .hero .price { font-size:34px; }
+  .stats { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero">
+  <div class="tag">🔬 科创板 · 激光自动化龙头</div>
+  <h1>柏楚电子</h1>
+  <div class="sub">688188.SH | 工业自动化软件平台</div>
+  <div class="price-row">
+    <span class="price" id="hero-price">--</span>
+    <span class="change down" id="hero-change">--</span>
+  </div>
+  <div class="meta-grid">
+    <div>总市值 <span id="hero-mcap">--</span></div>
+    <div>PE(TTM) <span id="hero-pe">--</span></div>
+    <div>52周区间 <span id="hero-52w">--</span></div>
+    <div>股息率 <span id="hero-div">--</span></div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="card">
+  <h2><span class="icon">📋</span>执行摘要</h2>
+  <p style="font-size:15px;line-height:1.7;">
+    柏楚电子是国内<strong style="color:var(--accent);">激光切割控制系统绝对龙头</strong>（中低功率市占率>60%），
+    正从"卖控制卡"向"软硬一体方案商"跃迁。2025年营收21.96亿（+26.5%），净利11.13亿（+26.0%），
+    毛利率77.7%，净利率50.7%——<strong style="color:var(--red);">"激光茅"的财务成色极佳</strong>。
+    高功率切割国产替代（市占率10%→40%）+智能焊接第二曲线+精密加工，三重驱动力支撑未来3年CAGR 25%+。
+    当前PE 36x处于近一年中等偏低位置，<strong>目标价 ¥120-145，现价 ¥105 存在14-27%上行空间</strong>。
+  </p>
+</div>
+
+<!-- Key Stats -->
+<div class="card">
+  <h2><span class="icon">📊</span>核心指标一览</h2>
+  <div class="stats" id="core-stats">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- Price Chart -->
+<div class="card">
+  <h2><span class="icon">📈</span>股价走势（近1年）</h2>
+  <div class="chart-wrap tall"><canvas id="priceChart"></canvas></div>
+  <div style="display:flex;gap:16px;font-size:11px;color:var(--text-secondary);margin-top:8px;flex-wrap:wrap;">
+    <span>🟠 MA60 <span id="ma60-val">--</span></span>
+    <span>🔵 MA20 <span id="ma20-val">--</span></span>
+    <span>52周高 ¥127.04</span><span>52周低 ¥88.50</span>
+  </div>
+</div>
+
+<!-- Financial Trends -->
+<div class="card">
+  <h2><span class="icon">💰</span>营收与利润趋势（季度）</h2>
+  <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+</div>
+
+<!-- Margin Trends -->
+<div class="card">
+  <h2><span class="icon">📐</span>利润率趋势</h2>
+  <div class="chart-wrap"><canvas id="marginChart"></canvas></div>
+</div>
+
+<!-- Business Segments -->
+<div class="card">
+  <h2><span class="icon">🏗️</span>业务结构（2025FY）</h2>
+  <div class="segment-bar">
+    <div class="s1" style="width:58.9%"></div>
+    <div class="s2" style="width:22.2%"></div>
+    <div class="s3" style="width:14.7%"></div>
+    <div class="s4" style="width:4.2%"></div>
+  </div>
+  <table class="mini-table" style="margin-top:10px;">
+    <tr><th>业务板块</th><th>营收(亿)</th><th>占比</th><th>YoY</th><th>毛利率</th></tr>
+    <tr><td>🔵 平面切割方案</td><td style="color:var(--red);">12.93</td><td>58.9%</td><td>+14.9%</td><td>81.6%</td></tr>
+    <tr><td>🟢 管材切割方案</td><td style="color:var(--red);">4.87</td><td>22.2%</td><td>+28.2%</td><td>84.4%</td></tr>
+    <tr><td>🟠 智能硬件/焊接/精密</td><td style="color:var(--red);">3.22</td><td>14.7%</td><td style="color:var(--red);">+83.1%</td><td>52.6%</td></tr>
+    <tr><td>🟣 三维切割</td><td style="color:var(--red);">0.64</td><td>2.9%</td><td style="color:var(--red);">+73.7%</td><td>82.7%</td></tr>
+  </table>
+</div>
+
+<!-- Growth Drivers -->
+<div class="card">
+  <h2><span class="icon">🚀</span>三重成长曲线</h2>
+  <table class="mini-table">
+    <tr><th>曲线</th><th>业务</th><th>阶段</th><th>增速预判</th><th>确定性</th></tr>
+    <tr><td>第一曲线</td><td>高功率切割国产替代 + 海外</td><td>中期</td><td>20-25%</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>第二曲线</td><td>智能焊接（钢构+船舶）</td><td>从0→1→10</td><td>50-80%</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td>第三曲线</td><td>精密微加工 + 通用运动控制</td><td>早期</td><td>50%+</td><td>⭐⭐⭐</td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--text-secondary);margin-top:8px;">
+    焊接催化剂：船级社AiP认证 ✓ | 扬子江船业战略合作 ✓ | 2025埃森展15+/20家采用柏楚系统 ✓
+  </p>
+</div>
+
+<!-- Valuation -->
+<div class="card">
+  <h2><span class="icon">🎯</span>估值锚定</h2>
+  <div class="chart-wrap"><canvas id="valuationChart"></canvas></div>
+  <table class="mini-table" style="margin-top:12px;">
+    <tr><th>方法</th><th>目标价区间</th><th>关键假设</th></tr>
+    <tr><td>DCF（基准）</td><td style="color:var(--red);">¥125-140</td><td>WACC 9.5%, 永续增长3%</td></tr>
+    <tr><td>可比估值</td><td style="color:var(--red);">¥120-130</td><td>2026E PE 33-36x</td></tr>
+    <tr><td>分析师一致预期</td><td style="color:var(--red);">¥130-155</td><td>国海/申万/中金目标价</td></tr>
+    <tr style="background:#FFF5F5;"><td><strong>综合目标价</strong></td><td style="color:var(--red);font-weight:700;">¥120-145</td><td>当前¥105.25，上行14-27%</td></tr>
+  </table>
+</div>
+
+<!-- Analyst Consensus -->
+<div class="card">
+  <h2><span class="icon">🏦</span>分析师一致预期</h2>
+  <div class="chart-wrap"><canvas id="consensusChart"></canvas></div>
+</div>
+
+<!-- Trading Plan -->
+<div class="trade-card">
+  <h3>🎯 交易计划</h3>
+  <div class="trade-row">
+    <div class="trade-item"><div class="tl">建议买入区间</div><div class="tv">¥98-108</div></div>
+    <div class="trade-item"><div class="tl">目标价区间</div><div class="tv">¥120-145</div></div>
+    <div class="trade-item"><div class="tl">建议仓位</div><div class="tv">8-10%</div></div>
+    <div class="trade-item"><div class="tl">安全边际</div><div class="tv">18-26%</div></div>
+    <div class="trade-item"><div class="tl">止损价</div><div class="tv">¥88</div></div>
+    <div class="trade-item"><div class="tl">止盈①</div><div class="tv">¥132（-30%）</div></div>
+    <div class="trade-item"><div class="tl">终极止盈</div><div class="tv">¥145（清仓）</div></div>
+    <div class="trade-item"><div class="tl">绝对止损线</div><div class="tv">-15%</div></div>
+  </div>
+  <p style="font-size:12px;margin-top:14px;opacity:0.8;">
+    ⚠️ 凯利仓位 f* ≈ 54.6%（p=65%, b=3.4），实操取1/5~1/6 = 8-10%。逻辑止损：焊接订单连续两季未兑现/毛利率跌破70%。时间止损：买入后6个月无正向催化。
+  </p>
+</div>
+
+<!-- Risk Matrix -->
+<div class="card">
+  <h2><span class="icon">⚠️</span>风险矩阵</h2>
+  <table class="mini-table">
+    <tr><th>风险</th><th>等级</th><th>触发条件</th><th>应对</th></tr>
+    <tr><td>宏观PMI持续收缩</td><td><span class="risk-tag medium">中等</span></td><td>PMI<48连续3月</td><td>仓位上限降至5%</td></tr>
+    <tr><td>毛利率结构性下滑</td><td><span class="risk-tag medium">中等</span></td><td>单季毛利率<70%</td><td>重新评估硬件战略</td></tr>
+    <tr><td>焊接放量不及预期</td><td><span class="risk-tag medium">中等</span></td><td>6月无新船厂客户</td><td>时间止损</td></tr>
+    <tr><td>科技股系统性杀估值</td><td><span class="risk-tag high">较高</span></td><td>科创50跌>20%</td><td>绝对止损-15%</td></tr>
+    <tr><td>竞争格局恶化</td><td><span class="risk-tag low">低</span></td><td>市占率连续下降</td><td>核心逻辑证伪→清仓</td></tr>
+  </table>
+</div>
+
+<!-- Catalyst Calendar -->
+<div class="card">
+  <h2><span class="icon">📅</span>催化剂日历</h2>
+  <table class="mini-table">
+    <tr><th>日期</th><th>事件</th><th>预期影响</th></tr>
+    <tr><td style="color:var(--red);">2026-08-18</td><td>中报披露</td><td>营收+20-25%，净利+25-30%</td></tr>
+    <tr><td>2026-09-10</td><td>中国光博会</td><td>可能发布新切割头/焊接产品</td></tr>
+    <tr><td>2026-10月中</td><td>Q3业绩预告</td><td>验证下半年增长趋势</td></tr>
+    <tr><td>2026-11月</td><td>埃森焊接展（秋季）</td><td>焊接订单核心催化窗口</td></tr>
+  </table>
+</div>
+
+<!-- Behavior Finance Check -->
+<div class="card">
+  <h2><span class="icon">🧠</span>行为金融护栏</h2>
+  <div style="font-size:13px;line-height:1.7;">
+    <p><strong>确认偏误：</strong>如果中报营收增速<15%，或焊接连续两季零增长→成长逻辑需要重新审视。</p>
+    <p><strong>锚定效应：</strong>¥105不是锚，¥127高点也不是。买卖点完全基于DCF估值，不依赖价格记忆。</p>
+    <p><strong>过度自信：</strong>若实际胜率降至45%，凯利仓位降至16.4%（实操8-10%仍安全）。若降至35%，应清仓。</p>
+    <p><strong>近期偏差：</strong>近2月¥127→¥88波动是市场风格切换，3年维度基本面趋势未变（CAGR>30%）。</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>本报告基于公开信息与量化模型生成，仅供参考学习，不构成个人投资建议</p>
+  <p>数据来源：腾讯自选股 · 国家统计局 · 申万宏源 · 国海证券 · 中金公司</p>
+  <p>投资有风险，入市需谨慎 | 弈投师 · 2026-08-10</p>
+</div>
+
+<script>
+(function() {
+  if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+  if (typeof BC_PRICE === 'undefined') { console.warn('BC_PRICE data not loaded'); return; }
+
+  const P = BC_PRICE;
+  const F = BC_FINANCIALS;
+  const red = '#E53E3E', green = '#38A169', blue = '#2B6CB0';
+  const orange = '#ED8936', purple = '#9F7AEA';
+  const gray = '#A0AEC0', lightBlue = '#63B3ED';
+
+  // Hero
+  document.getElementById('hero-price').textContent = '¥' + P.meta.latestPrice;
+  const chgEl = document.getElementById('hero-change');
+  chgEl.textContent = (P.meta.ytdChange > 0 ? '▲' : '▼') + ' ' + Math.abs(P.meta.ytdChange) + '% YTD';
+  chgEl.className = 'change ' + (P.meta.ytdChange > 0 ? 'up' : 'down');
+  document.getElementById('hero-mcap').textContent = P.meta.marketCap + '亿';
+  document.getElementById('hero-pe').textContent = P.meta.latestPE + 'x';
+  document.getElementById('hero-52w').textContent = '¥88.50 - ¥127.04';
+  document.getElementById('hero-div').textContent = '1.76%';
+
+  // Core stats
+  const statsEl = document.getElementById('core-stats');
+  const stats = [
+    {l:'PE(TTM)',v:P.meta.latestPE+'x',s:'近1年中等偏低'},
+    {l:'PB',v:P.meta.latestPB+'x',s:'轻资产高ROE'},
+    {l:'ROE(2025)',v:'19.26%',s:'连续3年>15%',u:true},
+    {l:'毛利率(TTM)',v:'76.9%',s:'软硬一体微降'},
+    {l:'净利率(TTM)',v:'52.2%',s:'A股顶级水平',u:true},
+    {l:'经营CF/净利润',v:'99.3%',s:'利润含金量极高',u:true},
+    {l:'资产负债率',v:'5.6%',s:'几乎零有息负债',u:true},
+    {l:'研发费用率',v:'15.6%',s:'持续高研发投入'},
+  ];
+  statsEl.innerHTML = stats.map(s => 
+    `<div class="stat-item">
+      <div class="label">${s.l}</div>
+      <div class="value ${s.u?'up':''}">${s.v}</div>
+      <div class="sub-v">${s.s}</div>
+    </div>`
+  ).join('');
+
+  // MA values
+  const lastMa20 = P.ma20.filter(v=>v).slice(-1)[0];
+  const lastMa60 = P.ma60.filter(v=>v).slice(-1)[0];
+  document.getElementById('ma20-val').textContent = lastMa20 ? '¥'+lastMa20 : '--';
+  document.getElementById('ma60-val').textContent = lastMa60 ? '¥'+lastMa60 : '--';
+
+  // Price Chart
+  new Chart(document.getElementById('priceChart'), {
+    type:'line',
+    data:{
+      labels: P.dates,
+      datasets:[
+        {label:'收盘价',data:P.closes,borderColor:blue,backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.1},
+        {label:'MA20',data:P.ma20,borderColor:lightBlue,borderWidth:1,pointRadius:0,fill:false},
+        {label:'MA60',data:P.ma60,borderColor:orange,borderWidth:1,pointRadius:0,fill:false},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:8,font:{size:10}},grid:{display:false}},
+        y:{position:'right',ticks:{callback:v=>'¥'+v,font:{size:10}},grid:{color:'#E2E8F0'}}
+      }
+    }
+  });
+
+  // Revenue & Profit Chart
+  new Chart(document.getElementById('revenueChart'), {
+    type:'bar',
+    data:{
+      labels: F.quarters,
+      datasets:[
+        {label:'营收(亿)',data:F.revenue,backgroundColor:blue+'99',borderColor:blue,borderWidth:1,borderRadius:4,order:2},
+        {label:'归母净利(亿)',data:F.netProfit,type:'line',borderColor:red,backgroundColor:'transparent',borderWidth:2,pointRadius:3,order:1},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:8,font:{size:9}},grid:{display:false}},
+        y:{position:'right',ticks:{font:{size:10}},grid:{color:'#E2E8F0'}}
+      }
+    }
+  });
+
+  // Margin Chart
+  new Chart(document.getElementById('marginChart'), {
+    type:'line',
+    data:{
+      labels: F.quarters,
+      datasets:[
+        {label:'毛利率(%)',data:F.grossMargin,borderColor:blue,backgroundColor:'transparent',borderWidth:2,pointRadius:3,yAxisID:'y'},
+        {label:'净利率(%)',data:F.netMargin,borderColor:red,backgroundColor:'transparent',borderWidth:2,pointRadius:3,yAxisID:'y'},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:8,font:{size:9}},grid:{display:false}},
+        y:{position:'right',min:40,max:90,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#E2E8F0'}}
+      }
+    }
+  });
+
+  // Valuation Chart (DCF scenarios)
+  new Chart(document.getElementById('valuationChart'), {
+    type:'bar',
+    data:{
+      labels:['悲观情景','基准情景','乐观情景','当前股价'],
+      datasets:[
+        {label:'每股价值(¥)',data:[95,132,170,105.25],
+         backgroundColor:[green+'60',blue+'80',red+'60',gray+'80'],
+         borderColor:[green,blue,red,gray],borderWidth:1.5,borderRadius:6}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11}}},
+        y:{position:'right',ticks:{callback:v=>'¥'+v,font:{size:10}},grid:{color:'#E2E8F0'}}
+      }
+    }
+  });
+
+  // Analyst Consensus Chart
+  const C = BC_CONSENSUS;
+  new Chart(document.getElementById('consensusChart'), {
+    type:'bar',
+    data:{
+      labels: C.years,
+      datasets:[
+        {label:'营收(亿)',data:C.revenue,backgroundColor:blue+'70',borderColor:blue,borderWidth:1,borderRadius:4,order:2,yAxisID:'y'},
+        {label:'PE(x)',data:C.pe,type:'line',borderColor:orange,backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,order:1,yAxisID:'y1'},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11}}},
+        y:{position:'right',ticks:{callback:v=>v+'亿',font:{size:10}},grid:{color:'#E2E8F0'},title:{display:true,text:'营收'}},
+        y1:{position:'left',ticks:{callback:v=>v+'x',font:{size:10}},grid:{display:false},title:{display:true,text:'PE'}}
+      }
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

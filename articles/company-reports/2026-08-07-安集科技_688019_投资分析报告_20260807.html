@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安集科技(688019) 投资分析报告 — 2026.08.07</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #fff;
+  --text: #212529;
+  --text-secondary: #6c757d;
+  --border: #dee2e6;
+  --red: #dc3545;
+  --green: #198754;
+  --blue: #0d6efd;
+  --gold: #f0ad4e;
+  --purple: #6f42c1;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 20px;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+/* Hero Banner */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.hero .ticker { font-size: 14px; opacity: 0.7; letter-spacing: 2px; margin-bottom: 8px; }
+.hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+.hero .meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 16px; }
+.hero .meta-item { text-align: center; }
+.hero .meta-label { font-size: 12px; opacity: 0.6; }
+.hero .meta-value { font-size: 22px; font-weight: 700; }
+.hero .meta-value.red { color: #ff6b6b; }
+.hero .meta-value.gold { color: #ffd43b; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border: 1px solid var(--border);
+}
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2 .layer-tag {
+  font-size: 11px;
+  background: var(--blue);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.card h3 { font-size: 16px; margin: 20px 0 10px; color: #333; }
+
+/* Section colors */
+.sec-macro { border-left: 4px solid #6c757d; }
+.sec-ind { border-left: 4px solid #0d6efd; }
+.sec-screen { border-left: 4px solid #6f42c1; }
+.sec-deep { border-left: 4px solid #198754; }
+.sec-trade { border-left: 4px solid #dc3545; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+th { background: #f1f3f5; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+tr:hover { background: #f8f9fa; }
+td.up { color: var(--red); font-weight: 600; }
+td.down { color: var(--green); }
+
+/* Signal boxes */
+.signal { padding: 16px; border-radius: 8px; margin: 12px 0; font-size: 14px; }
+.signal-bull { background: #fff3f3; border: 1px solid #ffc9c9; }
+.signal-bear { background: #f0fff4; border: 1px solid #b7ebc1; }
+.signal-info { background: #f0f4ff; border: 1px solid #c9d8ff; }
+.signal-title { font-weight: 700; margin-bottom: 6px; }
+
+/* Two column grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* KPI cards */
+.kpi-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.kpi {
+  flex: 1; min-width: 120px;
+  background: #f8f9fa; border-radius: 8px; padding: 14px;
+  text-align: center;
+}
+.kpi .val { font-size: 20px; font-weight: 700; }
+.kpi .lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Trading card */
+.trade-card {
+  background: linear-gradient(135deg, #fff5f5, #fff);
+  border: 2px solid var(--red);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+}
+.trade-card h3 { color: var(--red); margin-bottom: 16px; }
+.trade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; font-size: 14px; }
+.trade-grid .label { color: var(--text-secondary); }
+.trade-grid .value { font-weight: 600; }
+
+/* Disclaimer */
+.disclaimer {
+  font-size: 12px; color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  padding-top: 16px; margin-top: 32px;
+}
+
+.chart-wrap { position: relative; height: 280px; margin: 16px 0; }
+.chart-wrap canvas { width: 100% !important; }
+
+/* Comparables table highlight */
+.highlight { background: #fff9db; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="ticker">SH 688019 · 科创板 · 电子化学品Ⅱ</div>
+  <h1>安集科技 投资分析报告</h1>
+  <div style="opacity:0.7;font-size:14px;">Anji Microelectronics — 国产CMP抛光液龙头</div>
+  <div class="meta">
+    <div class="meta-item">
+      <div class="meta-label">最新价</div>
+      <div class="meta-value red">250.79</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">总市值</div>
+      <div class="meta-value">570.5亿</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">PE(TTM)</div>
+      <div class="meta-value gold">69.37</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">2025 ROE</div>
+      <div class="meta-value">25.18%</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">毛利率</div>
+      <div class="meta-value">56.72%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Layer 1: Macro -->
+<div class="card sec-macro">
+  <h2><span class="layer-tag">Layer 1</span> 宏观背景与仓位判断</h2>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">49.2</div><div class="lbl">中国7月PMI</div></div>
+    <div class="kpi"><div class="val">3.50-3.75%</div><div class="lbl">美联储利率</div></div>
+    <div class="kpi"><div class="val">4.75%</div><div class="lbl">10Y美债</div></div>
+    <div class="kpi"><div class="val">83.85%</div><div class="lbl">全A PE分位</div></div>
+    <div class="kpi"><div class="val">-20%</div><div class="lbl">科创50 7月回撤</div></div>
+  </div>
+
+  <p><strong>宏观一句话判断：</strong>外部流动性偏紧（美联储鹰派分歧+美债高位），国内经济动能走弱（PMI跌回收缩），A股整体估值偏高但科技板块经历7月剧烈回调后释放了部分泡沫。半导体材料赛道有独立景气支撑。</p>
+
+  <div class="grid2">
+    <div class="signal signal-info">
+      <div class="signal-title">📊 核心指标</div>
+      <ul style="margin-left:18px;font-size:14px;">
+        <li><strong>美联储7月FOMC：</strong>连续第5次按兵不动（3.50-3.75%），但3票反对主张加息25bp（2016年以来首次3张异议票），鹰派分歧加剧。来源：Fed</li>
+        <li><strong>中国7月PMI：</strong>49.2，较上月降1.1pct，重回荣枯线下方；装备制造业PMI 51.4%、高技术制造业PMI 53.3%仍在扩张。来源：国家统计局</li>
+        <li><strong>A股温度：</strong>全A PE(TTM) 21.93倍，处于2010年以来83.85%分位——整体不便宜。来源：中国银河策略</li>
+        <li><strong>科技风格调整：</strong>科创50 7月回撤超20%，电子板块成交占比从43.8%峰值回落，泡沫部分消化。来源：公开行情数据</li>
+        <li><strong>美债10Y：</strong>4.75%，压制成长股估值；布油重返$100上方，通胀预期扰动。来源：Wind</li>
+      </ul>
+    </div>
+    <div class="signal signal-bear">
+      <div class="signal-title">⚠️ 最大宏观风险</div>
+      <ul style="margin-left:18px;font-size:14px;">
+        <li><strong>美联储意外加息：</strong>若9月加息落地，全球成长股估值中枢将进一步下移</li>
+        <li><strong>美伊冲突升级：</strong>霍尔木兹海峡航运受阻，油价持续高位压制制造业成本</li>
+        <li><strong>科技股拥挤度回潮：</strong>若AI叙事受挫，7月回调只是开始而非结束</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="margin-top:12px;"><strong>⚖️ 建议权益仓位：</strong>50-60%（中性偏防御） <strong>| 风格倾向：</strong>科技硬件>纯AI应用，业绩确定型>远期叙事型 <strong>| 现金保留：</strong>15-20%</p>
+</div>
+
+<!-- Layer 2: Industry -->
+<div class="card sec-ind">
+  <h2><span class="layer-tag">Layer 2</span> 行业选赛道 — CMP抛光液/半导体材料</h2>
+
+  <div class="signal signal-bull">
+    <div class="signal-title">🔥 核心推荐：半导体材料（CMP抛光液+湿电子化学品） — 产业周期中早期</div>
+    <p style="font-size:14px;"><strong>一句话逻辑：</strong>中国半导体材料正处于"国产替代加速+晶圆产能扩张+制程升级耗材倍增"三重叠加的黄金窗口，CMP抛光液国产化率从2021年的&lt;15%提升至2025年约34%，但先进制程仍不足5%，替代空间巨大。</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">$38B</div><div class="lbl">全球CMP材料市场(2025)</div></div>
+    <div class="kpi"><div class="val">+10.3%</div><div class="lbl">2026E增速</div></div>
+    <div class="kpi"><div class="val">8.80%</div><div class="lbl">2025-30 CAGR</div></div>
+    <div class="kpi"><div class="val">34%</div><div class="lbl">国产化率(2025)</div></div>
+    <div class="kpi"><div class="val">57.3亿</div><div class="lbl">中国抛光液市场(2025)</div></div>
+  </div>
+
+  <h3>景气度量化指标</h3>
+  <table>
+    <tr><th>指标</th><th>数据</th><th>来源</th></tr>
+    <tr><td>全球CMP材料市场</td><td>2025年$38B → 2026E $42B (+10.3%)</td><td>TECHCET</td></tr>
+    <tr><td>CMP抛光液占比</td><td>约占CMP材料成本49%，2025年全球约$23B</td><td>QYResearch/SEMI</td></tr>
+    <tr><td>中国市场5年CAGR</td><td>26.5%（2021-2025），远超全球均值</td><td>中经百汇</td></tr>
+    <tr><td>CMP步骤增长</td><td>180nm→10次，14nm→21次，7nm→30次；2D→3D NAND：7→15次</td><td>安集/鼎龙公告</td></tr>
+    <tr><td>先进制程国产化</td><td>28nm+ >50%；14nm以下 <5%</td><td>东海研究</td></tr>
+    <tr><td>全球CR5份额</td><td>Entegris/Fujimi/Resonac/安集/Versum合计~65%</td><td>QYResearch</td></tr>
+  </table>
+
+  <h3>竞争格局（波特五力简化）</h3>
+  <table>
+    <tr><th>力量</th><th>评估</th><th>对安集影响</th></tr>
+    <tr><td>供应商议价力</td><td>中等→走弱。安集自研磨料+参股硅溶胶，原材料自主可控增强</td><td class="up">有利</td></tr>
+    <tr><td>客户议价力</td><td>较强。客户集中度高（前5占75%），但转换成本极高（认证1-2年）</td><td>中性</td></tr>
+    <tr><td>新进入者威胁</td><td>低。技术壁垒极高+客户认证周期长+IP壁垒（308项发明专利）</td><td class="up">有利</td></tr>
+    <tr><td>替代品威胁</td><td>低。CMP是不可替代的晶圆平坦化工艺</td><td class="up">有利</td></tr>
+    <tr><td>行业内竞争</td><td>加剧。鼎龙股份快速切入抛光液领域，国际巨头守城</td><td class="down">潜在风险</td></tr>
+  </table>
+</div>
+
+<!-- Layer 3: Quick Screening -->
+<div class="card sec-screen">
+  <h2><span class="layer-tag">Layer 3</span> 量化初筛 — 基本面硬性检查</h2>
+
+  <table>
+    <tr><th>筛选条件</th><th>结果</th><th>判断</th></tr>
+    <tr><td>近3年经营现金流为负年数</td><td>2023: +3.36亿 / 2024: +4.93亿 / 2025: +4.40亿</td><td class="up">✓ 全部为正</td></tr>
+    <tr><td>商誉/净资产</td><td>商誉=0（资产负债表无形科目为None）</td><td class="up">✓ 0%</td></tr>
+    <tr><td>大股东质押率</td><td>[MISSING: 需从westock查]</td><td>—</td></tr>
+    <tr><td>近2年重大违规</td><td>无违规处罚记录</td><td class="up">✓ 通过</td></tr>
+    <tr><td>日均成交额</td><td>10.5亿（今日半日）远超3000万底线</td><td class="up">✓ 流动性充裕</td></tr>
+  </table>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <h3>可比公司横向估值</h3>
+      <table>
+        <tr><th>公司</th><th>PE(TTM)</th><th>PB</th><th>市值</th><th>Q1毛利率</th></tr>
+        <tr class="highlight"><td>安集科技</td><td>69.4</td><td>12.7</td><td>570亿</td><td>55.5%</td></tr>
+        <tr><td>鼎龙股份</td><td>89.8</td><td>13.9</td><td>745亿</td><td>55.0%</td></tr>
+        <tr><td>上海新阳</td><td>82.5</td><td>6.2</td><td>291亿</td><td>42.2%</td></tr>
+        <tr><td>晶瑞电材</td><td>135.7</td><td>6.0</td><td>152亿</td><td>—</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>卖方一致预期</h3>
+      <table>
+        <tr><th>年份</th><th>营收(亿)</th><th>净利(亿)</th><th>增速</th><th>PE</th></tr>
+        <tr><td>2025A</td><td>25.04</td><td>7.84</td><td>+46.9%</td><td>72.8x</td></tr>
+        <tr><td>2026E</td><td>33.68</td><td>10.44</td><td>+33.2%</td><td>54.6x</td></tr>
+        <tr><td>2027E</td><td>43.23</td><td>13.87</td><td>+32.8%</td><td>41.1x</td></tr>
+        <tr><td>2028E</td><td>53.76</td><td>17.83</td><td>+28.6%</td><td>32.0x</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--text-secondary);margin-top:4px;">来源：东海研究 2026.06、雪球综合市场一致预期</p>
+    </div>
+  </div>
+
+  <div class="signal signal-info" style="margin-top:12px;">
+    <strong>可比公司PE均值：</strong>2026E 51x, 2027E 39x, 2028E 33x<br>
+    <strong>安集PE：</strong>2026E 44x, 2027E 33x, 2028E 25x —— 均低于可比均值，估值折价约15-25%
+  </div>
+</div>
+
+<!-- Layer 4: Deep Research -->
+<div class="card sec-deep">
+  <h2><span class="layer-tag">Layer 4</span> 深度研究 — 安集科技（688019）</h2>
+
+  <!-- 4a: Business Model -->
+  <h3>4a. 商业模式拆解</h3>
+  <div class="grid2">
+    <div>
+      <p><strong>怎么赚钱？</strong></p>
+      <table>
+        <tr><td>CMP抛光液</td><td>20.40亿 (81.5%)</td><td>+32.1% YoY</td><td>毛利率~58%</td></tr>
+        <tr><td>湿电子化学品</td><td>4.53亿 (18.1%)</td><td>+63.7% YoY</td><td>毛利率~50%</td></tr>
+        <tr><td>电镀液及添加剂</td><td>起步量产</td><td>—</td><td>新增曲线</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:8px;"><strong>"3+1"平台：</strong>CMP抛光液 + 湿电子化学品 + 电镀液及添加剂 + 核心原材料自主可控</p>
+    </div>
+    <div>
+      <p><strong>护城河在哪？</strong></p>
+      <ul style="font-size:14px;margin-left:18px;">
+        <li><strong>技术壁垒：</strong>308项授权发明专利（境内外），覆盖抛光/清洗/沉积三大工艺。国内唯一14nm以下CMP抛光液大规模量产，全球市占率从8%→11%→13%连年攀升</li>
+        <li><strong>客户粘性：</strong>半导体材料认证周期1-2年，一旦导入难被替换。2025年获中芯国际等核心客户"优秀供应商"称号</li>
+        <li><strong>上游自主：</strong>参股公司硅溶胶量产+自研磨料通过客户验证，供应链安全壁垒</li>
+        <li><strong>规模效应：</strong>研发费用率17.76%，头部客户放量后经营杠杆显著</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal signal-info" style="margin:12px 0;">
+    <strong>管理层质量：</strong>研发人员409人(占比52.1%)，硕博36.67%。2025年研发投入4.45亿元(占营收17.76%)。2025年可转债8.31亿+筹划H股上市，资本运作能力积极。股权激励覆盖核心技术人员。（Fact: 年报 / Mgmt Claim: 部分）
+  </div>
+
+  <!-- 4b: Financial Deep Dive -->
+  <h3>4b. 财务深度分析</h3>
+
+  <div class="chart-wrap"><canvas id="chartRev"></canvas></div>
+
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>指标</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>Q1 2026</th></tr>
+        <tr><td>营收(亿)</td><td>6.87</td><td>10.77</td><td>12.38</td><td>18.35</td><td>25.04</td><td>7.24</td></tr>
+        <tr><td>归母净利(亿)</td><td>1.25</td><td>3.01</td><td>4.03</td><td>5.34</td><td>7.84</td><td>2.08</td></tr>
+        <tr><td>毛利率</td><td>51.1%</td><td>54.2%</td><td>55.8%</td><td>58.5%</td><td>56.7%</td><td>55.5%</td></tr>
+        <tr><td>净利率</td><td>18.2%</td><td>28.0%</td><td>32.5%</td><td>29.1%</td><td>31.3%</td><td>28.7%</td></tr>
+        <tr><td>ROE(加权)</td><td>11.1%</td><td>22.2%</td><td>21.5%</td><td>22.2%</td><td>25.2%</td><td>5.7%*</td></tr>
+      </table>
+      <p style="font-size:11px;">*Q1年化约22.8%。来源：Tushare fina_indicator</p>
+    </div>
+    <div>
+      <table>
+        <tr><th>指标</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+        <tr><td>经营现金流(亿)</td><td>0.61</td><td>2.39</td><td>3.36</td><td>4.93</td><td>4.40</td></tr>
+        <tr><td>OCF/净利润</td><td>0.49</td><td>0.79</td><td>0.83</td><td>0.92</td><td>0.56</td></tr>
+        <tr><td>资产负债率</td><td>28.2%</td><td>25.7%</td><td>18.4%</td><td>21.8%</td><td>29.9%</td></tr>
+        <tr><td>总资产(亿)</td><td>16.7</td><td>20.5</td><td>26.0</td><td>34.5</td><td>50.4</td></tr>
+        <tr><td>归母权益(亿)</td><td>12.0</td><td>15.2</td><td>21.2</td><td>27.0</td><td>35.3</td></tr>
+      </table>
+      <p style="font-size:11px;">来源：Tushare income/balancesheet/cashflow</p>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;">
+    <strong>杜邦分解（2025年）：</strong>ROE 25.18% = 净利率 31.29% × 总资产周转率 0.59 × 权益乘数 1.43<br>
+    <strong>ROE质量：</strong>高利润率驱动（非杠杆驱动），权益乘数仅1.43（负债率极低）。Q1 2026负债率进一步降至15.7%（可转债转股影响），财务结构极其稳健。
+  </div>
+
+  <div class="grid2" style="margin-top:12px;">
+    <div class="signal signal-bull">
+      <div class="signal-title">✅ 财务亮点</div>
+      <ul style="margin-left:18px;font-size:13px;">
+        <li>3年营收CAGR 32.5%，利润CAGR 37.5%——高增长且利润增速>收入增速（经营杠杆释放）</li>
+        <li>经营现金流连续5年为正，2024年OCF/净利达92%（盈利质量高）</li>
+        <li>2025年OCF/净利降至56%，主因可转债利息+汇兑损失，属非经常性波动</li>
+        <li>负债率15.7%，账上现金充裕，财务风险极低</li>
+      </ul>
+    </div>
+    <div class="signal signal-bear">
+      <div class="signal-title">⚠️ 财务隐忧</div>
+      <ul style="margin-left:18px;font-size:13px;">
+        <li>毛利率从2024年的58.5%微降至2025年56.7%→Q1 2026 55.5%，连续4个季度下行（产品结构变化：低毛利湿电子化学品占比提升）</li>
+        <li>客户集中度极高：前5大客户占比约75%，单一客户流失风险</li>
+        <li>汇兑损失+可转债利息致财务费用同比大增9200万（Q1 2026），需持续跟踪</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4c: Valuation -->
+  <h3>4c. 估值 — 三种方法交叉验证</h3>
+
+  <div class="grid2">
+    <div>
+      <h4>方法① 可比估值</h4>
+      <table>
+        <tr><th></th><th>2026E PE</th><th>2027E PE</th><th>2028E PE</th></tr>
+        <tr><td>安集科技</td><td>54.6x</td><td>41.1x</td><td>32.0x</td></tr>
+        <tr><td>可比均值</td><td>51x</td><td>39x</td><td>33x</td></tr>
+        <tr><td>折价/溢价</td><td class="down">+7%</td><td class="down">+5%</td><td class="up">-3%</td></tr>
+      </table>
+      <p style="font-size:12px;margin-top:4px;">可比公司：鼎龙/雅克/上海新阳/彤程新材<br>2026E PE略高于均值（安集增速更快），2027-28年折价<br>来源：东海研究 2026.06</p>
+      <p style="font-size:12px;"><strong>基于2026E 10.45亿净利 × 45-60x PE：</strong><br>目标市值：470-627亿 → 股价 207-276元</p>
+    </div>
+    <div>
+      <h4>方法② 历史PE分位</h4>
+      <p style="font-size:14px;">当前PE(TTM) 69.4x，处于过去3年约60-70%分位。</p>
+      <ul style="font-size:13px;margin-left:18px;">
+        <li>2023年PE区间：40-80x</li>
+        <li>2024年PE区间：45-90x</li>
+        <li>2025年PE区间：50-110x（科技行情推升）</li>
+        <li>7月回调后回落至70x附近</li>
+      </ul>
+      <p style="font-size:13px;margin-top:8px;">历史中枢约55-65x，当前略高于中枢但已较7月高点（~100x）大幅回落。</p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <h4>方法③ 三情景估值</h4>
+    <table>
+      <tr><th>情景</th><th>2026E净利(亿)</th><th>假设PE</th><th>目标市值(亿)</th><th>目标股价(元)</th><th>概率</th></tr>
+      <tr style="background:#fff3f3;"><td>乐观</td><td>11.0（超预期+5%）</td><td>60x</td><td>660</td><td>290</td><td>25%</td></tr>
+      <tr><td>基准</td><td>10.44（一致预期）</td><td>52x</td><td>543</td><td>239</td><td>50%</td></tr>
+      <tr style="background:#f0fff4;"><td>悲观</td><td>9.0（下游砍单-14%）</td><td>40x</td><td>360</td><td>158</td><td>25%</td></tr>
+    </table>
+    <p style="margin-top:8px;"><strong>概率加权目标价：</strong>290×25% + 239×50% + 158×25% = <strong>231.5元</strong><br>
+    <strong>估值结论：</strong>当前价250.79元高于概率加权目标价231.5元约8%，处于合理偏贵区间。2027-2028年PE快速消化后仍有空间。</p>
+  </div>
+
+  <!-- Bull vs Bear -->
+  <div class="grid2" style="margin-top:16px;">
+    <div class="signal signal-bull">
+      <div class="signal-title">🐂 多头核心论点</div>
+      <ol style="margin-left:18px;font-size:14px;">
+        <li><strong>结构性成长确定性高：</strong>CMP抛光液全球市占率8%→11%→13%连年攀升，市场空间CAGR 8.8%，量价齐升逻辑清晰。AI驱动先进制程CMP步骤增加（7nm以下超30步），单晶圆耗材价值翻倍。</li>
+        <li><strong>"3+1"平台打开第二/第三增长曲线：</strong>湿电子化学品+63.7%、电镀液刚量产（全球$13.8B市场，国产化率极低），叠加原材料自主可控降低成本，2026-28年利润CAGR有望维持30%+。</li>
+        <li><strong>估值相对合理：</strong>2027E PE仅33x（低于可比均值39x），2028E 25x，高增长快速消化估值。7月科技回调后筹码出清，为长期投资者提供了更好的入场窗口。</li>
+      </ol>
+    </div>
+    <div class="signal signal-bear">
+      <div class="signal-title">🐻 空头核心论点</div>
+      <ol style="margin-left:18px;font-size:14px;">
+        <li><strong>估值绝对水位仍高：</strong>PE(TTM) 69x、PB 12.7x，已经把2-3年的增长提前定价。任何一个季度业绩miss都可能导致剧烈回调（7月科创50 -20%仅是预演）。</li>
+        <li><strong>竞争格局恶化风险：</strong>鼎龙股份凭借"抛光垫+抛光液"全产业链协同快速切入抛光液领域（2025年抛光液营收2.94亿，+36.8%）；国际巨头不会坐视份额流失。</li>
+        <li><strong>客户集中+地缘风险：</strong>前5客户占比75%，高度依赖中芯国际等少数晶圆厂。中美科技脱钩若升级，海外收入（3.5%）和市场拓展（H股上市/全球化）可能受阻。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="signal signal-info" style="margin-top:12px;">
+    <strong>🎯 变异认知（市场可能错在哪里？）：</strong><br>
+    市场定价了安集作为"CMP抛光液龙头"的成长，但可能<strong>低估了电镀液及添加剂业务的中期爆发力</strong>（全球$13.8B市场，当前国产化率近乎为零，安集2025年刚开始量产，若验证顺利，2027-28年有望贡献10%+营收弹性）。<br>
+    <strong>风险修正：</strong>如果电镀液放量不及预期，当前估值没有安全边际。
+  </div>
+</div>
+
+<!-- Layer 5: Trading Plan -->
+<div class="card sec-trade">
+  <h2><span class="layer-tag">Layer 5</span> 交易计划</h2>
+
+  <div class="trade-card">
+    <h3>📋 交易计划卡片 — 安集科技（688019）</h3>
+
+    <div class="trade-grid">
+      <div class="label">买入逻辑</div>
+      <div class="value">CMP抛光液国产龙头+湿电子化学品加速+电镀液新曲线，2026-28E利润CAGR ~30%，2027E PE仅33x低于行业均值</div>
+
+      <div class="label">目标价区间</div>
+      <div class="value" style="color:var(--red);">231-290元（概率加权231元，乐观情景290元）</div>
+
+      <div class="label">建议买入区间</div>
+      <div class="value" style="color:var(--red);">200-230元（在目标价基础上留10-15%安全边际）</div>
+
+      <div class="label">仓位建议</div>
+      <div class="value">总资产 <strong>5-8%</strong>（凯利f*≈12%，实操取½凯利→6%，考虑行业集中度取中值）</div>
+
+      <div class="label">胜率 p</div>
+      <div class="value">~55%（依据：基本面确定性高但估值不便宜+宏观逆风+竞争加剧。若实际胜率低20%→33%，凯利仓位降至0%）</div>
+
+      <div class="label">赔率 b</div>
+      <div class="value">1.08（止盈290元 +15.6% / 止损200元 -20.2%，b=15.6/20.2≈0.77… <strong>赔率偏低</strong>）</div>
+
+      <div class="label">凯利 f*</div>
+      <div class="value">(0.77×0.55 - 0.45) / 0.77 ≈ <strong>-4.1%</strong> → 凯利公式显示当前价格赔率不足<br>
+      <span style="font-size:12px;color:var(--red);">⚠️ 若买入价降至215元（止损195元），b=1.25，f*=11.6%，仓位方转正</span></div>
+    </div>
+
+    <hr style="margin:16px 0;border-color:#e9ecef;">
+
+    <div class="grid2">
+      <div>
+        <strong>🛑 止损规则</strong>
+        <ul style="font-size:13px;margin-left:18px;margin-top:4px;">
+          <li><strong>逻辑止损：</strong>Q2 2026营收增速跌破25%或毛利率跌破53%，抛光液市占率停滞</li>
+          <li><strong>技术止损：</strong>跌破200元（约前低支撑+120日均线附近）</li>
+          <li><strong>时间止损：</strong>6个月内无新制程验证突破或电镀液放量消息</li>
+          <li><strong>绝对止损：</strong>亏损超过20%无条件平仓</li>
+        </ul>
+      </div>
+      <div>
+        <strong>🎯 止盈规则</strong>
+        <ul style="font-size:13px;margin-left:18px;margin-top:4px;">
+          <li><strong>第一目标：</strong>260元（+3.7%，达到合理估值上沿，减仓30%）</li>
+          <li><strong>第二目标：</strong>290元（+15.6%，乐观情景目标，清仓剩余仓位）</li>
+          <li><strong>动态止盈：</strong>若2026中报超预期（H1净利>5.5亿），上调目标至310-330元</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>跟踪指标（每周检查）</h3>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>预警阈值</th><th>数据来源</th></tr>
+    <tr><td>CMP抛光液季度营收增速</td><td>Q1 +32.8%</td><td>&lt;25% 黄灯 / &lt;20% 红灯</td><td>公司季报</td></tr>
+    <tr><td>综合毛利率</td><td>Q1 55.5%</td><td>&lt;54% 黄灯 / &lt;52% 红灯</td><td>公司季报</td></tr>
+    <tr><td>全球CMP材料市场规模</td><td>$38B (2025)</td><td>TECHCET下调增速</td><td>TECHCET/SEMI</td></tr>
+    <tr><td>北向资金持仓变化</td><td>[MISSING]</td><td>连续2周净流出>5%</td><td>沪深港通</td></tr>
+    <tr><td>半导体设备/材料ETF资金流</td><td>[MISSING]</td><td>周净流出>10亿</td><td>Wind/东方财富</td></tr>
+    <tr><td>前5大客户资本开支计划</td><td>中芯/长存扩产中</td><td>大客户宣布缩减Capex</td><td>客户公告/产业链调研</td></tr>
+  </table>
+
+  <h3>催化剂日历（未来6个月）</h3>
+  <table>
+    <tr><th>时间</th><th>事件</th><th>预期影响</th></tr>
+    <tr><td>2026-08中下旬</td><td>2026H1中报披露</td><td>核心验证点：Q2营收增速、毛利率趋势、电镀液进展</td></tr>
+    <tr><td>2026-09</td><td>SEMICON Taiwan 2026</td><td>新产品/新客户合作公告可能性</td></tr>
+    <tr><td>2026-Q3</td><td>H股上市聆讯进展</td><td>若获批，国际化融资平台打开，短期提振估值</td></tr>
+    <tr><td>2026-Q4</td><td>上海化工区制造基地投产进度</td><td>产能释放节奏影响2027年收入预期</td></tr>
+    <tr><td>2026-11</td><td>2026Q3季报</td><td>全年业绩趋势确认关键窗口</td></tr>
+    <tr><td>2027-01</td><td>2026年度业绩预告</td><td>能否兑现10.44亿一致预期</td></tr>
+  </table>
+</div>
+
+<!-- Summary -->
+<div class="card">
+  <h2>📊 综合评估与建议</h2>
+
+  <div class="kpi-row">
+    <div class="kpi" style="background:#fff3f3;"><div class="val">⭐⭐⭐⭐</div><div class="lbl">基本面质量</div></div>
+    <div class="kpi" style="background:#fff8e1;"><div class="val">⭐⭐⭐</div><div class="lbl">当前估值吸引力</div></div>
+    <div class="kpi" style="background:#fff3f3;"><div class="val">⭐⭐⭐⭐</div><div class="lbl">行业景气度</div></div>
+    <div class="kpi" style="background:#f0fff4;"><div class="val">⭐⭐</div><div class="lbl">短期安全边际</div></div>
+    <div class="kpi" style="background:#fff3f3;"><div class="val">⭐⭐⭐⭐⭐</div><div class="lbl">中长期成长性</div></div>
+  </div>
+
+  <table style="margin-top:12px;">
+    <tr><td style="font-weight:700;">评级</td><td><strong>观望偏积极（建议等待200-230元区间建仓）</strong></td></tr>
+    <tr><td style="font-weight:700;">一句话</td><td>好赛道里的好公司，但价格还不够好。70x PE买30%增长标的，容错空间太窄。</td></tr>
+    <tr><td style="font-weight:700;">关键等待信号</td><td>① 价格回调至215元以下（此时凯利仓位转正）② H1中报确认毛利率企稳+电镀液放量超预期 ③ 宏观面出现降息/流动性改善信号</td></tr>
+    <tr><td style="font-weight:700;">最大下行风险</td><td>若2026年净利仅9亿（低预期15%）+ 估值压缩至40x PE → 股价跌至158元（-37%）</td></tr>
+  </table>
+</div>
+
+<!-- Risk Matrix -->
+<div class="card">
+  <h2>⚠️ 风险矩阵</h2>
+  <table>
+    <tr><th>风险因素</th><th>影响程度</th><th>发生概率</th><th>应对</th></tr>
+    <tr><td>全球半导体周期下行</td><td>高（-30%）</td><td>中低</td><td>跟踪下游晶圆厂Capex，跌破阈值减仓</td></tr>
+    <tr><td>鼎龙股份抛光液份额侵蚀</td><td>中（-15%）</td><td>中</td><td>跟踪安集vs鼎龙抛光液增速差</td></tr>
+    <tr><td>汇率/可转债利息侵蚀利润</td><td>低（-5%）</td><td>高</td><td>已price in部分，关注H2汇兑走势</td></tr>
+    <tr><td>地缘政治/出口管制升级</td><td>高（-35%）</td><td>低</td><td>控制仓位上限5%，不重仓单一地缘敏感股</td></tr>
+    <tr><td>新产品验证不及预期</td><td>中（-20%）</td><td>中</td><td>跟踪电镀液量产进度，时间止损机制</td></tr>
+  </table>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+<p><strong>⚠️ 免责声明：</strong>本报告基于公开信息和量化模型生成，仅供参考学习，不构成个人投资建议。文中数据来源包括Tushare、WeStock、公开研报、国家统计局、美联储公告等。部分数据可能存在延迟，请以官方数据为准。投资有风险，入市需谨慎。</p>
+<p><strong>数据标注说明：</strong> [MISSING] = 无法获取的数据 | Fact = 公开事实数据 | Consensus = 市场一致预期 | Model Est. = 模型估计 | 来源标注于对应数据点后</p>
+<p><strong>报告生成时间：</strong>2026-08-07 11:00 CST | <strong>分析师：</strong>弈投师（AI辅助生成）</p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Chart === 'undefined') return;
+
+  // Revenue & Net Profit Chart
+  var ctx1 = document.getElementById('chartRev');
+  if (!ctx1) return;
+
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['2019','2020','2021','2022','2023','2024','2025','Q1\n2026'],
+      datasets: [{
+        label: '营业收入 (亿元)',
+        data: [2.85, 4.22, 6.87, 10.77, 12.38, 18.35, 25.04, 7.24],
+        backgroundColor: '#0d6efd',
+        borderRadius: 6,
+        yAxisID: 'y'
+      }, {
+        label: '归母净利润 (亿元)',
+        data: [0.66, 1.54, 1.25, 3.01, 4.03, 5.34, 7.84, 2.08],
+        backgroundColor: '#dc3545',
+        borderRadius: 6,
+        yAxisID: 'y'
+      }, {
+        label: '毛利率 (%)',
+        data: [50.2, 52.0, 51.1, 54.2, 55.8, 58.5, 56.7, 55.5],
+        borderColor: '#198754',
+        backgroundColor: 'transparent',
+        borderWidth: 3,
+        type: 'line',
+        tension: 0.3,
+        pointRadius: 5,
+        yAxisID: 'y1'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: '安集科技 — 营收/利润/毛利率趋势 (2019-2026Q1)', font: { size: 14 } },
+        legend: { position: 'bottom' }
+      },
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: '金额 (亿元)' },
+          beginAtZero: true
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: '毛利率 (%)' },
+          min: 45,
+          max: 65,
+          grid: { display: false }
+        }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
